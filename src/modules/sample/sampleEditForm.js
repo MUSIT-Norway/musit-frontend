@@ -19,10 +19,10 @@ const leftoverSample = getNumberField('leftoverSample', null, false);
 const originatedObjectUuid = getStrField('originatedObjectUuid');
 const updatedBy = getStrField('updatedBy', null, false);
 const updatedByName = getStrField('updatedByName', null, false);
-const updatedDate = getNumberField('updatedDate', null, false);
+const updatedDate = getStrField('updatedDate', null, false);
 const registeredBy = getStrField('registeredBy', null, false);
 const registeredByName = getStrField('registeredByName', null, false);
-const registeredDate = getNumberField('registeredDate', null, false);
+const registeredDate = getStrField('registeredDate', null, false);
 const sampleNum = getNumberField('sampleNum');
 
 const fields = [
