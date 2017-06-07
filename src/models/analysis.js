@@ -332,10 +332,16 @@ MusitAnalysis.getAnalysisWithDetails = (
               fieldName: 'restriction_requesterName'
             }
           ]);
+          if (analysis.restriction) {
+            return {
+              ...analysis,
+              ...actorNames,
+              restriction: { ...analysis.restriction, ...actorNames.restriction}
+            };
+          }
           return {
             ...analysis,
-            ...actorNames,
-            restriction: { ...analysis.restriction, ...actorNames.restriction }
+            ...actorNames
           };
         }
         return analysis;

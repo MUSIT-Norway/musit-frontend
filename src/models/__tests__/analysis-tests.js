@@ -70,8 +70,7 @@ describe('Analysis model', () => {
           subNo: '2',
           term: 'Mansjettknapp',
           type: 'Analysis'
-        },
-        restriction: {}
+        }
       }
     };
 
