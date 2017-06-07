@@ -10,6 +10,7 @@ import type { Callback, AjaxGet, AjaxPost, AjaxPut } from './types/ajax';
 
 export type Restriction = {
   requester?: string,
+  requesterName?: string,
   reason?: string,
   expirationDate?: string,
   cancelledReason?: string,
@@ -205,6 +206,10 @@ MusitAnalysis.fromJsonToForm = (json, formDef) => {
       'restrictions_requester',
       restriction.requester
     );
+    formValues.restrictions_requesterName = toField(
+      'restrictions_requesterName',
+      restriction.requesterName
+    );
     formValues.restrictions_reason = toField('restrictions_reason', restriction.reason);
     formValues.restrictions_caseNumbers = toField(
       'restrictions_caseNumbers',
@@ -299,7 +304,8 @@ MusitAnalysis.getAnalysisWithDetails = (
           analysis.registeredBy,
           analysis.updatedBy,
           analysis.doneBy,
-          analysis.responsible
+          analysis.responsible,
+          analysis.restriction ? analysis.restriction.requester : ''
         ].filter(p => p),
         token: props.token
       }).map(actors => {
@@ -320,13 +326,22 @@ MusitAnalysis.getAnalysisWithDetails = (
             {
               id: analysis.responsible,
               fieldName: 'responsibleName'
+            },
+            {
+              id: analysis.restriction ? analysis.restriction.requester : '',
+              fieldName: 'restriction_requesterName'
             }
           ]);
-          return { ...analysis, ...actorNames };
+          return {
+            ...analysis,
+            ...actorNames,
+            restriction: { ...analysis.restriction, ...actorNames.restriction }
+          };
         }
         return analysis;
       })
     )
+    .do(e => console.log('RItuvesh', e))
     .flatMap(analysis => {
       if (analysis.type === 'AnalysisCollection' && analysis.events.length > 0) {
         return Observable.forkJoin(

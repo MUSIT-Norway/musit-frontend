@@ -209,7 +209,7 @@ const AnalysisView = ({ form, store, appSession, params, goToUrl }: Props) => (
               </label>
               <div className="col-md-10">
                 <p className="form-control-static" id="requester">
-                  {form.restrictions_requester.value || ''}
+                  {form.restrictions_requesterName.value || ''}
                 </p>
               </div>
             </div>

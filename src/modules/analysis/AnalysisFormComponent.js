@@ -10,6 +10,7 @@ import PersonRoleDate from '../../components/samples/personRoleDate';
 import AddButton from '../../components/AddButton';
 import { Table } from 'reactable';
 import MetaInformation from '../../components/metainfo';
+import { ActorSuggest } from '../../components/suggest/ActorSuggest';
 
 type Location = { state?: Array<ObjectData> };
 
@@ -362,18 +363,25 @@ const AnalysisForm = ({
                   Klausulert for:
                 </label>
                 <div className="col-md-10">
-                  <input
-                    className="form-control"
-                    id="restrictedBy"
-                    placeholder="Fornavn Etternavn"
-                    value={form.restrictions_requester.rawValue || ''}
-                    onChange={updateFormField(
-                      form.restrictions_requester.name,
-                      updateForm
-                    )}
+                  <ActorSuggest
+                    appSession={appSession}
+                    id="restrictions_requester"
+                    value={form.restrictions_requesterName.rawValue || ''}
+                    placeHolder="Find actor"
+                    onChange={e => {
+                      updateForm({
+                        name: 'restrictions_requesterName',
+                        rawValue: e.fn
+                      });
+                      updateForm({
+                        name: 'restrictions_requester',
+                        rawValue: e.dataportenId
+                      });
+                    }}
                   />
                 </div>
               </div>
+
               <div className="form-group">
                 <label className="control-label col-md-2" htmlFor="restrictionCause">
                   Årsak til klausulering:

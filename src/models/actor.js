@@ -16,7 +16,8 @@ type ActorMetaData = {
   registeredBy?: ?string,
   registeredByName?: ?string,
   updatedBy?: ?string,
-  updatedByName?: ?string
+  updatedByName?: ?string,
+  restriction?: { requesterName: ?string }
 };
 
 type ActorFieldName =
@@ -27,7 +28,11 @@ type ActorFieldName =
   | 'doneByName'
   | 'responsible'
   | 'responsibleName'
-  | 'doneBy';
+  | 'doneBy'
+  | 'restrictions_requester'
+  | 'restrictions_requesterName'
+  | 'restriction_requester'
+  | 'restriction_requesterName';
 
 type ActorField = {
   id: string,
@@ -104,6 +109,9 @@ MusitActor.getMultipleActorNames = (
     const actor = find(actors, a => MusitActor.hasActorId(a, next.id));
     if (!actor) {
       return acc;
+    }
+    if (next.fieldName === 'restriction_requesterName') {
+      return { ...acc, restriction: { ...acc.restriction, requesterName: actor.fn } };
     }
     return { ...acc, [next.fieldName]: actor.fn };
   }, {});

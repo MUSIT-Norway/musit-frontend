@@ -30,6 +30,7 @@ export const fieldsArray = [
   getStrField('comments'),
   getBoolField('restrictions', false),
   getStrField('restrictions_requester'),
+  getStrField('restrictions_requesterName', null, false),
   getStrField('restrictions_expirationDate'),
   getStrField('restrictions_reason'),
   getStrField('restrictions_cancelledReason'),
