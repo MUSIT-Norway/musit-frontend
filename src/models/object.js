@@ -261,11 +261,7 @@ MusitObject.moveSingleObject = (ajaxPut = simplePut) => ({
   token,
   callback
 }) => {
-  const items: objectTypeAndId = [].concat(id).map(objectId => ({
-    id: objectId,
-    objectType: objectType
-  }));
-  const data = { doneBy, destination, items };
+  const data = { doneBy, destination, items: objectType };
   return ajaxPut(
     Config.magasin.urls.api.storagefacility.moveObject(museumId),
     data,
