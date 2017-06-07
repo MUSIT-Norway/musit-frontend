@@ -7,6 +7,7 @@ import type { Event, Events } from '../../types/events';
 import type { AnalysisTypesObject, AnalysisTypes, AnalysisType } from '../../types/analysisTypes';
 import type { SampleTypesObject, SampleTypes, SampleType } from '../../types/sampleTypes';
 import type { AppSession } from '../../types/appSession';
+import {getSampleType, getSampleSubType} from '../../shared/sampleTypesAndSubTypes';
 
 type EventTypeProps = {
   events: Events,
@@ -22,7 +23,7 @@ function getPathDotsAndToolTip(pathArr) { return pathArr.length >2 ?
   <div title={toPathStr(pathArr)} data-toggle="popover" data-trigger="hover">{`.../${toPathStr(pathArr, -3)}`}</div>
   : toPathStr(pathArr)};
 
-function getKeyData(event: Event, analysisTypes: AnalysisTypes, sampleTypes: SampleTypes, appSession: AppSession){
+function getKeyData(event: Event, analysisTypes: AnalysisTypes, sampleTypes: SampleTypesObject, appSession: AppSession){
   if (event.type) {
     if((event.type === 'AnalysisCollection' ||event.type === 'Analysis' )&& analysisTypes) {
       const analysisTypeFound: ?AnalysisType = analysisTypes.find(f => f.id && f.id === event.analysisTypeId);
@@ -34,10 +35,9 @@ function getKeyData(event: Event, analysisTypes: AnalysisTypes, sampleTypes: Sam
       return getPathDotsAndToolTip(event.to.breadcrumb);
     }
     if(event.type === 'SampleCreated' && event.sampleTypeId && sampleTypes) {
-      const sampleTypeFound: ?SampleType = sampleTypes.find(f => f.sampleTypeId && f.sampleTypeId === event.sampleTypeId);
-      if (sampleTypeFound) {
-        return appSession.language.isEn ? sampleTypeFound.enSampleType : sampleTypeFound.noSampleType;
-      }
+      const sampleType: string = getSampleType(sampleTypes, event.sampleTypeId, appSession);
+      const sampleSubType: string = getSampleSubType(sampleTypes, event.sampleTypeId, appSession);
+      return sampleSubType ? `${sampleType} / ${sampleSubType}` : sampleType;
     }
   }
   return '';
@@ -63,7 +63,7 @@ export const EventTableComponent = ({ events, onClick, analysisTypes, sampleType
             <Td column="doneDate">{event.type && event.type === 'MoveObject' ? event.doneDate : event.registeredDate }</Td>
             <Td column="type">{event.type ? I18n.t(`musit.objects.objectsView.eventTypes.${event.type}`) : ''}</Td>
             <Td column="doneBy">{event.type && event.type === 'MoveObject' ? event.doneBy : event.registeredBy }</Td>
-            <Td column="keyData">{getKeyData(event, analysisTypes.analysisTypes, sampleTypes.sampleTypes, appSession)}</Td>
+            <Td column="keyData">{getKeyData(event, analysisTypes.analysisTypes, sampleTypes, appSession)}</Td>
             <Td column="caseNumber">{event.caseNumbers ? event.caseNumbers.join('; '): ''}</Td>
           </Tr>
         )}
