@@ -441,25 +441,6 @@ const AnalysisForm = ({
                   />
                 </div>
               </div>
-              <div className="form-group">
-                <label
-                  className="control-label col-md-2"
-                  htmlFor="restrictionCancellationCause"
-                >
-                  Årsak til kansellering:
-                </label>
-                <div className="col-md-10">
-                  <input
-                    className="form-control"
-                    id="restrictionCancellationCause"
-                    value={form.restrictions_cancelledReason.rawValue || ''}
-                    onChange={updateFormField(
-                      form.restrictions_cancelledReason.name,
-                      updateForm
-                    )}
-                  />
-                </div>
-              </div>
             </div>}
         </div>
         <hr />
