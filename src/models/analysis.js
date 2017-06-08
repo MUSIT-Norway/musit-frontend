@@ -10,7 +10,6 @@ import type { Field } from '../forms/form';
 import type { Callback, AjaxGet, AjaxPost, AjaxPut } from './types/ajax';
 import { DATE_FORMAT_DISPLAY } from '../shared/util';
 
-
 export type Restriction = {
   requester?: string,
   requesterName?: string,
