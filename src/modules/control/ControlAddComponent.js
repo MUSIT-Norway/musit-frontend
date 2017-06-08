@@ -341,8 +341,7 @@ export class ControlAddContainer extends React.Component {
                         <Col xs={5}>
                           {hasProp(e, 'leftValue')
                             ? <label>
-                                {' '}{translate('musit.newControl.envdata')}
-                                {' '}
+                                {translate('musit.newControl.envdata')}
                               </label>
                             : ''}
                         </Col>

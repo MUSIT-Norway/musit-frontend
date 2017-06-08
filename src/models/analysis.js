@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 import moment from 'moment';
 import type { Field } from '../forms/form';
 import type { Callback, AjaxGet, AjaxPost, AjaxPut } from './types/ajax';
+import { DATE_FORMAT_DISPLAY } from '../shared/util';
+
 
 export type Restriction = {
   requester?: string,
@@ -222,7 +224,7 @@ MusitAnalysis.fromJsonToForm = (json, formDef) => {
     );
     formValues.restrictions_expirationDate = toField(
       'restrictions_expirationDate',
-      moment(restriction.expirationDate).format('YYYY-MM-DD')
+      moment(restriction.expirationDate).format(DATE_FORMAT_DISPLAY)
     );
   }
 
@@ -392,7 +394,6 @@ MusitAnalysis.getAnalysisWithDetails = (
         return analysis;
       })
     )
-    .do(e => console.log('RItuvesh', e))
     .flatMap(analysis => {
       if (analysis.type === 'AnalysisCollection' && analysis.events.length > 0) {
         return Observable.forkJoin(

@@ -3,6 +3,7 @@ import { simpleGet, simplePut, simplePost } from '../shared/RxAjax';
 import Config from '../config';
 import { getPath } from '../shared/util';
 import type { MovableObject } from './types/movableObject';
+import type { objectTypeAndId } from '../types/object';
 import type { Callback, AjaxGet, AjaxPost, AjaxPut } from './types/ajax';
 import type { ObjectData } from '../types/object';
 import { Observable, Subject } from 'rxjs';
@@ -83,10 +84,9 @@ class MusitObject {
   static moveSingleObject: (
     ajaxPut: AjaxPut
   ) => (props: {
-    id: string,
     destination: number,
     doneBy: string,
-    objectType?: Array<{ objectType: 'collection' | 'sample', id: string }>,
+    objectTypeAndId?: objectTypeAndId,
     museumId: number,
     token: string,
     callback?: Callback
@@ -148,7 +148,7 @@ MusitObject.moveObjects = (
       .then(objects =>
         objects.forEach(obj =>
           MusitObject.moveSingleObject(ajaxPut)({
-            id: obj.id,
+            objectTypeAndId: [{ objectType: obj.objectType, id: obj.id }],
             destination,
             doneBy,
             museumId,
@@ -159,7 +159,7 @@ MusitObject.moveObjects = (
       );
   } else {
     MusitObject.moveSingleObject(ajaxPut)({
-      id: object.uuid,
+      objectTypeAndId: [{ objectType: object.objectType, id: object.uuid }],
       destination,
       doneBy,
       museumId,
@@ -252,20 +252,14 @@ MusitObject.getObjects = (ajaxGet = simpleGet) => ({
 };
 
 MusitObject.moveSingleObject = (ajaxPut = simplePut) => ({
-  id,
   destination,
   doneBy,
-  objectType,
+  objectTypeAndId,
   museumId,
   token,
   callback
 }) => {
-  let items = [].concat(id).map(objectId => ({
-    id: objectId,
-    objectType: objectType
-  }));
-  items = objectType ? objectType : items;
-  const data = { doneBy, destination, items };
+  const data = { doneBy, destination, items: objectTypeAndId };
   return ajaxPut(
     Config.magasin.urls.api.storagefacility.moveObject(museumId),
     data,
