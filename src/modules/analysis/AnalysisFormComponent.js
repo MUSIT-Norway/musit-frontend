@@ -11,7 +11,8 @@ import AddButton from '../../components/AddButton';
 import { Table } from 'reactable';
 import MetaInformation from '../../components/metainfo';
 import { ActorSuggest } from '../../components/suggest/ActorSuggest';
-
+import DatePicker from '../../components/DatePicker';
+import { DATE_FORMAT_DISPLAY, formatISOString } from '../../shared/util';
 type Location = { state?: Array<ObjectData> };
 
 type SaveAnalysisFn = (props: {
@@ -429,14 +430,14 @@ const AnalysisForm = ({
                   Sluttdato:
                 </label>
                 <div className="col-md-5">
-                  <input
-                    className="form-control"
-                    id="restrictionExpirationEndDate"
+                  <DatePicker
+                    dateFormat={DATE_FORMAT_DISPLAY}
                     value={form.restrictions_expirationDate.rawValue || ''}
-                    onChange={updateFormField(
-                      form.restrictions_expirationDate.name,
-                      updateForm
-                    )}
+                    onChange={e =>
+                      updateForm({
+                        name: 'restrictions_expirationDate',
+                        rawValue: formatISOString(e)
+                      })}
                   />
                 </div>
               </div>
