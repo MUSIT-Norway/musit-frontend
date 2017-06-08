@@ -9,6 +9,7 @@ describe('eventsStore', () => {
     const clearM = '-1---------';
     const loadPredefinedTypesM = '---1-----';
     const getSampleTypesM = '--1---------';
+    const getSampleM = '-----------';
     const expected = 'aabc-------';
 
     const expectedStateMap = {
@@ -30,6 +31,7 @@ describe('eventsStore', () => {
 
     // mock up$ and down$ events
     const clear$ = testScheduler.createHotObservable(clearM);
+    const getSample$ = testScheduler.createHotObservable(getSampleM);
     const getPredefinedTypes$ = testScheduler.createHotObservable(loadPredefinedTypesM, {
       1: {
         storageContainers: [],
@@ -45,7 +47,8 @@ describe('eventsStore', () => {
     const state$ = sampleStore$({
       clear$,
       getPredefinedTypes$,
-      getSampleTypes$
+      getSampleTypes$,
+      getSample$
     });
 
     // assertion

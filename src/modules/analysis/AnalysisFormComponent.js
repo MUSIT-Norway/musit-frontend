@@ -380,8 +380,8 @@ const AnalysisForm = ({
                     }}
                   />
                 </div>
-              </div>
 
+              </div>
               <div className="form-group">
                 <label className="control-label col-md-2" htmlFor="restrictionCause">
                   Årsak til klausulering:
@@ -545,11 +545,15 @@ export function submitForm(
         }
       : null;
 
-    const result = {
-      extRef: form.externalSource.value ? [form.externalSource.value] : null,
-      comment: form.comments.value,
-      type: 'GenericResult'
-    };
+    const externalSource = form.externalSource.value;
+    const comments = form.comments.value;
+    const result = externalSource || comments
+      ? {
+          extRef: externalSource ? [externalSource] : null,
+          comment: comments,
+          type: 'GenericResult'
+        }
+      : null;
     const doneBy = form.persons
       ? form.persons.rawValue.find(p => p.role === 'doneBy')
       : undefined;
@@ -567,11 +571,15 @@ export function submitForm(
       completedBy: null,
       completedDate: null,
       restriction,
-      objectIds: location && location.state ? location.state.map(a => a.uuid) : [],
+      objects: location && location.state
+        ? location.state.map(obj => ({
+            objectId: obj.objectId || obj.uuid,
+            objectType: obj.objectType
+          }))
+        : [],
       caseNumbers: form.caseNumbers.value,
       status: form.status.value,
       reason: form.reason.value,
-      result,
       type: 'AnalysisCollection'
     };
 
@@ -586,14 +594,18 @@ export function submitForm(
         appSession,
         analysisId
       );
-      return saveResult({
-        token: appSession.accessToken,
-        museumId: appSession.museumId,
-        result,
-        analysisId
-      }).then(() => {
+      if (result) {
+        return saveResult({
+          token: appSession.accessToken,
+          museumId: appSession.museumId,
+          result,
+          analysisId
+        }).then(() => {
+          goToUrl(url);
+        });
+      } else {
         goToUrl(url);
-      });
+      }
     });
   };
 }

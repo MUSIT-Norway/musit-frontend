@@ -12,6 +12,7 @@ import type { SampleTypesObject, SampleType } from '../../types/sampleTypes';
 import FontAwesome from 'react-fontawesome';
 import type { AppSession } from '../../types/appSession';
 import type { ObjectData } from '../../types/object';
+import { getSampleType, getSampleSubType } from '../../shared/sampleTypesAndSubTypes';
 
 type Props = {
   samples: Samples,
@@ -23,37 +24,6 @@ type Props = {
   objectData: ObjectData,
   sampleTypes: SampleTypesObject,
   sampleStatus: SampleStatus
-};
-
-const getSampleType = (
-  sampleTypes: SampleTypesObject,
-  sampleTypesId: number,
-  appSession: AppSession,
-  subType: boolean = false
-) => {
-  if (sampleTypes && sampleTypes.sampleTypes && sampleTypesId) {
-    const sampleTypeFound: ?SampleType = sampleTypes.sampleTypes.find(
-      f => f.sampleTypeId === sampleTypesId
-    );
-    if (sampleTypeFound) {
-      if (subType) {
-        return appSession.language.isEn
-          ? sampleTypeFound.enSampleSubType
-          : sampleTypeFound.noSampleSubType;
-      }
-      return appSession.language.isEn
-        ? sampleTypeFound.enSampleType
-        : sampleTypeFound.noSampleType;
-    }
-  }
-  return '';
-};
-const getSampleSubType = (
-  sampleTypes: SampleTypesObject,
-  sampleTypesId: number,
-  appSession: AppSession
-) => {
-  return getSampleType(sampleTypes, sampleTypesId, appSession, true);
 };
 
 const pickObjectParams = (
