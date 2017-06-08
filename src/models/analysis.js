@@ -336,7 +336,7 @@ MusitAnalysis.getAnalysisWithDetails = (
             return {
               ...analysis,
               ...actorNames,
-              restriction: { ...analysis.restriction, ...actorNames.restriction}
+              restriction: { ...analysis.restriction, ...actorNames.restriction }
             };
           }
           return {
