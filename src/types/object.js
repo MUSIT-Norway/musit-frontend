@@ -21,4 +21,4 @@ export type ObjectProps = {
   callBack: any
 };
 
-export type objectTypeAndId = Array<{ objectType: 'collection' | 'sample', id: string }>;
+export type objectTypeAndId = Array<{ objectType: string, id: string }>;

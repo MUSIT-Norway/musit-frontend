@@ -84,10 +84,9 @@ class MusitObject {
   static moveSingleObject: (
     ajaxPut: AjaxPut
   ) => (props: {
-    id: string,
     destination: number,
     doneBy: string,
-    objectType?: objectTypeAndId,
+    objectTypeAndId?: objectTypeAndId,
     museumId: number,
     token: string,
     callback?: Callback
@@ -149,7 +148,7 @@ MusitObject.moveObjects = (
       .then(objects =>
         objects.forEach(obj =>
           MusitObject.moveSingleObject(ajaxPut)({
-            id: obj.id,
+            objectTypeAndId: [{ objectType: obj.objectType, id: obj.id }],
             destination,
             doneBy,
             museumId,
@@ -160,7 +159,7 @@ MusitObject.moveObjects = (
       );
   } else {
     MusitObject.moveSingleObject(ajaxPut)({
-      id: object.uuid,
+      objectTypeAndId: [{ objectType: object.objectType, id: object.uuid }],
       destination,
       doneBy,
       museumId,
@@ -253,15 +252,14 @@ MusitObject.getObjects = (ajaxGet = simpleGet) => ({
 };
 
 MusitObject.moveSingleObject = (ajaxPut = simplePut) => ({
-  id,
   destination,
   doneBy,
-  objectType,
+  objectTypeAndId,
   museumId,
   token,
   callback
 }) => {
-  const data = { doneBy, destination, items: objectType };
+  const data = { doneBy, destination, items: objectTypeAndId };
   return ajaxPut(
     Config.magasin.urls.api.storagefacility.moveObject(museumId),
     data,
