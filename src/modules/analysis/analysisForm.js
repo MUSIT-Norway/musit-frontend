@@ -14,7 +14,7 @@ export const fieldsArray = [
   getArrField('persons'),
   getStrField('registeredBy', null, false),
   getStrField('registeredByName', null, false),
-  getNumberField('registeredDate', null, false),
+  getStrField('registeredDate', null, false),
   getStrField('responsible'),
   getStrField('administrator'),
   getStrField('completedBy'),
@@ -43,7 +43,7 @@ export const fieldsArray = [
   getStrField('analysisTypeCategory'),
   getStrField('updatedBy', null, false),
   getStrField('updatedByName', null, false),
-  getNumberField('updatedDate', null, false),
+  getStrField('updatedDate', null, false),
   getNumberField('status', 1, true, 1, 4, 0)
 ];
 

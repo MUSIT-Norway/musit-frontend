@@ -5,7 +5,7 @@ export type ObjectData = {
   nodeId: string,
   mainObjectId: number,
   uuid: string,
-  objectId: number,
+  objectId: ?number,
   objectUUID: string,
   objectType: string,
   subNo: string,

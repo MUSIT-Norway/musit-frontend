@@ -563,8 +563,11 @@ export function submitForm(
       completedBy: null,
       completedDate: null,
       restriction,
-      objectIds: location && location.state
-        ? location.state.map(a => a.objectId || a.uuid)
+      objects: location && location.state
+        ? location.state.map(obj => ({
+            objectId: obj.objectId || obj.uuid,
+            objectType: obj.objectType
+          }))
         : [],
       caseNumbers: form.caseNumbers.value,
       status: form.status.value,
