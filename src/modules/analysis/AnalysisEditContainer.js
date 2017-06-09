@@ -7,7 +7,7 @@ import {
   setLoadingAnalysisTypes$,
   loadAnalysisTypes$
 } from '../../stores/predefined';
-import store$, { getAnalysisTypes$, getAnalysis$, setLoading$ } from './analysisStore';
+import store$, { getAnalysis$, setLoading$ } from './analysisStore';
 import PropTypes from 'prop-types';
 import Analysis from '../../models/analysis';
 import { makeUrlAware } from '../../stores/appSession';
