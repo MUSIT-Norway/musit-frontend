@@ -133,6 +133,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               Plassering
             </th>
             <th
+              onClick={[Function]}
               style={
                 Object {
                   "textAlign": "right",
@@ -141,7 +142,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
             >
               <a
                 href=""
-                onClick={[Function]}
                 title="Legg til alle i plukklisten"
               >
                 <FontAwesome
@@ -234,6 +234,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               />
             </td>
             <td
+              onClick={[Function]}
               style={
                 Object {
                   "textAlign": "right",
@@ -241,7 +242,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               }
             >
               <a
-                onClick={[Function]}
                 title="Legg til plukklisten"
               >
                 <FontAwesome
@@ -333,6 +333,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               />
             </td>
             <td
+              onClick={[Function]}
               style={
                 Object {
                   "textAlign": "right",
@@ -340,7 +341,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               }
             >
               <a
-                onClick={[Function]}
                 title="Legg til plukklisten"
               >
                 <FontAwesome
@@ -432,6 +432,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               />
             </td>
             <td
+              onClick={[Function]}
               style={
                 Object {
                   "textAlign": "right",
@@ -439,7 +440,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               }
             >
               <a
-                onClick={[Function]}
                 title="Legg til plukklisten"
               >
                 <FontAwesome
@@ -531,6 +531,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               />
             </td>
             <td
+              onClick={[Function]}
               style={
                 Object {
                   "textAlign": "right",
@@ -538,7 +539,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               }
             >
               <a
-                onClick={[Function]}
                 title="Legg til plukklisten"
               >
                 <FontAwesome
@@ -630,6 +630,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               />
             </td>
             <td
+              onClick={[Function]}
               style={
                 Object {
                   "textAlign": "right",
@@ -637,7 +638,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               }
             >
               <a
-                onClick={[Function]}
                 title="Legg til plukklisten"
               >
                 <FontAwesome
@@ -729,6 +729,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               />
             </td>
             <td
+              onClick={[Function]}
               style={
                 Object {
                   "textAlign": "right",
@@ -736,7 +737,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               }
             >
               <a
-                onClick={[Function]}
                 title="Legg til plukklisten"
               >
                 <FontAwesome
@@ -828,6 +828,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               />
             </td>
             <td
+              onClick={[Function]}
               style={
                 Object {
                   "textAlign": "right",
@@ -835,7 +836,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               }
             >
               <a
-                onClick={[Function]}
                 title="Legg til plukklisten"
               >
                 <FontAwesome
@@ -927,6 +927,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               />
             </td>
             <td
+              onClick={[Function]}
               style={
                 Object {
                   "textAlign": "right",
@@ -934,7 +935,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               }
             >
               <a
-                onClick={[Function]}
                 title="Legg til plukklisten"
               >
                 <FontAwesome
@@ -1026,6 +1026,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               />
             </td>
             <td
+              onClick={[Function]}
               style={
                 Object {
                   "textAlign": "right",
@@ -1033,7 +1034,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               }
             >
               <a
-                onClick={[Function]}
                 title="Legg til plukklisten"
               >
                 <FontAwesome
@@ -1125,6 +1125,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               />
             </td>
             <td
+              onClick={[Function]}
               style={
                 Object {
                   "textAlign": "right",
@@ -1132,7 +1133,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               }
             >
               <a
-                onClick={[Function]}
                 title="Legg til plukklisten"
               >
                 <FontAwesome
@@ -1224,6 +1224,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               />
             </td>
             <td
+              onClick={[Function]}
               style={
                 Object {
                   "textAlign": "right",
@@ -1231,7 +1232,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               }
             >
               <a
-                onClick={[Function]}
                 title="Legg til plukklisten"
               >
                 <FontAwesome
@@ -1323,6 +1323,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               />
             </td>
             <td
+              onClick={[Function]}
               style={
                 Object {
                   "textAlign": "right",
@@ -1330,7 +1331,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               }
             >
               <a
-                onClick={[Function]}
                 title="Legg til plukklisten"
               >
                 <FontAwesome
@@ -1422,6 +1422,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               />
             </td>
             <td
+              onClick={[Function]}
               style={
                 Object {
                   "textAlign": "right",
@@ -1429,7 +1430,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               }
             >
               <a
-                onClick={[Function]}
                 title="Legg til plukklisten"
               >
                 <FontAwesome
@@ -1521,6 +1521,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               />
             </td>
             <td
+              onClick={[Function]}
               style={
                 Object {
                   "textAlign": "right",
@@ -1528,7 +1529,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               }
             >
               <a
-                onClick={[Function]}
                 title="Legg til plukklisten"
               >
                 <FontAwesome
@@ -1620,6 +1620,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               />
             </td>
             <td
+              onClick={[Function]}
               style={
                 Object {
                   "textAlign": "right",
@@ -1627,7 +1628,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               }
             >
               <a
-                onClick={[Function]}
                 title="Legg til plukklisten"
               >
                 <FontAwesome
@@ -1719,6 +1719,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               />
             </td>
             <td
+              onClick={[Function]}
               style={
                 Object {
                   "textAlign": "right",
@@ -1726,7 +1727,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               }
             >
               <a
-                onClick={[Function]}
                 title="Legg til plukklisten"
               >
                 <FontAwesome
@@ -1818,6 +1818,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               />
             </td>
             <td
+              onClick={[Function]}
               style={
                 Object {
                   "textAlign": "right",
@@ -1825,7 +1826,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               }
             >
               <a
-                onClick={[Function]}
                 title="Legg til plukklisten"
               >
                 <FontAwesome
@@ -1917,6 +1917,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               />
             </td>
             <td
+              onClick={[Function]}
               style={
                 Object {
                   "textAlign": "right",
@@ -1924,7 +1925,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               }
             >
               <a
-                onClick={[Function]}
                 title="Legg til plukklisten"
               >
                 <FontAwesome
@@ -2016,6 +2016,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               />
             </td>
             <td
+              onClick={[Function]}
               style={
                 Object {
                   "textAlign": "right",
@@ -2023,7 +2024,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               }
             >
               <a
-                onClick={[Function]}
                 title="Legg til plukklisten"
               >
                 <FontAwesome
@@ -2115,6 +2115,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               />
             </td>
             <td
+              onClick={[Function]}
               style={
                 Object {
                   "textAlign": "right",
@@ -2122,7 +2123,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               }
             >
               <a
-                onClick={[Function]}
                 title="Legg til plukklisten"
               >
                 <FontAwesome

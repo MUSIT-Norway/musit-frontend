@@ -80,23 +80,22 @@ export class ObjectSearchComponent extends React.Component {
                     <th>{I18n.t('musit.objectsearch.subNo.label')}</th>
                     <th>{I18n.t('musit.objectsearch.term.label')}</th>
                     <th>{I18n.t('musit.objectsearch.location.label')}</th>
-                    <th style={{ textAlign: 'right' }}>
-                      <a
-                        href=""
-                        onClick={e => {
-                          e.preventDefault();
-                          store.data.matches.forEach(obj =>
-                            this.props.pickObject({
-                              object: obj,
-                              breadcrumb: obj.breadcrumb,
-                              museumId: this.props.appSession.museumId,
-                              collectionId: this.props.appSession.collectionId,
-                              token: this.props.appSession.accessToken
-                            })
-                          );
-                        }}
-                        title={I18n.t('musit.objectsearch.addAllToPickList')}
-                      >
+                    <th
+                      style={{ textAlign: 'right' }}
+                      onClick={e => {
+                        e.preventDefault();
+                        store.data.matches.forEach(obj =>
+                          this.props.pickObject({
+                            object: obj,
+                            breadcrumb: obj.breadcrumb,
+                            museumId: this.props.appSession.museumId,
+                            collectionId: this.props.appSession.collectionId,
+                            token: this.props.appSession.accessToken
+                          })
+                        );
+                      }}
+                    >
+                      <a href="" title={I18n.t('musit.objectsearch.addAllToPickList')}>
                         <FontAwesome style={{ fontSize: '1.3em' }} name="shopping-cart" />
                       </a>
                     </th>
@@ -148,21 +147,21 @@ export class ObjectSearchComponent extends React.Component {
                               }}
                             />}
                         </td>
-                        <td style={{ textAlign: 'right' }}>
+                        <td
+                          style={{ textAlign: 'right' }}
+                          onClick={e => {
+                            this.props.pickObject({
+                              object: data,
+                              breadcrumb: data.breadcrumb,
+                              museumId: this.props.appSession.museumId,
+                              collectionId: this.props.appSession.collectionId,
+                              token: this.props.appSession.accessToken
+                            });
+                            e.stopPropagation();
+                          }}
+                        >
                           {isMainObject &&
-                            <a
-                              onClick={e => {
-                                this.props.pickObject({
-                                  object: data,
-                                  breadcrumb: data.breadcrumb,
-                                  museumId: this.props.appSession.museumId,
-                                  collectionId: this.props.appSession.collectionId,
-                                  token: this.props.appSession.accessToken
-                                });
-                                e.stopPropagation();
-                              }}
-                              title={I18n.t('musit.objectsearch.addToPickList')}
-                            >
+                            <a title={I18n.t('musit.objectsearch.addToPickList')}>
                               {this.props.isItemAdded(data, this.props.pickList.objects)
                                 ? <FontAwesome
                                     style={{ fontSize: '1.3em', color: 'Gray' }}

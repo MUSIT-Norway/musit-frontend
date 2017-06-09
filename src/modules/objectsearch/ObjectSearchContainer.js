@@ -6,7 +6,7 @@ import objectSearchStore$, {
   searchForObjects$,
   onChangeField$
 } from './objectSearchStore';
-import { addObject$ } from '../../stores/pickList';
+import { toggleObject$ } from '../../stores/pickList';
 import { isItemAdded } from '../../stores/pickList';
 import flowRight from 'lodash/flowRight';
 import { makeUrlAware } from '../../stores/appSession';
@@ -27,7 +27,7 @@ const commands = {
 };
 
 const props = {
-  pickObject: MusitObject.pickObject(addObject$),
+  pickObject: MusitObject.pickObject(toggleObject$),
   isItemAdded,
   goTo: hashHistory.push
 };
