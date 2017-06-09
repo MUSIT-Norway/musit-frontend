@@ -4,7 +4,7 @@ import analysisAddForm from './analysisForm';
 import AnalysisFormComponent from './AnalysisFormComponent';
 import store$, { loadPredefinedTypes$ } from './analysisStore';
 import Analysis from '../../models/analysis';
-import { makeUrlAware } from '../app/appSession';
+import { makeUrlAware } from '../../stores/appSession';
 import flowRight from 'lodash/flowRight';
 import mount from '../../shared/mount';
 import { toPromise } from '../../shared/util';

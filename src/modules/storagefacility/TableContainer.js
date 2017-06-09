@@ -1,15 +1,15 @@
 import { Observable } from 'rxjs';
 import inject from 'react-rxjs/dist/RxInject';
-import { toggleNode$, toggleObject$ } from '../app/pickList';
+import { toggleNode$, toggleObject$ } from '../../stores/pickList';
 import { showConfirm, showModal } from '../../shared/modal';
-import { makeUrlAware } from '../app/appSession';
+import { makeUrlAware } from '../../stores/appSession';
 import {
   loadChildren$,
   loadNode$,
   updateMoveDialog
 } from '../movedialog/moveDialogStore';
-import { isItemAdded } from '../app/pickList';
-import connectToScanner from '../app/scanner';
+import { isItemAdded } from '../../stores/pickList';
+import connectToScanner from '../../stores/scanner';
 import flowRight from 'lodash/flowRight';
 import { emitError, emitSuccess } from '../../shared/errors';
 import TableComponent from './TableComponent';

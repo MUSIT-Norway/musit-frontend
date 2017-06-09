@@ -2,24 +2,30 @@
 import React from 'react';
 import { I18n } from 'react-i18nify';
 import Config from '../../config';
-import type { AppSession } from 'types/appSession';
-import type { ObjectData } from 'types/object';
+import type { AppSession } from '../../types/appSession';
+import type { ObjectData } from '../../types/object';
+import type { SampleData } from '../../types/samples';
 import type { FormData } from './types/form';
 import type { Store } from './types/store';
-import PersonRoleDate from '../../components/samples/personRoleDate';
+import PersonRoleDate from '../../components/person/PersonRoleDate';
 import AddButton from '../../components/AddButton';
-import { Table } from 'reactable';
 import MetaInformation from '../../components/metainfo';
 import { ActorSuggest } from '../../components/suggest/ActorSuggest';
 import DatePicker from '../../components/DatePicker';
 import { DATE_FORMAT_DISPLAY, formatISOString } from '../../shared/util';
-type Location = { state?: Array<ObjectData> };
+import ObjectTable from '../objects/components/ObjectTable';
+
+type Location = {
+  state?: Array<ObjectData & SampleData & { sampleType: string, sampleSubType: string }>
+};
 
 type SaveAnalysisFn = (props: {
   museumId: number,
   data: mixed,
   token: string
 }) => Promise<*>;
+
+type Predefined = { analysisTypes: Array<any> };
 
 type Props = {
   form: FormData,
@@ -29,6 +35,7 @@ type Props = {
   saveAnalysis: SaveAnalysisFn,
   saveResult: Function,
   location: Location,
+  predefined: Predefined,
   goToUrl: (s: string) => void,
   goBack: () => void
 };
@@ -72,6 +79,7 @@ const AnalysisForm = ({
   form,
   updateForm,
   store,
+  predefined,
   saveAnalysis,
   saveResult,
   appSession,
@@ -79,6 +87,9 @@ const AnalysisForm = ({
   goToUrl,
   goBack
 }: Props) => {
+  const objectData = location && location.state
+    ? location.state
+    : store.analysis ? store.analysis.events : [];
   return (
     <div>
       <div className="page-header">
@@ -142,7 +153,7 @@ const AnalysisForm = ({
               </div>
             : <div className="col-md-5">
                 <p className="form-control-static">
-                  {getAnalysisTypeTerm(store, appSession)}
+                  {getAnalysisTypeTerm(store, predefined, appSession)}
                 </p>
               </div>}
         </div>
@@ -253,28 +264,15 @@ const AnalysisForm = ({
         <hr />
         <div className="well">
           <div className="form-group">
-            <label className="control-label col-md-2" htmlFor="objects">
-              Objekter:
+            <label className="col-md-12" htmlFor="objects">
+              Objekter/prøver:
             </label>
-            <div className="col-md-10">
-              <Table
-                id="objects"
-                className="table"
-                columns={[
-                  { key: 'museumNo', label: 'Museumsnr' },
-                  { key: 'subNo', label: 'Unr' },
-                  { key: 'term', label: 'Term/artsnavn' }
-                ]}
-                data={
-                  location && location.state
-                    ? location.state || []
-                    : store.analysis && store.analysis.events
-                }
-                sortable={['museumNumber', 'subNumber', 'term']}
-                noDataText="Ingen objekter"
-              />
+          </div>
+          <div className="form-group">
+            <div className="col-md-12 col-md-offset-0">
+              <ObjectTable objects={objectData} />
             </div>
-            <div className="col-md-11 col-md-offset-2">
+            <div className="col-md-11 col-md-offset-0">
               <AddButton label="Legg til object" />
             </div>
           </div>
@@ -381,7 +379,6 @@ const AnalysisForm = ({
                     }}
                   />
                 </div>
-
               </div>
               <div className="form-group">
                 <label className="control-label col-md-2" htmlFor="restrictionCause">
@@ -449,7 +446,7 @@ const AnalysisForm = ({
           onClick={submitForm(
             appSession,
             form,
-            location,
+            getObjects(location.state),
             saveAnalysis,
             saveResult,
             goToUrl
@@ -471,6 +468,17 @@ const AnalysisForm = ({
     </div>
   );
 };
+
+type ObjectWithUuidAndType = { objectId: string, objectType: string };
+
+function getObjects(objects): Array<ObjectWithUuidAndType> {
+  return objects
+    ? objects.map(obj => ({
+        objectId: obj.objectId || obj.uuid,
+        objectType: obj.objectType
+      }))
+    : [];
+}
 
 export function updateFormField(field: string, updateForm: Function) {
   return (e: { target: { value: string } }) =>
@@ -496,10 +504,14 @@ export function updateBooleanField(b: boolean) {
     });
 }
 
-export function getAnalysisTypeTerm(store: Store, appSession: AppSession) {
-  if (store.analysis && store.analysis.analysisTypeId && store.analysisTypes) {
+export function getAnalysisTypeTerm(
+  store: Store,
+  predefined: Predefined,
+  appSession: AppSession
+) {
+  if (store.analysis && store.analysis.analysisTypeId && predefined.analysisTypes) {
     const analysisTypeId = store.analysis.analysisTypeId;
-    const foundType = store.analysisTypes.find(type => type.id === analysisTypeId);
+    const foundType = predefined.analysisTypes.find(type => type.id === analysisTypeId);
     if (foundType) {
       return appSession.language.isEn ? foundType.enName : foundType.noName;
     }
@@ -510,7 +522,7 @@ export function getAnalysisTypeTerm(store: Store, appSession: AppSession) {
 export function submitForm(
   appSession: AppSession,
   form: FormData,
-  location?: Location,
+  objects: Array<ObjectWithUuidAndType>,
   saveAnalysisEvent: SaveAnalysisFn,
   saveResult: Function,
   goToUrl: (s: string) => void
@@ -553,12 +565,7 @@ export function submitForm(
       completedBy: null,
       completedDate: null,
       restriction,
-      objects: location && location.state
-        ? location.state.map(obj => ({
-            objectId: obj.objectId || obj.uuid,
-            objectType: obj.objectType
-          }))
-        : [],
+      objects,
       caseNumbers: form.caseNumbers.value,
       status: form.status.value,
       reason: form.reason.value,

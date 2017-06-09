@@ -3,7 +3,7 @@ import 'rxjs/add/observable/dom/ajax';
 import { hashHistory } from 'react-router';
 import { emitError } from './errors';
 import { closeModal } from './modal';
-import { setAccessToken$ } from '../modules/app/appSession';
+import { setAccessToken$ } from '../stores/appSession';
 
 export const onComplete = callback => response => {
   if (callback && callback.onComplete) {

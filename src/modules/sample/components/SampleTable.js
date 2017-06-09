@@ -7,12 +7,12 @@ import type {
   SampleData,
   SampleStatus,
   SampleStatusData
-} from '../../types/samples';
-import type { SampleTypesObject, SampleType } from '../../types/sampleTypes';
+} from '../../../types/samples';
+import type { SampleTypesObject } from '../../../types/sampleTypes';
 import FontAwesome from 'react-fontawesome';
-import type { AppSession } from '../../types/appSession';
-import type { ObjectData } from '../../types/object';
-import { getSampleType, getSampleSubType } from '../../shared/sampleTypesAndSubTypes';
+import type { AppSession } from '../../../types/appSession';
+import type { ObjectData } from '../../../types/object';
+import { getSampleType, getSampleSubType } from '../shared/types';
 
 type Props = {
   samples: Samples,

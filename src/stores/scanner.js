@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import omit from 'lodash/omit';
-import MusitObject from '../../models/object';
-import MusitNode from '../../models/node';
+import MusitObject from '../models/object';
+import MusitNode from '../models/node';
 
 export const initialState = { buffer: '', code: '', uuid: false, number: false };
 

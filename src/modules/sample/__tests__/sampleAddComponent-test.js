@@ -81,8 +81,8 @@ describe('AnalysisSampleFormPageAdd', () => {
               valid: true
             }
           },
-          subTypeValue: {
-            name: 'subTypeValue',
+          sampleSubType: {
+            name: 'sampleSubType',
             rawValue: 'Muskel',
             status: {
               valid: true

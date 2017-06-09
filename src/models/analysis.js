@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import moment from 'moment';
 import type { Field } from '../forms/form';
 import type { Callback, AjaxGet, AjaxPost, AjaxPut } from './types/ajax';
+import flatten from 'lodash/flatten';
 import { DATE_FORMAT_DISPLAY } from '../shared/util';
 
 export type Restriction = {
@@ -104,7 +105,8 @@ class MusitAnalysis {
     museumId: number,
     collectionId: string,
     token: string,
-    callback?: Callback
+    callback?: Callback,
+    sampleTypes: mixed
   }) => Observable;
 
   static getAnalysisTypes: (
@@ -178,7 +180,7 @@ MusitAnalysis.fromJsonToForm = (json, formDef) => {
   );
 
   let persons = [];
-  if (formValues.doneBy) {
+  if (json.doneBy) {
     persons = persons.concat([
       {
         name: json.doneByName,
@@ -189,7 +191,7 @@ MusitAnalysis.fromJsonToForm = (json, formDef) => {
     ]);
   }
 
-  if (formValues.responsible) {
+  if (json.responsible) {
     persons = persons.concat([
       {
         name: json.responsibleName,
@@ -303,18 +305,27 @@ function getEventObjectDetails(props, ajaxGet) {
       collectionId: props.collectionId,
       token: props.token
     };
-    return MusitObject.getObjectDetails(ajaxGet)(
-      params
-    ).flatMap(({ error, response }) => {
-      if (error) {
+    return MusitObject.getObjectDetails(ajaxGet)(params).flatMap(objRes => {
+      if (objRes.error) {
         return Sample.loadSample(ajaxGet)(params).flatMap(sample => {
           return MusitObject.getObjectDetails(ajaxGet)({
             ...params,
             id: sample.originatedObjectUuid
-          }).map(({ response }) => ({ ...sample, ...response }));
+          }).map(sampleObjectRes => {
+            const flattened = flatten(Object.values(props.sampleTypes));
+            const sampleType = flattened.find(
+              st => st.sampleTypeId === sample.sampleTypeId
+            );
+            return {
+              ...sample,
+              ...sampleObjectRes.response,
+              sampleType: sampleType.enSampleType,
+              sampleSubType: sampleType.enSampleSubType
+            };
+          });
         });
       }
-      return Observable.of(response);
+      return Observable.of(objRes.response);
     });
   };
 }
@@ -329,7 +340,7 @@ function zipObjectInfoWithEvents(analysis) {
       const od = arrayOfObjectDetails.find(objD => {
         return objD.objectId === e.objectId || objD.uuid === e.objectId;
       });
-      return od ? { ...e, term: od.term, museumNo: od.museumNo, subNo: od.subNo } : e;
+      return od ? { ...e, ...od } : e;
     });
     return { ...analysis, events: events };
   };

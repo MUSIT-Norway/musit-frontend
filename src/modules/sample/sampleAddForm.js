@@ -11,7 +11,7 @@ const note = getStrField('note', null, false);
 const size = getNumberField('size', null, false);
 const sizeUnit = getStrField('sizeUnit', null, false);
 const sampleType = getStrField('sampleType', null, false);
-const subTypeValue = getStrField('subTypeValue');
+const sampleSubType = getStrField('sampleSubType');
 const status = getNumberField('status', STATUS_INTACT_ID);
 const description = getStrField('description', null, false);
 const treatment = getStrField('treatment', null, false);
@@ -28,7 +28,7 @@ const fields = [
   externalIdSource,
   description,
   storageMedium,
-  subTypeValue,
+  sampleSubType,
   sampleType,
   leftoverSample,
   sampleId,

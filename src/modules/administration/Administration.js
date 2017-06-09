@@ -6,7 +6,7 @@ import Config from '../../config';
 import inject from 'react-rxjs/dist/RxInject';
 import { hashHistory } from 'react-router';
 import flowRight from 'lodash/flowRight';
-import { makeUrlAware } from '../app/appSession';
+import { makeUrlAware } from '../../stores/appSession';
 import type { AppSession } from 'types/appSession';
 
 type Props = {

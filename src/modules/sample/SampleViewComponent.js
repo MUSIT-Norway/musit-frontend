@@ -26,6 +26,8 @@ export type ClickEvents = {
   ) => (e: { preventDefault: Function }) => void,
   clickCreateAnalysis: (
     appSession: AppSession,
+    sample: SampleData,
+    form: FormDetails,
     object: mixed
   ) => (e: { preventDefault: Function }) => void
 };
@@ -50,7 +52,7 @@ export default function SampleViewComponent({
       <div className="pull-right">
         <button
           className="btn-info"
-          onClick={clickCreateAnalysis(appSession, { ...objectData, ...store.sample })}
+          onClick={clickCreateAnalysis(appSession, store.sample, form, objectData)}
         >
           Opprett analyse
         </button>
@@ -134,7 +136,10 @@ export default function SampleViewComponent({
           </p>
         </div>
       </div>
-      <ReadOnlySampleType sampleType={form.sampleType} subTypeValue={form.subTypeValue} />
+      <ReadOnlySampleType
+        sampleType={form.sampleType}
+        subTypeValue={form.sampleSubType}
+      />
       <div className="form-group">
         <label className="control-label col-md-2">Beskrivelse av prøve:</label>
         <div className="col-md-8">

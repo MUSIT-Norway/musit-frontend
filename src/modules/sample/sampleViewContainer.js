@@ -5,10 +5,10 @@ import type { ClickEvents } from './SampleViewComponent';
 import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
 import mount from '../../shared/mount';
-import { makeUrlAware } from '../app/appSession';
+import { getSampleType } from '../../models/sample';
+import { makeUrlAware } from '../../stores/appSession';
 import flowRight from 'lodash/flowRight';
 import store$, { getPredefinedTypes$, getSample$ } from './sampleStore';
-import flatten from 'lodash/flatten';
 import moment from 'moment';
 import { hashHistory } from 'react-router';
 import Config from '../../config';
@@ -44,12 +44,25 @@ export function clickEditSample(
   };
 }
 
-export function clickCreateAnalysis(appSession, objectData, goTo = hashHistory.push) {
+export function clickCreateAnalysis(
+  appSession,
+  sample,
+  form,
+  objectData,
+  goTo = hashHistory.push
+) {
   return e => {
     e.preventDefault();
     goTo({
       pathname: Config.magasin.urls.client.analysis.addAnalysis(appSession),
-      state: [objectData]
+      state: [
+        {
+          ...objectData,
+          ...sample,
+          sampleType: form.sampleType.value,
+          sampleSubType: form.sampleSubType.value
+        }
+      ]
     });
   };
 }
@@ -75,9 +88,7 @@ export function getPersonsFromResponse(response) {
 }
 
 export function convertSample(sample, sampleTypes) {
-  const sampleType = flatten(Object.values(sampleTypes)).find(
-    subType => sample.sampleTypeId === subType.sampleTypeId
-  );
+  const sampleType = getSampleType(sample.sampleTypeId, sampleTypes);
   const formData = {};
   formData.persons = {
     name: 'persons',
@@ -103,8 +114,8 @@ export function convertSample(sample, sampleTypes) {
     name: 'sampleType',
     defaultValue: sampleType ? sampleType.enSampleType : null
   };
-  formData.subTypeValue = {
-    name: 'subTypeValue',
+  formData.sampleSubType = {
+    name: 'sampleSubType',
     defaultValue: sampleType
       ? sampleType.enSampleSubType || sampleType.enSampleType
       : null

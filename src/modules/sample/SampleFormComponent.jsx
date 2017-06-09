@@ -1,12 +1,12 @@
 // @flow
 import React  from 'react';
 import Config from '../../config';
-import PersonRoleDate from '../../components/samples/personRoleDate';
+import PersonRoleDate from '../../components/person/PersonRoleDate';
 import Sample from '../../models/sample';
 import type { ObjectData } from '../../types/object';
 import type { AppSession } from '../../types/appSession';
 import { hashHistory } from 'react-router';
-import type { Person } from '../../components/samples/personRoleDate';
+import type { Person } from '../../components/person/PersonRoleDate';
 import type { FormDetails } from './types/form';
 import ValidatedFormGroup from '../../forms/components/ValidatedFormGroup';
 import FieldCheckBox from '../../forms/components/FieldCheckBox';
@@ -125,7 +125,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
           />
         </ValidatedFormGroup>
         {canEditSampleType ?
-          <ValidatedFormGroup fields={[form.sampleType, form.subTypeValue]}>
+          <ValidatedFormGroup fields={[form.sampleType, form.sampleSubType]}>
             <FieldDropDown
               field={form.sampleType}
               title="Prøvetype:"
@@ -133,11 +133,11 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
               onChange={(obj) => {
                 if (store.sampleTypes && store.sampleTypes[obj.rawValue] && store.sampleTypes[obj.rawValue].length === 1) {
                   updateForm({
-                    name: form.subTypeValue.name,
+                    name: form.sampleSubType.name,
                     rawValue: sampleTypeDisplayName(store.sampleTypes[obj.rawValue][0])
                   });
                 } else {
-                  updateForm({name: form.subTypeValue.name, rawValue: ''});
+                  updateForm({name: form.sampleSubType.name, rawValue: ''});
                 }
                 updateForm(obj);
               }}
@@ -145,7 +145,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
             />
             {form.sampleType.rawValue && form.sampleType.rawValue.trim().length > 0 && store.sampleTypes && store.sampleTypes[form.sampleType.rawValue].length > 1 &&
             <FieldDropDown
-              field={form.subTypeValue}
+              field={form.sampleSubType}
               title="Prøveundertype:"
               defaultOption="Velg undertype"
               valueFn={sampleTypeDisplayName}
@@ -156,7 +156,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
             }
           </ValidatedFormGroup>
           :
-          <ReadOnlySampleType sampleType={form.sampleType} subTypeValue={form.subTypeValue} />
+          <ReadOnlySampleType sampleType={form.sampleType} subTypeValue={form.sampleSubType} />
         }
         <ValidatedFormGroup fields={[form.description]}>
           <FieldTextArea
@@ -298,7 +298,7 @@ function submitSample(appSession: AppSession, store: Store, form: FormDetails, o
   const persons = form.persons.rawValue;
   const tmpData = {...myReduce(form), ...reducePersons(persons)};
   tmpData.sampleTypeId = store.sampleTypes
-    ? getSampleTypeId(store.sampleTypes, form.subTypeValue.value)
+    ? getSampleTypeId(store.sampleTypes, form.sampleSubType.value)
     : null;
   tmpData.isExtracted = true;
   tmpData.parentObject = { 

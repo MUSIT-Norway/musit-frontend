@@ -8,19 +8,31 @@ import { Table } from 'reactable';
 import MetaInformation from '../../components/metainfo';
 import Config from '../../config';
 import moment from 'moment';
+import ObjectTable from '../objects/components/ObjectTable';
+import AddButton from '../../components/AddButton';
 
 type Params = { analysisId: string };
+
+type Predefined = { analysisTypes: Array<any> };
 
 type Props = {
   form: FormData,
   store: Store,
   appSession: AppSession,
+  predefined: Predefined,
   params: Params,
   goToUrl: (s: string) => void,
   goBack: () => void
 };
 
-const AnalysisView = ({ form, store, appSession, params, goToUrl }: Props) => (
+const AnalysisView = ({
+  form,
+  store,
+  predefined,
+  appSession,
+  params,
+  goToUrl
+}: Props) => (
   <div>
     <div className="page-header">
       <h1>
@@ -47,7 +59,7 @@ const AnalysisView = ({ form, store, appSession, params, goToUrl }: Props) => (
         <label className="control-label col-md-2" htmlFor="type">Type analyse:</label>
         <div className="col-md-10">
           <p className="form-control-static" id="type">
-            {getAnalysisTypeTerm(form, store, appSession)}
+            {getAnalysisTypeTerm(form, predefined, appSession)}
           </p>
         </div>
       </div>
@@ -83,7 +95,9 @@ const AnalysisView = ({ form, store, appSession, params, goToUrl }: Props) => (
       </div>
 
       <div className="form-group">
-        <label className="control-label col-md-2" htmlFor="caseNumber">Saksnummer:</label>
+        <label className="control-label col-md-2" htmlFor="caseNumber">
+          Saksnummer:
+        </label>
         <div className="col-md-10">
           <p className="form-control-static" id="caseNumber">
             {form.caseNumbers.value &&
@@ -134,19 +148,14 @@ const AnalysisView = ({ form, store, appSession, params, goToUrl }: Props) => (
       <hr />
       <div className="well">
         <div className="form-group">
-          <label className="control-label col-md-2" htmlFor="objects">
-            Objekter:
+          <label className="col-md-12" htmlFor="objects">
+            Objekter/prøver:
           </label>
-          <div className="col-md-10">
-            <Table
-              id="objects"
-              className="table"
-              columns={[
-                { key: 'museumNo', label: 'Museumsnr' },
-                { key: 'subNo', label: 'Unr' },
-                { key: 'term', label: 'Term/artsnavn' }
-              ]}
-              data={
+        </div>
+        <div className="form-group">
+          <div className="col-md-12 col-md-offset-0">
+            <ObjectTable
+              objects={
                 form.type.value === 'AnalysisCollection'
                   ? form.events.value
                   : [
@@ -157,9 +166,10 @@ const AnalysisView = ({ form, store, appSession, params, goToUrl }: Props) => (
                       }
                     ]
               }
-              sortable={['museumNumber', 'subNumber', 'term']}
-              noDataText="Ingen objekter"
             />
+          </div>
+          <div className="col-md-11 col-md-offset-0">
+            <AddButton label="Legg til object" />
           </div>
         </div>
         <hr />
@@ -306,9 +316,11 @@ function getPlaceText(actorId?: ?string): string {
   }
 }
 
-function getAnalysisTypeTerm(form, store, appSession) {
-  if (form.analysisTypeId.rawValue && store.analysisTypes) {
-    const foundType = store.analysisTypes.find(a => a.id === form.analysisTypeId.value);
+function getAnalysisTypeTerm(form, predefined: Predefined, appSession) {
+  if (form.analysisTypeId.rawValue && predefined.analysisTypes) {
+    const foundType = predefined.analysisTypes.find(
+      a => a.id === form.analysisTypeId.value
+    );
     if (foundType) {
       return appSession.isEn ? foundType.enName : foundType.noName;
     }

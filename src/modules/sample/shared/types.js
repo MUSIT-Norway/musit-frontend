@@ -1,7 +1,7 @@
 // @flow
 
-import type { SampleTypesObject, SampleTypes, SampleType } from '../types/sampleTypes';
-import type { AppSession } from '../types/appSession';
+import type { SampleTypesObject, SampleType } from '../../../types/sampleTypes';
+import type { AppSession } from '../../../types/appSession';
 
 const findSampleType = (sampleTypes: SampleTypesObject, sampleTypesId: number) =>
   sampleTypes.sampleTypes.find(f => f.sampleTypeId === sampleTypesId);

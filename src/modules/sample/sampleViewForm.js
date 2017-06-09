@@ -11,7 +11,7 @@ const note = getStrField('note');
 const size = getNumberField('size');
 const sizeUnit = getStrField('sizeUnit');
 const sampleType = getStrField('sampleType');
-const subTypeValue = getStrField('subTypeValue');
+const sampleSubType = getStrField('sampleSubType');
 const status = getNumberField('status');
 const description = getStrField('description');
 const treatment = getStrField('treatment');
@@ -36,7 +36,7 @@ const fields = [
   externalIdSource,
   description,
   storageMedium,
-  subTypeValue,
+  sampleSubType,
   sampleType,
   leftoverSample,
   sampleId,

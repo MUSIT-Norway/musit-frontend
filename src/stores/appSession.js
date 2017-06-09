@@ -1,16 +1,16 @@
 import { Observable } from 'rxjs';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
-import { simpleGet } from '../../shared/RxAjax';
-import Config from '../../config';
-import { getAccessToken } from '../../shared/token';
-import { emitError } from '../../shared/errors';
-import { getDisplayName } from '../../shared/util';
+import { simpleGet } from '../shared/RxAjax';
+import Config from '../config';
+import { getAccessToken } from '../shared/token';
+import { emitError } from '../shared/errors';
+import { getDisplayName } from '../shared/util';
 import { I18n } from 'react-i18nify';
 import orderBy from 'lodash/orderBy';
 import React from 'react';
 import PropTypes from 'prop-types';
 import isEqualWith from 'lodash/isEqualWith';
-import { getLanguage } from './../../shared/language';
+import { getLanguage } from '../shared/language';
 
 export const makeUrlAware = Component => {
   class Wrapper extends React.Component {

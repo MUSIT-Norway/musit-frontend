@@ -2,6 +2,7 @@
   "en": {
     "musit": {
       "objects":{
+        "noData": "No objects to display",
         "objectsView": {
           "eventTypes": {
             "AnalysisCollection": "Analysis",
@@ -702,6 +703,7 @@
   "no": {
     "musit": {
       "objects":{
+        "noData": "Ingen objekter å vise",
         "objectsView": {
           "eventTypes": {
             "AnalysisCollection": "Analyse",

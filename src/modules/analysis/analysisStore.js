@@ -8,6 +8,7 @@ export const getAnalysisTypes$ = createAction('getAnalysisTypes$').switchMap(
   MusitAnalysis.getAnalysisTypesForCollection()
 );
 
+export const setLoading$ = createAction('setLoading$');
 export const getAnalysis$ = createAction('getAnalysis$').switchMap(props =>
   MusitAnalysis.getAnalysisWithDetails()(props).do(props.onComplete)
 );
@@ -17,6 +18,7 @@ export const loadPredefinedTypes$ = createAction(
 ).switchMap(props => MusitAnalysis.loadPredefinedTypes()(props));
 
 type Actions = {
+  setLoading$: Subject,
   getAnalysis$: Subject,
   getAnalysisTypes$: Subject,
   loadPredefinedTypes$: Subject
@@ -24,9 +26,11 @@ type Actions = {
 
 export const reducer$ = (actions: Actions) =>
   Observable.merge(
+    actions.setLoading$.map(() => state => ({ ...state, loading: true })),
     actions.getAnalysis$.map(analysis => state => ({
       ...state,
-      analysis
+      analysis,
+      loading: false
     })),
     actions.getAnalysisTypes$.map(analysisTypes => state => ({
       ...state,
@@ -42,7 +46,12 @@ export const reducer$ = (actions: Actions) =>
   );
 
 export const store$ = (
-  actions$: Actions = { getAnalysisTypes$, getAnalysis$, loadPredefinedTypes$ }
+  actions$: Actions = {
+    getAnalysisTypes$,
+    setLoading$,
+    getAnalysis$,
+    loadPredefinedTypes$
+  }
 ) =>
   createStore(
     'analysisStore',

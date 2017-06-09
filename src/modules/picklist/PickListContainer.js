@@ -15,11 +15,11 @@ import {
   refreshObjects$,
   addNode$,
   addObject$
-} from '../app/pickList';
+} from '../../stores/pickList';
 import inject from 'react-rxjs/dist/RxInject';
 import { showModal } from '../../shared/modal';
-import connectToScanner from '../app/scanner';
-import { makeUrlAware } from '../app/appSession';
+import connectToScanner from '../../stores/scanner';
+import { makeUrlAware } from '../../stores/appSession';
 import flowRight from 'lodash/flowRight';
 import { PickListComponent } from './PickListComponent';
 import { I18n } from 'react-i18nify';

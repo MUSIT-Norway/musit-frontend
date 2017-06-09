@@ -6,8 +6,8 @@ import type { Samples, SampleStatus } from '../../types/samples';
 import type { Events } from '../../types/events';
 import type { AnalysisTypesObject } from '../../types/analysisTypes';
 import type { SampleTypesObject } from '../../types/sampleTypes';
-import EventTableComponent from '../../components/events/eventTableComponent';
-import SampleTableComponent from '../../components/samples/sampleTableComponent';
+import EventTable from '../events/components/EventTable';
+import SampleTable from '../sample/components/SampleTable';
 import { hashHistory } from 'react-router';
 import Config from '../../config';
 import type { AppSession } from '../../types/appSession';
@@ -69,7 +69,7 @@ export const ViewObjectComponent = ({
     </div>
     <Tabs defaultActiveKey={1} id="events">
       <Tab title="Hendelser" eventKey={1}>
-        <EventTableComponent
+        <EventTable
           events={events}
           analysisTypes={analysisTypes}
           sampleTypes={sampleTypes}
@@ -88,7 +88,7 @@ export const ViewObjectComponent = ({
         />
       </Tab>
       <Tab title="Prøver" eventKey={2}>
-        <SampleTableComponent
+        <SampleTable
           samples={samples}
           onClick={sample => {
             hashHistory.push({

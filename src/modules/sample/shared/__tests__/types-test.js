@@ -1,4 +1,4 @@
-import { getSampleType, getSampleSubType } from '../sampleTypesAndSubTypes';
+import { getSampleType, getSampleSubType } from '../types';
 
 const sampleTypes = {
   data: [],

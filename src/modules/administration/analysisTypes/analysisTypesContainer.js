@@ -5,7 +5,7 @@ import analysisTypesForm from './analysisTypesForm';
 import AnalysisTypesComponent from './AnalysisTypesComponent';
 import store$, { getAnalysisTypes$ } from './analysisTypesStore';
 import Analysis from '../../../models/analysis';
-import { makeUrlAware } from '../../app/appSession';
+import { makeUrlAware } from '../../../stores/appSession';
 import flowRight from 'lodash/flowRight';
 import mount from '../../../shared/mount';
 import { toPromise } from '../../../shared/util';

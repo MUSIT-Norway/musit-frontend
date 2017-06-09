@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
-import { getPath, customSortingStorageNodeType } from '../../shared/util';
-import MusitObject from '../../models/object';
-import MusitNode from '../../models/node';
+import { getPath, customSortingStorageNodeType } from '../shared/util';
+import MusitObject from '../models/object';
+import MusitNode from '../models/node';
 import orderBy from 'lodash/orderBy';
 import toLower from 'lodash/toLower';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';

@@ -6,7 +6,7 @@ import { formatFloatToString } from './../../shared/util';
 import { Observable } from 'rxjs';
 import store$, { loadKDReport$, clear$ } from './reportStore';
 import inject from 'react-rxjs/dist/RxInject';
-import { makeUrlAware } from '../app/appSession';
+import { makeUrlAware } from '../../stores/appSession';
 import flowRight from 'lodash/flowRight';
 
 export class KDReport extends Component {

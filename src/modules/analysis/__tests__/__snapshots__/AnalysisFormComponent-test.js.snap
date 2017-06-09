@@ -263,33 +263,20 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
         className="form-group"
       >
         <label
-          className="control-label col-md-2"
+          className="col-md-12"
           htmlFor="objects"
         >
-          Objekter:
+          Objekter/prøver:
         </label>
+      </div>
+      <div
+        className="form-group"
+      >
         <div
-          className="col-md-10"
+          className="col-md-12 col-md-offset-0"
         >
-          <Table
-            className="table"
-            columns={
-              Array [
-                Object {
-                  "key": "museumNo",
-                  "label": "Museumsnr",
-                },
-                Object {
-                  "key": "subNo",
-                  "label": "Unr",
-                },
-                Object {
-                  "key": "term",
-                  "label": "Term/artsnavn",
-                },
-              ]
-            }
-            data={
+          <ObjectTable
+            objects={
               Array [
                 Object {
                   "id": 1,
@@ -317,25 +304,10 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
                 },
               ]
             }
-            defaultSort={false}
-            defaultSortDescending={false}
-            filterBy=""
-            hideFilterInput={false}
-            id="objects"
-            itemsPerPage={0}
-            noDataText="Ingen objekter"
-            sortBy={false}
-            sortable={
-              Array [
-                "museumNumber",
-                "subNumber",
-                "term",
-              ]
-            }
           />
         </div>
         <div
-          className="col-md-11 col-md-offset-2"
+          className="col-md-11 col-md-offset-0"
         >
           <AddButton
             label="Legg til object"

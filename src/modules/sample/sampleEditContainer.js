@@ -8,9 +8,9 @@ import lifeCycle from '../../shared/mount';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { toPromise } from '../../shared/util';
 import Sample from '../../models/sample';
-import { makeUrlAware } from '../../modules/app/appSession';
+import { makeUrlAware } from '../../stores/appSession';
 import flowRight from 'lodash/flowRight';
-import store$, { getPredefinedTypes$ } from './sampleStore';
+import store$, { getPredefinedTypes$, getSample$ } from './sampleStore';
 import { onMount } from './sampleViewContainer';
 
 const { form$, loadForm$, updateForm$ } = sampleForm;
@@ -21,10 +21,9 @@ const data = {
   store$
 };
 
-const commands = { loadForm$, updateForm$, getPredefinedTypes$ };
+const commands = { loadForm$, updateForm$, getSample$, getPredefinedTypes$ };
 
 const props = {
-  getSample: toPromise(Sample.loadSample()),
   addSample: toPromise(Sample.editSample()),
   emitSuccess,
   emitError

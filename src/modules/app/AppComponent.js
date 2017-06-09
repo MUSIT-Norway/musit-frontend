@@ -6,18 +6,18 @@ import { hashHistory, IndexLink } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
 import { MenuItem, Nav, Navbar, NavDropdown, NavItem } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
-import MusitUserAccount from './UserAccount';
+import MusitUserAccount from './components/UserAccount';
 import './AppComponent.css';
 import Logo from './musitLogo.png';
 import LoginComponent from '../login/LoginComponent';
 import { emitError } from '../../shared/errors';
 import Loader from 'react-loader';
-import { loadAppSession$, setCollectionId$, setMuseumId$ } from '../app/appSession';
+import { loadAppSession$, setCollectionId$, setMuseumId$ } from '../../stores/appSession';
 import inject from 'react-rxjs/dist/RxInject';
 import {
   clearNodes$ as clearNodePicklist$,
   clearObjects$ as clearObjectPicklist$
-} from './pickList';
+} from '../../stores/pickList';
 import Config from '../../config';
 import { backendVersion, frontendVersion, VersionInfo } from '../../build';
 

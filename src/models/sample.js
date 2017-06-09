@@ -9,6 +9,7 @@ import uniq from 'lodash/uniq';
 import uniqBy from 'lodash/uniqBy';
 import MusitActor from '../models/actor';
 import moment from 'moment';
+import flatten from 'lodash/flatten';
 
 export type SampleStatus = {
   id: number,
@@ -237,6 +238,12 @@ Sample.loadSample = (ajaxGet = simpleGet, ajaxPost = simplePost) => ({
       });
     });
 };
+
+export function getSampleType(sampleTypeId: number, sampleTypesMap: mixed) {
+  return flatten(Object.values(sampleTypesMap)).find(
+    subType => sampleTypeId === subType.sampleTypeId
+  );
+}
 
 function getActorName(actors, actorId) {
   const actor = actors.find(a => MusitActor.hasActorId(a, actorId));

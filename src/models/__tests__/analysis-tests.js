@@ -48,7 +48,8 @@ describe('Analysis model', () => {
       token: '1234',
       id: 12345,
       collectionId: '00000000-0000-0000-0000-000000000000',
-      museumId: 99
+      museumId: 99,
+      sampleTypes: {}
     };
 
     const loadM = '-1----------';

@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
-import EventTableComponent from '../eventTableComponent';
+import EventTableComponent from '../components/EventTable';
 
 describe('EventTableComponent', () => {
   it('should render header, body and footer', () => {

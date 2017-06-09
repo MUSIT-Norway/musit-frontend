@@ -6,10 +6,10 @@ import objectSearchStore$, {
   searchForObjects$,
   onChangeField$
 } from './objectSearchStore';
-import { addObject$ } from '../app/pickList';
-import { isItemAdded } from '../app/pickList';
+import { addObject$ } from '../../stores/pickList';
+import { isItemAdded } from '../../stores/pickList';
 import flowRight from 'lodash/flowRight';
-import { makeUrlAware } from '../app/appSession';
+import { makeUrlAware } from '../../stores/appSession';
 import { hashHistory } from 'react-router';
 import ObjectSearchComponent from './ObjectSearchComponent';
 import MusitObject from '../../models/object';

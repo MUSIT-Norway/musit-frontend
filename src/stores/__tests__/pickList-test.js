@@ -1,11 +1,11 @@
 /* eslint-disable */
 import { Subject, Observable } from 'rxjs/Rx';
 import { store$, isItemAdded } from '../pickList';
-const diff = require('deep-diff').diff;
-import MusitObject from '../../../models/object';
+import MusitObject from '../../models/object';
 import isEqual from 'lodash/isEqual';
+import MusitTestScheduler from '../../testutils/MusitTestScheduler';
 
-import MusitTestScheduler from '../../../testutils/MusitTestScheduler';
+const diff = require('deep-diff').diff;
 
 describe('pickList', () => {
   it('testing and clear', () => {

@@ -200,12 +200,6 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
         "value": "Vev",
       }
     }
-    subTypeValue={
-      Object {
-        "name": "subTypeValue",
-        "value": "Muskel",
-      }
-    }
   />
   <div
     className="form-group"

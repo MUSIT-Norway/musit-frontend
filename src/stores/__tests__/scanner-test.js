@@ -10,7 +10,7 @@ import { mount } from 'enzyme';
 import { Observable } from 'rxjs';
 import { createStore } from 'react-rxjs/dist/RxStore';
 
-import MusitTestScheduler from '../../../testutils/MusitTestScheduler';
+import MusitTestScheduler from '../../testutils/MusitTestScheduler';
 
 describe('scannerWrapper', () => {
   it('should provide toggleScanner to child component', () => {

@@ -1,5 +1,5 @@
 import type { Field } from 'forms/form';
-import type { Person } from '../../../components/samples/personRoleDate';
+import type { Person } from '../../../components/person/PersonRoleDate';
 
 export type FormDetails = {
   note: Field<string>,

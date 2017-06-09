@@ -56,7 +56,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "codacy": "cat coverage/lcov.info | ./node_modules/.bin/codacy-coverage",
-    "coverage": "npm test a -- --coverage --collectCoverageFrom='src/**/*.{js,jsx}'",
+    "coverage": "npm test a -- --coverage --collectCoverageFrom='src/!(_poc*)**/*.{js,jsx}'",
     "flow": "./node_modules/.bin/flow check --show-all-errors",
     "formatcode": "./node_modules/.bin/prettier --single-quote --trailing-comma none --print-width 90 --write \"{src,__{tests,mocks}__}/**/*.js\""
   }

@@ -1,7 +1,7 @@
 import inject from 'react-rxjs/dist/RxInject';
 import sampleForm from './sampleAddForm';
 import SampleFormAddComponent from './SampleFormComponent';
-import { makeUrlAware } from '../app/appSession';
+import { makeUrlAware } from '../../stores/appSession';
 import flowRight from 'lodash/flowRight';
 import Sample from '../../models/sample';
 import PropTypes from 'prop-types';

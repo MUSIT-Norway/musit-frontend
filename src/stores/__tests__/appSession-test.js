@@ -1,5 +1,5 @@
 import React from 'react';
-import { refreshSession, makeUrlAware } from './../appSession';
+import { refreshSession, makeUrlAware } from '../appSession';
 import sinon from 'sinon';
 import { mount } from 'enzyme';
 

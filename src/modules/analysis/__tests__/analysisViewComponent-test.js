@@ -89,6 +89,10 @@ describe('AnalysisViewComponent', () => {
         store={store}
         goToUrl={() => {}}
         goBack={() => {}}
+        predefined={{
+          sampleTypes: [],
+          analysisTypes: []
+        }}
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();

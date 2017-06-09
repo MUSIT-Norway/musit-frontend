@@ -1,23 +1,26 @@
 import inject from 'react-rxjs/dist/RxInject';
 import analysisForm, { fieldsArray } from './analysisForm';
 import AnalysisFormComponent from './AnalysisFormComponent';
-import store$, {
-  getAnalysisTypes$,
-  getAnalysis$,
-  loadPredefinedTypes$
-} from './analysisStore';
+import {
+  setLoadingSampleTypes$,
+  loadSampleTypes$,
+  setLoadingAnalysisTypes$,
+  loadAnalysisTypes$
+} from '../../stores/predefined';
+import store$, { getAnalysisTypes$, getAnalysis$, setLoading$ } from './analysisStore';
 import PropTypes from 'prop-types';
 import Analysis from '../../models/analysis';
-import { makeUrlAware } from '../app/appSession';
+import { makeUrlAware } from '../../stores/appSession';
 import flowRight from 'lodash/flowRight';
 import mount from '../../shared/mount';
 import { toPromise } from '../../shared/util';
 import { hashHistory } from 'react-router';
-
+import { onMount, onProps } from './AnalysisViewContainer';
 const { form$, updateForm$, loadForm$ } = analysisForm;
 
 const data = {
   appSession$: { type: PropTypes.object.isRequired },
+  predefined$: { type: PropTypes.object.isRequired },
   store$,
   form$
 };
@@ -27,7 +30,11 @@ const commands = {
   loadForm$,
   getAnalysisTypes$,
   getAnalysis$,
-  loadPredefinedTypes$
+  setLoadingSampleTypes$,
+  loadSampleTypes$,
+  setLoadingAnalysisTypes$,
+  loadAnalysisTypes$,
+  setLoading$
 };
 
 const props = {
@@ -37,29 +44,8 @@ const props = {
   goBack: hashHistory.goBack
 };
 
-export const onMount = ({
-  loadPredefinedTypes,
-  getAnalysis,
-  appSession,
-  params,
-  loadForm
-}) => {
-  const inputParams = {
-    museumId: appSession.museumId,
-    id: params.analysisId,
-    collectionId: appSession.collectionId,
-    token: appSession.accessToken
-  };
-  loadPredefinedTypes({
-    ...inputParams,
-    onComplete: () =>
-      getAnalysis({
-        ...inputParams,
-        onComplete: analysis => loadForm(Analysis.fromJsonToForm(analysis, fieldsArray))
-      })
-  });
-};
-
-export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(
-  AnalysisFormComponent
-);
+export default flowRight([
+  inject(data, commands, props),
+  mount(onMount, onProps(fieldsArray)),
+  makeUrlAware
+])(AnalysisFormComponent);

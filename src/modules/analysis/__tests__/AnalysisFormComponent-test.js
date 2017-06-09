@@ -36,22 +36,12 @@ const form: FormData = (fieldsArray.reduce(
 describe('AnalysisFormComponent', () => {
   describe('submitForm', () => {
     it('should add restriction if restriction is set', done => {
-      const location = {
-        state: [
-          {
-            id: 1245,
-            nodeId: '2b691a67-a520-45fe-85e5-27dd6ca20000',
-            mainObjectId: 321,
-            objectId: null,
-            objectUUID: '2b691a67-a520-45fe-85e5-27dd6ca20000',
-            subNo: 'subNo',
-            term: 'term',
-            museumNo: '99',
-            objectType: 'collection',
-            uuid: '2b691a67-a520-45fe-85e5-27dd6ca2bb94'
-          }
-        ]
-      };
+      const objects = [
+        {
+          objectId: '2b691a67-a520-45fe-85e5-27dd6ca2bb94',
+          objectType: 'collection'
+        }
+      ];
       const goTo = sinon.spy();
       const formWithRestrictions: FormData = {
         ...form,
@@ -69,7 +59,7 @@ describe('AnalysisFormComponent', () => {
       submitForm(
         appSession,
         formWithRestrictions,
-        location,
+        objects,
         saveAnalysisPromise.createPromise(),
         loadFormPromise.createPromise(),
         goTo
@@ -116,14 +106,14 @@ describe('AnalysisFormComponent', () => {
           category: '5'
         }
       ];
-      const store = { analysis, analysisTypes };
-      const term = getAnalysisTypeTerm(store, appSession);
+      const store = { analysis };
+      const term = getAnalysisTypeTerm(store, { analysisTypes }, appSession);
       expect(term).toBe('');
     });
 
     it('should return empty string if called prematurely', () => {
       const store = {};
-      const term = getAnalysisTypeTerm(store, appSession);
+      const term = getAnalysisTypeTerm(store, { analysisTypes: [] }, appSession);
       expect(term).toBe('');
     });
 
@@ -146,8 +136,8 @@ describe('AnalysisFormComponent', () => {
           category: '5'
         }
       ];
-      const store = { analysis, analysisTypes };
-      const term = getAnalysisTypeTerm(store, appSession);
+      const store = { analysis };
+      const term = getAnalysisTypeTerm(store, { analysisTypes }, appSession);
       expect(term).toBe('Tjokkimokki 1');
     });
   });
@@ -237,6 +227,10 @@ describe('AnalysisFormComponent', () => {
         saveResult={promise}
         store={store}
         location={location}
+        predefined={{
+          sampleTypes: [],
+          analysisTypes: []
+        }}
       />
     );
 

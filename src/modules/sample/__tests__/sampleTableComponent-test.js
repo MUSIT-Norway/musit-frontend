@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
-import SampleTableComponent from '../sampleTableComponent';
+import SampleTableComponent from '../components/SampleTable';
 import moment from 'moment';
 
 describe('EventTableComponent', () => {

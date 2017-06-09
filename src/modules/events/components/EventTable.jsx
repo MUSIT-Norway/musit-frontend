@@ -2,12 +2,12 @@
 import React from 'react';
 import { Table, Tr, Td } from 'reactable';
 import { I18n } from 'react-i18nify';
-import type { Event, Events } from '../../types/events';
+import type { Event, Events } from '../../../types/events';
 
-import type { AnalysisTypesObject, AnalysisTypes, AnalysisType } from '../../types/analysisTypes';
-import type { SampleTypesObject, SampleTypes, SampleType } from '../../types/sampleTypes';
-import type { AppSession } from '../../types/appSession';
-import {getSampleType, getSampleSubType} from '../../shared/sampleTypesAndSubTypes';
+import type { AnalysisTypesObject, AnalysisTypes, AnalysisType } from '../../../types/analysisTypes';
+import type { SampleTypesObject } from '../../../types/sampleTypes';
+import type { AppSession } from '../../../types/appSession';
+import {getSampleType, getSampleSubType} from '../../sample/shared/types';
 
 type EventTypeProps = {
   events: Events,
@@ -18,10 +18,17 @@ type EventTypeProps = {
 };
 
 //TODO move it to utils
-function toPathStr (pathArr, crumb = 0){ return  pathArr.slice(crumb).map(o => o.name).join('  /  ')};
-function getPathDotsAndToolTip(pathArr) { return pathArr.length >2 ?
-  <div title={toPathStr(pathArr)} data-toggle="popover" data-trigger="hover">{`.../${toPathStr(pathArr, -3)}`}</div>
-  : toPathStr(pathArr)};
+function toPathStr (pathArr, crumb = 0){
+  return pathArr.slice(crumb).map(o => o.name).join('  /  ');
+}
+
+function getPathDotsAndToolTip(pathArr) {
+  return pathArr.length > 2
+    ? <div title={toPathStr(pathArr)} data-toggle="popover" data-trigger="hover">
+        {'.../' + toPathStr(pathArr, -3)}
+      </div>
+    : toPathStr(pathArr);
+}
 
 function getKeyData(event: Event, analysisTypes: AnalysisTypes, sampleTypes: SampleTypesObject, appSession: AppSession){
   if (event.type) {
