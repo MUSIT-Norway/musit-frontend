@@ -13,7 +13,12 @@ import AddButton from '../../components/AddButton';
 
 type Params = { analysisId: string };
 
-type Predefined = { analysisTypes: Array<any> };
+type Predefined = {
+  analysisTypes: Array<any>,
+  purposes: Array<any>,
+  analysisLabList: Array<any>,
+  categories: mixed
+};
 
 type Props = {
   form: FormData,
@@ -69,7 +74,7 @@ const AnalysisView = ({
         </label>
         <div className="col-md-10">
           <p className="form-control-static" id="reason">
-            {getAnalysisPurpose(form, store, appSession)}
+            {getAnalysisPurpose(form, predefined, appSession)}
           </p>
         </div>
       </div>
@@ -89,7 +94,7 @@ const AnalysisView = ({
         </label>
         <div className="col-md-5">
           <p className="form-control-static" id="status">
-            {getPlaceText(form.place.value)}
+            {getLabPlaceText(predefined, form.orgId.value)}
           </p>
         </div>
       </div>
@@ -290,30 +295,11 @@ function getStatusText(status?: ?number): string {
   }
 }
 
-function getPlaceText(actorId?: ?string): string {
+function getLabPlaceText(predefined: any, actorId?: ?string): string {
   if (!actorId) {
     return '';
   }
-  switch (actorId) {
-    case 355:
-      return 'Canadian Centre for DNA Barcoding';
-    case 356:
-      return 'Macrogen Europe';
-    case 357:
-      return 'Poznan radiocarbon laboratory';
-    case 358:
-      return 'Beta Analytic Limited';
-    case 359:
-      return 'Chrono Centre';
-    case 360:
-      return 'Vitenskapsmuseet: Nasjonallaboratoriene for datering';
-    case 361:
-      return 'Norwegian geological Survey';
-    case 362:
-      return 'Museum of Archaeology/UiS';
-    default:
-      return 'N/A: ' + actorId;
-  }
+  return predefined.analysisLabList.find(x => x.id === actorId).fullName;
 }
 
 function getAnalysisTypeTerm(form, predefined: Predefined, appSession) {
@@ -328,9 +314,9 @@ function getAnalysisTypeTerm(form, predefined: Predefined, appSession) {
   return '';
 }
 
-function getAnalysisPurpose(form, store, appSession) {
-  if (form.reason.rawValue && store.purposes) {
-    const foundType = store.purposes.find(a => `${a.id}` === form.reason.rawValue);
+function getAnalysisPurpose(form, predefined, appSession) {
+  if (form.reason.rawValue && predefined.purposes) {
+    const foundType = predefined.purposes.find(a => `${a.id}` === form.reason.rawValue);
     if (foundType) {
       return appSession.isEn ? foundType.enPurpose : foundType.noPurpose;
     }

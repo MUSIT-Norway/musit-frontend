@@ -41,7 +41,8 @@ export const reducer$ = (actions: Actions) =>
       ...state,
       categories: predefinedTypes.categories,
       purposes: predefinedTypes.purposes,
-      analysisTypes: predefinedTypes.analysisTypes
+      analysisTypes: predefinedTypes.analysisTypes,
+      analysisLabList: predefinedTypes.analysisLabList
     }))
   );
 
@@ -56,7 +57,12 @@ export const store$ = (
   createStore(
     'analysisStore',
     reducer$(actions$),
-    Observable.of({ analysisTypes: [], purposes: [], categories: {} })
+    Observable.of({
+      analysisTypes: [],
+      purposes: [],
+      categories: {},
+      analysisLabList: []
+    })
   );
 
 export default store$();

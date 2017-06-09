@@ -220,7 +220,8 @@ export default {
           searchUrl: (term: string, mid: MuseumId): string =>
             `/api/actor/person?museumId=${mid}&search=[${encodeURIComponent(term)}]`,
           baseUrl: '/api/actor/person',
-          currentUser: '/api/actor/dataporten/currentUser'
+          currentUser: '/api/actor/dataporten/currentUser',
+          getLabList: '/api/actor/organisation/labs'
         },
         geolocation: {
           searchUrl: (term: string): string =>

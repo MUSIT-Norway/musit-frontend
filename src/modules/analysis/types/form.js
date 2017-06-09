@@ -20,7 +20,7 @@ export type FormData = {
   type: Field<string>,
   partOf: Field<string>,
   result: Field<string>,
-  place: Field<string>,
+  orgId: Field<number>, //place for analysis
   externalSource: Field<string>,
   comments: Field<string>,
   reason: Field<string>,

@@ -33,6 +33,11 @@ export type Analysis = {
   doneByName?: string,
   responsible?: string,
   responsibleName?: string,
+  administrator?: string,
+  administratorName?: string,
+  completedBy?: string,
+  completedByName?: string,
+  completedDate?: string,
   caseNumbers?: Array<string>,
   restriction?: Restriction,
   result?: Result
@@ -160,6 +165,12 @@ class MusitAnalysis {
     token: string,
     onComplete: (predefinedTypes: mixed) => void
   }) => Observable;
+
+  static getAnalysisLabList: (
+    ajaxGet: AjaxGet
+  ) => (props: {
+    token: string
+  }) => Observable;
 }
 
 const toField = (
@@ -180,7 +191,7 @@ MusitAnalysis.fromJsonToForm = (json, formDef) => {
   );
 
   let persons = [];
-  if (json.doneBy) {
+  if (formValues.doneBy && formValues.doneBy.defaultValue) {
     persons = persons.concat([
       {
         name: json.doneByName,
@@ -191,13 +202,35 @@ MusitAnalysis.fromJsonToForm = (json, formDef) => {
     ]);
   }
 
-  if (json.responsible) {
+  if (formValues.responsible && formValues.responsible.defaultValue) {
     persons = persons.concat([
       {
         name: json.responsibleName,
         uuid: json.responsible,
         role: 'responsible',
         date: null
+      }
+    ]);
+  }
+
+  if (formValues.administrator && formValues.administrator.defaultValue) {
+    persons = persons.concat([
+      {
+        name: json.administratorName,
+        uuid: json.administrator,
+        role: 'administrator',
+        date: null
+      }
+    ]);
+  }
+
+  if (formValues.completedBy && formValues.completedBy.defaultValue) {
+    persons = persons.concat([
+      {
+        name: json.completedByName,
+        uuid: json.completedBy,
+        role: 'completedBy',
+        date: json.completedDate
       }
     ]);
   }
@@ -235,6 +268,7 @@ MusitAnalysis.fromJsonToForm = (json, formDef) => {
     formValues.externalSource = toField('externalSource', result.extRef);
   }
 
+  console.log('FormValues', formValues);
   return Object.keys(formValues).map(key => formValues[key]);
 };
 
@@ -365,6 +399,14 @@ function getActorNames(actors, analysis) {
       fieldName: 'responsibleName'
     },
     {
+      id: analysis.administrator,
+      fieldName: 'administratorName'
+    },
+    {
+      id: analysis.completedBy,
+      fieldName: 'completedByName'
+    },
+    {
       id: analysis.restriction ? analysis.restriction.requester : '',
       fieldName: 'restriction_requesterName'
     }
@@ -383,6 +425,8 @@ MusitAnalysis.getAnalysisWithDetails = (
           analysis.updatedBy,
           analysis.doneBy,
           analysis.responsible,
+          analysis.administrator,
+          analysis.completedBy,
           analysis.restriction ? analysis.restriction.requester : ''
         ].filter(p => p),
         token: props.token
@@ -467,6 +511,13 @@ MusitAnalysis.getPurposes = (ajaxGet = simpleGet) => ({ token, callback }) =>
     ({ response }) => response
   );
 
+MusitAnalysis.getAnalysisLabList = (ajaxGet = simpleGet) => ({ token }) =>
+  ajaxGet(Config.magasin.urls.api.actor.getLabList, token)
+    .map(({ response }) => response)
+    .do(function onError() {
+      return [];
+    });
+
 MusitAnalysis.getAnalysisCategories = (ajaxGet = simpleGet) => ({ museumId, token }) =>
   ajaxGet(
     Config.magasin.urls.api.analysisType.getAnalysisCategories(museumId),
@@ -481,12 +532,14 @@ MusitAnalysis.loadPredefinedTypes = (ajaxGet = simpleGet) => ({
   return Observable.forkJoin([
     MusitAnalysis.getAnalysisCategories(ajaxGet)({ museumId, token }),
     MusitAnalysis.getPurposes(ajaxGet)({ museumId, token }),
-    MusitAnalysis.getAnalysisTypes(ajaxGet)({ museumId, token })
+    MusitAnalysis.getAnalysisTypes(ajaxGet)({ museumId, token }),
+    MusitAnalysis.getAnalysisLabList(ajaxGet)({ token })
   ])
-    .map(([categories, purposes, analysisTypes]) => ({
+    .map(([categories, purposes, analysisTypes, analysisLabList]) => ({
       categories: categories.reduce((a, c) => Object.assign(a, { [c.id]: c.name }), {}),
       purposes,
-      analysisTypes
+      analysisTypes,
+      analysisLabList
     }))
     .do(onComplete);
 };

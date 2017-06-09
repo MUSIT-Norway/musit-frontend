@@ -30,7 +30,7 @@ export default function ObjectTable({ objects }) {
                   : <span className="icon icon-musitobject" />}
               </Td>
               <Td column="museumNo">{event.museumNo || ''}</Td>
-              <Td column="subNo">{event.subNo}</Td>
+              <Td column="subNo">{event.subNo || ''}</Td>
               <Td column="term">{event.term}</Td>
               <Td column="sampleNum"><span>{event.sampleNum || ''}</span></Td>
               <Td column="sampleType">

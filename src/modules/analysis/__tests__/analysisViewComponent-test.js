@@ -91,7 +91,10 @@ describe('AnalysisViewComponent', () => {
         goBack={() => {}}
         predefined={{
           sampleTypes: [],
-          analysisTypes: []
+          analysisTypes: [],
+          purposes: [],
+          categories: {},
+          analysisLabList: []
         }}
       />
     );

@@ -54,7 +54,8 @@ describe('predefined', () => {
         treatments: [],
         analysisTypes: [],
         categories: {},
-        purposes: []
+        purposes: [],
+        analysisLabList: []
       }
     };
 

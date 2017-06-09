@@ -25,7 +25,12 @@ type SaveAnalysisFn = (props: {
   token: string
 }) => Promise<*>;
 
-type Predefined = { analysisTypes: Array<any> };
+type Predefined = {
+  analysisTypes: Array<any>,
+  purposes: Array<any>,
+  analysisLabList: Array<any>,
+  categories: {}
+};
 
 type Props = {
   form: FormData,
@@ -39,41 +44,6 @@ type Props = {
   goToUrl: (s: string) => void,
   goBack: () => void
 };
-
-const analysisPlaces = [
-  {
-    orgId: 355,
-    fullName: 'Canadian Centre for DNA Barcoding'
-  },
-  {
-    orgId: 356,
-    fullName: 'Macrogen Europe'
-  },
-  {
-    orgId: 357,
-    fullName: 'Poznan radiocarbon laboratory'
-  },
-  {
-    orgId: 358,
-    fullName: 'Beta Analytic Limited'
-  },
-  {
-    orgId: 359,
-    fullName: 'Chrono Centre'
-  },
-  {
-    orgId: 360,
-    fullName: 'Vitenskapsmuseet: Nasjonallaboratoriene for datering'
-  },
-  {
-    orgId: 361,
-    fullName: 'Norwegian geological Survey'
-  },
-  {
-    orgId: 362,
-    fullName: 'Museum of Archaeology/UiS'
-  }
-];
 
 const AnalysisForm = ({
   form,
@@ -122,9 +92,9 @@ const AnalysisForm = ({
                     onChange={updateFormField(form.analysisTypeCategory.name, updateForm)}
                   >
                     <option value="">Velg kategori</option>
-                    {store.categories &&
-                      Object.keys(store.categories).map(k => (
-                        <option key={k} value={k}>{store.categories[k]}</option>
+                    {predefined.categories &&
+                      Object.keys(predefined.categories).map(k => (
+                        <option key={k} value={k}>{predefined.categories[k]}</option>
                       ))}
                   </select>
                 </div>
@@ -138,8 +108,8 @@ const AnalysisForm = ({
                       onChange={updateFormField(form.analysisTypeId.name, updateForm)}
                     >
                       <option value="">Velg type</option>
-                      {store.analysisTypes &&
-                        store.analysisTypes
+                      {predefined.analysisTypes &&
+                        predefined.analysisTypes
                           .filter(
                             b => b.category.toString() === form.analysisTypeCategory.value
                           )
@@ -169,8 +139,8 @@ const AnalysisForm = ({
               onChange={updateFormField(form.reason.name, updateForm)}
             >
               <option value="">Velg formål</option>
-              {store.purposes &&
-                store.purposes.map(a => (
+              {predefined.purposes &&
+                predefined.purposes.map(a => (
                   <option key={a.id} value={a.id}>
                     {appSession.isEn ? a.enPurpose : a.noPurpose}
                   </option>
@@ -206,15 +176,16 @@ const AnalysisForm = ({
             <select
               id="place"
               className="form-control"
-              value={form.place.rawValue || ''}
-              onChange={updateFormField(form.place.name, updateForm)}
+              value={form.orgId.rawValue || ''}
+              onChange={updateFormField(form.orgId.name, updateForm)}
             >
               <option value="">Velg analysested</option>
-              {analysisPlaces.map(a => (
-                <option key={a.orgId} value={a.orgId}>
-                  {a.fullName}
-                </option>
-              ))}
+              {predefined.analysisLabList &&
+                predefined.analysisLabList.map(a => (
+                  <option key={a.id} value={a.id}>
+                    {a.fullName}
+                  </option>
+                ))}
             </select>
           </div>
         </div>
@@ -258,8 +229,9 @@ const AnalysisForm = ({
           personData={form.persons.value}
           updateForm={updateForm}
           fieldName={form.persons.name}
-          roles={['responsible', 'doneBy']}
-          showDateForRole={(roleName: string) => roleName !== 'responsible'}
+          roles={['responsible', 'doneBy', 'administrator', 'completedBy']}
+          showDateForRole={(roleName: string) =>
+            ['completedBy', 'doneBy'].some(e => e === roleName)}
         />
         <hr />
         <div className="well">
@@ -548,11 +520,19 @@ export function submitForm(
           type: 'GenericResult'
         }
       : null;
+
     const doneBy = form.persons
       ? form.persons.rawValue.find(p => p.role === 'doneBy')
       : undefined;
     const responsible = form.persons
       ? form.persons.rawValue.find(p => p.role === 'responsible')
+      : undefined;
+
+    const administrator = form.persons
+      ? form.persons.rawValue.find(p => p.role === 'administrator')
+      : undefined;
+    const completedBy = form.persons
+      ? form.persons.rawValue.find(p => p.role === 'completedBy')
       : undefined;
 
     const data = {
@@ -561,9 +541,10 @@ export function submitForm(
       doneDate: doneBy && doneBy.date,
       note: form.note.value,
       responsible: responsible && responsible.uuid,
-      administrator: null,
-      completedBy: null,
-      completedDate: null,
+      administrator: administrator && administrator.uuid,
+      completedBy: completedBy && completedBy.uuid,
+      completedDate: completedBy && completedBy.date,
+      orgId: form.orgId.value,
       restriction,
       objects,
       caseNumbers: form.caseNumbers.value,

@@ -107,13 +107,27 @@ describe('AnalysisFormComponent', () => {
         }
       ];
       const store = { analysis };
-      const term = getAnalysisTypeTerm(store, { analysisTypes }, appSession);
+      const purposes = [];
+      const analysisLabList = [];
+      const categories = {};
+      const term = getAnalysisTypeTerm(
+        store,
+        { analysisTypes, purposes, analysisLabList, categories },
+        appSession
+      );
       expect(term).toBe('');
     });
 
     it('should return empty string if called prematurely', () => {
       const store = {};
-      const term = getAnalysisTypeTerm(store, { analysisTypes: [] }, appSession);
+      const purposes = [];
+      const analysisLabList = [];
+      const categories = {};
+      const term = getAnalysisTypeTerm(
+        store,
+        { analysisTypes: [], analysisLabList, purposes, categories },
+        appSession
+      );
       expect(term).toBe('');
     });
 
@@ -136,8 +150,15 @@ describe('AnalysisFormComponent', () => {
           category: '5'
         }
       ];
+      const purposes = [];
+      const analysisLabList = [];
+      const categories = {};
       const store = { analysis };
-      const term = getAnalysisTypeTerm(store, { analysisTypes }, appSession);
+      const term = getAnalysisTypeTerm(
+        store,
+        { analysisTypes, analysisLabList, purposes, categories },
+        appSession
+      );
       expect(term).toBe('Tjokkimokki 1');
     });
   });
@@ -210,9 +231,7 @@ describe('AnalysisFormComponent', () => {
             subNo: 'subNO'
           }
         ]
-      },
-      analysisTypes: [],
-      analysisTypeCategorie: []
+      }
     };
 
     const wrapper = shallow(
@@ -228,8 +247,10 @@ describe('AnalysisFormComponent', () => {
         store={store}
         location={location}
         predefined={{
-          sampleTypes: [],
-          analysisTypes: []
+          purposes: [],
+          analysisTypes: [],
+          analysisLabList: [],
+          categories: {}
         }}
       />
     );

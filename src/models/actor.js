@@ -15,6 +15,8 @@ type ActorMetaData = {
   doneBy?: ?string,
   registeredBy?: ?string,
   registeredByName?: ?string,
+  completedBy?: ?string,
+  administrator?: ?string,
   updatedBy?: ?string,
   updatedByName?: ?string,
   restriction?: { requesterName: ?string }
@@ -28,6 +30,10 @@ type ActorFieldName =
   | 'doneByName'
   | 'responsible'
   | 'responsibleName'
+  | 'administrator'
+  | 'administratorName'
+  | 'completedBy'
+  | 'completedByName'
   | 'doneBy'
   | 'restrictions_requester'
   | 'restrictions_requesterName'

@@ -24,7 +24,7 @@ export const fieldsArray = [
   getStrField('type'),
   getStrField('partOf'),
   getStrField('result'),
-  getStrField('place'),
+  getNumberField('orgId'),
   getStrField('reason'),
   getStrField('externalSource'),
   getStrField('comments'),

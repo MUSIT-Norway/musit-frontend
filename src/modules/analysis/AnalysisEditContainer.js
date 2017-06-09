@@ -28,12 +28,11 @@ const data = {
 const commands = {
   updateForm$,
   loadForm$,
-  getAnalysisTypes$,
-  getAnalysis$,
   setLoadingSampleTypes$,
   loadSampleTypes$,
   setLoadingAnalysisTypes$,
   loadAnalysisTypes$,
+  getAnalysis$,
   setLoading$
 };
 

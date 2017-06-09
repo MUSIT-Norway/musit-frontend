@@ -135,46 +135,6 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
           >
             Velg analysested
           </option>
-          <option
-            value={355}
-          >
-            Canadian Centre for DNA Barcoding
-          </option>
-          <option
-            value={356}
-          >
-            Macrogen Europe
-          </option>
-          <option
-            value={357}
-          >
-            Poznan radiocarbon laboratory
-          </option>
-          <option
-            value={358}
-          >
-            Beta Analytic Limited
-          </option>
-          <option
-            value={359}
-          >
-            Chrono Centre
-          </option>
-          <option
-            value={360}
-          >
-            Vitenskapsmuseet: Nasjonallaboratoriene for datering
-          </option>
-          <option
-            value={361}
-          >
-            Norwegian geological Survey
-          </option>
-          <option
-            value={362}
-          >
-            Museum of Archaeology/UiS
-          </option>
         </select>
       </div>
     </div>
@@ -250,6 +210,8 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
         Array [
           "responsible",
           "doneBy",
+          "administrator",
+          "completedBy",
         ]
       }
       showDateForRole={[Function]}
