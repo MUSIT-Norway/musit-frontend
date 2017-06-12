@@ -29,6 +29,7 @@ import MusitObject from '../../models/object';
 import MusitActor from '../../models/actor';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
 import type { MovableObject } from '../../models/types/movableObject';
+import Config from '../../config';
 
 export const nodeCallback = (
   appSession,
@@ -258,23 +259,38 @@ const commands = {
   loadNode$
 };
 
-const customProps = {
+const customProps = props => ({
   updateMoveDialog,
   emitError,
   emitSuccess,
   showModal,
   moveNode: MusitNode.moveNode(),
   moveObject: MusitObject.moveSingleObject(),
-  isTypeNode: props => 'nodes' === props.route.type,
-  moveItems
-};
+  isTypeNode: 'nodes' === props.route.type,
+  moveItems,
+  createSample: (items, appSession) => {
+    props.history.push({
+      pathname: Config.magasin.urls.client.analysis.addSample(
+        appSession,
+        items[0].sampleNum ? items[0].originatedObjectUuid : items[0].objectId
+      ),
+      state: items
+    });
+  },
+  createAnalysis: (items, appSession) => {
+    props.history.push({
+      pathname: Config.magasin.urls.client.analysis.addAnalysis(appSession),
+      state: items
+    });
+  }
+});
 
 export const processBarcode = (barCode, props) => {
   const isMoveDialogActive = props.classExistsOnDom('moveDialog');
   const museumId = props.appSession.museumId;
   const collectionId = props.appSession.collectionId;
   const token = props.appSession.accessToken;
-  const isNodeView = props.isTypeNode(props);
+  const isNodeView = props.isTypeNode;
   if (barCode.uuid) {
     if (!isNodeView && !isMoveDialogActive) {
       return props.emitError({

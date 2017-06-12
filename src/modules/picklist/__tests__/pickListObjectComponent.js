@@ -82,7 +82,7 @@ describe('PickListComponent for objects', () => {
         iconRendrer={x => x}
         classExistsOnDom={x => x}
         moveItems={x => x}
-        isTypeNode={() => false}
+        isTypeNode={false}
         toggleScanner={() => true}
         scannerEnabled={true}
       />
@@ -108,7 +108,7 @@ describe('PickListComponent for objects', () => {
         emitSuccess={x => x}
         classExistsOnDom={x => x}
         moveItems={x => x}
-        isTypeNode={() => false}
+        isTypeNode={false}
         toggleScanner={() => true}
         scannerEnabled={true}
       />
@@ -140,7 +140,7 @@ describe('PickListComponent for objects', () => {
         iconRendrer={x => x}
         classExistsOnDom={x => x}
         moveItems={x => x}
-        isTypeNode={() => false}
+        isTypeNode={false}
         toggleScanner={() => true}
         scannerEnabled={true}
       />
@@ -155,7 +155,7 @@ describe('PickListComponent for objects', () => {
       .children()
       .find('tr')
       .childAt(1)
-      .childAt(2);
+      .childAt(4);
     removeButton.simulate('click');
     e(onRemoveObject.calledOnce).to.equal(true);
   });
@@ -184,7 +184,7 @@ describe('PickListComponent for objects', () => {
         iconRendrer={x => x}
         classExistsOnDom={x => x}
         moveItems={x => x}
-        isTypeNode={() => false}
+        isTypeNode={false}
         toggleScanner={() => true}
         scannerEnabled={true}
       />
@@ -228,7 +228,7 @@ describe('PickListComponent for objects', () => {
         iconRendrer={x => x}
         classExistsOnDom={x => x}
         moveItems={x => x}
-        isTypeNode={() => false}
+        isTypeNode={false}
         toggleScanner={() => true}
         scannerEnabled={true}
       />

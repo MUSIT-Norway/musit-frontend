@@ -23,7 +23,7 @@ describe('processBarcode', () => {
     const emitError = sinon.spy();
     const props = {
       findNodeByUUID: () => Observable.of(null),
-      isTypeNode: () => true,
+      isTypeNode: true,
       classExistsOnDom: () => false,
       appSession,
       emitError
@@ -36,7 +36,7 @@ describe('processBarcode', () => {
     const emitError = sinon.spy();
     const props = {
       findNodeByUUID: () => Observable.of(null),
-      isTypeNode: () => false,
+      isTypeNode: false,
       classExistsOnDom: () => false,
       appSession,
       emitError
@@ -53,7 +53,7 @@ describe('processBarcode', () => {
           id: 1,
           name: 'Test'
         }),
-      isTypeNode: () => true,
+      isTypeNode: true,
       classExistsOnDom: clazz => clazz === 'moveDialog',
       appSession,
       updateMoveDialog
@@ -70,7 +70,7 @@ describe('processBarcode', () => {
           id: 1,
           name: 'Test'
         }),
-      isTypeNode: () => true,
+      isTypeNode: true,
       classExistsOnDom: () => false,
       appSession,
       addNode
@@ -83,7 +83,7 @@ describe('processBarcode', () => {
     const emitError = sinon.spy();
     const props = {
       findNodeByBarcode: () => Observable.of(null),
-      isTypeNode: () => true,
+      isTypeNode: true,
       classExistsOnDom: () => false,
       appSession,
       emitError
@@ -96,7 +96,7 @@ describe('processBarcode', () => {
     const emitError = sinon.spy();
     const props = {
       findObjectByBarcode: () => Observable.of(null),
-      isTypeNode: () => false,
+      isTypeNode: false,
       classExistsOnDom: () => false,
       appSession,
       emitError
@@ -109,7 +109,7 @@ describe('processBarcode', () => {
     const emitError = sinon.spy();
     const props = {
       findNodeByBarcode: () => Observable.of(null),
-      isTypeNode: () => false,
+      isTypeNode: false,
       classExistsOnDom: clazz => clazz === 'moveDialog',
       appSession,
       emitError
@@ -128,7 +128,7 @@ describe('processBarcode', () => {
             term: 'Fugl'
           }
         ]),
-      isTypeNode: () => false,
+      isTypeNode: false,
       classExistsOnDom: () => false,
       appSession,
       addObject
@@ -151,7 +151,7 @@ describe('processBarcode', () => {
             term: 'Fisk'
           }
         ]),
-      isTypeNode: () => false,
+      isTypeNode: false,
       classExistsOnDom: () => false,
       appSession,
       emitError
@@ -169,7 +169,7 @@ describe('processBarcode', () => {
           name: 'Test',
           nodeId: '1234'
         }),
-      isTypeNode: () => true,
+      isTypeNode: true,
       classExistsOnDom: clazz => clazz === 'moveDialog',
       appSession,
       updateMoveDialog
@@ -187,7 +187,7 @@ describe('processBarcode', () => {
           name: 'Test',
           nodeId: '1234'
         }),
-      isTypeNode: () => true,
+      isTypeNode: true,
       classExistsOnDom: () => false,
       appSession,
       addNode
@@ -205,7 +205,7 @@ describe('processBarcode', () => {
           name: 'Test'
           // Missing nodeId!
         }),
-      isTypeNode: () => true,
+      isTypeNode: true,
       classExistsOnDom: () => false,
       appSession,
       emitError
@@ -223,7 +223,7 @@ describe('processBarcode', () => {
           name: 'Test'
           // Missing nodeId!
         }),
-      isTypeNode: () => false,
+      isTypeNode: false,
       classExistsOnDom: () => false,
       appSession,
       emitError

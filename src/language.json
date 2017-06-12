@@ -35,6 +35,8 @@
         "analysis": "Analysis",
         "registeringAnalysis": "Registering analysis",
         "editAnalysis": "Edit analysis",
+        "createAnalysis": "Create analysis",
+        "createSample": "Create sample",
         "viewAnalysis": "Analysis details"
       },
       "unknown": "Unknown",
@@ -737,6 +739,8 @@
         "sample": "Prøveuttak",
         "registeringAnalysis": "Registrer analyse",
         "editAnalysis": "Endre analyse",
+        "createAnalysis": "Opprett analyse",
+        "createSample": "Opprett prøve",
         "viewAnalysis": "Analyse detaljer",
         "registeringSample": "Registrer prøveuttak"
       },

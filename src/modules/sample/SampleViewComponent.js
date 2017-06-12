@@ -51,13 +51,13 @@ export default function SampleViewComponent({
       </div>
       <div className="pull-right">
         <button
-          className="btn-info"
+          className="btn btn-default"
           onClick={clickCreateAnalysis(appSession, store.sample, form, objectData)}
         >
           Opprett analyse
         </button>
         <button
-          className="btn-info"
+          className="btn btn-default"
           onClick={clickEditSample(appSession, sampleId, objectData)}
         >
           Endre prøve

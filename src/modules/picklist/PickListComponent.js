@@ -27,7 +27,9 @@ export class PickListComponent extends React.Component {
     emitSuccess: PropTypes.func.isRequired,
     toggleScanner: PropTypes.func.isRequired,
     scannerEnabled: PropTypes.bool.isRequired,
-    moveItems: PropTypes.func.isRequired
+    moveItems: PropTypes.func.isRequired,
+    createSample: PropTypes.func.isRequired,
+    createAnalysis: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -36,13 +38,9 @@ export class PickListComponent extends React.Component {
     this.showMoveNodes = this.showMoveNodes.bind(this);
   }
 
-  isNodeView() {
-    return this.props.isTypeNode(this.props);
-  }
-
   showMoveNodes(items) {
     let title;
-    if (this.props.isTypeNode(this.props)) {
+    if (this.props.isTypeNode) {
       title = I18n.t('musit.moveModal.moveNodes');
     } else {
       title = I18n.t('musit.moveModal.moveObjects');
@@ -51,7 +49,7 @@ export class PickListComponent extends React.Component {
       title,
       <MusitModal
         appSession={this.props.appSession}
-        onMove={this.props.moveItems(this.props.appSession, items, this.isNodeView())}
+        onMove={this.props.moveItems(this.props.appSession, items, this.props.isTypeNode)}
       />
     );
   }
@@ -137,7 +135,7 @@ export class PickListComponent extends React.Component {
   }
 
   remove(item) {
-    if (this.isNodeView()) {
+    if (this.props.isTypeNode) {
       this.props.removeNode(item);
     } else {
       this.props.removeObject(item);
@@ -145,7 +143,7 @@ export class PickListComponent extends React.Component {
   }
 
   toggle(item, on) {
-    if (this.isNodeView()) {
+    if (this.props.isTypeNode) {
       this.props.markNode({ item, on });
     } else {
       this.toggleObject({ item, on });
@@ -157,7 +155,8 @@ export class PickListComponent extends React.Component {
     const pickList = this.props.pickList[type] || [];
     const marked = pickList.filter(p => p.marked);
     const markedValues = marked.map(p => p.value);
-    const isNode = this.isNodeView();
+    const isNode = this.props.isTypeNode;
+    const isObject = !isNode;
     return (
       <div>
         <main>
@@ -192,22 +191,54 @@ export class PickListComponent extends React.Component {
                     />
                   </th>
                   <th style={{ verticalAlign: 'bottom', textAlign: 'left' }}>
-                    {isNode
-                      ? <FontAwesome
-                          className="normalActionNoPadding"
+                    {isNode &&
+                      <FontAwesome
+                        className="normalActionNoPadding"
+                        style={{ fontSize: '1.5em' }}
+                        name="print"
+                        onClick={() => {
+                          if (marked.length > 0) {
+                            this.print(marked);
+                          }
+                        }}
+                        title={I18n.t('musit.pickList.tooltip.printSelectedNodes')}
+                      />}
+                    {isObject &&
+                      <FontAwesome
+                        className="normalActionNoPadding"
+                        style={{
+                          fontSize: '1.5em',
+                          color: marked.length !== 1 ? 'grey' : null
+                        }}
+                        name="flask"
+                        onClick={() => {
+                          if (marked.length === 1) {
+                            this.props.createSample(markedValues, this.props.appSession);
+                          }
+                        }}
+                        title={I18n.t('musit.analysis.createSample')}
+                      />}
+                    {isObject &&
+                      <span>
+                        <FontAwesome
+                          className="normalAction"
                           style={{ fontSize: '1.5em' }}
-                          name="print"
+                          name="code-fork"
                           onClick={() => {
                             if (marked.length > 0) {
-                              this.print(marked);
+                              this.props.createAnalysis(
+                                markedValues,
+                                this.props.appSession
+                              );
                             }
                           }}
-                          title={I18n.t('musit.pickList.tooltip.printSelectedNodes')}
+                          title={I18n.t('musit.analysis.createAnalysis')}
                         />
-                      : null}
-                    {isNode ? this.selectedCount(isNode, marked.length) : null}
+                        {this.selectedCount(isNode, marked.length)}
+                      </span>}
+                    {isNode && this.selectedCount(isNode, marked.length)}
                     <FontAwesome
-                      className={isNode ? 'normalAction' : 'normalActionNoPadding'}
+                      className="normalAction"
                       name="truck"
                       style={{ fontSize: '1.5em' }}
                       onClick={() => {
