@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import analysisAddForm from './analysisForm';
 import AnalysisFormComponent from './AnalysisFormComponent';
 import { onMount } from './AnalysisViewContainer';
-import store$  from './analysisStore';
+import store$ from './analysisStore';
 import Analysis from '../../models/analysis';
 import { makeUrlAware } from '../../stores/appSession';
 import flowRight from 'lodash/flowRight';
@@ -11,10 +11,10 @@ import mount from '../../shared/mount';
 import { toPromise } from '../../shared/util';
 import { hashHistory } from 'react-router';
 import predefined$, {
-    setLoadingSampleTypes$,
-    loadSampleTypes$,
-    setLoadingAnalysisTypes$,
-    loadAnalysisTypes$
+  setLoadingSampleTypes$,
+  loadSampleTypes$,
+  setLoadingAnalysisTypes$,
+  loadAnalysisTypes$
 } from '../../stores/predefined';
 const { form$, updateForm$, loadForm$ } = analysisAddForm;
 
@@ -31,7 +31,7 @@ const commands = {
   setLoadingSampleTypes$,
   loadSampleTypes$,
   setLoadingAnalysisTypes$,
-  loadAnalysisTypes$,
+  loadAnalysisTypes$
 };
 
 const props = {
