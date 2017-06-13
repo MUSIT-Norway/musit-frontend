@@ -54,7 +54,9 @@ const AnalysisView = ({ form, store, predefined, appSession, match, goToUrl }: P
       />
       <hr />
       <div className="form-group">
-        <label className="control-label col-md-2" htmlFor="type">Type analyse:</label>
+        <label className="control-label col-md-2" htmlFor="type">
+          {I18n.t('musit.analysis.analysisType')}
+        </label>
         <div className="col-md-10">
           <p className="form-control-static" id="type">
             {getAnalysisTypeTerm(form, predefined, appSession)}
@@ -63,7 +65,7 @@ const AnalysisView = ({ form, store, predefined, appSession, match, goToUrl }: P
       </div>
       <div className="form-group">
         <label className="control-label col-md-2" htmlFor="reason">
-          Formål med analysen:
+          {I18n.t('musit.analysis.reason')}{' '}
         </label>
         <div className="col-md-10">
           <p className="form-control-static" id="reason">
@@ -73,7 +75,7 @@ const AnalysisView = ({ form, store, predefined, appSession, match, goToUrl }: P
       </div>
       <div className="form-group">
         <label className="control-label col-md-2" htmlFor="status">
-          Status på analysen:
+          {I18n.t('musit.analysis.status')}
         </label>
         <div className="col-md-5">
           <p className="form-control-static" id="status">
@@ -83,7 +85,7 @@ const AnalysisView = ({ form, store, predefined, appSession, match, goToUrl }: P
       </div>
       <div className="form-group">
         <label className="control-label col-md-2" htmlFor="status">
-          Sted for analysen:
+          {I18n.t('musit.analysis.place')}
         </label>
         <div className="col-md-5">
           <p className="form-control-static" id="status">
@@ -94,7 +96,7 @@ const AnalysisView = ({ form, store, predefined, appSession, match, goToUrl }: P
 
       <div className="form-group">
         <label className="control-label col-md-2" htmlFor="caseNumber">
-          Saksnummer:
+          {I18n.t('musit.analysis.caseNumber')}
         </label>
         <div className="col-md-10">
           <p className="form-control-static" id="caseNumber">
@@ -107,7 +109,7 @@ const AnalysisView = ({ form, store, predefined, appSession, match, goToUrl }: P
       <hr />
       <div className="form-group">
         <label className="control-label col-md-2" htmlFor="note">
-          Beskrivelse/ kommentar:
+          {I18n.t('musit.analysis.note')}
         </label>
         <div className="col-md-10">
           <p className="form-control-static" id="note">
@@ -122,19 +124,19 @@ const AnalysisView = ({ form, store, predefined, appSession, match, goToUrl }: P
         form.persons.value.map((p, i) => (
           <div key={`persons_${i}`} className="form-group">
             <label className="control-label col-md-2" htmlFor="responsible-name1">
-              Navn:
+              {I18n.t('musit.texts.name')}
             </label>
             <div className="col-md-2">
               <p className="form-control-static" id="responsible-name1">{p.name}</p>
             </div>
             <label className="control-label col-md-1" htmlFor="responsible-role1">
-              Rolle:
+              {I18n.t('musit.texts.role')}{' '}
             </label>
             <div className="col-md-2">
               <p className="form-control-static" id="responsible-role1">{p.role}</p>
             </div>
             <label className="control-label col-md-1" htmlFor="responsible-role1">
-              Dato:
+              {I18n.t('musit.texts.date')}
             </label>
             <div className="col-md-2">
               <p className="form-control-static" id="responsible-date">
@@ -147,7 +149,7 @@ const AnalysisView = ({ form, store, predefined, appSession, match, goToUrl }: P
       <div className="well">
         <div className="form-group">
           <label className="col-md-12" htmlFor="objects">
-            Objekter/prøver:
+            {I18n.t('musit.analysis.objectOrSample')}
           </label>
         </div>
         <div className="form-group">
@@ -173,7 +175,7 @@ const AnalysisView = ({ form, store, predefined, appSession, match, goToUrl }: P
         <hr />
         <div className="form-group">
           <label className="control-label col-md-2" htmlFor="externalSource">
-            Ekstern kilde:
+            {I18n.t('musit.analysis.externalSource')}
           </label>
           <div className="col-md-10">
             <p className="form-control-static" id="externalSource">
@@ -183,7 +185,7 @@ const AnalysisView = ({ form, store, predefined, appSession, match, goToUrl }: P
         </div>
         <div className="form-group">
           <label className="control-label col-md-2" htmlFor="externalFile">
-            Vedlegg:
+            {I18n.t('musit.texts.attachment')}:
           </label>
           <div className="col-md-10">
             <p className="form-control-static" id="externalFile">{' '}</p>
@@ -191,7 +193,7 @@ const AnalysisView = ({ form, store, predefined, appSession, match, goToUrl }: P
         </div>
         <div className="form-group">
           <label className="control-label col-md-2" htmlFor="comments">
-            Kommentar til resultat:
+            {I18n.t('musit.analysis.commentsToResult')}
           </label>
           <div className="col-md-10">
             <p className="form-control-static" id="comments">
@@ -201,11 +203,13 @@ const AnalysisView = ({ form, store, predefined, appSession, match, goToUrl }: P
         </div>
         <div className="form-group">
           <label className="control-label col-md-2" htmlFor="restrictions">
-            Klausulering:
+            {I18n.t('musit.analysis.restrictions.restrictions')}
           </label>
           <div className="col-md-10">
             <p className="form-control-static" id="restrictions">
-              {form.restrictions.value ? 'Ja' : 'Nei'}
+              {form.restrictions.value
+                ? I18n.t('musit.texts.yes')
+                : I18n.t('musit.texts.no')}
             </p>
           </div>
         </div>
@@ -213,7 +217,7 @@ const AnalysisView = ({ form, store, predefined, appSession, match, goToUrl }: P
           <div>
             <div className="form-group">
               <label className="control-label col-md-2" htmlFor="requester">
-                Klausulert for:
+                {I18n.t('musit.analysis.restrictions.restrictionsFor')}
               </label>
               <div className="col-md-10">
                 <p className="form-control-static" id="requester">
@@ -223,7 +227,7 @@ const AnalysisView = ({ form, store, predefined, appSession, match, goToUrl }: P
             </div>
             <div className="form-group">
               <label className="control-label col-md-2" htmlFor="reason">
-                Årsak til klausulering:
+                {I18n.t('musit.analysis.restrictions.reasonForRestriction')}
               </label>
               <div className="col-md-10">
                 <p className="form-control-static" id="reason">
@@ -233,7 +237,7 @@ const AnalysisView = ({ form, store, predefined, appSession, match, goToUrl }: P
             </div>
             <div className="form-group">
               <label className="control-label col-md-2" htmlFor="caseNumbers">
-                Saksnummer:
+                {I18n.t('musit.analysis.restrictions.caseNumber')}
               </label>
               <div className="col-md-10">
                 <p className="form-control-static" id="caseNumbers">
@@ -246,7 +250,7 @@ const AnalysisView = ({ form, store, predefined, appSession, match, goToUrl }: P
             </div>
             <div className="form-group">
               <label className="control-label col-md-2" htmlFor="expirationDate">
-                Sluttdato:
+                {I18n.t('musit.analysis.restrictions.endDate')}
               </label>
               <div className="col-md-10">
                 <p className="form-control-static" id="expirationDate">
@@ -256,7 +260,7 @@ const AnalysisView = ({ form, store, predefined, appSession, match, goToUrl }: P
             </div>
             <div className="form-group">
               <label className="control-label col-md-2" htmlFor="cancelledReason">
-                Årsak til oppheving:
+                {I18n.t('musit.analysis.reasonForCancellation')}
               </label>
               <div className="col-md-10">
                 <p className="form-control-static" id="cancelledReason">
@@ -270,19 +274,19 @@ const AnalysisView = ({ form, store, predefined, appSession, match, goToUrl }: P
   </div>
 );
 
-function getStatusText(status?: ?number): string {
+export function getStatusText(status?: ?number): string {
   if (!status) {
     return '';
   }
   switch (status) {
     case 1:
-      return '1. Under forberedelse';
+      return I18n.t('musit.analysis.statusType.1');
     case 2:
-      return '2. Analyse påbegynt';
+      return I18n.t('musit.analysis.statusType.2');
     case 3:
-      return '3. Analyse ferdig';
+      return I18n.t('musit.analysis.statusType.3');
     case 4:
-      return '4. Avsluttet uten resultat';
+      return I18n.t('musit.analysis.statusType.4');
     default:
       return 'N/A: ' + status;
   }
@@ -301,7 +305,7 @@ function getAnalysisTypeTerm(form, predefined: Predefined, appSession) {
       a => a.id === form.analysisTypeId.value
     );
     if (foundType) {
-      return appSession.isEn ? foundType.enName : foundType.noName;
+      return appSession.language.isEn ? foundType.enName : foundType.noName;
     }
   }
   return '';
@@ -311,7 +315,7 @@ function getAnalysisPurpose(form, predefined, appSession) {
   if (form.reason.rawValue && predefined.purposes) {
     const foundType = predefined.purposes.find(a => `${a.id}` === form.reason.rawValue);
     if (foundType) {
-      return appSession.isEn ? foundType.enPurpose : foundType.noPurpose;
+      return appSession.language.isEn ? foundType.enPurpose : foundType.noPurpose;
     }
   }
   return '';

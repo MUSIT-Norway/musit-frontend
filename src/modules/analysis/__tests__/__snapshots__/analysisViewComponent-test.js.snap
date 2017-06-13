@@ -44,6 +44,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         htmlFor="reason"
       >
         Formål med analysen:
+         
       </label>
       <div
         className="col-md-10"
@@ -116,7 +117,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         className="control-label col-md-2"
         htmlFor="note"
       >
-        Beskrivelse/ kommentar:
+        Kommentar:
       </label>
       <div
         className="col-md-10"
@@ -202,7 +203,8 @@ exports[`AnalysisViewComponent should render properly 1`] = `
           className="control-label col-md-2"
           htmlFor="externalFile"
         >
-          Vedlegg:
+          Vedlegg
+          :
         </label>
         <div
           className="col-md-10"
@@ -240,7 +242,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
           className="control-label col-md-2"
           htmlFor="restrictions"
         >
-          Klausulering:
+          Klausulering
         </label>
         <div
           className="col-md-10"

@@ -14,6 +14,7 @@ import { ActorSuggest } from '../../components/suggest/ActorSuggest';
 import DatePicker from '../../components/DatePicker';
 import { DATE_FORMAT_DISPLAY, formatISOString } from '../../shared/util';
 import ObjectTable from '../objects/components/ObjectTable';
+import { getStatusText } from './AnalysisViewComponent';
 
 type Location = {
   state?: Array<ObjectData & SampleData & { sampleType: string, sampleSubType: string }>
@@ -81,7 +82,9 @@ const AnalysisForm = ({
             <hr />
           </div>}
         <div className="form-group">
-          <label className="control-label col-md-2" htmlFor="type">Type analyse:</label>
+          <label className="control-label col-md-2" htmlFor="type">
+            {I18n.t('musit.analysis.analysisType')}
+          </label>
           {!form.id.value
             ? <div>
                 <div className="col-md-5">
@@ -91,7 +94,7 @@ const AnalysisForm = ({
                     value={form.analysisTypeCategory.value || ''}
                     onChange={updateFormField(form.analysisTypeCategory.name, updateForm)}
                   >
-                    <option value="">Velg kategori</option>
+                    <option value="">{I18n.t('musit.analysis.chooseCategory')}</option>
                     {predefined.categories &&
                       Object.keys(predefined.categories).map(k => (
                         <option key={k} value={k}>{predefined.categories[k]}</option>
@@ -107,7 +110,7 @@ const AnalysisForm = ({
                       value={form.analysisTypeId.rawValue || ''}
                       onChange={updateFormField(form.analysisTypeId.name, updateForm)}
                     >
-                      <option value="">Velg type</option>
+                      <option value="">{I18n.t('musit.analysis.chooseType')}</option>
                       {predefined.analysisTypes &&
                         predefined.analysisTypes
                           .filter(
@@ -129,7 +132,7 @@ const AnalysisForm = ({
         </div>
         <div className="form-group">
           <label className="control-label col-md-2" htmlFor="reason">
-            Formål med analysen:
+            {I18n.t('musit.analysis.reason')}
           </label>
           <div className="col-md-10">
             <select
@@ -138,11 +141,11 @@ const AnalysisForm = ({
               value={form.reason.rawValue || ''}
               onChange={updateFormField(form.reason.name, updateForm)}
             >
-              <option value="">Velg formål</option>
+              <option value="">{I18n.t('musit.analysis.chooseReason')}</option>
               {predefined.purposes &&
                 predefined.purposes.map(a => (
                   <option key={a.id} value={a.id}>
-                    {appSession.isEn ? a.enPurpose : a.noPurpose}
+                    {appSession.language.isEn ? a.enPurpose : a.noPurpose}
                   </option>
                 ))}
             </select>
@@ -150,7 +153,7 @@ const AnalysisForm = ({
         </div>
         <div className="form-group">
           <label className="control-label col-md-2" htmlFor="status">
-            Status på analysen:
+            {I18n.t('musit.analysis.status')}
           </label>
           <div className="col-md-10">
             <select
@@ -159,18 +162,18 @@ const AnalysisForm = ({
               value={form.status.rawValue || ''}
               onChange={updateFormField(form.status.name, updateForm)}
             >
-              <option value="">Velg formål</option>
-              <option value="1">1. Under forberedelse</option>
-              <option value="2">2. Analyse påbegynt</option>
-              <option value="3">3. Analyse ferdig</option>
-              <option value="4">4. Avsluttet uten resultat</option>
+              <option value="">{I18n.t('musit.analysis.chooseStatus')}</option>
+              <option value="1">{getStatusText(1)}</option>
+              <option value="2">{getStatusText(2)}</option>
+              <option value="3">{getStatusText(3)}</option>
+              <option value="4">{getStatusText(4)}</option>
             </select>
           </div>
         </div>
 
         <div className="form-group">
           <label className="control-label col-md-2" htmlFor="place">
-            Sted for analysen:
+            {I18n.t('musit.analysis.place')}
           </label>
           <div className="col-md-10">
             <select
@@ -179,7 +182,7 @@ const AnalysisForm = ({
               value={form.orgId.rawValue || ''}
               onChange={updateFormField(form.orgId.name, updateForm)}
             >
-              <option value="">Velg analysested</option>
+              <option value="">{I18n.t('musit.analysis.choosePlace')}</option>
               {predefined.analysisLabList &&
                 predefined.analysisLabList.map(a => (
                   <option key={a.id} value={a.id}>
@@ -192,7 +195,7 @@ const AnalysisForm = ({
 
         <div className="form-group">
           <label className="control-label col-md-2" htmlFor="casenumber">
-            Saksnummer:
+            {I18n.t('musit.analysis.caseNumber')}
           </label>
           <div className="col-md-5">
             <input
@@ -210,7 +213,9 @@ const AnalysisForm = ({
         </div>
         <hr />
         <div className="form-group">
-          <label className="control-label col-md-2" htmlFor="note">Kommentar:</label>
+          <label className="control-label col-md-2" htmlFor="note">
+            {I18n.t('musit.analysis.note')}
+          </label>
           <div className="col-md-10">
             <textarea
               className="form-control"
@@ -222,7 +227,9 @@ const AnalysisForm = ({
           </div>
         </div>
         <div className="form-group">
-          <label className="control-label">Personer tilknyttet analysen:</label>
+          <label className="control-label">
+            {I18n.t('musit.analysis.personTillAnalysis')}
+          </label>
         </div>
         <PersonRoleDate
           appSession={appSession}
@@ -237,7 +244,7 @@ const AnalysisForm = ({
         <div className="well">
           <div className="form-group">
             <label className="col-md-12" htmlFor="objects">
-              Objekter/prøver:
+              {I18n.t('musit.analysis.objectOrSample')}
             </label>
           </div>
           <div className="form-group">
@@ -245,13 +252,13 @@ const AnalysisForm = ({
               <ObjectTable objects={objectData} />
             </div>
             <div className="col-md-11 col-md-offset-0">
-              <AddButton label="Legg til object" />
+              <AddButton label={I18n.t('musit.analysis.addMoreObjectOrSample')} />
             </div>
           </div>
           <hr />
           <div className="form-group">
             <label className="control-label col-md-2" htmlFor="externalSource">
-              Ekstern kilde:
+              {I18n.t('musit.analysis.externalSource')}
             </label>
             <div className="col-md-5">
               <input
@@ -262,23 +269,23 @@ const AnalysisForm = ({
               />
             </div>
             <div className="col-md-2">
-              <button className="btn btn-default">Lagre</button>
+              <button className="btn btn-default">{I18n.t('musit.texts.save')}</button>
             </div>
           </div>
           <div className="form-group">
             <label className="control-label col-md-2" htmlFor="file">
-              Last opp fil:
+              {I18n.t('musit.texts.uploadFile')}:
             </label>
             <div className="col-md-5">
               <input className="form-control" id="file" />
             </div>
             <div className="col-md-2">
-              <button className="btn btn-default">Bla gjennom</button>
+              <button className="btn btn-default">{I18n.t('musit.texts.browse')}</button>
             </div>
           </div>
           <div className="form-group">
             <label className="control-label col-md-2" htmlFor="resultNote">
-              Kommentar til resultat:
+              {I18n.t('musit.analysis.commentsToResult')}
             </label>
             <div className="col-md-10">
               <textarea
@@ -292,7 +299,7 @@ const AnalysisForm = ({
           </div>
           <div className="form-group">
             <label className="control-label col-md-2" htmlFor="isRestricted">
-              Klausulering:
+              {I18n.t('musit.analysis.restrictions.restrictions')}
             </label>
             <div className="col-md-10">
               <div className="btn-group" data-toggle="buttons">
@@ -308,7 +315,7 @@ const AnalysisForm = ({
                     )}
                   />
                   {' '}
-                  Ja
+                  {I18n.t('musit.texts.yes')}
                 </label>
                 <label
                   className={`btn btn-default ${!form.restrictions.value ? 'active' : ''}`}
@@ -322,7 +329,7 @@ const AnalysisForm = ({
                     )}
                   />
                   {' '}
-                  Nei
+                  {I18n.t('musit.texts.no')}
                 </label>
               </div>
             </div>
@@ -331,14 +338,14 @@ const AnalysisForm = ({
             <div>
               <div className="form-group">
                 <label className="control-label col-md-2" htmlFor="restrictedBy">
-                  Klausulert for:
+                  {I18n.t('musit.analysis.restrictions.restrictionsFor')}
                 </label>
                 <div className="col-md-10">
                   <ActorSuggest
                     appSession={appSession}
                     id="restrictions_requester"
                     value={form.restrictions_requesterName.rawValue || ''}
-                    placeHolder="Find actor"
+                    placeHolder={I18n.t('musit.analysis.restrictions.findActor')}
                     onChange={e => {
                       updateForm({
                         name: 'restrictions_requesterName',
@@ -354,7 +361,7 @@ const AnalysisForm = ({
               </div>
               <div className="form-group">
                 <label className="control-label col-md-2" htmlFor="restrictionCause">
-                  Årsak til klausulering:
+                  {I18n.t('musit.analysis.restrictions.reasonForRestriction')}
                 </label>
                 <div className="col-md-10">
                   <input
@@ -370,7 +377,7 @@ const AnalysisForm = ({
                   className="control-label col-md-2"
                   htmlFor="restrictionCaseNumbers"
                 >
-                  Saksnummer:
+                  {I18n.t('musit.analysis.restrictions.caseNumber')}
                 </label>
                 <div className="col-md-5">
                   <input
@@ -388,7 +395,9 @@ const AnalysisForm = ({
                   />
                 </div>
                 <div className="col-md-2">
-                  <AddButton label="Legg til flere saksnummer" />
+                  <AddButton
+                    label={I18n.t('musit.analysis.restrictions.addMoreCaseNumbers')}
+                  />
                 </div>
               </div>
               <div className="form-group">
@@ -396,7 +405,7 @@ const AnalysisForm = ({
                   className="control-label col-md-2"
                   htmlFor="restrictionExpirationEndDate"
                 >
-                  Sluttdato:
+                  {I18n.t('musit.analysis.restrictions.endDate')}
                 </label>
                 <div className="col-md-5">
                   <DatePicker
@@ -424,7 +433,7 @@ const AnalysisForm = ({
             goToUrl
           )}
         >
-          Lagre
+          {I18n.t('musit.texts.save')}
         </button>
         {' '}
         <button
@@ -434,7 +443,7 @@ const AnalysisForm = ({
             goBack();
           }}
         >
-          Avbryt
+          {I18n.t('musit.texts.cancel')}
         </button>
       </form>
     </div>

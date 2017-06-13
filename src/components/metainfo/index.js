@@ -2,6 +2,7 @@
 import React from 'react';
 import FontAwesome from 'react-fontawesome';
 import moment from 'moment';
+import { I18n } from 'react-i18nify';
 
 type Props = {
   onClickEdit?: (e: { preventDefault: Function }) => void,
@@ -24,7 +25,7 @@ export default function MetaInformation({
     <div>
       <div className="form-group">
         <label className="control-label col-sm-2" htmlFor="registeredBy">
-          Registrert:
+          {I18n.t('musit.texts.registeredBy')}:
         </label>
         <div className="col-sm-6">
           <p className="form-control-static" id="registeredBy">
@@ -39,13 +40,13 @@ export default function MetaInformation({
         </div>
         {onClickEdit &&
           <button className="btn btn-default pull-right" onClick={onClickEdit}>
-            Endre
+            {I18n.t('musit.texts.change')}
           </button>}
       </div>
       {updatedBy &&
         <div className="form-group">
           <label className="control-label col-sm-2" htmlFor="updatedBy">
-            Sist endret:
+            {I18n.t('musit.texts.lastUpdateBy')}:
           </label>
           <div className="col-sm-10">
             <p className="form-control-static" id="updatedBy">

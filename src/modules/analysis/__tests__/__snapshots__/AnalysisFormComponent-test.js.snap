@@ -36,7 +36,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
             <option
               value=""
             >
-              Velg kategori
+              Valg kategori
             </option>
           </select>
         </div>
@@ -63,7 +63,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
           <option
             value=""
           >
-            Velg formål
+            Valg formål
           </option>
         </select>
       </div>
@@ -89,7 +89,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
           <option
             value=""
           >
-            Velg formål
+            Valg status
           </option>
           <option
             value="1"
@@ -135,7 +135,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
           <option
             value=""
           >
-            Velg analysested
+            Valg analysested
           </option>
         </select>
       </div>
@@ -274,7 +274,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
           className="col-md-11 col-md-offset-0"
         >
           <AddButton
-            label="Legg til object"
+            label="Legg til flere objekter/prøver"
           />
         </div>
       </div>
@@ -315,7 +315,8 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
           className="control-label col-md-2"
           htmlFor="file"
         >
-          Last opp fil:
+          Last opp fil
+          :
         </label>
         <div
           className="col-md-5"
@@ -363,7 +364,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
           className="control-label col-md-2"
           htmlFor="isRestricted"
         >
-          Klausulering:
+          Klausulering
         </label>
         <div
           className="col-md-10"

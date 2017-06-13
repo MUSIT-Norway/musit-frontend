@@ -13,11 +13,11 @@ export default function ObjectTable({ objects }) {
       className="table"
       columns={[
         { key: 'type', label: '' },
-        { key: 'museumNo', label: 'Museumsnr' },
-        { key: 'subNo', label: 'Unr' },
-        { key: 'term', label: 'Term/artsnavn' },
-        { key: 'sampleNum', label: 'Prøvenr' },
-        { key: 'sampleType', label: 'Prøvetype' }
+        { key: 'museumNo', label: I18n.t('musit.analysis.museumNumber') },
+        { key: 'subNo', label: I18n.t('musit.analysis.underNumber') },
+        { key: 'term', label: I18n.t('musit.analysis.term') },
+        { key: 'sampleNum', label: I18n.t('musit.analysis.sampleNumber') },
+        { key: 'sampleType', label: I18n.t('musit.analysis.sampleType') }
       ]}
       sortable={['museumNumber', 'subNumber', 'term']}
     >
