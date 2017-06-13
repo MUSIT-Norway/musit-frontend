@@ -51,7 +51,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
         }
       >
         <strong>
-          Museumnr:
+          Museumsnr
         </strong>
          
         M1234
@@ -64,14 +64,14 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
         }
       >
         <strong>
-          Unr:
+          Unr
         </strong>
          
         a
       </span>
       <span>
         <strong>
-          Term/artsnavn:
+          Term/artsnavn
         </strong>
          
         Carex saxatilis
@@ -79,7 +79,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
     </div>
     <hr />
     <h4>
-      Personer tilknyttet prøveuttaket
+      Personer knyttet til prøveuttake
     </h4>
     <div>
       <div

@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import type { Field } from 'forms/form';
+import { I18n } from 'react-i18nify';
 
 type FieldInputProps = {
   field: Field<*>,
@@ -37,7 +38,7 @@ export default function CheckBoxInput({
               onChange={e => onChange({ name: field.name, rawValue: e.target.value })}
             />
             {' '}
-            Ja
+            {I18n.t('musit.texts.yes')}
           </label>
           <label className={`btn btn-default${field.rawValue === '2' ? ' active' : ''}`}>
             <input
@@ -47,7 +48,7 @@ export default function CheckBoxInput({
               onChange={e => onChange({ name: field.name, rawValue: e.target.value })}
             />
             {' '}
-            Nei
+            {I18n.t('musit.texts.no')}
           </label>
         </div>
       </div>

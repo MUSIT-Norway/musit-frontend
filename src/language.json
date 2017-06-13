@@ -31,6 +31,34 @@
           "description": "Analysis places for analysis"
         }
       },
+      "sample": {
+        "sample": "Sample",
+        "registerSample": "Register sample",
+        "derivedFromObject": "Derived from objects",
+        "personsAssociatedWithSampleTaking": "Persons associated with sample taking",
+        "sampleId": "Sample id:",
+        "sampleNumber": "Sample:",
+        "externalId": "External id:",
+        "externalIdSource": "External id source:",
+        "sampleType": "Sample type:",
+        "chooseType": "Select type",
+        "sampleSubType": "Sample subtype:",
+        "chooseSubType": "select subtype",
+        "description": "Description of the test:",
+        "status": "Status:",
+        "chooseStatus": "Select status",
+        "volumeOrWeight": "Sample volume / weights:",
+        "chooseUnit": "Select unit",
+        "storageContainer": "Storage container:",
+        "chooseStorageContainer": "Select container",
+        "storageMedium": "Storage medium:",
+        "chooseStorageMedium": "select medium",
+        "treatment": "Treatment:",
+        "chooseTreatment": "Select treatment",
+        "hasResidualMaterial": "Has residual material:",
+        "comments": "Comment:",
+        "updateSample": "Update sample"
+      },
       "analysis": {
         "analysis": "Analysis",
         "analysisType": "Type of analysis:",
@@ -331,6 +359,7 @@
         "name": "Name",
         "role":"Role",
         "date":"Date",
+        "chooseRole":"Select role",
         "attachment": "Attachment"
       },
       "viewControl": {
@@ -783,6 +812,34 @@
           "description": "Analysesteder for analyse"
         }
       },
+      "sample":{
+        "sample": "Prøve",
+        "registerSample":"Registrer prøve",
+        "derivedFromObject":"Avledet fra objekt",
+        "personsAssociatedWithSampleTaking":"Personer knyttet til prøveuttake",
+        "sampleId":"PrøveID:",
+        "sampleNumber":"Prøvenr:",
+        "externalId":"EksternID:",
+        "externalIdSource":"Kilde for ekstern ID:",
+        "sampleType":"Prøvetype:",
+        "chooseType": "Valg type",
+        "sampleSubType":"Prøveundertype:",
+        "chooseSubType": "Valg undertype",
+        "description":"Beskrivelse av prøve:",
+        "status":"Status:",
+        "chooseStatus": "Valg status",
+        "volumeOrWeight":"Prøvevolum/-vekt:",
+        "chooseUnit": "Valg enhet",
+        "storageContainer":"Lagringskontainer:",
+        "chooseStorageContainer": "Valg kontainer",
+        "storageMedium":"Lagringsmedium:",
+        "chooseStorageMedium": "Valg medium",
+        "treatment":"Behandling:",
+        "chooseTreatment": "Valg behandling",
+        "hasResidualMaterial":"Har restmateriale:",
+        "comments":"Kommentar:",
+        "updateSample": "Endre prøve"
+      },
       "analysis": {
         "analysis": "Analyse",
         "analysisType": "Type analyse:",
@@ -1085,6 +1142,7 @@
         "name": "Navn",
         "role":"Rolle",
         "date":"Dato",
+        "chooseRole":"Velg rolle",
         "attachment": "Vedlegg"
       },
       "viewControl": {

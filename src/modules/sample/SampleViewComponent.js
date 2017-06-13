@@ -8,6 +8,7 @@ import type { AppSession } from '../../types/appSession';
 import type { FormDetails } from './types/form';
 import type { ObjectData } from '../../types/object';
 import ReadOnlySampleType from './components/ReadOnlySampleType';
+import { I18n } from 'react-i18nify';
 
 type Props = {
   form: FormDetails,
@@ -48,7 +49,7 @@ export default function SampleViewComponent({
       <form className="form-horizontal">
         <div className="page-header">
           <h1>
-            Prøve
+            {I18n.t('musit.sample.sample')}
           </h1>
         </div>
         <div className="pull-right">
@@ -56,13 +57,13 @@ export default function SampleViewComponent({
             className="btn btn-default"
             onClick={clickCreateAnalysis(appSession, store.sample, form, objectData)}
           >
-            Opprett analyse
+            {I18n.t('musit.analysis.createAnalysis')}
           </button>
           <button
             className="btn btn-default"
             onClick={clickEditSample(appSession, sampleId, objectData)}
           >
-            Endre prøve
+            {I18n.t('musit.sample.updateSample')}
           </button>
         </div>
         <div>
@@ -75,26 +76,26 @@ export default function SampleViewComponent({
           <hr />
         </div>
         <h4>
-          Avledet fra objekt
+          {I18n.t('musit.sample.derivedFromObject')}
         </h4>
         <div>
           <span style={{ marginRight: 20 }}>
-            <strong>Museumnr:</strong> {objectData.museumNo}
+            <strong>{I18n.t('musit.analysis.museumNumber')}</strong> {objectData.museumNo}
           </span>
           <span style={{ marginRight: 20 }}>
-            <strong>Unr:</strong> {objectData.subNo}
+            <strong>{I18n.t('musit.analysis.underNumber')}</strong> {objectData.subNo}
           </span>
           <span>
-            <strong>Term/artsnavn:</strong> {objectData.term}
+            <strong>{I18n.t('musit.analysis.term')}</strong> {objectData.term}
           </span>
         </div>
         <hr />
-        <h4>Personer tilknyttet prøveuttaket</h4>
+        <h4>{I18n.t('musit.sample.personsAssociatedWithSampleTaking')}</h4>
         <div>
           <div className="row">
-            <div className="col-md-4"><strong>Navn</strong></div>
-            <div className="col-md-2"><strong>Rolle</strong></div>
-            <div className="col-md-2"><strong>Dato</strong></div>
+            <div className="col-md-4"><strong>{I18n.t('musit.texts.name')}</strong></div>
+            <div className="col-md-2"><strong>{I18n.t('musit.texts.role')}</strong></div>
+            <div className="col-md-2"><strong>{I18n.t('musit.texts.date')}</strong></div>
           </div>
           {form.persons.value &&
             form.persons.value.map((p, i) => (
@@ -109,7 +110,9 @@ export default function SampleViewComponent({
         </div>
         <hr />
         <div className="form-group">
-          <label className="control-label col-md-2">Prøvenr:</label>
+          <label className="control-label col-md-2">
+            {I18n.t('musit.sample.sampleNumber')}
+          </label>
           <div className="col-md-2">
             <p className="form-control-static">
               {form.sampleNum.value}
@@ -117,7 +120,9 @@ export default function SampleViewComponent({
           </div>
         </div>
         <div className="form-group">
-          <label className="control-label col-md-2">PrøveID:</label>
+          <label className="control-label col-md-2">
+            {I18n.t('musit.sample.sampleId')}
+          </label>
           <div className="col-md-2">
             <p className="form-control-static">
               {form.sampleId.value}
@@ -125,13 +130,17 @@ export default function SampleViewComponent({
           </div>
         </div>
         <div className="form-group">
-          <label className="control-label col-md-2">EksternID:</label>
+          <label className="control-label col-md-2">
+            {I18n.t('musit.sample.externalId')}
+          </label>
           <div className="col-md-3">
             <p className="form-control-static">
               {form.externalId.value}
             </p>
           </div>
-          <label className="control-label col-md-2">Kilde for ekstern ID:</label>
+          <label className="control-label col-md-2">
+            {I18n.t('musit.sample.externalIdSource')}
+          </label>
           <div className="col-md-2">
             <p className="form-control-static">
               {form.externalIdSource.value}
@@ -143,7 +152,9 @@ export default function SampleViewComponent({
           subTypeValue={form.sampleSubType}
         />
         <div className="form-group">
-          <label className="control-label col-md-2">Beskrivelse av prøve:</label>
+          <label className="control-label col-md-2">
+            {I18n.t('musit.sample.description')}
+          </label>
           <div className="col-md-8">
             <p className="form-control-static">
               {form.description.value}
@@ -151,7 +162,9 @@ export default function SampleViewComponent({
           </div>
         </div>
         <div className="form-group">
-          <label className="control-label col-md-2">Status:</label>
+          <label className="control-label col-md-2">
+            {I18n.t('musit.sample.status')}
+          </label>
           <div className="col-md-2">
             <p className="form-control-static">
               {getStatusValue(form.status.value)}
@@ -159,7 +172,9 @@ export default function SampleViewComponent({
           </div>
         </div>
         <div className="form-group">
-          <label className="control-label col-md-2">Prøvevolum/-vekt:</label>
+          <label className="control-label col-md-2">
+            {I18n.t('musit.sample.volumeOrWeight')}
+          </label>
           <div className="col-md-2">
             <p className="form-control-static">
               {form.size.value}{' '}{form.sizeUnit.value}
@@ -167,7 +182,9 @@ export default function SampleViewComponent({
           </div>
         </div>
         <div className="form-group">
-          <label className="control-label col-md-2">Lagringskontainer:</label>
+          <label className="control-label col-md-2">
+            {I18n.t('musit.sample.storageContainer')}
+          </label>
           <div className="col-md-2">
             <p className="form-control-static">
               {form.container.value}
@@ -175,7 +192,9 @@ export default function SampleViewComponent({
           </div>
         </div>
         <div className="form-group">
-          <label className="control-label col-md-2">Lagringsmedium:</label>
+          <label className="control-label col-md-2">
+            {I18n.t('musit.sample.storageMedium')}
+          </label>
           <div className="col-md-2">
             <p className="form-control-static">
               {form.storageMedium.value}
@@ -183,7 +202,9 @@ export default function SampleViewComponent({
           </div>
         </div>
         <div className="form-group">
-          <label className="control-label col-md-2">Behandling:</label>
+          <label className="control-label col-md-2">
+            {I18n.t('musit.sample.treatment')}
+          </label>
           <div className="col-md-2">
             <p className="form-control-static">
               {form.treatment.value}
@@ -191,7 +212,9 @@ export default function SampleViewComponent({
           </div>
         </div>
         <div className="form-group">
-          <label className="control-label col-md-2">Har restmateriale:</label>
+          <label className="control-label col-md-2">
+            {I18n.t('musit.sample.hasResidualMaterial')}
+          </label>
           <div className="col-md-2">
             <p className="form-control-static">
               {(form.leftoverSample.value === 3 && 'Ja') ||
@@ -201,7 +224,9 @@ export default function SampleViewComponent({
           </div>
         </div>
         <div className="form-group">
-          <label className="control-label col-md-2">Kommentar:</label>
+          <label className="control-label col-md-2">
+            {I18n.t('musit.sample.comments')}
+          </label>
           <div className="col-md-8">
             <p className="form-control-static">
               {form.note.value}
@@ -217,7 +242,7 @@ export default function SampleViewComponent({
             goBack();
           }}
         >
-          Avbryt
+          {I18n.t('musit.texts.cancel')}
         </button>
       </form>
     </div>

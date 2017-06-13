@@ -17,6 +17,7 @@ import flatten from 'lodash/flatten';
 import MetaInformation from '../../components/metainfo';
 import moment from 'moment';
 import ReadOnlySampleType from './components/ReadOnlySampleType';
+import { I18n } from 'react-i18nify';
 
 type Params = {
   objectId: string,
@@ -62,7 +63,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
     <form className="form-horizontal">
       <div className="page-header">
         <h1>
-          Registrer prøve
+          {I18n.t('musit.sample.registerSample')}
         </h1>
       </div>
       {form.registeredByName && form.registeredByName.value &&
@@ -76,21 +77,21 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
         <hr />
       </div>}
       <h4>
-        Avledet fra objekt
+        {I18n.t('musit.sample.derivedFromObject')}
       </h4>
       <div>
         <span style={{ marginRight: 20 }}>
-          <strong>Museumnr:</strong> {objectData.museumNo}
+          <strong>{I18n.t('musit.analysis.museumNumber')}</strong> {objectData.museumNo}
         </span>
         <span style={{ marginRight: 20 }}>
-          <strong>Unr:</strong> {objectData.subNo}
+          <strong>{I18n.t('musit.analysis.underNumber')}</strong> {objectData.subNo}
         </span>
         <span>
-          <strong>Term/artsnavn:</strong> {objectData.term}
+          <strong>{I18n.t('musit.analysis.term')}</strong> {objectData.term}
         </span>
       </div>
       <hr/>
-      <h4>Personer knyttet til prøveuttaket</h4>
+      <h4>{I18n.t('musit.sample.personsAssociatedWithSampleTaking')}</h4>
       <PersonRoleDate
         appSession={appSession}
         personData={form.persons.rawValue}
@@ -105,7 +106,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
         <ValidatedFormGroup fields={[form.sampleNum]}>
           <FieldInput
             field={form.sampleNum}
-            title="Prøvenr:"
+            title={I18n.t('musit.sample.sampleNumber')}
             onChange={updateForm}
             readOnly={true}
           />
@@ -113,19 +114,19 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
         <ValidatedFormGroup fields={[form.sampleId]}>
           <FieldInput
             field={form.sampleId}
-            title="PrøveID:"
+            title={I18n.t('musit.sample.sampleId')}
             onChange={updateForm}
           />
         </ValidatedFormGroup>
         <ValidatedFormGroup fields={[form.externalId, form.externalIdSource]}>
           <FieldInput
             field={form.externalId}
-            title="EksternID:"
+            title={I18n.t('musit.sample.externalId')}
             onChange={updateForm}
           />
           <FieldInput
             field={form.externalIdSource}
-            title="Kilde for ekstern ID:"
+            title={I18n.t('musit.sample.externalIdSource')}
             onChange={updateForm}
           />
         </ValidatedFormGroup>
@@ -133,8 +134,8 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
           <ValidatedFormGroup fields={[form.sampleType, form.sampleSubType]}>
             <FieldDropDown
               field={form.sampleType}
-              title="Prøvetype:"
-              defaultOption="Velg type"
+              title={I18n.t('musit.sample.sampleType')}
+              defaultOption={I18n.t('musit.sample.chooseType')}
               onChange={(obj) => {
                 if (store.sampleTypes && store.sampleTypes[obj.rawValue] && store.sampleTypes[obj.rawValue].length === 1) {
                   updateForm({
@@ -151,8 +152,8 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
             {form.sampleType.rawValue && form.sampleType.rawValue.trim().length > 0 && store.sampleTypes && store.sampleTypes[form.sampleType.rawValue].length > 1 &&
             <FieldDropDown
               field={form.sampleSubType}
-              title="Prøveundertype:"
-              defaultOption="Velg undertype"
+              title={I18n.t('musit.sample.sampleSubType')}
+              defaultOption={I18n.t('musit.sample.chooseSubType')}
               valueFn={sampleTypeDisplayName}
               displayFn={sampleTypeDisplayName}
               onChange={updateForm}
@@ -166,7 +167,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
         <ValidatedFormGroup fields={[form.description]}>
           <FieldTextArea
             field={form.description}
-            title="Beskrivelse av prøve:"
+            title={I18n.t('musit.sample.description')}
             onChangeInput={updateForm}
             inputProps={{rows: 5}}
             controlWidth={8}
@@ -175,8 +176,8 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
         <ValidatedFormGroup fields={[form.status]}>
           <FieldDropDown
             field={form.status}
-            title="Status:"
-            defaultOption="Velg status"
+            title={I18n.t('musit.sample.status')}
+            defaultOption={I18n.t('musit.sample.chooseStatus')}
             valueFn={(v) => v.id}
             displayFn={(v) => v.noStatus}
             onChange={updateForm}
@@ -186,14 +187,14 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
         <ValidatedFormGroup fields={[form.size, form.sizeUnit]}>
           <FieldInput
             field={form.size}
-            title="Prøvevolum/-vekt:"
+            title={I18n.t('musit.sample.volumeOrWeight')}
             onChange={updateForm}
             inputProps={{className: 'size'}}
           />
           <FieldDropDown
             field={form.sizeUnit}
             title=""
-            defaultOption="Velg enhet"
+            defaultOption={I18n.t('musit.sample.chooseUnit')}
             onChange={updateForm}
             selectItems={Sample.sampleSizeUnits}
           />
@@ -201,8 +202,8 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
         <ValidatedFormGroup fields={[form.container]}>
           <FieldDropDown
             field={form.container}
-            title="Lagringskontainer:"
-            defaultOption="Velg kontainer"
+            title={I18n.t('musit.sample.storageContainer')}
+            defaultOption={I18n.t('musit.sample.chooseStorageContainer')}
             onChange={updateForm}
             selectItems={store.storageContainers ? store.storageContainers.map(c => c.noStorageContainer) : []}
           />
@@ -210,8 +211,8 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
         <ValidatedFormGroup fields={[form.storageMedium]}>
           <FieldDropDown
             field={form.storageMedium}
-            title="Lagringsmedium:"
-            defaultOption="Velg medium"
+            title={I18n.t('musit.sample.storageMedium')}
+            defaultOption={I18n.t('musit.sample.chooseStorageMedium')}
             onChange={updateForm}
             selectItems={store.storageMediums ? store.storageMediums.map(m => m.noStorageMedium) : []}
           />
@@ -219,8 +220,8 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
         <ValidatedFormGroup fields={[form.treatment]}>
           <FieldDropDown
             field={form.treatment}
-            title="Behandling:"
-            defaultOption="Velg behandling"
+            title={I18n.t('musit.sample.treatment')}
+            defaultOption={I18n.t('musit.sample.chooseTreatment')}
             onChange={updateForm}
             selectItems={store.treatments ? store.treatments.map(t => t.noTreatment) : []}
           />
@@ -228,7 +229,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
         <ValidatedFormGroup fields={[form.leftoverSample]}>
           <FieldCheckBox
             field={form.leftoverSample}
-            title="Har restmateriale:"
+            title={I18n.t('musit.sample.hasResidualMaterial')}
             yesValue={3}
             noValue={2}
             onChange={updateForm}
@@ -238,7 +239,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
         <ValidatedFormGroup fields={[form.note]}>
           <FieldTextArea
             field={form.note}
-            title="Kommentar:"
+            title={I18n.t('musit.sample.comments')}
             onChangeInput={updateForm}
             inputProps={{rows: 5, className: 'note'}}
             controlWidth={8}
@@ -259,7 +260,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
             );
         }}
       >
-        Lagre
+        {I18n.t('musit.texts.save')}
       </button>
       <a
         href="/"
@@ -269,7 +270,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
           history.goBack();
         }}
       >
-        Avbryt
+        {I18n.t('musit.texts.cancel')}
       </a>
     </form>
   </div>

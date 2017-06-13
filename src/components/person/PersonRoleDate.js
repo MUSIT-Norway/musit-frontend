@@ -9,6 +9,7 @@ import { DATE_FORMAT_DISPLAY } from '../../shared/util';
 import type { AppSession } from '../../types/appSession';
 import MusitActor from '../../models/actor';
 import moment from 'moment';
+import { I18n } from 'react-i18nify';
 
 export type Person = {
   name?: string,
@@ -51,14 +52,14 @@ export const PersonRoleDate = ({
     <Grid>
       <Row>
         <Col md={2}>
-          <strong>Navn</strong>
+          <strong>{I18n.t('musit.texts.name')}</strong>
         </Col>
         <Col md={2}>
-          <strong>Rolle</strong>
+          <strong>{I18n.t('musit.texts.role')}</strong>
         </Col>
         {showDateForRole &&
           <Col md={2}>
-            <strong>Dato</strong>
+            <strong>{I18n.t('musit.texts.date')}</strong>
           </Col>}
         <Col md={2} />
       </Row>
@@ -71,7 +72,7 @@ export const PersonRoleDate = ({
               key={`id_${i}`}
               id={`id_${i}`}
               value={v.name || ''}
-              placeHolder="Find actor"
+              placeHolder={I18n.t('musit.analysis.restrictions.findActor')}
               onChange={newValue => {
                 updateForm({
                   name: fieldName,
@@ -98,7 +99,7 @@ export const PersonRoleDate = ({
                   name: fieldName,
                   rawValue: updateRole(i, role, personData)
                 })}
-              title={v.role ? v.role : 'Velg rolle'}
+              title={v.role ? v.role : I18n.t('musit.texts.chooseRole')}
             />
           </Col>
           {showDateForRole &&
@@ -141,7 +142,7 @@ export const PersonRoleDate = ({
                 rawValue: addPerson(personData)
               })}
           >
-            Legg til flere personer
+            {I18n.t('musit.analysis.addPersons')}
           </Button>
         </Col>
       </Row>
