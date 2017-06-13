@@ -58,12 +58,12 @@ describe('analysisViewContainer', () => {
   );
 });
 
-type Params = { museumId: number, collectionId: string, token: string };
+type SubjectParams = { museumId: number, collectionId: string, token: string };
 
 function runTest(
   loadingSampleTypes: boolean,
   loadingAnalysisTypes: boolean,
-  assertFn: (sampleTypesArg: ?Params, analysisTypesArgs: ?Params) => void
+  assertFn: (sampleTypesArg: ?SubjectParams, analysisTypesArgs: ?SubjectParams) => void
 ) {
   return () => {
     const setLoadingSampleTypes = sinon.spy();

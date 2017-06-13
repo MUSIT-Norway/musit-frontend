@@ -4,6 +4,10 @@ import React from 'react';
 import { EventsComponent } from '../EventsComponent';
 
 describe('EventsComponent', () => {
+  const history = {
+    push: () => {}
+  };
+
   it('Check it renders when not loaded', () => {
     const myDiv = shallow(
       <EventsComponent
@@ -12,17 +16,18 @@ describe('EventsComponent', () => {
           loading: true
         }}
         loader={<span>loader</span>}
-        route={{
-          showObservations: true,
-          showControls: true
-        }}
-        params={{
-          id: '1'
+        showObservations={true}
+        showControls={true}
+        match={{
+          params: {
+            id: '1'
+          }
         }}
         appSession={{}}
         clearEvents={() => true}
         loadEvents={() => true}
         loadRootNode={() => true}
+        history={history}
       />
     );
     expect(shallowToJson(myDiv)).toMatchSnapshot();
@@ -34,17 +39,18 @@ describe('EventsComponent', () => {
         store={{
           data: []
         }}
-        route={{
-          showObservations: true,
-          showControls: true
-        }}
-        params={{
-          id: '1'
+        showObservations={true}
+        showControls={true}
+        match={{
+          params: {
+            id: '1'
+          }
         }}
         appSession={{}}
         clearEvents={() => true}
         loadEvents={() => true}
         loadRootNode={() => true}
+        history={history}
       />
     );
     expect(shallowToJson(myDiv)).toMatchSnapshot();

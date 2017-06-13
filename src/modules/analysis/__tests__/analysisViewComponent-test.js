@@ -84,7 +84,7 @@ describe('AnalysisViewComponent', () => {
     const wrapper = shallow(
       <AnalysisViewComponent
         form={form}
-        params={{ analysisId: '45' }}
+        match={{ params: { analysisId: '45' } }}
         appSession={appSession}
         store={store}
         goToUrl={() => {}}

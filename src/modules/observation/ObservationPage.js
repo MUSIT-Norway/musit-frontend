@@ -24,7 +24,6 @@ import {
   formatISOString
 } from '../../shared/util';
 import FontAwesome from 'react-fontawesome';
-import { hashHistory } from 'react-router';
 import SaveCancel from '../../components/formfields/saveCancel/SaveCancel';
 import DatePicker from '../../components/DatePicker';
 import { ActorSuggest } from '../../components/suggest/ActorSuggest';
@@ -45,7 +44,8 @@ export default class ObservationPage extends React.Component {
     mode: PropTypes.oneOf(['ADD', 'VIEW', 'EDIT']).isRequired,
     saveDisabled: PropTypes.bool,
     cancelDisabled: PropTypes.bool,
-    appSession: PropTypes.object.isRequired
+    appSession: PropTypes.object.isRequired,
+    history: PropTypes.object
   };
 
   static defaultProps = {
@@ -498,7 +498,7 @@ export default class ObservationPage extends React.Component {
               ? <Col xs={10}>
                   <Button
                     onClick={() => {
-                      hashHistory.goBack();
+                      this.props.history.goBack();
                     }}
                   >
                     {I18n.t('musit.texts.close')}
@@ -506,7 +506,7 @@ export default class ObservationPage extends React.Component {
                 </Col>
               : <SaveCancel
                   onClickSave={this.handleSubmit}
-                  onClickCancel={() => hashHistory.goBack()}
+                  onClickCancel={() => this.props.history.goBack()}
                   saveDisabled={
                     this.props.saveDisabled === true ||
                       this.state.observations.length === 0

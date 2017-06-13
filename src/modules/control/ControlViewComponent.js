@@ -18,7 +18,6 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { hashHistory } from 'react-router';
 import { Grid, Row, Col, ControlLabel, Button } from 'react-bootstrap';
 import ControlView from './ControlViewForm';
 import { MusitField } from '../../components/formfields';
@@ -34,22 +33,24 @@ export class ControlViewContainer extends React.Component {
   static propTypes = {
     controls: PropTypes.object,
     getControl: PropTypes.func.isRequired,
-    params: PropTypes.object,
-    rootNode: PropTypes.object
+    match: PropTypes.object,
+    rootNode: PropTypes.object,
+    history: PropTypes.object
   };
 
   componentWillMount() {
-    if (this.props.params.controlId) {
+    const params = this.props.match.params || {};
+    if (params.controlId) {
       this.props.getControl({
-        nodeId: this.props.params.id,
-        controlId: this.props.params.controlId,
+        nodeId: params.id,
+        controlId: params.controlId,
         museumId: this.props.appSession.museumId,
         token: this.props.appSession.accessToken
       });
     }
     if (!this.props.store.rootNode) {
       this.props.loadRootNode({
-        id: this.props.params.id,
+        id: params.id,
         museumId: this.props.appSession.museumId,
         token: this.props.appSession.accessToken
       });
@@ -128,7 +129,7 @@ export class ControlViewContainer extends React.Component {
                 style={{ textAlign: 'center', border: '12px', borderColor: 'red' }}
               >
                 <Col xs={10}>
-                  <Button onClick={() => hashHistory.goBack()}>
+                  <Button onClick={this.props.history.goBack}>
                     {I18n.t('musit.texts.close')}
                   </Button>
                 </Col>

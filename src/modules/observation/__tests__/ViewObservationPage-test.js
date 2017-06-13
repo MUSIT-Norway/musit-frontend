@@ -89,9 +89,11 @@ describe('Render view observation page', () => {
             ]
           }
         }}
-        params={{
-          id: '1',
-          obsId: 45
+        match={{
+          params: {
+            id: '1',
+            obsId: 45
+          }
         }}
         appSession={{
           accessToken: '1234',

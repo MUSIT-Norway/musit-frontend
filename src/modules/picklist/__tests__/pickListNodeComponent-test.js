@@ -6,6 +6,10 @@ import { expect as e } from 'chai';
 import sinon from 'sinon';
 
 describe('PickListComponent for nodes', () => {
+  const history = {
+    push: () => {}
+  };
+
   const pickList = {
     nodes: [
       {
@@ -65,7 +69,7 @@ describe('PickListComponent for nodes', () => {
   it('should display component (nodes) correctly', () => {
     const wrapper = shallow(
       <PickListComponent
-        route={{ type: 'nodes' }}
+        type="nodes"
         pickList={pickList}
         markNode={x => x}
         markObject={x => x}
@@ -82,6 +86,7 @@ describe('PickListComponent for nodes', () => {
         isTypeNode={() => true}
         toggleScanner={() => true}
         scannerEnabled={true}
+        history={history}
       />
     );
 
@@ -98,7 +103,7 @@ describe('PickListComponent for nodes', () => {
 
     const wrapper = mount(
       <PickListComponent
-        route={{ type: 'nodes' }}
+        type="nodes"
         pickList={pickList}
         markNode={onToggleNode}
         markObject={onToggleObject}
@@ -117,6 +122,7 @@ describe('PickListComponent for nodes', () => {
         toggleScanner={onToggleScanner}
         scannerEnabled={true}
         showModal={onShowModal}
+        history={history}
       />
     );
 

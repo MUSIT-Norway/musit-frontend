@@ -63,7 +63,7 @@ const getObjectsValue = (store: Store) => {
 };
 
 const AnalysisTypesComponent = (props: Props) => (
-  <div>
+  <div className="container">
     <div className="page-header">
       <h1>{I18n.t('musit.administration.analysisTypes.analysisTypes')}</h1>
     </div>

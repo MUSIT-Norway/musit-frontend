@@ -6,6 +6,11 @@ exports[`PickListComponent for objects Should mount 1`] = `
   classExistsOnDom={[Function]}
   emitError={[Function]}
   emitSuccess={[Function]}
+  history={
+    Object {
+      "push": [Function],
+    }
+  }
   iconRendrer={[Function]}
   isTypeNode={false}
   markMainObject={[Function]}
@@ -101,13 +106,9 @@ exports[`PickListComponent for objects Should mount 1`] = `
   refreshObjects={[Function]}
   removeNode={[Function]}
   removeObject={[Function]}
-  route={
-    Object {
-      "type": "objects",
-    }
-  }
   scannerEnabled={true}
   toggleScanner={[Function]}
+  type="objects"
 >
   <div>
     <main>

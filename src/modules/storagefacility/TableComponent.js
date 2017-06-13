@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
 import Loader from 'react-loader';
 import NodeGrid from './NodeTable';
@@ -29,7 +28,7 @@ export default class TableComponent extends React.Component {
     loadStats: PropTypes.func.isRequired,
     loadRootNode: PropTypes.func.isRequired,
     deleteNode: PropTypes.func.isRequired,
-    params: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
     pickObject: PropTypes.func.isRequired,
     pickNode: PropTypes.func.isRequired,
     setLoading: PropTypes.func.isRequired,
@@ -41,7 +40,8 @@ export default class TableComponent extends React.Component {
     isItemAdded: PropTypes.func.isRequired,
     toggleScanner: PropTypes.func.isRequired,
     scannerEnabled: PropTypes.bool.isRequired,
-    goTo: PropTypes.func.isRequired
+    goTo: PropTypes.func.isRequired,
+    history: PropTypes.object
   };
 
   constructor(props) {
@@ -82,13 +82,13 @@ export default class TableComponent extends React.Component {
   }
 
   componentWillMount(
-    nodeId = this.props.params.id,
+    nodeId = this.props.match.params.id,
     museumId = this.props.appSession.museumId,
     collectionId = this.props.appSession.collectionId,
     token = this.props.appSession.accessToken
   ) {
     this.loadRootNode(nodeId, museumId, token);
-    if (this.props.route.showObjects) {
+    if (this.props.showObjects) {
       this.loadObjects(nodeId, museumId, collectionId, token);
     } else {
       this.loadNodes(nodeId, museumId, token);
@@ -103,15 +103,18 @@ export default class TableComponent extends React.Component {
     const museumId = newProps.appSession.museumId;
     const collectionId = newProps.appSession.collectionId;
     const token = this.props.appSession.accessToken;
-    const nodeId = museumHasChanged ? null : newProps.params.id;
-    const locationState = newProps.location.state;
-    const idHasChanged = newProps.params.id !== this.props.params.id;
-    const stateHasChanged = locationState !== this.props.location.state;
 
+    const newParams = newProps.match.params || {};
+    const curParams = this.props.match.params || {};
+
+    const locationState = newProps.location.state;
+    const idHasChanged = newParams.id !== curParams.id;
+    const stateHasChanged = locationState !== this.props.location.state;
     if (idHasChanged || museumHasChanged || collectionHasChanged || stateHasChanged) {
+      const nodeId = museumHasChanged ? null : newParams.id;
       const currentPage = this.getCurrentPage(locationState);
       this.loadRootNode(nodeId, museumId, token);
-      if (newProps.route.showObjects) {
+      if (newProps.showObjects) {
         this.loadObjects(nodeId, museumId, collectionId, token, currentPage);
       } else {
         this.loadNodes(nodeId, museumId, token, currentPage);
@@ -306,11 +309,11 @@ export default class TableComponent extends React.Component {
   }
 
   makeToolbar(
-    nodeId = this.props.params.id,
+    nodeId = this.props.match.params.id,
     museumId = this.props.appSession.museumId,
     collectionId = this.props.appSession.collectionId,
     token = this.props.appSession.accessToken,
-    showObjects = this.props.route.showObjects,
+    showObjects = this.props.showObjects,
     searchPattern = this.state.searchPattern
   ) {
     return (
@@ -391,7 +394,7 @@ export default class TableComponent extends React.Component {
                 callback: {
                   onComplete: () => {
                     if (rootNode.isPartOf) {
-                      hashHistory.replace(
+                      this.props.history.replace(
                         Config.magasin.urls.client.storagefacility.goToNode(
                           rootNode.pathNames.filter(
                             path => path.nodeId === rootNode.isPartOf
@@ -444,7 +447,7 @@ export default class TableComponent extends React.Component {
     token = this.props.appSession.accessToken,
     rootNode = this.props.tableStore.rootNode,
     children = this.props.tableStore.children,
-    showObjects = this.props.route.showObjects,
+    showObjects = this.props.showObjects,
     moveNode = this.showMoveNodeModal,
     moveObject = this.showMoveObjectModal,
     showHistory = this.showObjectMoveHistory
@@ -471,7 +474,7 @@ export default class TableComponent extends React.Component {
                 token
               })}
             goToObject={uuid =>
-              hashHistory.push(
+              this.props.history.push(
                 Config.magasin.urls.client.object.gotoObject(this.props.appSession, uuid)
               )}
             isObjectAdded={object =>
@@ -484,7 +487,7 @@ export default class TableComponent extends React.Component {
               currentPage={currentPage}
               perPage={Config.magasin.limit}
               onClick={cp => {
-                hashHistory.replace({
+                this.props.history.replace({
                   pathname: Config.magasin.urls.client.storagefacility.goToObjects(
                     rootNode.nodeId,
                     this.props.appSession
@@ -527,7 +530,7 @@ export default class TableComponent extends React.Component {
             currentPage={currentPage}
             perPage={Config.magasin.limit}
             onClick={cp => {
-              hashHistory.replace({
+              this.props.history.replace({
                 pathname: Config.magasin.urls.client.storagefacility.goToNode(
                   rootNode.nodeId,
                   this.props.appSession

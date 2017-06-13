@@ -6,9 +6,9 @@ describe('ViewObjectContainer-test', () => {
     const loadObject = sinon.spy();
     const loadSampleEvents = sinon.spy();
     const loadMoveAndAnalysisEvents = sinon.spy();
-    const params = sinon.spy();
     const getAnalysisTypes = sinon.spy();
     const getSampleTypes = sinon.spy();
+    const match = { params: { id: '123' } };
     const appSession = {
       museumId: 99,
       collectionId: '1234455',
@@ -19,7 +19,7 @@ describe('ViewObjectContainer-test', () => {
       loadObject,
       loadSampleEvents,
       loadMoveAndAnalysisEvents,
-      params,
+      match,
       getAnalysisTypes,
       getSampleTypes
     });

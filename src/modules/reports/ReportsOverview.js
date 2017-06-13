@@ -4,7 +4,6 @@ import { Table, PageHeader, Panel, Grid, Row } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
 import Config from '../../config';
 import inject from 'react-rxjs/dist/RxInject';
-import { hashHistory } from 'react-router';
 import flowRight from 'lodash/flowRight';
 import { makeUrlAware } from '../../stores/appSession';
 
@@ -43,7 +42,7 @@ export const ReportsOverview = props => {
                             href={url}
                             onClick={e => {
                               e.preventDefault();
-                              hashHistory.push(url);
+                              props.history.push(url);
                             }}
                           >
                             {I18n.t(report.title)}

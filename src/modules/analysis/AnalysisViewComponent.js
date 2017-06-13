@@ -11,7 +11,7 @@ import moment from 'moment';
 import ObjectTable from '../objects/components/ObjectTable';
 import AddButton from '../../components/AddButton';
 
-type Params = { analysisId: string };
+type Match = { params: { analysisId: string } };
 
 type Predefined = {
   analysisTypes: Array<any>,
@@ -25,20 +25,13 @@ type Props = {
   store: Store,
   appSession: AppSession,
   predefined: Predefined,
-  params: Params,
+  match: Match,
   goToUrl: (s: string) => void,
   goBack: () => void
 };
 
-const AnalysisView = ({
-  form,
-  store,
-  predefined,
-  appSession,
-  params,
-  goToUrl
-}: Props) => (
-  <div>
+const AnalysisView = ({ form, store, predefined, appSession, match, goToUrl }: Props) => (
+  <div className="container">
     <div className="page-header">
       <h1>
         {I18n.t('musit.analysis.viewAnalysis')}
@@ -54,7 +47,7 @@ const AnalysisView = ({
           goToUrl(
             Config.magasin.urls.client.analysis.editAnalysis(
               appSession,
-              params.analysisId
+              match.params.analysisId
             )
           );
         }}

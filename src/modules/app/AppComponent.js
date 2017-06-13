@@ -2,7 +2,7 @@ import { I18n } from 'react-i18nify';
 import 'react-select/dist/react-select.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { hashHistory, IndexLink } from 'react-router';
+import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { MenuItem, Nav, Navbar, NavDropdown, NavItem } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
@@ -84,7 +84,7 @@ export class AppComponent extends Component {
   handleCollectionId(collectionId) {
     this.props.setCollectionId(collectionId);
     this.props.clearObjectPicklist();
-    const nodeId = this.props.params.id;
+    const nodeId = this.props.match.params ? this.props.match.params.id : null;
     const localAppSession = { ...this.props.appSession, collectionId };
     if (nodeId) {
       this.props.goTo(
@@ -136,12 +136,12 @@ export class AppComponent extends Component {
         <Navbar fixedTop style={{ zIndex: 1 }}>
           <Navbar.Header>
             <Navbar.Brand>
-              <IndexLink to={'/about'} activeStyle={{ color: '#33e0ff' }}>
+              <Link to={'/about'}>
                 <div className="brand">
                   <img height="40" alt="logo" src={Logo} />
                 </div>
                 <span>MUSIT</span>
-              </IndexLink>
+              </Link>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
@@ -260,8 +260,4 @@ const commands = {
   clearNodePicklist$
 };
 
-const props = {
-  goTo: hashHistory.push
-};
-
-export default inject(data, commands, props)(AppComponent);
+export default inject(data, commands)(AppComponent);

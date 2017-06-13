@@ -6,6 +6,10 @@ import { expect as e } from 'chai';
 import sinon from 'sinon';
 
 describe('PickListComponent for objects', () => {
+  const history = {
+    push: () => {}
+  };
+
   const pickList = {
     nodes: [
       {
@@ -67,7 +71,7 @@ describe('PickListComponent for objects', () => {
 
     const wrapper = mount(
       <PickListComponent
-        route={{ type: 'objects' }}
+        type="objects"
         pickList={pickList}
         markNode={onToggleNode}
         markObject={onToggleObject}
@@ -85,6 +89,7 @@ describe('PickListComponent for objects', () => {
         isTypeNode={false}
         toggleScanner={() => true}
         scannerEnabled={true}
+        history={history}
       />
     );
 
@@ -94,7 +99,7 @@ describe('PickListComponent for objects', () => {
   it('should display component (objects) correctly', () => {
     const wrapper = shallow(
       <PickListComponent
-        route={{ type: 'objects' }}
+        type="objects"
         pickList={pickList}
         markNode={x => x}
         markObject={x => x}
@@ -111,6 +116,7 @@ describe('PickListComponent for objects', () => {
         isTypeNode={false}
         toggleScanner={() => true}
         scannerEnabled={true}
+        history={history}
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
@@ -125,7 +131,7 @@ describe('PickListComponent for objects', () => {
 
     const wrapper = mount(
       <PickListComponent
-        route={{ type: 'objects' }}
+        type="objects"
         pickList={pickList}
         markNode={onToggleNode}
         markObject={onToggleObject}
@@ -143,6 +149,7 @@ describe('PickListComponent for objects', () => {
         isTypeNode={false}
         toggleScanner={() => true}
         scannerEnabled={true}
+        history={history}
       />
     );
 
@@ -169,7 +176,7 @@ describe('PickListComponent for objects', () => {
 
     const wrapper = mount(
       <PickListComponent
-        route={{ type: 'objects' }}
+        type="objects"
         pickList={pickList}
         markNode={onToggleNode}
         markObject={onToggleObject}
@@ -187,6 +194,7 @@ describe('PickListComponent for objects', () => {
         isTypeNode={false}
         toggleScanner={() => true}
         scannerEnabled={true}
+        history={history}
       />
     );
 
@@ -213,7 +221,7 @@ describe('PickListComponent for objects', () => {
 
     const wrapper = mount(
       <PickListComponent
-        route={{ type: 'objects' }}
+        type="objects"
         pickList={pickList}
         markNode={onToggleNode}
         markObject={onToggleObject}
@@ -231,6 +239,7 @@ describe('PickListComponent for objects', () => {
         isTypeNode={false}
         toggleScanner={() => true}
         scannerEnabled={true}
+        history={history}
       />
     );
 

@@ -19,9 +19,11 @@ export const makeUrlAware = Component => {
         museumId: PropTypes.number.isRequired,
         collectionId: PropTypes.string.isRequired
       }).isRequired,
-      params: PropTypes.shape({
-        museumId: PropTypes.string,
-        collectionIds: PropTypes.string
+      match: PropTypes.shape({
+        params: PropTypes.shape({
+          museumId: PropTypes.string,
+          collectionIds: PropTypes.string
+        })
       })
     };
 
@@ -38,18 +40,16 @@ export const makeUrlAware = Component => {
     }
 
     diffPropsAndRefresh(newProps) {
-      const paramsDiffFromSession = !isEqualWith(
-        newProps.params,
+      const newParams = (newProps.match && newProps.match.params) || {};
+      const routerMatchDiffFromSession = !isEqualWith(
+        newParams,
         newProps.appSession,
-        (params, session) => {
-          return (
-            params.museumId * 1 === session.museumId &&
-            params.collectionIds === session.collectionId
-          );
-        }
+        (params, session) =>
+          params.museumId * 1 === session.museumId &&
+          params.collectionIds === session.collectionId
       );
-      if (paramsDiffFromSession) {
-        this.props.refreshSession(newProps.params, newProps.appSession);
+      if (routerMatchDiffFromSession) {
+        this.props.refreshSession(newParams, newProps.appSession);
       }
     }
 

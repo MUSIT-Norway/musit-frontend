@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 import { I18n } from 'react-i18nify';
 import Config from '../../config';
 import inject from 'react-rxjs/dist/RxInject';
-import { hashHistory } from 'react-router';
 import flowRight from 'lodash/flowRight';
 import { makeUrlAware } from '../../stores/appSession';
 import type { AppSession } from 'types/appSession';
+import type { History } from 'types/Routes';
 
 type Props = {
-  appSession: AppSession
+  appSession: AppSession,
+  history: History
 };
 
 const administrations = [
@@ -33,7 +34,7 @@ const administrations = [
 
 export const Administration = (props: Props) => {
   return (
-    <div>
+    <div className="container">
       <div className="page-header">
         <h1>{I18n.t('musit.administration.administration')}</h1>
       </div>
@@ -54,7 +55,7 @@ export const Administration = (props: Props) => {
                     href={url}
                     onClick={e => {
                       e.preventDefault();
-                      hashHistory.push(url);
+                      props.history.push(url);
                     }}
                   >
                     {I18n.t(a.title)}

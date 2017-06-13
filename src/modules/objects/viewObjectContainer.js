@@ -15,7 +15,6 @@ import { emitError, emitSuccess } from '../../shared/errors';
 import mount from '../../shared/mount';
 import { toggleObject$ } from '../../stores/pickList';
 import { isItemAdded } from '../../stores/pickList';
-import { hashHistory } from 'react-router';
 import MusitObject from '../../models/object';
 import sample from '../../models/sample';
 
@@ -27,14 +26,14 @@ const data: {} = {
   pickList$: { type: PropTypes.object.isRequired }
 };
 
-const props: {} = {
+const props: {} = props => ({
   emitSuccess,
   emitError,
   pickObject: MusitObject.pickObject(toggleObject$),
   isItemAdded,
-  goTo: hashHistory.push,
+  goTo: props.history.push,
   sampleStatus: sample.sampleStatuses
-};
+});
 
 const commands: {} = {
   loadObject$,
@@ -48,12 +47,12 @@ export const onMount = ({
   loadObject,
   loadMoveAndAnalysisEvents,
   loadSampleEvents,
-  params,
+  match,
   appSession,
   getAnalysisTypes,
   getSampleTypes
 }: any) => {
-  const uuid: string = params.id;
+  const uuid: string = match.params.id;
   const museumId: number = appSession.museumId;
   const accessToken: string = appSession.accessToken;
   const collectionId: string = appSession.collectionId;

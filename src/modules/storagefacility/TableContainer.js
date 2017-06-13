@@ -14,7 +14,6 @@ import flowRight from 'lodash/flowRight';
 import { emitError, emitSuccess } from '../../shared/errors';
 import TableComponent from './TableComponent';
 import PropTypes from 'prop-types';
-import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
 import MusitObject from '../../models/object';
 import MusitNode from '../../models/node';
@@ -45,18 +44,19 @@ const commands = {
   loadChildren$
 };
 
-const customProps = {
+const customProps = props => ({
   pickNode: MusitNode.pickNode(toggleNode$),
   pickObject: MusitObject.pickObject(toggleObject$),
   deleteNode: MusitNode.deleteNode(),
-  goTo: hashHistory.push,
+  goTo: props.history.push,
+  history: props.history,
   updateMoveDialog,
   isItemAdded,
   showConfirm,
   showModal,
   emitError,
   emitSuccess
-};
+});
 
 export const processBarcode = (barCode, props) => {
   if (props.classExistsOnDom('moveHistory')) {

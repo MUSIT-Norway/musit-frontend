@@ -10,7 +10,6 @@ import { toggleObject$ } from '../../stores/pickList';
 import { isItemAdded } from '../../stores/pickList';
 import flowRight from 'lodash/flowRight';
 import { makeUrlAware } from '../../stores/appSession';
-import { hashHistory } from 'react-router';
 import ObjectSearchComponent from './ObjectSearchComponent';
 import MusitObject from '../../models/object';
 
@@ -26,11 +25,11 @@ const commands = {
   onChangeField$
 };
 
-const props = {
+const props = props => ({
   pickObject: MusitObject.pickObject(toggleObject$),
   isItemAdded,
-  goTo: hashHistory.push
-};
+  goTo: props.history.push
+});
 
 export default flowRight([inject(data, commands, props), makeUrlAware])(
   ObjectSearchComponent

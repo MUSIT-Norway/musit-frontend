@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { PageHeader, Grid, Table } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import Breadcrumb from '../../components/layout/Breadcrumb';
-import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
 import MusitModal from '../movedialog/MoveDialogComponent';
 import MusitObject from '../../models/object';
@@ -79,7 +78,7 @@ export class PickListComponent extends React.Component {
     return <span className="icon icon-musitobject" />;
   }
 
-  labelRenderer(isNode, pick) {
+  labelRenderer(isNode, pick, historyPush) {
     return (
       <div>
         {!isNode && pick.value.sampleNum
@@ -99,14 +98,14 @@ export class PickListComponent extends React.Component {
             node={pick.path}
             onClickCrumb={node => {
               if (node.nodeId) {
-                hashHistory.push(
+                historyPush(
                   Config.magasin.urls.client.storagefacility.goToNode(
                     node.nodeId,
                     this.props.appSession
                   )
                 );
               } else {
-                hashHistory.push(
+                historyPush(
                   Config.magasin.urls.client.storagefacility.goToRoot(
                     this.props.appSession
                   )
@@ -151,7 +150,7 @@ export class PickListComponent extends React.Component {
   }
 
   render() {
-    const type = this.props.route.type;
+    const type = this.props.type;
     const pickList = this.props.pickList[type] || [];
     const marked = pickList.filter(p => p.marked);
     const markedValues = marked.map(p => p.value);
@@ -163,7 +162,7 @@ export class PickListComponent extends React.Component {
           <Grid>
             <PageHeader>
               <div>
-                <span>{I18n.t(`musit.pickList.title.${this.props.route.type}`)}</span>
+                <span>{I18n.t(`musit.pickList.title.${type}`)}</span>
                 <div
                   style={{
                     float: 'right',
@@ -306,7 +305,9 @@ export class PickListComponent extends React.Component {
                       </td>
                       <td>
                         <span className="pickListIcon">
-                          {this.iconRenderer(pick)} {this.labelRenderer(isNode, pick)}
+                          {this.iconRenderer(pick)}
+                          {' '}
+                          {this.labelRenderer(isNode, pick, this.props.history.push)}
                         </span>
                       </td>
                     </tr>

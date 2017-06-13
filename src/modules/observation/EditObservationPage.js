@@ -5,7 +5,6 @@ import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { I18n } from 'react-i18nify';
 import inject from 'react-rxjs/dist/RxInject';
-import { hashHistory } from 'react-router';
 import { emitError, emitSuccess } from '../../shared/errors';
 import store$, { loadRootNode$ } from './observationStore';
 import Control from '../../models/control';
@@ -16,15 +15,16 @@ export class EditObservationPage extends React.Component {
     addObservation: PropTypes.func.isRequired,
     emitError: PropTypes.func.isRequired,
     emitSuccess: PropTypes.func.isRequired,
-    params: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
     rootNode: PropTypes.object,
-    appSession: PropTypes.object.isRequired
+    appSession: PropTypes.object.isRequired,
+    history: PropTypes.object
   };
 
   componentWillMount() {
     if (!this.props.store.rootNode) {
       this.props.loadRootNode({
-        id: this.props.params.id,
+        id: this.props.match.params.id,
         museumId: this.props.appSession.museumId,
         token: this.props.appSession.accessToken
       });
@@ -76,7 +76,7 @@ export class EditObservationPage extends React.Component {
             </h4>
             <ObservationPage
               appSession={this.props.appSession}
-              id={this.props.params.id}
+              id={this.props.match.params.id}
               observations={this.getObservationsFromLocationState()}
               doneDate={this.props.location.state.doneDate}
               doneBy={this.getDoneByFromLocationState()}
@@ -93,7 +93,7 @@ export class EditObservationPage extends React.Component {
                     token,
                     callback: {
                       onComplete: () => {
-                        hashHistory.goBack();
+                        this.props.history.goBack();
                         this.props.emitSuccess({
                           type: 'saveSuccess',
                           message: I18n.t('musit.newControl.saveControlSuccess')

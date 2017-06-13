@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AnalysisTypesComponent should render properly 1`] = `
-<div>
+<div
+  className="container"
+>
   <div
     className="page-header"
   >

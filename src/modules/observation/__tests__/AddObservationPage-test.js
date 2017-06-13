@@ -14,8 +14,10 @@ describe('Render add observation page', () => {
         store={{
           rootNode: null
         }}
-        params={{
-          id: '1'
+        match={{
+          params: {
+            id: '1'
+          }
         }}
         appSession={{
           accessToken: '1234',

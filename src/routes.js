@@ -1,6 +1,7 @@
 import React from 'react';
-import { IndexRedirect, IndexRoute, Route, Router, hashHistory } from 'react-router';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 import NotFound from './components/NotFound';
+import ScrollToTop, { scrollToTop } from './components/layout/ScrollToTop';
 import AboutView from './modules/about/AboutPage';
 import PickListView from './modules/picklist/PickListContainer';
 import StorageUnitsTable from './modules/storagefacility/TableContainer';
@@ -22,12 +23,7 @@ import AnalysisEditContainer from './modules/analysis/AnalysisEditContainer';
 import SampleFormAddContainer from './modules/sample/sampleAddContainer';
 import SampleViewContainer from './modules/sample/sampleViewContainer';
 import SampleEditContainer from './modules/sample/sampleEditContainer';
-import CenteredLayout from './components/layout/CenteredLayout';
 import ViewObjectContainer from './modules/objects/viewObjectContainer';
-import SampleIndexMultiple from './_poc/multiple/SampleIndex';
-import SampleEditMultiple from './_poc/multiple/SampleEdit';
-import SampleIndexSingle from './_poc/single/SampleIndex';
-import SampleEditSingle from './_poc/single/SampleEdit';
 import HomeView from './modules/home/HomePage';
 import Administration from './modules/administration/Administration';
 import AnalysisTypes from './modules/administration/analysisTypes/analysisTypesContainer';
@@ -35,87 +31,207 @@ import AnalysisPlaces
   from './modules/administration/analysisPlaces/analysisPlacesContainer';
 import SampleTypes from './modules/administration/sampleTypes/sampleTypesContainer';
 
-export default () => {
-  return (
-    <Router onUpdate={() => window.scrollTo(0, 0)} history={hashHistory}>
-      <Route>
-        <Route component={CenteredLayout}>
-          <Route path="sample/index/multiple" component={SampleIndexMultiple} />
-          <Route path="sample/edit/multiple" component={SampleEditMultiple} />
-          <Route path="sample/index/single" component={SampleIndexSingle} />
-          <Route path="sample/edit/single" component={SampleEditSingle} />
-        </Route>
-        <Route
-          path="/(museum/:museumId/)(collections/:collectionIds/)"
-          component={AppComponent}
-        >
-          <IndexRedirect to="magasin" />
-          <Route path="magasin">
-            <IndexRoute component={StorageUnitsTable} />
-            <Route path="add" add component={AddStorageUnitPanel} />
-            <Route path=":id/add" add component={AddStorageUnitPanel} />
-            <Route path=":id/view" component={EditStorageUnitPanel} />
-            <Route
-              path=":id/controls"
-              showControls
-              showObservations={false}
-              component={EventsContainer}
-            />
-            <Route
-              path=":id/controlsobservations"
-              showObservations
-              showControls
-              component={EventsContainer}
-            />
-            <Route path=":id/control/add" component={ControlAddContainer} />
-            <Route path=":id/control/:controlId" component={ControlViewContainer} />
-            <Route
-              path=":id/observations"
-              showObservations
-              showControls={false}
-              component={EventsContainer}
-            />
-            <Route path=":id/observation/add" component={AddObservationPage} />
-            <Route path=":id/observation/edit" component={EditObservationPage} />
-            <Route path=":id/observation/:obsId" component={ViewObservationPage} />
-            <Route path=":id/objects" showObjects component={StorageUnitsTable} />
-            <Route path=":id" component={StorageUnitsTable} />
-          </Route>
-          <Route component={CenteredLayout}>
-            <Route path="objects/:id" component={ViewObjectContainer} />
-            <Route path="analysis">
-              <Route path="add" component={AnalysisAddContainer} />
-              <Route path="edit/:analysisId" component={AnalysisEditContainer} />
-              <Route path=":analysisId" component={AnalysisViewContainer} />
-              <Route path="sample">
-                <Route path=":objectId/add" component={SampleFormAddContainer} />
-                <Route path=":sampleId/edit" component={SampleEditContainer} />
-                <Route path=":sampleId" component={SampleViewContainer} />
-              </Route>
-            </Route>
-            <Route path="administration">
-              <IndexRoute component={Administration} />
-              <Route path="analysistypes" component={AnalysisTypes} />
-              <Route path="analysisplaces" component={AnalysisPlaces} />
-              <Route path="sampletypes" component={SampleTypes} />
-            </Route>
-          </Route>
-          <Route path="picklist">
-            <Route path="nodes" type="nodes" component={PickListView} />
-            <Route path="objects" type="objects" component={PickListView} />
-          </Route>
-          <Route path="reports">
-            <IndexRoute component={Reports} />
-            <Route path="kdreport" component={KDReportComponent} />
-          </Route>
-          <Route path="search/objects" component={ObjectSearchContainer} />
-          <Route path="about" component={AboutView} />
-          <Route path="home" component={HomeView} />
+import { replace } from 'lodash';
 
-          -- Catch all route
-          <Route path="*" component={NotFound} status={404} />
-        </Route>
-      </Route>
-    </Router>
-  );
-};
+/**
+ *
+ * Higher order components and helper functions
+ * Helper components for the router
+ */
+
+const extraProps = (Component, extraProps) => originProps => (
+  <Component {...Object.assign({}, originProps, extraProps)} />
+);
+
+/**
+ * Creates a route path based on the current path from the router.
+ *
+ * @param props that comes from the router
+ * @param path that should be appended to the current route
+ */
+const rt = (props, path) => replace(props.match.path + '/' + path, /(\/+)/g, '/');
+
+/**
+ * Route pages
+ *
+ * Each sub domain has its own page.
+ */
+
+const MusitRouter = () => (
+  <HashRouter>
+    <div>
+      <Route path="/" component={AppPage} />
+    </div>
+  </HashRouter>
+);
+
+const AppPage = props => (
+  <AppComponent {...props} goTo={props.history.push}>
+    <Switch>
+      <Route exact path={rt(props, '/')} component={HomePage} />
+      <Route exact path={rt(props, '/home')} component={HomePage} />
+      <Route exact path={rt(props, '/about')} component={AboutPage} />
+      <Route
+        path={rt(props, '/museum/:museumId/collections/:collectionIds')}
+        component={MuseumAndCollectionPage}
+      />
+
+      <Route component={NotFoundPage} />
+    </Switch>
+  </AppComponent>
+);
+
+const HomePage = scrollToTop(HomeView);
+const AboutPage = scrollToTop(AboutView);
+
+const MuseumAndCollectionPage = props => (
+  <Switch>
+    <Route path={rt(props, '/magasin')} component={MagasinPage} />
+    <Route path={rt(props, '/picklist')} component={PicklistPage} />
+    <Route path={rt(props, '/objects')} component={ObjectPage} />
+    <Route path={rt(props, '/analysis')} component={AnalysisPage} />
+    <Route path={rt(props, '/administration')} component={AdministrationPage} />
+    <Route path={rt(props, '/reports')} component={ReportsPage} />
+    <Route path={rt(props, '/search')} component={SearchPage} />
+
+    <Route component={NotFoundPage} />
+  </Switch>
+);
+
+const PicklistPage = props => (
+  <ScrollToTop>
+    <Switch>
+      <Route
+        path={rt(props, '/nodes')}
+        exact
+        component={extraProps(PickListView, { type: 'nodes' })}
+      />
+      <Route
+        path={rt(props, '/objects')}
+        exact
+        component={extraProps(PickListView, { type: 'objects' })}
+      />
+
+      <Route component={NotFoundPage} />
+    </Switch>
+  </ScrollToTop>
+);
+
+const MagasinPage = props => (
+  <Switch>
+    <Route path={rt(props, '/')} exact component={StorageUnitsTable} />
+    <Route path={rt(props, '/add')} exact component={AddStorageUnitPanel} />
+    <Route path={rt(props, '/:id')} exact component={StorageUnitsTable} />
+    <Route path={rt(props, '/:id/add')} exact component={AddStorageUnitPanel} />
+    <Route path={rt(props, '/:id/view')} exact component={EditStorageUnitPanel} />
+    <Route
+      path={rt(props, '/:id/controls')}
+      exact
+      component={extraProps(EventsContainer, {
+        showControls: true,
+        showObservations: false
+      })}
+    />
+    <Route
+      path={rt(props, '/:id/controlsobservations')}
+      exact
+      component={extraProps(EventsContainer, {
+        showControls: true,
+        showObservations: true
+      })}
+    />
+    <Route path={rt(props, '/:id/control/add')} exact component={ControlAddContainer} />
+    <Route
+      path={rt(props, '/:id/control/:controlId')}
+      exact
+      component={ControlViewContainer}
+    />
+    <Route
+      path={rt(props, '/:id/observations')}
+      exact
+      component={extraProps(EventsContainer, {
+        showControls: false,
+        showObservations: true
+      })}
+    />
+    <Route
+      path={rt(props, '/:id/observations/add')}
+      exact
+      component={AddObservationPage}
+    />
+    <Route
+      path={rt(props, '/:id/observations/edit')}
+      exact
+      component={EditObservationPage}
+    />
+    <Route
+      path={rt(props, '/:id/observations/:obsId')}
+      exact
+      component={ViewObservationPage}
+    />
+    <Route path={rt(props, '/:id/objects')} exact component={StorageUnitsTable} />
+
+    <Route component={NotFoundPage} />
+  </Switch>
+);
+
+const ObjectPage = props => (
+  <Switch>
+    <Route path={rt(props, '/:id')} exact component={ViewObjectContainer} />
+
+    <Route component={NotFoundPage} />
+  </Switch>
+);
+
+const AnalysisPage = props => (
+  <Switch>
+    <Route path={rt(props, '/add')} exact component={AnalysisAddContainer} />
+    <Route path={rt(props, '/edit')} exact component={AnalysisEditContainer} />
+    <Route path={rt(props, '/:analysisId')} exact component={AnalysisViewContainer} />
+    <Route
+      path={rt(props, '/sample/:objectId/add')}
+      exact
+      component={SampleFormAddContainer}
+    />
+    <Route
+      path={rt(props, '/sample/:objectId/edit')}
+      exact
+      component={SampleEditContainer}
+    />
+    <Route path={rt(props, '/sample/:objectId')} exact component={SampleViewContainer} />
+
+    <Route component={NotFoundPage} />
+  </Switch>
+);
+
+const AdministrationPage = props => (
+  <Switch>
+    <Route path={rt(props, '/')} exact component={Administration} />
+    <Route path={rt(props, '/analysistypes')} exact component={AnalysisTypes} />
+    <Route path={rt(props, '/analysisplaces')} exact component={AnalysisPlaces} />
+    <Route path={rt(props, '/sampletypes')} exact component={SampleTypes} />
+
+    <Route component={NotFoundPage} />
+  </Switch>
+);
+
+const ReportsPage = props => (
+  <Switch>
+    <Route path={rt(props, '/')} exact component={Reports} />
+    <Route path={rt(props, '/kdreport')} component={KDReportComponent} />
+
+    <Route component={NotFoundPage} />
+  </Switch>
+);
+
+const SearchPage = props => (
+  <Switch>
+    <Route path={rt(props, '/objects')} exact component={ObjectSearchContainer} />
+
+    <Route component={NotFoundPage} />
+  </Switch>
+);
+
+const NotFoundPage = props => <ScrollToTop><NotFound {...props} /></ScrollToTop>;
+
+export default MusitRouter;

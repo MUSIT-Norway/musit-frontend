@@ -14,7 +14,7 @@ describe('makeUrlAware', () => {
     const wrapper = mount(
       <EnhancedComponent
         appSession={appSession}
-        params={{ museumId: '99', collectionId: '1234' }}
+        match={{ museumId: '99', collectionId: '1234' }}
       />
     );
     wrapper.setProps({ appSession });
@@ -31,7 +31,7 @@ describe('RefreshSession', () => {
     setCollectionId = sinon.spy();
   });
 
-  it('It should refresh session if params is different.', () => {
+  it('It should refresh session if match values is different.', () => {
     const params = {
       museumId: 98,
       collectionId: 'Vascular Plant'
@@ -47,43 +47,49 @@ describe('RefreshSession', () => {
   });
 
   it('It should NOT refresh museum if museumId is null.', () => {
-    const params = {
-      museumId: null,
-      collectionId: 'Vascular Plant'
+    const match = {
+      params: {
+        museumId: null,
+        collectionId: 'Vascular Plant'
+      }
     };
     const appSession = {
       museumId: 99,
       collectionId: 'Lichens'
     };
-    refreshSession(setMuseumId, setCollectionId)(params, appSession);
+    refreshSession(setMuseumId, setCollectionId)(match, appSession);
     expect(setMuseumId.calledOnce).toBe(false);
     expect(setCollectionId.calledOnce).toBe(false);
   });
 
   it('It should NOT refresh collection if collection is null.', () => {
-    const params = {
-      museumId: null,
-      collectionId: null
+    const match = {
+      params: {
+        museumId: null,
+        collectionId: null
+      }
     };
     const appSession = {
       museumId: 99,
       collectionId: 'Lichens'
     };
-    refreshSession(setMuseumId, setCollectionId)(params, appSession);
+    refreshSession(setMuseumId, setCollectionId)(match, appSession);
     expect(setMuseumId.calledOnce).toBe(false);
     expect(setCollectionId.calledOnce).toBe(false);
   });
 
   it('It should NOT do anything if appSession is empty.', () => {
-    const params = {
-      museumId: null,
-      collectionId: null
+    const match = {
+      params: {
+        museumId: null,
+        collectionId: null
+      }
     };
     const appSession = {
       museumId: null,
       collectionId: null
     };
-    refreshSession(setMuseumId, setCollectionId)(params, appSession);
+    refreshSession(setMuseumId, setCollectionId)(match, appSession);
     expect(setMuseumId.calledOnce).toBe(false);
     expect(setCollectionId.calledOnce).toBe(false);
   });

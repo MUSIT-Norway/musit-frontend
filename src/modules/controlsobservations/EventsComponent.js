@@ -5,7 +5,6 @@ import EventsLeftMenu from './EventsLeftMenu';
 import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import Toolbar from '../../components/layout/Toolbar';
-import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
 import inject from 'react-rxjs/dist/RxInject';
 import store$, { clearEvents$, loadRootNode$, loadEvents$ } from './eventsStore';
@@ -16,19 +15,20 @@ export class EventsComponent extends React.Component {
   static propTypes = {
     appSession: PropTypes.object,
     store: PropTypes.object,
-    params: PropTypes.object,
+    match: PropTypes.object,
     route: PropTypes.object,
     loadEvents: PropTypes.func.isRequired,
     loadRootNode: PropTypes.func.isRequired,
     clearEvents: PropTypes.func.isRequired,
-    loader: PropTypes.element.isRequired
+    loader: PropTypes.element.isRequired,
+    history: PropTypes.object
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      showObservations: this.props.route.showObservations,
-      showControls: this.props.route.showControls
+      showObservations: this.props.showObservations,
+      showControls: this.props.showControls
     };
   }
 
@@ -37,14 +37,15 @@ export class EventsComponent extends React.Component {
   };
 
   componentWillMount() {
+    const params = this.props.match.params || {};
     this.props.clearEvents();
     this.props.loadEvents({
-      nodeId: this.props.params.id,
+      nodeId: params.id,
       museumId: this.props.appSession.museumId,
       token: this.props.appSession.accessToken
     });
     this.props.loadRootNode({
-      id: this.props.params.id,
+      id: params.id,
       museumId: this.props.appSession.museumId,
       token: this.props.appSession.accessToken
     });
@@ -69,24 +70,24 @@ export class EventsComponent extends React.Component {
     );
   }
 
-  makeLeftMenu() {
-    const nodeId = this.props.params.id;
+  makeLeftMenu(historyPush) {
+    const nodeId = this.props.match.params.id;
     const appSession = this.props.appSession;
     return (
       <div style={{ paddingTop: 10 }}>
         <EventsLeftMenu
-          id={this.props.params.id}
+          id={nodeId}
           selectObservation
           selectControl
           onClickNewObservation={() =>
-            hashHistory.push(
+            historyPush(
               Config.magasin.urls.client.storagefacility.addObservation(
                 nodeId,
                 appSession
               )
             )}
           onClickNewControl={() =>
-            hashHistory.push(
+            historyPush(
               Config.magasin.urls.client.storagefacility.addControl(nodeId, appSession)
             )}
         />
@@ -94,7 +95,7 @@ export class EventsComponent extends React.Component {
     );
   }
 
-  makeContent() {
+  makeContent(historyPush) {
     if (this.props.store.loading) {
       return this.props.loader;
     }
@@ -115,13 +116,13 @@ export class EventsComponent extends React.Component {
         </div>
       );
     }
-    const nodeId = this.props.params.id;
+    const nodeId = this.props.match.params.id;
     const appSession = this.props.appSession;
     return (
       <EventsGrid
         id={nodeId}
         showControl={ctl =>
-          hashHistory.push(
+          historyPush(
             Config.magasin.urls.client.storagefacility.viewControl(
               nodeId,
               ctl.id,
@@ -129,7 +130,7 @@ export class EventsComponent extends React.Component {
             )
           )}
         showObservation={obs =>
-          hashHistory.push(
+          historyPush(
             Config.magasin.urls.client.storagefacility.viewObservation(
               nodeId,
               obs.id,
@@ -141,14 +142,14 @@ export class EventsComponent extends React.Component {
     );
   }
 
-  showNodes(node) {
+  showNodes(node, historyPush) {
     const appSession = this.props.appSession;
     if (node && node.nodeId) {
-      hashHistory.push(
+      historyPush(
         Config.magasin.urls.client.storagefacility.goToNode(node.nodeId, appSession)
       );
     } else {
-      hashHistory.push(Config.magasin.urls.client.storagefacility.goToRoot(appSession));
+      historyPush(Config.magasin.urls.client.storagefacility.goToRoot(appSession));
     }
   }
 
@@ -159,13 +160,13 @@ export class EventsComponent extends React.Component {
         breadcrumb={
           <Breadcrumb
             node={this.props.store.rootNode}
-            onClickCrumb={node => this.showNodes(node)}
+            onClickCrumb={node => this.showNodes(node, this.props.history.push)}
             allActive
           />
         }
         toolbar={this.makeToolbar()}
-        leftMenu={this.makeLeftMenu()}
-        content={this.makeContent()}
+        leftMenu={this.makeLeftMenu(this.props.history.push)}
+        content={this.makeContent(this.props.history.push)}
       />
     );
   }

@@ -14,7 +14,6 @@ import { makeUrlAware } from '../../stores/appSession';
 import flowRight from 'lodash/flowRight';
 import mount from '../../shared/mount';
 import { toPromise } from '../../shared/util';
-import { hashHistory } from 'react-router';
 import { onMount, onProps } from './AnalysisViewContainer';
 const { form$, updateForm$, loadForm$ } = analysisForm;
 
@@ -36,12 +35,12 @@ const commands = {
   setLoading$
 };
 
-const props = {
+const props = props => ({
   saveAnalysis: toPromise(Analysis.editAnalysisEvent()),
   saveResult: toPromise(Analysis.addResult()),
-  goToUrl: hashHistory.push,
-  goBack: hashHistory.goBack
-};
+  goToUrl: props.history.push,
+  goBack: props.history.goBack
+});
 
 export default flowRight([
   inject(data, commands, props),

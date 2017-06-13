@@ -18,7 +18,7 @@ describe('AnalysisSampleFormPageView', () => {
           sample: {}
         }}
         appSession={appSession}
-        params={{ sampleId: '0000-1111-2222-3333' }}
+        match={{ params: { sampleId: '0000-1111-2222-3333' } }}
         form={{
           note: {
             name: 'note',

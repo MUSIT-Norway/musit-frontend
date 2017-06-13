@@ -9,7 +9,7 @@ import store$, { setLoading$, loadRootNode$, getObservation$ } from './observati
 
 export class ViewObservationPage extends React.Component {
   static propTypes = {
-    params: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
     setLoading: PropTypes.func.isRequired,
     getObservation: PropTypes.func.isRequired,
     loadRootNode: PropTypes.func.isRequired,
@@ -19,13 +19,13 @@ export class ViewObservationPage extends React.Component {
   componentWillMount() {
     this.props.setLoading();
     this.props.getObservation({
-      nodeId: this.props.params.id,
-      observationId: this.props.params.obsId,
+      nodeId: this.props.match.params.id,
+      observationId: this.props.match.params.obsId,
       museumId: this.props.appSession.museumId,
       token: this.props.appSession.accessToken
     });
     this.props.loadRootNode({
-      id: this.props.params.id,
+      id: this.props.match.params.id,
       museumId: this.props.appSession.museumId,
       token: this.props.appSession.accessToken
     });
@@ -46,7 +46,7 @@ export class ViewObservationPage extends React.Component {
             </h4>
             <ObservationPage
               appSession={this.props.appSession}
-              id={this.props.params.id}
+              id={this.props.match.params.id}
               onSaveObservation={() => true} // disable save
               observations={this.props.store.data.observations}
               doneBy={this.props.store.data.doneBy}

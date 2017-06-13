@@ -12,8 +12,8 @@ import flowRight from 'lodash/flowRight';
 import mount from '../../shared/mount';
 import store$, { getAnalysis$, setLoading$ } from './analysisStore';
 import Analysis from '../../models/analysis';
+import { toPromise } from '../../shared/util';
 import analysisForm, { fieldsArray } from './analysisForm';
-import { hashHistory } from 'react-router';
 
 const { form$, loadForm$ } = analysisForm;
 
@@ -34,10 +34,11 @@ const commands = {
   setLoading$
 };
 
-const props = {
-  goToUrl: hashHistory.push,
-  goBack: hashHistory.goBack
-};
+const props = props => ({
+  loadAnalysis: toPromise(Analysis.getAnalysisWithDetails()),
+  goToUrl: props.history.push,
+  goBack: props.history.goBack
+});
 
 // Can be componentified
 export const onMount = ({
@@ -71,7 +72,7 @@ export const onProps = fieldsArray => ({
   predefined,
   loadForm,
   setLoading,
-  params
+  match
 }) => {
   if (
     !store.loading &&
@@ -81,7 +82,7 @@ export const onProps = fieldsArray => ({
   ) {
     setLoading();
     getAnalysis({
-      id: params.analysisId,
+      id: match.params.analysisId,
       sampleTypes: predefined.sampleTypes,
       museumId: appSession.museumId,
       collectionId: appSession.collectionId,

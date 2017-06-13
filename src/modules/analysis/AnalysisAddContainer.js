@@ -9,7 +9,6 @@ import { makeUrlAware } from '../../stores/appSession';
 import flowRight from 'lodash/flowRight';
 import mount from '../../shared/mount';
 import { toPromise } from '../../shared/util';
-import { hashHistory } from 'react-router';
 import predefined$, {
   setLoadingSampleTypes$,
   loadSampleTypes$,
@@ -34,12 +33,12 @@ const commands = {
   loadAnalysisTypes$
 };
 
-const props = {
+const props = props => ({
   saveAnalysis: toPromise(Analysis.saveAnalysisEvent()),
   saveResult: toPromise(Analysis.addResult()),
-  goToUrl: hashHistory.push,
-  goBack: hashHistory.goBack
-};
+  goToUrl: props.history.push,
+  goBack: props.history.goBack
+});
 
 export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(
   AnalysisFormComponent

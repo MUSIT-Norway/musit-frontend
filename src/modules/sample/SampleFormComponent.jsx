@@ -5,9 +5,9 @@ import PersonRoleDate from '../../components/person/PersonRoleDate';
 import Sample from '../../models/sample';
 import type { ObjectData } from '../../types/object';
 import type { AppSession } from '../../types/appSession';
-import { hashHistory } from 'react-router';
 import type { Person } from '../../components/person/PersonRoleDate';
 import type { FormDetails } from './types/form';
+import type { History} from 'types/Routes'
 import ValidatedFormGroup from '../../forms/components/ValidatedFormGroup';
 import FieldCheckBox from '../../forms/components/FieldCheckBox';
 import FieldDropDown from '../../forms/components/FieldDropDown';
@@ -23,6 +23,9 @@ type Params = {
   sampleId?: string
 }
 
+type Match = {
+  params: Params
+}
 type Store = {
   sampleTypes?: any,
   storageContainers?: any,
@@ -40,7 +43,8 @@ type Props = {
   updatePersonForSample: Function,
   location: { pathname: string, state: Array<ObjectData> },
   appSession: AppSession,
-  params: Params
+  match: Match,
+  history: History
 };
 
 function isFormValid(form) {
@@ -50,10 +54,11 @@ function isFormValid(form) {
   }, true);
 }
 
-export default function SampleFormComponent({form, store, updateForm, addSample, location: { state }, appSession, params }: Props) {
+export default function SampleFormComponent({form, store, updateForm, addSample, location: { state }, appSession, match: {params}, history }: Props) {
   const objectData = state[0];
   const canEditSampleType = !form.sampleNum;
   return (
+    <div className="container">
     <form className="form-horizontal">
       <div className="page-header">
         <h1>
@@ -247,7 +252,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
           e.preventDefault();
           submitSample(appSession, store, form, objectData, params, addSample)
             .then((value) =>
-              hashHistory.push({
+              history.push({
                 pathname: Config.magasin.urls.client.analysis.gotoSample(appSession, value.objectId || value),
                 state: [objectData]
               })
@@ -261,12 +266,13 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
         style={{ marginLeft: 20 }}
         onClick={(e) => {
           e.preventDefault();
-          hashHistory.goBack();
+          history.goBack();
         }}
       >
         Avbryt
       </a>
     </form>
+  </div>
   );
 }
 

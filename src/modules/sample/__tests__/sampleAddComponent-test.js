@@ -204,6 +204,7 @@ describe('AnalysisSampleFormPageAdd', () => {
             }
           ]
         }}
+        match={{ params: {} }}
       />
     );
     wrapper.find('.note').simulate('change', {

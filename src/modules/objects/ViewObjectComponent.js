@@ -8,9 +8,9 @@ import type { AnalysisTypesObject } from '../../types/analysisTypes';
 import type { SampleTypesObject } from '../../types/sampleTypes';
 import EventTable from '../events/components/EventTable';
 import SampleTable from '../sample/components/SampleTable';
-import { hashHistory } from 'react-router';
 import Config from '../../config';
 import type { AppSession } from '../../types/appSession';
+import type { History } from 'types/Routes';
 
 type ViewObjectComponentProps = {
   objectStore: { objectData: ObjectData, events: Events, samples: Samples },
@@ -20,7 +20,8 @@ type ViewObjectComponentProps = {
   pickObject: Function,
   isItemAdded: Function,
   pickList: Object,
-  sampleStatus: SampleStatus
+  sampleStatus: SampleStatus,
+  history: History
 };
 
 export const ViewObjectComponent = ({
@@ -31,9 +32,10 @@ export const ViewObjectComponent = ({
   pickObject,
   isItemAdded,
   pickList,
-  sampleStatus
+  sampleStatus,
+  history
 }: ViewObjectComponentProps) => (
-  <div>
+  <div className="container">
     <PageHeader>Objektvisning</PageHeader>
     <div style={{ marginTop: '30px', marginBottom: '40px' }}>
       <Row>
@@ -46,7 +48,7 @@ export const ViewObjectComponent = ({
       <Button
         className="primary"
         onClick={() =>
-          hashHistory.push({
+          history.push({
             pathname: Config.magasin.urls.client.analysis.addAnalysis(appSession),
             state: [objectData]
           })}
@@ -56,7 +58,7 @@ export const ViewObjectComponent = ({
       <Button
         className="primary"
         onClick={() =>
-          hashHistory.push({
+          history.push({
             pathname: Config.magasin.urls.client.analysis.addSample(
               appSession,
               objectData.uuid
@@ -76,7 +78,7 @@ export const ViewObjectComponent = ({
           appSession={appSession}
           onClick={event => {
             if (event.type === 'Analysis' || event.type === 'AnalysisCollection') {
-              hashHistory.push({
+              history.push({
                 pathname: Config.magasin.urls.client.analysis.viewAnalysis(
                   appSession,
                   event.id
@@ -91,7 +93,7 @@ export const ViewObjectComponent = ({
         <SampleTable
           samples={samples}
           onClick={sample => {
-            hashHistory.push({
+            history.push({
               pathname: Config.magasin.urls.client.analysis.gotoSample(
                 appSession,
                 sample.objectId

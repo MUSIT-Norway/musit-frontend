@@ -5,24 +5,24 @@ import inject from 'react-rxjs/dist/RxInject';
 import nodeStore$, { clearNode$, loadNode$, updateState$ } from './nodeStore';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { I18n } from 'react-i18nify';
-import { hashHistory } from 'react-router';
 import MusitNode from '../../models/node';
 
 export class AddStorageUnitContainer extends React.Component {
   static propTypes = {
     nodeStore: PropTypes.object.isRequired,
-    params: PropTypes.object,
+    match: PropTypes.object,
     updateState: PropTypes.func.isRequired,
     addNode: PropTypes.func.isRequired,
     clearNode: PropTypes.func.isRequired,
     loadNode: PropTypes.func.isRequired,
-    appSession: PropTypes.object.isRequired
+    appSession: PropTypes.object.isRequired,
+    goBack: PropTypes.func
   };
 
   componentWillMount() {
     this.props.clearNode();
     this.props.loadNode({
-      id: this.props.params.id,
+      id: this.props.match.params.id,
       museumId: this.props.appSession.museumId,
       token: this.props.appSession.accessToken
     });
@@ -48,7 +48,7 @@ export class AddStorageUnitContainer extends React.Component {
               data,
               callback: {
                 onComplete: () => {
-                  hashHistory.goBack();
+                  props.goBack();
                   this.props.emitSuccess({
                     type: 'saveSuccess',
                     message: I18n.t('musit.storageUnits.messages.saveNodeSuccess')
@@ -63,6 +63,7 @@ export class AddStorageUnitContainer extends React.Component {
         }}
         isAdd
         loaded={!!this.props.nodeStore.unit}
+        goBack={this.props.goBack}
       />
     );
   }
@@ -79,10 +80,11 @@ const commands = {
   updateState$
 };
 
-const props = {
+const props = props => ({
   emitError,
   emitSuccess,
-  addNode: MusitNode.addNode()
-};
+  addNode: MusitNode.addNode(),
+  goBack: props.history.goBack
+});
 
 export default inject(data, commands, props)(AddStorageUnitContainer);

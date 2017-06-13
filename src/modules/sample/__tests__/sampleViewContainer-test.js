@@ -221,13 +221,15 @@ describe('SampleViewContainer', () => {
 
   describe('onMount', () => {
     it('should call getPredefinedTypes', () => {
-      const params = {
-        sampleId: 23
+      const match = {
+        params: {
+          sampleId: 23
+        }
       };
       const getSample = sinon.spy();
       const loadForm = sinon.spy();
       const getPredefinedTypes = sinon.spy();
-      onMount({ params, getSample, loadForm, getPredefinedTypes, appSession });
+      onMount({ match, getSample, loadForm, getPredefinedTypes, appSession });
       expect(getPredefinedTypes.calledOnce).toBe(true);
       expect(getPredefinedTypes.getCall(0).args[0].token).toEqual(appSession.accessToken);
     });

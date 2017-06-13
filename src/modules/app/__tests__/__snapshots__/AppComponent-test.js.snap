@@ -13,12 +13,8 @@ exports[`AppComponent remders 1`] = `
   >
     <NavbarHeader>
       <NavbarBrand>
-        <IndexLink
-          activeStyle={
-            Object {
-              "color": "#33e0ff",
-            }
-          }
+        <Link
+          replace={false}
           to="/about"
         >
           <div
@@ -33,7 +29,7 @@ exports[`AppComponent remders 1`] = `
           <span>
             MUSIT
           </span>
-        </IndexLink>
+        </Link>
       </NavbarBrand>
       <NavbarToggle />
     </NavbarHeader>
@@ -47,8 +43,10 @@ exports[`AppComponent remders 1`] = `
         stacked={false}
       >
         <LinkContainer
-          action="push"
-          onlyActiveOnIndex={false}
+          activeClassName="active"
+          exact={false}
+          replace={false}
+          strict={false}
           to="/museum/99/collections/00000000-0000-0000-0000-000000000000/magasin"
         >
           <NavItem
@@ -59,9 +57,11 @@ exports[`AppComponent remders 1`] = `
           </NavItem>
         </LinkContainer>
         <LinkContainer
-          action="push"
+          activeClassName="active"
+          exact={false}
           onClick={[Function]}
-          onlyActiveOnIndex={false}
+          replace={false}
+          strict={false}
           to="/museum/99/collections/00000000-0000-0000-0000-000000000000/analysis"
         >
           <NavDropdown
@@ -69,8 +69,10 @@ exports[`AppComponent remders 1`] = `
             title="Analyse"
           >
             <LinkContainer
-              action="push"
-              onlyActiveOnIndex={false}
+              activeClassName="active"
+              exact={false}
+              replace={false}
+              strict={false}
               to="/museum/99/collections/00000000-0000-0000-0000-000000000000/analysis/add"
             >
               <MenuItem
@@ -85,8 +87,10 @@ exports[`AppComponent remders 1`] = `
           </NavDropdown>
         </LinkContainer>
         <LinkContainer
-          action="push"
-          onlyActiveOnIndex={false}
+          activeClassName="active"
+          exact={false}
+          replace={false}
+          strict={false}
           to="/museum/99/collections/00000000-0000-0000-0000-000000000000/reports"
         >
           <NavItem
@@ -97,8 +101,10 @@ exports[`AppComponent remders 1`] = `
           </NavItem>
         </LinkContainer>
         <LinkContainer
-          action="push"
-          onlyActiveOnIndex={false}
+          activeClassName="active"
+          exact={false}
+          replace={false}
+          strict={false}
           to="/museum/99/collections/00000000-0000-0000-0000-000000000000/administration"
         >
           <NavItem
@@ -117,8 +123,10 @@ exports[`AppComponent remders 1`] = `
         stacked={false}
       >
         <LinkContainer
-          action="push"
-          onlyActiveOnIndex={false}
+          activeClassName="active"
+          exact={false}
+          replace={false}
+          strict={false}
           to="/museum/99/collections/00000000-0000-0000-0000-000000000000/picklist/nodes"
         >
           <NavItem
@@ -133,8 +141,10 @@ exports[`AppComponent remders 1`] = `
           </NavItem>
         </LinkContainer>
         <LinkContainer
-          action="push"
-          onlyActiveOnIndex={false}
+          activeClassName="active"
+          exact={false}
+          replace={false}
+          strict={false}
           to="/museum/99/collections/00000000-0000-0000-0000-000000000000/picklist/objects"
         >
           <NavItem
@@ -149,8 +159,10 @@ exports[`AppComponent remders 1`] = `
           </NavItem>
         </LinkContainer>
         <LinkContainer
-          action="push"
-          onlyActiveOnIndex={false}
+          activeClassName="active"
+          exact={false}
+          replace={false}
+          strict={false}
           to="/museum/99/collections/00000000-0000-0000-0000-000000000000/search/objects"
         >
           <NavItem

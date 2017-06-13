@@ -16,7 +16,6 @@ import { I18n } from 'react-i18nify';
 import FontAwesome from 'react-fontawesome';
 import './index.css';
 import Config from '../../config';
-import { hashHistory } from 'react-router';
 import Logos from '../../components/logos/Logos';
 import inject from 'react-rxjs/dist/RxInject';
 import flowRight from 'lodash/flowRight';
@@ -30,12 +29,14 @@ const aboutURL = '/about';
 const notFoundURL = '/notfound';
 
 type Props = {
-  appSession: AppSession
+  appSession: AppSession,
+  goToNotFound: () => void,
+  goToAbout: () => void,
+  goTo: (url: string) => void
 };
-const goTo = url => hashHistory.push(url);
 
-const buttonAdd = (t, url) => (
-  <Button style={{ fontSize: '3.2em' }} className="button" onClick={() => goTo(url)}>
+const buttonAdd = (t, onClick) => (
+  <Button style={{ fontSize: '3.2em' }} className="button" onClick={onClick}>
     {t} <FontAwesome name="chevron-right" />
   </Button>
 );
@@ -59,16 +60,25 @@ export const HomePage = (props: Props) => (
     </Row>
     <Row className="buttonRow">
       <Col md={6}>
-        {buttonAdd(I18n.t('musit.texts.magazine'), magasinURL(props.appSession))}
+        {buttonAdd(
+          I18n.t('musit.texts.magazine'),
+          props.goTo(magasinURL(props.appSession))
+        )}
       </Col>
       <Col>
-        {buttonAdd(I18n.t('musit.analysis.analysis'), analysisURL(props.appSession))}
+        {buttonAdd(
+          I18n.t('musit.analysis.analysis'),
+          props.goTo(analysisURL(props.appSession))
+        )}
       </Col>
     </Row>
 
     <Row className="buttonRow">
       <Col md={6}>
-        {buttonAdd(I18n.t('musit.reports.reports'), reportURL(props.appSession))}
+        {buttonAdd(
+          I18n.t('musit.reports.reports'),
+          props.goTo(reportURL(props.appSession))
+        )}
       </Col>
     </Row>
     <Row>
@@ -78,12 +88,12 @@ export const HomePage = (props: Props) => (
       </div>
       <div style={{ textAlign: 'center', height: '50px' }}>
         <Col md={4} mdOffset={2}>
-          <Button bsStyle="link" onClick={() => goTo(notFoundURL)}>
+          <Button bsStyle="link" onClick={props.goToNotFound}>
             {I18n.t('musit.texts.aboutMusitSolutions')}
           </Button>
         </Col>
         <Col md={4}>
-          <Button bsStyle="link" onClick={() => goTo(aboutURL)}>
+          <Button bsStyle="link" onClick={props.goToAbout}>
             {I18n.t('musit.texts.abuotMusit')}
           </Button>
         </Col>
@@ -99,4 +109,10 @@ const data = {
   appSession$: { type: PropTypes.object.isRequired }
 };
 
-export default flowRight([inject(data), makeUrlAware])(HomePage);
+const props = props => ({
+  goToNotFound: () => props.history.push(notFoundURL),
+  goToAbout: () => props.history.push(aboutURL),
+  goTo: url => () => props.history.push(url)
+});
+
+export default flowRight([inject(data, {}, props), makeUrlAware])(HomePage);

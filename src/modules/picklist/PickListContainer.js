@@ -266,7 +266,7 @@ const customProps = props => ({
   showModal,
   moveNode: MusitNode.moveNode(),
   moveObject: MusitObject.moveSingleObject(),
-  isTypeNode: 'nodes' === props.route.type,
+  isTypeNode: 'nodes' === props.type,
   moveItems,
   createSample: (items, appSession) => {
     props.history.push({

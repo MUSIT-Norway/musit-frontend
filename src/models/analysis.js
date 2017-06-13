@@ -268,7 +268,6 @@ MusitAnalysis.fromJsonToForm = (json, formDef) => {
     formValues.externalSource = toField('externalSource', result.extRef);
   }
 
-  console.log('FormValues', formValues);
   return Object.keys(formValues).map(key => formValues[key]);
 };
 

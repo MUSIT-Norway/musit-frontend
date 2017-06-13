@@ -61,7 +61,7 @@ const AnalysisForm = ({
     ? location.state
     : store.analysis ? store.analysis.events : [];
   return (
-    <div>
+    <div className="container">
       <div className="page-header">
         <h1>
           {form.id.value

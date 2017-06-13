@@ -5,24 +5,24 @@ import inject from 'react-rxjs/dist/RxInject';
 import { emitError, emitSuccess } from '../../shared/errors';
 import nodeStore$, { clearNode$, loadNode$, updateState$ } from './nodeStore';
 import MusitNode from '../../models/node';
-import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
 
 export class EditStorageUnitContainer extends React.Component {
   static propTypes = {
     editNode: PropTypes.func.isRequired,
     loadNode: PropTypes.func.isRequired,
-    params: PropTypes.object,
+    match: PropTypes.object,
     unit: PropTypes.object,
     updateState: PropTypes.func.isRequired,
     appSession: PropTypes.object.isRequired,
-    nodeStore: PropTypes.object.isRequired
+    nodeStore: PropTypes.object.isRequired,
+    goBack: PropTypes.func
   };
 
   componentWillMount() {
     const id =
       (this.props.location.state && this.props.location.state.uuid) ||
-      this.props.params.id;
+      this.props.match.params.id;
     const museumId = this.props.appSession.museumId;
     const token = this.props.appSession.accessToken;
     this.props.loadNode({ id, museumId, token });
@@ -41,7 +41,7 @@ export class EditStorageUnitContainer extends React.Component {
         unit={this.props.nodeStore.unit}
         rootNode={this.props.nodeStore.rootNode}
         onLagreClick={data => {
-          const id = this.props.params.id;
+          const id = this.props.match.params.id;
           const museumId = this.props.appSession.museumId;
           const token = this.props.appSession.accessToken;
           this.props
@@ -52,7 +52,7 @@ export class EditStorageUnitContainer extends React.Component {
               data,
               callback: {
                 onComplete: () => {
-                  hashHistory.goBack();
+                  this.props.goBack();
                   this.props.emitSuccess({
                     type: 'saveSuccess',
                     message: I18n.t('musit.storageUnits.messages.saveNodeSuccess')
@@ -66,6 +66,7 @@ export class EditStorageUnitContainer extends React.Component {
             .toPromise();
         }}
         loaded={!!this.props.nodeStore.unit && this.props.nodeStore.loaded}
+        goBack={this.props.goBack}
       />
     );
   }
@@ -82,10 +83,11 @@ const commands = {
   updateState$
 };
 
-const props = {
+const props = props => ({
   emitError,
   emitSuccess,
-  editNode: MusitNode.editNode()
-};
+  editNode: MusitNode.editNode(),
+  goBack: props.history.goBack
+});
 
 export default inject(data, commands, props)(EditStorageUnitContainer);

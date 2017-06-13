@@ -1,6 +1,5 @@
 import { Observable } from 'rxjs';
 import 'rxjs/add/observable/dom/ajax';
-import { hashHistory } from 'react-router';
 import { emitError } from './errors';
 import { closeModal } from './modal';
 import { setAccessToken$ } from '../stores/appSession';
@@ -24,7 +23,7 @@ export const onFailure = callback => error => {
       if (localStorage.getItem('accessToken')) {
         localStorage.removeItem('accessToken');
         setAccessToken$.next(null);
-        hashHistory.push('/');
+        window.location.replace('/');
         emitError({ ...error, type: 'network' });
       }
       closeModal();

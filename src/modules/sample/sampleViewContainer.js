@@ -10,7 +10,6 @@ import { makeUrlAware } from '../../stores/appSession';
 import flowRight from 'lodash/flowRight';
 import store$, { getPredefinedTypes$, getSample$ } from './sampleStore';
 import moment from 'moment';
-import { hashHistory } from 'react-router';
 import Config from '../../config';
 
 const { form$, loadForm$ } = sampleForm;
@@ -21,20 +20,21 @@ const data = {
   store$
 };
 
-const clicks: ClickEvents = { clickEditSample, clickCreateAnalysis };
+const props: ClickEvents = props => ({
+  clickEditSample: (appSession, sampleId, objectData) =>
+    clickEditSample(appSession, sampleId, objectData, props.history.push),
+  clickCreateAnalysis: (appSession, sample, form, objectData) =>
+    clickCreateAnalysis(appSession, sample, form, objectData, props.history.push),
+  goBack: props.history.goBack
+});
 
 const commands = { getSample$, loadForm$, getPredefinedTypes$ };
 
-export default flowRight([inject(data, commands, clicks), mount(onMount), makeUrlAware])(
+export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(
   SampleViewComponent
 );
 
-export function clickEditSample(
-  appSession,
-  sampleId,
-  objectData,
-  goTo = hashHistory.push
-) {
+export function clickEditSample(appSession, sampleId, objectData, goTo) {
   return e => {
     e.preventDefault();
     goTo({
@@ -44,13 +44,7 @@ export function clickEditSample(
   };
 }
 
-export function clickCreateAnalysis(
-  appSession,
-  sample,
-  form,
-  objectData,
-  goTo = hashHistory.push
-) {
+export function clickCreateAnalysis(appSession, sample, form, objectData, goTo) {
   return e => {
     e.preventDefault();
     goTo({
@@ -155,8 +149,8 @@ export function loadSample(id, museumId, token, getSample, loadForm) {
     });
 }
 
-export function onMount({ getSample, getPredefinedTypes, loadForm, params, appSession }) {
-  const id = params.sampleId;
+export function onMount({ getSample, getPredefinedTypes, loadForm, match, appSession }) {
+  const id = match.params.sampleId;
   const museumId = appSession.museumId;
   const token = appSession.accessToken;
   getPredefinedTypes({

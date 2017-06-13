@@ -22,7 +22,6 @@ import { Grid, Row, Col, FormControl } from 'react-bootstrap';
 import PairedToogleButtons from './ToggleButtons';
 import DatePicker from '../../components/DatePicker';
 import SaveCancel from '../../components/formfields/saveCancel/SaveCancel';
-import { hashHistory } from 'react-router';
 import {
   flatten,
   DATE_FORMAT_DISPLAY,
@@ -44,10 +43,11 @@ import Config from '../../config';
 export class ControlAddContainer extends React.Component {
   static propTypes = {
     addControl: PropTypes.func.isRequired,
-    params: PropTypes.object,
+    match: PropTypes.object,
     appSession: PropTypes.object,
     envReqData: PropTypes.object,
-    rootNode: PropTypes.object
+    rootNode: PropTypes.object,
+    history: PropTypes.object
   };
 
   constructor(props) {
@@ -62,7 +62,7 @@ export class ControlAddContainer extends React.Component {
   componentWillMount() {
     if (!this.props.store.rootNode) {
       this.props.loadRootNode({
-        id: this.props.params.id,
+        id: this.props.match.params.id,
         museumId: this.props.appSession.museumId,
         token: this.props.appSession.accessToken
       });
@@ -134,9 +134,9 @@ export class ControlAddContainer extends React.Component {
     };
     if (this.oneStateIsNotOK()) {
       // push a new path onto the history, with the provided nice control state
-      hashHistory.replace({
+      props.history.replace({
         pathname: Config.magasin.urls.client.storagefacility.editObservation(
-          this.props.params.id,
+          this.props.match.params.id,
           this.props.appSession
         ),
         state: controlState
@@ -144,13 +144,13 @@ export class ControlAddContainer extends React.Component {
     } else {
       this.props
         .addControl({
-          nodeId: this.props.params.id,
+          nodeId: this.props.match.params.id,
           museumId: this.props.appSession.museumId,
           controlData: controlState,
           token: this.props.appSession.accessToken,
           callback: {
             onComplete: () => {
-              hashHistory.goBack();
+              props.history.goBack();
               emitSuccess({
                 type: 'saveSuccess',
                 message: I18n.t('musit.newControl.saveControlSuccess')
@@ -369,7 +369,7 @@ export class ControlAddContainer extends React.Component {
                 )}
                 translate={translate}
                 onClickSave={e => this.handleSubmit(e)}
-                onClickCancel={() => hashHistory.goBack()}
+                onClickCancel={() => props.history.goBack()}
               />
             </Grid>
           </form>
