@@ -169,7 +169,11 @@ const MagasinPage = props => (
       exact
       component={ViewObservationPage}
     />
-    <Route path={rt(props, '/:id/objects')} exact component={StorageUnitsTable} />
+    <Route
+      path={rt(props, '/:id/objects')}
+      exact
+      component={extraProps(StorageUnitsTable, { showObjects: true })}
+    />
 
     <Route component={NotFoundPage} />
   </Switch>
