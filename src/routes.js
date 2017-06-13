@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import NotFound from './components/NotFound';
 import ScrollToTop, { scrollToTop } from './components/layout/ScrollToTop';
 import AboutView from './modules/about/AboutPage';
@@ -58,11 +58,11 @@ const rt = (props, path) => replace(props.match.path + '/' + path, /(\/+)/g, '/'
  */
 
 const MusitRouter = () => (
-  <HashRouter>
+  <BrowserRouter>
     <div>
       <Route path="/" component={AppPage} />
     </div>
-  </HashRouter>
+  </BrowserRouter>
 );
 
 const AppPage = props => (
