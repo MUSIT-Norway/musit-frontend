@@ -193,16 +193,16 @@ const AnalysisPage = props => (
     <Route path={rt(props, '/edit')} exact component={AnalysisEditContainer} />
     <Route path={rt(props, '/:analysisId')} exact component={AnalysisViewContainer} />
     <Route
-      path={rt(props, '/sample/:objectId/add')}
+      path={rt(props, '/sample/:sampleId/add')}
       exact
       component={SampleFormAddContainer}
     />
     <Route
-      path={rt(props, '/sample/:objectId/edit')}
+      path={rt(props, '/sample/:sampleId/edit')}
       exact
       component={SampleEditContainer}
     />
-    <Route path={rt(props, '/sample/:objectId')} exact component={SampleViewContainer} />
+    <Route path={rt(props, '/sample/:sampleId')} exact component={SampleViewContainer} />
 
     <Route component={NotFoundPage} />
   </Switch>
