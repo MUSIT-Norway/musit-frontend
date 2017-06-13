@@ -35,7 +35,7 @@ export class ControlViewContainer extends React.Component {
     getControl: PropTypes.func.isRequired,
     match: PropTypes.object,
     rootNode: PropTypes.object,
-    history: PropTypes.object
+    goBack: PropTypes.func.isRequired
   };
 
   componentWillMount() {
@@ -129,7 +129,7 @@ export class ControlViewContainer extends React.Component {
                 style={{ textAlign: 'center', border: '12px', borderColor: 'red' }}
               >
                 <Col xs={10}>
-                  <Button onClick={this.props.history.goBack}>
+                  <Button onClick={this.props.goBack}>
                     {I18n.t('musit.texts.close')}
                   </Button>
                 </Col>
@@ -152,4 +152,8 @@ const commands = {
   loadRootNode$
 };
 
-export default inject(data, commands)(ControlViewContainer);
+const props = ({ history: { goBack } }) => ({
+  goBack
+});
+
+export default inject(data, commands, props)(ControlViewContainer);

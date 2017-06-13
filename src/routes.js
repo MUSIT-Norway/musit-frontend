@@ -125,14 +125,6 @@ const MagasinPage = props => (
     <Route path={rt(props, '/:id/add')} exact component={AddStorageUnitPanel} />
     <Route path={rt(props, '/:id/view')} exact component={EditStorageUnitPanel} />
     <Route
-      path={rt(props, '/:id/controls')}
-      exact
-      component={extraProps(EventsContainer, {
-        showControls: true,
-        showObservations: false
-      })}
-    />
-    <Route
       path={rt(props, '/:id/controlsobservations')}
       exact
       component={extraProps(EventsContainer, {
@@ -147,25 +139,17 @@ const MagasinPage = props => (
       component={ControlViewContainer}
     />
     <Route
-      path={rt(props, '/:id/observations')}
-      exact
-      component={extraProps(EventsContainer, {
-        showControls: false,
-        showObservations: true
-      })}
-    />
-    <Route
-      path={rt(props, '/:id/observations/add')}
+      path={rt(props, '/:id/observation/add')}
       exact
       component={AddObservationPage}
     />
     <Route
-      path={rt(props, '/:id/observations/edit')}
+      path={rt(props, '/:id/observation/edit')}
       exact
       component={EditObservationPage}
     />
     <Route
-      path={rt(props, '/:id/observations/:obsId')}
+      path={rt(props, '/:id/observation/:obsId')}
       exact
       component={ViewObservationPage}
     />
@@ -190,7 +174,11 @@ const ObjectPage = props => (
 const AnalysisPage = props => (
   <Switch>
     <Route path={rt(props, '/add')} exact component={AnalysisAddContainer} />
-    <Route path={rt(props, '/edit')} exact component={AnalysisEditContainer} />
+    <Route
+      path={rt(props, '/edit/:analysisId')}
+      exact
+      component={AnalysisEditContainer}
+    />
     <Route path={rt(props, '/:analysisId')} exact component={AnalysisViewContainer} />
     <Route
       path={rt(props, '/sample/:sampleId/add')}

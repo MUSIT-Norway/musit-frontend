@@ -4,7 +4,6 @@ import { I18n } from 'react-i18nify';
 import type { AppSession } from '../../types/appSession';
 import type { FormData } from './types/form';
 import type { Store } from './types/store';
-import { Table } from 'reactable';
 import MetaInformation from '../../components/metainfo';
 import Config from '../../config';
 import moment from 'moment';

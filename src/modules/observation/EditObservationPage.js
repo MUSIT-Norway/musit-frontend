@@ -18,7 +18,7 @@ export class EditObservationPage extends React.Component {
     match: PropTypes.object.isRequired,
     rootNode: PropTypes.object,
     appSession: PropTypes.object.isRequired,
-    history: PropTypes.object
+    goBack: PropTypes.func.isRequired
   };
 
   componentWillMount() {
@@ -76,6 +76,7 @@ export class EditObservationPage extends React.Component {
             </h4>
             <ObservationPage
               appSession={this.props.appSession}
+              goBack={this.props.goBack}
               id={this.props.match.params.id}
               observations={this.getObservationsFromLocationState()}
               doneDate={this.props.location.state.doneDate}
@@ -93,7 +94,7 @@ export class EditObservationPage extends React.Component {
                     token,
                     callback: {
                       onComplete: () => {
-                        this.props.history.goBack();
+                        this.props.goBack();
                         this.props.emitSuccess({
                           type: 'saveSuccess',
                           message: I18n.t('musit.newControl.saveControlSuccess')
@@ -122,10 +123,11 @@ const commands = {
   loadRootNode$
 };
 
-const props = {
+const props = ({ history: { goBack } }) => ({
   emitError,
   emitSuccess,
-  addObservation: Control.addControl()
-};
+  addObservation: Control.addControl(),
+  goBack
+});
 
 export default inject(data, commands, props)(EditObservationPage);

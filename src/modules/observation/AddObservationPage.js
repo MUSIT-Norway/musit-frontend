@@ -19,7 +19,7 @@ export class AddObservationPage extends React.Component {
     actor: PropTypes.object,
     rootNode: PropTypes.object,
     appSession: PropTypes.object.isRequired,
-    history: PropTypes.object
+    goBack: PropTypes.func.isRequired
   };
 
   componentWillMount() {
@@ -44,6 +44,7 @@ export class AddObservationPage extends React.Component {
             </h4>
             <ObservationPage
               appSession={this.props.appSession}
+              goBack={this.props.goBack}
               id={this.props.match.params.id}
               onSaveObservation={(nodeId, data) => {
                 const museumId = this.props.appSession.museumId;
@@ -56,7 +57,7 @@ export class AddObservationPage extends React.Component {
                     token,
                     callback: {
                       onComplete: () => {
-                        props.history.goBack();
+                        this.props.goBack();
                         this.props.emitSuccess({
                           type: 'saveSuccess',
                           message: I18n.t('musit.observation.page.messages.saveSuccess')
@@ -86,10 +87,11 @@ const commands = {
   loadRootNode$
 };
 
-const props = {
+const props = ({ history: { goBack } }) => ({
   emitError,
   emitSuccess,
-  addObservation: Observation.addObservation()
-};
+  addObservation: Observation.addObservation(),
+  goBack
+});
 
 export default inject(data, commands, props)(AddObservationPage);

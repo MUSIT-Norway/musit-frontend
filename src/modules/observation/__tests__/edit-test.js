@@ -7,6 +7,8 @@ describe('Render oobservation page in edit mode', () => {
   it('should set default date and have correct date format', () => {
     const observationPage = shallow(
       <ObservationPage
+        goBack={() => {}}
+        appSession={{}}
         observations={[
           {
             type: 'gas',

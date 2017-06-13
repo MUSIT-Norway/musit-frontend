@@ -51,6 +51,7 @@ exports[`Render observation page in add mode should set default date and have co
             Utført av
           </ControlLabel>
           <Component
+            appSession={Object {}}
             id="doneByField"
             onChange={[Function]}
             placeHolder="Find actor"

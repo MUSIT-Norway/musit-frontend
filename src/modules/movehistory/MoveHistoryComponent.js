@@ -29,7 +29,7 @@ import inject from 'react-rxjs/dist/RxInject';
 export class MoveHistoryComponent extends Component {
   static propTypes = {
     moveHistoryStore: PropTypes.object.isRequired,
-    objectId: PropTypes.number.isRequired,
+    objectId: PropTypes.string.isRequired,
     appSession: PropTypes.object.isRequired,
     loadMoveHistory: PropTypes.func.isRequired,
     clear: PropTypes.func.isRequired

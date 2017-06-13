@@ -117,7 +117,11 @@ export class AppComponent extends Component {
 
   buildVersionLink(versionInfo: VersionInfo) {
     if (versionInfo.url) {
-      return <a target="_blank" href={versionInfo.url}>{versionInfo.sha}</a>;
+      return (
+        <a target="_blank" rel="noopener noreferrer" href={versionInfo.url}>
+          {versionInfo.sha}
+        </a>
+      );
     }
     return versionInfo.sha;
   }

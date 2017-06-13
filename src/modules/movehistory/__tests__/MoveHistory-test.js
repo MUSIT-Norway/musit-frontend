@@ -11,7 +11,7 @@ describe('MoveHistoryComponent', () => {
     const loadMoveHistory = sinon.spy();
     mount(
       <MoveHistoryComponent
-        objectId={1234}
+        objectId="1234"
         clear={clear}
         loadMoveHistory={loadMoveHistory}
         moveHistoryStore={{
@@ -38,7 +38,7 @@ describe('MoveHistoryComponent', () => {
     expect(loadMoveHistory.callCount).toBe(1);
     expect(loadMoveHistory.getCall(0).args[0].token).toBe('1234-1234-1234');
     expect(loadMoveHistory.getCall(0).args[0].museumId).toBe(99);
-    expect(loadMoveHistory.getCall(0).args[0].objectId).toBe(1234);
+    expect(loadMoveHistory.getCall(0).args[0].objectId).toBe('1234');
   });
 });
 

@@ -45,7 +45,7 @@ export default class ObservationPage extends React.Component {
     saveDisabled: PropTypes.bool,
     cancelDisabled: PropTypes.bool,
     appSession: PropTypes.object.isRequired,
-    history: PropTypes.object
+    goBack: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -498,7 +498,7 @@ export default class ObservationPage extends React.Component {
               ? <Col xs={10}>
                   <Button
                     onClick={() => {
-                      this.props.history.goBack();
+                      this.props.goBack();
                     }}
                   >
                     {I18n.t('musit.texts.close')}
@@ -506,7 +506,7 @@ export default class ObservationPage extends React.Component {
                 </Col>
               : <SaveCancel
                   onClickSave={this.handleSubmit}
-                  onClickCancel={() => this.props.history.goBack()}
+                  onClickCancel={() => this.props.goBack()}
                   saveDisabled={
                     this.props.saveDisabled === true ||
                       this.state.observations.length === 0

@@ -212,6 +212,7 @@ exports[`AppComponent remders 1`] = `
     Backend build: 
     <a
       href="https://gitlab.com/MUSIT-Norway/musit/commit/813e993f1d1bdaa7b60daa66d75e1957de4c6e2b"
+      rel="noopener noreferrer"
       target="_blank"
     >
       813e993f1d1bdaa7b60daa66d75e1957de4c6e2b

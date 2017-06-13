@@ -4,6 +4,8 @@ exports[`PickListComponent for objects Should mount 1`] = `
 <PickListComponent
   appSession={Object {}}
   classExistsOnDom={[Function]}
+  createAnalysis={[Function]}
+  createSample={[Function]}
   emitError={[Function]}
   emitSuccess={[Function]}
   history={

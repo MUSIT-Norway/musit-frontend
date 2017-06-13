@@ -10,6 +10,7 @@ describe('Render view observation page', () => {
     const loadRootNode = sinon.spy();
     shallow(
       <ViewObservationPage
+        goBack={() => {}}
         store={{
           rootNode: null,
           data: {

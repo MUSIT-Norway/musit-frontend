@@ -47,7 +47,7 @@ export class ControlAddContainer extends React.Component {
     appSession: PropTypes.object,
     envReqData: PropTypes.object,
     rootNode: PropTypes.object,
-    history: PropTypes.object
+    goBack: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -133,14 +133,7 @@ export class ControlAddContainer extends React.Component {
       doneDate: this.state.doneDate
     };
     if (this.oneStateIsNotOK()) {
-      // push a new path onto the history, with the provided nice control state
-      props.history.replace({
-        pathname: Config.magasin.urls.client.storagefacility.editObservation(
-          this.props.match.params.id,
-          this.props.appSession
-        ),
-        state: controlState
-      });
+      this.props.editObservation(this.props.appSession, controlState);
     } else {
       this.props
         .addControl({
@@ -150,7 +143,7 @@ export class ControlAddContainer extends React.Component {
           token: this.props.appSession.accessToken,
           callback: {
             onComplete: () => {
-              props.history.goBack();
+              this.props.goBack();
               emitSuccess({
                 type: 'saveSuccess',
                 message: I18n.t('musit.newControl.saveControlSuccess')
@@ -369,7 +362,7 @@ export class ControlAddContainer extends React.Component {
                 )}
                 translate={translate}
                 onClickSave={e => this.handleSubmit(e)}
-                onClickCancel={() => props.history.goBack()}
+                onClickCancel={() => this.props.goBack()}
               />
             </Grid>
           </form>
@@ -388,8 +381,17 @@ const commands = {
   loadRootNode$
 };
 
-const props = {
-  addControl: Control.addControl()
-};
+const props = ({ history: { goBack, replace }, match: { params: { id } } }) => ({
+  addControl: Control.addControl(),
+  goBack,
+  editObservation: (appSession, controlState) =>
+    replace({
+      pathname: Config.magasin.urls.client.storagefacility.editObservation(
+        id,
+        appSession
+      ),
+      state: controlState
+    })
+});
 
 export default inject(data, commands, props)(ControlAddContainer);

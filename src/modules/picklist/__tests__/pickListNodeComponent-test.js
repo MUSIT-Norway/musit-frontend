@@ -69,6 +69,8 @@ describe('PickListComponent for nodes', () => {
   it('should display component (nodes) correctly', () => {
     const wrapper = shallow(
       <PickListComponent
+        createAnalysis={() => {}}
+        createSample={() => {}}
         type="nodes"
         pickList={pickList}
         markNode={x => x}
@@ -103,6 +105,8 @@ describe('PickListComponent for nodes', () => {
 
     const wrapper = mount(
       <PickListComponent
+        createAnalysis={() => {}}
+        createSample={() => {}}
         type="nodes"
         pickList={pickList}
         markNode={onToggleNode}

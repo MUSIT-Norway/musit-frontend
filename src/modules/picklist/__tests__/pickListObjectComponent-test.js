@@ -71,6 +71,8 @@ describe('PickListComponent for objects', () => {
 
     const wrapper = mount(
       <PickListComponent
+        createAnalysis={() => {}}
+        createSample={() => {}}
         type="objects"
         pickList={pickList}
         markNode={onToggleNode}
@@ -99,6 +101,8 @@ describe('PickListComponent for objects', () => {
   it('should display component (objects) correctly', () => {
     const wrapper = shallow(
       <PickListComponent
+        createAnalysis={() => {}}
+        createSample={() => {}}
         type="objects"
         pickList={pickList}
         markNode={x => x}
@@ -131,6 +135,8 @@ describe('PickListComponent for objects', () => {
 
     const wrapper = mount(
       <PickListComponent
+        createAnalysis={() => {}}
+        createSample={() => {}}
         type="objects"
         pickList={pickList}
         markNode={onToggleNode}
@@ -176,6 +182,8 @@ describe('PickListComponent for objects', () => {
 
     const wrapper = mount(
       <PickListComponent
+        createAnalysis={() => {}}
+        createSample={() => {}}
         type="objects"
         pickList={pickList}
         markNode={onToggleNode}
@@ -221,6 +229,8 @@ describe('PickListComponent for objects', () => {
 
     const wrapper = mount(
       <PickListComponent
+        createAnalysis={() => {}}
+        createSample={() => {}}
         type="objects"
         pickList={pickList}
         markNode={onToggleNode}

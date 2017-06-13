@@ -11,6 +11,7 @@ describe('Render edit observation page', () => {
     const emitSuccess = sinon.spy();
     shallow(
       <EditObservationPage
+        goBack={() => {}}
         store={{
           rootNode: null
         }}

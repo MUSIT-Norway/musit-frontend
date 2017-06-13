@@ -13,7 +13,8 @@ export class ViewObservationPage extends React.Component {
     setLoading: PropTypes.func.isRequired,
     getObservation: PropTypes.func.isRequired,
     loadRootNode: PropTypes.func.isRequired,
-    store: PropTypes.object.isRequired
+    store: PropTypes.object.isRequired,
+    goBack: PropTypes.func.isRequired
   };
 
   componentWillMount() {
@@ -46,6 +47,7 @@ export class ViewObservationPage extends React.Component {
             </h4>
             <ObservationPage
               appSession={this.props.appSession}
+              goBack={this.props.goBack}
               id={this.props.match.params.id}
               onSaveObservation={() => true} // disable save
               observations={this.props.store.data.observations}
@@ -74,4 +76,8 @@ const commands = {
   loadRootNode$
 };
 
-export default inject(data, commands)(ViewObservationPage);
+const props = ({ history: { goBack } }) => ({
+  goBack
+});
+
+export default inject(data, commands, props)(ViewObservationPage);

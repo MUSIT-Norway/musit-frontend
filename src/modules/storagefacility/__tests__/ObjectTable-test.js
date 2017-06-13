@@ -20,6 +20,7 @@ describe('ObjectTable', () => {
   const dummyArg = { preventDefault: () => null, stopPropagation: () => null };
   const wrapper = shallow(
     <ObjectGrid
+      goToObject={() => {}}
       tableData={tableData}
       pickObject={pickObject}
       onMove={onMove}
