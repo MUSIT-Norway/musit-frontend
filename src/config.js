@@ -130,16 +130,16 @@ export default {
           analysesForObject: (mid: MuseumId, objectId: number): string =>
             `/api/management/${mid}/analyses/objects/${objectId}`,
           saveAnalysisType: (mid: MuseumId) => `/api/management/${mid}/analyses/types`,
-          getPurposes: 'api/management/purposes'
+          getPurposes: '/api/management/purposes'
         },
         samples: {
-          baseUrl: (mid: MuseumId): string => `api/management/${mid}/samples`,
-          sampleTypes: 'api/management/sampletypes',
+          baseUrl: (mid: MuseumId): string => `/api/management/${mid}/samples`,
+          sampleTypes: '/api/management/sampletypes',
           samplesForObject: (mid: MuseumId, objectId: number): string =>
-            `api/management/${mid}/samples/${objectId}/children`,
-          treatments: 'api/management/treatments',
-          storagecontainer: 'api/management/storagecontainer',
-          storagemediums: 'api/management/storagemediums'
+            `/api/management/${mid}/samples/${objectId}/children`,
+          treatments: '/api/management/treatments',
+          storagecontainer: '/api/management/storagecontainer',
+          storagemediums: '/api/management/storagemediums'
         },
         storagefacility: {
           searchUrl: (term: string, mid: MuseumId) =>
@@ -200,7 +200,7 @@ export default {
             objectId: NodeId,
             collectionId: CollectionId
           ): string =>
-            `api/thingaggregate/museum/${mid}/objects/${objectId}?collectionIds=${collectionId}`,
+            `/api/thingaggregate/museum/${mid}/objects/${objectId}?collectionIds=${collectionId}`,
           getMainObject: (
             mid: MuseumId,
             objectId: NodeId,
