@@ -272,7 +272,7 @@ const customProps = props => ({
     props.history.push({
       pathname: Config.magasin.urls.client.analysis.addSample(
         appSession,
-        items[0].sampleNum ? items[0].originatedObjectUuid : items[0].objectId
+        items[0].sampleNum ? items[0].originatedObjectUuid : items[0].uuid
       ),
       state: items
     });
