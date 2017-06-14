@@ -21,6 +21,7 @@ import NotificationSystem from 'react-notification-system';
 import notification$ from './shared/errors';
 import queryParser from 'query-string';
 import { loadLanguage } from './shared/language';
+import Config from './config';
 
 const notificationSystem = ReactDOM.render(
   <NotificationSystem />,
@@ -47,7 +48,7 @@ notification$.subscribe(event => {
 const accessToken = queryParser.parse(window.location.search)['_at'];
 if (accessToken) {
   localStorage.setItem('accessToken', JSON.stringify({ accessToken }));
-  window.location.href = '/#/home';
+  window.location.href = Config.magasin.urls.client.homePage;
 } else {
   const dest = document.getElementById('content');
 

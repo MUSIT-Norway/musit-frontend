@@ -35,9 +35,7 @@ export default {
           goToSampleTypes: (appSession: AppSession) =>
             `${clientContextUrl(appSession)}/administration/sampletypes`
         },
-        homePage: {
-          goToHomePage: (appSession: AppSession) => `${clientContextUrl(appSession)}/home`
-        },
+        homePage: '/home',
         analysis: {
           baseUrl: (appSession: AppSession) => `${clientContextUrl(appSession)}/analysis`,
           editAnalysis: (appSession: AppSession, analysisId: string) =>

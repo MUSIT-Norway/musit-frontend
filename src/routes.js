@@ -181,7 +181,7 @@ const AnalysisPage = props => (
     />
     <Route path={rt(props, '/:analysisId')} exact component={AnalysisViewContainer} />
     <Route
-      path={rt(props, '/sample/:sampleId/add')}
+      path={rt(props, '/sample/:objectId/add')}
       exact
       component={SampleFormAddContainer}
     />

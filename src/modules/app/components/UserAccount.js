@@ -38,6 +38,7 @@ export default class MusitUserAccount extends Component {
           method={'POST'}
           encType={'application/x-www-form-urlencoded'}
           action={'/service_auth/web'}
+          target="blank"
         >
           <input hidden="hidden" name="_at" readOnly="readOnly" value={token} />
         </form>
