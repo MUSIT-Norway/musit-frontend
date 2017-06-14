@@ -13,23 +13,32 @@ import { I18n } from 'react-i18nify';
 type Props = {
   form: FormDetails,
   appSession: AppSession,
-  location: { state: Array<ObjectData> },
+  location: {
+    state: Array<ObjectData & SampleData & { sampleType: string, sampleSubType: string }>
+  },
   match: { params: { sampleId: string } },
   store: { sample: SampleData }
 };
+type ClickEventReturn = (e: { preventDefault: Function }) => void;
 
 export type ClickEvents = {
   clickEditSample: (
     appSession: AppSession,
     sampleId: string,
     object: ObjectData
-  ) => (e: { preventDefault: Function }) => void,
+  ) => ClickEventReturn,
   clickCreateAnalysis: (
     appSession: AppSession,
     sample: SampleData,
     form: FormDetails,
     object: mixed
-  ) => (e: { preventDefault: Function }) => void,
+  ) => ClickEventReturn,
+  clickCreateSample: (
+    appSession: AppSession,
+    sample: SampleData,
+    form: FormDetails,
+    object: mixed
+  ) => ClickEventReturn,
   goBack: () => void
 };
 
@@ -41,6 +50,7 @@ export default function SampleViewComponent({
   match: { params: { sampleId } },
   clickCreateAnalysis,
   clickEditSample,
+  clickCreateSample,
   goBack
 }: Props & ClickEvents) {
   const objectData = state[0];
@@ -65,6 +75,12 @@ export default function SampleViewComponent({
           >
             {I18n.t('musit.sample.updateSample')}
           </button>
+          <button
+            className="btn btn-default"
+            onClick={clickCreateSample(appSession, store.sample, form, objectData)}
+          >
+            {` ${I18n.t('musit.analysis.createSample')}`}
+          </button>
         </div>
         <div>
           <MetaInformation
@@ -76,7 +92,10 @@ export default function SampleViewComponent({
           <hr />
         </div>
         <h4>
-          {I18n.t('musit.sample.derivedFromObject')}
+          {objectData.sampleNum
+            ? I18n.t('musit.sample.derivedFromObjectAndSample')
+            : I18n.t('musit.sample.derivedFromObject')}
+
         </h4>
         <div>
           <span style={{ marginRight: 20 }}>
@@ -88,6 +107,26 @@ export default function SampleViewComponent({
           <span>
             <strong>{I18n.t('musit.analysis.term')}</strong> {objectData.term}
           </span>
+          {objectData.sampleNum &&
+            <span>
+              <br />
+              <span style={{ marginRight: 20 }}>
+                <strong>{I18n.t('musit.sample.sampleNumber')}</strong>
+                {' '}
+                {objectData.sampleNum}
+              </span>
+
+              <span style={{ marginRight: 20 }}>
+                <strong>{I18n.t('musit.sample.sampleType')}</strong>
+                {' '}
+                {objectData.sampleType}
+              </span>
+              <span style={{ marginRight: 20 }}>
+                <strong>{I18n.t('musit.sample.sampleSubType')}</strong>
+                {' '}
+                {objectData.sampleSubType}
+              </span>
+            </span>}
         </div>
         <hr />
         <h4>{I18n.t('musit.sample.personsAssociatedWithSampleTaking')}</h4>

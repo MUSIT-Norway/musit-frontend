@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default (props) => (
+export default props => (
   <div>
     <p>MUSIT - The University museums IT-organisation</p>
     <br />

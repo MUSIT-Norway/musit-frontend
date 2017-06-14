@@ -29,6 +29,12 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
       >
         Endre prøve
       </button>
+      <button
+        className="btn btn-default"
+        onClick={[Function]}
+      >
+         Opprett prøve
+      </button>
     </div>
     <div>
       <MetaInformation

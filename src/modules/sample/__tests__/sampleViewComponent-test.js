@@ -14,6 +14,7 @@ describe('AnalysisSampleFormPageView', () => {
       <SampleViewComponent
         clickCreateAnalysis={() => () => null}
         clickEditSample={() => () => null}
+        clickCreateSample={() => () => null}
         store={{
           sample: {}
         }}

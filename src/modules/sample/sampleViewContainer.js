@@ -11,6 +11,9 @@ import flowRight from 'lodash/flowRight';
 import store$, { getPredefinedTypes$, getSample$ } from './sampleStore';
 import moment from 'moment';
 import Config from '../../config';
+import type { SampleData } from '../../types/samples';
+import type { ObjectData } from '../../types/object';
+import type { FormDetails } from './types/form';
 
 const { form$, loadForm$ } = sampleForm;
 
@@ -25,6 +28,8 @@ const props: ClickEvents = props => ({
     clickEditSample(appSession, sampleId, objectData, props.history.push),
   clickCreateAnalysis: (appSession, sample, form, objectData) =>
     clickCreateAnalysis(appSession, sample, form, objectData, props.history.push),
+  clickCreateSample: (appSession, sample, form, objectData) =>
+    clickCreateSample(appSession, sample, form, objectData, props.history.push),
   goBack: props.history.goBack
 });
 
@@ -51,10 +56,24 @@ export function clickCreateAnalysis(appSession, sample, form, objectData, goTo) 
       pathname: Config.magasin.urls.client.analysis.addAnalysis(appSession),
       state: [
         {
-          ...objectData,
-          ...sample,
-          sampleType: form.sampleType.value,
-          sampleSubType: form.sampleSubType.value
+          ...mergeSampleWithObject(sample, objectData, form)
+        }
+      ]
+    });
+  };
+}
+
+export function clickCreateSample(appSession, sample, form, objectData, goTo) {
+  return e => {
+    e.preventDefault();
+    goTo({
+      pathname: Config.magasin.urls.client.analysis.addSample(
+        appSession,
+        sample.objectId
+      ),
+      state: [
+        {
+          ...mergeSampleWithObject(sample, objectData, form)
         }
       ]
     });
@@ -157,4 +176,17 @@ export function onMount({ getSample, getPredefinedTypes, loadForm, match, appSes
     token: appSession.accessToken,
     onComplete: loadSample(id, museumId, token, getSample, loadForm)
   });
+}
+
+function mergeSampleWithObject(
+  sample: SampleData,
+  objectData: ObjectData,
+  form: FormDetails
+) {
+  return {
+    ...objectData,
+    ...sample,
+    sampleType: form.sampleType.value,
+    sampleSubType: form.sampleSubType.value
+  };
 }

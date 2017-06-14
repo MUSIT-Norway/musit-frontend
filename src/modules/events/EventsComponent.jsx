@@ -4,7 +4,6 @@ import { Row, Col } from 'react-bootstrap';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { I18n } from 'react-i18nify';
 
-
 export const EventsComponent = ({ eventsStore: { object, data, currentLocation } }) => (
   <div>
     <h1>Hendelser</h1>
@@ -46,18 +45,18 @@ export const EventsComponent = ({ eventsStore: { object, data, currentLocation }
       <Table
         className="table"
         columns={[
-          { key: 'id', label: 'ID'},
-          { key: 'eventDate', label: 'Dato'},
-          { key: 'type', label: 'Type hendelse'},
+          { key: 'id', label: 'ID' },
+          { key: 'eventDate', label: 'Dato' },
+          { key: 'type', label: 'Type hendelse' },
           { key: 'registeredBy', label: 'Utført av' },
-          { key: 'note', label: 'Kommentar' },
-          { key: 'id', label: '' }
+          { key: 'note', label: 'Kommentar' },
+          { key: 'id', label: '' }
         ]}
-        sortable={['type', 'eventDate', 'registeredBy', 'note' ]}
+        sortable={['type', 'eventDate', 'registeredBy', 'note']}
         defaultSort={{ column: 'eventDate', direction: 'desc' }}
         noDataText={I18n.t('musit.events.noDataForObject')}
       >
-        {data.map((event, i) =>
+        {data.map((event, i) => (
           <Tr key={i}>
             <Td column="id">{event.id}</Td>
             <Td column="eventDate">{event.eventDate}</Td>
@@ -66,9 +65,8 @@ export const EventsComponent = ({ eventsStore: { object, data, currentLocation }
             <Td column="note"><span>{event.note}</span></Td>
             <Td column="id">Les mer</Td>
           </Tr>
-        )}
-      </Table>
-    }
+        ))}
+      </Table>}
   </div>
 );
 

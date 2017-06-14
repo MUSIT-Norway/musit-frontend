@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
-export default (props) => (
+export default props => (
   <Modal show={props.isVisible} onHide={props.hideModal}>
     <Modal.Header closeButton>
       <Modal.Title>Use of personal information in MUSITbasen</Modal.Title>
@@ -12,7 +12,9 @@ export default (props) => (
       <p>In MUSITbasen the following personal information is stored:</p>
       <ul>
         <li>User name, full name and email address at your university.</li>
-        <li>Information about which access a user has, and the changes made in the system by the user.</li>
+        <li>
+          Information about which access a user has, and the changes made in the system by the user.
+        </li>
       </ul>
     </Modal.Body>
     <Modal.Footer>

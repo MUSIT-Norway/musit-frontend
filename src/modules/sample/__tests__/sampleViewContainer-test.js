@@ -132,6 +132,7 @@ describe('SampleViewContainer', () => {
       };
       clickCreateAnalysis(appSession, sample, form, objectData, goTo)(event);
       expect(preventDefault.calledOnce).toBe(true);
+
       expect(goTo.calledOnce).toBe(true);
       expect(goTo.getCall(0).args[0].pathname).toEqual(
         '/museum/99/collections/1234/analysis/add'
