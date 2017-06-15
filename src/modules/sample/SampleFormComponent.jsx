@@ -1,33 +1,20 @@
 // @flow
 import React from 'react';
-import Config from '../../config';
 import PersonRoleDate from '../../components/person/PersonRoleDate';
 import Sample from '../../models/sample';
 import type { ObjectData } from '../../types/object';
 import type { AppSession } from '../../types/appSession';
 import type { SampleData } from '../../types/samples';
-import type { Person } from '../../components/person/PersonRoleDate';
 import type { FormDetails } from './types/form';
-import type { History } from 'types/Routes';
 import ValidatedFormGroup from '../../forms/components/ValidatedFormGroup';
 import FieldCheckBox from '../../forms/components/FieldCheckBox';
 import FieldDropDown from '../../forms/components/FieldDropDown';
 import FieldInput from '../../forms/components/FieldInput';
 import FieldTextArea from '../../forms/components/FieldTextArea';
-import flatten from 'lodash/flatten';
 import MetaInformation from '../../components/metainfo';
-import moment from 'moment';
 import ReadOnlySampleType from './components/ReadOnlySampleType';
 import { I18n } from 'react-i18nify';
 
-type Params = {
-  objectId: string,
-  sampleId?: string
-};
-
-type Match = {
-  params: Params
-};
 type Store = {
   sampleTypes?: any,
   storageContainers?: any,
@@ -38,38 +25,29 @@ type Store = {
 type Props = {
   form: FormDetails,
   store: Store,
-  persons: Array<Person>,
   updateForm: Function,
-  addSample: Function,
-  addPersonToSample: Function,
-  updatePersonForSample: Function,
-  location: {
-    pathname: string,
-    state: Array<ObjectData & SampleData & { sampleType: string, sampleSubType: string }>
-  },
+  clickSave: () => void,
   appSession: AppSession,
-  match: Match,
-  history: History
+  clickBack: (e: *) => void,
+  sampleTypeDisplayName: (s: {
+    enSampleSubType?: string,
+    enSampleType: string
+  }) => string,
+  isFormValid: (f: FormDetails) => boolean,
+  objectData: ObjectData & SampleData & { sampleType: string, sampleSubType: string }
 };
-
-function isFormValid(form) {
-  return Object.keys(form).reduce((acc, k) => {
-    const field = form[k];
-    return acc && field.status.valid;
-  }, true);
-}
 
 export default function SampleFormComponent({
   form,
   store,
   updateForm,
-  addSample,
-  location: { state },
+  clickSave,
+  sampleTypeDisplayName,
+  isFormValid,
   appSession,
-  match: { params },
-  history
+  clickBack,
+  objectData
 }: Props) {
-  const objectData = state[0];
   const canEditSampleType = !form.sampleNum;
   return (
     <div className="container">
@@ -302,108 +280,13 @@ export default function SampleFormComponent({
             />
           </ValidatedFormGroup>
         </div>
-        <button
-          className="btn btn-primary"
-          disabled={!isFormValid(form)}
-          onClick={e => {
-            e.preventDefault();
-            submitSample(
-              appSession,
-              store,
-              form,
-              objectData,
-              params,
-              addSample
-            ).then(value =>
-              history.push({
-                pathname: Config.magasin.urls.client.analysis.gotoSample(
-                  appSession,
-                  value.objectId || value
-                ),
-                state: [objectData]
-              })
-            );
-          }}
-        >
+        <button className="btn btn-primary" disabled={!isFormValid} onClick={clickSave}>
           {I18n.t('musit.texts.save')}
         </button>
-        <a
-          href="/"
-          style={{ marginLeft: 20 }}
-          onClick={e => {
-            e.preventDefault();
-            history.goBack();
-          }}
-        >
+        <a href="/" style={{ marginLeft: 20 }} onClick={clickBack}>
           {I18n.t('musit.texts.cancel')}
         </a>
       </form>
     </div>
   );
-}
-
-function submitSample(
-  appSession: AppSession,
-  store: Store,
-  form: FormDetails,
-  objectData: ObjectData,
-  params: Params,
-  addSample: Function
-) {
-  const token = appSession.accessToken;
-  const museumId = appSession.museumId;
-  const myReduce = (frm: FormDetails) =>
-    Object.keys(frm).reduce(
-      (akk: any, key: string) => ({
-        ...akk,
-        [key]: frm[key].value || frm[key].defaultValue
-      }),
-      {}
-    );
-  const reducePersons = (p: any) =>
-    p &&
-    p.reduce((akk: any, v: Person) => {
-      switch (v.role) {
-        case 'creator':
-          return {
-            ...akk,
-            doneByStamp: {
-              user: v.uuid,
-              date: moment(v.date).format()
-            }
-          };
-        case 'responsible':
-          return {
-            ...akk,
-            responsible: v.uuid
-          };
-        default:
-          return {};
-      }
-    }, {});
-
-  const persons = form.persons.rawValue;
-  const tmpData = { ...myReduce(form), ...reducePersons(persons) };
-  tmpData.sampleTypeId = store.sampleTypes
-    ? getSampleTypeId(store.sampleTypes, form.sampleSubType.value)
-    : null;
-  tmpData.isExtracted = true;
-  tmpData.parentObject = {
-    objectType: objectData.objectType,
-    objectId: params.objectId || tmpData.originatedObjectUuid
-  };
-  tmpData.museumId = appSession.museumId;
-  const data = Sample.prepareForSubmit(tmpData);
-  return addSample({ id: params.sampleId, museumId, token, data });
-}
-
-function getSampleTypeId(sampleTypes, selectSubType) {
-  return flatten(Object.values(sampleTypes)).find(subType => {
-    const subTypeName = sampleTypeDisplayName(subType);
-    return subTypeName === selectSubType;
-  }).sampleTypeId;
-}
-
-function sampleTypeDisplayName(v) {
-  return v.enSampleSubType || v.enSampleType;
 }

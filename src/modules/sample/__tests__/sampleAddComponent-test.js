@@ -195,16 +195,12 @@ describe('AnalysisSampleFormPageAdd', () => {
           }
         }}
         updateForm={updateForm}
-        location={{
-          state: [
-            {
-              term: 'Carex saxatilis',
-              museumNo: 'M1234',
-              subNo: 'a'
-            }
-          ]
+        objectData={{
+          term: 'Carex saxatilis',
+          museumNo: 'M1234',
+          subNo: 'a'
         }}
-        match={{ params: {} }}
+        isFormValid={true}
       />
     );
     wrapper.find('.note').simulate('change', {

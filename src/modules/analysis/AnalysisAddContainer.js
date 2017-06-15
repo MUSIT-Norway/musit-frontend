@@ -34,6 +34,7 @@ const commands = {
 };
 
 const props = props => ({
+  ...props,
   saveAnalysis: toPromise(Analysis.saveAnalysisEvent()),
   saveResult: toPromise(Analysis.addResult()),
   goToUrl: props.history.push,

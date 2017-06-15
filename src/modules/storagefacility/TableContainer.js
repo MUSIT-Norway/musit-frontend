@@ -45,6 +45,7 @@ const commands = {
 };
 
 const customProps = props => ({
+  ...props,
   pickNode: MusitNode.pickNode(toggleNode$),
   pickObject: MusitObject.pickObject(toggleObject$),
   deleteNode: MusitNode.deleteNode(),

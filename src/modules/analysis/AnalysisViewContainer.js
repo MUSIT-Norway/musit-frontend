@@ -35,6 +35,7 @@ const commands = {
 };
 
 const props = props => ({
+  ...props,
   loadAnalysis: toPromise(Analysis.getAnalysisWithDetails()),
   goToUrl: props.history.push,
   goBack: props.history.goBack

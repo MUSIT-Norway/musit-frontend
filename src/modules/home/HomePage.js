@@ -110,6 +110,7 @@ const data = {
 };
 
 const props = props => ({
+  ...props,
   goToNotFound: () => props.history.push(notFoundURL),
   goToAbout: () => props.history.push(aboutURL),
   goTo: url => () => props.history.push(url)

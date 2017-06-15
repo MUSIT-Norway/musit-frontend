@@ -5,13 +5,13 @@ import SampleFormComponent from './SampleFormComponent';
 import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
 import lifeCycle from '../../shared/mount';
-import { emitError, emitSuccess } from '../../shared/errors';
-import { toPromise } from '../../shared/util';
+import { simplePut } from '../../shared/RxAjax';
 import Sample from '../../models/sample';
 import { makeUrlAware } from '../../stores/appSession';
 import flowRight from 'lodash/flowRight';
 import store$, { getPredefinedTypes$, getSample$ } from './sampleStore';
 import { onMount } from './sampleViewContainer';
+import { sampleProps } from './shared/submit';
 
 const { form$, loadForm$, updateForm$ } = sampleForm;
 
@@ -23,11 +23,10 @@ const data = {
 
 const commands = { loadForm$, updateForm$, getSample$, getPredefinedTypes$ };
 
-const props = {
-  addSample: toPromise(Sample.editSample()),
-  emitSuccess,
-  emitError
-};
+const props = (props, ajaxPut = simplePut) => ({
+  ...props,
+  ...sampleProps(props, Sample.editSample(ajaxPut))
+});
 
 export default flowRight([
   inject(data, commands, props),

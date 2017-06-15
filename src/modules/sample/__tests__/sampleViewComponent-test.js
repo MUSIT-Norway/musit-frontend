@@ -122,15 +122,12 @@ describe('AnalysisSampleFormPageView', () => {
             value: [{ name: 'Arne And', role: 'creator', date: 1495756800000 }]
           }
         }}
-        location={{
-          state: [
-            {
-              term: 'Carex saxatilis',
-              museumNo: 'M1234',
-              subNo: 'a'
-            }
-          ]
+        objectData={{
+          term: 'Carex saxatilis',
+          museumNo: 'M1234',
+          subNo: 'a'
         }}
+        goBack={() => {}}
       />
     );
 

@@ -123,11 +123,12 @@ const commands = {
   loadRootNode$
 };
 
-const props = ({ history: { goBack } }) => ({
+const props = props => ({
+  ...props,
   emitError,
   emitSuccess,
   addObservation: Control.addControl(),
-  goBack
+  goBack: props.history.goBack
 });
 
 export default inject(data, commands, props)(EditObservationPage);

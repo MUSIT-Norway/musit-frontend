@@ -26,6 +26,7 @@ const commands = {
 };
 
 const props = props => ({
+  ...props,
   pickObject: MusitObject.pickObject(toggleObject$),
   isItemAdded,
   goTo: props.history.push

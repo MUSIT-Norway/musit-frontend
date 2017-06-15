@@ -381,14 +381,15 @@ const commands = {
   loadRootNode$
 };
 
-const props = ({ history: { goBack, replace }, match: { params: { id } } }) => ({
+const props = props => ({
+  ...props,
   addControl: Control.addControl(),
-  goBack,
+  goBack: props.history.goBack,
   editObservation: (appSession, controlState) =>
-    replace({
+    props.history.replace({
       pathname: Config.magasin.urls.client.storagefacility.editObservation(
-        id,
-        appSession
+        props.match.params.id,
+        props.appSession
       ),
       state: controlState
     })

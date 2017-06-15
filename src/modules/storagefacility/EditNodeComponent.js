@@ -84,6 +84,7 @@ const commands = {
 };
 
 const props = props => ({
+  ...props,
   emitError,
   emitSuccess,
   editNode: MusitNode.editNode(),

@@ -260,6 +260,7 @@ const commands = {
 };
 
 const customProps = props => ({
+  ...props,
   updateMoveDialog,
   emitError,
   emitSuccess,

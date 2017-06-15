@@ -3,13 +3,13 @@ import sampleForm from './sampleAddForm';
 import SampleFormAddComponent from './SampleFormComponent';
 import { makeUrlAware } from '../../stores/appSession';
 import flowRight from 'lodash/flowRight';
-import Sample from '../../models/sample';
 import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
-import { emitError, emitSuccess } from '../../shared/errors';
-import { toPromise } from '../../shared/util';
 import mount from '../../shared/mount';
 import store$, { getPredefinedTypes$ } from './sampleStore';
+import { sampleProps } from './shared/submit';
+import Sample from '../../models/sample';
+import { simplePost } from '../../shared/RxAjax';
 
 const { form$, updateForm$, loadForm$ } = sampleForm;
 
@@ -19,11 +19,10 @@ const data = {
   store$
 };
 
-const props = {
-  addSample: toPromise(Sample.addSample()),
-  emitSuccess,
-  emitError
-};
+const props = (props, ajaxPost = simplePost) => ({
+  ...props,
+  ...sampleProps(props, Sample.addSample(ajaxPost))
+});
 
 const commands = {
   updateForm$,

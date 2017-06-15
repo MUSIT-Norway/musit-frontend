@@ -24,13 +24,32 @@ const data = {
 };
 
 const props: ClickEvents = props => ({
-  clickEditSample: (appSession, sampleId, objectData) =>
-    clickEditSample(appSession, sampleId, objectData, props.history.push),
-  clickCreateAnalysis: (appSession, sample, form, objectData) =>
-    clickCreateAnalysis(appSession, sample, form, objectData, props.history.push),
-  clickCreateSample: (appSession, sample, form, objectData) =>
-    clickCreateSample(appSession, sample, form, objectData, props.history.push),
-  goBack: props.history.goBack
+  ...props,
+  objectData: props.location.state[0],
+  clickEditSample: clickEditSample(
+    props.appSession,
+    props.match.params.sampleId,
+    props.location.state[0],
+    props.history.push
+  ),
+  clickCreateAnalysis: clickCreateAnalysis(
+    props.appSession,
+    props.store.sample,
+    props.form,
+    props.location.state[0],
+    props.history.push
+  ),
+  clickCreateSample: clickCreateSample(
+    props.appSession,
+    props.store.sample,
+    props.form,
+    props.location.state[0],
+    props.history.push
+  ),
+  goBack: e => {
+    e.preventDefault();
+    props.history.goBack();
+  }
 });
 
 const commands = { getSample$, loadForm$, getPredefinedTypes$ };

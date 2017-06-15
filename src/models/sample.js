@@ -161,6 +161,7 @@ Sample.prepareForSubmit = tmpData => ({
     'registeredDate',
     'persons'
   ]),
+  isExtracted: true,
   originatedObjectUuid: tmpData.originatedObjectUuid || tmpData.parentObject.objectId,
   size: tmpData.size ? { value: tmpData.size, unit: tmpData.sizeUnit } : null,
   externalId: tmpData.externalId

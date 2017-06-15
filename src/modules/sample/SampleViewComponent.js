@@ -13,12 +13,10 @@ import { I18n } from 'react-i18nify';
 type Props = {
   form: FormDetails,
   appSession: AppSession,
-  location: {
-    state: Array<ObjectData & SampleData & { sampleType: string, sampleSubType: string }>
-  },
-  match: { params: { sampleId: string } },
+  objectData: ObjectData & SampleData & { sampleType: string, sampleSubType: string },
   store: { sample: SampleData }
 };
+
 type ClickEventReturn = (e: { preventDefault: Function }) => void;
 
 export type ClickEvents = {
@@ -44,16 +42,12 @@ export type ClickEvents = {
 
 export default function SampleViewComponent({
   form,
-  store,
-  appSession,
-  location: { state },
-  match: { params: { sampleId } },
   clickCreateAnalysis,
   clickEditSample,
   clickCreateSample,
+  objectData,
   goBack
 }: Props & ClickEvents) {
-  const objectData = state[0];
   return (
     <div className="container">
       <form className="form-horizontal">
@@ -63,22 +57,13 @@ export default function SampleViewComponent({
           </h1>
         </div>
         <div className="pull-right">
-          <button
-            className="btn btn-default"
-            onClick={clickCreateAnalysis(appSession, store.sample, form, objectData)}
-          >
+          <button className="btn btn-default" onClick={clickCreateAnalysis}>
             {I18n.t('musit.analysis.createAnalysis')}
           </button>
-          <button
-            className="btn btn-default"
-            onClick={clickEditSample(appSession, sampleId, objectData)}
-          >
+          <button className="btn btn-default" onClick={clickEditSample}>
             {I18n.t('musit.sample.updateSample')}
           </button>
-          <button
-            className="btn btn-default"
-            onClick={clickCreateSample(appSession, store.sample, form, objectData)}
-          >
+          <button className="btn btn-default" onClick={clickCreateSample}>
             {` ${I18n.t('musit.analysis.createSample')}`}
           </button>
         </div>
@@ -273,14 +258,7 @@ export default function SampleViewComponent({
           </div>
         </div>
         <hr />
-        <button
-          className="btn-link"
-          style={{ marginLeft: 20 }}
-          onClick={e => {
-            e.preventDefault();
-            goBack();
-          }}
-        >
+        <button className="btn-link" style={{ marginLeft: 20 }} onClick={goBack}>
           {I18n.t('musit.texts.cancel')}
         </button>
       </form>

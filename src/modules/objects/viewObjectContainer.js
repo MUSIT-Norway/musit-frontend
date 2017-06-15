@@ -11,7 +11,6 @@ import sampleStore$, { getSampleTypes$ } from '../sample/sampleStore';
 import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
 import flowRight from 'lodash/flowRight';
-import { emitError, emitSuccess } from '../../shared/errors';
 import mount from '../../shared/mount';
 import { toggleObject$ } from '../../stores/pickList';
 import { isItemAdded } from '../../stores/pickList';
@@ -27,8 +26,8 @@ const data: {} = {
 };
 
 const props: {} = props => ({
-  emitSuccess,
-  emitError,
+  ...props,
+  loading: !(props.sampleTypes.sampleTypes && props.sampleTypes.sampleTypes.find),
   pickObject: MusitObject.pickObject(toggleObject$),
   isItemAdded,
   goTo: props.history.push,

@@ -152,8 +152,9 @@ const commands = {
   loadRootNode$
 };
 
-const props = ({ history: { goBack } }) => ({
-  goBack
+const props = props => ({
+  ...props,
+  goBack: props.history.goBack
 });
 
 export default inject(data, commands, props)(ControlViewContainer);
