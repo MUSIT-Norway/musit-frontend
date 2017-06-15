@@ -2,12 +2,7 @@ import inject from 'react-rxjs/dist/RxInject';
 import PropTypes from 'prop-types';
 import AnalysisViewComponent from './AnalysisViewComponent';
 import { makeUrlAware } from '../../stores/appSession';
-import {
-  setLoadingSampleTypes$,
-  loadSampleTypes$,
-  setLoadingAnalysisTypes$,
-  loadAnalysisTypes$
-} from '../../stores/predefined';
+import { loadPredefinedTypes } from '../../stores/predefined';
 import flowRight from 'lodash/flowRight';
 import mount from '../../shared/mount';
 import store$, { getAnalysis$, setLoading$ } from './analysisStore';
@@ -26,10 +21,6 @@ const data = {
 
 const commands = {
   loadForm$,
-  setLoadingSampleTypes$,
-  loadSampleTypes$,
-  setLoadingAnalysisTypes$,
-  loadAnalysisTypes$,
   getAnalysis$,
   setLoading$
 };
@@ -40,30 +31,6 @@ const props = props => ({
   goToUrl: props.history.push,
   goBack: props.history.goBack
 });
-
-// Can be componentified
-export const onMount = ({
-  setLoadingSampleTypes,
-  loadSampleTypes,
-  setLoadingAnalysisTypes,
-  loadAnalysisTypes,
-  appSession,
-  predefined
-}) => {
-  const inputParams = {
-    museumId: appSession.museumId,
-    collectionId: appSession.collectionId,
-    token: appSession.accessToken
-  };
-  if (!predefined.loadingSampleTypes) {
-    setLoadingSampleTypes();
-    loadSampleTypes(inputParams);
-  }
-  if (!predefined.loadingAnalysisTypes) {
-    setLoadingAnalysisTypes();
-    loadAnalysisTypes(inputParams);
-  }
-};
 
 // Can be componentified
 export const onProps = fieldsArray => ({
@@ -97,6 +64,7 @@ export const onProps = fieldsArray => ({
 
 export default flowRight([
   inject(data, commands, props),
-  mount(onMount, onProps(fieldsArray)),
+  mount(null, onProps(fieldsArray)),
+  loadPredefinedTypes,
   makeUrlAware
 ])(AnalysisViewComponent);

@@ -1,3 +1,5 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
 import Analysis from '../models/analysis';
 import Sample from '../models/sample';
@@ -47,3 +49,71 @@ export default store$({
   setLoadingAnalysisTypes$,
   loadAnalysisTypes$
 });
+
+class PredefinedLoader extends React.Component {
+  static propTypes = {
+    appSession: PropTypes.shape({
+      museumId: PropTypes.number,
+      collectionId: PropTypes.string,
+      accessToken: PropTypes.string
+    }).isRequired,
+    setLoadingAnalysisTypes: PropTypes.func.isRequired,
+    loadAnalysisTypes: PropTypes.func.isRequired,
+    setLoadingSampleTypes: PropTypes.func.isRequired,
+    loadSampleTypes: PropTypes.func.isRequired,
+    component: PropTypes.any.isRequired
+  };
+
+  componentWillMount() {
+    const inputParams = {
+      museumId: this.props.appSession.museumId,
+      collectionId: this.props.appSession.collectionId,
+      token: this.props.appSession.accessToken
+    };
+    if (!this.isSampleTypesLoaded()) {
+      this.props.setLoadingSampleTypes();
+      this.props.loadSampleTypes(inputParams);
+    }
+    if (!this.isAnalysisTypesLoaded()) {
+      this.props.setLoadingAnalysisTypes();
+      this.props.loadAnalysisTypes(inputParams);
+    }
+  }
+
+  isSampleTypesLoaded() {
+    return (
+      !this.props.predefined.loadingSampleTypes && !!this.props.predefined.sampleTypes
+    );
+  }
+
+  isAnalysisTypesLoaded() {
+    return (
+      !this.props.predefined.loadingAnalysisTypes && !!this.props.predefined.analysisTypes
+    );
+  }
+
+  render() {
+    if (!this.isAnalysisTypesLoaded() || !this.isSampleTypesLoaded()) {
+      return <div className="loading" />;
+    }
+    const Component = this.props.component;
+    return <Component {...this.props} />;
+  }
+}
+
+export const loadPredefinedTypes = Component => {
+  return initialProps => {
+    return (
+      <PredefinedLoader
+        {...initialProps}
+        component={Component}
+        setLoadingAnalysisTypes={setLoadingAnalysisTypes$.next.bind(
+          setLoadingAnalysisTypes$
+        )}
+        loadAnalysisTypes={loadAnalysisTypes$.next.bind(loadAnalysisTypes$)}
+        setLoadingSampleTypes={setLoadingSampleTypes$.next.bind(setLoadingSampleTypes$)}
+        loadSampleTypes={loadSampleTypes$.next.bind(loadSampleTypes$)}
+      />
+    );
+  };
+};

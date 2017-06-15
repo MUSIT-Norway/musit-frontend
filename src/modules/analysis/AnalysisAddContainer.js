@@ -2,35 +2,24 @@ import inject from 'react-rxjs/dist/RxInject';
 import PropTypes from 'prop-types';
 import analysisAddForm from './analysisForm';
 import AnalysisFormComponent from './AnalysisFormComponent';
-import { onMount } from './AnalysisViewContainer';
+import { loadPredefinedTypes } from '../../stores/predefined';
 import store$ from './analysisStore';
 import Analysis from '../../models/analysis';
 import { makeUrlAware } from '../../stores/appSession';
 import flowRight from 'lodash/flowRight';
-import mount from '../../shared/mount';
 import { toPromise } from '../../shared/util';
-import predefined$, {
-  setLoadingSampleTypes$,
-  loadSampleTypes$,
-  setLoadingAnalysisTypes$,
-  loadAnalysisTypes$
-} from '../../stores/predefined';
 const { form$, updateForm$, loadForm$ } = analysisAddForm;
 
 const data = {
   appSession$: { type: PropTypes.object.isRequired },
-  predefined$,
+  predefined$: { type: PropTypes.object.isRequired },
   store$,
   form$
 };
 
 const commands = {
   updateForm$,
-  loadForm$,
-  setLoadingSampleTypes$,
-  loadSampleTypes$,
-  setLoadingAnalysisTypes$,
-  loadAnalysisTypes$
+  loadForm$
 };
 
 const props = props => ({
@@ -41,6 +30,8 @@ const props = props => ({
   goBack: props.history.goBack
 });
 
-export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(
-  AnalysisFormComponent
-);
+export default flowRight([
+  inject(data, commands, props),
+  loadPredefinedTypes,
+  makeUrlAware
+])(AnalysisFormComponent);

@@ -11,7 +11,9 @@ const mount = (
     props: Props;
 
     componentWillMount() {
-      onMount(this.props);
+      if (onMount) {
+        onMount(this.props);
+      }
     }
 
     componentWillReceiveProps(props: Props) {
