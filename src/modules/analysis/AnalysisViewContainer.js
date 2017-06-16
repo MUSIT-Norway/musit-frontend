@@ -7,8 +7,8 @@ import flowRight from 'lodash/flowRight';
 import lifeCycle from '../../shared/mount';
 import store$, { getAnalysis$, setLoading$ } from './analysisStore';
 import Analysis from '../../models/analysis';
-import { toPromise } from '../../shared/util';
 import analysisForm, { fieldsArray } from './analysisForm';
+import Config from '../../config';
 
 const { form$, loadForm$ } = analysisForm;
 
@@ -26,28 +26,26 @@ const commands = {
 
 const props = props => ({
   ...props,
-  loadAnalysis: toPromise(Analysis.getAnalysisWithDetails()),
-  goToUrl: props.history.push,
-  goBack: props.history.goBack
+  clickEdit: () => {
+    props.history.push(
+      Config.magasin.urls.client.analysis.editAnalysis(
+        props.appSession,
+        props.match.params.analysisId
+      )
+    );
+  }
 });
 
-export const onMount = fieldsArray => ({
-  appSession,
-  getAnalysis,
-  predefined,
-  loadForm,
-  setLoading,
-  match
-}) => {
-  setLoading();
-  getAnalysis({
-    id: match.params.analysisId,
-    sampleTypes: predefined.sampleTypes,
-    museumId: appSession.museumId,
-    collectionId: appSession.collectionId,
-    token: appSession.accessToken,
+export const onMount = fieldsArray => props => {
+  props.setLoading();
+  props.getAnalysis({
+    id: props.match.params.analysisId,
+    sampleTypes: props.predefined.sampleTypes,
+    museumId: props.appSession.museumId,
+    collectionId: props.appSession.collectionId,
+    token: props.appSession.accessToken,
     onComplete: analysis => {
-      loadForm(Analysis.fromJsonToForm(analysis, fieldsArray));
+      props.loadForm(Analysis.fromJsonToForm(analysis, fieldsArray));
     }
   });
 };

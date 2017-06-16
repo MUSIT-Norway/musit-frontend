@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
-import { MenuItem, Nav, Navbar, NavDropdown, NavItem } from 'react-bootstrap';
+import { Nav, Navbar, NavItem } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import MusitUserAccount from './components/UserAccount';
 import './AppComponent.css';

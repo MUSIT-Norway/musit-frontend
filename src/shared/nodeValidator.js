@@ -36,9 +36,5 @@ export const checkNodeBranch = (from, to) => {
 };
 
 export const checkNodeBranchAndType = (from, to) => {
-  // console.log(JSON.stringify(from));
-  // console.log(JSON.stringify(to));
-  // console.log('checkNodeBranchAndType return =' + checkNodeType(from, to) + checkNodeBranch(from, to));
-
   return checkNodeType(from, to) || checkNodeBranch(from, to);
 };

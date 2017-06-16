@@ -2,34 +2,26 @@
 import React from 'react';
 import { I18n } from 'react-i18nify';
 import type { AppSession } from '../../types/appSession';
-import type { FormData } from './types/form';
-import type { Store } from './types/store';
+import type { FormData } from './shared/formType';
+import type { Store } from './shared/storeType';
 import MetaInformation from '../../components/metainfo';
-import Config from '../../config';
 import moment from 'moment';
-import ObjectTable from '../objects/components/ObjectTable';
+import ObjectTable from './components/ExpandableObjectResultTable';
 import AddButton from '../../components/AddButton';
-
-type Match = { params: { analysisId: string } };
-
-type Predefined = {
-  analysisTypes: Array<any>,
-  purposes: Array<any>,
-  analysisLabList: Array<any>,
-  categories: mixed
-};
+import type { Predefined } from './shared/predefinedType';
+import toNumber from 'lodash/toNumber';
+import toArray from 'lodash/toArray';
 
 type Props = {
   form: FormData,
   store: Store,
   appSession: AppSession,
   predefined: Predefined,
-  match: Match,
-  goToUrl: (s: string) => void,
-  goBack: () => void
+  clickEdit: Function,
+  clickCancel: Function
 };
 
-const AnalysisView = ({ form, store, predefined, appSession, match, goToUrl }: Props) => (
+const AnalysisView = ({ form, store, predefined, appSession, clickEdit }: Props) => (
   <div className="container">
     <div className="page-header">
       <h1>
@@ -42,14 +34,7 @@ const AnalysisView = ({ form, store, predefined, appSession, match, goToUrl }: P
         updatedDate={form.updatedDate.value}
         registeredBy={form.registeredByName.value}
         registeredDate={form.registeredDate.value}
-        onClickEdit={() => {
-          goToUrl(
-            Config.magasin.urls.client.analysis.editAnalysis(
-              appSession,
-              match.params.analysisId
-            )
-          );
-        }}
+        onClickEdit={clickEdit}
       />
       <hr />
       <div className="form-group">
@@ -88,7 +73,7 @@ const AnalysisView = ({ form, store, predefined, appSession, match, goToUrl }: P
         </label>
         <div className="col-md-5">
           <p className="form-control-static" id="status">
-            {getLabPlaceText(predefined, form.orgId.value)}
+            {getLabPlaceText(predefined, toNumber(form.orgId.value))}
           </p>
         </div>
       </div>
@@ -154,9 +139,9 @@ const AnalysisView = ({ form, store, predefined, appSession, match, goToUrl }: P
         <div className="form-group">
           <div className="col-md-12 col-md-offset-0">
             <ObjectTable
-              objects={
+              data={
                 form.type.value === 'AnalysisCollection'
-                  ? form.events.value
+                  ? toArray(form.events.value)
                   : [
                       {
                         term: form.term.value,
@@ -180,14 +165,6 @@ const AnalysisView = ({ form, store, predefined, appSession, match, goToUrl }: P
             <p className="form-control-static" id="externalSource">
               {form.externalSource.value}
             </p>
-          </div>
-        </div>
-        <div className="form-group">
-          <label className="control-label col-md-2" htmlFor="externalFile">
-            {I18n.t('musit.texts.attachment')}:
-          </label>
-          <div className="col-md-10">
-            <p className="form-control-static" id="externalFile">{' '}</p>
           </div>
         </div>
         <div className="form-group">
@@ -291,7 +268,7 @@ export function getStatusText(status?: ?number): string {
   }
 }
 
-function getLabPlaceText(predefined: any, actorId?: ?string): string {
+function getLabPlaceText(predefined: any, actorId: ?string): string {
   if (!actorId) {
     return '';
   }

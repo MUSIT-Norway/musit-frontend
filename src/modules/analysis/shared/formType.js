@@ -1,3 +1,4 @@
+// @flow
 import type { Field } from '../../../forms/form';
 import type { Person } from '../../../components/person/PersonRoleDate';
 
@@ -29,6 +30,7 @@ export type FormData = {
   // restriction
   restrictions: Field<boolean>,
   restrictions_requester: Field<string>,
+  restrictions_requesterName: Field<string>,
   restrictions_expirationDate: Field<string>,
   restrictions_reason: Field<string>,
   restrictions_caseNumbers: Field<Array<string>>,

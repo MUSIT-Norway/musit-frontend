@@ -1,11 +1,10 @@
-// @flow
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import AnalysisViewComponent from '../AnalysisViewComponent';
 import { fieldsArray } from '../analysisForm';
 import type { Field } from 'forms/form';
-import type { FormData } from '../types/form';
+import type { FormData } from '../shared/formType';
 import { appSession } from './../../../testutils/sampleDataForTest';
 
 declare var describe: any;
@@ -87,8 +86,8 @@ describe('AnalysisViewComponent', () => {
         match={{ params: { analysisId: '45' } }}
         appSession={appSession}
         store={store}
-        goToUrl={() => {}}
-        goBack={() => {}}
+        clickEdit={() => {}}
+        clickCancel={() => {}}
         predefined={{
           sampleTypes: [],
           analysisTypes: [],

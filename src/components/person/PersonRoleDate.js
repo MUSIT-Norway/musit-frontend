@@ -32,7 +32,7 @@ type Props = {
   updateForm: Function,
   fieldName: string,
   appSession: AppSession,
-  roles?: Array<string>,
+  roles: Array<string>,
   showDateForRole?: Function
 };
 
@@ -44,9 +44,7 @@ export const PersonRoleDate = ({
   roles,
   showDateForRole
 }: Props) => {
-  const pArr: Array<Person> = personData && personData.length > 0
-    ? personData
-    : defaultPersons;
+  const pArr: Array<Person> = personData.length > 0 ? personData : defaultPersons;
   return (
     pArr &&
     <Grid>
@@ -83,7 +81,7 @@ export const PersonRoleDate = ({
                       name: newValue.fn,
                       uuid: MusitActor.getActorId(newValue) || undefined
                     },
-                    personData
+                    pArr
                   )
                 });
               }}
@@ -97,7 +95,7 @@ export const PersonRoleDate = ({
               onChange={role =>
                 updateForm({
                   name: fieldName,
-                  rawValue: updateRole(i, role, personData)
+                  rawValue: updateRole(i, role, pArr)
                 })}
               title={v.role ? v.role : I18n.t('musit.texts.chooseRole')}
             />
@@ -111,12 +109,12 @@ export const PersonRoleDate = ({
                   onClear={newValue =>
                     updateForm({
                       name: fieldName,
-                      rawValue: updateDate(i, newValue, personData)
+                      rawValue: updateDate(i, newValue, pArr)
                     })}
                   onChange={newValue => {
                     updateForm({
                       name: fieldName,
-                      rawValue: updateDate(i, newValue, personData)
+                      rawValue: updateDate(i, newValue, pArr)
                     });
                   }}
                 />}
@@ -127,7 +125,7 @@ export const PersonRoleDate = ({
               onClick={() =>
                 updateForm({
                   name: fieldName,
-                  rawValue: deletePerson(i, personData)
+                  rawValue: deletePerson(i, pArr)
                 })}
             />
           </Col>
@@ -139,7 +137,7 @@ export const PersonRoleDate = ({
             onClick={() =>
               updateForm({
                 name: fieldName,
-                rawValue: addPerson(personData)
+                rawValue: addPerson(pArr)
               })}
           >
             {I18n.t('musit.analysis.addPersons')}

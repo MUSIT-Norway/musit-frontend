@@ -1,3 +1,4 @@
+// @flow
 import type { ObjectData } from 'types/object';
 
 export type AnalysisType = {

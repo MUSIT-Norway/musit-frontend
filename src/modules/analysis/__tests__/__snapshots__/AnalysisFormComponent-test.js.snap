@@ -30,13 +30,13 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
           <select
             className="form-control"
             id="type"
-            onChange={[Function]}
+            onChange="analysisTypeCategory"
             value=""
           >
             <option
               value=""
             >
-              Valg kategori
+              Velg kategori
             </option>
           </select>
         </div>
@@ -57,13 +57,13 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
         <select
           className="form-control"
           id="reason"
-          onChange={[Function]}
+          onChange="reason"
           value=""
         >
           <option
             value=""
           >
-            Valg formål
+            Velg formål
           </option>
         </select>
       </div>
@@ -83,13 +83,13 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
         <select
           className="form-control"
           id="status"
-          onChange={[Function]}
+          onChange="status"
           value="1"
         >
           <option
             value=""
           >
-            Valg status
+            Velg status
           </option>
           <option
             value="1"
@@ -129,13 +129,13 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
         <select
           className="form-control"
           id="place"
-          onChange={[Function]}
+          onChange="orgId"
           value=""
         >
           <option
             value=""
           >
-            Valg analysested
+            Velg analysested
           </option>
         </select>
       </div>
@@ -155,7 +155,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
         <input
           className="form-control"
           id="casenumber"
-          onChange={[Function]}
+          onChange="caseNumbers"
           type="text"
           value=""
         />
@@ -177,7 +177,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
         <textarea
           className="form-control"
           id="note"
-          onChange={[Function]}
+          onChange="note"
           rows={5}
           value=""
         />
@@ -208,6 +208,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
         }
       }
       fieldName="persons"
+      personData={Array []}
       roles={
         Array [
           "responsible",
@@ -239,35 +240,8 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
         <div
           className="col-md-12 col-md-offset-0"
         >
-          <ObjectTable
-            objects={
-              Array [
-                Object {
-                  "id": 1,
-                  "mainObjectId": 1,
-                  "museumNo": "museumNO",
-                  "nodeId": "1234",
-                  "objectId": 1,
-                  "objectType": "collection",
-                  "objectUUID": "sdffsdsfsf",
-                  "subNo": "subNO",
-                  "term": "saks 1",
-                  "uuid": "ddlkjlkjfsdf",
-                },
-                Object {
-                  "id": 2,
-                  "mainObjectId": 1,
-                  "museumNo": "museumNO",
-                  "nodeId": "1234",
-                  "objectId": 2,
-                  "objectType": "collection",
-                  "objectUUID": "sdffsdsfsf",
-                  "subNo": "subNO",
-                  "term": "saks 2",
-                  "uuid": "ddlkjlkjfsdf",
-                },
-              ]
-            }
+          <ExpandableObjectTable
+            updateForm={[Function]}
           />
         </div>
         <div
@@ -279,84 +253,12 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
         </div>
       </div>
       <hr />
-      <div
-        className="form-group"
-      >
-        <label
-          className="control-label col-md-2"
-          htmlFor="externalSource"
-        >
-          Ekstern kilde:
-        </label>
-        <div
-          className="col-md-5"
-        >
-          <input
-            className="form-control"
-            id="externalSource"
-            onChange={[Function]}
-            value=""
-          />
-        </div>
-        <div
-          className="col-md-2"
-        >
-          <button
-            className="btn btn-default"
-          >
-            Lagre
-          </button>
-        </div>
-      </div>
-      <div
-        className="form-group"
-      >
-        <label
-          className="control-label col-md-2"
-          htmlFor="file"
-        >
-          Last opp fil
-          :
-        </label>
-        <div
-          className="col-md-5"
-        >
-          <input
-            className="form-control"
-            id="file"
-          />
-        </div>
-        <div
-          className="col-md-2"
-        >
-          <button
-            className="btn btn-default"
-          >
-            Bla gjennom
-          </button>
-        </div>
-      </div>
-      <div
-        className="form-group"
-      >
-        <label
-          className="control-label col-md-2"
-          htmlFor="resultNote"
-        >
-          Kommentar til resultat:
-        </label>
-        <div
-          className="col-md-10"
-        >
-          <textarea
-            className="form-control"
-            id="resultNote"
-            onChange={[Function]}
-            rows={5}
-            value=""
-          />
-        </div>
-      </div>
+      <Result
+        comments=""
+        externalSource=""
+        updateComments={[Function]}
+        updateExternalSource={[Function]}
+      />
       <div
         className="form-group"
       >
@@ -364,7 +266,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
           className="control-label col-md-2"
           htmlFor="isRestricted"
         >
-          Klausulering
+          Klausulering:
         </label>
         <div
           className="col-md-10"
@@ -378,7 +280,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
             >
               <input
                 name="options"
-                onChange={[Function]}
+                onChange="restrictions"
                 type="radio"
               />
                
@@ -389,7 +291,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
             >
               <input
                 name="options"
-                onChange={[Function]}
+                onChange="restrictions"
                 type="radio"
               />
                

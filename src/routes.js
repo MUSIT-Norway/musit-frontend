@@ -158,7 +158,9 @@ const MagasinPage = props => (
     <Route
       path={rt(props, '/:id/objects')}
       exact
-      component={extraProps(StorageUnitsTable, { showObjects: true })}
+      component={extraProps(StorageUnitsTable, {
+        showObjects: true
+      })}
     />
 
     <Route component={NotFoundPage} />

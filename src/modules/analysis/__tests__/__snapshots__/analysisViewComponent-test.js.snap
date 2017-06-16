@@ -157,8 +157,8 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         <div
           className="col-md-12 col-md-offset-0"
         >
-          <ObjectTable
-            objects={
+          <ExpandableObjectTable
+            data={
               Array [
                 Object {
                   "museumNo": undefined,
@@ -201,27 +201,6 @@ exports[`AnalysisViewComponent should render properly 1`] = `
       >
         <label
           className="control-label col-md-2"
-          htmlFor="externalFile"
-        >
-          Vedlegg
-          :
-        </label>
-        <div
-          className="col-md-10"
-        >
-          <p
-            className="form-control-static"
-            id="externalFile"
-          >
-             
-          </p>
-        </div>
-      </div>
-      <div
-        className="form-group"
-      >
-        <label
-          className="control-label col-md-2"
           htmlFor="comments"
         >
           Kommentar til resultat:
@@ -242,7 +221,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
           className="control-label col-md-2"
           htmlFor="restrictions"
         >
-          Klausulering
+          Klausulering:
         </label>
         <div
           className="col-md-10"

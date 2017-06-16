@@ -1,14 +1,9 @@
-// @flow
 import React from 'react';
-import AnalysisFormComponent, {
-  updateFormField,
-  updateBooleanField,
-  getAnalysisTypeTerm,
-  submitForm
-} from '../AnalysisFormComponent';
+import AnalysisFormComponent from '../AnalysisFormComponent';
+import { getAnalysisTypeTerm, submitForm } from '../shared/submit';
 import { fieldsArray } from '../analysisForm';
 import type { Field } from 'forms/form';
-import type { FormData } from '../types/form';
+import type { FormData } from '../shared/formType';
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import sinon from 'sinon';
@@ -63,9 +58,7 @@ describe('AnalysisFormComponent', () => {
         saveAnalysisPromise.createPromise(),
         loadFormPromise.createPromise(),
         goTo
-      )({
-        preventDefault: identity
-      }).then(() => {
+      ).then(() => {
         expect(saveAnalysisPromise.params.id).toEqual(45);
         expect(saveAnalysisPromise.params.token).toEqual('45667');
         expect(saveAnalysisPromise.params.museumId).toEqual(99);
@@ -163,42 +156,6 @@ describe('AnalysisFormComponent', () => {
     });
   });
 
-  describe('updateFormField', () => {
-    it('should updateForm with non empty input value', () => {
-      const updateForm = sinon.spy();
-      updateFormField('someFieldName', updateForm)({ target: { value: 'Test' } });
-      expect(updateForm.calledOnce).toBe(true);
-      expect(updateForm.getCall(0).args[0].name).toEqual('someFieldName');
-      expect(updateForm.getCall(0).args[0].rawValue).toEqual('Test');
-    });
-
-    it('should updateForm with empty input value', () => {
-      const updateForm = sinon.spy();
-      updateFormField('someFieldName', updateForm)({ target: { value: '' } });
-      expect(updateForm.calledOnce).toBe(true);
-      expect(updateForm.getCall(0).args[0].name).toEqual('someFieldName');
-      expect(updateForm.getCall(0).args[0].rawValue).toEqual('');
-    });
-  });
-
-  describe('updateBooleanField', () => {
-    it('should updateForm with true boolean value', () => {
-      const updateForm = sinon.spy();
-      updateBooleanField(true)('someOtherFieldName', updateForm)();
-      expect(updateForm.calledOnce).toBe(true);
-      expect(updateForm.getCall(0).args[0].name).toEqual('someOtherFieldName');
-      expect(updateForm.getCall(0).args[0].rawValue).toEqual(true);
-    });
-
-    it('updateBooleanField should updateForm with false boolean value', () => {
-      const updateForm = sinon.spy();
-      updateBooleanField(false)('someOtherFieldName', updateForm)();
-      expect(updateForm.calledOnce).toBe(true);
-      expect(updateForm.getCall(0).args[0].name).toEqual('someOtherFieldName');
-      expect(updateForm.getCall(0).args[0].rawValue).toEqual(false);
-    });
-  });
-
   it('should render objects from events', () => {
     const location = {};
     const store = {
@@ -240,8 +197,11 @@ describe('AnalysisFormComponent', () => {
         form={form}
         updateForm={identity}
         submitForm={identity}
-        goBack={identity}
-        goToUrl={identity}
+        clickCancel={identity}
+        updateStringField={identity}
+        updateArrayField={identity}
+        updateBooleanField={identity}
+        clickSave={identity}
         saveAnalysis={promise}
         saveResult={promise}
         store={store}

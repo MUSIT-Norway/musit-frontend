@@ -26,7 +26,7 @@ export const fieldsArray = [
   getStrField('result'),
   getNumberField('orgId'),
   getStrField('reason'),
-  getStrField('externalSource'),
+  getArrField('externalSource', []),
   getStrField('comments'),
   getBoolField('restrictions', false),
   getStrField('restrictions_requester'),
