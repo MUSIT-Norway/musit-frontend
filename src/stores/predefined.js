@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import Analysis from '../models/analysis';
 import Sample from '../models/sample';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
+import inject from 'react-rxjs/dist/RxInject';
 
 export const setLoadingSampleTypes$ = createAction('setLoadingSampleTypes$');
 export const loadSampleTypes$ = createAction('loadSampleTypes$').switchMap(
@@ -43,7 +44,7 @@ export const store$ = actions =>
     Observable.of({ loadingSampleTypes: false, loadingAnalysisTypes: false })
   );
 
-export default store$({
+const predefined$ = store$({
   setLoadingSampleTypes$,
   loadSampleTypes$,
   setLoadingAnalysisTypes$,
@@ -101,8 +102,8 @@ class PredefinedLoader extends React.Component {
   }
 }
 
-export const loadPredefinedTypes = Component => {
-  return initialProps => {
+export const loadPredefinedTypes = Component =>
+  inject({ predefined$ })(initialProps => {
     return (
       <PredefinedLoader
         {...initialProps}
@@ -115,5 +116,4 @@ export const loadPredefinedTypes = Component => {
         loadSampleTypes={loadSampleTypes$.next.bind(loadSampleTypes$)}
       />
     );
-  };
-};
+  });

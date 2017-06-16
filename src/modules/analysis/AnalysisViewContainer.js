@@ -4,7 +4,7 @@ import AnalysisViewComponent from './AnalysisViewComponent';
 import { makeUrlAware } from '../../stores/appSession';
 import { loadPredefinedTypes } from '../../stores/predefined';
 import flowRight from 'lodash/flowRight';
-import mount from '../../shared/mount';
+import lifeCycle from '../../shared/mount';
 import store$, { getAnalysis$, setLoading$ } from './analysisStore';
 import Analysis from '../../models/analysis';
 import { toPromise } from '../../shared/util';
@@ -14,7 +14,6 @@ const { form$, loadForm$ } = analysisForm;
 
 const data = {
   appSession$: { type: PropTypes.object.isRequired },
-  predefined$: { type: PropTypes.object.isRequired },
   store$,
   form$
 };
@@ -32,39 +31,33 @@ const props = props => ({
   goBack: props.history.goBack
 });
 
-// Can be componentified
-export const onProps = fieldsArray => ({
+export const onMount = fieldsArray => ({
   appSession,
   getAnalysis,
-  store,
   predefined,
   loadForm,
   setLoading,
   match
 }) => {
-  if (
-    !store.loading &&
-    !store.analysis &&
-    predefined.sampleTypes &&
-    predefined.analysisTypes
-  ) {
-    setLoading();
-    getAnalysis({
-      id: match.params.analysisId,
-      sampleTypes: predefined.sampleTypes,
-      museumId: appSession.museumId,
-      collectionId: appSession.collectionId,
-      token: appSession.accessToken,
-      onComplete: analysis => {
-        loadForm(Analysis.fromJsonToForm(analysis, fieldsArray));
-      }
-    });
-  }
+  setLoading();
+  getAnalysis({
+    id: match.params.analysisId,
+    sampleTypes: predefined.sampleTypes,
+    museumId: appSession.museumId,
+    collectionId: appSession.collectionId,
+    token: appSession.accessToken,
+    onComplete: analysis => {
+      loadForm(Analysis.fromJsonToForm(analysis, fieldsArray));
+    }
+  });
 };
+
+const MountableAnalysisViewComponent = lifeCycle(onMount(fieldsArray))(
+  AnalysisViewComponent
+);
 
 export default flowRight([
   inject(data, commands, props),
-  mount(null, onProps(fieldsArray)),
   loadPredefinedTypes,
   makeUrlAware
-])(AnalysisViewComponent);
+])(MountableAnalysisViewComponent);

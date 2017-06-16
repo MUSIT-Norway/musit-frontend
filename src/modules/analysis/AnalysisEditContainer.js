@@ -6,15 +6,14 @@ import PropTypes from 'prop-types';
 import Analysis from '../../models/analysis';
 import { makeUrlAware } from '../../stores/appSession';
 import flowRight from 'lodash/flowRight';
-import mount from '../../shared/mount';
+import lifeCycle from '../../shared/mount';
 import { toPromise } from '../../shared/util';
-import { onProps } from './AnalysisViewContainer';
+import { onMount } from './AnalysisViewContainer';
 import { loadPredefinedTypes } from '../../stores/predefined';
 const { form$, updateForm$, loadForm$ } = analysisForm;
 
 const data = {
   appSession$: { type: PropTypes.object.isRequired },
-  predefined$: { type: PropTypes.object.isRequired },
   store$,
   form$
 };
@@ -34,9 +33,12 @@ const props = props => ({
   goBack: props.history.goBack
 });
 
+const MountableAnalysisFormComponent = lifeCycle(onMount(fieldsArray))(
+  AnalysisFormComponent
+);
+
 export default flowRight([
   inject(data, commands, props),
-  mount(null, onProps(fieldsArray)),
   loadPredefinedTypes,
   makeUrlAware
-])(AnalysisFormComponent);
+])(MountableAnalysisFormComponent);

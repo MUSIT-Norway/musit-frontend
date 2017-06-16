@@ -12,7 +12,6 @@ const { form$, updateForm$, loadForm$ } = analysisAddForm;
 
 const data = {
   appSession$: { type: PropTypes.object.isRequired },
-  predefined$: { type: PropTypes.object.isRequired },
   store$,
   form$
 };
