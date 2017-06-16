@@ -30,6 +30,8 @@ import AnalysisTypes from './modules/administration/analysisTypes/analysisTypesC
 import AnalysisPlaces
   from './modules/administration/analysisPlaces/analysisPlacesContainer';
 import SampleTypes from './modules/administration/sampleTypes/sampleTypesContainer';
+import AnalysisEventsViewContainer
+  from './modules/analysis/events/analysisEventsViewContainer';
 
 import { replace } from 'lodash';
 
@@ -173,6 +175,7 @@ const ObjectPage = props => (
 
 const AnalysisPage = props => (
   <Switch>
+    <Route path={rt(props, '/')} exact component={AnalysisEventsViewContainer} />
     <Route path={rt(props, '/add')} exact component={AnalysisAddContainer} />
     <Route
       path={rt(props, '/edit/:analysisId')}

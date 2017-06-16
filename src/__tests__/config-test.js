@@ -190,6 +190,16 @@ describe('Config urls', () => {
       service: 'managment',
       endpoints: [
         {
+          name: 'getAllAnalysisTypes',
+          actual: urls.api.analysisType.getAllAnalysisTypes(99),
+          expected: '/api/management/99/analyses/types'
+        },
+        {
+          name: 'getAnalysisCategories',
+          actual: urls.api.analysisType.getAnalysisCategories(99),
+          expected: '/api/management/99/analyses/categories'
+        },
+        {
           name: 'getAnalysisTypesForCategory',
           actual: urls.api.analysisType.getAnalysisTypesForCategory(99, 123),
           expected: '/api/management/99/analyses/types/categories/123'
@@ -198,6 +208,11 @@ describe('Config urls', () => {
           name: 'getAnalysisTypesForCollection',
           actual: urls.api.analysisType.getAnalysisTypesForCollection(99, 123),
           expected: '/api/management/99/analyses/types?collectionIds=123'
+        },
+        {
+          name: 'resultsUrl',
+          actual: urls.api.analysis.resultsUrl(99, 123),
+          expected: '/api/management/99/analyses/123/results'
         },
         {
           name: 'saveAnalysisEvent',
@@ -223,6 +238,26 @@ describe('Config urls', () => {
           name: 'getAnalysisForObject',
           actual: urls.api.analysis.getAnalysisForObject(99, 123),
           expected: '/api/management/99/analyses/objects/123'
+        },
+        {
+          name: 'analysesForObject',
+          actual: urls.api.analysis.analysesForObject(99, 123),
+          expected: '/api/management/99/analyses/objects/123'
+        },
+        {
+          name: 'saveAnalysisType',
+          actual: urls.api.analysis.saveAnalysisType(99, 123),
+          expected: '/api/management/99/analyses/types'
+        },
+        {
+          name: 'getPurposes',
+          actual: urls.api.analysis.getPurposes,
+          expected: '/api/management/purposes'
+        },
+        {
+          name: 'getAnalysisEvents',
+          actual: urls.api.analysis.getAnalysisEvents(99),
+          expected: '/api/management/99/analyses'
         }
       ]
     }

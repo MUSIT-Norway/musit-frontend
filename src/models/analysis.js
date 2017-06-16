@@ -171,6 +171,13 @@ class MusitAnalysis {
   ) => (props: {
     token: string
   }) => Observable;
+
+  static getAnalysisEvents: (
+    ajaxGet: AjaxGet
+  ) => (props: {
+    museumId: number,
+    token: string
+  }) => Observable;
 }
 
 const toField = (
@@ -541,6 +548,11 @@ MusitAnalysis.loadPredefinedTypes = (ajaxGet = simpleGet) => ({
       analysisLabList
     }))
     .do(onComplete);
+};
+
+MusitAnalysis.getAnalysisEvents = (ajaxGet = simpleGet) => ({ museumId, token }) => {
+  const url = Config.magasin.urls.api.analysis.getAnalysisEvents(museumId);
+  return ajaxGet(url, token).map(({ response }) => response);
 };
 
 export default MusitAnalysis;

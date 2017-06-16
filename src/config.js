@@ -128,7 +128,8 @@ export default {
           analysesForObject: (mid: MuseumId, objectId: number): string =>
             `/api/management/${mid}/analyses/objects/${objectId}`,
           saveAnalysisType: (mid: MuseumId) => `/api/management/${mid}/analyses/types`,
-          getPurposes: '/api/management/purposes'
+          getPurposes: '/api/management/purposes',
+          getAnalysisEvents: (mid: MuseumId) => `/api/management/${mid}/analyses`
         },
         samples: {
           baseUrl: (mid: MuseumId): string => `/api/management/${mid}/samples`,

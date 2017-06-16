@@ -1,5 +1,6 @@
 import LanguageJson from './language.json';
 import { I18n } from 'react-i18nify';
+import 'jest-enzyme';
 
 if (!global.localStorage) {
   const LocalStorage = require('node-localstorage').LocalStorage;

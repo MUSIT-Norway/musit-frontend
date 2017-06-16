@@ -59,32 +59,16 @@ exports[`AppComponent remders 1`] = `
         <LinkContainer
           activeClassName="active"
           exact={false}
-          onClick={[Function]}
           replace={false}
           strict={false}
           to="/museum/99/collections/00000000-0000-0000-0000-000000000000/analysis"
         >
-          <NavDropdown
-            id="analysis-dropdown"
-            title="Analyse"
+          <NavItem
+            active={false}
+            disabled={false}
           >
-            <LinkContainer
-              activeClassName="active"
-              exact={false}
-              replace={false}
-              strict={false}
-              to="/museum/99/collections/00000000-0000-0000-0000-000000000000/analysis/add"
-            >
-              <MenuItem
-                bsClass="dropdown"
-                disabled={false}
-                divider={false}
-                header={false}
-              >
-                Registrer analyse
-              </MenuItem>
-            </LinkContainer>
-          </NavDropdown>
+            Analyse
+          </NavItem>
         </LinkContainer>
         <LinkContainer
           activeClassName="active"

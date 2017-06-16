@@ -4,12 +4,7 @@ import Config from '../config';
 import { simpleGet, simplePost } from '../shared/RxAjax';
 import { Observable } from 'rxjs';
 import type { Callback, AjaxGet, AjaxPost } from './types/ajax';
-
-type Actor = {
-  fn: string,
-  dataportenId?: string,
-  applicationId?: string
-};
+import type { Actor } from 'types/actor';
 
 type ActorMetaData = {
   doneBy?: ?string,

@@ -23,6 +23,7 @@ import validate from '../common/validators';
 
 export default class MusitField extends Component {
   static propTypes = {
+    id: PropTypes.string,
     value: PropTypes.string, // Should be any
     addOnPrefix: PropTypes.string,
     help: PropTypes.string, // always ? on add on after
@@ -78,6 +79,7 @@ export default class MusitField extends Component {
       : null;
     const lcPlaceholder = (
       <input
+        id={this.props.id}
         style={this.props.style}
         type="text"
         className="form-control"

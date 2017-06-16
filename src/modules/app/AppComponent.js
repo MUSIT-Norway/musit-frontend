@@ -158,22 +158,8 @@ export class AppComponent extends Component {
               </LinkContainer>
               <LinkContainer
                 to={Config.magasin.urls.client.analysis.baseUrl(this.props.appSession)}
-                onClick={e => e.preventDefault()}
               >
-                <NavDropdown
-                  title={I18n.t('musit.analysis.analysis')}
-                  id="analysis-dropdown"
-                >
-                  <LinkContainer
-                    to={Config.magasin.urls.client.analysis.addAnalysis(
-                      this.props.appSession
-                    )}
-                  >
-                    <MenuItem>
-                      {I18n.t('musit.analysis.registeringAnalysis')}
-                    </MenuItem>
-                  </LinkContainer>
-                </NavDropdown>
+                <NavItem>{I18n.t('musit.analysis.analysis')}</NavItem>
               </LinkContainer>
               <LinkContainer
                 to={Config.magasin.urls.client.report.goToReport(this.props.appSession)}
