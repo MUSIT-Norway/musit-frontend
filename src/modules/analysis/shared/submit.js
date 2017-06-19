@@ -104,7 +104,6 @@ export function submitForm(
 
   const externalSource = form.externalSource.value;
   const comments = form.comments.value;
-  debugger;
   const result = externalSource || comments
     ? {
         extRef: externalSource,
