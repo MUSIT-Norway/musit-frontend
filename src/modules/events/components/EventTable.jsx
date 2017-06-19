@@ -86,11 +86,17 @@ export const EventTableComponent = ({
       <Table
         className="table table-hover table-inverse table-responsive"
         columns={[
-          { key: 'doneDate', label: 'Utført dato' },
-          { key: 'type', label: 'Type hendelse' },
-          { key: 'doneBy', label: 'Utført av' },
-          { key: 'keyData', label: 'Nøkkeldata' },
-          { key: 'caseNumber', label: 'Saksnummer' }
+          { key: 'doneDate', label: I18n.t('musit.objects.objectsView.events.doneDate') },
+          { key: 'type', label: I18n.t('musit.objects.objectsView.events.eventType') },
+          {
+            key: 'doneBy',
+            label: I18n.t('musit.objects.objectsView.events.performedBy')
+          },
+          { key: 'keyData', label: I18n.t('musit.objects.objectsView.events.keyData') },
+          {
+            key: 'caseNumber',
+            label: I18n.t('musit.objects.objectsView.events.caseNumber')
+          }
         ]}
         sortable={['id', 'type', 'eventDate', 'registeredBy', 'note']}
         noDataText={I18n.t('musit.events.noDataForObject')}

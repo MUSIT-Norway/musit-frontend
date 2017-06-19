@@ -85,13 +85,31 @@ const SampleTableComponent = ({
       <Table
         className="table table-hover table-inverse table-responsive"
         columns={[
-          { key: 'sampleNum', label: 'Prøvenr' },
-          { key: 'registeredDate', label: 'Dato' },
-          { key: 'sampleType', label: 'Prøvetype' },
-          { key: 'sampleSubType', label: 'Prøveundertype' },
-          { key: 'status', label: 'Status' },
-          { key: 'hasAnalyse', label: 'Analyse' },
-          { key: 'storageMedium', label: 'Lagringsmedium' },
+          {
+            key: 'sampleNum',
+            label: I18n.t('musit.objects.objectsView.samples.sampleNumber')
+          },
+          {
+            key: 'registeredDate',
+            label: I18n.t('musit.objects.objectsView.samples.date')
+          },
+          {
+            key: 'sampleType',
+            label: I18n.t('musit.objects.objectsView.samples.sampleType')
+          },
+          {
+            key: 'sampleSubType',
+            label: I18n.t('musit.objects.objectsView.samples.sampleSubType')
+          },
+          { key: 'status', label: I18n.t('musit.objects.objectsView.samples.status') },
+          {
+            key: 'hasAnalyse',
+            label: I18n.t('musit.objects.objectsView.samples.analysis')
+          },
+          {
+            key: 'storageMedium',
+            label: I18n.t('musit.objects.objectsView.samples.storageMedia')
+          },
           {
             key: 'add',
             label: (

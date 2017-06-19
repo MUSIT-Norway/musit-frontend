@@ -24,6 +24,7 @@ const updatedDate = getStrField('updatedDate', null, false);
 const registeredBy = getStrField('registeredBy', null, false);
 const registeredByName = getStrField('registeredByName', null, false);
 const registeredDate = getStrField('registeredDate', null, false);
+const statusText = getStrField('statusText', null, false);
 
 const fields = [
   objectId,
@@ -48,7 +49,8 @@ const fields = [
   registeredBy,
   registeredByName,
   registeredDate,
-  sampleNum
+  sampleNum,
+  statusText
 ];
 
 export default createForm('sampleViewForm.js', fields);

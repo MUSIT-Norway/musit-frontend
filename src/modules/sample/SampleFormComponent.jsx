@@ -203,7 +203,7 @@ export default function SampleFormComponent({
               title={I18n.t('musit.sample.status')}
               defaultOption={I18n.t('musit.sample.chooseStatus')}
               valueFn={v => v.id}
-              displayFn={v => v.noStatus}
+              displayFn={v => (appSession.language.isEn ? v.enStatus : v.noStatus)}
               onChange={updateForm}
               selectItems={Sample.sampleStatuses}
             />

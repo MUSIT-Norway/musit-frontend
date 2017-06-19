@@ -11,6 +11,7 @@ import SampleTable from '../sample/components/SampleTable';
 import Config from '../../config';
 import type { AppSession } from '../../types/appSession';
 import type { History } from 'types/Routes';
+import { I18n } from 'react-i18nify';
 
 type ViewObjectComponentProps = {
   objectStore: { objectData: ObjectData, events: Events, samples: Samples },
@@ -39,12 +40,22 @@ export const ViewObjectComponent = ({
 }: ViewObjectComponentProps) =>
   !loading
     ? <div className="container">
-        <PageHeader>Objektvisning</PageHeader>
+        <PageHeader>{I18n.t('musit.objects.objectsView.objectView')}</PageHeader>
         <div style={{ marginTop: '30px', marginBottom: '40px' }}>
           <Row>
-            <Col md={2}><b>Museumsnr:</b>{' '}{objectData && objectData.museumNo}</Col>
-            <Col md={1}><b>Unr:</b>{' '}{objectData && objectData.subNo}</Col>
-            <Col md={3}><b>Term/artsnavn:</b>{' '}{objectData && objectData.term}</Col>
+            <Col md={2}>
+              <b>{I18n.t('musit.analysis.museumNumber')}:</b>
+              {' '}
+              {objectData && objectData.museumNo}
+            </Col>
+            <Col md={1}>
+              <b>{I18n.t('musit.analysis.underNumber')}:</b>
+              {' '}
+              {objectData && objectData.subNo}
+            </Col>
+            <Col md={3}>
+              <b>{I18n.t('musit.analysis.term')}:</b>{' '}{objectData && objectData.term}
+            </Col>
           </Row>
         </div>
         <div style={{ paddingBottom: 10 }}>
@@ -56,7 +67,7 @@ export const ViewObjectComponent = ({
                 state: [objectData]
               })}
           >
-            Ny analyse
+            {I18n.t('musit.objects.objectsView.newAnalysis')}
           </Button>
           <Button
             className="primary"
@@ -69,11 +80,11 @@ export const ViewObjectComponent = ({
                 state: [objectData]
               })}
           >
-            Ny prøve
+            {I18n.t('musit.objects.objectsView.newSample')}
           </Button>
         </div>
         <Tabs defaultActiveKey={1} id="events">
-          <Tab title="Hendelser" eventKey={1}>
+          <Tab title={I18n.t('musit.objects.objectsView.events.events')} eventKey={1}>
             <EventTable
               events={events}
               analysisTypes={analysisTypes}
@@ -92,7 +103,7 @@ export const ViewObjectComponent = ({
               }}
             />
           </Tab>
-          <Tab title="Prøver" eventKey={2}>
+          <Tab title={I18n.t('musit.objects.objectsView.samples.samples')} eventKey={2}>
             <SampleTable
               samples={samples}
               onClick={sample => {

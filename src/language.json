@@ -4,6 +4,27 @@
       "objects":{
         "noData": "No objects to display",
         "objectsView": {
+          "objectView": "Object view",
+          "newAnalysis": "New analysis",
+          "newSample": "New sample",
+          "events": {
+            "events": "Events",
+            "doneDate": "Done date",
+            "eventType": "Type of event",
+            "performedBy": "Done by",
+            "keyData": "Key data",
+            "caseNumber": "Case number"
+          },
+          "samples": {
+            "samples": "Sample",
+            "sampleNumber": "Sample number",
+            "date": "Date",
+            "sampleType": "Sample type",
+            "sampleSubType": "Sample subtype",
+            "status": "Status",
+            "analysis": "Analysis",
+            "storageMedia": "Storage media"
+          },
           "eventTypes": {
             "AnalysisCollection": "Analysis",
             "Analysis": "Analysis",
@@ -786,6 +807,27 @@
       "objects":{
         "noData": "Ingen objekter å vise",
         "objectsView": {
+          "objectView":"Objektvisning",
+          "newAnalysis":"Ny analyse",
+          "newSample":"Ny prøve",
+          "events":{
+            "events":"Hendelser",
+            "doneDate":"Utført dato",
+            "eventType":"Type hendelse",
+            "performedBy":"Utført av",
+            "keyData":"Nøkkeldata",
+            "caseNumber":"Saksnummer"
+          },
+          "samples":{
+            "samples":"Prøver",
+            "sampleNumber":"Prøvenr",
+            "date":"Dato",
+            "sampleType":"Prøvetype",
+            "sampleSubType":"Prøveundertype",
+            "status":"Status",
+            "analysis":"Analyse",
+            "storageMedia":"Lagringsmedium"
+          },
           "eventTypes": {
             "AnalysisCollection": "Analyse",
             "Analysis": "Analyse",

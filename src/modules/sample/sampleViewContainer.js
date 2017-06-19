@@ -14,6 +14,7 @@ import Config from '../../config';
 import type { SampleData } from '../../types/samples';
 import type { ObjectData } from '../../types/object';
 import type { FormDetails } from './types/form';
+import Sample from '../../models/sample';
 
 const { form$, loadForm$ } = sampleForm;
 
@@ -119,7 +120,31 @@ export function getPersonsFromResponse(response) {
   return persons;
 }
 
-export function convertSample(sample, sampleTypes) {
+function getSampleTypeWithLanguage(sampleType, appSession) {
+  if (sampleType) {
+    return appSession.language.isEn ? sampleType.enSampleType : sampleType.noSampleType;
+  }
+  return null;
+}
+function getSampleSubTypeWithLanguage(sampleType, appSession) {
+  if (sampleType) {
+    return appSession.language.isEn
+      ? sampleType.enSampleSubType
+      : sampleType.noSampleSubType;
+  }
+  return null;
+}
+function getStatusValue(v, appSession) {
+  if (v) {
+    const statuses = Sample.sampleStatuses;
+    const s = statuses.find(e => e.id === v);
+    if (s) {
+      return appSession.language.isEn ? s.enStatus : s.noStatus;
+    }
+    return null;
+  }
+}
+export function convertSample(sample, sampleTypes, appSession) {
   const sampleType = getSampleType(sample.sampleTypeId, sampleTypes);
   const formData = {};
   formData.persons = {
@@ -144,13 +169,11 @@ export function convertSample(sample, sampleTypes) {
   };
   formData.sampleType = {
     name: 'sampleType',
-    defaultValue: sampleType ? sampleType.enSampleType : null
+    defaultValue: getSampleTypeWithLanguage(sampleType, appSession)
   };
   formData.sampleSubType = {
     name: 'sampleSubType',
-    defaultValue: sampleType
-      ? sampleType.enSampleSubType || sampleType.enSampleType
-      : null
+    defaultValue: getSampleSubTypeWithLanguage(sampleType, appSession)
   };
   formData.externalId = {
     name: 'externalId',
@@ -168,22 +191,28 @@ export function convertSample(sample, sampleTypes) {
     name: 'sizeUnit',
     defaultValue: sample.size ? sample.size.unit : null
   };
+  formData.statusText = {
+    name: 'statusText',
+    defaultValue: getStatusValue(sample.status, appSession)
+  };
+
   const data = Object.keys(sample).reduce((akk, key: string) => {
     if (akk[key]) {
       return akk;
     }
     return { ...akk, [key]: { name: key, defaultValue: sample[key] } };
   }, formData);
+
   return Object.values(data);
 }
 
-export function loadSample(id, museumId, token, getSample, loadForm) {
+export function loadSample(id, museumId, token, getSample, loadForm, appSession) {
   return ({ sampleTypes }) =>
     getSample({
       id,
       museumId,
       token,
-      onComplete: sample => loadForm(convertSample(sample, sampleTypes))
+      onComplete: sample => loadForm(convertSample(sample, sampleTypes, appSession))
     });
 }
 
@@ -193,7 +222,7 @@ export function onMount({ getSample, getPredefinedTypes, loadForm, match, appSes
   const token = appSession.accessToken;
   getPredefinedTypes({
     token: appSession.accessToken,
-    onComplete: loadSample(id, museumId, token, getSample, loadForm)
+    onComplete: loadSample(id, museumId, token, getSample, loadForm, appSession)
   });
 }
 

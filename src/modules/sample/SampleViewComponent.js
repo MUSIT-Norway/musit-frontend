@@ -1,7 +1,6 @@
 // @flow
 import React from 'react';
 import MetaInformation from '../../components/metainfo';
-import Sample from '../../models/sample';
 import type { SampleData } from '../../types/samples';
 import moment from 'moment';
 import type { AppSession } from '../../types/appSession';
@@ -191,7 +190,7 @@ export default function SampleViewComponent({
           </label>
           <div className="col-md-2">
             <p className="form-control-static">
-              {getStatusValue(form.status.value)}
+              {form.statusText.value}
             </p>
           </div>
         </div>
@@ -264,12 +263,4 @@ export default function SampleViewComponent({
       </form>
     </div>
   );
-}
-
-function getStatusValue(v) {
-  if (v) {
-    const statuses = Sample.sampleStatuses;
-    const s = statuses.find(e => e.id === v);
-    return s && s.noStatus;
-  }
 }

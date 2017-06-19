@@ -63,6 +63,10 @@ describe('AnalysisSampleFormPageView', () => {
           },
           status: {
             name: 'status',
+            value: '1'
+          },
+          statusText: {
+            name: 'statusText',
             value: 'Nyskilt'
           },
           storageMedium: {

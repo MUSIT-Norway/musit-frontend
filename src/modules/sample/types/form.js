@@ -26,5 +26,6 @@ export type FormDetails = {
   sampleId: Field<string>,
   doneDate: Field<string>,
   description: Field<string>,
-  persons: Field<Array<Person>>
+  persons: Field<Array<Person>>,
+  statusText: Field<string>
 };

@@ -20,6 +20,7 @@ describe('SampleViewContainer', () => {
     isExtracted: true,
     museumId: 99,
     status: 1,
+    statusText: 'test status text',
     sampleNum: 1,
     sampleId: 'ssdfsdfdfsdf',
     externalId: { value: 'ddff', source: 'ddddd' },
@@ -86,7 +87,7 @@ describe('SampleViewContainer', () => {
           name: 'Test name'
         }
       };
-      const flattenedSample = convertSample(sample, sampleTypes);
+      const flattenedSample = convertSample(sample, sampleTypes, appSession);
       expect(flattenedSample).not.toBe(null);
     });
     it('should tolerate limited to no fields in response', () => {
@@ -98,14 +99,14 @@ describe('SampleViewContainer', () => {
           name: 'Test name'
         }
       };
-      const flattenedSample = convertSample(sample, sampleTypes);
+      const flattenedSample = convertSample(sample, sampleTypes, appSession);
       expect(flattenedSample).not.toBe(null);
     });
     it('should flatten fields in response', () => {
       const sampleTypes = {
         sampleTypes: { test: { sampleTypeId: 2, enSampleType: 'DNA Sumtin' } }
       };
-      const flattenedSample = convertSample(sample, sampleTypes);
+      const flattenedSample = convertSample(sample, sampleTypes, appSession);
       expect(flattenedSample).not.toBe(null);
     });
   });
@@ -166,6 +167,7 @@ describe('SampleViewContainer', () => {
           sampleTypeId: 2,
           size: { unit: 'mg', value: 1 },
           status: 1,
+          statusText: 'test status text',
           storageMedium: 'Destillert vann',
           subNo: 'Dontcare',
           term: 'Whatsthis',
@@ -209,7 +211,7 @@ describe('SampleViewContainer', () => {
       const sampleTypes = {
         sampleTypes: { test: { sampleTypeId: 2, enSampleType: 'DNA Sumtin' } }
       };
-      loadSample(id, museumId, token, getSample, loadForm)(sampleTypes);
+      loadSample(id, museumId, token, getSample, loadForm, appSession)(sampleTypes);
       expect(getSample.calledOnce).toBe(true);
       expect(getSample.getCall(0).args[0].id).toEqual(id);
       expect(getSample.getCall(0).args[0].museumId).toEqual(museumId);
