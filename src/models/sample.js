@@ -314,8 +314,8 @@ Sample.sampleStatuses = [
   },
   {
     id: 8,
-    noStatus: 'Uttørket',
-    enStatus: 'Dessicated'
+    noStatus: 'Kansellert',
+    enStatus: 'Canceled'
   },
   {
     id: 9,
