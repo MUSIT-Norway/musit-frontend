@@ -860,7 +860,7 @@
         "registerSample":"Registrer prøve",
         "derivedFromObject":"Avledet fra objekt",
         "derivedFromObjectAndSample": "Avledet fra objekt/prøve",
-        "personsAssociatedWithSampleTaking":"Personer knyttet til prøveuttake",
+        "personsAssociatedWithSampleTaking":"Personer knyttet til prøveuttaket",
         "sampleId":"PrøveID:",
         "sampleNumber":"Prøvenr:",
         "externalId":"EksternID:",
