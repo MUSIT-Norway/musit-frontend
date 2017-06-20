@@ -69,7 +69,8 @@ class PredefinedLoader extends React.Component {
     const inputParams = {
       museumId: this.props.appSession.museumId,
       collectionId: this.props.appSession.collectionId,
-      token: this.props.appSession.accessToken
+      token: this.props.appSession.accessToken,
+      isEn: this.props.appSession.language.isEn
     };
     if (!this.isSampleTypesLoaded()) {
       this.props.setLoadingSampleTypes();

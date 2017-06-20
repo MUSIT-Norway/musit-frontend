@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import type { Field } from 'forms/form';
+import type { AppSession } from '../../types/appSession';
 
 type FieldDropDownProps = {
   field: Field<string>,
@@ -10,7 +11,8 @@ type FieldDropDownProps = {
   title: string,
   onChange: Function,
   selectItems: Array<*>,
-  inputProps?: { className?: string, style?: {} }
+  inputProps?: { className?: string, style?: {} },
+  appSession?: AppSession
 };
 
 export default function FieldDropDown(props: FieldDropDownProps) {
@@ -31,8 +33,21 @@ export default function FieldDropDown(props: FieldDropDownProps) {
         >
           {props.defaultOption && <option>{props.defaultOption}</option>}
           {props.selectItems.map((v, i) => (
-            <option key={i} value={props.valueFn ? props.valueFn(v) : v}>
-              {props.displayFn ? props.displayFn(v) : v}
+            <option
+              key={i}
+              value={
+                props.valueFn
+                  ? props.appSession
+                      ? props.valueFn(v, props.appSession)
+                      : props.valueFn(v)
+                  : v
+              }
+            >
+              {props.displayFn
+                ? props.appSession
+                    ? props.displayFn(v, props.appSession)
+                    : props.displayFn(v)
+                : v}
             </option>
           ))}
         </select>

@@ -29,10 +29,7 @@ type Props = {
   clickSave: () => void,
   appSession: AppSession,
   clickBack: (e: *) => void,
-  sampleTypeDisplayName: (s: {
-    enSampleSubType?: string,
-    enSampleType: string
-  }) => string,
+  sampleTypeDisplayName: Function,
   isFormValid: (f: FormDetails) => boolean,
   objectData: ObjectData & SampleData & { sampleType: string, sampleSubType: string }
 };
@@ -158,7 +155,8 @@ export default function SampleFormComponent({
                       updateForm({
                         name: form.sampleSubType.name,
                         rawValue: sampleTypeDisplayName(
-                          store.sampleTypes[obj.rawValue][0]
+                          store.sampleTypes[obj.rawValue][0],
+                          appSession
                         )
                       });
                     } else {
@@ -178,6 +176,7 @@ export default function SampleFormComponent({
                     defaultOption={I18n.t('musit.sample.chooseSubType')}
                     valueFn={sampleTypeDisplayName}
                     displayFn={sampleTypeDisplayName}
+                    appSession={appSession}
                     onChange={updateForm}
                     selectItems={
                       store.sampleTypes ? store.sampleTypes[form.sampleType.rawValue] : []
@@ -231,7 +230,12 @@ export default function SampleFormComponent({
               onChange={updateForm}
               selectItems={
                 store.storageContainers
-                  ? store.storageContainers.map(c => c.noStorageContainer)
+                  ? store.storageContainers.map(
+                      c =>
+                        appSession.language.isEn
+                          ? c.enStorageContainer
+                          : c.noStorageContainer
+                    )
                   : []
               }
             />
@@ -244,7 +248,10 @@ export default function SampleFormComponent({
               onChange={updateForm}
               selectItems={
                 store.storageMediums
-                  ? store.storageMediums.map(m => m.noStorageMedium)
+                  ? store.storageMediums.map(
+                      m =>
+                        appSession.language.isEn ? m.enStorageMedium : m.noStorageMedium
+                    )
                   : []
               }
             />
@@ -256,7 +263,11 @@ export default function SampleFormComponent({
               defaultOption={I18n.t('musit.sample.chooseTreatment')}
               onChange={updateForm}
               selectItems={
-                store.treatments ? store.treatments.map(t => t.noTreatment) : []
+                store.treatments
+                  ? store.treatments.map(
+                      t => (appSession.language.isEn ? t.enTreatment : t.noTreatment)
+                    )
+                  : []
               }
             />
           </ValidatedFormGroup>

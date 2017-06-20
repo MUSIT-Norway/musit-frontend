@@ -63,7 +63,8 @@ class Sample {
   static loadSampleTypes: (
     ajaxGet: AjaxGet
   ) => (props: {
-    token: string
+    token: string,
+    isEn: string
   }) => Observable;
   static loadAllSampleTypes: (
     ajaxGet: AjaxGet
@@ -90,6 +91,7 @@ class Sample {
     ajaxGet: AjaxGet
   ) => (props: {
     token: string,
+    isEn: string,
     onComplete: (predefinedTypes: mixed) => void
   }) => Observable;
   static sampleStatuses: Array<SampleStatus>;
@@ -112,19 +114,30 @@ Sample.loadPredefinedTypes = (ajaxGet = simpleGet) => props => {
     .do(props.onComplete);
 };
 
-Sample.loadSampleTypes = (ajaxGet = simpleGet) => ({ token }) => {
+Sample.loadSampleTypes = (ajaxGet = simpleGet) => ({ token, isEn }) => {
   const url = Config.magasin.urls.api.samples.sampleTypes;
-  return ajaxGet(url, token).map(({ response }) =>
-    uniqBy(response, 'enSampleType').reduce(
+  return ajaxGet(url, token).map(({ response }) => {
+    if (isEn) {
+      return uniqBy(response, 'enSampleType').reduce(
+        (acc, sampleType) => ({
+          ...acc,
+          [sampleType.enSampleType]: response.filter(
+            v => v.enSampleType === sampleType.enSampleType
+          )
+        }),
+        {}
+      );
+    }
+    return uniqBy(response, 'noSampleType').reduce(
       (acc, sampleType) => ({
         ...acc,
-        [sampleType.enSampleType]: response.filter(
-          v => v.enSampleType === sampleType.enSampleType
+        [sampleType.noSampleType]: response.filter(
+          v => v.noSampleType === sampleType.noSampleType
         )
       }),
       {}
-    )
-  );
+    );
+  });
 };
 Sample.loadAllSampleTypes = (ajaxGet = simpleGet) => ({ token }) => {
   const url = Config.magasin.urls.api.samples.sampleTypes;

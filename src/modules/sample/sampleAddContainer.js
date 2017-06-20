@@ -35,5 +35,5 @@ export default flowRight([inject(data, commands, props), mount(onMount), makeUrl
 );
 
 export function onMount({ appSession, getPredefinedTypes }) {
-  getPredefinedTypes({ token: appSession.accessToken });
+  getPredefinedTypes({ token: appSession.accessToken, isEn: appSession.language.isEn });
 }

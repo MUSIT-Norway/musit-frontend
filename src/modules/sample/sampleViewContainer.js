@@ -222,6 +222,7 @@ export function onMount({ getSample, getPredefinedTypes, loadForm, match, appSes
   const token = appSession.accessToken;
   getPredefinedTypes({
     token: appSession.accessToken,
+    isEn: appSession.language.isEn,
     onComplete: loadSample(id, museumId, token, getSample, loadForm, appSession)
   });
 }

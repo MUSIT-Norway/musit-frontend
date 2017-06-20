@@ -41,7 +41,11 @@ const saveSample = doSaveSample => (
   const data = Sample.prepareForSubmit({
     ...normalizeForm(form),
     ...getActors(form.persons.rawValue),
-    sampleTypeId: getSampleTypeId(store.sampleTypes, form.sampleSubType.value),
+    sampleTypeId: getSampleTypeId(
+      store.sampleTypes,
+      form.sampleSubType.value,
+      appSession
+    ),
     parentObject: {
       objectType: objectData.objectType,
       objectId: params.objectId ||
@@ -67,18 +71,20 @@ const saveSample = doSaveSample => (
     );
 };
 
-function getSampleTypeId(sampleTypes, selectSubType) {
+function getSampleTypeId(sampleTypes, selectSubType, appSession) {
   if (!sampleTypes) {
     return null;
   }
   return flatten(Object.values(sampleTypes)).find(subType => {
-    const subTypeName = sampleTypeDisplayName(subType);
+    const subTypeName = sampleTypeDisplayName(subType, appSession);
     return subTypeName === selectSubType;
   }).sampleTypeId;
 }
 
-function sampleTypeDisplayName(v) {
-  return v.enSampleSubType || v.enSampleType;
+function sampleTypeDisplayName(v, appSession) {
+  return appSession.language.isEn
+    ? v.enSampleSubType || v.enSampleType
+    : v.noSampleSubType || v.noSampleType;
 }
 
 function normalizeForm(frm: FormDetails) {
