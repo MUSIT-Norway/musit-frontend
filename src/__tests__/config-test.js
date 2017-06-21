@@ -258,6 +258,44 @@ describe('Config urls', () => {
           name: 'getAnalysisEvents',
           actual: urls.api.analysis.getAnalysisEvents(99),
           expected: '/api/management/99/analyses'
+        },
+        {
+          name: 'baseUrl',
+          actual: urls.api.samples.baseUrl(99),
+          expected: '/api/management/99/samples'
+        },
+        {
+          name: 'sampleTypes',
+          actual: urls.api.samples.sampleTypes,
+          expected: '/api/management/sampletypes'
+        },
+        {
+          name: 'samplesForObject',
+          actual: urls.api.samples.samplesForObject(99, 123),
+          expected: '/api/management/99/samples/123/children'
+        },
+        {
+          name: 'treatments',
+          actual: urls.api.samples.treatments,
+          expected: '/api/management/treatments'
+        },
+        {
+          name: 'storagecontainer',
+          actual: urls.api.samples.storagecontainer,
+          expected: '/api/management/storagecontainer'
+        },
+        {
+          name: 'storagemediums',
+          actual: urls.api.samples.storagemediums,
+          expected: '/api/management/storagemediums'
+        },
+        {
+          name: 'samplesForNode',
+          actual: urls.api.samples.samplesForNode(
+            99,
+            'dca44956-40d0-48dc-bd0d-921b825ad019'
+          ),
+          expected: '/api/management/99/node/dca44956-40d0-48dc-bd0d-921b825ad019/samples'
         }
       ]
     }

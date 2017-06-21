@@ -138,7 +138,9 @@ export default {
             `/api/management/${mid}/samples/${objectId}/children`,
           treatments: '/api/management/treatments',
           storagecontainer: '/api/management/storagecontainer',
-          storagemediums: '/api/management/storagemediums'
+          storagemediums: '/api/management/storagemediums',
+          samplesForNode: (mid: MuseumId, nodeId: string): string =>
+            `/api/management/${mid}/node/${nodeId}/samples`
         },
         storagefacility: {
           searchUrl: (term: string, mid: MuseumId) =>
