@@ -5,7 +5,7 @@ import { makeUrlAware } from '../../stores/appSession';
 import flowRight from 'lodash/flowRight';
 import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
-import mount from '../../shared/mount';
+import lifeCycle from '../../shared/lifeCycle';
 import store$, { getPredefinedTypes$ } from './sampleStore';
 import { sampleProps } from './shared/submit';
 import Sample from '../../models/sample';
@@ -30,9 +30,11 @@ const commands = {
   getPredefinedTypes$
 };
 
-export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(
-  SampleFormAddComponent
-);
+export default flowRight([
+  inject(data, commands, props),
+  lifeCycle({ onMount }),
+  makeUrlAware
+])(SampleFormAddComponent);
 
 export function onMount({ appSession, getPredefinedTypes }) {
   getPredefinedTypes({ token: appSession.accessToken, isEn: appSession.language.isEn });

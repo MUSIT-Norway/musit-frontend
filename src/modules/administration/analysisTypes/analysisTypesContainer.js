@@ -7,7 +7,7 @@ import store$, { getAnalysisTypes$ } from './analysisTypesStore';
 import Analysis from '../../../models/analysis';
 import { makeUrlAware } from '../../../stores/appSession';
 import flowRight from 'lodash/flowRight';
-import mount from '../../../shared/mount';
+import lifeCycle from '../../../shared/lifeCycle';
 import { toPromise } from '../../../shared/util';
 import type { AppSession } from '../../../types/appSession';
 
@@ -40,6 +40,8 @@ export const onMount = ({ appSession, getAnalysisTypes }: Props) => {
   });
 };
 
-export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(
-  AnalysisTypesComponent
-);
+export default flowRight([
+  inject(data, commands, props),
+  lifeCycle({ onMount }),
+  makeUrlAware
+])(AnalysisTypesComponent);

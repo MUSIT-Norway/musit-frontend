@@ -1,6 +1,9 @@
 // @flow
 import type { Field } from '../../../forms/form';
 import type { Person } from '../../../components/person/PersonRoleDate';
+import type {} from './submit';
+import type { ObjectData } from '../../../types/object';
+import type { SampleData } from '../../../types/samples';
 
 export type FormData = {
   id: Field<number>,
@@ -41,7 +44,7 @@ export type FormData = {
   term: Field<string>,
   eventDate: Field<string>,
   actor: Field<string>,
-  events: Field<Array<*>>,
+  events: Field<Array<ObjectData & SampleData>>,
   updatedBy: Field<string>,
   updatedByName: Field<string>,
   updatedDate: Field<string>,

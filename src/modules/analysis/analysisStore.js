@@ -13,6 +13,12 @@ export const getAnalysis$ = createAction('getAnalysis$').switchMap(props =>
   MusitAnalysis.getAnalysisWithDetails()(props).do(props.onComplete)
 );
 
+export const updateExtraDescriptionAttribute$ = createAction(
+  'updateExtraDescriptionAttribute$'
+);
+
+export const updateExtraResultAttribute$ = createAction('updateExtraResultAttribute$');
+
 export const loadPredefinedTypes$ = createAction(
   'loadPredefinedTypes$'
 ).switchMap(props => MusitAnalysis.loadPredefinedTypes()(props));
@@ -21,7 +27,9 @@ type Actions = {
   setLoading$: Subject,
   getAnalysis$: Subject,
   getAnalysisTypes$: Subject,
-  loadPredefinedTypes$: Subject
+  loadPredefinedTypes$: Subject,
+  updateExtraDescriptionAttribute$: Subject,
+  updateExtraResultAttribute$: Subject
 };
 
 export const reducer$ = (actions: Actions) =>
@@ -43,6 +51,14 @@ export const reducer$ = (actions: Actions) =>
       purposes: predefinedTypes.purposes,
       analysisTypes: predefinedTypes.analysisTypes,
       analysisLabList: predefinedTypes.analysisLabList
+    })),
+    actions.updateExtraDescriptionAttribute$.map(({ name, value }) => state => ({
+      ...state,
+      extraDescriptionAttributes: { ...state.extraDescriptionAttributes, [name]: value }
+    })),
+    actions.updateExtraResultAttribute$.map(({ name, value }) => state => ({
+      ...state,
+      extraResultAttributes: { ...state.extraResultAttributes, [name]: value }
     }))
   );
 
@@ -51,7 +67,9 @@ export const store$ = (
     getAnalysisTypes$,
     setLoading$,
     getAnalysis$,
-    loadPredefinedTypes$
+    loadPredefinedTypes$,
+    updateExtraDescriptionAttribute$,
+    updateExtraResultAttribute$
   }
 ) =>
   createStore(

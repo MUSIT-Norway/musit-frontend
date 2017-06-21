@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import inject from 'react-rxjs/dist/RxInject';
 import flowRight from 'lodash/flowRight';
 import AnalysisEventsViewComponent from './AnalysisEventsViewComponent';
-import mount from '../../../shared/mount';
+import lifeCycle from '../../../shared/lifeCycle';
 import Config from '../../../config';
 import type { AppSession } from 'types/appSession';
 import analysisEventsStore$, {
@@ -26,15 +26,15 @@ const props = props => ({
     )
 });
 
-const LoadedAnalysisEventsViewComponent = mount(
-  ({ getAnalysisEvents, appSession, predefined }) => {
+const LoadedAnalysisEventsViewComponent = lifeCycle({
+  onMount: ({ getAnalysisEvents, appSession, predefined }) => {
     getAnalysisEvents({
       museumId: appSession.museumId,
       token: appSession.accessToken,
       analysisTypes: predefined.analysisTypes
     });
   }
-)(AnalysisEventsViewComponent);
+})(AnalysisEventsViewComponent);
 
 export default flowRight([inject(data, commands, props), loadPredefinedTypes])(
   LoadedAnalysisEventsViewComponent

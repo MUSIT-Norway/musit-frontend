@@ -1,98 +1,90 @@
 // @flow
-import Config from '../../../config';
-import type { AppSession } from '../../../types/appSession';
-import type { Predefined } from './predefinedType';
-import type { FormData } from './formType';
-import type { Store } from './storeType';
+import type {
+  AnalysisType,
+  ExtraResultAttributeValues,
+  Size
+} from '../../../types/analysisTypes';
+import type { AppSession, Language } from '../../../types/appSession';
+import type { ObjectData } from '../../../types/object';
+import type { History } from '../../../types/Routes';
+import type { SampleData } from '../../../types/samples';
+import type { Result } from '../../../types/analysisTypes';
 import toArray from 'lodash/toArray';
-
-export function getAnalysisTypeTerm(
-  store: Store,
-  predefined: Predefined,
-  appSession: AppSession
-) {
-  if (store.analysis && store.analysis.analysisTypeId && predefined.analysisTypes) {
-    const analysisTypeId = store.analysis.analysisTypeId;
-    const foundType = predefined.analysisTypes.find(type => type.id === analysisTypeId);
-    if (foundType) {
-      return appSession.language.isEn ? foundType.enName : foundType.noName;
-    }
-  }
-  return '';
-}
+import { Observable } from 'rxjs';
+import MusitAnalysis from '../../../models/analysis';
+import type { AnalysisSavePayload } from '../../../models/analysis';
+import Config from '../../../config';
+import type { FormData } from './formType';
 
 type ObjectWithUuidAndType = { objectId: ?string, objectType: string };
 
-export function getObjects(props: *) {
-  return props.form.events.rawValue.length > 0
-    ? props.form.events.rawValue
-    : props.location.state || [];
-}
-
-export function getObjectsWithType(
-  objects: [{ objectId: ?string, uuid: ?string, sampleNum?: number, objectType: string }]
-): Array<ObjectWithUuidAndType> {
-  return objects
-    ? objects.map(obj => ({
-        objectId: obj.objectId || obj.uuid,
-        objectType: obj.sampleNum ? 'sample' : obj.objectType
-      }))
-    : [];
-}
-
-const doSaveAnalysisResult = function(
-  saveResult,
-  appSession,
-  result,
-  events,
-  analysisId,
-  onComplete
-) {
-  const params = {
-    token: appSession.accessToken,
-    museumId: appSession.museumId
-  };
-  return Promise.all(
-    events
-      .map(evt => {
-        const newVar = {
-          ...params,
-          result: { ...evt.result, type: 'GenericResult' },
-          analysisId: evt.id
-        };
-        return saveResult(newVar);
-      })
-      .concat(
-        saveResult({
-          ...params,
-          result,
-          analysisId
-        })
-      )
-  ).then(onComplete);
+type Analysis = {
+  id: number,
+  events: ?Array<ObjectData & SampleData>
 };
 
-type SaveAnalysisFn = (props: {
-  museumId: number,
-  data: mixed,
-  token: string
-}) => Promise<*>;
-
-type SaveResultFn = (props: {
-  museumId: number,
-  result: mixed,
-  token: string
-}) => Promise<*>;
+export type Location = {
+  state?: Array<ObjectData & SampleData>
+};
 
 export function submitForm(
+  id: ?number,
+  result: ?Result,
   appSession: AppSession,
-  form: FormData,
-  objects: Array<ObjectWithUuidAndType>,
-  saveAnalysisEvent: SaveAnalysisFn,
-  saveResult: SaveResultFn,
-  goToUrl: (s: string) => void
+  history: History,
+  data: AnalysisSavePayload,
+  events: Array<ObjectData & SampleData>,
+  ajaxPost: (url: string) => Observable<*>,
+  ajaxPut: (url: string) => Observable<*>
 ) {
-  const restriction = form.restrictions.value
+  const token = appSession.accessToken;
+  const museumId = appSession.museumId;
+  const upsertAnalysis$ = getAnalysisUpsert(id, ajaxPut, museumId, data, token, ajaxPost);
+  return upsertAnalysis$.toPromise().then((analysis: Analysis) =>
+    Observable.forkJoin(
+      zipEventsWithId(events, analysis.events)
+        .map(evt =>
+          MusitAnalysis.addResult(ajaxPost)({
+            token,
+            museumId,
+            result: { ...evt.result, type: result && result.type },
+            analysisId: parseInt(evt.id, 10)
+          })
+        )
+        .concat(
+          MusitAnalysis.addResult(ajaxPost)({
+            token,
+            museumId,
+            result,
+            analysisId: parseInt(analysis.id, 10)
+          })
+        )
+    )
+      .toPromise()
+      .then(() =>
+        history.push(
+          Config.magasin.urls.client.analysis.viewAnalysis(
+            appSession,
+            parseInt(analysis.id, 10)
+          )
+        )
+      )
+  );
+}
+
+function getAnalysisUpsert(id, ajaxPut, museumId, data, token, ajaxPost) {
+  return id
+    ? MusitAnalysis.editAnalysisEvent(ajaxPut)({
+        id,
+        museumId,
+        data,
+        token
+      })
+    : MusitAnalysis.saveAnalysisEvent(ajaxPost)({ museumId, data, token });
+}
+
+function getRestrictions(form: FormData) {
+  return form.restrictions.value
     ? {
         requester: form.restrictions_requester.value,
         expirationDate: form.restrictions_expirationDate.value,
@@ -101,38 +93,49 @@ export function submitForm(
         cancelledReason: form.restrictions_cancelledReason.value
       }
     : null;
+}
 
-  const externalSource = form.externalSource.value;
-  const comments = form.comments.value;
-  const result = externalSource || comments
+export function getResult(
+  form: FormData,
+  extraResultAttributes: ExtraResultAttributeValues
+) {
+  const extRef = toArray(form.externalSource.value);
+  const comment = form.comments.value;
+  const extraAttributes = Object.keys(extraResultAttributes).reduce((acc, att) => {
+    let value = extraResultAttributes[att];
+    if (value && typeof value !== 'string' && value.type === 'Size') {
+      const size: Size = (value.value: any);
+      value = { ...size, rawValue: undefined };
+    }
+    if (value && typeof value !== 'string' && value.type === 'String') {
+      value = (value.value: any);
+    }
+    return {
+      ...acc,
+      [att]: value
+    };
+  }, {});
+  return extRef || comment
     ? {
-        extRef: externalSource,
-        comment: comments,
-        type: 'GenericResult'
+        extRef,
+        comment,
+        ...extraAttributes,
+        type: extraResultAttributes.type && extraResultAttributes.type.toString()
       }
     : null;
+}
 
-  const doneBy =
-    form.persons &&
-    Array.isArray(form.persons.rawValue) &&
-    form.persons.rawValue.find(p => p.role === 'doneBy');
-
-  const responsible =
-    form.persons &&
-    Array.isArray(form.persons.rawValue) &&
-    form.persons.rawValue.find(p => p.role === 'responsible');
-
-  const administrator =
-    form.persons &&
-    Array.isArray(form.persons.rawValue) &&
-    form.persons.rawValue.find(p => p.role === 'administrator');
-
-  const completedBy =
-    form.persons &&
-    Array.isArray(form.persons.rawValue) &&
-    form.persons.rawValue.find(p => p.role === 'completedBy');
-
-  const data = {
+export function getAnalysisCollection(
+  form: FormData,
+  extraAttributes: mixed,
+  location: Location
+) {
+  const persons = form.persons.value;
+  const doneBy = findPerson(persons, 'doneBy');
+  const responsible = findPerson(persons, 'responsible');
+  const administrator = findPerson(persons, 'administrator');
+  const completedBy = findPerson(persons, 'completedBy');
+  return {
     analysisTypeId: form.analysisTypeId.value,
     doneBy: doneBy && doneBy.uuid,
     doneDate: doneBy && doneBy.date,
@@ -142,46 +145,68 @@ export function submitForm(
     completedBy: completedBy && completedBy.uuid,
     completedDate: completedBy && completedBy.date,
     orgId: form.orgId.value,
-    restriction,
-    objects,
+    objects: getObjectsWithType(getObjects((form.events.value: any), location)),
+    restriction: getRestrictions(form),
+    extraAttributes: extraAttributes,
     caseNumbers: form.caseNumbers.value,
     status: form.status.value,
     reason: form.reason.value,
     type: 'AnalysisCollection'
   };
+}
 
-  return saveAnalysisEvent({
-    id: form.id.value,
-    museumId: appSession.museumId,
-    data: data,
-    token: appSession.accessToken
-  }).then(
-    (analysis: {
-      id: number,
-      events: [{ id: number, objectId: string, objectType: string }]
-    }) => {
-      const analysisId = typeof analysis === 'number' ? analysis : analysis.id;
-      const url = Config.magasin.urls.client.analysis.viewAnalysis(
-        appSession,
-        analysisId
-      );
-      if (result) {
-        return doSaveAnalysisResult(
-          saveResult,
-          appSession,
-          result,
-          toArray(form.events.value).map(evt => {
-            const event = analysis.events.find(
-              evtFromServer => evtFromServer.objectId === evt.objectId || evt.uuid
-            );
-            return { ...evt, id: event ? event.id : null };
-          }),
-          analysisId,
-          () => goToUrl(url)
-        );
-      } else {
-        goToUrl(url);
-      }
+function findPerson(persons, role) {
+  return toArray(persons).find(p => p.role === role);
+}
+
+export function getAnalysisType(
+  analysisTypeId: ?number,
+  analysisTypes: Array<AnalysisType>
+): ?AnalysisType {
+  return analysisTypes && analysisTypes.find(at => at.id === analysisTypeId);
+}
+
+export function getObjects(
+  formEvents: Array<ObjectData & SampleData>,
+  location: Location
+): Array<ObjectData & SampleData> {
+  return formEvents.length > 0 ? formEvents : location.state || [];
+}
+
+export function getObjectsWithType(
+  objects: Array<ObjectData & SampleData>
+): Array<ObjectWithUuidAndType> {
+  if (!objects) {
+    return [];
+  }
+  return objects.map((obj: ObjectData & SampleData) => ({
+    objectId: obj.objectId || obj.uuid,
+    objectType: obj.sampleNum ? 'sample' : obj.objectType
+  }));
+}
+
+export function getAnalysisTypeTerm(
+  analysis: ?Analysis,
+  analysisTypes: Array<AnalysisType>,
+  language: Language
+): string {
+  if (analysis && analysis.analysisTypeId && analysisTypes) {
+    const analysisTypeId = analysis.analysisTypeId;
+    const foundType = analysisTypes.find(type => type.id === analysisTypeId);
+    if (foundType) {
+      return language.isEn ? foundType.enName : foundType.noName;
     }
-  );
+  }
+  return '';
+}
+
+function zipEventsWithId(formEvents, apiEvents) {
+  return formEvents.map(evt => {
+    const event =
+      apiEvents &&
+      apiEvents.find(
+        evtFromServer => evtFromServer.objectId === evt.objectId || evt.uuid
+      );
+    return { ...evt, id: event ? event.id : null };
+  });
 }

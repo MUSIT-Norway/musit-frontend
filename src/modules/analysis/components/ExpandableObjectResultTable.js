@@ -10,7 +10,8 @@ type Object = {
 type Props = {
   data: Array<Object>,
   renderExpanded?: (props: { index: number, data: Object }) => React.Element<*>,
-  updateForm?: Function
+  updateForm?: Function,
+  extraAttributes?: any
 };
 
 type State = {

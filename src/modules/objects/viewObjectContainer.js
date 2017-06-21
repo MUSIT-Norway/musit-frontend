@@ -11,7 +11,7 @@ import sampleStore$, { getSampleTypes$ } from '../sample/sampleStore';
 import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
 import flowRight from 'lodash/flowRight';
-import mount from '../../shared/mount';
+import lifeCycle from '../../shared/lifeCycle';
 import { toggleObject$ } from '../../stores/pickList';
 import { isItemAdded } from '../../stores/pickList';
 import MusitObject from '../../models/object';
@@ -72,6 +72,6 @@ export const onMount = ({
   getSampleTypes(ajaxProps);
 };
 
-export default flowRight([inject(data, commands, props), mount(onMount)])(
+export default flowRight([inject(data, commands, props), lifeCycle({ onMount })])(
   ViewObjectComponent
 );

@@ -1,6 +1,8 @@
 // @flow
+import type { AnalysisType } from '../../../types/analysisTypes';
+
 export type Predefined = {
-  analysisTypes: Array<any>,
+  analysisTypes: Array<AnalysisType>,
   purposes: Array<any>,
   analysisLabList: Array<any>,
   categories: {}

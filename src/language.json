@@ -946,10 +946,10 @@
         "status": "Status på analysen:",
         "chooseStatus": "Velg status",
         "statusType":{
-          "1":"1. Under forberedelse",
-          "2":"2. Analyse påbegynt",
-          "3":"3. Analyse ferdig",
-          "4":"4. Avsluttet uten resultat"
+          "1":"Under forberedelse",
+          "2":"Analyse påbegynt",
+          "3":"Analyse ferdig",
+          "4":"Avsluttet uten resultat"
         },
         "place": "Sted for analysen:",
         "choosePlace": "Velg analysested",

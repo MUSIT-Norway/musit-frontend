@@ -1,21 +1,10 @@
 // @flow
-import type { ObjectData } from 'types/object';
-
-export type AnalysisType = {
-  id: number,
-  noName: string,
-  enName: string,
-  category: string
-};
-
-export type Analysis = {
-  id: number,
-  analysisTypeId: string,
-  events: Array<ObjectData>
-};
+import type { AnalysisType, AnalysisCollection } from '../../../types/analysisTypes';
 
 export type Store = {
-  analysis?: Analysis,
+  analysis?: AnalysisCollection,
   analysisTypes?: Array<AnalysisType>,
-  analysisTypeCategories?: Array<String>
+  analysisTypeCategories?: Array<String>,
+  extraDescriptionAttributes: any,
+  extraResultAttributes: any
 };

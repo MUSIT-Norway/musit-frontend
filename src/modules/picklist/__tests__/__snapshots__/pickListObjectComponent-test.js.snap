@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PickListComponent for objects Should mount 1`] = `
+exports[`PickListComponent for objects Should not fail horribly 1`] = `
 <PickListComponent
   appSession={Object {}}
   classExistsOnDom={[Function]}

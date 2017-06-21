@@ -29,56 +29,6 @@ const form: FormData = (fieldsArray.reduce(
 ): any);
 
 describe('AnalysisFormComponent', () => {
-  describe('submitForm', () => {
-    it('should add restriction if restriction is set', done => {
-      const objects = [
-        {
-          objectId: '2b691a67-a520-45fe-85e5-27dd6ca2bb94',
-          objectType: 'collection'
-        }
-      ];
-      const goTo = sinon.spy();
-      const formWithRestrictions: FormData = {
-        ...form,
-        id: { ...form.id, value: 45 },
-        restrictions: { ...form.restrictions, value: true },
-        restrictions_requester: { ...form.restrictions_requester, value: 'Test mann' },
-        restrictions_reason: { ...form.restrictions_reason, value: 'No reason' },
-        restrictions_expirationDate: {
-          ...form.restrictions_expirationDate,
-          value: '2017-01-01'
-        }
-      };
-      const saveAnalysisPromise = new StatefulPromise();
-      const loadFormPromise = new StatefulPromise();
-      submitForm(
-        appSession,
-        formWithRestrictions,
-        objects,
-        saveAnalysisPromise.createPromise(),
-        loadFormPromise.createPromise(),
-        goTo
-      ).then(() => {
-        expect(saveAnalysisPromise.params.id).toEqual(45);
-        expect(saveAnalysisPromise.params.token).toEqual('45667');
-        expect(saveAnalysisPromise.params.museumId).toEqual(99);
-        expect(saveAnalysisPromise.params.data.restriction).not.toBe(null);
-        expect(saveAnalysisPromise.params.data.restriction.requester).toBe('Test mann');
-        expect(saveAnalysisPromise.params.data.restriction.reason).toBe('No reason');
-        expect(saveAnalysisPromise.params.data.restriction.expirationDate).toBe(
-          '2017-01-01'
-        );
-        expect(saveAnalysisPromise.params.data.objects).toEqual([
-          {
-            objectType: 'collection',
-            objectId: '2b691a67-a520-45fe-85e5-27dd6ca2bb94'
-          }
-        ]);
-        done();
-      });
-    });
-  });
-
   describe('getAnalysisTypeTerm', () => {
     it('should return empty string if not found', () => {
       const analysis = { id: 1, analysisTypeId: '11134', events: [] };
@@ -143,15 +93,7 @@ describe('AnalysisFormComponent', () => {
           category: '5'
         }
       ];
-      const purposes = [];
-      const analysisLabList = [];
-      const categories = {};
-      const store = { analysis };
-      const term = getAnalysisTypeTerm(
-        store,
-        { analysisTypes, analysisLabList, purposes, categories },
-        appSession
-      );
+      const term = getAnalysisTypeTerm(analysis, analysisTypes, appSession.language);
       expect(term).toBe('Tjokkimokki 1');
     });
   });

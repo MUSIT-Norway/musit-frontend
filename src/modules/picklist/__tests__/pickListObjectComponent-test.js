@@ -63,7 +63,7 @@ describe('PickListComponent for objects', () => {
     ]
   };
 
-  it('Should mount', () => {
+  it('Should not fail horribly', () => {
     const onToggleNode = sinon.spy();
     const onToggleObject = sinon.spy();
     const onRemoveObject = sinon.spy();

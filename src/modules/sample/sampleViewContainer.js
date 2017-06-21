@@ -4,7 +4,7 @@ import SampleViewComponent from './SampleViewComponent';
 import type { ClickEvents } from './SampleViewComponent';
 import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
-import mount from '../../shared/mount';
+import lifeCycle from '../../shared/lifeCycle';
 import { getSampleType } from '../../models/sample';
 import { makeUrlAware } from '../../stores/appSession';
 import flowRight from 'lodash/flowRight';
@@ -55,9 +55,11 @@ const props: ClickEvents = props => ({
 
 const commands = { getSample$, loadForm$, getPredefinedTypes$ };
 
-export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(
-  SampleViewComponent
-);
+export default flowRight([
+  inject(data, commands, props),
+  lifeCycle({ onMount }),
+  makeUrlAware
+])(SampleViewComponent);
 
 export function clickEditSample(appSession, sampleId, objectData, goTo) {
   return e => {
