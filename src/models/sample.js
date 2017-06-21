@@ -317,8 +317,8 @@ Sample.sampleStatuses = [
   },
   {
     id: 6,
-    noStatus: 'Uttørket',
-    enStatus: 'Dehydrated'
+    noStatus: 'Kansellert',
+    enStatus: 'Canceled'
   },
   {
     id: 7,
@@ -327,8 +327,8 @@ Sample.sampleStatuses = [
   },
   {
     id: 8,
-    noStatus: 'Kansellert',
-    enStatus: 'Canceled'
+    noStatus: 'Uttørket',
+    enStatus: 'Dessicated'
   },
   {
     id: 9,
