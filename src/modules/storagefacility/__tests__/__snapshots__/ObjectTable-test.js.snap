@@ -32,6 +32,12 @@ exports[`ObjectTable should render properly  1`] = `
             <th>
               Term/Artsnavn
             </th>
+            <th>
+              Prøvenr
+            </th>
+            <th>
+              Prøvetype
+            </th>
             <th />
             <th />
             <th>
@@ -78,6 +84,8 @@ exports[`ObjectTable should render properly  1`] = `
             <td>
               Carex
             </td>
+            <td />
+            <td />
             <td>
               <a
                 className="onShowMoveHistory"
@@ -150,6 +158,8 @@ exports[`ObjectTable should render properly  1`] = `
             <td>
               Pinus sylvestris
             </td>
+            <td />
+            <td />
             <td>
               <a
                 className="onShowMoveHistory"
@@ -220,6 +230,8 @@ exports[`ObjectTable should render properly  1`] = `
             <td>
               Steinøks
             </td>
+            <td />
+            <td />
             <td>
               <a
                 className="onShowMoveHistory"
@@ -292,6 +304,8 @@ exports[`ObjectTable should render properly  1`] = `
             <td>
               Flintavslag
             </td>
+            <td />
+            <td />
             <td>
               <a
                 className="onShowMoveHistory"
@@ -362,6 +376,8 @@ exports[`ObjectTable should render properly  1`] = `
             <td>
               Cladionia
             </td>
+            <td />
+            <td />
             <td>
               <a
                 className="onShowMoveHistory"

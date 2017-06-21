@@ -43,7 +43,8 @@ export default class TableComponent extends React.Component {
     goTo: PropTypes.func.isRequired,
     history: PropTypes.object,
     sampleStore: PropTypes.object.isRequired,
-    getSamplesForNode: PropTypes.func.isRequired
+    getSamplesForNode: PropTypes.func.isRequired,
+    getSampleTypes: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -91,6 +92,7 @@ export default class TableComponent extends React.Component {
     token = this.props.appSession.accessToken
   ) {
     this.loadRootNode(nodeId, museumId, token);
+    this.props.getSampleTypes({ museumId, collectionId, token });
     if (this.props.showObjects) {
       this.loadObjects(nodeId, museumId, collectionId, token);
       this.getSamplesForNode(nodeId, museumId, collectionId, token);
@@ -508,6 +510,7 @@ export default class TableComponent extends React.Component {
               this.props.isItemAdded(object, this.props.pickList.objects)}
             onMove={moveObject}
             sampleStore={this.props.sampleStore}
+            appSession={this.props.appSession}
           />
           {showPaging &&
             <PagingToolbar

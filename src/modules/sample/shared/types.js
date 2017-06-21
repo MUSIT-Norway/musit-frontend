@@ -38,3 +38,28 @@ export const getSampleSubType = (
   }
   return '';
 };
+
+export const getSampleSubTypeWithSlash = (
+  sampleTypes: SampleTypesObject,
+  sampleTypesId: number,
+  appSession: AppSession
+) => {
+  const subType = getSampleSubType(sampleTypes, sampleTypesId, appSession);
+  if (subType) {
+    return ' / ' + subType;
+  }
+  return '';
+};
+
+export const getSampleTypeAndSubType = (
+  sampleTypes: SampleTypesObject,
+  sampleTypesId: number,
+  appSession: AppSession
+) => {
+  const sampleType = getSampleType(sampleTypes, sampleTypesId, appSession);
+  const sampleSubType = getSampleSubType(sampleTypes, sampleTypesId, appSession);
+  if (sampleSubType) {
+    return sampleType + ' / ' + sampleSubType;
+  }
+  return sampleType ? sampleType : '';
+};
