@@ -27,7 +27,10 @@ const data: {} = {
 
 const props: {} = props => ({
   ...props,
-  loading: !(props.sampleTypes.sampleTypes && props.sampleTypes.sampleTypes.find),
+  loading: !(props.sampleTypes.sampleTypes && props.sampleTypes.sampleTypes.find) ||
+    props.objectStore.loadingObjectData ||
+    props.objectStore.loadingSamples ||
+    props.objectStore.loadingEvents,
   pickObject: MusitObject.pickObject(toggleObject$),
   isItemAdded,
   goTo: props.history.push,

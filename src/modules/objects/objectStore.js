@@ -4,10 +4,25 @@ import { Observable } from 'rxjs';
 import MusitObject from '../../models/object';
 import Sample from '../../models/sample';
 import Event from '../../models/event';
-export const initialState = { objectData: {}, events: [], samples: [] };
+export const initialState = {
+  objectData: {},
+  events: [],
+  samples: [],
+  loadingObjectData: false,
+  loadingEvents: false,
+  loadingSamples: false
+};
+export const loadingState = {
+  objectData: {},
+  events: [],
+  samples: [],
+  loadingObjectData: true,
+  loadingEvents: true,
+  loadingSamples: true
+};
 
 export const loadObject$: Observable = createAction('loadObject$').switchMap(params =>
-  MusitObject.getObjectDetails()(params).map(({ response }) => response)
+  MusitObject.getObjectWithCurrentLocation()(params)
 );
 
 export const loadSampleEvents$: Observable = createAction('loadSampleEvents$').switchMap(
@@ -29,10 +44,22 @@ type Actions = {
 
 const reducer$ = (actions: Actions) =>
   Observable.merge(
-    actions.clear$.map(() => () => initialState),
-    actions.loadObject$.map(objectData => state => ({ ...state, objectData })),
-    actions.loadSampleEvents$.map(samples => state => ({ ...state, samples })),
-    actions.loadMoveAndAnalysisEvents$.map(events => state => ({ ...state, events }))
+    actions.clear$.map(() => () => loadingState),
+    actions.loadObject$.map(objectData => state => ({
+      ...state,
+      objectData,
+      loadingObjectData: false
+    })),
+    actions.loadSampleEvents$.map(samples => state => ({
+      ...state,
+      samples,
+      loadingSamples: false
+    })),
+    actions.loadMoveAndAnalysisEvents$.map(events => state => ({
+      ...state,
+      events,
+      loadingEvents: false
+    }))
   );
 
 export const store$ = (
