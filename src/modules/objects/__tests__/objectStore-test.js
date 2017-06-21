@@ -1,4 +1,4 @@
-import { store$, initialState } from '../objectStore';
+import { store$, initialState, loadingState } from '../objectStore';
 import MusitTestScheduler from '../../../testutils/MusitTestScheduler';
 
 describe('objectStore', () => {
@@ -109,28 +109,46 @@ describe('objectStore', () => {
     ];
 
     // mock streams
-    const clearM = '-x--------------';
-    const loadObjectM = '--x-------------';
-    const loadSampleEventsM = '---x------------';
-    const loadMoveAndAnalysisEventsM = '----x-----------';
-    const expected = 'aabcd-----------';
+    // prettier-ignore
+    const streams = {
+       clearM :                  "-x--------------",
+     loadObjectM:                "--x-------------",
+     loadSampleEventsM:          "---x------------",
+     loadMoveAndAnalysisEventsM: "----x-----------",
+     expected:                   "iabcd-----------"
+    };
 
     const expectedStateMap = {
-      a: initialState,
-      b: { ...initialState, objectData },
-      c: { ...initialState, samples, objectData },
+      i: initialState,
+      a: loadingState,
+      b: { ...loadingState, objectData, loadingObjectData: false },
+      c: {
+        ...loadingState,
+        samples,
+        objectData,
+        loadingObjectData: false,
+        loadingSamples: false
+      },
       d: { ...initialState, samples, events, objectData }
     };
 
     // mock up$ and down$ events
 
-    const clear$ = testScheduler.createHotObservable(clearM, { x: initialState });
-    const loadObject$ = testScheduler.createHotObservable(loadObjectM, { x: objectData });
-    const loadSampleEvents$ = testScheduler.createHotObservable(loadSampleEventsM, {
-      x: samples
+    const clear$ = testScheduler.createHotObservable(streams.clearM, { x: initialState });
+    const loadObject$ = testScheduler.createHotObservable(streams.loadObjectM, {
+      x: objectData,
+      loadingObjectData: true,
+      loadingSamples: false,
+      loadingEvents: false
     });
+    const loadSampleEvents$ = testScheduler.createHotObservable(
+      streams.loadSampleEventsM,
+      {
+        x: samples
+      }
+    );
     const loadMoveAndAnalysisEvents$ = testScheduler.createHotObservable(
-      loadMoveAndAnalysisEventsM,
+      streams.loadMoveAndAnalysisEventsM,
       { x: events }
     );
 
@@ -142,7 +160,7 @@ describe('objectStore', () => {
     });
 
     // assertion
-    testScheduler.expectObservable(state$).toBe(expected, expectedStateMap);
+    testScheduler.expectObservable(state$).toBe(streams.expected, expectedStateMap);
 
     // run tests
     testScheduler.flush();

@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Row, Col, Tabs, Tab, PageHeader, Button } from 'react-bootstrap';
+import { Tabs, Tab, PageHeader, Button } from 'react-bootstrap';
 import type { ObjectData } from '../../types/object';
 import type { Samples, SampleStatus } from '../../types/samples';
 import type { Events } from '../../types/events';
@@ -8,6 +8,7 @@ import type { AnalysisTypesObject } from '../../types/analysisTypes';
 import type { SampleTypesObject } from '../../types/sampleTypes';
 import EventTable from '../events/components/EventTable';
 import SampleTable from '../sample/components/SampleTable';
+import ViewObjectData from './components/ViewObjectData';
 import Config from '../../config';
 import type { AppSession } from '../../types/appSession';
 import type { History } from 'types/Routes';
@@ -40,24 +41,10 @@ export const ViewObjectComponent = ({
 }: ViewObjectComponentProps) =>
   !loading
     ? <div className="container">
-        <PageHeader>{I18n.t('musit.objects.objectsView.objectView')}</PageHeader>
-        <div style={{ marginTop: '30px', marginBottom: '40px' }}>
-          <Row>
-            <Col md={2}>
-              <b>{I18n.t('musit.analysis.museumNumber')}:</b>
-              {' '}
-              {objectData && objectData.museumNo}
-            </Col>
-            <Col md={1}>
-              <b>{I18n.t('musit.analysis.underNumber')}:</b>
-              {' '}
-              {objectData && objectData.subNo}
-            </Col>
-            <Col md={3}>
-              <b>{I18n.t('musit.analysis.term')}:</b>{' '}{objectData && objectData.term}
-            </Col>
-          </Row>
-        </div>
+        <PageHeader>
+          {I18n.t('musit.objects.objectsView.objectView')}
+        </PageHeader>
+        <ViewObjectData objectData={objectData} />
         <div style={{ paddingBottom: 10 }}>
           <Button
             className="primary"

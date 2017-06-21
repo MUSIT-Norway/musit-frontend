@@ -60,6 +60,16 @@ class MusitObject {
     token: string,
     callback?: Callback
   }) => Observable;
+  static getObjectWithCurrentLocation: (
+    ajaxGet: AjaxGet
+  ) => (props: {
+    objectId: number,
+    museumId: number,
+    collectionId: string,
+    token: string,
+    callback?: Callback
+  }) => Observable;
+
   static pickObject: (
     pickObject$: Subject,
     ajaxGet: AjaxGet
@@ -195,6 +205,24 @@ MusitObject.getObjectLocation = (ajaxGet = simpleGet) => ({
     token,
     callback
   ).map(({ response }) => ({ ...response, breadcrumb: getPath(response) }));
+
+MusitObject.getObjectWithCurrentLocation = (ajaxGet = simpleGet) => ({
+  objectId,
+  museumId,
+  token,
+  collectionId,
+  callback
+}) =>
+  Observable.forkJoin([
+    MusitObject.getObjectDetails(ajaxGet)({
+      id: objectId,
+      museumId,
+      collectionId,
+      token,
+      callback
+    }),
+    MusitObject.getObjectLocation(ajaxGet)({ objectId, museumId, token, callback })
+  ]).map(([{ response }, l]) => ({ ...response, currentLocation: l }));
 
 MusitObject.getMainObject = (ajaxGet = simpleGet) => ({
   id,
