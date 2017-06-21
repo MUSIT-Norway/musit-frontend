@@ -293,9 +293,13 @@ describe('Config urls', () => {
           name: 'samplesForNode',
           actual: urls.api.samples.samplesForNode(
             99,
-            'dca44956-40d0-48dc-bd0d-921b825ad019'
+            'dca44956-40d0-48dc-bd0d-921b825ad019',
+            'dca44956-40d0-48dc-bd0d-921b825ad000',
+            1,
+            20
           ),
-          expected: '/api/management/99/node/dca44956-40d0-48dc-bd0d-921b825ad019/samples'
+          expected: '/api/management/99/node/dca44956-40d0-48dc-bd0d-921b825ad019/' +
+            'samples?collectionIds=dca44956-40d0-48dc-bd0d-921b825ad000&page=1&limit=20'
         }
       ]
     }

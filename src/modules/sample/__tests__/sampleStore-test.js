@@ -6,11 +6,18 @@ describe('eventsStore', () => {
     const testScheduler = new MusitTestScheduler();
 
     // mock streams
-    const clearM = '-1---------';
-    const loadPredefinedTypesM = '---1-----';
-    const getSampleTypesM = '--1---------';
-    const getSampleM = '-----------';
-    const expected = 'aabc-------';
+    // prettier-ignore
+    const clearM               = '-1---------';
+    // prettier-ignore
+    const loadPredefinedTypesM = '---1-------';
+    // prettier-ignore
+    const getSampleTypesM      = '--1--------';
+    // prettier-ignore
+    const getSampleM           = '-----------';
+    // prettier-ignore
+    const getSamplesForNodeM   = '-----------';
+    // prettier-ignore
+    const expected             = 'aabc-------';
 
     const expectedStateMap = {
       a: {
@@ -43,12 +50,14 @@ describe('eventsStore', () => {
     const getSampleTypes$ = testScheduler.createHotObservable(getSampleTypesM, {
       1: ['dummySampleTypes']
     });
+    const getSamplesForNode$ = testScheduler.createHotObservable(getSamplesForNodeM);
 
     const state$ = sampleStore$({
       clear$,
       getPredefinedTypes$,
       getSampleTypes$,
-      getSample$
+      getSample$,
+      getSamplesForNode$
     });
 
     // assertion

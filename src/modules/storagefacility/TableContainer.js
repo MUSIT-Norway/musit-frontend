@@ -26,11 +26,13 @@ import tableStore$, {
   setLoading$,
   clearRootNode$
 } from './tableStore';
+import sampleStore$, { getSamplesForNode$ } from '../sample/sampleStore';
 
 const data = {
   appSession$: { type: PropTypes.instanceOf(Observable).isRequired },
   tableStore$,
-  pickList$: { type: PropTypes.object.isRequired }
+  pickList$: { type: PropTypes.object.isRequired },
+  sampleStore$
 };
 
 const commands = {
@@ -41,7 +43,8 @@ const commands = {
   loadObjects$,
   setLoading$,
   loadNode$,
-  loadChildren$
+  loadChildren$,
+  getSamplesForNode$
 };
 
 const customProps = props => ({

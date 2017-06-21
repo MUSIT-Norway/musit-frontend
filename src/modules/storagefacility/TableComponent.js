@@ -41,7 +41,9 @@ export default class TableComponent extends React.Component {
     toggleScanner: PropTypes.func.isRequired,
     scannerEnabled: PropTypes.bool.isRequired,
     goTo: PropTypes.func.isRequired,
-    history: PropTypes.object
+    history: PropTypes.object,
+    sampleStore: PropTypes.object.isRequired,
+    getSamplesForNode: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -56,6 +58,7 @@ export default class TableComponent extends React.Component {
     this.showMoveNodeModal = this.showMoveNodeModal.bind(this);
     this.showMoveObjectModal = this.showMoveObjectModal.bind(this);
     this.showNodes = this.showNodes.bind(this);
+    this.getSamplesForNode = this.getSamplesForNode.bind(this);
   }
 
   getCurrentPage(state = this.props.location.state) {
@@ -90,6 +93,7 @@ export default class TableComponent extends React.Component {
     this.loadRootNode(nodeId, museumId, token);
     if (this.props.showObjects) {
       this.loadObjects(nodeId, museumId, collectionId, token);
+      this.getSamplesForNode(nodeId, museumId, collectionId, token);
     } else {
       this.loadNodes(nodeId, museumId, token);
     }
@@ -116,6 +120,7 @@ export default class TableComponent extends React.Component {
       this.loadRootNode(nodeId, museumId, token);
       if (newProps.showObjects) {
         this.loadObjects(nodeId, museumId, collectionId, token, currentPage);
+        this.getSamplesForNode(nodeId, museumId, collectionId, token, currentPage);
       } else {
         this.loadNodes(nodeId, museumId, token, currentPage);
       }
@@ -170,6 +175,25 @@ export default class TableComponent extends React.Component {
       this.props.setLoading();
       this.props.loadObjects({
         id,
+        museumId,
+        collectionId,
+        page,
+        token
+      });
+    }
+  }
+
+  getSamplesForNode(
+    nodeId,
+    museumId = this.props.appSession.museumId,
+    collectionId = this.props.appSession.collectionId,
+    token = this.props.appSession.accessToken,
+    page
+  ) {
+    if (nodeId) {
+      this.props.setLoading();
+      this.props.getSamplesForNode({
+        nodeId,
         museumId,
         collectionId,
         page,
@@ -259,7 +283,8 @@ export default class TableComponent extends React.Component {
     collectionId = this.props.appSession.collectionId,
     token = this.props.appSession.accessToken,
     nodeId = this.props.tableStore.rootNode.nodeId,
-    loadObjects = this.loadObjects
+    loadObjects = this.loadObjects,
+    getSamplesForNode = this.getSamplesForNode
   ) => (toNode, toName, onSuccess, onFailure = () => true) => {
     const description = MusitObject.getObjectDescription(objectToMove);
     MusitObject.moveObjects({
@@ -273,6 +298,7 @@ export default class TableComponent extends React.Component {
         onComplete: () => {
           onSuccess();
           loadObjects(nodeId);
+          getSamplesForNode(nodeId);
           this.props.emitSuccess({
             type: 'movedSuccess',
             message: I18n.t('musit.moveModal.messages.objectMoved', {
@@ -329,6 +355,7 @@ export default class TableComponent extends React.Component {
         clickShowRight={() => {
           this.showObjects();
           this.loadObjects(nodeId, museumId, collectionId, token);
+          this.getSamplesForNode(nodeId, museumId, collectionId, token);
           blur();
         }}
         clickShowLeft={() => {
@@ -480,6 +507,7 @@ export default class TableComponent extends React.Component {
             isObjectAdded={object =>
               this.props.isItemAdded(object, this.props.pickList.objects)}
             onMove={moveObject}
+            sampleStore={this.props.sampleStore}
           />
           {showPaging &&
             <PagingToolbar

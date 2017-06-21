@@ -94,6 +94,17 @@ class Sample {
   }) => Observable;
   static sampleStatuses: Array<SampleStatus>;
   static sampleSizeUnits: Array<string>;
+  static loadSamplesForNode: (
+    ajaxGet: AjaxGet
+  ) => (props: {
+    nodeId: string,
+    museumId: number,
+    token: string,
+    collectionId: string,
+    page: number,
+    limit: number,
+    callback?: Callback
+  }) => Observable;
 }
 
 Sample.loadPredefinedTypes = (ajaxGet = simpleGet) => props => {
@@ -272,6 +283,25 @@ Sample.loadSampleDataForObject = (ajaxGet = simpleGet) => ({
           registeredDate: moment(r.registeredStamp.date).format(DATE_FORMAT_DISPLAY)
         }))) || []
   );
+};
+
+Sample.loadSamplesForNode = (ajaxGet = simpleGet) => ({
+  nodeId,
+  museumId,
+  token,
+  collectionId,
+  page,
+  limit,
+  callback
+}) => {
+  const url = Config.magasin.urls.api.samples.samplesForNode(
+    museumId,
+    nodeId,
+    collectionId,
+    page,
+    limit
+  );
+  return ajaxGet(url, token, callback).map(({ response }) => response);
 };
 
 export const STATUS_INTACT_ID = 1;
