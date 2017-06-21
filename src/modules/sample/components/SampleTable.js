@@ -12,7 +12,11 @@ import type { SampleTypesObject } from '../../../types/sampleTypes';
 import FontAwesome from 'react-fontawesome';
 import type { AppSession } from '../../../types/appSession';
 import type { ObjectData } from '../../../types/object';
-import { getSampleType, getSampleSubType } from '../shared/types';
+import {
+  getSampleType,
+  getSampleSubType,
+  getSampleTypeAndSubType
+} from '../shared/types';
 
 type Props = {
   samples: Samples,
@@ -42,8 +46,11 @@ const pickObjectParams = (
       objectType: 'sample',
       subNo: objectData.subNo,
       term: objectData.term,
-      sampleType: getSampleType(sampleTypes, s.sampleTypeId, appSession),
-      sampleSubType: getSampleSubType(sampleTypes, s.sampleTypeId, appSession)
+      sampleTypeAndSubType: getSampleTypeAndSubType(
+        sampleTypes,
+        s.sampleTypeId,
+        appSession
+      )
     },
     breadcrumb: s.breadcrumb ? s.breadcrumb : [],
     museumId: appSession.museumId,

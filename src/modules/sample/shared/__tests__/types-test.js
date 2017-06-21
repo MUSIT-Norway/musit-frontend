@@ -1,4 +1,9 @@
-import { getSampleType, getSampleSubType, getSampleSubTypeWithSlash, getSampleTypeAndSubType } from '../types';
+import {
+  getSampleType,
+  getSampleSubType,
+  getSampleSubTypeWithSlash,
+  getSampleTypeAndSubType
+} from '../types';
 
 const sampleTypes = {
   data: [],
@@ -358,7 +363,6 @@ describe('getSampleSubTypeWithSlash', () => {
     expect(sampleType).toBe(' / aDNA');
   });
 });
-
 
 describe('getSampleTypeAndSubType', () => {
   it('should have working getSampleTypeAndSubType method', () => {

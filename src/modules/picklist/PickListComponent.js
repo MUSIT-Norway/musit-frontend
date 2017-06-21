@@ -84,7 +84,7 @@ export class PickListComponent extends React.Component {
         {!isNode && pick.value.sampleNum
           ? <span
               style={{ paddingLeft: '1em' }}
-            >{`${pick.value.sampleNum} ${pick.value.sampleType}${pick.value.sampleSubType ? `/${pick.value.sampleSubType}` : ''}`}</span>
+            >{`${pick.value.sampleNum} ${pick.value.sampleTypeAndSubType}`}</span>
           : null}
         {!isNode
           ? <span style={{ paddingLeft: '1em' }}>{pick.value.museumNo}</span>

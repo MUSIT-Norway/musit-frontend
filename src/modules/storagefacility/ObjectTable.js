@@ -19,6 +19,24 @@ export default class ObjectGrid extends Component {
   };
 
   render() {
+    const sampleObject = c => {
+      return {
+        ...c,
+        uuid: c.sampleObject.objectId,
+        collection: this.props.appSession.collectionId,
+        id: c.sampleObject.objectId,
+        museumNo: c.museumNo,
+        objectType: 'sample',
+        subNo: c.subNo,
+        term: c.term,
+        sampleNum: c.sampleObject.sampleNum,
+        sampleTypeAndSubType: getSampleTypeAndSubType(
+          { sampleTypes: this.props.sampleStore.sampleTypes },
+          c.sampleObject.sampleTypeId,
+          this.props.appSession
+        )
+      };
+    };
     const showTableData = (c, i) => {
       const isMainObject = !c.mainObjectId || MusitObject.isMainObject(c);
       const isChildObject = c.mainObjectId && !isMainObject;
@@ -96,12 +114,12 @@ export default class ObjectGrid extends Component {
                 href=""
                 onClick={e => {
                   e.preventDefault();
-                  this.props.pickObject(c);
+                  this.props.pickObject(c.sampleObject ? sampleObject(c) : c);
                   e.stopPropagation();
                 }}
                 title={I18n.t('musit.grid.object.iconTooltip.addToPickList')}
               >
-                {this.props.isObjectAdded(c)
+                {this.props.isObjectAdded(c.sampleObject ? sampleObject(c) : c)
                   ? <FontAwesome
                       style={{ fontSize: '1.5em', color: 'Gray' }}
                       name="shopping-cart"
@@ -145,6 +163,10 @@ export default class ObjectGrid extends Component {
                       onClick={e => {
                         e.preventDefault();
                         this.props.tableData.forEach(o => this.props.pickObject(o));
+                        this.props.sampleStore.nodeSamples &&
+                          this.props.sampleStore.nodeSamples.forEach(o =>
+                            this.props.pickObject(sampleObject(o))
+                          );
                       }}
                       title={I18n.t('musit.grid.object.iconTooltip.addAllToPickList')}
                     >
@@ -154,8 +176,6 @@ export default class ObjectGrid extends Component {
                 </tr>
               </thead>
               <tbody>
-                {console.log('Rituvesh', this.props.sampleStore)}
-                {console.log('Rituvesh', this.props.tableData)}
                 {this.props.tableData.map((c, i) => showTableData(c, i))}
                 {this.props.sampleStore.nodeSamples &&
                   this.props.sampleStore.nodeSamples.map((c, i) =>
