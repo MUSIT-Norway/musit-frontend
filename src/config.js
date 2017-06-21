@@ -140,7 +140,15 @@ export default {
           storagecontainer: '/api/management/storagecontainer',
           storagemediums: '/api/management/storagemediums',
           samplesForNode: (mid: MuseumId, nodeId: string): string =>
-            `/api/management/${mid}/node/${nodeId}/samples`
+            `/api/management/${mid}/node/${nodeId}/samples`,
+          samplesForNode: (
+            mid: MuseumId,
+            nodeId: NodeId,
+            collectionId: CollectionId,
+            page: number,
+            limit: number
+          ): string =>
+            `/api/management/${mid}/node/${nodeId}/samples?collectionIds=${collectionId}&page=${page}&limit=${limit}`
         },
         storagefacility: {
           searchUrl: (term: string, mid: MuseumId) =>

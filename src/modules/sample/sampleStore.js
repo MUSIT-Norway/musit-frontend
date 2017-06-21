@@ -17,12 +17,20 @@ export const getSample$ = createAction('getSample$').switchMap(props =>
 
 export const clear$ = createAction('clear$');
 
+export const getSamplesForNode$ = createAction('getSamplesForNode$').switchMap(
+  Sample.loadSamplesForNode()
+);
+
 const reducer$ = actions =>
   Observable.merge(
     actions.clear$.map(() => () => initialState),
     actions.getPredefinedTypes$.map(types => state => ({ ...state, ...types })),
     actions.getSampleTypes$.map(sampleTypes => state => ({ ...state, sampleTypes })),
-    actions.getSample$.map(sample => state => ({ ...state, sample }))
+    actions.getSample$.map(sample => state => ({ ...state, sample })),
+    actions.getSamplesForNode$.map(nodeSamples => state => ({
+      ...state,
+      nodeSamples
+    }))
   );
 
 export const sampleStore$ = (
@@ -30,7 +38,8 @@ export const sampleStore$ = (
     getPredefinedTypes$,
     clear$,
     getSampleTypes$,
-    getSample$
+    getSample$,
+    getSamplesForNode$
   }
 ) => createStore('sampleStore$', reducer$(actions), Observable.of(initialState));
 
