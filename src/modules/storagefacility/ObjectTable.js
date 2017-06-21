@@ -4,6 +4,7 @@ import { FormGroup, Table } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import { I18n } from 'react-i18nify';
 import MusitObject from '../../models/object';
+import { getSampleTypeAndSubType } from '../sample/shared/types';
 
 export default class ObjectGrid extends Component {
   static propTypes = {
@@ -13,7 +14,8 @@ export default class ObjectGrid extends Component {
     isObjectAdded: PropTypes.func.isRequired,
     showMoveHistory: PropTypes.func.isRequired,
     onMove: PropTypes.func.isRequired,
-    sampleStore: PropTypes.object.isRequired
+    sampleStore: PropTypes.object.isRequired,
+    appSession: PropTypes.object.isRequired
   };
 
   render() {
@@ -41,7 +43,23 @@ export default class ObjectGrid extends Component {
             {c.term}
           </td>
           <td>
-            {isMainObject &&
+            {c.sampleObject && c.sampleObject.sampleNum ? c.sampleObject.sampleNum : ''}
+          </td>
+          <td>
+            {c.sampleObject &&
+              c.sampleObject.sampleTypeId &&
+              this.props.appSession &&
+              this.props.sampleStore.sampleTypes
+              ? getSampleTypeAndSubType(
+                  { sampleTypes: this.props.sampleStore.sampleTypes },
+                  c.sampleObject.sampleTypeId,
+                  this.props.appSession
+                )
+              : ''}
+          </td>
+          <td>
+            {!c.sampleObject &&
+              isMainObject &&
               <a
                 className="onShowMoveHistory"
                 href=""
@@ -56,7 +74,8 @@ export default class ObjectGrid extends Component {
               </a>}
           </td>
           <td>
-            {isMainObject &&
+            {!c.sampleObject &&
+              isMainObject &&
               <a
                 className="onMoveClick"
                 href=""
@@ -110,6 +129,12 @@ export default class ObjectGrid extends Component {
                   </th>
                   <th>
                     {I18n.t('musit.grid.object.term')}
+                  </th>
+                  <th>
+                    {I18n.t('musit.analysis.sampleNumber')}
+                  </th>
+                  <th>
+                    {I18n.t('musit.analysis.sampleType')}
                   </th>
                   <th />
                   <th />

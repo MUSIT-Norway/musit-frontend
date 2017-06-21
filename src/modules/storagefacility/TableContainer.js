@@ -26,7 +26,7 @@ import tableStore$, {
   setLoading$,
   clearRootNode$
 } from './tableStore';
-import sampleStore$, { getSamplesForNode$ } from '../sample/sampleStore';
+import sampleStore$, { getSampleTypes$, getSamplesForNode$ } from '../sample/sampleStore';
 
 const data = {
   appSession$: { type: PropTypes.instanceOf(Observable).isRequired },
@@ -44,7 +44,8 @@ const commands = {
   setLoading$,
   loadNode$,
   loadChildren$,
-  getSamplesForNode$
+  getSamplesForNode$,
+  getSampleTypes$
 };
 
 const customProps = props => ({

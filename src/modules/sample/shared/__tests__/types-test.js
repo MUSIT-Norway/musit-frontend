@@ -1,4 +1,4 @@
-import { getSampleType, getSampleSubType } from '../types';
+import { getSampleType, getSampleSubType, getSampleSubTypeWithSlash, getSampleTypeAndSubType } from '../types';
 
 const sampleTypes = {
   data: [],
@@ -346,8 +346,30 @@ describe('getSampleType', () => {
 });
 
 describe('getSampleSubType', () => {
-  it('should have working getSampleType method', () => {
-    const sampleType = getSampleSubType(sampleTypes, 1, appSession);
-    expect(sampleType).toBe('aDNA');
+  it('should have working getSampleSubType method', () => {
+    const sampleType = getSampleSubType(sampleTypes, 2, appSession);
+    expect(sampleType).toBe('eDNA');
+  });
+});
+
+describe('getSampleSubTypeWithSlash', () => {
+  it('should have working getSampleSubTypeWithSlash method', () => {
+    const sampleType = getSampleSubTypeWithSlash(sampleTypes, 1, appSession);
+    expect(sampleType).toBe(' / aDNA');
+  });
+});
+
+
+describe('getSampleTypeAndSubType', () => {
+  it('should have working getSampleTypeAndSubType method', () => {
+    const sampleType = getSampleTypeAndSubType(sampleTypes, 1, appSession);
+    expect(sampleType).toBe('DNA extract / aDNA');
+  });
+});
+
+describe('getSampleTypeAndSubType', () => {
+  it('should have working getSampleTypeAndSubType method with no subType', () => {
+    const sampleType = getSampleTypeAndSubType(sampleTypes, 6, appSession);
+    expect(sampleType).toBe('Living individual');
   });
 });
