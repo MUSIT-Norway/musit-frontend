@@ -48,7 +48,7 @@ export class AddStorageUnitContainer extends React.Component {
               data,
               callback: {
                 onComplete: () => {
-                  props.goBack();
+                  this.props.goBack();
                   this.props.emitSuccess({
                     type: 'saveSuccess',
                     message: I18n.t('musit.storageUnits.messages.saveNodeSuccess')
