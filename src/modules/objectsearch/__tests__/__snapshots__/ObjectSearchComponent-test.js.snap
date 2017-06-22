@@ -22,7 +22,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
         className="control-label"
         htmlFor="museumNo"
       >
-        Museumnr.
+        Museumsnr.
       </label>
        
       <input
@@ -60,7 +60,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
         className="control-label"
         htmlFor="term"
       >
-        Term/Artsnavn
+        Gjenstand/Takson
       </label>
        
       <input
@@ -121,13 +121,13 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
         <thead>
           <tr>
             <th>
-              Museumnr.
+              Museumsnr.
             </th>
             <th>
               Unr.
             </th>
             <th>
-              Term/Artsnavn
+              Gjenstand/Takson
             </th>
             <th>
               Plassering

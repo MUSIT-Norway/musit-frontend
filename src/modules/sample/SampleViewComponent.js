@@ -124,7 +124,9 @@ export default function SampleViewComponent({
             form.persons.value.map((p, i) => (
               <div className="row" key={i}>
                 <div className="col-md-4">{p.name}</div>
-                <div className="col-md-2">{p.role}</div>
+                <div className="col-md-2">
+                  {I18n.t(`musit.sample.roles.${p.role}`) || p.role}
+                </div>
                 <div className="col-md-2">
                   {p.date ? moment(p.date).format('DD.MM.YYYY') : null}
                 </div>

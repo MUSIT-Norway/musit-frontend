@@ -256,6 +256,7 @@ export default ({
           personData={toArray(form.persons.value)}
           updateForm={updateForm}
           fieldName={form.persons.name}
+          getDisplayNameForRole={(r: string) => I18n.t(`musit.analysis.roles.${r}`)}
           roles={['responsible', 'doneBy', 'administrator', 'completedBy']}
           showDateForRole={(roleName: string) =>
             ['completedBy', 'doneBy'].some(e => e === roleName)}
