@@ -24,7 +24,7 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
         },
         Object {
           "key": "caseNumber",
-          "label": "Saksnummer",
+          "label": "Saksnr.",
         },
       ]
     }

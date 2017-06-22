@@ -8,7 +8,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
     className="page-header"
   >
     <h1>
-      Analyse detaljer
+      Analyse
     </h1>
   </div>
   <form
@@ -25,7 +25,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         className="control-label col-md-2"
         htmlFor="type"
       >
-        Type analyse:
+        Type analyse
       </label>
       <div
         className="col-md-10"
@@ -43,7 +43,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         className="control-label col-md-2"
         htmlFor="reason"
       >
-        Formål med analysen:
+        Formål med analysen
          
       </label>
       <div
@@ -62,7 +62,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         className="control-label col-md-2"
         htmlFor="status"
       >
-        Status på analysen:
+        Status på analysen
       </label>
       <div
         className="col-md-5"
@@ -80,7 +80,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         className="control-label col-md-2"
         htmlFor="status"
       >
-        Sted for analysen:
+        Analysested
       </label>
       <div
         className="col-md-5"
@@ -98,7 +98,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         className="control-label col-md-2"
         htmlFor="caseNumber"
       >
-        Saksnummer:
+        Saksnummer
       </label>
       <div
         className="col-md-10"
@@ -117,7 +117,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         className="control-label col-md-2"
         htmlFor="note"
       >
-        Kommentar:
+        Kommentar
       </label>
       <div
         className="col-md-10"
@@ -130,7 +130,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
     </div>
     <hr />
     <h4>
-      Personer tilknyttet analysen:
+      Personer tilknyttet analysen
     </h4>
     <div>
       <div
@@ -170,7 +170,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
           className="col-md-12"
           htmlFor="objects"
         >
-          Objekter/prøver:
+          Objekter/prøver
         </label>
       </div>
       <div
@@ -207,7 +207,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
           className="control-label col-md-2"
           htmlFor="externalSource"
         >
-          Ekstern kilde:
+          Ekstern kilde
         </label>
         <div
           className="col-md-10"
@@ -225,7 +225,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
           className="control-label col-md-2"
           htmlFor="comments"
         >
-          Kommentar til resultat:
+          Kommentar til resultat
         </label>
         <div
           className="col-md-10"
@@ -243,7 +243,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
           className="control-label col-md-2"
           htmlFor="restrictions"
         >
-          Klausulering:
+          Klausulering
         </label>
         <div
           className="col-md-10"

@@ -33,7 +33,8 @@ type Props = {
   fieldName: string,
   appSession: AppSession,
   roles: Array<string>,
-  showDateForRole?: Function
+  showDateForRole?: Function,
+  getDisplayNameForRole?: Function
 };
 
 export const PersonRoleDate = ({
@@ -42,7 +43,8 @@ export const PersonRoleDate = ({
   updateForm,
   fieldName,
   roles,
-  showDateForRole
+  showDateForRole,
+  getDisplayNameForRole
 }: Props) => {
   const pArr: Array<Person> = personData.length > 0 ? personData : defaultPersons;
   return (
@@ -91,13 +93,20 @@ export const PersonRoleDate = ({
             <DropdownButton
               id={`role_${i}`}
               items={roles}
+              displayItems={roles.map(
+                r => getDisplayNameForRole && getDisplayNameForRole(r)
+              )}
               index={i}
               onChange={role =>
                 updateForm({
                   name: fieldName,
                   rawValue: updateRole(i, role, pArr)
                 })}
-              title={v.role ? v.role : I18n.t('musit.texts.chooseRole')}
+              title={
+                v.role
+                  ? (getDisplayNameForRole && getDisplayNameForRole(v.role)) || v.role
+                  : I18n.t('musit.texts.chooseRole')
+              }
             />
           </Col>
           {showDateForRole &&

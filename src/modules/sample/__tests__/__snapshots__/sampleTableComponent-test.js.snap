@@ -8,7 +8,7 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       Array [
         Object {
           "key": "sampleNum",
-          "label": "Prøvenr",
+          "label": "Prøvenr.",
         },
         Object {
           "key": "registeredDate",

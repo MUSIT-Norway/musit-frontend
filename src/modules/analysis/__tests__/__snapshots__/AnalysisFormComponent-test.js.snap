@@ -8,7 +8,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
     className="page-header"
   >
     <h1>
-      Registrer analyse
+      Analyse
     </h1>
   </div>
   <form
@@ -21,7 +21,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
         className="control-label col-md-2"
         htmlFor="type"
       >
-        Type analyse:
+        Type analyse
       </label>
       <div>
         <div
@@ -48,7 +48,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
         className="control-label col-md-2"
         htmlFor="reason"
       >
-        Formål med analysen:
+        Formål med analysen
       </label>
       <div
         className="col-md-3"
@@ -74,7 +74,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
         className="control-label col-md-2"
         htmlFor="status"
       >
-        Status på analysen:
+        Status på analysen
       </label>
       <div
         className="col-md-3"
@@ -120,7 +120,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
         className="control-label col-md-2"
         htmlFor="place"
       >
-        Sted for analysen:
+        Analysested
       </label>
       <div
         className="col-md-3"
@@ -146,7 +146,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
         className="control-label col-md-2"
         htmlFor="casenumber"
       >
-        Saksnummer:
+        Saksnummer
       </label>
       <div
         className="col-md-3"
@@ -168,7 +168,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
         className="control-label col-md-2"
         htmlFor="note"
       >
-        Kommentar:
+        Kommentar
       </label>
       <div
         className="col-md-6"
@@ -188,7 +188,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
       <label
         className="control-label"
       >
-        Personer tilknyttet analysen:
+        Personer tilknyttet analysen
       </label>
     </div>
     <Component
@@ -207,6 +207,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
         }
       }
       fieldName="persons"
+      getDisplayNameForRole={[Function]}
       personData={Array []}
       roles={
         Array [
@@ -230,7 +231,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
           className="col-md-12"
           htmlFor="objects"
         >
-          Objekter/prøver:
+          Objekter/prøver
         </label>
       </div>
       <div
@@ -265,7 +266,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
           className="control-label col-md-2"
           htmlFor="isRestricted"
         >
-          Klausulering:
+          Klausulering
         </label>
         <div
           className="col-md-10"
