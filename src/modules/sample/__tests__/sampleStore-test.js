@@ -7,18 +7,14 @@ describe('eventsStore', () => {
 
     // mock streams
     // prettier-ignore
-    const clearM               = '-1---------';
-    // prettier-ignore
-    const loadPredefinedTypesM = '---1-------';
-    // prettier-ignore
-    const getSampleTypesM      = '--1--------';
-    // prettier-ignore
-    const getSampleM           = '-----------';
-    // prettier-ignore
-    const getSamplesForNodeM   = '-----------';
-    // prettier-ignore
-    const expected             = 'aabc-------';
-
+    const streams = {
+      clearM:               '-1---------',
+      loadPredefinedTypesM: '---1-------',
+      getSampleTypesM:      '--1--------',
+      getSampleM:           '-----------',
+      getSamplesForNodeM:   '-----------',
+      expected:             'aabc-------'
+    };
     const expectedStateMap = {
       a: {
         data: []
@@ -37,20 +33,25 @@ describe('eventsStore', () => {
     };
 
     // mock up$ and down$ events
-    const clear$ = testScheduler.createHotObservable(clearM);
-    const getSample$ = testScheduler.createHotObservable(getSampleM);
-    const getPredefinedTypes$ = testScheduler.createHotObservable(loadPredefinedTypesM, {
-      1: {
-        storageContainers: [],
-        storageMediums: [],
-        treatments: [],
-        sampleTypes: []
+    const clear$ = testScheduler.createHotObservable(streams.clearM);
+    const getSample$ = testScheduler.createHotObservable(streams.getSampleM);
+    const getPredefinedTypes$ = testScheduler.createHotObservable(
+      streams.loadPredefinedTypesM,
+      {
+        1: {
+          storageContainers: [],
+          storageMediums: [],
+          treatments: [],
+          sampleTypes: []
+        }
       }
-    });
-    const getSampleTypes$ = testScheduler.createHotObservable(getSampleTypesM, {
+    );
+    const getSampleTypes$ = testScheduler.createHotObservable(streams.getSampleTypesM, {
       1: ['dummySampleTypes']
     });
-    const getSamplesForNode$ = testScheduler.createHotObservable(getSamplesForNodeM);
+    const getSamplesForNode$ = testScheduler.createHotObservable(
+      streams.getSamplesForNodeM
+    );
 
     const state$ = sampleStore$({
       clear$,
@@ -61,7 +62,7 @@ describe('eventsStore', () => {
     });
 
     // assertion
-    testScheduler.expectObservable(state$).toBe(expected, expectedStateMap);
+    testScheduler.expectObservable(state$).toBe(streams.expected, expectedStateMap);
 
     // run tests
     testScheduler.flush();
