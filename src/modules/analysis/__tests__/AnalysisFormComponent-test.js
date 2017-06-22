@@ -49,28 +49,16 @@ describe('AnalysisFormComponent', () => {
           category: '5'
         }
       ];
-      const store = { analysis };
-      const purposes = [];
-      const analysisLabList = [];
-      const categories = {};
       const term = getAnalysisTypeTerm(
-        store,
-        { analysisTypes, purposes, analysisLabList, categories },
-        appSession
+        analysis.analysisTypeId,
+        analysisTypes,
+        appSession.language
       );
       expect(term).toBe('');
     });
 
     it('should return empty string if called prematurely', () => {
-      const store = {};
-      const purposes = [];
-      const analysisLabList = [];
-      const categories = {};
-      const term = getAnalysisTypeTerm(
-        store,
-        { analysisTypes: [], analysisLabList, purposes, categories },
-        appSession
-      );
+      const term = getAnalysisTypeTerm(undefined, [], appSession.language);
       expect(term).toBe('');
     });
 
@@ -93,7 +81,11 @@ describe('AnalysisFormComponent', () => {
           category: '5'
         }
       ];
-      const term = getAnalysisTypeTerm(analysis, analysisTypes, appSession.language);
+      const term = getAnalysisTypeTerm(
+        analysis.analysisTypeId,
+        analysisTypes,
+        appSession.language
+      );
       expect(term).toBe('Tjokkimokki 1');
     });
   });

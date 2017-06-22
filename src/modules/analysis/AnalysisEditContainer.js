@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 import { makeUrlAware } from '../../stores/appSession';
 import flowRight from 'lodash/flowRight';
 import lifeCycle from '../../shared/lifeCycle';
-import { onMount, onProps } from './AnalysisViewContainer';
+import { onMount, onReceiveProps } from './AnalysisViewContainer';
 import { loadPredefinedTypes } from '../../stores/predefined';
 import props from './shared/formProps';
 
@@ -36,7 +36,7 @@ const commands = {
 
 const MountableAnalysisFormComponent = lifeCycle({
   onMount,
-  onReceiveProps: onProps(fieldsArray),
+  onReceiveProps: onReceiveProps(fieldsArray),
   onUnmount: props => {
     props.clearForm();
     props.clearStore();

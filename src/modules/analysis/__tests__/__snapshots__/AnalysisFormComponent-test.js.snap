@@ -171,7 +171,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
         Kommentar:
       </label>
       <div
-        className="col-md-10"
+        className="col-md-6"
       >
         <textarea
           className="form-control"

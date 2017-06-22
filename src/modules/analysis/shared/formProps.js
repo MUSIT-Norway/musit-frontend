@@ -114,7 +114,7 @@ export default (
     updateAnalysisCategory: updateAnalysisCategory(props.updateForm),
     updateAnalysisTypeId: updateAnalysisTypeId(props.updateForm),
     analysisTypeTerm: getAnalysisTypeTerm(
-      props.store.analysis,
+      props.store.analysis && props.store.analysis.analysisTypeId,
       props.predefined.analysisTypes,
       props.appSession.language
     ),

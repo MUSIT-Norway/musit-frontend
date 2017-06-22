@@ -122,7 +122,7 @@ function extraAttributesWithResult(extraAttributes, result) {
     extraAttributes &&
     Object.keys(extraAttributes).reduce((acc, eat) => {
       const value = result[eat];
-      const eatAttr = extraAttributes ? extraAttributes[eat] : {};
+      const eatAttr = extraAttributes && extraAttributes[eat] ? extraAttributes[eat] : {};
       return {
         ...acc,
         [eat]: {

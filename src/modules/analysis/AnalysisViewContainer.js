@@ -49,7 +49,7 @@ export const onMount = props => {
   });
 };
 
-export const onProps = fieldsArray => props => {
+export const onReceiveProps = fieldsArray => props => {
   if (props.store.analysis && !props.form.analysisTypeId.value) {
     props.loadForm(Analysis.fromJsonToForm(props.store.analysis, fieldsArray));
   }
@@ -57,7 +57,7 @@ export const onProps = fieldsArray => props => {
 
 const MountableAnalysisViewComponent = lifeCycle({
   onMount,
-  onReceiveProps: onProps(fieldsArray),
+  onReceiveProps: onReceiveProps(fieldsArray),
   onUnmount: props => {
     props.clearForm();
     props.clearStore();

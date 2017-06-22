@@ -12,10 +12,12 @@ import MetaInformation from '../../components/metainfo';
 import ObjectResultTable from './components/ExpandableObjectResultTable';
 import Restrictions from './components/Restrictions';
 import Result from './components/Result';
-import { getStatusText } from './AnalysisViewComponent';
+import { getStatusText } from './shared/submit';
 import type { Predefined } from './shared/predefinedType';
 import toString from 'lodash/toString';
 import toArray from 'lodash/toArray';
+import AttributeSelect from './components/DescriptionAttributeSelect';
+import AttributeInput from './components/DescriptionAttributeInput';
 
 type Props = {
   form: FormData,
@@ -38,7 +40,7 @@ type Props = {
   clickCancel: Function
 };
 
-const AnalysisForm = ({
+export default ({
   form,
   updateForm,
   updateArrayField,
@@ -100,7 +102,7 @@ const AnalysisForm = ({
                 </div>
                 {form.analysisTypeCategory.rawValue &&
                   form.analysisTypeCategory.rawValue !== '0' &&
-                  <div className="col-md-7">
+                  <div className="col-md-3">
                     <select
                       id="subType"
                       className="form-control"
@@ -137,7 +139,7 @@ const AnalysisForm = ({
                 {attr.allowedValues
                   ? <AttributeSelect
                       attr={attr}
-                      values={getExtraDescriptionAttributeValue(attr.attributeKey) || []}
+                      value={getExtraDescriptionAttributeValue(attr.attributeKey) || []}
                       onChange={updateExtraDescriptionAttribute}
                     />
                   : <AttributeInput
@@ -234,7 +236,7 @@ const AnalysisForm = ({
           <label className="control-label col-md-2" htmlFor="note">
             {I18n.t('musit.analysis.note')}
           </label>
-          <div className="col-md-10">
+          <div className="col-md-6">
             <textarea
               className="form-control"
               rows={5}
@@ -337,40 +339,3 @@ const AnalysisForm = ({
     </div>
   );
 };
-
-function AttributeSelect({ attr, values, onChange }) {
-  return (
-    <select
-      multiple={/^Array\[.*]$/.test(attr.attributeType)}
-      className="form-control"
-      name={attr.attributeKey}
-      size={attr.allowedValues && attr.allowedValues.length}
-      onChange={onChange(attr.attributeKey, attr.attributeType)}
-    >
-      {attr.allowedValues &&
-        attr.allowedValues.map((av, i) => (
-          <option
-            key={i}
-            value={av.id}
-            selected={values && [].concat(values).find(v => v === av.id)}
-          >
-            {av.enLabel}
-          </option>
-        ))}
-    </select>
-  );
-}
-
-function AttributeInput({ attr, value, onChange }) {
-  return (
-    <input
-      className="form-control"
-      type="text"
-      name={attr.attributeKey}
-      onChange={onChange(attr.attributeKey, attr.attributeType)}
-      value={value || ''}
-    />
-  );
-}
-
-export default AnalysisForm;

@@ -7,7 +7,7 @@ import type { SampleData } from '../../../types/samples';
 
 export type FormData = {
   id: Field<number>,
-  analysisTypeId: Field<string>,
+  analysisTypeId: Field<number>,
   analysisTypeCategory: Field<string>,
   doneBy: Field<string>,
   doneDate: Field<string>,

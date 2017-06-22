@@ -30,38 +30,44 @@ export default function Result({
                 {attrKey}
               </label>
               {extraAttributes[attrKey].type === 'Size'
-                ? <div className="col-md-5">
-                    <input
-                      className="form-control"
-                      name={attrKey}
-                      value={
-                        (extraAttributes[attrKey].value &&
-                          extraAttributes[attrKey].value.rawValue) ||
-                          ''
-                      }
-                      onChange={e =>
-                        updateExtraResultAttribute(attrKey, {
-                          ...extraAttributes[attrKey].value,
-                          value: parseFloat(e.target.value.replace(',', '.')),
-                          rawValue: e.target.value
-                        })}
-                    />
-                    <select
-                      onChange={e =>
-                        updateExtraResultAttribute(attrKey, {
-                          ...extraAttributes[attrKey].value,
-                          unit: e.target.value
-                        })}
-                      defaultValue={
-                        (extraAttributes[attrKey].value &&
-                          extraAttributes[attrKey].value.unit) ||
-                          ''
-                      }
-                    >
-                      {Sample.sampleSizeUnits.map((unit, i) => (
-                        <option key={i}>{unit}</option>
-                      ))}
-                    </select>
+                ? <div>
+                    <div className="col-md-3">
+                      <input
+                        className="form-control"
+                        name={attrKey}
+                        value={
+                          (extraAttributes[attrKey].value &&
+                            extraAttributes[attrKey].value.rawValue) ||
+                            ''
+                        }
+                        onChange={e =>
+                          updateExtraResultAttribute(attrKey, {
+                            ...extraAttributes[attrKey].value,
+                            value: parseFloat(e.target.value.replace(',', '.')),
+                            rawValue: e.target.value
+                          })}
+                      />
+                    </div>
+                    <div className="col-md-2">
+                      <select
+                        className="form-control"
+                        onChange={e =>
+                          updateExtraResultAttribute(attrKey, {
+                            ...extraAttributes[attrKey].value,
+                            unit: e.target.value
+                          })}
+                        defaultValue={
+                          (extraAttributes[attrKey].value &&
+                            extraAttributes[attrKey].value.unit) ||
+                            ''
+                        }
+                      >
+                        <option value="">{I18n.t('musit.sample.chooseUnit')}</option>
+                        {Sample.sampleSizeUnits.map((unit, i) => (
+                          <option key={i}>{unit}</option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
                 : <div className="col-md-5">
                     <input
@@ -91,7 +97,7 @@ export default function Result({
         <label className="control-label col-md-2" htmlFor="resultNote">
           {I18n.t('musit.analysis.commentsToResult')}
         </label>
-        <div className="col-md-10">
+        <div className="col-md-5">
           <textarea
             className="form-control"
             rows={5}
