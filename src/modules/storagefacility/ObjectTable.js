@@ -37,12 +37,12 @@ export default class ObjectGrid extends Component {
         )
       };
     };
-    const showTableData = (c, i) => {
+    const showTableData = c => {
       const isMainObject = !c.mainObjectId || MusitObject.isMainObject(c);
       const isChildObject = c.mainObjectId && !isMainObject;
       return (
         <tr
-          key={i}
+          key={c.sampleObject ? c.sampleObject.objectId : c.id}
           className={isChildObject ? 'childObject' : isMainObject && 'mainObject'}
           onClick={() => this.props.goToObject(c.uuid)}
         >
@@ -179,7 +179,7 @@ export default class ObjectGrid extends Component {
                 {this.props.tableData.map((c, i) => showTableData(c, i))}
                 {this.props.sampleStore.nodeSamples &&
                   this.props.sampleStore.nodeSamples.map((c, i) =>
-                    showTableData({ ...c, objectType: 'sample' }, i)
+                    showTableData({ ...c, objectType: 'sample' })
                   )}
               </tbody>
             </Table>
