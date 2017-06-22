@@ -4,7 +4,8 @@ import inject from 'react-rxjs/dist/RxInject';
 import objectSearchStore$, {
   clearSearch$,
   searchForObjects$,
-  onChangeField$
+  onChangeField$,
+  clearStore$
 } from './objectSearchStore';
 import { toggleObject$ } from '../../stores/pickList';
 import { isItemAdded } from '../../stores/pickList';
@@ -12,6 +13,7 @@ import flowRight from 'lodash/flowRight';
 import { makeUrlAware } from '../../stores/appSession';
 import ObjectSearchComponent from './ObjectSearchComponent';
 import MusitObject from '../../models/object';
+import lifeCycle from '../../shared/lifeCycle';
 
 const data = {
   appSession$: { type: PropTypes.instanceOf(Observable).isRequired },
@@ -22,7 +24,8 @@ const data = {
 const commands = {
   clearSearch$,
   searchForObjects$,
-  onChangeField$
+  onChangeField$,
+  clearStore$
 };
 
 const props = props => ({
@@ -33,5 +36,5 @@ const props = props => ({
 });
 
 export default flowRight([inject(data, commands, props), makeUrlAware])(
-  ObjectSearchComponent
+  lifeCycle({ onMount: props => props.clearStore() })(ObjectSearchComponent)
 );

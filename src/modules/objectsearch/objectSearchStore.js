@@ -13,6 +13,7 @@ export const initialState = {
 };
 
 export const clearSearch$ = createAction('clearSearch$');
+export const clearStore$ = createAction('clearStore$');
 export const searchForObjects$ = createAction('searchForObjects$').switchMap(
   searchForObjects()
 );
@@ -20,6 +21,7 @@ export const onChangeField$ = createAction('onChangeField$');
 
 export const reducer$ = actions =>
   Observable.merge(
+    actions.clearStore$.map(() => () => initialState),
     actions.clearSearch$.map(() => () => ({ ...initialState, loading: true })),
     actions.searchForObjects$.map(result => state => {
       const matches = result.matches;
@@ -42,7 +44,8 @@ export const reducer$ = actions =>
     }))
   );
 
-export const store$ = (actions$ = { clearSearch$, searchForObjects$, onChangeField$ }) =>
-  createStore('objectSearchStore$', reducer$(actions$), Observable.of(initialState));
+export const store$ = (
+  actions$ = { clearSearch$, clearStore$, searchForObjects$, onChangeField$ }
+) => createStore('objectSearchStore$', reducer$(actions$), Observable.of(initialState));
 
 export default store$();

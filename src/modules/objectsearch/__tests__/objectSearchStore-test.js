@@ -220,6 +220,7 @@ describe('objectSearchStore', () => {
 
     // mock up$ and down$ events
     const clearSearch$ = new Subject();
+    const clearStore$ = new Subject();
     const searchForObjects$ = testScheduler
       .createHotObservable(searchForObjectsdM, {
         x: {
@@ -352,7 +353,12 @@ describe('objectSearchStore', () => {
       x: { field: 'test', value: 'hallo' }
     });
 
-    const state$ = store$({ clearSearch$, searchForObjects$, onChangeField$ });
+    const state$ = store$({
+      clearSearch$,
+      searchForObjects$,
+      onChangeField$,
+      clearStore$
+    });
 
     // assertion
     testScheduler.expectObservable(state$).toBe(expected, expectedStateMap);
