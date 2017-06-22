@@ -46,6 +46,15 @@ export default function SampleFormComponent({
   objectData
 }: Props) {
   const canEditSampleType = !form.sampleNum;
+
+  // true of sampleType has value and the sampleType exists in sampleTypes from store (backend)
+  const shouldShowSampleSubType =
+    form.sampleType.rawValue &&
+    form.sampleType.rawValue.trim().length > 0 &&
+    store.sampleTypes &&
+    store.sampleTypes[form.sampleType.rawValue] &&
+    store.sampleTypes[form.sampleType.rawValue].length > 1;
+
   return (
     <div className="container">
       <form className="form-horizontal">
@@ -166,10 +175,7 @@ export default function SampleFormComponent({
                   }}
                   selectItems={store.sampleTypes ? Object.keys(store.sampleTypes) : []}
                 />
-                {form.sampleType.rawValue &&
-                  form.sampleType.rawValue.trim().length > 0 &&
-                  store.sampleTypes &&
-                  store.sampleTypes[form.sampleType.rawValue].length > 1 &&
+                {shouldShowSampleSubType &&
                   <FieldDropDown
                     field={form.sampleSubType}
                     title={I18n.t('musit.sample.sampleSubType')}
