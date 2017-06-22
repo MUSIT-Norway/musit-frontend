@@ -33,7 +33,7 @@ exports[`ObjectTable should render properly  1`] = `
               Gjenstand/Takson
             </th>
             <th>
-              Prøvenr
+              Prøvenr.
             </th>
             <th>
               Prøvetype
