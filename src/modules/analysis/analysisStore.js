@@ -4,6 +4,17 @@ import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import MusitAnalysis from '../../models/analysis';
 import uniq from 'lodash/uniq';
 
+const initialState = {
+  analysisTypes: [],
+  purposes: [],
+  categories: {},
+  analysisLabList: [],
+  loading: false,
+  extraDescriptionAttributes: {},
+  extraResultAttributes: {},
+  analysisTypeCategories: []
+};
+
 export const getAnalysisTypes$ = createAction('getAnalysisTypes$').switchMap(
   MusitAnalysis.getAnalysisTypesForCollection()
 );
@@ -17,6 +28,8 @@ export const updateExtraDescriptionAttribute$ = createAction(
   'updateExtraDescriptionAttribute$'
 );
 
+export const clearStore$ = createAction('clearStore$');
+
 export const updateExtraResultAttribute$ = createAction('updateExtraResultAttribute$');
 
 export const loadPredefinedTypes$ = createAction(
@@ -29,11 +42,13 @@ type Actions = {
   getAnalysisTypes$: Subject,
   loadPredefinedTypes$: Subject,
   updateExtraDescriptionAttribute$: Subject,
-  updateExtraResultAttribute$: Subject
+  updateExtraResultAttribute$: Subject,
+  clearStore$: Subject
 };
 
 export const reducer$ = (actions: Actions) =>
   Observable.merge(
+    actions.clearStore$.map(() => () => initialState),
     actions.setLoading$.map(() => state => ({ ...state, loading: true })),
     actions.getAnalysis$.map(analysis => state => ({
       ...state,
@@ -69,18 +84,9 @@ export const store$ = (
     getAnalysis$,
     loadPredefinedTypes$,
     updateExtraDescriptionAttribute$,
-    updateExtraResultAttribute$
+    updateExtraResultAttribute$,
+    clearStore$
   }
-) =>
-  createStore(
-    'analysisStore',
-    reducer$(actions$),
-    Observable.of({
-      analysisTypes: [],
-      purposes: [],
-      categories: {},
-      analysisLabList: []
-    })
-  );
+) => createStore('analysisStore', reducer$(actions$), Observable.of(initialState));
 
 export default store$();

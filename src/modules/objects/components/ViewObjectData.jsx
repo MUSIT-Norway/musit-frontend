@@ -13,6 +13,12 @@ import type {
   NatLocation
 } from '../../../types/object';
 
+type PathNamesProps = Array<{
+  name: string,
+  nodeId: number,
+  nodeUuid: string
+}>;
+
 type ViewNatHistComponentProps = {
   museumNo: string,
   subNo: string,
@@ -42,12 +48,6 @@ type ViewArcheologyComponentProps = {
   currentLocation: { pathNames: PathNamesProps },
   coordinates: ?Array<ArkCoordinate>
 };
-
-type PathNamesProps = Array<{
-  name: string,
-  nodeId: number,
-  nodeUuid: string
-}>;
 
 type ViewEntographyComponentProps = {
   museumNo: string,

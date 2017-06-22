@@ -5,7 +5,8 @@ import store$, {
   getAnalysis$,
   setLoading$,
   updateExtraDescriptionAttribute$,
-  updateExtraResultAttribute$
+  updateExtraResultAttribute$,
+  clearStore$
 } from './analysisStore';
 import PropTypes from 'prop-types';
 import { makeUrlAware } from '../../stores/appSession';
@@ -29,12 +30,17 @@ const commands = {
   updateExtraResultAttribute$,
   getAnalysis$,
   setLoading$,
+  clearStore$,
   ...formActions
 };
 
 const MountableAnalysisFormComponent = lifeCycle({
   onMount,
-  onReceiveProps: onProps(fieldsArray)
+  onReceiveProps: onProps(fieldsArray),
+  onUnmount: props => {
+    props.clearForm();
+    props.clearStore();
+  }
 })(AnalysisFormComponent);
 
 export default flowRight([

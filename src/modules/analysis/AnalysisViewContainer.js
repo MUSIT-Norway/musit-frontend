@@ -5,7 +5,7 @@ import { makeUrlAware } from '../../stores/appSession';
 import { loadPredefinedTypes } from '../../stores/predefined';
 import flowRight from 'lodash/flowRight';
 import lifeCycle from '../../shared/lifeCycle';
-import store$, { getAnalysis$, setLoading$ } from './analysisStore';
+import store$, { getAnalysis$, setLoading$, clearStore$ } from './analysisStore';
 import Analysis from '../../models/analysis';
 import analysisForm, { fieldsArray } from './analysisForm';
 import Config from '../../config';
@@ -22,6 +22,7 @@ const data = {
 const commands = {
   getAnalysis$,
   setLoading$,
+  clearStore$,
   ...formActions
 };
 
@@ -56,7 +57,11 @@ export const onProps = fieldsArray => props => {
 
 const MountableAnalysisViewComponent = lifeCycle({
   onMount,
-  onReceiveProps: onProps(fieldsArray)
+  onReceiveProps: onProps(fieldsArray),
+  onUnmount: props => {
+    props.clearForm();
+    props.clearStore();
+  }
 })(AnalysisViewComponent);
 
 export default flowRight([
