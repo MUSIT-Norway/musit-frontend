@@ -98,37 +98,42 @@ function getRestrictions(form: FormData) {
 
 export function getResult(
   form: FormData,
-  extraResultAttributes: ExtraResultAttributeValues
+  extraResultAttributes: ?ExtraResultAttributeValues
 ) {
   const extRef = toArray(form.externalSource.value);
   const comment = form.comments.value;
-  const extraAttributes = Object.keys(extraResultAttributes).reduce((acc, att) => {
-    let value = extraResultAttributes[att];
-    if (value && typeof value !== 'string' && value.type === 'Size') {
-      const size: Size = (value.value: any);
-      value = { ...size, rawValue: undefined };
-    }
-    if (value && typeof value !== 'string' && value.type === 'String') {
-      value = (value.value: any);
-    }
-    return {
-      ...acc,
-      [att]: value
-    };
-  }, {});
+  const extraAttributeType = extraResultAttributes && extraResultAttributes.type
+    ? extraResultAttributes.type.toString()
+    : 'GenericResult';
+  const extraAttributes =
+    extraResultAttributes &&
+    Object.keys(extraResultAttributes).reduce((acc, att) => {
+      let value = extraResultAttributes && extraResultAttributes[att];
+      if (value && typeof value !== 'string' && value.type === 'Size') {
+        const size: Size = (value.value: any);
+        value = { ...size, rawValue: undefined };
+      }
+      if (value && typeof value !== 'string' && value.type === 'String') {
+        value = (value.value: any);
+      }
+      return {
+        ...acc,
+        [att]: value
+      };
+    }, {});
   return extRef || comment
     ? {
         extRef,
         comment,
         ...extraAttributes,
-        type: extraResultAttributes.type && extraResultAttributes.type.toString()
+        type: extraAttributeType
       }
     : null;
 }
 
 export function getAnalysisCollection(
   form: FormData,
-  extraAttributes: mixed,
+  extraAttributes: ?mixed,
   location: Location
 ) {
   const persons = form.persons.value;

@@ -48,15 +48,20 @@ export default (
     ),
     props.predefined.analysisTypes
   );
-  const extraAttributesFromApi =
-    props.store.analysis && props.store.analysis.extraAttributes;
-  const extraAttributes = {
-    ...extraAttributesFromApi,
-    ...props.store.extraDescriptionAttributes,
-    type: analysisType
-      ? analysisType.extraDescriptionType
-      : extraAttributesFromApi && extraAttributesFromApi.type
-  };
+
+  const extraAttributeType = analysisType
+    ? analysisType.extraDescriptionType
+    : props.store.analysis &&
+        props.store.analysis.extraAttributes &&
+        props.store.analysis.extraAttributes.type;
+
+  const extraAttributes = extraAttributeType
+    ? {
+        ...(props.store.analysis && props.store.analysis.extraAttributes),
+        ...props.store.extraDescriptionAttributes,
+        type: extraAttributeType
+      }
+    : null;
 
   function getApiResult(
     name,
@@ -78,7 +83,7 @@ export default (
     return value && value.toString();
   }
 
-  const extraResultAttributes: ExtraResultAttributeValues = analysisType &&
+  const extraResultAttributes: ?ExtraResultAttributeValues = analysisType &&
     analysisType.extraResultAttributes
     ? Object.keys(analysisType.extraResultAttributes).reduce(
         (acc, era) => {
@@ -98,12 +103,15 @@ export default (
             }
           };
         },
-        {
-          type: analysisType.extraDescriptionType &&
-            analysisType.extraDescriptionType.replace('Attributes', 'Result')
-        }
+        analysisType && analysisType.extraDescriptionType
+          ? {
+              type: analysisType.extraDescriptionType &&
+                analysisType.extraDescriptionType.replace('Attributes', 'Result')
+            }
+          : {}
       )
-    : { type: null };
+    : null;
+
   return {
     ...props,
     objects: getObjects(toArray(props.form.events.value), props.location),
@@ -124,7 +132,8 @@ export default (
         value: getExtraAttributeValue(evt, type)
       });
     },
-    getExtraDescriptionAttributeValue: (name: string) => extraAttributes[name],
+    getExtraDescriptionAttributeValue: (name: string) =>
+      extraAttributes && extraAttributes[name],
     extraDescriptionAttributes: analysisType && analysisType.extraDescriptionAttributes,
     extraResultAttributes: extraResultAttributes,
     updateExtraResultAttribute: (name: string, value: string | number) => {
