@@ -144,11 +144,9 @@ export default {
           samplesForNode: (
             mid: MuseumId,
             nodeId: NodeId,
-            collectionId: CollectionId,
-            page: number,
-            limit: number
+            collectionId: CollectionId
           ): string =>
-            `/api/management/${mid}/node/${nodeId}/samples?collectionIds=${collectionId}&page=${page}&limit=${limit}`
+            `/api/management/${mid}/node/${nodeId}/samples?collectionIds=${collectionId}`
         },
         storagefacility: {
           searchUrl: (term: string, mid: MuseumId) =>

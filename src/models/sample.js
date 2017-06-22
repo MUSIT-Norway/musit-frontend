@@ -103,8 +103,6 @@ class Sample {
     museumId: number,
     token: string,
     collectionId: string,
-    page: number,
-    limit: number,
     callback?: Callback
   }) => Observable;
 }
@@ -303,16 +301,12 @@ Sample.loadSamplesForNode = (ajaxGet = simpleGet) => ({
   museumId,
   token,
   collectionId,
-  page,
-  limit,
   callback
 }) => {
   const url = Config.magasin.urls.api.samples.samplesForNode(
     museumId,
     nodeId,
-    collectionId,
-    page,
-    limit
+    collectionId
   );
   return ajaxGet(url, token, callback).map(({ response }) => response);
 };
