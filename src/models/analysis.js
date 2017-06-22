@@ -10,42 +10,25 @@ import type { Field } from '../forms/form';
 import type { Callback, AjaxGet, AjaxPost, AjaxPut } from './types/ajax';
 import flatten from 'lodash/flatten';
 import { DATE_FORMAT_DISPLAY } from '../shared/util';
+import type { AnalysisCollection, Result, Restriction } from '../types/analysisTypes';
 
-export type Restriction = {
-  requester?: string,
-  requesterName?: string,
-  reason?: string,
-  expirationDate?: string,
-  cancelledReason?: string,
-  caseNumbers?: Array<string>
+export type AnalysisSavePayload = {
+  doneBy?: ?string,
+  doneDate?: ?string,
+  responsible?: ?string,
+  administrator?: ?string,
+  completedBy?: ?string,
+  completedDate?: ?string,
+  caseNumbers?: ?Array<string>,
+  restriction?: ?Restriction,
+  result?: ?Result
 };
 
-export type Result = {
-  extRef?: Array<string>,
-  comment?: string
-};
+type AnalysisTypeSavePayload = {};
 
-export type Analysis = {
-  id: string,
-  registeredBy: string,
-  doneBy?: string,
-  doneDate?: string,
-  doneByName?: string,
-  responsible?: string,
-  responsibleName?: string,
-  administrator?: string,
-  administratorName?: string,
-  completedBy?: string,
-  completedByName?: string,
-  completedDate?: string,
-  caseNumbers?: Array<string>,
-  restriction?: Restriction,
-  result?: Result
-};
-
-export type AnalysisType = {
-  id: string
-  // TODO TBD
+type AnalysisResultSavePayload = {
+  extRef?: ?Array<string>,
+  comment?: ?string
 };
 
 type FormValue = {
@@ -54,7 +37,10 @@ type FormValue = {
 };
 
 class MusitAnalysis {
-  static fromJsonToForm: (json: Analysis, fields: Array<Field<*>>) => Array<FormValue>;
+  static fromJsonToForm: (
+    json: AnalysisCollection,
+    fields: Array<Field<*>>
+  ) => Array<FormValue>;
 
   static getAnalysisTypesForCollection: (
     ajaxGet: AjaxGet
@@ -69,7 +55,7 @@ class MusitAnalysis {
     ajaxPost: AjaxPost
   ) => (props: {
     museumId: number,
-    data: AnalysisType,
+    data: AnalysisSavePayload,
     token: string,
     callback?: Callback
   }) => Observable;
@@ -79,7 +65,7 @@ class MusitAnalysis {
   ) => (props: {
     id: number,
     museumId: number,
-    data: Analysis,
+    data: AnalysisSavePayload,
     token: string,
     callback?: Callback
   }) => Observable;
@@ -141,7 +127,7 @@ class MusitAnalysis {
     ajaxPost: AjaxPost
   ) => (props: {
     museumId: number,
-    data: AnalysisType,
+    data: AnalysisTypeSavePayload,
     token: string,
     callback?: Callback
   }) => Observable;
@@ -152,10 +138,7 @@ class MusitAnalysis {
     analysisId: number,
     museumId: number,
     token: string,
-    result: {
-      extRef?: ?Array<string>,
-      comment?: ?string
-    }
+    result: ?AnalysisResultSavePayload
   }) => Observable;
 
   static loadPredefinedTypes: (

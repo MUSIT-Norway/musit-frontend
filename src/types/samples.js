@@ -1,5 +1,4 @@
 // @flow
-import { Moment } from 'moment';
 
 export type SampleData = {
   id: string,

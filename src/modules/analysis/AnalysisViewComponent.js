@@ -9,8 +9,13 @@ import moment from 'moment';
 import ObjectTable from './components/ExpandableObjectResultTable';
 import AddButton from '../../components/AddButton';
 import type { Predefined } from './shared/predefinedType';
-import toNumber from 'lodash/toNumber';
 import toArray from 'lodash/toArray';
+import {
+  getAnalysisTypeTerm,
+  getLabPlaceText,
+  getStatusText,
+  getAnalysisPurpose
+} from './shared/submit';
 
 type Props = {
   form: FormData,
@@ -21,7 +26,7 @@ type Props = {
   clickCancel: Function
 };
 
-const AnalysisView = ({ form, store, predefined, appSession, clickEdit }: Props) => (
+export default ({ form, store, predefined, appSession, clickEdit }: Props) => (
   <div className="container">
     <div className="page-header">
       <h1>
@@ -43,7 +48,11 @@ const AnalysisView = ({ form, store, predefined, appSession, clickEdit }: Props)
         </label>
         <div className="col-md-10">
           <p className="form-control-static" id="type">
-            {getAnalysisTypeTerm(form, predefined, appSession)}
+            {getAnalysisTypeTerm(
+              form.analysisTypeId.value,
+              predefined.analysisTypes,
+              appSession.language
+            )}
           </p>
         </div>
       </div>
@@ -53,7 +62,11 @@ const AnalysisView = ({ form, store, predefined, appSession, clickEdit }: Props)
         </label>
         <div className="col-md-10">
           <p className="form-control-static" id="reason">
-            {getAnalysisPurpose(form, predefined, appSession)}
+            {getAnalysisPurpose(
+              form.reason.value,
+              predefined.purposes,
+              appSession.language
+            )}
           </p>
         </div>
       </div>
@@ -73,7 +86,7 @@ const AnalysisView = ({ form, store, predefined, appSession, clickEdit }: Props)
         </label>
         <div className="col-md-5">
           <p className="form-control-static" id="status">
-            {getLabPlaceText(predefined, toNumber(form.orgId.value))}
+            {getLabPlaceText(predefined.analysisLabList, form.orgId.value)}
           </p>
         </div>
       </div>
@@ -240,52 +253,3 @@ const AnalysisView = ({ form, store, predefined, appSession, clickEdit }: Props)
     </form>
   </div>
 );
-
-export function getStatusText(status?: ?number): string {
-  if (!status) {
-    return '';
-  }
-  switch (status) {
-    case 1:
-      return I18n.t('musit.analysis.statusType.1');
-    case 2:
-      return I18n.t('musit.analysis.statusType.2');
-    case 3:
-      return I18n.t('musit.analysis.statusType.3');
-    case 4:
-      return I18n.t('musit.analysis.statusType.4');
-    default:
-      return 'N/A: ' + status;
-  }
-}
-
-function getLabPlaceText(predefined: any, actorId: ?string): string {
-  if (!actorId) {
-    return '';
-  }
-  return predefined.analysisLabList.find(x => x.id === actorId).fullName;
-}
-
-function getAnalysisTypeTerm(form, predefined: Predefined, appSession) {
-  if (form.analysisTypeId.rawValue && predefined.analysisTypes) {
-    const foundType = predefined.analysisTypes.find(
-      a => a.id === form.analysisTypeId.value
-    );
-    if (foundType) {
-      return appSession.language.isEn ? foundType.enName : foundType.noName;
-    }
-  }
-  return '';
-}
-
-function getAnalysisPurpose(form, predefined, appSession) {
-  if (form.reason.rawValue && predefined.purposes) {
-    const foundType = predefined.purposes.find(a => `${a.id}` === form.reason.rawValue);
-    if (foundType) {
-      return appSession.language.isEn ? foundType.enPurpose : foundType.noPurpose;
-    }
-  }
-  return '';
-}
-
-export default AnalysisView;

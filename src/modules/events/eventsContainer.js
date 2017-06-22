@@ -7,7 +7,7 @@ import eventsStore$, {
   clear$
 } from './eventsStore.js';
 import flowRight from 'lodash/flowRight';
-import mount from '../../shared/mount';
+import lifeCycle from '../../shared/lifeCycle';
 import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
 
@@ -35,4 +35,6 @@ export const onMount = ({
   getCurrentLocation({ museumId, token, objectId });
 };
 
-export default flowRight([inject(data, commands), mount(onMount)])(EventsComponent);
+export default flowRight([inject(data, commands), lifeCycle({ onMount })])(
+  EventsComponent
+);

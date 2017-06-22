@@ -8,10 +8,16 @@ import Result from '../components/Result';
 type Props = {
   data: Array<Object>,
   handleClickRow: (object: Object) => void,
-  updateForm?: Function
+  updateForm?: Function,
+  extraAttributes?: any
 };
 
-export default function ObjectResultTable({ data, handleClickRow, updateForm }: Props) {
+export default function ObjectResultTable({
+  data,
+  handleClickRow,
+  extraAttributes,
+  updateForm
+}: Props) {
   return (
     <table
       style={{
@@ -63,6 +69,18 @@ export default function ObjectResultTable({ data, handleClickRow, updateForm }: 
                   >
                     <td colSpan={7}>
                       <Result
+                        extraAttributes={extraAttributesWithResult(
+                          extraAttributes,
+                          row.result
+                        )}
+                        updateExtraResultAttribute={(name, value) => {
+                          const newData = [...data];
+                          newData.splice(i, 1, {
+                            ...row,
+                            result: { ...row.result, [name]: value }
+                          });
+                          updateForm && updateForm({ name: 'events', rawValue: newData });
+                        }}
                         externalSource={
                           row.result.extRef ? row.result.extRef.join(',') : ''
                         }
@@ -96,5 +114,27 @@ export default function ObjectResultTable({ data, handleClickRow, updateForm }: 
           : <span className="no-data">{I18n.t('musit.objects.noData')}</span>}
       </tbody>
     </table>
+  );
+}
+
+function extraAttributesWithResult(extraAttributes, result) {
+  return (
+    extraAttributes &&
+    Object.keys(extraAttributes).reduce((acc, eat) => {
+      const value = result[eat];
+      const eatAttr = extraAttributes && extraAttributes[eat] ? extraAttributes[eat] : {};
+      return {
+        ...acc,
+        [eat]: {
+          ...eatAttr,
+          value: eatAttr.type === 'String'
+            ? value
+            : {
+                ...value,
+                rawValue: value && value.value && value.value.toString().replace('.', ',')
+              }
+        }
+      };
+    }, {})
   );
 }

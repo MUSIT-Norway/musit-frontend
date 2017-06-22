@@ -46,6 +46,7 @@ const saveSample = doSaveSample => (
       form.sampleSubType.value,
       appSession
     ),
+    originatedObjectUuid: objectData.uuid,
     parentObject: {
       objectType: objectData.objectType,
       objectId: params.objectId ||

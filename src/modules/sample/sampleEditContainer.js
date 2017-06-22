@@ -4,7 +4,7 @@ import sampleForm from './sampleEditForm';
 import SampleFormComponent from './SampleFormComponent';
 import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
-import lifeCycle from '../../shared/mount';
+import lifeCycle from '../../shared/lifeCycle';
 import { simplePut } from '../../shared/RxAjax';
 import Sample from '../../models/sample';
 import { makeUrlAware } from '../../stores/appSession';
@@ -30,6 +30,6 @@ const props = (props, ajaxPut = simplePut) => ({
 
 export default flowRight([
   inject(data, commands, props),
-  lifeCycle(onMount),
+  lifeCycle({ onMount }),
   makeUrlAware
 ])(SampleFormComponent);

@@ -126,17 +126,20 @@ const updateForm = (state: Field<*>[], data: Update<*>): Field<*>[] => {
   return state.slice(0, fieldIndex).concat([updated]).concat(state.slice(fieldIndex + 1));
 };
 
-const reducer$ = (updateField$: Subject<Update<*>>, loadForm$: Subject<Update<*>[]>) =>
-  Observable.merge(
+const reducer$ = (initialFields, { updateForm$, loadForm$, clearForm$ }) => {
+  return Observable.merge(
+    clearForm$.map(() => () => initialFields),
     loadForm$.map((load: Update<*>[]) => (state: Field<*>[]) =>
       load.reduce(updateForm, state)),
-    updateField$.map((update: Update<*>) => (state: Field<*>[]) =>
+    updateForm$.map((update: Update<*>) => (state: Field<*>[]) =>
       updateForm(state, update))
   );
+};
 
 export type FormDetails = {
   updateForm$: Subject<Update<*>>,
   loadForm$: Subject<Update<*>[]>,
+  clearForm$: Subject<void>,
   form$: Observable<Field<*>[]>
 };
 
@@ -169,6 +172,7 @@ const createForm$ = (
 ): FormDetails => {
   updateForm$ = updateForm$ || createAction(name + ': updateForm$');
   loadForm$ = loadForm$ || createAction(name + ': loadForm$');
+  const clearForm$ = createAction(name + ': clearForm$');
   const initialFields = fields.reduce(
     (acc, field) => [
       ...acc,
@@ -187,9 +191,10 @@ const createForm$ = (
   return {
     updateForm$,
     loadForm$,
+    clearForm$,
     form$: createStore(
       name,
-      reducer$(updateForm$, loadForm$),
+      reducer$(initialFields, { updateForm$, loadForm$, clearForm$ }),
       Observable.of(initialFields)
     ).map(form => form.reduce((acc, f) => ({ ...acc, [f.name]: f }), {}))
   };

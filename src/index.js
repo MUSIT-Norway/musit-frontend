@@ -15,6 +15,7 @@ import './styles/table.css';
 import './styles/fonts.css';
 import appSession$ from './stores/appSession';
 import pickList$ from './stores/pickList';
+import predefined$ from './stores/predefined';
 import provide from 'react-rxjs/dist/RxProvide';
 import NotificationSystem from 'react-notification-system';
 import notification$ from './shared/errors';
@@ -62,6 +63,10 @@ if (accessToken) {
     pickList$: {
       type: PropTypes.object,
       value: pickList$
+    },
+    predefined$: {
+      type: PropTypes.object,
+      value: predefined$
     }
   })(MusitRoutes);
 

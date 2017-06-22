@@ -4,18 +4,20 @@ import { I18n } from 'react-i18nify';
 import type { AppSession } from '../../types/appSession';
 import type { ObjectData } from '../../types/object';
 import type { SampleData } from '../../types/samples';
+import type { ExtraAttribute } from '../../types/analysisTypes';
 import type { FormData } from './shared/formType';
-import type { Store } from './shared/storeType';
 import PersonRoleDate from '../../components/person/PersonRoleDate';
 import AddButton from '../../components/AddButton';
 import MetaInformation from '../../components/metainfo';
 import ObjectResultTable from './components/ExpandableObjectResultTable';
 import Restrictions from './components/Restrictions';
 import Result from './components/Result';
-import { getStatusText } from './AnalysisViewComponent';
+import { getStatusText } from './shared/submit';
 import type { Predefined } from './shared/predefinedType';
 import toString from 'lodash/toString';
 import toArray from 'lodash/toArray';
+import AttributeSelect from './components/DescriptionAttributeSelect';
+import AttributeInput from './components/DescriptionAttributeInput';
 
 type Props = {
   form: FormData,
@@ -23,8 +25,14 @@ type Props = {
   updateArrayField: Function,
   updateBooleanField: Function,
   updateStringField: Function,
-  getAnalysisTypeTerm: Function,
-  store: Store,
+  updateAnalysisTypeId: Function,
+  updateAnalysisCategory: Function,
+  updateExtraDescriptionAttribute: Function,
+  getExtraDescriptionAttributeValue: (name: string) => string | Array<string | number>,
+  extraDescriptionAttributes: Array<ExtraAttribute>,
+  extraResultAttributes: Array<any>,
+  updateExtraResultAttribute: (name: string, value: string | number) => void,
+  analysisTypeTerm: string,
   appSession: AppSession,
   objects: Array<ObjectData & SampleData & { sampleType: string, sampleSubType: string }>,
   predefined: Predefined,
@@ -32,13 +40,20 @@ type Props = {
   clickCancel: Function
 };
 
-const AnalysisForm = ({
+export default ({
   form,
   updateForm,
   updateArrayField,
   updateBooleanField,
   updateStringField,
-  getAnalysisTypeTerm,
+  updateAnalysisTypeId,
+  updateAnalysisCategory,
+  updateExtraDescriptionAttribute,
+  getExtraDescriptionAttributeValue,
+  extraDescriptionAttributes,
+  extraResultAttributes,
+  updateExtraResultAttribute,
+  analysisTypeTerm,
   predefined,
   appSession,
   objects,
@@ -71,12 +86,12 @@ const AnalysisForm = ({
           </label>
           {!form.id.value
             ? <div>
-                <div className="col-md-5">
+                <div className="col-md-3">
                   <select
                     id="type"
                     className="form-control"
                     value={form.analysisTypeCategory.value || ''}
-                    onChange={updateStringField(form.analysisTypeCategory.name)}
+                    onChange={updateAnalysisCategory}
                   >
                     <option value="">{I18n.t('musit.analysis.chooseCategory')}</option>
                     {predefined.categories &&
@@ -87,12 +102,12 @@ const AnalysisForm = ({
                 </div>
                 {form.analysisTypeCategory.rawValue &&
                   form.analysisTypeCategory.rawValue !== '0' &&
-                  <div className="col-md-5">
+                  <div className="col-md-3">
                     <select
                       id="subType"
                       className="form-control"
                       value={form.analysisTypeId.rawValue || ''}
-                      onChange={updateStringField(form.analysisTypeId.name)}
+                      onChange={updateAnalysisTypeId}
                     >
                       <option value="">{I18n.t('musit.analysis.chooseType')}</option>
                       {predefined.analysisTypes &&
@@ -108,17 +123,38 @@ const AnalysisForm = ({
                     </select>
                   </div>}
               </div>
-            : <div className="col-md-5">
+            : <div className="col-md-10">
                 <p className="form-control-static">
-                  {getAnalysisTypeTerm(predefined)}
+                  {analysisTypeTerm}
                 </p>
               </div>}
         </div>
+        {extraDescriptionAttributes &&
+          extraDescriptionAttributes.map((attr, i) => (
+            <div className="form-group" key={i}>
+              <label className="control-label col-md-2" htmlFor="type">
+                {attr.attributeKey}
+              </label>
+              <div className="col-md-3">
+                {attr.allowedValues
+                  ? <AttributeSelect
+                      attr={attr}
+                      value={getExtraDescriptionAttributeValue(attr.attributeKey) || []}
+                      onChange={updateExtraDescriptionAttribute}
+                    />
+                  : <AttributeInput
+                      attr={attr}
+                      value={getExtraDescriptionAttributeValue(attr.attributeKey) || ''}
+                      onChange={updateExtraDescriptionAttribute}
+                    />}
+              </div>
+            </div>
+          ))}
         <div className="form-group">
           <label className="control-label col-md-2" htmlFor="reason">
             {I18n.t('musit.analysis.reason')}
           </label>
-          <div className="col-md-10">
+          <div className="col-md-3">
             <select
               id="reason"
               className="form-control"
@@ -139,7 +175,7 @@ const AnalysisForm = ({
           <label className="control-label col-md-2" htmlFor="status">
             {I18n.t('musit.analysis.status')}
           </label>
-          <div className="col-md-10">
+          <div className="col-md-3">
             <select
               id="status"
               className="form-control"
@@ -159,7 +195,7 @@ const AnalysisForm = ({
           <label className="control-label col-md-2" htmlFor="place">
             {I18n.t('musit.analysis.place')}
           </label>
-          <div className="col-md-10">
+          <div className="col-md-3">
             <select
               id="place"
               className="form-control"
@@ -181,7 +217,7 @@ const AnalysisForm = ({
           <label className="control-label col-md-2" htmlFor="casenumber">
             {I18n.t('musit.analysis.caseNumber')}
           </label>
-          <div className="col-md-5">
+          <div className="col-md-3">
             <input
               type="text"
               className="form-control"
@@ -200,7 +236,7 @@ const AnalysisForm = ({
           <label className="control-label col-md-2" htmlFor="note">
             {I18n.t('musit.analysis.note')}
           </label>
-          <div className="col-md-10">
+          <div className="col-md-6">
             <textarea
               className="form-control"
               rows={5}
@@ -233,7 +269,11 @@ const AnalysisForm = ({
           </div>
           <div className="form-group">
             <div className="col-md-12 col-md-offset-0">
-              <ObjectResultTable data={objects} updateForm={updateForm} />
+              <ObjectResultTable
+                data={objects}
+                extraAttributes={extraResultAttributes}
+                updateForm={updateForm}
+              />
             </div>
             <div className="col-md-11 col-md-offset-0">
               <AddButton label={I18n.t('musit.analysis.addMoreObjectOrSample')} />
@@ -241,6 +281,8 @@ const AnalysisForm = ({
           </div>
           <hr />
           <Result
+            extraAttributes={extraResultAttributes}
+            updateExtraResultAttribute={updateExtraResultAttribute}
             externalSource={toArray(form.externalSource.rawValue).join(',')}
             updateExternalSource={rawValue =>
               updateForm({
@@ -297,5 +339,3 @@ const AnalysisForm = ({
     </div>
   );
 };
-
-export default AnalysisForm;

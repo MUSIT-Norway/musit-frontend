@@ -51,6 +51,8 @@ const predefined$ = store$({
   loadAnalysisTypes$
 });
 
+export default predefined$;
+
 class PredefinedLoader extends React.Component {
   static propTypes = {
     appSession: PropTypes.shape({
