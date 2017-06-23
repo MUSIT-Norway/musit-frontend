@@ -21,7 +21,7 @@ import { isMultipleSelectAttribute } from '../../../types/analysisTypes';
 
 type DomEvent = {
   preventDefault: Function,
-  target: { value: string, options?: HTMLOptionsCollection }
+  target: { value: string, options?: Array<{ selected: boolean, value: string }> }
 };
 
 type Props = {
@@ -264,7 +264,7 @@ function clickCancel(props) {
   };
 }
 
-function getExtraAttributeValue(evt: DomEvent, type: string) {
+export function getExtraAttributeValue(evt: DomEvent, type: string) {
   if (evt.target.options) {
     const values = [...evt.target.options]
       .filter(option => option.selected)
