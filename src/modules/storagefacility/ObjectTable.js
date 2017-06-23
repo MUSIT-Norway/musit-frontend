@@ -76,8 +76,7 @@ export default class ObjectGrid extends Component {
               : ''}
           </td>
           <td>
-            {!c.sampleObject &&
-              isMainObject &&
+            {isMainObject &&
               <a
                 className="onShowMoveHistory"
                 href=""
@@ -92,7 +91,7 @@ export default class ObjectGrid extends Component {
               </a>}
           </td>
           <td>
-            { isMainObject &&
+            {isMainObject &&
               <a
                 className="onMoveClick"
                 href=""
