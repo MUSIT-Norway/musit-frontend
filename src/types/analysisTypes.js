@@ -2,7 +2,8 @@
 import type { ObjectData } from '../types/object';
 import type { SampleData } from '../types/samples';
 
-export const isMultipleSelectAttribute = (attributeType: string) => /^Array\[.*]$/.test(attributeType);
+export const isMultipleSelectAttribute = (attributeType: string) =>
+  /^Array\[.*]$/.test(attributeType);
 
 export type Size = { value: number, unit: string, rawValue: ?string };
 
