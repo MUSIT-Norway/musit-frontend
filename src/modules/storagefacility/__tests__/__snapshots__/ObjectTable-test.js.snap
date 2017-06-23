@@ -30,10 +30,10 @@ exports[`ObjectTable should render properly  1`] = `
               Unr.
             </th>
             <th>
-              Term/Artsnavn
+              Gjenstand/Takson
             </th>
             <th>
-              Prøvenr
+              Prøvenr.
             </th>
             <th>
               Prøvetype

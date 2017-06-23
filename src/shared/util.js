@@ -117,6 +117,9 @@ export const apiUrl = (url: string): string => {
 };
 
 export const getPath = (node: any) => {
+  if (!node) {
+    return [];
+  }
   const nodeIds = (node.path || '')
     .split(',')
     .slice(1)

@@ -122,7 +122,7 @@ export default class TableComponent extends React.Component {
       this.loadRootNode(nodeId, museumId, token);
       if (newProps.showObjects) {
         this.loadObjects(nodeId, museumId, collectionId, token, currentPage);
-        this.getSamplesForNode(nodeId, museumId, collectionId, token, currentPage);
+        this.getSamplesForNode(nodeId, museumId, collectionId, token);
       } else {
         this.loadNodes(nodeId, museumId, token, currentPage);
       }
@@ -189,8 +189,7 @@ export default class TableComponent extends React.Component {
     nodeId,
     museumId = this.props.appSession.museumId,
     collectionId = this.props.appSession.collectionId,
-    token = this.props.appSession.accessToken,
-    page
+    token = this.props.appSession.accessToken
   ) {
     if (nodeId) {
       this.props.setLoading();
@@ -198,7 +197,6 @@ export default class TableComponent extends React.Component {
         nodeId,
         museumId,
         collectionId,
-        page,
         token
       });
     }

@@ -299,7 +299,10 @@ export const ViewObjectData = (props: ViewObjectDataProps) => {
   } else if (isNumismaticCollection(objectData.collection)) {
     return viewNumisObject(objectData);
   } else {
-    const pathNames = props.objectData && props.objectData.currentLocation.pathNames;
+    const pathNames =
+      props.objectData &&
+      props.objectData.currentLocation &&
+      props.objectData.currentLocation.pathNames;
     return (
       <div className="unknown">
         Unknown objecttype {objectData.museumNo}<br />

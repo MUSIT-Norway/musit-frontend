@@ -118,6 +118,8 @@ export default function SampleFormComponent({
           fieldName={form.persons.name}
           roles={['responsible', 'creator']}
           showDateForRole={(roleName: string) => roleName !== 'responsible'}
+          getDisplayNameForRole={(roleName: string) =>
+            I18n.t(`musit.sample.roles.${roleName}`)}
         />
         <br />
         <div className="well">

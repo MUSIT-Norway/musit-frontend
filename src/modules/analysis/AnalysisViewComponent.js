@@ -5,6 +5,7 @@ import type { AppSession } from '../../types/appSession';
 import type { FormData } from './shared/formType';
 import type { Store } from './shared/storeType';
 import MetaInformation from '../../components/metainfo';
+import type { Person } from '../../components/person/PersonRoleDate';
 import moment from 'moment';
 import ObjectTable from './components/ExpandableObjectResultTable';
 import AddButton from '../../components/AddButton';
@@ -123,10 +124,12 @@ export default ({ form, store, predefined, appSession, clickEdit }: Props) => (
           <div className="col-md-2"><strong>{I18n.t('musit.texts.date')}</strong></div>
         </div>
         {form.persons.value &&
-          form.persons.value.map((p, i) => (
+          form.persons.value.map((p: Person, i: number) => (
             <div className="row" key={i}>
               <div className="col-md-4">{p.name}</div>
-              <div className="col-md-2">{p.role}</div>
+              <div className="col-md-2">
+                {I18n.t(`musit.analysis.roles.${p.role || 'UNKNOWN'}`) || p.role}
+              </div>
               <div className="col-md-2">
                 {p.date ? moment(p.date).format('DD.MM.YYYY') : null}
               </div>

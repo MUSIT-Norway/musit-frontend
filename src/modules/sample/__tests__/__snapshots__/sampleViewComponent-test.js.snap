@@ -46,7 +46,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
       <hr />
     </div>
     <h4>
-      Avledet fra objekt
+      Avledet fra objekt/prøve
     </h4>
     <div>
       <span
@@ -57,7 +57,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
         }
       >
         <strong>
-          Museumsnr
+          Museumsnr.
         </strong>
          
         M1234
@@ -70,14 +70,14 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
         }
       >
         <strong>
-          Unr
+          Unr.
         </strong>
          
         a
       </span>
       <span>
         <strong>
-          Term/artsnavn
+          Gjenstand/Takson
         </strong>
          
         Carex saxatilis
@@ -85,7 +85,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
     </div>
     <hr />
     <h4>
-      Personer knyttet til prøveuttaket
+      Personer tilknyttet prøveuttaket
     </h4>
     <div>
       <div
@@ -124,7 +124,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
         <div
           className="col-md-2"
         >
-          creator
+          Utført av
         </div>
         <div
           className="col-md-2"
@@ -140,7 +140,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
       <label
         className="control-label col-md-2"
       >
-        Prøvenr:
+        Prøvenr.
       </label>
       <div
         className="col-md-2"
@@ -158,7 +158,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
       <label
         className="control-label col-md-2"
       >
-        PrøveID:
+        PrøveID
       </label>
       <div
         className="col-md-2"
@@ -176,7 +176,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
       <label
         className="control-label col-md-2"
       >
-        EksternID:
+        Ekstern ID
       </label>
       <div
         className="col-md-3"
@@ -190,7 +190,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
       <label
         className="control-label col-md-2"
       >
-        Kilde for ekstern ID:
+        Kilde for ekstern ID
       </label>
       <div
         className="col-md-2"
@@ -216,7 +216,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
       <label
         className="control-label col-md-2"
       >
-        Beskrivelse av prøve:
+        Beskrivelse av prøve
       </label>
       <div
         className="col-md-8"
@@ -234,7 +234,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
       <label
         className="control-label col-md-2"
       >
-        Status:
+        Status
       </label>
       <div
         className="col-md-2"
@@ -252,7 +252,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
       <label
         className="control-label col-md-2"
       >
-        Prøvevolum/-vekt:
+        Prøvevolum/-vekt
       </label>
       <div
         className="col-md-2"
@@ -272,7 +272,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
       <label
         className="control-label col-md-2"
       >
-        Lagringskontainer:
+        Lagringskontainer
       </label>
       <div
         className="col-md-2"
@@ -290,7 +290,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
       <label
         className="control-label col-md-2"
       >
-        Lagringsmedium:
+        Lagringsmedium
       </label>
       <div
         className="col-md-2"
@@ -308,7 +308,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
       <label
         className="control-label col-md-2"
       >
-        Behandling:
+        Behandling
       </label>
       <div
         className="col-md-2"
@@ -326,7 +326,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
       <label
         className="control-label col-md-2"
       >
-        Har restmateriale:
+        Har restmateriale
       </label>
       <div
         className="col-md-2"
@@ -344,7 +344,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
       <label
         className="control-label col-md-2"
       >
-        Kommentar:
+        Kommentar
       </label>
       <div
         className="col-md-8"
