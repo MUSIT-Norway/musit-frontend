@@ -17,10 +17,11 @@ import type { Predefined } from '../shared/predefinedType';
 import type { Store } from '../shared/storeType';
 import toArray from 'lodash/toArray';
 import keys from 'lodash/keys';
+import { isMultipleSelectAttribute } from '../../../types/analysisTypes';
 
 type DomEvent = {
   preventDefault: Function,
-  target: { value: string, options?: HTMLOptionsCollection }
+  target: { value: string, options?: Array<{ selected: boolean, value: string }> }
 };
 
 type Props = {
@@ -263,11 +264,18 @@ function clickCancel(props) {
   };
 }
 
-function getExtraAttributeValue(evt, type) {
+export function getExtraAttributeValue(evt: DomEvent, type: string) {
   if (evt.target.options) {
-    return [...evt.target.options]
+    const values = [...evt.target.options]
       .filter(option => option.selected)
       .map(parseOption(type));
+    if (isMultipleSelectAttribute(type)) {
+      return values;
+    }
+    if (values.length === 0) {
+      return null;
+    }
+    return values[0];
   }
   return evt.target.value;
 }
