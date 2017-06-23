@@ -17,6 +17,7 @@ import type { Predefined } from '../shared/predefinedType';
 import type { Store } from '../shared/storeType';
 import toArray from 'lodash/toArray';
 import keys from 'lodash/keys';
+import { isMultipleSelectAttribute } from '../../../types/analysisTypes';
 
 type DomEvent = {
   preventDefault: Function,
@@ -263,11 +264,18 @@ function clickCancel(props) {
   };
 }
 
-function getExtraAttributeValue(evt, type) {
+function getExtraAttributeValue(evt: DomEvent, type: string) {
   if (evt.target.options) {
-    return [...evt.target.options]
+    const values = [...evt.target.options]
       .filter(option => option.selected)
       .map(parseOption(type));
+    if (isMultipleSelectAttribute(type)) {
+      if (values.length === 0) {
+        return null;
+      }
+      return values[0];
+    }
+    return values;
   }
   return evt.target.value;
 }

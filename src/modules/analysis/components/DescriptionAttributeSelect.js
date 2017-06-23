@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import { I18n } from 'react-i18nify';
+import { isMultipleSelectAttribute } from '../../../types/analysisTypes';
 
 type Props = {
   attr: {
@@ -8,17 +9,18 @@ type Props = {
     attributeType: string,
     allowedValues: ?Array<{ id: number, enLabel: string, noLabel: string }>
   },
-  onChange: (name: string, type: string) => (e: *) => void,
+  onChange: (name: string, type: string) => () => void,
   value: ?string | ?Array<string | number>
 };
 
 const DescriptionAttributeSelect = (props: Props) => {
+  let multiple = isMultipleSelectAttribute(props.attr.attributeType);
   return (
     <select
-      multiple={/^Array\[.*]$/.test(props.attr.attributeType)}
+      multiple={multiple}
       className="form-control"
       name={props.attr.attributeKey}
-      size={props.attr.allowedValues && props.attr.allowedValues.length}
+      size={multiple && props.attr.allowedValues ? props.attr.allowedValues.length : 1}
       onChange={props.onChange(props.attr.attributeKey, props.attr.attributeType)}
     >
       <option value="">{I18n.t('musit.sample.chooseUnit')}</option>
