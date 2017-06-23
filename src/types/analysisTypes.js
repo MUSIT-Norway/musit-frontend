@@ -27,6 +27,7 @@ export type AnalysisType = {
   name: string,
   extraDescriptionAttributes?: Array<ExtraAttribute>,
   extraDescriptionType?: string,
+  extraResultType?: string,
   extraResultAttributes?: { [string]: string }
 };
 

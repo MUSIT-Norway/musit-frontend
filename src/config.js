@@ -139,8 +139,6 @@ export default {
           treatments: '/api/management/treatments',
           storagecontainer: '/api/management/storagecontainer',
           storagemediums: '/api/management/storagemediums',
-          samplesForNode: (mid: MuseumId, nodeId: string): string =>
-            `/api/management/${mid}/node/${nodeId}/samples`,
           samplesForNode: (
             mid: MuseumId,
             nodeId: NodeId,

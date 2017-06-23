@@ -40,20 +40,39 @@ export const makeUrlAware = Component => {
     }
 
     diffPropsAndRefresh(newProps) {
-      const newParams = (newProps.match && newProps.match.params) || {};
-      const routerMatchDiffFromSession = !isEqualWith(
+      const newParams = this.getParams(newProps);
+      const routerMatchDiffFromSession = this.isRouterMatchDifferentFromSession(
         newParams,
-        newProps.appSession,
-        (params, session) =>
-          params.museumId * 1 === session.museumId &&
-          params.collectionIds === session.collectionId
+        newProps.appSession
       );
       if (routerMatchDiffFromSession) {
         this.props.refreshSession(newParams, newProps.appSession);
       }
     }
 
+    getParams(newProps) {
+      return (newProps.match && newProps.match.params) || {};
+    }
+
+    isRouterMatchDifferentFromSession(newParams, appSession) {
+      return !isEqualWith(
+        newParams,
+        appSession,
+        (params, session) =>
+          params.museumId * 1 === session.museumId &&
+          params.collectionIds === session.collectionId
+      );
+    }
+
     render() {
+      if (
+        this.isRouterMatchDifferentFromSession(
+          this.getParams(this.props),
+          this.props.appSession
+        )
+      ) {
+        return <div className="loading" />;
+      }
       return <Component {...this.props} />;
     }
   }

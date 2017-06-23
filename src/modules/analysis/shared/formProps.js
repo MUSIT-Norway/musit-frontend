@@ -16,6 +16,7 @@ import type { FormData } from '../shared/formType';
 import type { Predefined } from '../shared/predefinedType';
 import type { Store } from '../shared/storeType';
 import toArray from 'lodash/toArray';
+import keys from 'lodash/keys';
 
 type DomEvent = {
   preventDefault: Function,
@@ -49,68 +50,17 @@ export default (
     props.predefined.analysisTypes
   );
 
-  const extraAttributeType = analysisType
-    ? analysisType.extraDescriptionType
-    : props.store.analysis &&
-        props.store.analysis.extraAttributes &&
-        props.store.analysis.extraAttributes.type;
+  const extraDescriptionAttributes = getExtraDescriptionAttributes(
+    analysisType,
+    props.store.analysis,
+    props.store.extraDescriptionAttributes
+  );
 
-  const extraAttributes = extraAttributeType
-    ? {
-        ...(props.store.analysis && props.store.analysis.extraAttributes),
-        ...props.store.extraDescriptionAttributes,
-        type: extraAttributeType
-      }
-    : null;
-
-  function getApiResult(
-    name,
-    type,
-    result
-  ): ?string | ?number | ?{ value: number, unit: string, rawValue: ?string } {
-    const value = result && result[name];
-    if (
-      value &&
-      type === 'Size' &&
-      typeof value !== 'number' &&
-      typeof value !== 'string'
-    ) {
-      return {
-        ...value,
-        rawValue: value.value ? value.value.toString().replace('.', ',') : null
-      };
-    }
-    return value && value.toString();
-  }
-
-  const extraResultAttributes: ?ExtraResultAttributeValues = analysisType &&
-    analysisType.extraResultAttributes
-    ? Object.keys(analysisType.extraResultAttributes).reduce(
-        (acc, era) => {
-          const type =
-            analysisType.extraResultAttributes && analysisType.extraResultAttributes[era];
-          const value = props.store.extraResultAttributes &&
-            props.store.extraResultAttributes[era]
-            ? props.store.extraResultAttributes[era]
-            : props.store.analysis
-                ? getApiResult(era, type, props.store.analysis.result)
-                : null;
-          return {
-            ...acc,
-            [era]: {
-              type,
-              value
-            }
-          };
-        },
-        analysisType && analysisType.extraDescriptionType
-          ? {
-              type: analysisType.extraDescriptionType &&
-                analysisType.extraDescriptionType.replace('Attributes', 'Result')
-            }
-          : {}
-      )
-    : null;
+  const extraResultAttributes: ?ExtraResultAttributeValues = getExtraResultAttributes(
+    analysisType,
+    props.store.analysis,
+    props.store.extraResultAttributes
+  );
 
   return {
     ...props,
@@ -133,7 +83,7 @@ export default (
       });
     },
     getExtraDescriptionAttributeValue: (name: string) =>
-      extraAttributes && extraAttributes[name],
+      extraDescriptionAttributes && extraDescriptionAttributes[name],
     extraDescriptionAttributes: analysisType && analysisType.extraDescriptionAttributes,
     extraResultAttributes: extraResultAttributes,
     updateExtraResultAttribute: (name: string, value: string | number) => {
@@ -147,7 +97,7 @@ export default (
       props.appSession,
       props.history,
       props.location,
-      extraAttributes,
+      extraDescriptionAttributes,
       extraResultAttributes,
       ajaxPost,
       ajaxPut
@@ -155,6 +105,73 @@ export default (
     clickCancel: clickCancel(props)
   };
 };
+
+function getExtraDescriptionAttributes(
+  analysisType,
+  analysis,
+  extraDescriptionAttributes
+) {
+  const extraDescriptionAttributesType = analysisType
+    ? analysisType.extraDescriptionType
+    : analysis && analysis.extraAttributes && analysis.extraAttributes.type;
+
+  return extraDescriptionAttributesType
+    ? {
+        ...(analysis && analysis.extraAttributes),
+        ...extraDescriptionAttributes,
+        type: extraDescriptionAttributesType
+      }
+    : null;
+}
+
+function getExtraResultAttributes(analysisType, analysis, extraResultAttributes) {
+  const initial = analysisType && analysisType.extraResultType
+    ? {
+        type: analysisType.extraResultType
+      }
+    : {};
+  return analysisType && analysisType.extraResultAttributes
+    ? keys(analysisType.extraResultAttributes).reduce((acc, era) => {
+        const type =
+          analysisType &&
+          analysisType.extraResultAttributes &&
+          analysisType.extraResultAttributes[era];
+        const value = extraResultAttributes && extraResultAttributes[era]
+          ? extraResultAttributes[era]
+          : analysis ? getApiResult(era, type, analysis.result) : null;
+        return {
+          ...acc,
+          [era]: {
+            type,
+            value
+          }
+        };
+      }, initial)
+    : null;
+}
+
+function getApiResult(
+  name,
+  type,
+  result
+): ?string | ?number | ?{ value: number, unit: string, rawValue: ?string } {
+  const value = result && result[name];
+  if (
+    value &&
+    type === 'Size' &&
+    typeof value !== 'number' &&
+    typeof value !== 'string'
+  ) {
+    if (value.value) {
+      return {
+        ...value,
+        rawValue: value.value.toString().replace('.', ',')
+      };
+    }
+    return value;
+  }
+  return value && value.toString();
+}
 
 function updateStringField(updateForm) {
   return (name: string) => (evt: DomEvent) =>
@@ -219,7 +236,7 @@ function clickSave(
   appSession,
   history,
   location,
-  extraAttributes,
+  extraDescriptionAttributes,
   extraResultAttributes,
   ajaxPost,
   ajaxPut
@@ -231,8 +248,8 @@ function clickSave(
       getResult(form, extraResultAttributes),
       appSession,
       history,
-      getAnalysisCollection(form, extraAttributes, location),
-      ([].concat(form.events.value): any), // flow sucks, or some other reason why I cannot get around this.
+      getAnalysisCollection(form, extraDescriptionAttributes, location),
+      toArray(form.events.value),
       ajaxPost,
       ajaxPut
     );
