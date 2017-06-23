@@ -15,7 +15,7 @@ variables:
   DOCKER_DRIVER: overlay
 
 services:
-  - docker:dind
+  - $MUSIT_DOCKER_REGISTRY/library/docker:dind
 
 before_script:
   - echo "Running build $CI_BUILD_ID"
