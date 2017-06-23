@@ -35,7 +35,7 @@ const AnalysisEventsViewComponent = (props: Props) => (
           <MusitField
             id="filter-analysis-events"
             value={props.analysisEventsStore.filterEventValue}
-            placeHolder="Filter the list"
+            placeHolder={I18n.t('musit.analysis.filterTheList')}
             onChange={props.filterEvents}
             addOnPrefix={'\u2315'}
           />
