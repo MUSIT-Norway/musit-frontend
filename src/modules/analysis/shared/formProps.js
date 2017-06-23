@@ -270,12 +270,12 @@ function getExtraAttributeValue(evt: DomEvent, type: string) {
       .filter(option => option.selected)
       .map(parseOption(type));
     if (isMultipleSelectAttribute(type)) {
-      if (values.length === 0) {
-        return null;
-      }
-      return values[0];
+      return values;
     }
-    return values;
+    if (values.length === 0) {
+      return null;
+    }
+    return values[0];
   }
   return evt.target.value;
 }
