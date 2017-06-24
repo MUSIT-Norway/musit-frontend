@@ -18,6 +18,9 @@ test:
     paths:
       - node_modules/
 
+  before_script:
+    - apt-get update -qq && apt-get install -qy libelf1
+
   script:
     - echo "Running frontend tests..."
     - npm install
