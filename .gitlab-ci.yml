@@ -1,30 +1,6 @@
 ######################################################################
 # GitLab CI build script for the MUSIT frontend project              #
 ######################################################################
-image: $MUSIT_DOCKER_REGISTRY/musit/docker-node
-
-# -----
-# Need to temporarily disable caches until we figure out how to properly do a
-# cleanup of docker containers and images on the runner agent host machines.
-# -----
-# cache:
-#   paths:
-#   - node_modules/
-
-variables:
-  DOCKER_DRIVER: overlay
-
-services:
-  - $MUSIT_DOCKER_REGISTRY/library/docker:dind
-
-before_script:
-  - echo "Running build $CI_BUILD_ID"
-  - mkdir $HOME/.docker
-  - echo $DOCKER_AUTH_CONFIG > $HOME/.docker/config.json
-  - apt-get update -qq && apt-get install -qy libelf1
-  - docker info
-  # Ensure that we are building the client from the correct Docker image.
-  - sed -e "s/FROM node/FROM $MUSIT_DOCKER_REGISTRY\/library\/node/g" Dockerfile > Dockerfile.tmp && mv Dockerfile.tmp Dockerfile
 
 stages:
   - test
@@ -33,6 +9,15 @@ stages:
 
 test:
   stage: test
+  tags:
+    - docker
+    - shared
+  image: musitproject/docker-node
+
+  cache:
+    paths:
+      - node_modules/
+
   script:
     - echo "Running frontend tests..."
     - npm install
@@ -47,18 +32,44 @@ test:
 
 build:
   stage: build
+  tags:
+    - docker
+    - musit
+    - utv
+  image: $MUSIT_DOCKER_REGISTRY/musit/docker-node
+  variables:
+    DOCKER_DRIVER: overlay
+
+  services:
+    - $MUSIT_DOCKER_REGISTRY/library/docker:dind
+
+  before_script:
+    - echo "Running build $CI_BUILD_ID"
+    - mkdir $HOME/.docker
+    - echo $DOCKER_AUTH_CONFIG > $HOME/.docker/config.json
+    - apt-get update -qq && apt-get install -qy libelf1
+    - docker info
+    # Ensure that we are building the client from the correct Docker image.
+    - sed -e "s/FROM node/FROM $MUSIT_DOCKER_REGISTRY\/library\/node/g" Dockerfile > Dockerfile.tmp && mv Dockerfile.tmp Dockerfile
+
   script:
     - sed -i 's/LOCAL_DEVELOPMENT/'$CI_COMMIT_SHA'/g' $CI_PROJECT_DIR/src/build.js
     - docker build -t $MUSIT_DOCKER_REGISTRY/musit/webpack:utv .
     - docker push $MUSIT_DOCKER_REGISTRY/musit/webpack:utv
+
   only:
     - master@MUSIT-Norway/musit-frontend
 
 cleanup:
   stage: cleanup
+  tags:
+    - docker
+    - musit
+    - utv
+  services:
+    - $MUSIT_DOCKER_REGISTRY/library/docker:dind
   script:
-    - docker rm -v $(docker ps -a -q --filter=status=exited --filter=status=dead)
-    - docker rmi $(docker images --filter "dangling=true" | grep "webpack")
+    - ./gitlab-clean
   only:
     - master@MUSIT-Norway/musit-frontend
   allow_failure: true
