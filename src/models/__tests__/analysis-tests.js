@@ -1,10 +1,11 @@
 // @flow
-import Analysis from '../analysis';
+import Analysis, { extractResponseArray } from '../analysis';
 import { Observable } from 'rxjs';
 import MusitTestScheduler from '../../testutils/MusitTestScheduler';
 
 declare var describe: any;
 declare var it: any;
+declare var expect: any;
 
 describe('Analysis model', () => {
   it('should work', () => {
@@ -81,5 +82,20 @@ describe('Analysis model', () => {
       .expectObservable(load.flatMap(() => ajaxFunc(props)))
       .toBe(expected, expectedStateMap);
     testScheduler.flush();
+  });
+
+  describe('extractResponseArray', () => {
+    it('should convert responses with no content (http 204) to empty array', () => {
+      const result = extractResponseArray({ status: 204, response: null });
+
+      expect(result).toEqual([]);
+    });
+
+    it('should pass trough 200 responses', () => {
+      const content = ['a response'];
+      const result = extractResponseArray({ status: 200, response: content });
+
+      expect(result).toEqual(content);
+    });
   });
 });
