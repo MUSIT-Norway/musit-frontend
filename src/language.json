@@ -111,6 +111,7 @@
       },
       "analysis": {
         "analysis": "Analysis",
+        "filterTheList": "Filter the list",
         "analysisType": "Type of analysis",
         "chooseCategory": "Select category",
         "chooseType": "Select Type",
@@ -943,6 +944,7 @@
       },
       "analysis": {
         "analysis": "Analyse",
+        "filterTheList": "Filtrer listen",
         "analysisType": "Type analyse",
         "chooseCategory": "Velg kategori",
         "chooseType": "Velg type",
