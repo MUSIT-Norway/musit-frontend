@@ -4,7 +4,7 @@ import eventsStore$, {
   loadAnalyses$,
   getCurrentLocation$,
   setObject$,
-  clear$
+  clearStore$
 } from './eventsStore.js';
 import flowRight from 'lodash/flowRight';
 import lifeCycle from '../../shared/lifeCycle';
@@ -16,25 +16,27 @@ const data = {
   eventsStore$
 };
 
-const commands = { loadAnalyses$, getCurrentLocation$, setObject$, clear$ };
+const commands = { loadAnalyses$, getCurrentLocation$, setObject$, clearStore$ };
 
 export const onMount = ({
   appSession,
   location: { state },
   loadAnalyses,
   getCurrentLocation,
-  setObject,
-  clear
+  setObject
 }) => {
   const museumId = appSession.museumId;
   const token = appSession.accessToken;
   const objectId = state.id;
-  clear();
   setObject(state);
   loadAnalyses({ museumId, token, id: state.uuid, objectId }); // TODO Fix this when backend is behaving
   getCurrentLocation({ museumId, token, objectId });
 };
 
-export default flowRight([inject(data, commands), lifeCycle({ onMount })])(
+const onUnmount = props => {
+  props.clearStore();
+};
+
+export default flowRight([inject(data, commands), lifeCycle({ onMount, onUnmount })])(
   EventsComponent
 );

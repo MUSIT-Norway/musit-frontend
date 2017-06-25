@@ -12,39 +12,39 @@ export const initialState = {
   loadingEvents: false,
   loadingSamples: false
 };
-export const loadingState = {
-  objectData: {},
-  events: [],
-  samples: [],
-  loadingObjectData: true,
-  loadingEvents: true,
-  loadingSamples: true
-};
 
-export const loadObject$: Observable = createAction('loadObject$').switchMap(params =>
-  MusitObject.getObjectWithCurrentLocation()(params)
-);
+const setLoading$ = createAction('setLoading');
 
-export const loadSampleEvents$: Observable = createAction('loadSampleEvents$').switchMap(
-  Sample.loadSampleDataForObject()
-);
+const flagLoading = s => () => setLoading$.next(s);
+
+export const loadObject$: Observable = createAction('loadObject$')
+  .do(flagLoading({ loadingObjectData: true }))
+  .switchMap(params => MusitObject.getObjectWithCurrentLocation()(params));
+
+export const loadSampleEvents$: Observable = createAction('loadSampleEvents$')
+  .do(flagLoading({ loadingSamples: true }))
+  .switchMap(Sample.loadSampleDataForObject());
 
 export const loadMoveAndAnalysisEvents$: Observable = createAction(
   'loadMoveAndAnalysisEvents$'
-).switchMap(Event.getAnalysesAndMoves());
+)
+  .do(flagLoading({ loadingEvents: true }))
+  .switchMap(Event.getAnalysesAndMoves());
 
-export const clear$: Observable = createAction('clear$');
+export const clearStore$: Observable = createAction('clearStore$');
 
 type Actions = {
   loadSampleEvents$: Observable,
   loadMoveAndAnalysisEvents$: Observable,
   loadObject$: Observable,
-  clear$: Observable
+  clearStore$: Observable,
+  setLoading$: Observable
 };
 
 const reducer$ = (actions: Actions) =>
   Observable.merge(
-    actions.clear$.map(() => () => loadingState),
+    actions.clearStore$.map(() => () => initialState),
+    actions.setLoading$.map(loading => state => ({ ...state, ...loading })),
     actions.loadObject$.map(objectData => state => ({
       ...state,
       objectData,
@@ -67,7 +67,8 @@ export const store$ = (
     loadObject$,
     loadSampleEvents$,
     loadMoveAndAnalysisEvents$,
-    clear$
+    clearStore$,
+    setLoading$
   }
 ) => createStore('objectStore$', reducer$(actions), Observable.of(initialState));
 
