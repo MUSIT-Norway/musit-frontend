@@ -60,8 +60,8 @@ export default class MusitUserAccount extends Component {
     );
     const menuText = (t1, t2) => (
       <Row>
-        <Col md={1}>{t1}</Col>
-        <Col md={1}>{t2}</Col>
+        <Col md={1} sm={1} xs={1}>{t1}</Col>
+        <Col md={1} sm={1} xs={1}>{t2}</Col>
       </Row>
     );
     const groups = this.props.groups;
