@@ -82,7 +82,7 @@ export default class ObjectGrid extends Component {
                 href=""
                 onClick={e => {
                   e.preventDefault();
-                  this.props.showMoveHistory(c.sampleObject ? sampleObject(c) : c);
+                  this.props.showMoveHistory(c);
                   e.stopPropagation();
                 }}
                 title={I18n.t('musit.grid.object.iconTooltip.moveObjectHistory')}
@@ -97,7 +97,7 @@ export default class ObjectGrid extends Component {
                 href=""
                 onClick={e => {
                   e.preventDefault();
-                  this.props.onMove(c.sampleObject ? sampleObject(c) : c);
+                  this.props.onMove(c);
                   e.stopPropagation();
                 }}
                 title={I18n.t('musit.grid.object.iconTooltip.moveObject')}
