@@ -274,8 +274,7 @@ const customProps = props => ({
       pathname: Config.magasin.urls.client.analysis.addSample(
         appSession,
         items[0].sampleNum ? items[0].originatedObjectUuid : items[0].uuid
-      ),
-      state: items
+      )
     });
   },
   createAnalysis: (items, appSession) => {

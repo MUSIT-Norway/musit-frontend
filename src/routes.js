@@ -191,6 +191,11 @@ const AnalysisPage = props => (
       component={SampleFormAddContainer}
     />
     <Route
+      path={rt(props, '/sample/:sampleId/fromSample')}
+      exact
+      component={SampleFormAddContainer}
+    />
+    <Route
       path={rt(props, '/sample/:sampleId/edit')}
       exact
       component={SampleEditContainer}

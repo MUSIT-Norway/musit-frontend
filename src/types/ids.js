@@ -7,3 +7,5 @@ export type MuseumId = number;
 export type CollectionId = string;
 
 export type NodeId = string;
+
+export type ObjectId = string;

@@ -1,6 +1,6 @@
 // @flow
 
-import type { MuseumId, CollectionId, NodeId } from 'types/ids';
+import type { MuseumId, CollectionId, NodeId, ObjectId } from 'types/ids';
 
 type AppSession = {
   museumId: number,
@@ -46,6 +46,8 @@ export default {
             `${clientContextUrl(appSession)}/analysis/${analysisId}`,
           addSample: (appSession: AppSession, objectId: string) =>
             `${clientContextUrl(appSession)}/analysis/sample/${objectId}/add`,
+          addFromSample: (appSession: AppSession, sampleId: string) =>
+            `${clientContextUrl(appSession)}/analysis/sample/${sampleId}/fromSample`,
           gotoSample: (appSession: AppSession, sampleId: string) =>
             `${clientContextUrl(appSession)}/analysis/sample/${sampleId}`,
           editSample: (appSession: AppSession, sampleId: string) =>
@@ -202,13 +204,13 @@ export default {
           },
           objectDetailsUrl: (
             mid: MuseumId,
-            objectId: NodeId,
+            objectId: ObjectId,
             collectionId: CollectionId
           ): string =>
             `/api/thingaggregate/museum/${mid}/objects/${objectId}?collectionIds=${collectionId}`,
           getMainObject: (
             mid: MuseumId,
-            objectId: NodeId,
+            objectId: ObjectId,
             collectionId: CollectionId
           ): string =>
             `/api/thingaggregate/museum/${mid}/objects/${objectId}/children?collectionIds=${collectionId}`,
