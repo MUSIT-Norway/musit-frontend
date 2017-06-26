@@ -193,12 +193,12 @@ const viewNumisObject = ({ museumNo, subNo, term }: ViewNatNumisComponentProps) 
   <div className="numis" style={{ marginTop: '30px', marginBottom: '40px' }}>
     <Row>
       <LabeledDataCol
-        md={2}
+        md={3}
         label="musit.objects.objectsView.museumNo"
         value={museumNo}
       />
-      <LabeledDataCol md={2} label="musit.objects.objectsView.subNo" value={subNo} />
-      <LabeledDataCol md={3} label="musit.objects.objectsView.item" value={term} />
+      <LabeledDataCol md={3} label="musit.objects.objectsView.subNo" value={subNo} />
+      <LabeledDataCol md={6} label="musit.objects.objectsView.item" value={term} />
     </Row>
   </div>
 );
@@ -217,17 +217,17 @@ const viewArcheologyObject = ({
   <div className="Ark" style={{ marginTop: '30px', marginBottom: '40px' }}>
     <Row>
       <LabeledDataCol
-        md={2}
+        md={3}
         label="musit.objects.objectsView.museumNo"
         value={museumNo}
       />
-      <LabeledDataCol md={2} label="musit.objects.objectsView.subNo" value={subNo} />
+      <LabeledDataCol md={3} label="musit.objects.objectsView.subNo" value={subNo} />
+      <LabeledDataCol md={6} label="musit.objects.objectsView.termItem" value={term} />
     </Row>
     <Row>
-      <LabeledDataCol md={4} label="musit.objects.objectsView.termItem" value={term} />
-      <LabeledDataCol md={4} label="musit.objects.objectsView.arkForm" value={arkForm} />
+      <LabeledDataCol md={3} label="musit.objects.objectsView.arkForm" value={arkForm} />
       <LabeledDataCol
-        md={4}
+        md={3}
         label="musit.objects.objectsView.collectingNumber"
         value={arkFindingNo}
       />
@@ -243,11 +243,11 @@ const viewArcheologyObject = ({
       <Col md={1}>
         <b>{I18n.t('musit.objects.objectsView.findingPlace')}:</b>
       </Col>
-      <Col md={3}>
+      <Col md={5}>
         {locations && writeArkLocations(locations)}
       </Col>
       <Col md={1}><b>{I18n.t('musit.objects.objectsView.coordinate')}:{' '}</b></Col>
-      <Col md={3}>
+      <Col md={5}>
         {coordinates &&
           coordinates.map((c: ArkCoordinate, i: number) => (
             <Row
@@ -257,7 +257,7 @@ const viewArcheologyObject = ({
       </Col>
     </Row>
     <Row>
-      <Col md={8}>
+      <Col md={12}>
         <b>{I18n.t('musit.objects.objectsView.location')}:{' '}</b>
         {CurrentMagasinLocation(pathNames)}
       </Col>
@@ -275,9 +275,9 @@ const viewEtnographyObject = ({
 }: ViewEntographyComponentProps) => (
   <div className="Ento" style={{ marginTop: '30px', marginBottom: '40px' }}>
     <Row>
-      <LabeledDataCol md={2} label="musit.objects.objectsView.musNo" value={museumNo} />
-      <LabeledDataCol md={2} label="musit.objects.objectsView.subNo" value={subNo} />
-      <LabeledDataCol md={3} label="musit.objects.objectsView.termItem" value={term} />
+      <LabeledDataCol md={3} label="musit.objects.objectsView.musNo" value={museumNo} />
+      <LabeledDataCol md={3} label="musit.objects.objectsView.subNo" value={subNo} />
+      <LabeledDataCol md={6} label="musit.objects.objectsView.termItem" value={term} />
     </Row>
     <Row>
       <LabeledDataCol
@@ -290,13 +290,13 @@ const viewEtnographyObject = ({
       <Col md={1}>
         <b>{I18n.t('musit.objects.objectsView.findingPlace')}:</b>
       </Col>
-      <Col md={3}>
+      <Col md={11}>
         {locations && writeEtnoLocations(locations)}
       </Col>
     </Row>
     <Row>
       <LabeledDataCol
-        md={8}
+        md={12}
         label="musit.objects.objectsView.location"
         value={CurrentMagasinLocation(pathNames)}
       />
