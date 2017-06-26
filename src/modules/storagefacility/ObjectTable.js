@@ -42,7 +42,7 @@ export default class ObjectGrid extends Component {
       const isChildObject = c.mainObjectId && !isMainObject;
       return (
         <tr
-          key={c.sampleObject ? c.sampleObject.objectId : c.id}
+          key={c.id}
           className={isChildObject ? 'childObject' : isMainObject && 'mainObject'}
           onClick={() => this.props.goToObject(c.uuid, c.objectType)}
         >
@@ -82,7 +82,7 @@ export default class ObjectGrid extends Component {
                 href=""
                 onClick={e => {
                   e.preventDefault();
-                  this.props.showMoveHistory(c.sampleObject ? sampleObject(c) : c);
+                  this.props.showMoveHistory(c);
                   e.stopPropagation();
                 }}
                 title={I18n.t('musit.grid.object.iconTooltip.moveObjectHistory')}
@@ -97,7 +97,7 @@ export default class ObjectGrid extends Component {
                 href=""
                 onClick={e => {
                   e.preventDefault();
-                  this.props.onMove(c.sampleObject ? sampleObject(c) : c);
+                  this.props.onMove(c);
                   e.stopPropagation();
                 }}
                 title={I18n.t('musit.grid.object.iconTooltip.moveObject')}
@@ -112,12 +112,12 @@ export default class ObjectGrid extends Component {
                 href=""
                 onClick={e => {
                   e.preventDefault();
-                  this.props.pickObject(c.sampleObject ? sampleObject(c) : c);
+                  this.props.pickObject(c);
                   e.stopPropagation();
                 }}
                 title={I18n.t('musit.grid.object.iconTooltip.addToPickList')}
               >
-                {this.props.isObjectAdded(c.sampleObject ? sampleObject(c) : c)
+                {this.props.isObjectAdded(c)
                   ? <FontAwesome
                       style={{ fontSize: '1.5em', color: 'Gray' }}
                       name="shopping-cart"
