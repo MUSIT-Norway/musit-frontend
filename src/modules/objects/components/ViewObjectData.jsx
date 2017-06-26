@@ -134,27 +134,27 @@ const viewNatHistObject = ({
   return (
     <div className="Nathist" style={{ marginTop: '30px', marginBottom: '40px' }}>
       <Row>
-        <Col md={2}>
+        <Col md={3}>
           <b>{I18n.t('musit.objects.objectsView.musNo')}:</b>{' '}{museumNo}
         </Col>
-        <Col md={2}><b>{I18n.t('musit.objects.objectsView.subNo')}:</b>{' '}{subNo}</Col>
-        <Col md={3}>
+        <Col md={3}><b>{I18n.t('musit.objects.objectsView.subNo')}:</b>{' '}{subNo}</Col>
+        <Col md={6}>
           <b>{I18n.t('musit.objects.objectsView.termTaxon')}:</b>{' '}{term}
         </Col>
       </Row>
       <Row>
-        <Col md={4}>
+        <Col md={6}>
           <b>{I18n.t('musit.objects.objectsView.gender')}:</b>{' '}{natGender}
         </Col>
-        <Col md={8}>
+        <Col md={6}>
           <b>{I18n.t('musit.objects.objectsView.stage')}:</b>{' '}{natStage}
         </Col>
       </Row>
       <Row>
-        <Col md={4}>
+        <Col md={6}>
           <b>{I18n.t('musit.objects.objectsView.collectionDate')}:</b>{' '}{natLegDate}
         </Col>
-        <Col md={8}>
+        <Col md={6}>
           <b>{I18n.t('musit.objects.objectsView.place')}:</b>
           {country && `${country}: `}
           {stateProvince && `${stateProvince}: `}
@@ -163,12 +163,12 @@ const viewNatHistObject = ({
         </Col>
       </Row>
       <Row>
-        <Col md={2}>
+        <Col md={12}>
           <b>{I18n.t('musit.objects.objectsView.coordinate')}:</b>{' '}{coordinate}
         </Col>
       </Row>
       <Row>
-        <Col md={8}>
+        <Col md={12}>
           <b>{I18n.t('musit.objects.objectsView.location')}:{' '}</b>
           {CurrentMagasinLocation(pathNames)}
         </Col>
