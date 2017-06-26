@@ -48,7 +48,7 @@ notification$.subscribe(event => {
 const accessToken = queryParser.parse(window.location.search)['_at'];
 if (accessToken) {
   localStorage.setItem('accessToken', JSON.stringify({ accessToken }));
-  window.location.href = Config.magasin.urls.client.homePage;
+  window.location.href = Config.magasin.urls.client.aboutPage;
 } else {
   const dest = document.getElementById('content');
 

@@ -298,6 +298,16 @@ describe('Config urls', () => {
           ),
           expected: '/api/management/99/node/dca44956-40d0-48dc-bd0d-921b825ad019/' +
             'samples?collectionIds=dca44956-40d0-48dc-bd0d-921b825ad000'
+        },
+        {
+          name: 'about',
+          actual: urls.client.aboutPage,
+          expected: '/about'
+        },
+        {
+          name: 'home',
+          actual: urls.client.homePage,
+          expected: '/home'
         }
       ]
     }
