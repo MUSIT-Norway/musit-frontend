@@ -75,6 +75,9 @@ Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) => prop
       });
     })
     .flatMap(events => {
+      if (events.length === 0) {
+        return Observable.of(events);
+      }
       return Observable.forkJoin(
         events.map(e => {
           if (e.type === 'SampleCreated') {
