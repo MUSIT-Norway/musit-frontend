@@ -36,6 +36,7 @@ export default {
             `${clientContextUrl(appSession)}/administration/sampletypes`
         },
         homePage: '/home',
+        aboutPage: '/about',
         analysis: {
           baseUrl: (appSession: AppSession) => `${clientContextUrl(appSession)}/analysis`,
           editAnalysis: (appSession: AppSession, analysisId: string) =>
