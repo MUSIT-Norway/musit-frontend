@@ -56,10 +56,10 @@ export default function Restrictions({ appSession, form, updateForm }: Props) {
             className="form-control"
             id="restrictionCause"
             value={form.restrictions_reason.rawValue || ''}
-            onChange={rawValue =>
+            onChange={e =>
               updateForm({
                 name: form.restrictions_reason.name,
-                rawValue
+                rawValue: e.target.value
               })}
           />
         </div>
