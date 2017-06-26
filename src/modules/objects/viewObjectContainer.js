@@ -4,7 +4,8 @@ import inject from 'react-rxjs/dist/RxInject';
 import objectStore$, {
   loadObject$,
   loadMoveAndAnalysisEvents$,
-  loadSampleEvents$
+  loadSampleEvents$,
+  clearStore$
 } from './objectStore';
 import store$, { getAnalysisTypes$ } from '../analysis/analysisStore';
 import sampleStore$, { getSampleTypes$ } from '../sample/sampleStore';
@@ -42,7 +43,8 @@ const commands: {} = {
   loadMoveAndAnalysisEvents$,
   loadSampleEvents$,
   getAnalysisTypes$,
-  getSampleTypes$
+  getSampleTypes$,
+  clearStore$
 };
 
 export const onMount = ({
@@ -72,6 +74,11 @@ export const onMount = ({
   getSampleTypes(ajaxProps);
 };
 
-export default flowRight([inject(data, commands, props), lifeCycle({ onMount })])(
-  ViewObjectComponent
-);
+const onUnmount = props => {
+  props.clearStore();
+};
+
+export default flowRight([
+  inject(data, commands, props),
+  lifeCycle({ onMount, onUnmount })
+])(ViewObjectComponent);

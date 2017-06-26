@@ -535,7 +535,15 @@ MusitAnalysis.loadPredefinedTypes = (ajaxGet = simpleGet) => ({
 
 MusitAnalysis.getAnalysisEvents = (ajaxGet = simpleGet) => ({ museumId, token }) => {
   const url = Config.magasin.urls.api.analysis.getAnalysisEvents(museumId);
-  return ajaxGet(url, token).map(({ response }) => response);
+  return ajaxGet(url, token).map(extractResponseArray);
+};
+
+export const extractResponseArray = (httpResponse: any) => {
+  if (httpResponse.status === 204) {
+    return [];
+  } else {
+    return httpResponse.response;
+  }
 };
 
 export default MusitAnalysis;

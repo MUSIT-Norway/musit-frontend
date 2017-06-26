@@ -31,10 +31,10 @@ const AnalysisEventsTableComponent = (props: TableProps) => (
     <table className="table table-condensed table-hover">
       <thead>
         <tr className="reactable-column-header">
-          <th>{I18n.t('musit.text.registeredDate')}</th>
+          <th>{I18n.t('musit.texts.dateRegistered')}</th>
           <th>{I18n.t('musit.analysis.analysisType')}</th>
           <th>{I18n.t('musit.analysis.status')}</th>
-          <th>{I18n.t('musit.text.registeredBy')}</th>
+          <th>{I18n.t('musit.texts.registeredBy')}</th>
         </tr>
       </thead>
 

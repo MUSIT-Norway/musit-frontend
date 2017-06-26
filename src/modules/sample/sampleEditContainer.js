@@ -13,7 +13,7 @@ import store$, { getPredefinedTypes$, getSample$ } from './sampleStore';
 import { onMount } from './sampleViewContainer';
 import { sampleProps } from './shared/submit';
 
-const { form$, loadForm$, updateForm$ } = sampleForm;
+const { form$, loadForm$, updateForm$, clearForm$ } = sampleForm;
 
 const data = {
   appSession$: { type: PropTypes.instanceOf(Observable).isRequired },
@@ -21,15 +21,19 @@ const data = {
   store$
 };
 
-const commands = { loadForm$, updateForm$, getSample$, getPredefinedTypes$ };
+const commands = { loadForm$, updateForm$, getSample$, getPredefinedTypes$, clearForm$ };
 
 const props = (props, ajaxPut = simplePut) => ({
   ...props,
   ...sampleProps(props, Sample.editSample(ajaxPut))
 });
 
+const onUnmount = props => {
+  props.clearForm();
+};
+
 export default flowRight([
   inject(data, commands, props),
-  lifeCycle({ onMount }),
+  lifeCycle({ onMount, onUnmount }),
   makeUrlAware
 ])(SampleFormComponent);

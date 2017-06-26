@@ -2,6 +2,9 @@
 import type { ObjectData } from '../types/object';
 import type { SampleData } from '../types/samples';
 
+export const isMultipleSelectAttribute = (attributeType: string) =>
+  /^Array\[.*]$/.test(attributeType);
+
 export type Size = { value: number, unit: string, rawValue: ?string };
 
 export type ExtraResultAttributeValues = {
@@ -27,6 +30,7 @@ export type AnalysisType = {
   name: string,
   extraDescriptionAttributes?: Array<ExtraAttribute>,
   extraDescriptionType?: string,
+  extraResultType?: string,
   extraResultAttributes?: { [string]: string }
 };
 

@@ -302,9 +302,9 @@ export default function SampleFormComponent({
         <button className="btn btn-primary" disabled={!isFormValid} onClick={clickSave}>
           {I18n.t('musit.texts.save')}
         </button>
-        <a href="/" style={{ marginLeft: 20 }} onClick={clickBack}>
+        <button className="btn btn-link" style={{ marginLeft: 20 }} onClick={clickBack}>
           {I18n.t('musit.texts.cancel')}
-        </a>
+        </button>
       </form>
     </div>
   );

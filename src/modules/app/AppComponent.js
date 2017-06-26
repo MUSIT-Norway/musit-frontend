@@ -137,7 +137,7 @@ export class AppComponent extends Component {
 
     return (
       <div>
-        <Navbar fixedTop style={{ zIndex: 1 }}>
+        <Navbar fixedTop>
           <Navbar.Header>
             <Navbar.Brand>
               <Link to={'/about'}>
@@ -206,18 +206,20 @@ export class AppComponent extends Component {
                   <FontAwesome name="search" style={{ fontSize: '1.3em', height: 25 }} />
                 </NavItem>
               </LinkContainer>
-              <MusitUserAccount
-                actor={this.props.appSession.actor}
-                groups={this.props.appSession.groups}
-                token={this.props.appSession.accessToken}
-                selectedMuseumId={this.props.appSession.museumId}
-                selectedCollectionId={this.props.appSession.collectionId}
-                handleLogout={this.handleLogout}
-                handleLanguage={this.handleLanguage}
-                handleMuseumId={this.handleMuseumId}
-                handleCollectionId={this.handleCollectionId}
-                rootNode={this.props.rootNode}
-              />
+              <NavItem role="presentation" style={{ margin: '-15px' }}>
+                <MusitUserAccount
+                  actor={this.props.appSession.actor}
+                  groups={this.props.appSession.groups}
+                  token={this.props.appSession.accessToken}
+                  selectedMuseumId={this.props.appSession.museumId}
+                  selectedCollectionId={this.props.appSession.collectionId}
+                  handleLogout={this.handleLogout}
+                  handleLanguage={this.handleLanguage}
+                  handleMuseumId={this.handleMuseumId}
+                  handleCollectionId={this.handleCollectionId}
+                  rootNode={this.props.rootNode}
+                />
+              </NavItem>
             </Nav>
           </Navbar.Collapse>
         </Navbar>

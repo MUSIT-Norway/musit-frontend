@@ -44,7 +44,7 @@ export default class ObjectGrid extends Component {
         <tr
           key={c.sampleObject ? c.sampleObject.objectId : c.id}
           className={isChildObject ? 'childObject' : isMainObject && 'mainObject'}
-          onClick={() => this.props.goToObject(c.uuid)}
+          onClick={() => this.props.goToObject(c.uuid, c.objectType)}
         >
           <td style={{ width: '20px' }}>
             {c.objectType && c.objectType === 'sample'
@@ -174,10 +174,10 @@ export default class ObjectGrid extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.props.tableData.map((c, i) => showTableData(c, i))}
+                {this.props.tableData.map(c => showTableData(c))}
                 {this.props.sampleStore.nodeSamples &&
-                  this.props.sampleStore.nodeSamples.map((c, i) =>
-                    showTableData({ ...c, objectType: 'sample' })
+                  this.props.sampleStore.nodeSamples.map(c =>
+                    showTableData(sampleObject(c))
                   )}
               </tbody>
             </Table>

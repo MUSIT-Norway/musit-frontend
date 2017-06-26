@@ -66,27 +66,31 @@ export class ControlAddContainer extends React.Component {
         museumId: this.props.appSession.museumId,
         token: this.props.appSession.accessToken
       });
+    } else {
+      this.setStateBasedOnRootNode(this.props.store.rootNode);
     }
   }
 
   componentWillReceiveProps(next) {
     if (next.store.rootNode && !this.props.store.rootNode) {
-      const requirement = next.store.rootNode.environmentRequirement;
-      this.setState({
-        temperature: requirement ? requirement.temperature : ' ',
-        temperatureTolerance: requirement ? requirement.temperatureTolerance : ' ',
-        relativeHumidity: requirement ? requirement.relativeHumidity : ' ',
-        relativeHumidityInterval: requirement
-          ? requirement.relativeHumidityTolerance
-          : ' ',
-        inertAir: requirement ? requirement.hypoxicAir : ' ',
-        inertAirInterval: requirement ? requirement.hypoxicAirTolerance : ' ',
-        light: requirement ? requirement.lightingCondition : ' ',
-        cleaning: requirement ? requirement.cleaning : ' ',
-        doneDate: this.props.doneDate ? this.props.doneDate : formatISOString(new Date()),
-        doneBy: this.props.appSession.actor
-      });
+      this.setStateBasedOnRootNode(next.store.rootNode);
     }
+  }
+
+  setStateBasedOnRootNode(rootNode) {
+    const requirement = rootNode.environmentRequirement;
+    this.setState({
+      temperature: requirement ? requirement.temperature : ' ',
+      temperatureTolerance: requirement ? requirement.temperatureTolerance : ' ',
+      relativeHumidity: requirement ? requirement.relativeHumidity : ' ',
+      relativeHumidityInterval: requirement ? requirement.relativeHumidityTolerance : ' ',
+      inertAir: requirement ? requirement.hypoxicAir : ' ',
+      inertAirInterval: requirement ? requirement.hypoxicAirTolerance : ' ',
+      light: requirement ? requirement.lightingCondition : ' ',
+      cleaning: requirement ? requirement.cleaning : ' ',
+      doneDate: this.props.doneDate ? this.props.doneDate : formatISOString(new Date()),
+      doneBy: this.props.appSession.actor
+    });
   }
 
   onControlClick(key, bool) {

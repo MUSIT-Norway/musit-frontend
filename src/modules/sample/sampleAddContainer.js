@@ -11,7 +11,7 @@ import { sampleProps } from './shared/submit';
 import Sample from '../../models/sample';
 import { simplePost } from '../../shared/RxAjax';
 
-const { form$, updateForm$, loadForm$ } = sampleForm;
+const { form$, updateForm$, loadForm$, clearForm$ } = sampleForm;
 
 const data = {
   appSession$: { type: PropTypes.instanceOf(Observable).isRequired },
@@ -27,12 +27,17 @@ const props = (props, ajaxPost = simplePost) => ({
 const commands = {
   updateForm$,
   loadForm$,
-  getPredefinedTypes$
+  getPredefinedTypes$,
+  clearForm$
+};
+
+const onUnmount = props => {
+  props.clearForm();
 };
 
 export default flowRight([
   inject(data, commands, props),
-  lifeCycle({ onMount }),
+  lifeCycle({ onMount, onUnmount }),
   makeUrlAware
 ])(SampleFormAddComponent);
 

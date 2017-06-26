@@ -5,11 +5,6 @@ exports[`AppComponent remders 1`] = `
   <Uncontrolled(Navbar)
     bsStyle="default"
     fixedTop={true}
-    style={
-      Object {
-        "zIndex": 1,
-      }
-    }
   >
     <NavbarHeader>
       <NavbarBrand>
@@ -164,22 +159,33 @@ exports[`AppComponent remders 1`] = `
             />
           </NavItem>
         </LinkContainer>
-        <MusitUserAccount
-          actor={
+        <NavItem
+          active={false}
+          disabled={false}
+          role="presentation"
+          style={
             Object {
-              "dataportenId": "1234",
-              "fn": "Jarl",
+              "margin": "-15px",
             }
           }
-          groups={Array []}
-          handleCollectionId={[Function]}
-          handleLanguage={[Function]}
-          handleLogout={[Function]}
-          handleMuseumId={[Function]}
-          selectedCollectionId="00000000-0000-0000-0000-000000000000"
-          selectedMuseumId={99}
-          token="1234"
-        />
+        >
+          <MusitUserAccount
+            actor={
+              Object {
+                "dataportenId": "1234",
+                "fn": "Jarl",
+              }
+            }
+            groups={Array []}
+            handleCollectionId={[Function]}
+            handleLanguage={[Function]}
+            handleLogout={[Function]}
+            handleMuseumId={[Function]}
+            selectedCollectionId="00000000-0000-0000-0000-000000000000"
+            selectedMuseumId={99}
+            token="1234"
+          />
+        </NavItem>
       </Nav>
     </NavbarCollapse>
   </Uncontrolled(Navbar)>
