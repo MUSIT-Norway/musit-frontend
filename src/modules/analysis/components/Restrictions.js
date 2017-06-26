@@ -56,10 +56,10 @@ export default function Restrictions({ appSession, form, updateForm }: Props) {
             className="form-control"
             id="restrictionCause"
             value={form.restrictions_reason.rawValue || ''}
-            onChange={rawValue =>
+            onChange={e =>
               updateForm({
                 name: form.restrictions_reason.name,
-                rawValue
+                rawValue: e.target.value
               })}
           />
         </div>
@@ -93,11 +93,19 @@ export default function Restrictions({ appSession, form, updateForm }: Props) {
           <DatePicker
             dateFormat={DATE_FORMAT_DISPLAY}
             value={form.restrictions_expirationDate.rawValue || ''}
-            onChange={e =>
+            onClear={() =>
               updateForm({
                 name: form.restrictions_expirationDate.name,
-                rawValue: formatISOString(e)
+                rawValue: null
               })}
+            onChange={selectedDate => {
+              if (selectedDate !== 'Invalid date') {
+                updateForm({
+                  name: form.restrictions_expirationDate.name,
+                  rawValue: formatISOString(selectedDate)
+                });
+              }
+            }}
           />
         </div>
       </div>
