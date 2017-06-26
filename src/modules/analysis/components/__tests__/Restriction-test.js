@@ -2,6 +2,7 @@
 
 import React from 'react';
 
+import { formatISOString } from '../../../../shared/util';
 import { getArrField, getStrField } from '../../../../forms/form';
 import DatePicker from '../../../../components/DatePicker';
 import Restriction from '../Restrictions';
@@ -69,7 +70,7 @@ describe('Restriction component', () => {
       expect(updateForm.calledOnce).toBe(true);
       expect(updateForm.getCall(0).args[0]).toEqual({
         name: form.restrictions_expirationDate.name,
-        rawValue: '2017-06-14T00:00:00.000+02:00'
+        rawValue: formatISOString('2017-06-14T00:00:00.000+02:00')
       });
     });
 
