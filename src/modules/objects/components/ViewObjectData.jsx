@@ -14,6 +14,7 @@ import type {
   EtnoLocation,
   NatLocation
 } from '../../../types/object';
+import './ViewObjectData.css';
 
 type PathNamesProps = Array<{
   name: string,
@@ -120,7 +121,9 @@ const writeEtnoLocations = (locations: Array<EtnoLocation>) => {
 
 const LabeledDataCol = (props: { md: number, label: string, value: ?string }) => (
   <Col md={props.md}>
-    <b>{I18n.t(props.label)}:</b>{' '}{props.value}
+    <span className="ViewObjectData_text-overflow">
+      <b>{I18n.t(props.label)}:</b>{' '}<span title={props.value}>{props.value}</span>
+    </span>
   </Col>
 );
 
