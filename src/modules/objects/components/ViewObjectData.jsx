@@ -1,5 +1,7 @@
 //@flow
 import React from 'react';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 import { Row, Col } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
 import compact from 'lodash/compact';
@@ -12,6 +14,7 @@ import type {
   EtnoLocation,
   NatLocation
 } from '../../../types/object';
+import './ViewObjectData.css';
 
 type PathNamesProps = Array<{
   name: string,
@@ -116,6 +119,17 @@ const writeEtnoLocations = (locations: Array<EtnoLocation>) => {
   ));
 };
 
+const LabeledDataCol = (props: { md: number, label: string, value: ?string }) => (
+  <Col md={props.md}>
+    <span className="ViewObjectData_text-overflow">
+      <b>{I18n.t(props.label)}:</b>{' '}<span title={props.value}>{props.value}</span>
+    </span>
+  </Col>
+);
+
+const arrayWithValues = (arr: Array<any>) =>
+  arr.filter(e => !(isUndefined(e) || isNull(e)));
+
 const viewNatHistObject = ({
   museumNo,
   subNo,
@@ -131,47 +145,45 @@ const viewNatHistObject = ({
   const municipality = locations && locations[0] && locations[0].natMunicipality;
   const coordinate = locations && locations[0] && locations[0].natCoordinate;
   const locality = locations && locations[0] && locations[0].natLocality;
+  const place = arrayWithValues([country, stateProvince, municipality, locality]).join(
+    ': '
+  );
   return (
     <div className="Nathist" style={{ marginTop: '30px', marginBottom: '40px' }}>
       <Row>
-        <Col md={2}>
-          <b>{I18n.t('musit.objects.objectsView.musNo')}:</b>{' '}{museumNo}
-        </Col>
-        <Col md={2}><b>{I18n.t('musit.objects.objectsView.subNo')}:</b>{' '}{subNo}</Col>
-        <Col md={3}>
-          <b>{I18n.t('musit.objects.objectsView.termTaxon')}:</b>{' '}{term}
-        </Col>
+        <LabeledDataCol md={3} label="musit.objects.objectsView.musNo" value={museumNo} />
+        <LabeledDataCol md={3} label="musit.objects.objectsView.subNo" value={subNo} />
+        <LabeledDataCol md={6} label="musit.objects.objectsView.termTaxon" value={term} />
       </Row>
       <Row>
-        <Col md={4}>
-          <b>{I18n.t('musit.objects.objectsView.gender')}:</b>{' '}{natGender}
-        </Col>
-        <Col md={8}>
-          <b>{I18n.t('musit.objects.objectsView.stage')}:</b>{' '}{natStage}
-        </Col>
+        <LabeledDataCol
+          md={6}
+          label="musit.objects.objectsView.gender"
+          value={natGender}
+        />
+        <LabeledDataCol md={6} label="musit.objects.objectsView.stage" value={natStage} />
       </Row>
       <Row>
-        <Col md={4}>
-          <b>{I18n.t('musit.objects.objectsView.collectionDate')}:</b>{' '}{natLegDate}
-        </Col>
-        <Col md={8}>
-          <b>{I18n.t('musit.objects.objectsView.place')}:</b>
-          {country && `${country}: `}
-          {stateProvince && `${stateProvince}: `}
-          {municipality && `${municipality}: `}
-          {locality}
-        </Col>
+        <LabeledDataCol
+          md={6}
+          label="musit.objects.objectsView.collectionDate"
+          value={natLegDate}
+        />
+        <LabeledDataCol md={6} label="musit.objects.objectsView.place" value={place} />
       </Row>
       <Row>
-        <Col md={2}>
-          <b>{I18n.t('musit.objects.objectsView.coordinate')}:</b>{' '}{coordinate}
-        </Col>
+        <LabeledDataCol
+          md={12}
+          label="musit.objects.objectsView.coordinate"
+          value={coordinate}
+        />
       </Row>
       <Row>
-        <Col md={8}>
-          <b>{I18n.t('musit.objects.objectsView.location')}:{' '}</b>
-          {CurrentMagasinLocation(pathNames)}
-        </Col>
+        <LabeledDataCol
+          md={12}
+          label="musit.objects.objectsView.location"
+          value={CurrentMagasinLocation(pathNames)}
+        />
       </Row>
     </div>
   );
@@ -180,11 +192,13 @@ const viewNatHistObject = ({
 const viewNumisObject = ({ museumNo, subNo, term }: ViewNatNumisComponentProps) => (
   <div className="numis" style={{ marginTop: '30px', marginBottom: '40px' }}>
     <Row>
-      <Col md={2}>
-        <b>{I18n.t('musit.objects.objectsView.museumNo')}:</b>{' '}{museumNo}
-      </Col>
-      <Col md={2}><b>{I18n.t('musit.objects.objectsView.subNo')}:</b>{' '}{subNo}</Col>
-      <Col md={3}><b>{I18n.t('musit.objects.objectsView.item')}:</b>{' '}{term}</Col>
+      <LabeledDataCol
+        md={3}
+        label="musit.objects.objectsView.museumNo"
+        value={museumNo}
+      />
+      <LabeledDataCol md={3} label="musit.objects.objectsView.subNo" value={subNo} />
+      <LabeledDataCol md={6} label="musit.objects.objectsView.item" value={term} />
     </Row>
   </div>
 );
@@ -202,36 +216,38 @@ const viewArcheologyObject = ({
 }: ViewArcheologyComponentProps) => (
   <div className="Ark" style={{ marginTop: '30px', marginBottom: '40px' }}>
     <Row>
-      <Col md={2}>
-        <b>{I18n.t('musit.objects.objectsView.museumNo')}:</b>{' '}{museumNo}
-      </Col>
-      <Col md={2}><b>{I18n.t('musit.objects.objectsView.subNo')}:</b>{' '}{subNo}</Col>
+      <LabeledDataCol
+        md={3}
+        label="musit.objects.objectsView.museumNo"
+        value={museumNo}
+      />
+      <LabeledDataCol md={3} label="musit.objects.objectsView.subNo" value={subNo} />
+      <LabeledDataCol md={6} label="musit.objects.objectsView.termItem" value={term} />
     </Row>
     <Row>
-      <Col md={4}><b>{I18n.t('musit.objects.objectsView.termItem')}: </b>{' '}{term}</Col>
-      <Col md={4}>
-        <b>{I18n.t('musit.objects.objectsView.arkForm')}:</b>{' '}{arkForm}
-      </Col>
-      <Col md={4}>
-        <b>{I18n.t('musit.objects.objectsView.collectingNumber')}: </b>{' '}{arkFindingNo}
-      </Col>
+      <LabeledDataCol md={3} label="musit.objects.objectsView.arkForm" value={arkForm} />
+      <LabeledDataCol
+        md={3}
+        label="musit.objects.objectsView.collectingNumber"
+        value={arkFindingNo}
+      />
     </Row>
     <Row>
-      <Col md={12}>
-        <b>{I18n.t('musit.objects.objectsView.material')}:</b>
-        {materials && writeArkMaterials(materials)}
-      </Col>
+      <LabeledDataCol
+        md={12}
+        label="musit.objects.objectsView.material"
+        value={materials && writeArkMaterials(materials)}
+      />
     </Row>
     <Row>
       <Col md={1}>
         <b>{I18n.t('musit.objects.objectsView.findingPlace')}:</b>
       </Col>
-      <Col md={3}>
+      <Col md={5}>
         {locations && writeArkLocations(locations)}
       </Col>
-      <Col md={1}><b>{I18n.t('musit.objects.objectsView.coordinate')}:{' '}</b></Col><Col
-        md={3}
-      >
+      <Col md={1}><b>{I18n.t('musit.objects.objectsView.coordinate')}:{' '}</b></Col>
+      <Col md={5}>
         {coordinates &&
           coordinates.map((c: ArkCoordinate, i: number) => (
             <Row
@@ -241,7 +257,7 @@ const viewArcheologyObject = ({
       </Col>
     </Row>
     <Row>
-      <Col md={8}>
+      <Col md={12}>
         <b>{I18n.t('musit.objects.objectsView.location')}:{' '}</b>
         {CurrentMagasinLocation(pathNames)}
       </Col>
@@ -259,31 +275,31 @@ const viewEtnographyObject = ({
 }: ViewEntographyComponentProps) => (
   <div className="Ento" style={{ marginTop: '30px', marginBottom: '40px' }}>
     <Row>
-      <Col md={2}>
-        <b>{I18n.t('musit.objects.objectsView.musNo')}:</b>{' '}{museumNo}
-      </Col>
-      <Col md={2}><b>{I18n.t('musit.objects.objectsView.subNo')}:</b>{' '}{subNo}</Col>
-      <Col md={3}><b>{I18n.t('musit.objects.objectsView.termItem')}:</b>{' '}{term}</Col>
+      <LabeledDataCol md={3} label="musit.objects.objectsView.musNo" value={museumNo} />
+      <LabeledDataCol md={3} label="musit.objects.objectsView.subNo" value={subNo} />
+      <LabeledDataCol md={6} label="musit.objects.objectsView.termItem" value={term} />
     </Row>
     <Row>
-      <Col md={12}>
-        <b>{I18n.t('musit.objects.objectsView.material')}:</b>
-        {materials && writeEtnoMaterials(materials)}
-      </Col>
+      <LabeledDataCol
+        md={12}
+        label="musit.objects.objectsView.material"
+        value={materials && writeEtnoMaterials(materials)}
+      />
     </Row>
     <Row>
       <Col md={1}>
         <b>{I18n.t('musit.objects.objectsView.findingPlace')}:</b>
       </Col>
-      <Col md={3}>
+      <Col md={11}>
         {locations && writeEtnoLocations(locations)}
       </Col>
     </Row>
     <Row>
-      <Col md={8}>
-        <b>{I18n.t('musit.objects.objectsView.location')}:{' '}</b>
-        {CurrentMagasinLocation(pathNames)}
-      </Col>
+      <LabeledDataCol
+        md={12}
+        label="musit.objects.objectsView.location"
+        value={CurrentMagasinLocation(pathNames)}
+      />
     </Row>
   </div>
 );
@@ -307,8 +323,11 @@ export const ViewObjectData = (props: ViewObjectDataProps) => {
       <div className="unknown">
         Unknown objecttype {objectData.museumNo}<br />
         <Row>
-          <b>{I18n.t('musit.objects.objectsView.location')}:{' '}</b>
-          {CurrentMagasinLocation(pathNames)}
+          <LabeledDataCol
+            md={12}
+            label="musit.objects.objectsView.location"
+            value={CurrentMagasinLocation(pathNames)}
+          />
         </Row>
       </div>
     );
