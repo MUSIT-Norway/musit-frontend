@@ -9,6 +9,11 @@ import store$, { getAnalysis$, setLoading$, clearStore$ } from './analysisStore'
 import Analysis from '../../models/analysis';
 import analysisForm, { fieldsArray } from './analysisForm';
 import Config from '../../config';
+import {
+  getExtraDescriptionAttributes,
+  getExtraResultAttributes,
+  getAnalysisType
+} from './shared/getters';
 
 const { form$, ...formActions } = analysisForm;
 
@@ -26,17 +31,37 @@ const commands = {
   ...formActions
 };
 
-const props = props => ({
-  ...props,
-  clickEdit: () => {
-    props.history.push(
-      Config.magasin.urls.client.analysis.editAnalysis(
-        props.appSession,
-        props.match.params.analysisId
-      )
-    );
-  }
-});
+const props = props => {
+  const analysisType = getAnalysisType(
+    parseInt(props.store.analysis ? props.store.analysis.analysisTypeId : null, 10),
+    props.predefined.analysisTypes
+  );
+
+  const extraResultAttributes = getExtraResultAttributes(
+    analysisType,
+    props.store.analysis,
+    props.store.extraResultAttributes
+  );
+
+  const extraDescriptionAttributes = analysisType &&
+    analysisType.extraDescriptionAttributes
+    ? analysisType.extraDescriptionAttributes
+    : [];
+
+  return {
+    ...props,
+    extraResultAttributes,
+    extraDescriptionAttributes,
+    clickEdit: () => {
+      props.history.push(
+        Config.magasin.urls.client.analysis.editAnalysis(
+          props.appSession,
+          props.match.params.analysisId
+        )
+      );
+    }
+  };
+};
 
 export const onMount = props => {
   props.setLoading();

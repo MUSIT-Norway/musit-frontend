@@ -200,42 +200,12 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         </div>
       </div>
       <hr />
-      <div
-        className="form-group"
-      >
-        <label
-          className="control-label col-md-2"
-          htmlFor="externalSource"
-        >
-          Ekstern kilde
-        </label>
-        <div
-          className="col-md-10"
-        >
-          <p
-            className="form-control-static"
-            id="externalSource"
-          />
-        </div>
-      </div>
-      <div
-        className="form-group"
-      >
-        <label
-          className="control-label col-md-2"
-          htmlFor="comments"
-        >
-          Kommentar til resultat
-        </label>
-        <div
-          className="col-md-10"
-        >
-          <p
-            className="form-control-static"
-            id="comments"
-          />
-        </div>
-      </div>
+      <Result
+        externalSource=""
+        updateComments={[Function]}
+        updateExternalSource={[Function]}
+        updateExtraResultAttribute={[Function]}
+      />
       <div
         className="form-group"
       >

@@ -1,10 +1,6 @@
 // @flow
-import type {
-  AnalysisType,
-  ExtraResultAttributeValues,
-  Size
-} from '../../../types/analysisTypes';
-import type { AppSession, Language } from '../../../types/appSession';
+import type { ExtraResultAttributeValues, Size } from '../../../types/analysisTypes';
+import type { AppSession } from '../../../types/appSession';
 import type { ObjectData } from '../../../types/object';
 import type { History } from '../../../types/Routes';
 import type { SampleData } from '../../../types/samples';
@@ -17,7 +13,6 @@ import MusitAnalysis from '../../../models/analysis';
 import type { AnalysisSavePayload } from '../../../models/analysis';
 import Config from '../../../config';
 import type { FormData } from './formType';
-import { I18n } from 'react-i18nify';
 
 type ObjectWithUuidAndType = { objectId: ?string, objectType: string };
 
@@ -165,13 +160,6 @@ function findPerson(persons, role) {
   return persons.find(p => p.role === role);
 }
 
-export function getAnalysisType(
-  analysisTypeId: ?number,
-  analysisTypes: Array<AnalysisType>
-): ?AnalysisType {
-  return analysisTypes && analysisTypes.find(at => at.id === analysisTypeId);
-}
-
 export function getObjects(
   formEvents: Array<ObjectData & SampleData>,
   location: Location
@@ -191,20 +179,6 @@ export function getObjectsWithType(
   }));
 }
 
-export function getAnalysisTypeTerm(
-  analysisTypeId: ?number,
-  analysisTypes: ?Array<AnalysisType>,
-  language: Language
-): string {
-  if (analysisTypeId && analysisTypes) {
-    const foundType = analysisTypes.find(type => type.id === analysisTypeId);
-    if (foundType) {
-      return language.isEn ? foundType.enName : foundType.noName;
-    }
-  }
-  return '';
-}
-
 function zipEventsWithId(formEvents, apiEvents) {
   return formEvents.map(evt => {
     const eventObjectId = evt.objectId || evt.uuid;
@@ -213,50 +187,4 @@ function zipEventsWithId(formEvents, apiEvents) {
       apiEvents.find(evtFromServer => evtFromServer.objectId === eventObjectId);
     return { ...evt, id: event ? event.id : null };
   });
-}
-
-export function getStatusText(status?: ?number): string {
-  if (!status) {
-    return '';
-  }
-  switch (status) {
-    case 1:
-      return I18n.t('musit.analysis.statusType.1');
-    case 2:
-      return I18n.t('musit.analysis.statusType.2');
-    case 3:
-      return I18n.t('musit.analysis.statusType.3');
-    case 4:
-      return I18n.t('musit.analysis.statusType.4');
-    default:
-      return 'N/A: ' + status;
-  }
-}
-
-export function getLabPlaceText(
-  analysisLabList: Array<{ id: number, fullName: string }>,
-  actorId: ?number
-): string {
-  if (!actorId) {
-    return '';
-  }
-  const lab = analysisLabList.find(x => x.id === actorId);
-  if (!lab) {
-    return '';
-  }
-  return lab.fullName;
-}
-
-export function getAnalysisPurpose(
-  reason: ?string,
-  purposes: ?Array<{ id: string, enPurpose: string, noPurpose: string }>,
-  language: Language
-) {
-  if (reason && purposes) {
-    const foundType = purposes.find(a => `${a.id}` === reason);
-    if (foundType) {
-      return language.isEn ? foundType.enPurpose : foundType.noPurpose;
-    }
-  }
-  return '';
 }

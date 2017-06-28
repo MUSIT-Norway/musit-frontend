@@ -11,7 +11,8 @@ import {
   getLabPlaceText,
   getStatusText,
   getAnalysisPurpose
-} from './shared/submit';
+} from './shared/getters';
+import Result from './components/Result';
 import { DATE_FORMAT_DISPLAY } from '../../shared/util';
 
 import type { Predefined } from './shared/predefinedType';
@@ -26,10 +27,20 @@ type Props = {
   appSession: AppSession,
   predefined: Predefined,
   clickEdit: Function,
-  clickCancel: Function
+  clickCancel: Function,
+  extraDescriptionAttributes: any,
+  extraResultAttributes: any
 };
 
-export default ({ form, store, predefined, appSession, clickEdit }: Props) => (
+export default ({
+  form,
+  store,
+  predefined,
+  appSession,
+  clickEdit,
+  extraResultAttributes,
+  extraDescriptionAttributes
+}: Props) => (
   <div className="container">
     <div className="page-header">
       <h1>
@@ -59,6 +70,21 @@ export default ({ form, store, predefined, appSession, clickEdit }: Props) => (
           </p>
         </div>
       </div>
+      {extraDescriptionAttributes &&
+        extraDescriptionAttributes.map((attr, i) => (
+          <div className="form-group" key={i}>
+            <label className="control-label col-md-2" htmlFor="type">
+              {attr.attributeKey}
+            </label>
+            <div className="col-md-3">
+              <p className="form-control-static">
+                {(store.analysis &&
+                  store.analysis.extraAttributes &&
+                  store.analysis.extraAttributes[attr.attributeKey]) || []}
+              </p>
+            </div>
+          </div>
+        ))}
       <div className="form-group">
         <label className="control-label col-md-2" htmlFor="reason">
           {I18n.t('musit.analysis.reason')}{' '}
@@ -148,6 +174,7 @@ export default ({ form, store, predefined, appSession, clickEdit }: Props) => (
         <div className="form-group">
           <div className="col-md-12 col-md-offset-0">
             <ObjectTable
+              extraAttributes={extraResultAttributes}
               data={
                 form.type.value === 'AnalysisCollection'
                   ? toArray(form.events.value)
@@ -166,26 +193,14 @@ export default ({ form, store, predefined, appSession, clickEdit }: Props) => (
           </div>
         </div>
         <hr />
-        <div className="form-group">
-          <label className="control-label col-md-2" htmlFor="externalSource">
-            {I18n.t('musit.analysis.externalSource')}
-          </label>
-          <div className="col-md-10">
-            <p className="form-control-static" id="externalSource">
-              {form.externalSource.value}
-            </p>
-          </div>
-        </div>
-        <div className="form-group">
-          <label className="control-label col-md-2" htmlFor="comments">
-            {I18n.t('musit.analysis.commentsToResult')}
-          </label>
-          <div className="col-md-10">
-            <p className="form-control-static" id="comments">
-              {form.comments.value}
-            </p>
-          </div>
-        </div>
+        <Result
+          extraAttributes={extraResultAttributes}
+          updateExtraResultAttribute={() => {}}
+          externalSource={toArray(form.externalSource.value).join(',')}
+          updateExternalSource={() => {}}
+          comments={form.comments.value}
+          updateComments={() => {}}
+        />
         <div className="form-group">
           <label className="control-label col-md-2" htmlFor="restrictions">
             {I18n.t('musit.analysis.restrictions.restrictions')}

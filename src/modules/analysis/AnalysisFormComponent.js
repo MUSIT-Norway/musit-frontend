@@ -12,7 +12,7 @@ import MetaInformation from '../../components/metainfo';
 import ObjectResultTable from './components/ExpandableObjectResultTable';
 import Restrictions from './components/Restrictions';
 import Result from './components/Result';
-import { getStatusText } from './shared/submit';
+import { getStatusText } from './shared/getters';
 import type { Predefined } from './shared/predefinedType';
 import toString from 'lodash/toString';
 import toArray from 'lodash/toArray';

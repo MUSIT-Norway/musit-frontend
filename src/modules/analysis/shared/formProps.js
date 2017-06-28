@@ -1,23 +1,25 @@
 // @flow
 import {
-  getAnalysisTypeTerm,
   getObjects,
-  getAnalysisType,
   getAnalysisCollection,
   submitForm,
   getResult
 } from '../shared/submit';
 import type { Location } from '../shared/submit';
 import { simplePost, simplePut } from '../../../shared/RxAjax';
-import type { ExtraResultAttributeValues } from '../../../types/analysisTypes';
 import type { History } from '../../../types/Routes';
 import type { AppSession } from '../../../types/appSession';
 import type { FormData } from '../shared/formType';
 import type { Predefined } from '../shared/predefinedType';
 import type { Store } from '../shared/storeType';
 import toArray from 'lodash/toArray';
-import keys from 'lodash/keys';
 import { isMultipleSelectAttribute } from '../../../types/analysisTypes';
+import {
+  getAnalysisTypeTerm,
+  getAnalysisType,
+  getExtraDescriptionAttributes,
+  getExtraResultAttributes
+} from './getters';
 
 type DomEvent = {
   preventDefault: Function,
@@ -57,7 +59,7 @@ export default (
     props.store.extraDescriptionAttributes
   );
 
-  const extraResultAttributes: ?ExtraResultAttributeValues = getExtraResultAttributes(
+  const extraResultAttributes = getExtraResultAttributes(
     analysisType,
     props.store.analysis,
     props.store.extraResultAttributes
@@ -106,73 +108,6 @@ export default (
     clickCancel: clickCancel(props)
   };
 };
-
-function getExtraDescriptionAttributes(
-  analysisType,
-  analysis,
-  extraDescriptionAttributes
-) {
-  const extraDescriptionAttributesType = analysisType
-    ? analysisType.extraDescriptionType
-    : analysis && analysis.extraAttributes && analysis.extraAttributes.type;
-
-  return extraDescriptionAttributesType
-    ? {
-        ...(analysis && analysis.extraAttributes),
-        ...extraDescriptionAttributes,
-        type: extraDescriptionAttributesType
-      }
-    : null;
-}
-
-function getExtraResultAttributes(analysisType, analysis, extraResultAttributes) {
-  const initial = analysisType && analysisType.extraResultType
-    ? {
-        type: analysisType.extraResultType
-      }
-    : {};
-  return analysisType && analysisType.extraResultAttributes
-    ? keys(analysisType.extraResultAttributes).reduce((acc, era) => {
-        const type =
-          analysisType &&
-          analysisType.extraResultAttributes &&
-          analysisType.extraResultAttributes[era];
-        const value = extraResultAttributes && extraResultAttributes[era]
-          ? extraResultAttributes[era]
-          : analysis ? getApiResult(era, type, analysis.result) : null;
-        return {
-          ...acc,
-          [era]: {
-            type,
-            value
-          }
-        };
-      }, initial)
-    : null;
-}
-
-function getApiResult(
-  name,
-  type,
-  result
-): ?string | ?number | ?{ value: number, unit: string, rawValue: ?string } {
-  const value = result && result[name];
-  if (
-    value &&
-    type === 'Size' &&
-    typeof value !== 'number' &&
-    typeof value !== 'string'
-  ) {
-    if (value.value) {
-      return {
-        ...value,
-        rawValue: value.value.toString().replace('.', ',')
-      };
-    }
-    return value;
-  }
-  return value && value.toString();
-}
 
 function updateStringField(updateForm) {
   return (name: string) => (evt: DomEvent) =>

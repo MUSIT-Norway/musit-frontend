@@ -1,13 +1,11 @@
 import React from 'react';
 import AnalysisFormComponent from '../AnalysisFormComponent';
-import { getAnalysisTypeTerm, submitForm } from '../shared/submit';
+import { getAnalysisTypeTerm } from '../shared/getters';
 import { fieldsArray } from '../analysisForm';
 import type { Field } from 'forms/form';
 import type { FormData } from '../shared/formType';
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
-import sinon from 'sinon';
-import StatefulPromise from '../../../testutils/StatefulPromise';
 import { appSession } from './../../../testutils/sampleDataForTest';
 
 declare var describe: any;
