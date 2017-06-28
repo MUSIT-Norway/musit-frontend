@@ -4,7 +4,6 @@ import { I18n } from 'react-i18nify';
 import MetaInformation from '../../components/metainfo';
 import moment from 'moment';
 import ObjectTable from './components/ExpandableObjectResultTable';
-import AddButton from '../../components/AddButton';
 import toArray from 'lodash/toArray';
 import {
   getAnalysisTypeTerm,

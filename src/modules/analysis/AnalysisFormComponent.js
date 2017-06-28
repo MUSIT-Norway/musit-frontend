@@ -7,7 +7,6 @@ import type { SampleData } from '../../types/samples';
 import type { ExtraAttribute } from '../../types/analysisTypes';
 import type { FormData } from './shared/formType';
 import PersonRoleDate from '../../components/person/PersonRoleDate';
-import AddButton from '../../components/AddButton';
 import MetaInformation from '../../components/metainfo';
 import ObjectResultTable from './components/ExpandableObjectResultTable';
 import Restrictions from './components/Restrictions';

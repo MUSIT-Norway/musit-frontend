@@ -10,7 +10,6 @@ import Analysis from '../../models/analysis';
 import analysisForm, { fieldsArray } from './analysisForm';
 import Config from '../../config';
 import {
-  getExtraDescriptionAttributes,
   getExtraResultAttributes,
   getAnalysisType
 } from './shared/getters';
