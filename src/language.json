@@ -2,6 +2,7 @@
   "en": {
     "musit": {
       "objects": {
+        "goToParentObject": "Go to object",
         "noData": "No objects to display",
         "objectsView": {
           "location": "Location",
@@ -857,6 +858,7 @@
   "no": {
     "musit": {
       "objects": {
+        "goToParentObject": "Gå til objektet",
         "noData": "Ingen objekter å vise",
         "objectsView": {
           "location": "Plassering",

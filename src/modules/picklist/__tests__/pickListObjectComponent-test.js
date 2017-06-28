@@ -168,7 +168,7 @@ describe('PickListComponent for objects', () => {
       .children()
       .find('tr')
       .childAt(1)
-      .childAt(4);
+      .childAt(5);
     removeButton.simulate('click');
     e(onRemoveObject.calledOnce).to.equal(true);
   });

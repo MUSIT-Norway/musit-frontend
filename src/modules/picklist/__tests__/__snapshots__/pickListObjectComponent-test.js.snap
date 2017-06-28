@@ -224,13 +224,25 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                         }
                         title="Opprett prøve"
                       />
+                      <span
+                        className="normalActionNoPadding"
+                        style={
+                          Object {
+                            "color": "#337ab7",
+                            "fontSize": "0.8em",
+                          }
+                        }
+                        title="Valgt objekte(r)"
+                      >
+                        (2)
+                      </span>
                       <span>
                         <span
                           className="icon-musit-microscope"
                           onClick={[Function]}
                           style={
                             Object {
-                              "color": "grey",
+                              "color": "#337ab7",
                               "fontSize": "1.5em",
                             }
                           }
@@ -240,6 +252,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                           className="normalActionNoPadding"
                           style={
                             Object {
+                              "color": "#337ab7",
                               "fontSize": "0.8em",
                             }
                           }
@@ -254,7 +267,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                         onClick={[Function]}
                         style={
                           Object {
-                            "color": "grey",
+                            "color": null,
                             "fontSize": "1.5em",
                           }
                         }
@@ -266,7 +279,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                           onClick={[Function]}
                           style={
                             Object {
-                              "color": "grey",
+                              "color": null,
                               "fontSize": "1.5em",
                             }
                           }
@@ -277,6 +290,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                         className="normalActionNoPadding"
                         style={
                           Object {
+                            "color": "#337ab7",
                             "fontSize": "0.8em",
                           }
                         }
@@ -290,7 +304,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                         onClick={[Function]}
                         style={
                           Object {
-                            "color": "grey",
+                            "color": null,
                             "fontSize": "1.5em",
                           }
                         }
@@ -302,7 +316,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                           onClick={[Function]}
                           style={
                             Object {
-                              "color": "grey",
+                              "color": null,
                               "fontSize": "1.5em",
                             }
                           }
@@ -313,6 +327,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                         className="normalActionNoPadding"
                         style={
                           Object {
+                            "color": "#337ab7",
                             "fontSize": "0.8em",
                           }
                         }
@@ -1048,13 +1063,25 @@ exports[`PickListComponent for objects should display component (objects) correc
                 }
                 title="Opprett prøve"
               />
+              <span
+                className="normalActionNoPadding"
+                style={
+                  Object {
+                    "color": "#337ab7",
+                    "fontSize": "0.8em",
+                  }
+                }
+                title="Valgt objekte(r)"
+              >
+                (2)
+              </span>
               <span>
                 <span
                   className="icon-musit-microscope"
                   onClick={[Function]}
                   style={
                     Object {
-                      "color": "grey",
+                      "color": "#337ab7",
                       "fontSize": "1.5em",
                     }
                   }
@@ -1064,6 +1091,7 @@ exports[`PickListComponent for objects should display component (objects) correc
                   className="normalActionNoPadding"
                   style={
                     Object {
+                      "color": "#337ab7",
                       "fontSize": "0.8em",
                     }
                   }
@@ -1078,7 +1106,7 @@ exports[`PickListComponent for objects should display component (objects) correc
                 onClick={[Function]}
                 style={
                   Object {
-                    "color": "grey",
+                    "color": null,
                     "fontSize": "1.5em",
                   }
                 }
@@ -1088,6 +1116,7 @@ exports[`PickListComponent for objects should display component (objects) correc
                 className="normalActionNoPadding"
                 style={
                   Object {
+                    "color": "#337ab7",
                     "fontSize": "0.8em",
                   }
                 }
@@ -1101,7 +1130,7 @@ exports[`PickListComponent for objects should display component (objects) correc
                 onClick={[Function]}
                 style={
                   Object {
-                    "color": "grey",
+                    "color": null,
                     "fontSize": "1.5em",
                   }
                 }
@@ -1111,6 +1140,7 @@ exports[`PickListComponent for objects should display component (objects) correc
                 className="normalActionNoPadding"
                 style={
                   Object {
+                    "color": "#337ab7",
                     "fontSize": "0.8em",
                   }
                 }

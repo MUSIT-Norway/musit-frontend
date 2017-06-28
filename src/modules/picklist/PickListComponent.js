@@ -123,7 +123,10 @@ export class PickListComponent extends React.Component {
     return (
       <span
         className="normalActionNoPadding"
-        style={{ fontSize: '0.8em' }}
+        style={{
+          fontSize: '0.8em',
+          color: count < 1 ? 'grey' : '#337ab7'
+        }}
         title={I18n.t(
           `musit.pickList.tooltip.${isNode ? 'selectedNodeCount' : 'selectedObjectCount'}`
         )}
@@ -195,7 +198,7 @@ export class PickListComponent extends React.Component {
                         className="normalActionNoPadding"
                         style={{
                           fontSize: '1.5em',
-                          color: marked.length !== 1 ? 'grey' : null
+                          color: marked.length < 1 ? 'grey' : null
                         }}
                         name="print"
                         onClick={() => {
@@ -205,12 +208,13 @@ export class PickListComponent extends React.Component {
                         }}
                         title={I18n.t('musit.pickList.tooltip.printSelectedNodes')}
                       />}
+                    {isNode && this.selectedCount(isNode, marked.length)}
                     {isObject &&
                       <span
                         className="icon icon-musit-testtube"
                         style={{
                           fontSize: '1.5em',
-                          color: marked.length !== 1 ? 'grey' : null
+                          color: marked.length !== 1 ? 'grey' : '#337ab7'
                         }}
                         onClick={() => {
                           if (marked.length === 1) {
@@ -219,13 +223,14 @@ export class PickListComponent extends React.Component {
                         }}
                         title={I18n.t('musit.analysis.createSample')}
                       />}
+                    {isObject && this.selectedCount(isNode, marked.length)}
                     {isObject &&
                       <span>
                         <span
                           className="icon-musit-microscope"
                           style={{
                             fontSize: '1.5em',
-                            color: marked.length !== 1 ? 'grey' : null
+                            color: marked.length < 1 ? 'grey' : '#337ab7'
                           }}
                           onClick={() => {
                             if (marked.length > 0) {
@@ -239,13 +244,12 @@ export class PickListComponent extends React.Component {
                         />
                         {this.selectedCount(isNode, marked.length)}
                       </span>}
-                    {isNode && this.selectedCount(isNode, marked.length)}
                     <FontAwesome
                       className="normalAction"
                       name="truck"
                       style={{
                         fontSize: '1.5em',
-                        color: marked.length !== 1 ? 'grey' : null
+                        color: marked.length < 1 ? 'grey' : null
                       }}
                       onClick={() => {
                         if (marked.length > 0) {
@@ -261,7 +265,7 @@ export class PickListComponent extends React.Component {
                       className="normalAction"
                       style={{
                         fontSize: '1.5em',
-                        color: marked.length !== 1 ? 'grey' : null
+                        color: marked.length < 1 ? 'grey' : null
                       }}
                       name="remove"
                       onClick={() => {
