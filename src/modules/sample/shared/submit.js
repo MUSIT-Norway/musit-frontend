@@ -91,8 +91,7 @@ const saveSample = doSaveSample => (
         pathname: Config.magasin.urls.client.analysis.gotoSample(
           appSession,
           value.objectId || value
-        ),
-        state: [objectData]
+        )
       })
     );
 };

@@ -12,11 +12,12 @@ import moment from 'moment';
 import Config from '../../config';
 import type { SampleData } from '../../types/samples';
 import type { ObjectData } from '../../types/object';
-import type { FormDetails } from './types/form';
 import { loadPredefinedTypes } from '../../stores/predefined';
 import values from 'lodash/values';
 import flatten from 'lodash/flatten';
-import Sample from '../../models/sample';
+import Sample, { getSampleType } from '../../models/sample';
+
+import type { AppSession } from 'types/appSession';
 
 const data = {
   appSession$: { type: PropTypes.instanceOf(Observable).isRequired },
@@ -37,7 +38,7 @@ const props: SampleProps = props => {
   const sampleData = props.sampleStore.sample;
   const sampleType = flatten(values(props.predefined.sampleTypes)).find(
     st => sampleData && st.sampleTypeId === sampleData.sampleTypeId
-  ); //getSampleTypeWithLanguage()
+  );
   const statusText = getStatusText(sampleData, props.appSession.language);
   return {
     ...props,
@@ -48,14 +49,14 @@ const props: SampleProps = props => {
     clickEditSample: clickEditSample(
       props.appSession,
       props.match.params.sampleId,
-      props.location.state[0],
+      props.objectStore.objectData,
       props.history.push
     ),
     clickCreateAnalysis: clickCreateAnalysis(
       props.appSession,
       props.sampleStore.sample,
-      props.form,
-      props.location.state[0],
+      props.predefined.sampleTypes,
+      props.objectStore.objectData,
       props.history.push
     ),
     clickCreateSample: clickCreateSample(
@@ -108,14 +109,14 @@ export function clickEditSample(appSession, sampleId, objectData, goTo) {
   };
 }
 
-export function clickCreateAnalysis(appSession, sample, form, objectData, goTo) {
+export function clickCreateAnalysis(appSession, sample, sampleTypes, objectData, goTo) {
   return e => {
     e.preventDefault();
     goTo({
       pathname: Config.magasin.urls.client.analysis.addAnalysis(appSession),
       state: [
         {
-          ...mergeSampleWithObject(sample, objectData, form)
+          ...mergeSampleWithObject(sample, objectData, sampleTypes, appSession)
         }
       ]
     });
@@ -173,13 +174,18 @@ export function getSampleSubTypeWithLanguage(sampleType, appSession) {
 function mergeSampleWithObject(
   sample: SampleData,
   objectData: ObjectData,
-  form: FormDetails
+  sampleTypes: any,
+  appSession: AppSession
 ) {
+  const sampleType = getSampleType(sample.sampleTypeId, sampleTypes);
+  const sampleTypeStr = getSampleTypeWithLanguage(sampleType, appSession);
+  const sampleSubTypeStr = getSampleSubTypeWithLanguage(sampleType, appSession);
+
   return {
     ...objectData,
     ...sample,
-    sampleType: form.sampleType.value,
-    sampleSubType: form.sampleSubType.value
+    sampleType: sampleTypeStr,
+    sampleSubType: sampleSubTypeStr
   };
 }
 

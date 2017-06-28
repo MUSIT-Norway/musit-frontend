@@ -131,7 +131,8 @@ describe('SampleViewContainer', () => {
       const event = {
         preventDefault
       };
-      clickCreateAnalysis(appSession, sample, form, objectData, goTo)(event);
+      //todo setup the tests with sampletype and reintroduce the sampleType and sampleSubType
+      clickCreateAnalysis(appSession, sample, [], objectData, goTo)(event);
       expect(preventDefault.calledOnce).toBe(true);
 
       expect(goTo.calledOnce).toBe(true);
@@ -162,8 +163,8 @@ describe('SampleViewContainer', () => {
           },
           sampleId: 'ssdfsdfdfsdf',
           sampleNum: 1,
-          sampleSubType: 'Stuff',
-          sampleType: 'Wierd',
+          sampleSubType: null,
+          sampleType: null,
           sampleTypeId: 2,
           size: { unit: 'mg', value: 1 },
           status: 1,
