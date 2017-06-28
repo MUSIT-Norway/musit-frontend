@@ -8,6 +8,7 @@ import { omit } from 'lodash';
 import uniq from 'lodash/uniq';
 import uniqBy from 'lodash/uniqBy';
 import MusitActor from '../models/actor';
+import MusitObject from '../models/object';
 import moment from 'moment';
 import flatten from 'lodash/flatten';
 
@@ -40,6 +41,7 @@ class Sample {
   ) => (props: {
     id: number,
     museumId: number,
+    collectionId: string,
     token: string,
     callback?: Callback
   }) => Observable;
@@ -53,7 +55,7 @@ class Sample {
   }) => Observable;
   static prepareForSubmit: (tmpData: {
     size?: { value: number, unit: string },
-    parentObject: { objectId: number, objectType: string },
+    parentObject: { objectId: number, objectType: string, sampleOrObjectData: any },
     sizeUnit: mixed,
     subTypeValue: mixed,
     sampleType: { value: string, subTypeValue: string },
@@ -211,13 +213,40 @@ Sample.editSample = (ajaxPut = simplePut) => ({
 Sample.loadSample = (ajaxGet = simpleGet, ajaxPost = simplePost) => ({
   id,
   museumId,
+  collectionId,
   token,
   callback
 }) => {
-  const baseUrl = Config.magasin.urls.api.samples.baseUrl(museumId);
-  const url = `${baseUrl}/${id}`;
-  return ajaxGet(url, token, callback)
+  const url = sampleId => Config.magasin.urls.api.samples.getSample(museumId, sampleId);
+  return ajaxGet(url(id), token, callback)
     .map(({ response }) => response)
+    .flatMap(sampleJson => {
+      if (sampleJson.parentObject.objectType === 'sample') {
+        const sampleUrl = url(sampleJson.parentObject.objectId);
+        return ajaxGet(sampleUrl, token).map(subSampleRes => {
+          return {
+            ...sampleJson,
+            parentObject: {
+              ...sampleJson.parentObject,
+              sampleOrObjectData: subSampleRes.response
+            }
+          };
+        });
+      } else if (sampleJson.parentObject.objectType === 'collection') {
+        return MusitObject.getObjectWithCurrentLocation(ajaxGet)({
+          objectId: sampleJson.parentObject.objectId || sampleJson.originatedObjectUuid,
+          museumId,
+          collectionId,
+          token
+        }).map(subSample => {
+          return {
+            ...sampleJson,
+            parentObject: { ...sampleJson.parentObject, sampleOrObjectData: subSample }
+          };
+        });
+      }
+      return Observable.of(sampleJson);
+    })
     .flatMap(sampleJson => {
       return MusitActor.getActors(ajaxPost)({
         token: token,

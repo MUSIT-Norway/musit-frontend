@@ -81,7 +81,7 @@
       "sample": {
         "sample": "Sample",
         "registerSample": "Sample",
-        "derivedFromObject": "Derived from object/sample",
+        "derivedFromObject": "Derived from object",
         "derivedFromObjectAndSample": "Derived from object/sample",
         "personsAssociatedWithSampleTaking": "Persons associated with sampling",
         "sampleId": "SampleID",
@@ -936,7 +936,7 @@
       "sample": {
         "sample": "Prøve",
         "registerSample": "Prøve",
-        "derivedFromObject": "Avledet fra objekt/prøve",
+        "derivedFromObject": "Avledet fra objekt",
         "derivedFromObjectAndSample": "Avledet fra objekt/prøve",
         "personsAssociatedWithSampleTaking": "Personer tilknyttet prøveuttaket",
         "sampleId": "PrøveID",

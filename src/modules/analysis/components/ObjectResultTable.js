@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-import Fontawesome from 'react-fontawesome';
 import { I18n } from 'react-i18nify';
 import './ObjectResultTable.css';
 import Result from '../components/Result';

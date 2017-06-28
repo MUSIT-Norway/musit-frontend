@@ -1,11 +1,10 @@
 // @flow
 import React from 'react';
-import type { Field } from '../../../forms/form';
 import { I18n } from 'react-i18nify';
 
 type Props = {
-  sampleType: Field<string>,
-  subTypeValue: Field<string>
+  sampleType: ?string,
+  subTypeValue: ?string
 };
 
 export default function ReadOnlySampleType({ sampleType, subTypeValue }: Props) {
@@ -16,17 +15,17 @@ export default function ReadOnlySampleType({ sampleType, subTypeValue }: Props) 
       </label>
       <div className="col-md-3">
         <p className="form-control-static">
-          {sampleType.value}
+          {sampleType}
         </p>
       </div>
-      {sampleType.value !== subTypeValue.value &&
+      {sampleType !== subTypeValue &&
         <div>
           <label className="control-label col-md-2">
             {I18n.t('musit.sample.sampleSubType')}
           </label>
           <div className="col-md-3">
             <p className="form-control-static">
-              {subTypeValue.value}
+              {subTypeValue}
             </p>
           </div>
         </div>}

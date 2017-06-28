@@ -21,6 +21,7 @@ class Event {
     id: number, // FIXME the same as objectId
     objectId: number, // FIXME The same as id
     museumId: number,
+    collectionId: string,
     token: string,
     callback?: Callback
   }) => Observable;
@@ -84,6 +85,7 @@ Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) => prop
             return Sample.loadSample(ajaxGet)({
               id: e.sampleObjectId,
               museumId: props.museumId,
+              collectionId: props.collectionId,
               token: props.token
             }).map(r => ({ ...e, sampleTypeId: r.sampleTypeId }));
           }

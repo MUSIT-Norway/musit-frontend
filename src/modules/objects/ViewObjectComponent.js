@@ -63,8 +63,7 @@ export const ViewObjectComponent = ({
                 pathname: Config.magasin.urls.client.analysis.addSample(
                   appSession,
                   objectData.uuid
-                ),
-                state: [objectData]
+                )
               })}
           >
             {I18n.t('musit.objects.objectsView.newSample')}

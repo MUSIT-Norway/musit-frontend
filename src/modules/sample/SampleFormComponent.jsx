@@ -15,45 +15,47 @@ import MetaInformation from '../../components/metainfo';
 import ReadOnlySampleType from './components/ReadOnlySampleType';
 import { I18n } from 'react-i18nify';
 
-type Store = {
-  sampleTypes?: any,
-  storageContainers?: any,
-  storageMediums?: any,
-  treatments?: any
+type Predefined = {
+  sampleTypes: any,
+  storageContainers: Array<any>,
+  storageMediums: Array<any>,
+  treatments: Array<any>
 };
 
 type Props = {
   form: FormDetails,
-  store: Store,
+  parentSample: SampleData,
   updateForm: Function,
   clickSave: () => void,
   appSession: AppSession,
   clickBack: (e: *) => void,
   sampleTypeDisplayName: Function,
   isFormValid: (f: FormDetails) => boolean,
-  objectData: ObjectData & SampleData & { sampleType: string, sampleSubType: string }
+  objectData: ObjectData & SampleData & { sampleType: string, sampleSubType: string },
+  predefined: Predefined
 };
 
 export default function SampleFormComponent({
   form,
-  store,
+  parentSample,
   updateForm,
   clickSave,
   sampleTypeDisplayName,
   isFormValid,
   appSession,
   clickBack,
-  objectData
+  objectData,
+  predefined
 }: Props) {
   const canEditSampleType = !form.sampleNum;
 
-  // true of sampleType has value and the sampleType exists in sampleTypes from store (backend)
+  // true if sampleType has value and the sampleType exists in sampleTypes from store (backend)
   const shouldShowSampleSubType =
     form.sampleType.rawValue &&
     form.sampleType.rawValue.trim().length > 0 &&
-    store.sampleTypes &&
-    store.sampleTypes[form.sampleType.rawValue] &&
-    store.sampleTypes[form.sampleType.rawValue].length > 1;
+    predefined.sampleTypes &&
+    predefined.sampleTypes[form.sampleType.rawValue] &&
+    predefined.sampleTypes[form.sampleType.rawValue].length > 1;
 
   return (
     <div className="container">
@@ -75,7 +77,7 @@ export default function SampleFormComponent({
             <hr />
           </div>}
         <h4>
-          {objectData.sampleNum
+          {parentSample && parentSample.sampleNum
             ? I18n.t('musit.sample.derivedFromObjectAndSample')
             : I18n.t('musit.sample.derivedFromObject')}
         </h4>
@@ -89,23 +91,24 @@ export default function SampleFormComponent({
           <span>
             <strong>{I18n.t('musit.analysis.term')}</strong> {objectData.term}
           </span>
-          {objectData.sampleNum &&
+          {parentSample &&
+            parentSample.sampleNum &&
             <span>
               <br />
               <span style={{ marginRight: 20 }}>
                 <strong>{I18n.t('musit.sample.sampleNumber')}</strong>
                 {' '}
-                {objectData.sampleNum}
+                {parentSample.sampleNum}
               </span>
               <span style={{ marginRight: 20 }}>
                 <strong>{I18n.t('musit.sample.sampleType')}</strong>
                 {' '}
-                {objectData.sampleType}
+                {parentSample.sampleTypeId}
               </span>
               <span style={{ marginRight: 20 }}>
                 <strong>{I18n.t('musit.sample.sampleSubType')}</strong>
                 {' '}
-                {objectData.sampleSubType}
+                {parentSample.sampleTypeId}
               </span>
             </span>}
         </div>
@@ -159,14 +162,14 @@ export default function SampleFormComponent({
                   defaultOption={I18n.t('musit.sample.chooseType')}
                   onChange={obj => {
                     if (
-                      store.sampleTypes &&
-                      store.sampleTypes[obj.rawValue] &&
-                      store.sampleTypes[obj.rawValue].length === 1
+                      predefined.sampleTypes &&
+                      predefined.sampleTypes[obj.rawValue] &&
+                      predefined.sampleTypes[obj.rawValue].length === 1
                     ) {
                       updateForm({
                         name: form.sampleSubType.name,
                         rawValue: sampleTypeDisplayName(
-                          store.sampleTypes[obj.rawValue][0],
+                          predefined.sampleTypes[obj.rawValue][0],
                           appSession
                         )
                       });
@@ -175,7 +178,9 @@ export default function SampleFormComponent({
                     }
                     updateForm(obj);
                   }}
-                  selectItems={store.sampleTypes ? Object.keys(store.sampleTypes) : []}
+                  selectItems={
+                    predefined.sampleTypes ? Object.keys(predefined.sampleTypes) : []
+                  }
                 />
                 {shouldShowSampleSubType &&
                   <FieldDropDown
@@ -187,13 +192,15 @@ export default function SampleFormComponent({
                     appSession={appSession}
                     onChange={updateForm}
                     selectItems={
-                      store.sampleTypes ? store.sampleTypes[form.sampleType.rawValue] : []
+                      predefined.sampleTypes
+                        ? predefined.sampleTypes[form.sampleType.rawValue]
+                        : []
                     }
                   />}
               </ValidatedFormGroup>
             : <ReadOnlySampleType
-                sampleType={form.sampleType}
-                subTypeValue={form.sampleSubType}
+                sampleType={form.sampleType.value}
+                subTypeValue={form.sampleSubType.value}
               />}
           <ValidatedFormGroup fields={[form.description]}>
             <FieldTextArea
@@ -237,8 +244,8 @@ export default function SampleFormComponent({
               defaultOption={I18n.t('musit.sample.chooseStorageContainer')}
               onChange={updateForm}
               selectItems={
-                store.storageContainers
-                  ? store.storageContainers.map(
+                predefined.storageContainers
+                  ? predefined.storageContainers.map(
                       c =>
                         appSession.language.isEn
                           ? c.enStorageContainer
@@ -255,8 +262,8 @@ export default function SampleFormComponent({
               defaultOption={I18n.t('musit.sample.chooseStorageMedium')}
               onChange={updateForm}
               selectItems={
-                store.storageMediums
-                  ? store.storageMediums.map(
+                predefined.storageMediums
+                  ? predefined.storageMediums.map(
                       m =>
                         appSession.language.isEn ? m.enStorageMedium : m.noStorageMedium
                     )
@@ -271,8 +278,8 @@ export default function SampleFormComponent({
               defaultOption={I18n.t('musit.sample.chooseTreatment')}
               onChange={updateForm}
               selectItems={
-                store.treatments
-                  ? store.treatments.map(
+                predefined.treatments
+                  ? predefined.treatments.map(
                       t => (appSession.language.isEn ? t.enTreatment : t.noTreatment)
                     )
                   : []

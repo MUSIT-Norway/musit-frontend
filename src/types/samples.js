@@ -10,19 +10,23 @@ export type SampleData = {
   status: string,
   details: string,
   hasAnalyse: boolean,
-  doneDate?: string,
-  registeredDate: string,
   storageMedium: string,
   sampleNum: number,
   breadcrumb: [],
   objectId: string,
   note: string,
-  status: number
+  status: number,
+  externalId?: { value?: string, source?: string },
+  size?: { unit: string, value: number },
+  container?: string,
+  treatment?: string,
+  description?: string,
+  parentObject: { objectId: string, objectType: string, sampleOrObjectData: any },
+  updatedStamp: { name: ?string, date?: string },
+  registeredStamp: { name: ?string, date?: string }
 };
 
 export type Samples = SampleData[];
-
-export type SamplesPropsType = { samples: Samples, onClick: Function };
 
 export type SampleStatusData = {
   id: number,

@@ -191,6 +191,7 @@ describe('AnalysisSampleFormPageAdd', () => {
           }
         }}
         updateForm={updateForm}
+        predefined={{ sampleTypes: [] }}
         objectData={{
           term: 'Carex saxatilis',
           museumNo: 'M1234',

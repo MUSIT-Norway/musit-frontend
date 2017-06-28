@@ -15,40 +15,39 @@ describe('eventsStore', () => {
     };
 
     // mock streams
-    const clearM = '-1---------';
-    const getCurrentLocM = '----1------';
-    const setObjectM = '--1--------';
-    const loadAnalysesM = '---1-------';
-    const expected = 'aabcd------';
+    // prettier-ignore
+    const mockStreams = {
+      getCurrentLocM: '--1--------',
+      setObjectM:     '-1---------',
+      expected:       'oab--------'
+    };
 
     const expectedStateMap = {
-      a: {},
-      b: {
+      o: {},
+      a: {
         object
       },
-      c: {
+      b: {
         object,
-        data: []
-      },
-      d: {
-        object,
-        data: [],
         currentLocation
       }
     };
 
     // mock up$ and down$ events
-    const clear$ = testScheduler.createHotObservable(clearM);
-    const getCurrentLocation$ = testScheduler.createHotObservable(getCurrentLocM, {
-      1: currentLocation
+    const getCurrentLocation$ = testScheduler.createHotObservable(
+      mockStreams.getCurrentLocM,
+      {
+        1: currentLocation
+      }
+    );
+    const setObject$ = testScheduler.createHotObservable(mockStreams.setObjectM, {
+      1: object
     });
-    const setObject$ = testScheduler.createHotObservable(setObjectM, { 1: object });
-    const loadEvents$ = testScheduler.createHotObservable(loadAnalysesM, { 1: [] });
 
-    const state$ = eventsStore$({ clear$, getCurrentLocation$, setObject$, loadEvents$ });
+    const state$ = eventsStore$({ getCurrentLocation$, setObject$ });
 
     // assertion
-    testScheduler.expectObservable(state$).toBe(expected, expectedStateMap);
+    testScheduler.expectObservable(state$).toBe(mockStreams.expected, expectedStateMap);
 
     // run tests
     testScheduler.flush();

@@ -38,15 +38,15 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
     </div>
     <div>
       <MetaInformation
-        registeredBy="1233"
-        registeredDate="1988-12-31"
-        updatedBy="Arne And"
-        updatedDate="1998-03-12"
+        registeredBy="Per Hansen"
+        registeredDate="1992-01-05"
+        updatedBy="Ole Hansen"
+        updatedDate="1992-01-01"
       />
       <hr />
     </div>
     <h4>
-      Avledet fra objekt/prøve
+      Avledet fra objekt
     </h4>
     <div>
       <span
@@ -60,7 +60,6 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
           Museumsnr.
         </strong>
          
-        M1234
       </span>
       <span
         style={
@@ -73,14 +72,12 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
           Unr.
         </strong>
          
-        a
       </span>
       <span>
         <strong>
           Gjenstand/Takson
         </strong>
          
-        Carex saxatilis
       </span>
     </div>
     <hr />
@@ -113,25 +110,6 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
           </strong>
         </div>
       </div>
-      <div
-        className="row"
-      >
-        <div
-          className="col-md-4"
-        >
-          Arne And
-        </div>
-        <div
-          className="col-md-2"
-        >
-          Utført av
-        </div>
-        <div
-          className="col-md-2"
-        >
-          26.05.2017
-        </div>
-      </div>
     </div>
     <hr />
     <div
@@ -148,7 +126,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
         <p
           className="form-control-static"
         >
-          2
+          12
         </p>
       </div>
     </div>
@@ -184,7 +162,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
         <p
           className="form-control-static"
         >
-          123
+          1234
         </p>
       </div>
       <label
@@ -198,18 +176,11 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
         <p
           className="form-control-static"
         >
-          Museum
+          1234
         </p>
       </div>
     </div>
-    <ReadOnlySampleType
-      sampleType={
-        Object {
-          "name": "sampleType",
-          "value": "Vev",
-        }
-      }
-    />
+    <ReadOnlySampleType />
     <div
       className="form-group"
     >
@@ -224,7 +195,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
         <p
           className="form-control-static"
         >
-          Av lær
+          description
         </p>
       </div>
     </div>
@@ -241,9 +212,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
       >
         <p
           className="form-control-static"
-        >
-          Nyskilt
-        </p>
+        />
       </div>
     </div>
     <div
@@ -260,9 +229,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
         <p
           className="form-control-static"
         >
-          1,23
-           
-          gr
+          1,23 tonn
         </p>
       </div>
     </div>
@@ -352,7 +319,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
         <p
           className="form-control-static"
         >
-          Heisann
+          23444455555
         </p>
       </div>
     </div>

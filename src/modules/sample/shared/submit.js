@@ -7,7 +7,7 @@ import { isFormValid } from '../../../forms/validators';
 
 export const sampleProps = (props, doSaveSample) => {
   return {
-    objectData: props.location.state[0],
+    objectData: props.objectStore.objectData,
     isFormValid: isFormValid(props.form),
     sampleTypeDisplayName,
     goBack: e => {
@@ -18,8 +18,9 @@ export const sampleProps = (props, doSaveSample) => {
       e.preventDefault();
       saveSample(doSaveSample)(
         props.form,
-        props.store,
-        props.location.state[0],
+        props.store.sample,
+        props.predefined.sampleTypes,
+        props.objectStore.objectData,
         props.match.params,
         props.appSession,
         props.history
@@ -28,28 +29,54 @@ export const sampleProps = (props, doSaveSample) => {
   };
 };
 
+function getParentObject(isAdd, sampleData, objectData) {
+  let parentObject;
+  const isEdit = !isAdd;
+  if (isAdd) {
+    if (sampleData) {
+      parentObject = {
+        objectId: sampleData.objectId,
+        objectType: 'sample'
+      };
+    } else {
+      parentObject = {
+        objectType: objectData.objectType,
+        objectId: objectData.uuid
+      };
+    }
+  } else if (isEdit) {
+    parentObject = {
+      objectId: sampleData.parentObject.sampleOrObjectData.objectId ||
+        sampleData.parentObject.sampleOrObjectData.uuid,
+      objectType: sampleData.parentObject.sampleOrObjectData.objectId
+        ? 'sample'
+        : 'collection'
+    };
+  }
+  return parentObject;
+}
+
 const saveSample = doSaveSample => (
   form,
-  store,
+  sampleData,
+  sampleTypes,
   objectData,
   params,
   appSession,
   history
 ) => {
+  let parentObject = getParentObject(!!!form.sampleNum, sampleData, objectData);
   const data = Sample.prepareForSubmit({
     ...normalizeForm(form),
     ...getActors(form.persons.rawValue),
     sampleTypeId: getSampleTypeId(
-      store.sampleTypes,
+      sampleTypes,
+      form.sampleType.value,
       form.sampleSubType.value,
       appSession
     ),
     originatedObjectUuid: objectData.uuid,
-    parentObject: {
-      objectType: objectData.objectType,
-      objectId: params.objectId ||
-        (form.originatedObjectUuid ? form.originatedObjectUuid.value : null)
-    },
+    parentObject: parentObject,
     museumId: appSession.museumId
   });
   return doSaveSample({
@@ -70,14 +97,18 @@ const saveSample = doSaveSample => (
     );
 };
 
-function getSampleTypeId(sampleTypes, selectSubType, appSession) {
+function getSampleTypeId(sampleTypes, sampleType, sampleSubType, appSession) {
   if (!sampleTypes) {
     return null;
   }
-  return flatten(Object.values(sampleTypes)).find(subType => {
-    const subTypeName = sampleTypeDisplayName(subType, appSession);
-    return subTypeName === selectSubType;
-  }).sampleTypeId;
+  if (sampleSubType) {
+    return flatten(Object.values(sampleTypes)).find(subType => {
+      const subTypeName = sampleTypeDisplayName(subType, appSession);
+      return subTypeName === sampleSubType;
+    }).sampleTypeId;
+  } else {
+    return sampleTypes[sampleType][0].sampleTypeId;
+  }
 }
 
 function sampleTypeDisplayName(v, appSession) {

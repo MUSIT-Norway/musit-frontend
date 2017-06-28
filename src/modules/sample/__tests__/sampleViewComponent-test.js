@@ -10,122 +10,52 @@ describe('AnalysisSampleFormPageView', () => {
       museumId: 99,
       actor: { dataportenId: '12345', fn: 'Jarl' }
     };
+
+    const sampleStore = {
+      sample: {
+        note: '23444455555',
+        size: {
+          unit: 'tonn',
+          value: '1,23'
+        },
+        sampleNum: '123',
+        externalId: { value: '1234', source: 'Museum' },
+        description: 'description',
+        term_species: 'Carex saxatilis',
+        sampleType: 'Vev',
+        subTypeValue: 'Muskel',
+        status: 1,
+        statusText: 'Nyskilt',
+        storageMedium: 'Etanol',
+        createdBy: '1111-2222-1111-1111',
+        leftoverSample: 2,
+        responsible: '1221-3222-3303-3333',
+        museumId: '1233',
+        subNo: '322222',
+        container: 'Reagensrør',
+        sampleId: '1233',
+        treatment: '1233',
+        parentObject: {
+          objectId: '12333',
+          objectType: 'collection',
+          sampleOrObjectData: {}
+        },
+        sampleNum: '12',
+        updatedStamp: { name: 'Ole Hansen', date: '1992-01-01' },
+        registeredStamp: { name: 'Per Hansen', date: '1992-01-05' }
+      }
+    };
     const wrapper = shallow(
       <SampleViewComponent
         clickCreateAnalysis={() => () => null}
         clickEditSample={() => () => null}
         clickCreateSample={() => () => null}
-        store={{
-          sample: {}
+        objectStore={{
+          objectData: {}
         }}
+        sampleStore={sampleStore}
         appSession={appSession}
         match={{ params: { sampleId: '0000-1111-2222-3333' } }}
-        form={{
-          note: {
-            name: 'note',
-            value: 'Heisann'
-          },
-          size: {
-            name: 'size',
-            value: '1,23'
-          },
-          sampleNum: {
-            name: 'sampleNum',
-            value: 2
-          },
-          externalId: {
-            name: 'externalId',
-            value: '123'
-          },
-          externalIdSource: {
-            name: 'externalIdSource',
-            value: 'Museum'
-          },
-          description: {
-            name: 'description',
-            value: 'Av lær'
-          },
-          term_species: {
-            name: 'term_species',
-            value: 'Carex saxatilis'
-          },
-          sampleType: {
-            name: 'sampleType',
-            value: 'Vev'
-          },
-          sizeUnit: {
-            name: 'sizeUnit',
-            value: 'gr'
-          },
-          subTypeValue: {
-            name: 'subTypeValue',
-            value: 'Muskel'
-          },
-          status: {
-            name: 'status',
-            value: '1'
-          },
-          statusText: {
-            name: 'statusText',
-            value: 'Nyskilt'
-          },
-          storageMedium: {
-            name: 'storageMedium',
-            value: 'Etanol'
-          },
-          createdBy: {
-            name: 'createdBy',
-            value: '1111-2222-1111-1111'
-          },
-          leftoverSample: {
-            name: 'leftoverSample',
-            value: 2
-          },
-          responsible: {
-            name: 'responsible',
-            value: '1221-3222-3303-3333'
-          },
-          museumId: {
-            name: 'museumId',
-            value: '1233'
-          },
-          subNo: {
-            name: 'subNo',
-            value: '322222'
-          },
-          registeredByName: {
-            name: 'registeredBy',
-            value: '1233'
-          },
-          container: {
-            name: 'container',
-            value: 'Reagensrør'
-          },
-          registeredDate: {
-            name: 'registeredDate',
-            value: '1988-12-31'
-          },
-          updatedByName: {
-            name: 'updatedBy',
-            value: 'Arne And'
-          },
-          updatedDate: {
-            name: 'updatedDate',
-            value: '1998-03-12'
-          },
-          sampleId: {
-            name: 'sampleId',
-            value: '1233'
-          },
-          treatment: {
-            name: 'treatment',
-            value: '1233'
-          },
-          persons: {
-            name: 'persons',
-            value: [{ name: 'Arne And', role: 'creator', date: 1495756800000 }]
-          }
-        }}
         objectData={{
           term: 'Carex saxatilis',
           museumNo: 'M1234',

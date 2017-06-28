@@ -1,11 +1,11 @@
 import {
   getPersonsFromResponse,
-  convertSample,
   onMount,
-  loadSample,
+  retrieveSample,
   clickCreateAnalysis,
   clickEditSample
 } from '../sampleViewContainer';
+import convertSample from '../sampleEditContainer';
 import sinon from 'sinon';
 import { appSession } from '../../../testutils/sampleDataForTest';
 
@@ -201,40 +201,23 @@ describe('SampleViewContainer', () => {
     });
   });
 
-  describe('loadSample', () => {
+  describe('retrieveSample', () => {
     it('should call getSample', () => {
       const id = 3;
       const museumId = 99;
+      const collectionId = '0000-0000-0000-0000';
       const token = '1234';
       const getSample = sinon.spy();
-      const loadForm = sinon.spy();
-      const sampleTypes = {
-        sampleTypes: { test: { sampleTypeId: 2, enSampleType: 'DNA Sumtin' } }
-      };
-      loadSample(id, museumId, token, getSample, loadForm, appSession)(sampleTypes);
+      const loadObject = sinon.spy();
+
+      retrieveSample(id, token, museumId, collectionId, getSample, loadObject);
       expect(getSample.calledOnce).toBe(true);
       expect(getSample.getCall(0).args[0].id).toEqual(id);
       expect(getSample.getCall(0).args[0].museumId).toEqual(museumId);
       expect(getSample.getCall(0).args[0].token).toEqual(token);
       getSample.getCall(0).args[0].onComplete(sample);
-      expect(loadForm.calledOnce).toBe(true);
-      expect(loadForm.getCall(0).args[0]).not.toBe(null);
-    });
-  });
-
-  describe('onMount', () => {
-    it('should call getPredefinedTypes', () => {
-      const match = {
-        params: {
-          sampleId: 23
-        }
-      };
-      const getSample = sinon.spy();
-      const loadForm = sinon.spy();
-      const getPredefinedTypes = sinon.spy();
-      onMount({ match, getSample, loadForm, getPredefinedTypes, appSession });
-      expect(getPredefinedTypes.calledOnce).toBe(true);
-      expect(getPredefinedTypes.getCall(0).args[0].token).toEqual(appSession.accessToken);
+      expect(loadObject.calledOnce).toBe(true);
+      expect(loadObject.getCall(0).args[0]).not.toBe(null);
     });
   });
 });
