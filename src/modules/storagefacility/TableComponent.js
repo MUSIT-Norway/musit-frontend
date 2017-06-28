@@ -62,10 +62,6 @@ export default class TableComponent extends React.Component {
     this.getSamplesForNode = this.getSamplesForNode.bind(this);
   }
 
-  getCurrentPage(state = this.props.location.state) {
-    return state && state.currentPage;
-  }
-
   loadRootNode(nodeId, museumId, token) {
     this.props.clearRootNode();
     if (!nodeId) {
@@ -91,13 +87,14 @@ export default class TableComponent extends React.Component {
     collectionId = this.props.appSession.collectionId,
     token = this.props.appSession.accessToken
   ) {
+    const currentPage = this.props.match.params.page;
     this.loadRootNode(nodeId, museumId, token);
     this.props.getSampleTypes({ museumId, collectionId, token });
     if (this.props.showObjects) {
-      this.loadObjects(nodeId, museumId, collectionId, token);
+      this.loadObjects(nodeId, museumId, collectionId, token, currentPage);
       this.getSamplesForNode(nodeId, museumId, collectionId, token);
     } else {
-      this.loadNodes(nodeId, museumId, token);
+      this.loadNodes(nodeId, museumId, token, { page: currentPage });
     }
   }
 
@@ -116,15 +113,22 @@ export default class TableComponent extends React.Component {
     const locationState = newProps.location.state;
     const idHasChanged = newParams.id !== curParams.id;
     const stateHasChanged = locationState !== this.props.location.state;
-    if (idHasChanged || museumHasChanged || collectionHasChanged || stateHasChanged) {
+    const pageHasChanged = newParams.page !== curParams.page;
+    if (
+      idHasChanged ||
+      pageHasChanged ||
+      museumHasChanged ||
+      collectionHasChanged ||
+      stateHasChanged
+    ) {
       const nodeId = museumHasChanged ? null : newParams.id;
-      const currentPage = this.getCurrentPage(locationState);
+      const currentPage = newParams.page;
       this.loadRootNode(nodeId, museumId, token);
       if (newProps.showObjects) {
         this.loadObjects(nodeId, museumId, collectionId, token, currentPage);
         this.getSamplesForNode(nodeId, museumId, collectionId, token);
       } else {
-        this.loadNodes(nodeId, museumId, token, currentPage);
+        this.loadNodes(nodeId, museumId, token, { page: currentPage });
       }
     }
   }
@@ -354,13 +358,10 @@ export default class TableComponent extends React.Component {
           this.setState({ ...this.state, searchPattern: newPattern })}
         clickShowRight={() => {
           this.showObjects();
-          this.loadObjects(nodeId, museumId, collectionId, token);
-          this.getSamplesForNode(nodeId, museumId, collectionId, token);
           blur();
         }}
         clickShowLeft={() => {
           this.showNodes();
-          this.loadNodes(nodeId, museumId, token);
           blur();
         }}
       />
@@ -479,7 +480,7 @@ export default class TableComponent extends React.Component {
     moveObject = this.showMoveObjectModal,
     showHistory = this.showObjectMoveHistory
   ) {
-    const currentPage = this.getCurrentPage() || 1;
+    const currentPage = this.props.match.params.page || 1;
     const matches = children && children.data && children.data.matches;
     const totalMatches = children && children.data && children.data.totalMatches;
     const isLoading = children && children.loading;
@@ -527,11 +528,9 @@ export default class TableComponent extends React.Component {
                 this.props.history.replace({
                   pathname: Config.magasin.urls.client.storagefacility.goToObjects(
                     rootNode.nodeId,
-                    this.props.appSession
-                  ),
-                  state: {
-                    currentPage: cp
-                  }
+                    this.props.appSession,
+                    cp
+                  )
                 });
               }}
             />}
@@ -570,11 +569,9 @@ export default class TableComponent extends React.Component {
               this.props.history.replace({
                 pathname: Config.magasin.urls.client.storagefacility.goToNode(
                   rootNode.nodeId,
-                  this.props.appSession
-                ),
-                state: {
-                  currentPage: cp
-                }
+                  this.props.appSession,
+                  cp
+                )
               });
             }}
           />}

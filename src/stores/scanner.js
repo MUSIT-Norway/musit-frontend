@@ -5,6 +5,7 @@ import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import omit from 'lodash/omit';
 import MusitObject from '../models/object';
 import MusitNode from '../models/node';
+import { KEEP_ALIVE } from './constants';
 
 export const initialState = { buffer: '', code: '', uuid: false, number: false };
 
@@ -29,7 +30,8 @@ const debouncer$ = charDebouncer$(reducer$.debounce(() => Observable.timer(50)))
 const scanner$ = createStore(
   'scanner',
   Observable.merge(reducer$, debouncer$, clearScanner$),
-  Observable.of(initialState)
+  Observable.of(initialState),
+  KEEP_ALIVE
 );
 
 export const makeStream = source$ =>

@@ -5,6 +5,7 @@ import MusitNode from '../models/node';
 import orderBy from 'lodash/orderBy';
 import toLower from 'lodash/toLower';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
+import { KEEP_ALIVE } from './constants';
 
 export const addObject$ = createAction('addObject$');
 export const toggleObject$ = createAction('toggleObject$');
@@ -186,7 +187,8 @@ export const store$ = (
   createStore(
     'pickList',
     reducer$(actions$),
-    Observable.of({ nodes: [], objects: [] })
+    Observable.of({ nodes: [], objects: [] }),
+    KEEP_ALIVE
   ).map(state => ({
     nodes: orderBy(state.nodes, [
       o => customSortingStorageNodeType(o.value.type),

@@ -11,6 +11,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import isEqualWith from 'lodash/isEqualWith';
 import { getLanguage } from '../shared/language';
+import { KEEP_ALIVE } from './constants';
 
 export const makeUrlAware = Component => {
   class Wrapper extends React.Component {
@@ -177,6 +178,7 @@ export const reducer$ = (actions, onError = emitError) =>
 
 const session$ = (
   actions$ = { setMuseumId$, setCollectionId$, setAccessToken$, loadAppSession$ }
-) => createStore('appSession', reducer$(actions$), Observable.of(initialState));
+) =>
+  createStore('appSession', reducer$(actions$), Observable.of(initialState), KEEP_ALIVE);
 
 export default session$();

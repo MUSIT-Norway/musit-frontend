@@ -1,6 +1,8 @@
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import { Observable } from 'rxjs';
 import Sample from '../../models/sample';
+import { KEEP_ALIVE } from '../../stores/constants';
+
 const initialState = { data: [] };
 
 export const getPredefinedTypes$ = createAction('getPredefinedTypes$').switchMap(
@@ -41,6 +43,7 @@ export const sampleStore$ = (
     getSample$,
     getSamplesForNode$
   }
-) => createStore('sampleStore$', reducer$(actions), Observable.of(initialState));
+) =>
+  createStore('sampleStore$', reducer$(actions), Observable.of(initialState), KEEP_ALIVE);
 
 export default sampleStore$();

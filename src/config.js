@@ -78,14 +78,14 @@ export default {
         },
         storagefacility: {
           goToRoot: (appSession: AppSession) => `${clientContextUrl(appSession)}/magasin`,
-          goToNode: (nodeId: number, appSession: AppSession) =>
-            `${clientContextUrl(appSession)}/magasin/${nodeId}`,
+          goToNode: (nodeId: number, appSession: AppSession, page?: ?number) =>
+            `${clientContextUrl(appSession)}/magasin/${nodeId}${page ? `/${page}` : ''}`,
           addNode: (nodeId: number, appSession: AppSession) =>
             `${clientContextUrl(appSession)}/magasin/${nodeId}/add`,
           editNode: (nodeId: number, appSession: AppSession) =>
             `${clientContextUrl(appSession)}/magasin/${nodeId}/view`,
-          goToObjects: (nodeId: number, appSession: AppSession) =>
-            `${clientContextUrl(appSession)}/magasin/${nodeId}/objects`,
+          goToObjects: (nodeId: number, appSession: AppSession, page?: ?number) =>
+            `${clientContextUrl(appSession)}/magasin/${nodeId}/objects${page ? `/${page}` : ''}`,
           addObservation: (nodeId: number, appSession: AppSession) =>
             `${clientContextUrl(appSession)}/magasin/${nodeId}/observation/add`,
           editObservation: (nodeId: number, appSession: AppSession) =>

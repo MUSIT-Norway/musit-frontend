@@ -54,6 +54,6 @@ export const store$ = (
     loadObjects$,
     loadNodes$
   }
-) => createStore('storageFacility', reducer$(actions$));
+) => createStore('storageFacility', reducer$(actions$), Observable.of({}));
 
 export default store$();

@@ -123,7 +123,6 @@ const MagasinPage = props => (
   <Switch>
     <Route path={rt(props, '/')} exact component={StorageUnitsTable} />
     <Route path={rt(props, '/add')} exact component={AddStorageUnitPanel} />
-    <Route path={rt(props, '/:id')} exact component={StorageUnitsTable} />
     <Route path={rt(props, '/:id/add')} exact component={AddStorageUnitPanel} />
     <Route path={rt(props, '/:id/view')} exact component={EditStorageUnitPanel} />
     <Route
@@ -156,13 +155,13 @@ const MagasinPage = props => (
       component={ViewObservationPage}
     />
     <Route
-      path={rt(props, '/:id/objects')}
+      path={rt(props, '/:id/objects/:page?')}
       exact
       component={extraProps(StorageUnitsTable, {
         showObjects: true
       })}
     />
-
+    <Route path={rt(props, '/:id/:page?')} exact component={StorageUnitsTable} />
     <Route component={NotFoundPage} />
   </Switch>
 );

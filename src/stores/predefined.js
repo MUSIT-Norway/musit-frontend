@@ -5,6 +5,7 @@ import Analysis from '../models/analysis';
 import Sample from '../models/sample';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import inject from 'react-rxjs/dist/RxInject';
+import { KEEP_ALIVE } from './constants';
 
 export const setLoadingSampleTypes$ = createAction('setLoadingSampleTypes$');
 export const loadSampleTypes$ = createAction('loadSampleTypes$').switchMap(
@@ -41,7 +42,8 @@ export const store$ = actions =>
   createStore(
     'predefined',
     reducer$(actions),
-    Observable.of({ loadingSampleTypes: false, loadingAnalysisTypes: false })
+    Observable.of({ loadingSampleTypes: false, loadingAnalysisTypes: false }),
+    KEEP_ALIVE
   );
 
 const predefined$ = store$({
