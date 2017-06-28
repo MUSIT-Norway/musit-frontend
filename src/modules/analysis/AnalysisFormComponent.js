@@ -96,7 +96,9 @@ export default ({
                     <option value="">{I18n.t('musit.analysis.chooseCategory')}</option>
                     {predefined.categories &&
                       Object.keys(predefined.categories).map(k => (
-                        <option key={k} value={k}>{predefined.categories[k]}</option>
+                        <option key={k} value={k}>
+                          {I18n.t(`musit.analysis.category.${k}`)}
+                        </option>
                       ))}
                   </select>
                 </div>

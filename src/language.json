@@ -1,7 +1,7 @@
 {
   "en": {
     "musit": {
-      "objects":{
+      "objects": {
         "noData": "No objects to display",
         "objectsView": {
           "location": "Location",
@@ -59,7 +59,7 @@
           }
         }
       },
-      "administration":{
+      "administration": {
         "administration": "Administration",
         "titleHeader": "Title",
         "descriptionHeader": "Description",
@@ -91,8 +91,10 @@
         "sampleType": "Sample type",
         "chooseType": "Select type",
         "sampleSubType": "Sample subtype",
-        "roles": {"creator": "Done by",
-          "responsible": "Responsible"},
+        "roles": {
+          "creator": "Done by",
+          "responsible": "Responsible"
+        },
         "chooseSubType": "Select subtype",
         "description": "Description of sample",
         "status": "Status",
@@ -115,6 +117,21 @@
         "analysisType": "Type of analysis",
         "chooseCategory": "Select category",
         "chooseType": "Select Type",
+        "category": {
+          "1": "Chemical analysis",
+          "2": "Colour analysis",
+          "3": "Dating",
+          "4": "Genetic analysis",
+          "5": "Image analysis",
+          "6": "Macro fossil analysis",
+          "7": "Micro fossil analysis",
+          "8": "Morphological measurements",
+          "9": "Osteology",
+          "10": "Sediment analysis",
+          "11": "Species determination",
+          "12": "Textile and fibre analysis",
+          "13": "Wood anatomy"
+        },
         "reason": "Purpose of the analysis",
         "chooseReason": "Select reason",
         "status": "Status",
@@ -133,11 +150,11 @@
         "personTillAnalysis": "Persons associated with the analysis",
         "addPersons": "Add more people",
         "objectOrSample": "Objects/samples",
-        "museumNumber":"Museum No.",
-        "underNumber":"U. No.",
-        "term":"Artefact/Taxon",
-        "sampleNumber":"Sample No.",
-        "sampleType":"Sample type",
+        "museumNumber": "Museum No.",
+        "underNumber": "U. No.",
+        "term": "Artefact/Taxon",
+        "sampleNumber": "Sample No.",
+        "sampleType": "Sample type",
         "addMoreObjectOrSample": "Add more objects/samples",
         "externalSource": "External source",
         "commentsToResult": "Comment to result",
@@ -328,7 +345,7 @@
             "Room": "Room",
             "Building": "Building",
             "Organisation": "Organisation",
-            "Root" : "Root",
+            "Root": "Root",
             "RootLoan": "Root"
           },
           "objectCount": "No. of obj.",
@@ -402,16 +419,16 @@
           "cancel": "Cancel",
           "ok": "Ok"
         },
-        "uploadFile":"Upload file",
-        "browse":"Browse",
-        "yes":"Yes",
-        "no":"No",
-        "change":"Change",
-        "lastUpdateBy" : "Last changed by",
+        "uploadFile": "Upload file",
+        "browse": "Browse",
+        "yes": "Yes",
+        "no": "No",
+        "change": "Change",
+        "lastUpdateBy": "Last changed by",
         "name": "Name",
-        "role":"Role",
-        "date":"Date",
-        "chooseRole":"Select role",
+        "role": "Role",
+        "date": "Date",
+        "chooseRole": "Select role",
         "attachment": "Attachment"
       },
       "viewControl": {
@@ -696,8 +713,8 @@
         "title": "Storage facility",
         "header": "Properties",
         "newNode": "New node",
-        "lastUpdateBy" : "Last updated by: ",
-        "lastUpdateDate" : "Last updated: ",
+        "lastUpdateBy": "Last updated by: ",
+        "lastUpdateDate": "Last updated: ",
         "environmentalData": "Environmental conditions",
         "type": {
           "labelText": "Type",
@@ -834,7 +851,7 @@
   },
   "no": {
     "musit": {
-      "objects":{
+      "objects": {
         "noData": "Ingen objekter å vise",
         "objectsView": {
           "location": "Plassering",
@@ -843,9 +860,9 @@
           "termTaxon": "Takson",
           "termItem": "Gjenstand",
           "arkForm": "Form",
-          "objectView":"Objektvisning",
-          "newAnalysis":"Ny analyse",
-          "newSample":"Ny prøve",
+          "objectView": "Objektvisning",
+          "newAnalysis": "Ny analyse",
+          "newSample": "Ny prøve",
           "gender": "Kjønn",
           "stage": "Stadium",
           "material": "Materiale",
@@ -866,23 +883,23 @@
           "findingPlace": "Funnsted",
           "collectionDate": "Innsamlingsdato",
           "collectingNumber": "Funnnr.",
-          "events":{
-            "events":"Hendelser",
-            "doneDate":"Utført dato",
-            "eventType":"Type hendelse",
-            "performedBy":"Utført av",
-            "keyData":"Nøkkeldata",
-            "caseNumber":"Saksnr."
+          "events": {
+            "events": "Hendelser",
+            "doneDate": "Utført dato",
+            "eventType": "Type hendelse",
+            "performedBy": "Utført av",
+            "keyData": "Nøkkeldata",
+            "caseNumber": "Saksnr."
           },
-          "samples":{
-            "samples":"Prøver",
-            "sampleNumber":"Prøvenr.",
-            "date":"Dato",
-            "sampleType":"Prøvetype",
-            "sampleSubType":"Prøveundertype",
-            "status":"Status",
-            "analysis":"Analyse",
-            "storageMedia":"Lagringsmedium"
+          "samples": {
+            "samples": "Prøver",
+            "sampleNumber": "Prøvenr.",
+            "date": "Dato",
+            "sampleType": "Prøvetype",
+            "sampleSubType": "Prøveundertype",
+            "status": "Status",
+            "analysis": "Analyse",
+            "storageMedia": "Lagringsmedium"
           },
           "eventTypes": {
             "AnalysisCollection": "Analyse",
@@ -892,7 +909,7 @@
           }
         }
       },
-      "administration":{
+      "administration": {
         "administration": "Administrasjon",
         "titleHeader": "Tittel",
         "descriptionHeader": "Beskrivelse",
@@ -911,35 +928,37 @@
           "description": "Analysesteder for analyse"
         }
       },
-      "sample":{
+      "sample": {
         "sample": "Prøve",
-        "registerSample":"Prøve",
-        "derivedFromObject":"Avledet fra objekt/prøve",
+        "registerSample": "Prøve",
+        "derivedFromObject": "Avledet fra objekt/prøve",
         "derivedFromObjectAndSample": "Avledet fra objekt/prøve",
-        "personsAssociatedWithSampleTaking":"Personer tilknyttet prøveuttaket",
-        "sampleId":"PrøveID",
-        "sampleNumber":"Prøvenr.",
-        "externalId":"Ekstern ID",
-        "externalIdSource":"Kilde for ekstern ID",
-        "sampleType":"Prøvetype",
+        "personsAssociatedWithSampleTaking": "Personer tilknyttet prøveuttaket",
+        "sampleId": "PrøveID",
+        "sampleNumber": "Prøvenr.",
+        "externalId": "Ekstern ID",
+        "externalIdSource": "Kilde for ekstern ID",
+        "sampleType": "Prøvetype",
         "chooseType": "Velg type",
-        "sampleSubType":"Prøveundertype",
-        "roles": {"creator": "Utført av",
-          "responsible": "Ansvarlig"},
+        "sampleSubType": "Prøveundertype",
+        "roles": {
+          "creator": "Utført av",
+          "responsible": "Ansvarlig"
+        },
         "chooseSubType": "Velg undertype",
-        "description":"Beskrivelse av prøve",
-        "status":"Status",
+        "description": "Beskrivelse av prøve",
+        "status": "Status",
         "chooseStatus": "Velg status",
-        "volumeOrWeight":"Prøvevolum/-vekt",
+        "volumeOrWeight": "Prøvevolum/-vekt",
         "chooseUnit": "Velg enhet",
-        "storageContainer":"Lagringskontainer",
+        "storageContainer": "Lagringskontainer",
         "chooseStorageContainer": "Velg kontainer",
-        "storageMedium":"Lagringsmedium",
+        "storageMedium": "Lagringsmedium",
         "chooseStorageMedium": "Velg medium",
-        "treatment":"Behandling",
+        "treatment": "Behandling",
         "chooseTreatment": "Velg behandling",
-        "hasResidualMaterial":"Har restmateriale",
-        "comments":"Kommentar",
+        "hasResidualMaterial": "Har restmateriale",
+        "comments": "Kommentar",
         "updateSample": "Endre prøve"
       },
       "analysis": {
@@ -948,15 +967,30 @@
         "analysisType": "Type analyse",
         "chooseCategory": "Velg kategori",
         "chooseType": "Velg type",
+        "category": {
+          "1": "Kjemisk analyse",
+          "2": "Fargeanalyse",
+          "3": "Datering",
+          "4": "Genetisk analyse",
+          "5": "Bildeanalyse",
+          "6": "Makrofossilanalyse",
+          "7": "Mikrofossilanalyse",
+          "8": "Morfologiske målinger",
+          "9": "Osteologi",
+          "10": "Sedimentanalyse",
+          "11": "Artsbestemmelse",
+          "12": "Tekstil- og fiberanalyse",
+          "13": "Vedanatomi"
+        },
         "reason": "Formål med analysen",
         "chooseReason": "Velg formål",
         "status": "Status på analysen",
         "chooseStatus": "Velg status",
-        "statusType":{
-          "1":"Under forberedelse",
-          "2":"Analyse påbegynt",
-          "3":"Analyse ferdig",
-          "4":"Avsluttet uten resultat"
+        "statusType": {
+          "1": "Under forberedelse",
+          "2": "Analyse påbegynt",
+          "3": "Analyse ferdig",
+          "4": "Avsluttet uten resultat"
         },
         "place": "Analysested",
         "choosePlace": "Velg analysested",
@@ -965,23 +999,23 @@
         "sample": "Prøveuttak",
         "personTillAnalysis": "Personer tilknyttet analysen",
         "addPersons": "Legg til flere personer",
-        "objectOrSample":"Objekter/prøver",
-        "museumNumber":"Museumsnr.",
-        "underNumber":"Unr.",
-        "term":"Gjenstand/Takson",
-        "sampleNumber":"Prøvenr.",
-        "sampleType":"Prøvetype",
+        "objectOrSample": "Objekter/prøver",
+        "museumNumber": "Museumsnr.",
+        "underNumber": "Unr.",
+        "term": "Gjenstand/Takson",
+        "sampleNumber": "Prøvenr.",
+        "sampleType": "Prøvetype",
         "addMoreObjectOrSample": "Legg til flere objekter/prøver",
-        "externalSource":"Ekstern kilde",
-        "commentsToResult":"Kommentar til resultat",
-        "restrictions":{
-          "restrictions":"Klausulering",
-          "restrictionsFor":"Klausulert for",
-          "reasonForRestriction":"Årsak til klausulering",
-          "caseNumber":"Saksnummer",
-          "addMoreCaseNumbers":" Legg til flere saksnummer",
-          "endDate":"Sluttdato",
-          "findActor":"Finn aktør"
+        "externalSource": "Ekstern kilde",
+        "commentsToResult": "Kommentar til resultat",
+        "restrictions": {
+          "restrictions": "Klausulering",
+          "restrictionsFor": "Klausulert for",
+          "reasonForRestriction": "Årsak til klausulering",
+          "caseNumber": "Saksnummer",
+          "addMoreCaseNumbers": " Legg til flere saksnummer",
+          "endDate": "Sluttdato",
+          "findActor": "Finn aktør"
         },
         "registeringAnalysis": "Analyse",
         "reasonForCancellation": "Årsak til oppheving",
@@ -1236,16 +1270,16 @@
           "cancel": "Avbryt",
           "ok": "Ok"
         },
-        "uploadFile":"Last opp fil",
-        "browse":"Bla gjennom",
-        "yes":"Ja",
-        "no":"Nei",
-        "change":"Endre",
-        "lastUpdateBy" : "Sist endret av",
+        "uploadFile": "Last opp fil",
+        "browse": "Bla gjennom",
+        "yes": "Ja",
+        "no": "Nei",
+        "change": "Endre",
+        "lastUpdateBy": "Sist endret av",
         "name": "Navn",
-        "role":"Rolle",
-        "date":"Dato",
-        "chooseRole":"Velg rolle",
+        "role": "Rolle",
+        "date": "Dato",
+        "chooseRole": "Velg rolle",
         "attachment": "Vedlegg"
       },
       "viewControl": {
@@ -1530,8 +1564,8 @@
         "title": "Magasin",
         "header": "Egenskaper",
         "newNode": "Ny node",
-        "lastUpdateBy" : "Sist endret av: ",
-        "lastUpdateDate" : "Sist endret dato: ",
+        "lastUpdateBy": "Sist endret av: ",
+        "lastUpdateDate": "Sist endret dato: ",
         "environmentalData": "Miljødata",
         "type": {
           "labelText": "Type",
