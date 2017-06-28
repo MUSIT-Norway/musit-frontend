@@ -9,10 +9,7 @@ import store$, { getAnalysis$, setLoading$, clearStore$ } from './analysisStore'
 import Analysis from '../../models/analysis';
 import analysisForm, { fieldsArray } from './analysisForm';
 import Config from '../../config';
-import {
-  getExtraResultAttributes,
-  getAnalysisType
-} from './shared/getters';
+import { getExtraResultAttributes, getAnalysisType } from './shared/getters';
 
 const { form$, ...formActions } = analysisForm;
 

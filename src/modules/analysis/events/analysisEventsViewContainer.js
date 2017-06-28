@@ -38,6 +38,8 @@ const LoadedAnalysisEventsViewComponent = lifeCycle({
   }
 })(AnalysisEventsViewComponent);
 
-export default flowRight([inject(data, commands, props), loadPredefinedTypes, makeUrlAware])(
-  LoadedAnalysisEventsViewComponent
-);
+export default flowRight([
+  inject(data, commands, props),
+  loadPredefinedTypes,
+  makeUrlAware
+])(LoadedAnalysisEventsViewComponent);
