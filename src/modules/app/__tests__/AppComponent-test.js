@@ -68,6 +68,7 @@ describe('AppComponent', () => {
         toggleEnabled={toggleEnabled}
         clearObjectPicklist={a => a}
         clearNodePicklist={a => a}
+        featureToggles={{ administrationPage: true }}
       >
         <span>Yay</span>
       </AppComponent>

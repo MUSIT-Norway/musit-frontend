@@ -42,7 +42,7 @@ type Props = {
   clickCancel: Function
 };
 
-export default ({
+const AnalysisFormComponent = ({
   form,
   updateForm,
   updateArrayField,
@@ -280,9 +280,6 @@ export default ({
                 updateForm={updateForm}
               />
             </div>
-            <div className="col-md-11 col-md-offset-0">
-              <AddButton label={I18n.t('musit.analysis.addMoreObjectOrSample')} />
-            </div>
           </div>
           <hr />
           <Result
@@ -348,3 +345,5 @@ export default ({
     </div>
   );
 };
+
+export default AnalysisFormComponent;

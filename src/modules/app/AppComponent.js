@@ -20,6 +20,7 @@ import {
 } from '../../stores/pickList';
 import Config from '../../config';
 import { backendVersion, frontendVersion, VersionInfo } from '../../build';
+import featureToggles from '../../featureToggles';
 
 export class AppComponent extends Component {
   static propTypes = {
@@ -31,7 +32,8 @@ export class AppComponent extends Component {
     pickList: PropTypes.object.isRequired,
     goTo: PropTypes.func.isRequired,
     clearObjectPicklist: PropTypes.func.isRequired,
-    clearNodePicklist: PropTypes.func.isRequired
+    clearNodePicklist: PropTypes.func.isRequired,
+    featureToggles: PropTypes.object.isRequired
   };
 
   constructor(props, context) {
@@ -134,7 +136,6 @@ export class AppComponent extends Component {
     if (!this.isSessionLoaded()) {
       return <Loader loaded={false} />;
     }
-
     return (
       <div>
         <Navbar fixedTop>
@@ -166,13 +167,14 @@ export class AppComponent extends Component {
               >
                 <NavItem>{I18n.t('musit.reports.reports')}</NavItem>
               </LinkContainer>
-              <LinkContainer
-                to={Config.magasin.urls.client.administration.goToAdministration(
-                  this.props.appSession
-                )}
-              >
-                <NavItem>{I18n.t('musit.administration.administration')}</NavItem>
-              </LinkContainer>
+              {this.props.featureToggles.administrationPage &&
+                <LinkContainer
+                  to={Config.magasin.urls.client.administration.goToAdministration(
+                    this.props.appSession
+                  )}
+                >
+                  <NavItem>{I18n.t('musit.administration.administration')}</NavItem>
+                </LinkContainer>}
             </Nav>
             <Nav pullRight>
               <LinkContainer
@@ -239,6 +241,8 @@ export class AppComponent extends Component {
   }
 }
 
+const props = props => ({ ...props, featureToggles: featureToggles });
+
 const data = {
   appSession$: { type: PropTypes.object.isRequired },
   pickList$: { type: PropTypes.object.isRequired }
@@ -252,4 +256,4 @@ const commands = {
   clearNodePicklist$
 };
 
-export default inject(data, commands)(AppComponent);
+export default inject(data, commands, props)(AppComponent);
