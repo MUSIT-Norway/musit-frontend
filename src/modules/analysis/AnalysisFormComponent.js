@@ -18,6 +18,8 @@ import toString from 'lodash/toString';
 import toArray from 'lodash/toArray';
 import AttributeSelect from './components/DescriptionAttributeSelect';
 import AttributeInput from './components/DescriptionAttributeInput';
+import ValidatedFormGroup from '../../forms/components/ValidatedFormGroup';
+import { isFormValid } from '../../forms/validators';
 
 type Props = {
   form: FormData,
@@ -80,7 +82,8 @@ export default ({
             />
             <hr />
           </div>}
-        <div className="form-group">
+
+        <ValidatedFormGroup fields={[form.analysisTypeId]}>
           <label className="control-label col-md-2" htmlFor="type">
             {I18n.t('musit.analysis.analysisType')}
           </label>
@@ -130,7 +133,7 @@ export default ({
                   {analysisTypeTerm}
                 </p>
               </div>}
-        </div>
+        </ValidatedFormGroup>
         {extraDescriptionAttributes &&
           extraDescriptionAttributes.map((attr, i) => (
             <div className="form-group" key={i}>
@@ -173,7 +176,7 @@ export default ({
             </select>
           </div>
         </div>
-        <div className="form-group">
+        <ValidatedFormGroup fields={[form.status]}>
           <label className="control-label col-md-2" htmlFor="status">
             {I18n.t('musit.analysis.status')}
           </label>
@@ -191,8 +194,7 @@ export default ({
               <option value="4">{getStatusText(4)}</option>
             </select>
           </div>
-        </div>
-
+        </ValidatedFormGroup>
         <div className="form-group">
           <label className="control-label col-md-2" htmlFor="place">
             {I18n.t('musit.analysis.place')}
@@ -331,7 +333,11 @@ export default ({
             <Restrictions appSession={appSession} form={form} updateForm={updateForm} />}
         </div>
         <hr />
-        <button className="btn btn-primary" onClick={clickSave}>
+        <button
+          className="btn btn-primary"
+          disabled={!isFormValid(form)}
+          onClick={clickSave}
+        >
           {I18n.t('musit.texts.save')}
         </button>
         {' '}

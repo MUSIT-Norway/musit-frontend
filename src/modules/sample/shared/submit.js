@@ -3,14 +3,12 @@ import flatten from 'lodash/flatten';
 import Config from '../../../config';
 import type { FormDetails } from '../types/form';
 import Sample from '../../../models/sample';
+import { isFormValid } from '../../../forms/validators';
 
 export const sampleProps = (props, doSaveSample) => {
   return {
     objectData: props.location.state[0],
-    isFormValid: Object.keys(props.form).reduce((acc, k) => {
-      const field = props.form[k];
-      return acc && field.status.valid;
-    }, true),
+    isFormValid: isFormValid(props.form),
     sampleTypeDisplayName,
     goBack: e => {
       e.preventDefault();

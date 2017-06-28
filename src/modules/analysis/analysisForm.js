@@ -8,10 +8,10 @@ import createForm, {
 
 export const fieldsArray = [
   getStrField('id'),
-  getNumberField('analysisTypeId'),
+  getNumberField('analysisTypeId', null, true),
   getStrField('doneBy'),
   getStrField('doneDate'),
-  getArrField('persons'),
+  getArrField('persons', [], false),
   getStrField('registeredBy', null, false),
   getStrField('registeredByName', null, false),
   getStrField('registeredDate', null, false),
@@ -21,7 +21,7 @@ export const fieldsArray = [
   getStrField('completedDate'),
   getStrField('objectId'),
   getStrField('note'),
-  getStrField('type'),
+  getStrField('type', null, false),
   getStrField('partOf'),
   getStrField('result'),
   getNumberField('orgId'),

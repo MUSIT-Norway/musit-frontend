@@ -46,4 +46,10 @@ export const noValidation = {
   valueValidator: () => () => null
 };
 
+export const isFormValid = f =>
+  Object.keys(f).reduce((acc, k) => {
+    const field: Object = f[k];
+    return acc && field.status && field.status.valid;
+  }, true);
+
 export const composeValidators = revalidate.composeValidators;

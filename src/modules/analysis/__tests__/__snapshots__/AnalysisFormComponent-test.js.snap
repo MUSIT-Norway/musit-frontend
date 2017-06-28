@@ -14,8 +14,24 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
   <form
     className="form-horizontal"
   >
-    <div
-      className="form-group"
+    <ValidatedFormGroup
+      fields={
+        Array [
+          Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function],
+              "toRaw": [Function],
+            },
+            "name": "analysisTypeId",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function],
+              "valueValidator": [Function],
+            },
+          },
+        ]
+      }
     >
       <label
         className="control-label col-md-2"
@@ -40,7 +56,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
           </select>
         </div>
       </div>
-    </div>
+    </ValidatedFormGroup>
     <div
       className="form-group"
     >
@@ -67,8 +83,24 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
         </select>
       </div>
     </div>
-    <div
-      className="form-group"
+    <ValidatedFormGroup
+      fields={
+        Array [
+          Object {
+            "defaultValue": 1,
+            "mapper": Object {
+              "fromRaw": [Function],
+              "toRaw": [Function],
+            },
+            "name": "status",
+            "rawValue": "1",
+            "validator": Object {
+              "rawValidator": [Function],
+              "valueValidator": [Function],
+            },
+          },
+        ]
+      }
     >
       <label
         className="control-label col-md-2"
@@ -112,7 +144,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
           </option>
         </select>
       </div>
-    </div>
+    </ValidatedFormGroup>
     <div
       className="form-group"
     >
@@ -304,6 +336,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
     <hr />
     <button
       className="btn btn-primary"
+      disabled={true}
       onClick={[Function]}
     >
       Lagre

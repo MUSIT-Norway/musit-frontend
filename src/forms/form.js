@@ -65,7 +65,7 @@ const updateField = (field: Field<*>, data: Update<*>): Field<*> => {
 export const getStrField = (
   field: string,
   defaultValue?: ?string = null,
-  required?: boolean = true
+  required?: boolean = false
 ): Field<string> => ({
   name: field,
   defaultValue: defaultValue,
@@ -88,7 +88,7 @@ export const getBoolField = (
 export const getArrField = (
   field: string,
   defaultValue?: Array<*> = [],
-  required?: boolean = true
+  required?: boolean = false
 ): Field<Array<*>> => ({
   name: field,
   defaultValue: defaultValue,
@@ -101,7 +101,7 @@ export const getArrField = (
 export const getNumberField = (
   field: string,
   defaultValue?: ?number = null,
-  required?: boolean = true,
+  required?: boolean = false,
   rangeFrom?: ?number = 0,
   rangeTo?: ?number = Number.MAX_VALUE,
   decimalPrecision?: ?number = 2
