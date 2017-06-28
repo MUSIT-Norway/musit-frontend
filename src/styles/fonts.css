@@ -117,3 +117,9 @@
 .icon-musitpicklistobject:before {
     content: "\77";
 }
+.icon-musit-microscope:before {
+    content: "\4a";
+}
+.icon-musit-testtube:before {
+    content: "\4b";
+}

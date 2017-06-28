@@ -47,7 +47,7 @@ export default function ObjectResultTable({
                 >
                   <td name="type" width={10}>
                     {row.sampleNum
-                      ? <Fontawesome name="flask" />
+                      ? <span className="icon icon-musit-testtube" />
                       : <span className="icon icon-musitobject" />}
                   </td>
                   <td name="museumNo">{row.museumNo || ''}</td>

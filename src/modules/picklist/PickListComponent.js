@@ -73,7 +73,7 @@ export class PickListComponent extends React.Component {
       return <FontAwesome name="folder" />;
     }
     if (pick.value.objectType === 'sample') {
-      return <FontAwesome name="flask" />;
+      return <span className="icon icon-musit-testtube" />;
     }
     return <span className="icon icon-musitobject" />;
   }
@@ -193,7 +193,10 @@ export class PickListComponent extends React.Component {
                     {isNode &&
                       <FontAwesome
                         className="normalActionNoPadding"
-                        style={{ fontSize: '1.5em' }}
+                        style={{
+                          fontSize: '1.5em',
+                          color: marked.length !== 1 ? 'grey' : null
+                        }}
                         name="print"
                         onClick={() => {
                           if (marked.length > 0) {
@@ -203,13 +206,12 @@ export class PickListComponent extends React.Component {
                         title={I18n.t('musit.pickList.tooltip.printSelectedNodes')}
                       />}
                     {isObject &&
-                      <FontAwesome
-                        className="normalActionNoPadding"
+                      <span
+                        className="icon icon-musit-testtube"
                         style={{
                           fontSize: '1.5em',
                           color: marked.length !== 1 ? 'grey' : null
                         }}
-                        name="flask"
                         onClick={() => {
                           if (marked.length === 1) {
                             this.props.createSample(markedValues, this.props.appSession);
@@ -219,10 +221,12 @@ export class PickListComponent extends React.Component {
                       />}
                     {isObject &&
                       <span>
-                        <FontAwesome
-                          className="normalAction"
-                          style={{ fontSize: '1.5em' }}
-                          name="code-fork"
+                        <span
+                          className="icon-musit-microscope"
+                          style={{
+                            fontSize: '1.5em',
+                            color: marked.length !== 1 ? 'grey' : null
+                          }}
                           onClick={() => {
                             if (marked.length > 0) {
                               this.props.createAnalysis(
@@ -239,7 +243,10 @@ export class PickListComponent extends React.Component {
                     <FontAwesome
                       className="normalAction"
                       name="truck"
-                      style={{ fontSize: '1.5em' }}
+                      style={{
+                        fontSize: '1.5em',
+                        color: marked.length !== 1 ? 'grey' : null
+                      }}
                       onClick={() => {
                         if (marked.length > 0) {
                           this.showMoveNodes(markedValues);
@@ -252,7 +259,10 @@ export class PickListComponent extends React.Component {
                     {this.selectedCount(isNode, marked.length)}
                     <FontAwesome
                       className="normalAction"
-                      style={{ fontSize: '1.5em' }}
+                      style={{
+                        fontSize: '1.5em',
+                        color: marked.length !== 1 ? 'grey' : null
+                      }}
                       name="remove"
                       onClick={() => {
                         if (marked.length > 0) {

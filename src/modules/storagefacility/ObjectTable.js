@@ -48,7 +48,7 @@ export default class ObjectGrid extends Component {
         >
           <td style={{ width: '20px' }}>
             {c.objectType && c.objectType === 'sample'
-              ? <FontAwesome style={{ fontSize: '1.3em' }} name="flask" />
+              ? <span className="icon icon-musit-testtube" />
               : <span className="icon icon-musitobject" />}
           </td>
           <td>

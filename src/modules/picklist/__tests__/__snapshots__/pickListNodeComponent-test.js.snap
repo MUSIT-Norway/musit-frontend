@@ -70,6 +70,7 @@ exports[`PickListComponent for nodes should display component (nodes) correctly 
                 onClick={[Function]}
                 style={
                   Object {
+                    "color": "grey",
                     "fontSize": "1.5em",
                   }
                 }
@@ -92,6 +93,7 @@ exports[`PickListComponent for nodes should display component (nodes) correctly 
                 onClick={[Function]}
                 style={
                   Object {
+                    "color": "grey",
                     "fontSize": "1.5em",
                   }
                 }
@@ -114,6 +116,7 @@ exports[`PickListComponent for nodes should display component (nodes) correctly 
                 onClick={[Function]}
                 style={
                   Object {
+                    "color": "grey",
                     "fontSize": "1.5em",
                   }
                 }

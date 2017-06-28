@@ -213,9 +213,8 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                         }
                       }
                     >
-                      <FontAwesome
-                        className="normalActionNoPadding"
-                        name="flask"
+                      <span
+                        className="icon icon-musit-testtube"
                         onClick={[Function]}
                         style={
                           Object {
@@ -224,10 +223,10 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                           }
                         }
                         title="Opprett prøve"
-                      >
+                      />
+                      <span>
                         <span
-                          aria-hidden={true}
-                          className="fa fa-flask normalActionNoPadding"
+                          className="icon-musit-microscope"
                           onClick={[Function]}
                           style={
                             Object {
@@ -235,33 +234,8 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                               "fontSize": "1.5em",
                             }
                           }
-                          title="Opprett prøve"
-                        />
-                      </FontAwesome>
-                      <span>
-                        <FontAwesome
-                          className="normalAction"
-                          name="code-fork"
-                          onClick={[Function]}
-                          style={
-                            Object {
-                              "fontSize": "1.5em",
-                            }
-                          }
                           title="Opprett analyse"
-                        >
-                          <span
-                            aria-hidden={true}
-                            className="fa fa-code-fork normalAction"
-                            onClick={[Function]}
-                            style={
-                              Object {
-                                "fontSize": "1.5em",
-                              }
-                            }
-                            title="Opprett analyse"
-                          />
-                        </FontAwesome>
+                        />
                         <span
                           className="normalActionNoPadding"
                           style={
@@ -280,6 +254,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                         onClick={[Function]}
                         style={
                           Object {
+                            "color": "grey",
                             "fontSize": "1.5em",
                           }
                         }
@@ -291,6 +266,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                           onClick={[Function]}
                           style={
                             Object {
+                              "color": "grey",
                               "fontSize": "1.5em",
                             }
                           }
@@ -314,6 +290,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                         onClick={[Function]}
                         style={
                           Object {
+                            "color": "grey",
                             "fontSize": "1.5em",
                           }
                         }
@@ -325,6 +302,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                           onClick={[Function]}
                           style={
                             Object {
+                              "color": "grey",
                               "fontSize": "1.5em",
                             }
                           }
@@ -1059,9 +1037,8 @@ exports[`PickListComponent for objects should display component (objects) correc
                 }
               }
             >
-              <FontAwesome
-                className="normalActionNoPadding"
-                name="flask"
+              <span
+                className="icon icon-musit-testtube"
                 onClick={[Function]}
                 style={
                   Object {
@@ -1072,12 +1049,12 @@ exports[`PickListComponent for objects should display component (objects) correc
                 title="Opprett prøve"
               />
               <span>
-                <FontAwesome
-                  className="normalAction"
-                  name="code-fork"
+                <span
+                  className="icon-musit-microscope"
                   onClick={[Function]}
                   style={
                     Object {
+                      "color": "grey",
                       "fontSize": "1.5em",
                     }
                   }
@@ -1101,6 +1078,7 @@ exports[`PickListComponent for objects should display component (objects) correc
                 onClick={[Function]}
                 style={
                   Object {
+                    "color": "grey",
                     "fontSize": "1.5em",
                   }
                 }
@@ -1123,6 +1101,7 @@ exports[`PickListComponent for objects should display component (objects) correc
                 onClick={[Function]}
                 style={
                   Object {
+                    "color": "grey",
                     "fontSize": "1.5em",
                   }
                 }
