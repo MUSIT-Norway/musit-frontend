@@ -11,6 +11,7 @@ import type { Callback, AjaxGet, AjaxPost, AjaxPut } from './types/ajax';
 import flatten from 'lodash/flatten';
 import { DATE_FORMAT_DISPLAY } from '../shared/util';
 import type { AnalysisCollection, Result, Restriction } from '../types/analysisTypes';
+import type { CollectionId } from 'types/ids';
 
 export type AnalysisSavePayload = {
   doneBy?: ?string,
@@ -159,7 +160,8 @@ class MusitAnalysis {
     ajaxGet: AjaxGet
   ) => (props: {
     museumId: number,
-    token: string
+    token: string,
+    collectionId: CollectionId
   }) => Observable;
 }
 
@@ -533,8 +535,14 @@ MusitAnalysis.loadPredefinedTypes = (ajaxGet = simpleGet) => ({
     .do(onComplete);
 };
 
-MusitAnalysis.getAnalysisEvents = (ajaxGet = simpleGet) => ({ museumId, token }) => {
-  const url = Config.magasin.urls.api.analysis.getAnalysisEvents(museumId);
+MusitAnalysis.getAnalysisEvents = (ajaxGet = simpleGet) => ({
+  museumId,
+  token,
+  collectionId
+}) => {
+  const url = Config.magasin.urls.api.analysis.getAnalysisEvents(museumId, [
+    collectionId
+  ]);
   return ajaxGet(url, token).map(extractResponseArray);
 };
 

@@ -132,7 +132,8 @@ export default {
             `/api/management/${mid}/analyses/objects/${objectId}`,
           saveAnalysisType: (mid: MuseumId) => `/api/management/${mid}/analyses/types`,
           getPurposes: '/api/management/purposes',
-          getAnalysisEvents: (mid: MuseumId) => `/api/management/${mid}/analyses`
+          getAnalysisEvents: (mid: MuseumId, collectionIds: Array<CollectionId>) =>
+            `/api/management/${mid}/analyses?collectionIds=${collectionIds.join(',')}`
         },
         samples: {
           baseUrl: (mid: MuseumId): string => `/api/management/${mid}/samples`,

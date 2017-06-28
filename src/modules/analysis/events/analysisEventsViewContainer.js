@@ -30,6 +30,7 @@ const LoadedAnalysisEventsViewComponent = lifeCycle({
   onMount: ({ getAnalysisEvents, appSession, predefined }) => {
     getAnalysisEvents({
       museumId: appSession.museumId,
+      collectionId: appSession.collectionId,
       token: appSession.accessToken,
       analysisTypes: predefined.analysisTypes
     });

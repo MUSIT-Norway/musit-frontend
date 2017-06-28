@@ -256,8 +256,8 @@ describe('Config urls', () => {
         },
         {
           name: 'getAnalysisEvents',
-          actual: urls.api.analysis.getAnalysisEvents(99),
-          expected: '/api/management/99/analyses'
+          actual: urls.api.analysis.getAnalysisEvents(99, ['col1', 'col2']),
+          expected: '/api/management/99/analyses?collectionIds=col1,col2'
         },
         {
           name: 'baseUrl',
