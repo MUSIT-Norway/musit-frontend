@@ -188,9 +188,6 @@ export default ({
               }
             />
           </div>
-          <div className="col-md-11 col-md-offset-0">
-            <AddButton label="Legg til object" />
-          </div>
         </div>
         <hr />
         <Result
