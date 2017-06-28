@@ -5,6 +5,7 @@ import React from 'react';
 import { formatISOString } from '../../../../shared/util';
 import { getArrField, getStrField } from '../../../../forms/form';
 import DatePicker from '../../../../components/DatePicker';
+import { ActorSuggest } from '../../../../components/suggest/ActorSuggest';
 import Restriction from '../Restrictions';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
@@ -85,6 +86,63 @@ describe('Restriction component', () => {
       Comp.find(DatePicker).props().onChange('Invalid date');
 
       expect(updateForm.notCalled).toBe(true);
+    });
+  });
+
+  describe('requester fields', () => {
+    it('should update requesterName', () => {
+      const appSession = sinon.spy();
+      const updateForm = sinon.spy();
+      const Comp = shallow(
+        <Restriction form={form} updateForm={updateForm} appSession={appSession} />
+      );
+      const actor = {
+        fn: 'Ola Nordmann'
+      };
+      Comp.find(ActorSuggest).props().onChange(actor);
+
+      expect(updateForm.getCall(0).args[0]).toEqual({
+        name: form.restrictions_requesterName.name,
+        rawValue: actor.fn
+      });
+    });
+
+    it('should update request id based from applicationId', () => {
+      const appSession = sinon.spy();
+      const updateForm = sinon.spy();
+      const Comp = shallow(
+        <Restriction form={form} updateForm={updateForm} appSession={appSession} />
+      );
+      const actor = {
+        fn: 'Ola Nordmann',
+        applicationId: '123'
+      };
+      Comp.find(ActorSuggest).props().onChange(actor);
+
+      expect(updateForm.calledTwice);
+      expect(updateForm.getCall(1).args[0]).toEqual({
+        name: form.restrictions_requester.name,
+        rawValue: actor.applicationId
+      });
+    });
+
+    it('should update request id based from dataportenId', () => {
+      const appSession = sinon.spy();
+      const updateForm = sinon.spy();
+      const Comp = shallow(
+        <Restriction form={form} updateForm={updateForm} appSession={appSession} />
+      );
+      const actor = {
+        fn: 'Ola Nordmann',
+        dataportenId: '123'
+      };
+      Comp.find(ActorSuggest).props().onChange(actor);
+
+      expect(updateForm.calledTwice);
+      expect(updateForm.getCall(1).args[0]).toEqual({
+        name: form.restrictions_requester.name,
+        rawValue: actor.dataportenId
+      });
     });
   });
 });

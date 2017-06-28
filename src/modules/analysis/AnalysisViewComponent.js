@@ -1,15 +1,10 @@
 // @flow
 import React from 'react';
 import { I18n } from 'react-i18nify';
-import type { AppSession } from '../../types/appSession';
-import type { FormData } from './shared/formType';
-import type { Store } from './shared/storeType';
 import MetaInformation from '../../components/metainfo';
-import type { Person } from '../../components/person/PersonRoleDate';
 import moment from 'moment';
 import ObjectTable from './components/ExpandableObjectResultTable';
 import AddButton from '../../components/AddButton';
-import type { Predefined } from './shared/predefinedType';
 import toArray from 'lodash/toArray';
 import {
   getAnalysisTypeTerm,
@@ -17,6 +12,13 @@ import {
   getStatusText,
   getAnalysisPurpose
 } from './shared/submit';
+import { DATE_FORMAT_DISPLAY } from '../../shared/util';
+
+import type { Predefined } from './shared/predefinedType';
+import type { Person } from '../../components/person/PersonRoleDate';
+import type { AppSession } from '../../types/appSession';
+import type { FormData } from './shared/formType';
+import type { Store } from './shared/storeType';
 
 type Props = {
   form: FormData,
@@ -131,7 +133,7 @@ export default ({ form, store, predefined, appSession, clickEdit }: Props) => (
                 {I18n.t(`musit.analysis.roles.${p.role || 'UNKNOWN'}`) || p.role}
               </div>
               <div className="col-md-2">
-                {p.date ? moment(p.date).format('DD.MM.YYYY') : null}
+                {p.date ? moment(p.date).format(DATE_FORMAT_DISPLAY) : null}
               </div>
             </div>
           ))}
@@ -237,7 +239,10 @@ export default ({ form, store, predefined, appSession, clickEdit }: Props) => (
               </label>
               <div className="col-md-10">
                 <p className="form-control-static" id="expirationDate">
-                  {form.restrictions_expirationDate.value || ''}
+                  {form.restrictions_expirationDate.value &&
+                    moment(form.restrictions_expirationDate.value).format(
+                      DATE_FORMAT_DISPLAY
+                    )}
                 </p>
               </div>
             </div>

@@ -1,11 +1,13 @@
 // @flow
 import React from 'react';
 import { ActorSuggest } from '../../../components/suggest/ActorSuggest';
+import MusitActor from '../../../models/actor';
 import DatePicker from '../../../components/DatePicker';
 import { DATE_FORMAT_DISPLAY, formatISOString } from '../../../shared/util';
+import { I18n } from 'react-i18nify';
 import type { AppSession } from '../../../types/appSession';
 import type { Field, Update } from '../../../forms/form';
-import { I18n } from 'react-i18nify';
+import type { Actor } from 'types/actor';
 
 type Form = {
   restrictions_requesterName: Field<string>,
@@ -34,14 +36,14 @@ export default function Restrictions({ appSession, form, updateForm }: Props) {
             id="restrictions_requester"
             value={form.restrictions_requesterName.rawValue || ''}
             placeHolder="Find actor"
-            onChange={actor => {
+            onChange={(actor: Actor) => {
               updateForm({
                 name: form.restrictions_requesterName.name,
                 rawValue: actor.fn
               });
               updateForm({
                 name: form.restrictions_requester.name,
-                rawValue: actor.dataportenId
+                rawValue: MusitActor.getActorId(actor)
               });
             }}
           />

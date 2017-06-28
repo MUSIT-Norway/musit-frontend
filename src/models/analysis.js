@@ -5,11 +5,9 @@ import MusitActor from './actor';
 import MusitObject from './object';
 import Sample from './sample';
 import { Observable } from 'rxjs';
-import moment from 'moment';
 import type { Field } from '../forms/form';
 import type { Callback, AjaxGet, AjaxPost, AjaxPut } from './types/ajax';
 import flatten from 'lodash/flatten';
-import { DATE_FORMAT_DISPLAY } from '../shared/util';
 import type { AnalysisCollection, Result, Restriction } from '../types/analysisTypes';
 import type { CollectionId } from 'types/ids';
 
@@ -250,7 +248,7 @@ MusitAnalysis.fromJsonToForm = (json, formDef) => {
     );
     formValues.restrictions_expirationDate = toField(
       'restrictions_expirationDate',
-      moment(restriction.expirationDate).format(DATE_FORMAT_DISPLAY)
+      restriction.expirationDate
     );
   }
 
