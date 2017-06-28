@@ -109,7 +109,7 @@
         "chooseTreatment": "Select treatment",
         "hasResidualMaterial": "Has residual material",
         "comments": "Comment",
-        "updateSample": "Edit sample"
+        "updateSample": "Edit"
       },
       "analysis": {
         "analysis": "Analysis",
@@ -172,7 +172,12 @@
         "editAnalysis": "Edit analysis",
         "createAnalysis": "Create analysis",
         "createSample": "Create sample",
-        "viewAnalysis": "Analysis"
+        "viewAnalysis": "Analysis",
+        "roles": {"administrator": "Administrator",
+          "responsible": "Responsible",
+          "doneBy": "Done by",
+          "completedBy": "Completed by"
+        }
       },
       "unknown": "Unknown",
       "language": "Language",
@@ -419,12 +424,12 @@
           "cancel": "Cancel",
           "ok": "Ok"
         },
-        "uploadFile": "Upload file",
-        "browse": "Browse",
-        "yes": "Yes",
-        "no": "No",
-        "change": "Change",
-        "lastUpdateBy": "Last changed by",
+        "uploadFile":"Upload file",
+        "browse":"Browse",
+        "yes":"Yes",
+        "no":"No",
+        "change":"Edit",
+        "lastUpdateBy" : "Last changed by",
         "name": "Name",
         "role": "Role",
         "date": "Date",
@@ -1023,7 +1028,13 @@
         "createAnalysis": "Opprett analyse",
         "createSample": "Opprett prøve",
         "viewAnalysis": "Analyse",
-        "registeringSample": "Registrer prøveuttak"
+        "registeringSample": "Registrer prøveuttak",
+        "roles": {
+          "administrator": "Administrert av",
+          "responsible": "Ansvarlig",
+          "doneBy": "Analysert av",
+          "completedBy": "Avsluttet av"
+        }
       },
       "unknown": "Ukjent",
       "language": "Språk",

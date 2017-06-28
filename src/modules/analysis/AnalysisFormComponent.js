@@ -65,7 +65,7 @@ export default ({
       <div className="page-header">
         <h1>
           {form.id.value
-            ? I18n.t('musit.analysis.editAnalysis')
+            ? I18n.t('musit.analysis.analysis')
             : I18n.t('musit.analysis.registeringAnalysis')}
         </h1>
       </div>

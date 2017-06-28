@@ -28,11 +28,11 @@ export default function ObjectResultTable({
       <thead>
         <tr>
           <th>{' '}</th>
-          <th>Museumnr</th>
-          <th>Unr</th>
-          <th>Term/artsnavn</th>
-          <th>Prøvenr</th>
-          <th>Prøvetype</th>
+          <th>{I18n.t('musit.objects.objectsView.musNo')}</th>
+          <th>{I18n.t('musit.objects.objectsView.subNo')}</th>
+          <th>{I18n.t('musit.analysis.term')}</th>
+          <th>{I18n.t('musit.sample.sampleNumber')}</th>
+          <th>{I18n.t('musit.sample.sampleType')}</th>
           <th width={10}>{' '}</th>
         </tr>
       </thead>
