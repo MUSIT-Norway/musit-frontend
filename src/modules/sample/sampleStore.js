@@ -1,5 +1,7 @@
+// @flow
+
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import Sample from '../../models/sample';
 import predefined$ from '../../stores/predefined';
 import { KEEP_ALIVE } from '../../stores/constants';
@@ -8,6 +10,14 @@ import type { SampleData } from 'types/samples';
 import type { SampleType } from 'types/sampleTypes';
 
 export type SampleDateExtended = { sampleType?: SampleType } & SampleData;
+
+export type Action = {
+  getPredefinedTypes$: Subject,
+  clear$: Subject,
+  getSampleTypes$: Subject,
+  getSample$: Subject,
+  getSamplesForNode$: Subject
+}
 
 const initialState = { data: [] };
 
@@ -39,7 +49,7 @@ const extendSample = (state, sample, apiSampleTypes) => {
   }
 };
 
-const reducer$ = (actions, predefined) =>
+const reducer$ = (actions: Action, predefined: Subject) =>
   Observable.merge(
     actions.clear$.map(() => state => ({
       ...initialState,
@@ -62,14 +72,14 @@ const reducer$ = (actions, predefined) =>
   );
 
 export const sampleStore$ = (
-  actions = {
+  actions: Action = {
     getPredefinedTypes$,
     clear$,
     getSampleTypes$,
     getSample$,
     getSamplesForNode$
   },
-  predefined = predefined$
+  predefined: Subject = predefined$
 ) =>
   createStore(
     'sampleStore$',
