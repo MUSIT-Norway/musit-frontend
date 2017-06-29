@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
 import flatten from 'lodash/flatten';
+import uniq from 'lodash/uniq';
 import uniqBy from 'lodash/uniqBy';
 import find from 'lodash/find';
 import { I18n } from 'react-i18nify';
@@ -65,11 +66,12 @@ export default class MusitUserAccount extends Component {
       </Row>
     );
     const groups = this.props.groups;
-    const museumId = this.props.selectedMuseumId;
+    const selectedMuseumId = this.props.selectedMuseumId;
     const collectionId = this.props.selectedCollectionId;
     const museumDropDown = groups.length > 1 && groups[0].museumName;
     const collectionDropdown = groups.length > 0 && groups[0].collections.length > 0;
-    const collections = collectionDropdown && this.getCollections(museumId, groups);
+    const collections =
+      collectionDropdown && this.getCollections(selectedMuseumId, groups);
     const hasAdmin = !!find(groups, g => {
       return g.permission >= 40;
     });
@@ -93,17 +95,18 @@ export default class MusitUserAccount extends Component {
                 {I18n.t('musit.userProfile.museum')}
               </MenuItem>}
             {museumDropDown &&
-              groups.map((cc, i) => {
-                const cid = this.getCollections(cc.museumId, groups)[0].uuid;
+              uniq(groups.map(g => g.museumId)).map((museumId, i) => {
+                const defaultCollectionId = this.getCollections(museumId, groups)[0].uuid;
                 return (
                   <MenuItem
-                    key={i}
-                    eventKey={cc.museumId}
-                    onClick={() => this.props.handleMuseumId(cc.museumId, cid)}
+                    key={'museum-' + i}
+                    eventKey={museumId}
+                    onClick={() =>
+                      this.props.handleMuseumId(museumId, defaultCollectionId)}
                   >
                     {menuText(
-                      museumId === cc.museumId ? <FontAwesome name="check" /> : '',
-                      I18n.t(`musit.userProfile.museums.${cc.museumId}`)
+                      selectedMuseumId === museumId ? <FontAwesome name="check" /> : '',
+                      I18n.t(`musit.userProfile.museums.${museumId}`)
                     )}
                   </MenuItem>
                 );
