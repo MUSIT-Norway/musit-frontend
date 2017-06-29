@@ -1,10 +1,8 @@
 /* eslint-disable */
 import { Subject, Observable } from 'rxjs/Rx';
 import { store$ } from '../predefined';
-import MusitObject from '../../models/object';
 import Sample from '../../models/sample';
 import Analysis from '../../models/analysis';
-import isEqual from 'lodash/isEqual';
 import MusitTestScheduler from '../../testutils/MusitTestScheduler';
 
 const diff = require('deep-diff').diff;
@@ -14,12 +12,14 @@ describe('predefined', () => {
     const testScheduler = new MusitTestScheduler();
 
     // mock streams
-    const setLoadingSampleTypesM = '-1-------';
-    const loadSampleTypesM = '--1------';
-    const setLoadingAnalysisTypesM = '---1-----';
-    const loadAnalysisTypesM = '----1----';
-    const expected = 'abcde----';
-
+    // prettier-ignore
+    const stream = {
+      setLoadingSampleTypesM:   '-1-------',
+      loadSampleTypesM:         '--1------',
+      setLoadingAnalysisTypesM: '---1-----',
+      loadAnalysisTypesM:       '----1----',
+      expected:                 'abcde----'
+  }
     const expectedStateMap = {
       a: {
         loadingAnalysisTypes: false,
@@ -32,7 +32,7 @@ describe('predefined', () => {
       c: {
         loadingAnalysisTypes: false,
         loadingSampleTypes: false,
-        sampleTypes: {},
+        sampleTypes: { raw: [] },
         storageContainers: [],
         storageMediums: [],
         treatments: []
@@ -40,7 +40,7 @@ describe('predefined', () => {
       d: {
         loadingAnalysisTypes: true,
         loadingSampleTypes: false,
-        sampleTypes: {},
+        sampleTypes: { raw: [] },
         storageContainers: [],
         storageMediums: [],
         treatments: []
@@ -48,7 +48,7 @@ describe('predefined', () => {
       e: {
         loadingAnalysisTypes: false,
         loadingSampleTypes: false,
-        sampleTypes: {},
+        sampleTypes: { raw: [] },
         storageContainers: [],
         storageMediums: [],
         treatments: [],
@@ -60,10 +60,10 @@ describe('predefined', () => {
     };
 
     const setLoadingSampleTypes$ = testScheduler.createHotObservable(
-      setLoadingSampleTypesM
+      stream.setLoadingSampleTypesM
     );
     const loadSampleTypes$ = testScheduler
-      .createHotObservable(loadSampleTypesM, {
+      .createHotObservable(stream.loadSampleTypesM, {
         1: { token: '12134', museumId: 99, collectionId: 'sfsfdfs' }
       })
       .flatMap(
@@ -74,10 +74,10 @@ describe('predefined', () => {
         })
       );
     const setLoadingAnalysisTypes$ = testScheduler.createHotObservable(
-      setLoadingAnalysisTypesM
+      stream.setLoadingAnalysisTypesM
     );
     const loadAnalysisTypes$ = testScheduler
-      .createHotObservable(loadAnalysisTypesM, {
+      .createHotObservable(stream.loadAnalysisTypesM, {
         1: { token: '12134', museumId: 99, collectionId: 'sfsfdfs' }
       })
       .flatMap(
@@ -96,7 +96,7 @@ describe('predefined', () => {
     });
 
     // assertion
-    testScheduler.expectObservable(state$).toBe(expected, expectedStateMap);
+    testScheduler.expectObservable(state$).toBe(stream.expected, expectedStateMap);
 
     // run tests
     testScheduler.flush();

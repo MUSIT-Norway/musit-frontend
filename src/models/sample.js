@@ -129,25 +129,31 @@ Sample.loadSampleTypes = (ajaxGet = simpleGet) => ({ token, isEn }) => {
   const url = Config.magasin.urls.api.samples.sampleTypes;
   return ajaxGet(url, token).map(({ response }) => {
     if (isEn) {
-      return uniqBy(response, 'enSampleType').reduce(
+      return {
+        ...uniqBy(response, 'enSampleType').reduce(
+          (acc, sampleType) => ({
+            ...acc,
+            [sampleType.enSampleType]: response.filter(
+              v => v.enSampleType === sampleType.enSampleType
+            )
+          }),
+          {}
+        ),
+        raw: response
+      };
+    }
+    return {
+      ...uniqBy(response, 'noSampleType').reduce(
         (acc, sampleType) => ({
           ...acc,
-          [sampleType.enSampleType]: response.filter(
-            v => v.enSampleType === sampleType.enSampleType
+          [sampleType.noSampleType]: response.filter(
+            v => v.noSampleType === sampleType.noSampleType
           )
         }),
         {}
-      );
-    }
-    return uniqBy(response, 'noSampleType').reduce(
-      (acc, sampleType) => ({
-        ...acc,
-        [sampleType.noSampleType]: response.filter(
-          v => v.noSampleType === sampleType.noSampleType
-        )
-      }),
-      {}
-    );
+      ),
+      raw: response
+    };
   });
 };
 Sample.loadAllSampleTypes = (ajaxGet = simpleGet) => ({ token }) => {
