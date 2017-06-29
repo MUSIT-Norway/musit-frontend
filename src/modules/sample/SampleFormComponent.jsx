@@ -5,6 +5,7 @@ import Sample from '../../models/sample';
 import type { ObjectData } from '../../types/object';
 import type { AppSession } from '../../types/appSession';
 import type { SampleData } from '../../types/samples';
+import type { SampleDateExtended } from './sampleStore';
 import type { FormDetails } from './types/form';
 import ValidatedFormGroup from '../../forms/components/ValidatedFormGroup';
 import FieldCheckBox from '../../forms/components/FieldCheckBox';
@@ -14,6 +15,7 @@ import FieldTextArea from '../../forms/components/FieldTextArea';
 import MetaInformation from '../../components/metainfo';
 import ReadOnlySampleType from './components/ReadOnlySampleType';
 import { I18n } from 'react-i18nify';
+import MusitI18n from '../../components/MusitI18n';
 
 type Predefined = {
   sampleTypes: any,
@@ -24,7 +26,7 @@ type Predefined = {
 
 type Props = {
   form: FormDetails,
-  parentSample: SampleData,
+  parentSample: SampleDateExtended,
   updateForm: Function,
   clickSave: () => void,
   appSession: AppSession,
@@ -103,12 +105,20 @@ export default function SampleFormComponent({
               <span style={{ marginRight: 20 }}>
                 <strong>{I18n.t('musit.sample.sampleType')}</strong>
                 {' '}
-                {parentSample.sampleTypeId}
+                {parentSample.sampleType &&
+                  <MusitI18n
+                    en={parentSample.sampleType.enSampleType}
+                    no={parentSample.sampleType.noSampleType}
+                  />}
               </span>
               <span style={{ marginRight: 20 }}>
                 <strong>{I18n.t('musit.sample.sampleSubType')}</strong>
                 {' '}
-                {parentSample.sampleTypeId}
+                {parentSample.sampleType &&
+                  <MusitI18n
+                    en={parentSample.sampleType.enSampleSubType}
+                    no={parentSample.sampleType.noSampleSubType}
+                  />}
               </span>
             </span>}
         </div>
