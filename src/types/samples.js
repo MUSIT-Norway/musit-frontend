@@ -1,29 +1,73 @@
 // @flow
 
-export type SampleData = {
+import type { ActorStamp } from './actor';
+import type { ObjectId, MuseumId, ActorId, SampleId, SampleTypeId } from './ids';
+
+export type ActorStampWithName = ActorStamp & { name?: ?string };
+export type ParentObjectWithData = ParentObject & { sampleOrObjectData?: ?any };
+
+/**
+ * This is the actual response object from the backend.
+ */
+type Size = {
+  unit: string,
+  value: number
+};
+
+/**
+ * This is the actual response object from the backend.
+ */
+export type ExternalId = {
+  value: string,
+  source?: string
+};
+
+/**
+ * This is the actual response object from the backend.
+ */
+export type ParentObject = {
+  objectId: ?ObjectId,
+  objectType: 'collection' | 'sample'
+};
+
+/**
+ * This is the actual response object from the backend.
+ */
+export type Sample = {
+  objectId: ObjectId,
+  originatedObjectUuid: ObjectId,
+  parentObject: ParentObjectWithData, //this is a hack to get flow to work
+  isExtracted: boolean,
+  museumId: MuseumId,
+  status: number,
+  responsible?: ?ActorId,
+  doneByStamp?: ?ActorStamp,
+  sampleNum?: ?number,
+  sampleId?: ?SampleId,
+  externalId?: ?ExternalId,
+  sampleTypeId: SampleTypeId,
+  size?: ?Size,
+  container?: ?string,
+  storageMedium?: ?string,
+  treatment?: ?string,
+  leftoverSample: number,
+  description?: ?string,
+  note?: ?string,
+  registeredStamp: ActorStampWithName, //this is a hack to get flow to work
+  updatedStamp?: ?ActorStampWithName, //this is a hack to get flow to work
+  isDeleted: boolean
+};
+
+export type SampleData = Sample & {
   id: string,
-  sampleId: string,
   doneBy: string,
   date: string,
-  sampleTypeId: number,
   sampleSubType: string,
-  status: string,
   details: string,
   hasAnalyse: boolean,
-  storageMedium: string,
-  sampleNum: number,
   breadcrumb: [],
-  objectId: string,
-  note: string,
-  status: number,
-  externalId?: { value?: string, source?: string },
-  size?: { unit: string, value: number },
-  container?: string,
-  treatment?: string,
-  description?: string,
-  parentObject: { objectId: string, objectType: string, sampleOrObjectData: any },
-  updatedStamp: { name: ?string, date?: string },
-  registeredStamp: { name: ?string, date?: string }
+  updatedDate?: ?string,
+  registeredDate: string
 };
 
 export type Samples = SampleData[];

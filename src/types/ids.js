@@ -9,3 +9,9 @@ export type CollectionId = string;
 export type NodeId = string;
 
 export type ObjectId = string;
+
+export type ActorId = string;
+
+export type SampleId = string;
+
+export type SampleTypeId = number;

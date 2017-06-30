@@ -52,7 +52,7 @@ export default function SampleViewComponent(props: Props & SampleProps) {
   if (!sample || !objectData) {
     return <div className="loading" />;
   }
-  const derivedFrom = sample.parentObject.sampleOrObjectData;
+  const derivedFrom: any = sample.parentObject.sampleOrObjectData || {};
   return (
     <div className="container">
       <form className="form-horizontal">
@@ -74,8 +74,8 @@ export default function SampleViewComponent(props: Props & SampleProps) {
         </div>
         <div>
           <MetaInformation
-            updatedBy={sample.updatedStamp.name}
-            updatedDate={sample.updatedStamp.date}
+            updatedBy={sample.updatedStamp ? sample.updatedStamp.name : null}
+            updatedDate={sample.updatedStamp ? sample.updatedStamp.date : null}
             registeredBy={sample.registeredStamp.name}
             registeredDate={sample.registeredStamp.date}
           />

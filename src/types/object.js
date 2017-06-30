@@ -64,7 +64,7 @@ export type MusitObject = {
   museumNo: string,
   subNo?: ?string,
   term: string,
-  currentLocationId? : ?string,
+  currentLocationId?: ?string,
   path?: ?string,
   pathNames?: ?Array<NamedPathElement>,
   mainObjectId?: ?number,
@@ -77,8 +77,8 @@ export type MusitObject = {
   materials?: ?Array<any>,
   locations?: ?Array<any>,
   coordinates?: ?Array<ArkCoordinate>,
-  objectType: 'sample' | 'collection',
-}
+  objectType: 'sample' | 'collection'
+};
 
 export type ObjectData = {
   // not provided from the backend
@@ -86,7 +86,6 @@ export type ObjectData = {
   objectUUID: string,
   currentLocation: { pathNames: ?Array<NamedPathElement> },
   nodeId: string
-} & MusitObject ;
-
+} & MusitObject;
 
 export type objectTypeAndId = Array<{ objectType: string, id: string }>;

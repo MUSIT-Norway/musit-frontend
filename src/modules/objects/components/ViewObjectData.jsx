@@ -16,7 +16,7 @@ import type {
   NatLocation
 } from '../../../types/object';
 import './ViewObjectData.css';
-import type {NamedPathElement} from 'types/object'
+import type { NamedPathElement } from 'types/object';
 
 type ViewNatHistComponentProps = {
   museumNo: string,
@@ -312,8 +312,7 @@ export const ViewObjectData = (props: ViewObjectDataProps) => {
     return viewNumisObject(objectData);
   } else {
     const pathNames: ?Array<NamedPathElement> =
-      props.objectData.currentLocation &&
-      props.objectData.currentLocation.pathNames;
+      props.objectData.currentLocation && props.objectData.currentLocation.pathNames;
     return (
       <div className="unknown">
         Unknown objecttype {objectData.museumNo}<br />

@@ -26,14 +26,16 @@ export const getSampleSubType = (
   sampleTypes: SampleTypesObject,
   sampleTypesId: number,
   appSession: AppSession
-) => {
+): string => {
   if (sampleTypes && sampleTypes.sampleTypes && sampleTypesId) {
     const sampleTypeFound: ?SampleType = findSampleType(sampleTypes, sampleTypesId);
 
     if (sampleTypeFound) {
-      return appSession.language.isEn
-        ? sampleTypeFound.enSampleSubType
-        : sampleTypeFound.noSampleSubType;
+      return (
+        (appSession.language.isEn
+          ? sampleTypeFound.enSampleSubType
+          : sampleTypeFound.noSampleSubType) || ''
+      );
     }
   }
   return '';

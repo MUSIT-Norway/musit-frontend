@@ -24,8 +24,9 @@ type Predefined = {
   treatments: Array<any>
 };
 
-export type ObjectWithSampleAndTypes = ObjectData & SampleData & { sampleType: string, sampleSubType: string }
-export type ObjectOrSample = ObjectWithSampleAndTypes | ObjectData
+export type ObjectWithSampleAndTypes = ObjectData &
+  SampleData & { sampleType: string, sampleSubType: string };
+export type ObjectOrSample = ObjectWithSampleAndTypes | ObjectData;
 
 export type Props = {
   form: FormDetails,

@@ -1,10 +1,9 @@
 // @flow
 export type SampleType = {
-  enSampleSubType: string,
+  enSampleSubType?: ?string,
   enSampleType: string,
-  noSampleSubType: string,
+  noSampleSubType?: ?string,
   noSampleType: string,
-  sampleType: string,
   sampleTypeId: number
 };
 
