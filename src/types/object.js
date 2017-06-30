@@ -45,35 +45,48 @@ export type EtnoMaterial = {
 export type Material = EtnoMaterial | ArkMaterial;
 export type Location = EtnoLocation | ArkLocation | NatLocation;
 
-export type ObjectData = {
-  id: number,
-  nodeId: string,
-  mainObjectId: number,
-  uuid: string,
-  objectId: ?string,
-  objectUUID: string,
-  objectType: string,
-  collection: number,
-  subNo: string,
-  term: string,
-  museumNo: string,
-  arkForm: ?string,
-  arkFindingNo: ?string,
-  natStage: ?string,
-  natGender: ?string,
-  natLegDate: ?string,
-  materials: ?Array<any>,
-  locations: ?Array<any>,
-  currentLocation: { pathNames: Array<any> },
-  coordinates: ?Array<ArkCoordinate>
+/**
+ * This is the actual response object from the backend.
+ */
+export type NamedPathElement = {
+  name: string,
+  nodeId: number,
+  nodeUuid: string
 };
 
-export type ObjectProps = {
+/**
+ * This is the actual response object from the backend.
+ */
+export type MusitObject = {
   id: number,
-  museumId: {},
-  collectionId: {},
-  token: string,
-  callBack: any
-};
+  uuid: string,
+  museumId: number,
+  museumNo: string,
+  subNo?: ?string,
+  term: string,
+  currentLocationId? : ?string,
+  path?: ?string,
+  pathNames?: ?Array<NamedPathElement>,
+  mainObjectId?: ?number,
+  collection?: ?number,
+  arkForm?: ?string,
+  arkFindingNo?: ?string,
+  natStage?: ?string,
+  natGender?: ?string,
+  natLegDate?: ?string,
+  materials?: ?Array<any>,
+  locations?: ?Array<any>,
+  coordinates?: ?Array<ArkCoordinate>,
+  objectType: 'sample' | 'collection',
+}
+
+export type ObjectData = {
+  // not provided from the backend
+  objectId?: ?string,
+  objectUUID: string,
+  currentLocation: { pathNames: ?Array<NamedPathElement> },
+  nodeId: string
+} & MusitObject ;
+
 
 export type objectTypeAndId = Array<{ objectType: string, id: string }>;

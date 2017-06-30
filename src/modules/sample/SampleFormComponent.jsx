@@ -24,16 +24,19 @@ type Predefined = {
   treatments: Array<any>
 };
 
-type Props = {
+export type ObjectWithSampleAndTypes = ObjectData & SampleData & { sampleType: string, sampleSubType: string }
+export type ObjectOrSample = ObjectWithSampleAndTypes | ObjectData
+
+export type Props = {
   form: FormDetails,
-  parentSample: SampleDateExtended,
+  parentSample: ?SampleDateExtended,
   updateForm: Function,
   clickSave: () => void,
   appSession: AppSession,
   clickBack: (e: *) => void,
   sampleTypeDisplayName: Function,
   isFormValid: (f: FormDetails) => boolean,
-  objectData: ObjectData & SampleData & { sampleType: string, sampleSubType: string },
+  objectData: ObjectOrSample,
   predefined: Predefined
 };
 

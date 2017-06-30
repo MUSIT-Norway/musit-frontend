@@ -5,6 +5,7 @@ import isUndefined from 'lodash/isUndefined';
 import { Row, Col } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
 import compact from 'lodash/compact';
+
 import type {
   ObjectData,
   ArkCoordinate,
@@ -15,61 +16,56 @@ import type {
   NatLocation
 } from '../../../types/object';
 import './ViewObjectData.css';
-
-type PathNamesProps = Array<{
-  name: string,
-  nodeId: number,
-  nodeUuid: string
-}>;
+import type {NamedPathElement} from 'types/object'
 
 type ViewNatHistComponentProps = {
   museumNo: string,
-  subNo: string,
+  subNo?: ?string,
   term: string,
-  natGender: ?string,
-  natStage: ?string,
-  natLegDate: ?string,
-  currentLocation: { pathNames: PathNamesProps },
-  locations: ?Array<NatLocation>
+  natGender?: ?string,
+  natStage?: ?string,
+  natLegDate?: ?string,
+  currentLocation: { pathNames: ?Array<NamedPathElement> },
+  locations?: ?Array<NatLocation>
 };
 
 type ViewNatNumisComponentProps = {
   museumNo: string,
-  subNo: string,
+  subNo?: ?string,
   term: string,
-  currentLocation: { pathNames: PathNamesProps }
+  currentLocation: { pathNames: ?Array<NamedPathElement> }
 };
 
 type ViewArcheologyComponentProps = {
   museumNo: string,
-  subNo: string,
+  subNo?: ?string,
   term: string,
-  arkForm: ?string,
+  arkForm?: ?string,
   arkFindingNo: ?string,
-  locations: ?Array<ArkLocation>,
-  materials: ?Array<ArkMaterial>,
-  currentLocation: { pathNames: PathNamesProps },
-  coordinates: ?Array<ArkCoordinate>
+  locations?: ?Array<ArkLocation>,
+  materials?: ?Array<ArkMaterial>,
+  currentLocation: { pathNames: ?Array<NamedPathElement> },
+  coordinates?: ?Array<ArkCoordinate>
 };
 
 type ViewEntographyComponentProps = {
   museumNo: string,
-  subNo: string,
+  subNo?: ?string,
   term: string,
-  currentLocation: { pathNames: PathNamesProps },
-  locations: ?Array<EtnoLocation>,
-  materials: ?Array<EtnoMaterial>
+  currentLocation: { pathNames: ?Array<NamedPathElement> },
+  locations?: ?Array<EtnoLocation>,
+  materials?: ?Array<EtnoMaterial>
 };
 
 type ViewObjectDataProps = {
   objectData: ObjectData
 };
 
-const isNatHistCollection = (collection: number): boolean =>
+const isNatHistCollection = (collection: ?number): boolean =>
   [4, 5, 6, 7, 8, 9].some(x => x === collection);
-const isArcheologyCollection = (collection: number): boolean => 1 === collection;
-const isEtnographyHistCollection = (collection: number): boolean => 2 === collection;
-const isNumismaticCollection = (collection: number): boolean => 3 === collection;
+const isArcheologyCollection = (collection: ?number): boolean => 1 === collection;
+const isEtnographyHistCollection = (collection: ?number): boolean => 2 === collection;
+const isNumismaticCollection = (collection: ?number): boolean => 3 === collection;
 
 const getCommaSeparatedStringFromObj = (obj: any) =>
   compact(Object.values(obj)).join(', ');
@@ -79,7 +75,7 @@ const writeArkMaterials = (materials: Array<ArkMaterial>) =>
     .map((m: ArkMaterial) => `${m.material}${m.spesMaterial ? `/${m.spesMaterial}` : ''}`)
     .join(', ');
 
-const CurrentMagasinLocation = (pathNames: PathNamesProps) =>
+const currentMagasinLocation = (pathNames: ?Array<NamedPathElement>) =>
   pathNames
     ? pathNames.reduce(
         (akk: string, o: any, ind: number) =>
@@ -182,7 +178,7 @@ const viewNatHistObject = ({
         <LabeledDataCol
           md={12}
           label="musit.objects.objectsView.location"
-          value={CurrentMagasinLocation(pathNames)}
+          value={currentMagasinLocation(pathNames)}
         />
       </Row>
     </div>
@@ -259,7 +255,7 @@ const viewArcheologyObject = ({
     <Row>
       <Col md={12}>
         <b>{I18n.t('musit.objects.objectsView.location')}:{' '}</b>
-        {CurrentMagasinLocation(pathNames)}
+        {currentMagasinLocation(pathNames)}
       </Col>
     </Row>
   </div>
@@ -298,7 +294,7 @@ const viewEtnographyObject = ({
       <LabeledDataCol
         md={12}
         label="musit.objects.objectsView.location"
-        value={CurrentMagasinLocation(pathNames)}
+        value={currentMagasinLocation(pathNames)}
       />
     </Row>
   </div>
@@ -315,8 +311,7 @@ export const ViewObjectData = (props: ViewObjectDataProps) => {
   } else if (isNumismaticCollection(objectData.collection)) {
     return viewNumisObject(objectData);
   } else {
-    const pathNames =
-      props.objectData &&
+    const pathNames: ?Array<NamedPathElement> =
       props.objectData.currentLocation &&
       props.objectData.currentLocation.pathNames;
     return (
@@ -326,7 +321,7 @@ export const ViewObjectData = (props: ViewObjectDataProps) => {
           <LabeledDataCol
             md={12}
             label="musit.objects.objectsView.location"
-            value={CurrentMagasinLocation(pathNames)}
+            value={currentMagasinLocation(pathNames)}
           />
         </Row>
       </div>

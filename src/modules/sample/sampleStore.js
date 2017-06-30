@@ -17,7 +17,7 @@ export type Action = {
   getSampleTypes$: Subject,
   getSample$: Subject,
   getSamplesForNode$: Subject
-}
+};
 
 const initialState = { data: [] };
 
