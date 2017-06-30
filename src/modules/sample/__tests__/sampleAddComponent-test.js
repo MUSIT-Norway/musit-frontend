@@ -18,6 +18,7 @@ describe('AnalysisSampleFormPageAdd', () => {
     const sampleTypeDisplayName = sinon.spy();
     const clickBack = sinon.spy();
     const clickSave = sinon.spy();
+    const updateSampleType = sinon.spy();
 
     const wrapper = mount(
       <SampleAddComponent
@@ -35,6 +36,7 @@ describe('AnalysisSampleFormPageAdd', () => {
         updateForm={updateForm}
         clickSave={clickSave}
         appSession={appSession}
+        updateSampleType={updateSampleType}
         clickBack={clickBack}
         sampleTypeDisplayName={sampleTypeDisplayName}
         isFormValid={isFormValid}
@@ -82,6 +84,7 @@ describe('AnalysisSampleFormPageAdd', () => {
     const sampleTypeDisplayName = sinon.spy();
     const clickBack = sinon.spy();
     const clickSave = sinon.spy();
+    const updateSampleType = sinon.spy();
 
     const wrapper = mount(
       <SampleAddComponent
@@ -95,6 +98,7 @@ describe('AnalysisSampleFormPageAdd', () => {
           }
         }}
         form={formDefinition}
+        updateSampleType={updateSampleType}
         parentSample={{
           id: '123',
           uuid: '0000-0000-123',

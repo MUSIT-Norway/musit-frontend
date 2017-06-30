@@ -94,7 +94,12 @@ function getParentObject(isAdd, sampleData, objectData) {
         objectId: objectData.uuid
       };
     }
-  } else if (isEdit && sampleData) {
+  } else if (
+    isEdit &&
+    sampleData &&
+    sampleData.parentObject &&
+    sampleData.parentObject.sampleOrObjectData
+  ) {
     parentObject = {
       objectId: sampleData.parentObject.sampleOrObjectData.objectId ||
         sampleData.parentObject.sampleOrObjectData.uuid,
