@@ -22,7 +22,7 @@ import {
 } from './shared/getters';
 import { onUnmount } from './shared/formProps';
 import type { AppSession } from '../../types/appSession';
-import type { Predefined } from './shared/predefinedType';
+import type { Predefined } from '../../types/predefined';
 import type { Store } from './shared/storeType';
 import type { FormData } from './shared/formType';
 import type { Field } from '../../forms/form';

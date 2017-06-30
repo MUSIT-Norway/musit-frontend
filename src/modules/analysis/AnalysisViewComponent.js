@@ -7,8 +7,7 @@ import ObjectTable from './components/ExpandableObjectResultTable';
 import toArray from 'lodash/toArray';
 import Result from './components/Result';
 import { DATE_FORMAT_DISPLAY } from '../../shared/util';
-
-import type { Person } from '../../components/person/PersonRoleDate';
+import type { Person } from '../../types/person';
 import type { FormData } from './shared/formType';
 
 type Props = {

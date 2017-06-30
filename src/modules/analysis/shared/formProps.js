@@ -10,8 +10,9 @@ import { simplePost, simplePut } from '../../../shared/RxAjax';
 import type { History } from '../../../types/Routes';
 import type { AppSession } from '../../../types/appSession';
 import type { FormData } from '../shared/formType';
-import type { Predefined } from '../shared/predefinedType';
+import type { Predefined } from '../../../types/predefined';
 import type { Store } from '../shared/storeType';
+import type { DomEvent } from '../../../types/dom';
 import toArray from 'lodash/toArray';
 import { isMultipleSelectAttribute } from '../../../types/analysisTypes';
 import {
@@ -20,11 +21,6 @@ import {
   getExtraDescriptionAttributes,
   getExtraResultAttributes
 } from './getters';
-
-type DomEvent = {
-  preventDefault: Function,
-  target: { value: string, options?: Array<{ selected: boolean, value: string }> }
-};
 
 type Props = {
   updateForm: Function,

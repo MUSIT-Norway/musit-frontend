@@ -1,28 +1,28 @@
 // @flow
 import createForm, { getStrField, getArrField, getNumberField } from '../../forms/form';
 
-const sampleId = getStrField('sampleId', null, false);
-const externalId = getStrField('externalId', null, false);
-const externalIdSource = getStrField('externalIdSource', null, false);
-const container = getStrField('container', null, false);
-const storageMedium = getStrField('storageMedium', null, false);
-const note = getStrField('note', null, false);
-const size = getNumberField('size', null, false);
-const sizeUnit = getStrField('sizeUnit', null, false);
-const sampleType = getStrField('sampleType', null, false);
+const sampleId = getStrField('sampleId');
+const externalId = getStrField('externalId');
+const externalIdSource = getStrField('externalIdSource');
+const container = getStrField('container');
+const storageMedium = getStrField('storageMedium');
+const note = getStrField('note');
+const size = getNumberField('size');
+const sizeUnit = getStrField('sizeUnit');
+const sampleType = getStrField('sampleType');
 const sampleSubType = getStrField('sampleSubType', null, true);
 const status = getNumberField('status', null, true);
-const description = getStrField('description', null, false);
-const treatment = getStrField('treatment', null, false);
-const persons = getArrField('persons', [], false);
-const leftoverSample = getNumberField('leftoverSample', null, false);
+const description = getStrField('description');
+const treatment = getStrField('treatment');
+const persons = getArrField('persons', []);
+const leftoverSample = getNumberField('leftoverSample');
 const originatedObjectUuid = getStrField('originatedObjectUuid');
-const updatedBy = getStrField('updatedBy', null, false);
-const updatedByName = getStrField('updatedByName', null, false);
-const updatedDate = getStrField('updatedDate', null, false);
-const registeredBy = getStrField('registeredBy', null, false);
-const registeredByName = getStrField('registeredByName', null, false);
-const registeredDate = getStrField('registeredDate', null, false);
+const updatedBy = getStrField('updatedBy');
+const updatedByName = getStrField('updatedByName');
+const updatedDate = getStrField('updatedDate');
+const registeredBy = getStrField('registeredBy');
+const registeredByName = getStrField('registeredByName');
+const registeredDate = getStrField('registeredDate');
 const sampleNum = getNumberField('sampleNum');
 
 const fields = [

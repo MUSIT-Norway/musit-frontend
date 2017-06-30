@@ -2,21 +2,21 @@
 import createForm, { getStrField, getArrField, getNumberField } from '../../forms/form';
 import { STATUS_INTACT_ID } from '../../models/sample';
 
-const sampleId = getStrField('sampleId', null, false);
-const externalId = getStrField('externalId', null, false);
-const externalIdSource = getStrField('externalIdSource', null, false);
-const container = getStrField('container', null, false);
-const storageMedium = getStrField('storageMedium', null, false);
-const note = getStrField('note', null, false);
-const size = getNumberField('size', null, false);
-const sizeUnit = getStrField('sizeUnit', null, false);
-const sampleType = getStrField('sampleType', null, false);
+const sampleId = getStrField('sampleId');
+const externalId = getStrField('externalId');
+const externalIdSource = getStrField('externalIdSource');
+const container = getStrField('container');
+const storageMedium = getStrField('storageMedium');
+const note = getStrField('note');
+const size = getNumberField('size');
+const sizeUnit = getStrField('sizeUnit');
+const sampleType = getStrField('sampleType');
 const sampleSubType = getStrField('sampleSubType', null, true);
 const status = getNumberField('status', STATUS_INTACT_ID, true);
-const description = getStrField('description', null, false);
-const treatment = getStrField('treatment', null, false);
-const persons = getArrField('persons', [], false);
-const leftoverSample = getNumberField('leftoverSample', 1, false);
+const description = getStrField('description');
+const treatment = getStrField('treatment');
+const persons = getArrField('persons', []);
+const leftoverSample = getNumberField('leftoverSample', 1);
 
 const fields = [
   note,

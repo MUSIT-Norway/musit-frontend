@@ -7,16 +7,10 @@ import DropdownButton from '../../components/DropdownButton';
 import DatePicker from '../DatePicker';
 import { DATE_FORMAT_DISPLAY } from '../../shared/util';
 import type { AppSession } from '../../types/appSession';
+import type { Person } from '../../types/person';
 import MusitActor from '../../models/actor';
 import moment from 'moment';
 import { I18n } from 'react-i18nify';
-
-export type Person = {
-  name?: string,
-  uuid?: string,
-  role?: string,
-  date?: string
-};
 
 const defaultPerson: Person = {
   name: '',

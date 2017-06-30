@@ -1,5 +1,5 @@
 // @flow
-import type { AnalysisType } from '../../../types/analysisTypes';
+import type { AnalysisType } from './analysisTypes';
 
 export type Predefined = {
   analysisTypes: Array<AnalysisType>,
