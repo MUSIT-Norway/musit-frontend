@@ -270,12 +270,18 @@ const customProps = props => ({
   isTypeNode: 'nodes' === props.type,
   moveItems,
   createSample: (items, appSession) => {
-    props.history.push({
-      pathname: Config.magasin.urls.client.analysis.addSample(
-        appSession,
-        items[0].sampleNum ? items[0].originatedObjectUuid : items[0].uuid
-      )
-    });
+    if (items[0].objectType === 'sample') {
+      props.history.push({
+        pathname: Config.magasin.urls.client.analysis.addFromSample(
+          appSession,
+          items[0].objectId
+        )
+      });
+    } else if (items[0].objectType === 'collection') {
+      props.history.push({
+        pathname: Config.magasin.urls.client.analysis.addSample(appSession, items[0].uuid)
+      });
+    }
   },
   createAnalysis: (items, appSession) => {
     props.history.push({
