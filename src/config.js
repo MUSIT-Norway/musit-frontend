@@ -138,12 +138,12 @@ export default {
         samples: {
           baseUrl: (mid: MuseumId): string => `/api/management/${mid}/samples`,
           sampleTypes: '/api/management/sampletypes',
-          samplesForObject: (mid: MuseumId, objectId: number): string =>
+          samplesForObject: (mid: MuseumId, objectId: string): string =>
             `/api/management/${mid}/samples/${objectId}/children`,
           treatments: '/api/management/treatments',
           storagecontainer: '/api/management/storagecontainer',
           storagemediums: '/api/management/storagemediums',
-          getSample: (mid: MuseumId, sampleId: number) =>
+          getSample: (mid: MuseumId, sampleId: string) =>
             `/api/management/${mid}/samples/${sampleId}`,
           samplesForNode: (
             mid: MuseumId,
@@ -172,7 +172,7 @@ export default {
             limit: ?number
           ): string =>
             `/api/storagefacility/museum/${mid}/storagenodes/${uuid}/children?page=${pageNum || 1}&limit=${limit || 25}`,
-          currentLocation: (mid: MuseumId, objectId: number): string =>
+          currentLocation: (mid: MuseumId, objectId: string): string =>
             `/api/storagefacility/museum/${mid}/storagenodes/objects/${objectId}/currentlocation`,
           currentLocations: (mid: MuseumId): string =>
             `/api/storagefacility/museum/${mid}/storagenodes/objects/currentlocations`,

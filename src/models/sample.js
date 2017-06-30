@@ -30,7 +30,7 @@ class Sample {
   static editSample: (
     ajaxPut: AjaxPut
   ) => (props: {
-    id: number,
+    id: string,
     museumId: number,
     token: string,
     data: mixed,
@@ -39,7 +39,7 @@ class Sample {
   static loadSample: (
     ajaxGet: AjaxGet
   ) => (props: {
-    id: number,
+    id: string,
     museumId: number,
     collectionId: string,
     token: string,
@@ -48,7 +48,7 @@ class Sample {
   static loadSampleDataForObject: (
     ajaxGet: AjaxGet
   ) => (props: {
-    id: number,
+    id: string,
     museumId: number,
     token: string,
     callback?: Callback

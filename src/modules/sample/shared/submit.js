@@ -1,20 +1,50 @@
+// @flow
 import moment from 'moment';
 import flatten from 'lodash/flatten';
 import Config from '../../../config';
 import type { FormDetails } from '../types/form';
+import type { Predefined } from '../../../types/predefined';
+import type { DomEvent } from '../../../types/dom';
+import type { ObjectData } from '../../../types/object';
+import type { SampleData } from '../../../types/samples';
+import type { AppSession } from '../../../types/appSession';
+import type { Person } from '../../../types/person';
+import type { SampleType } from '../../../types/sampleTypes';
+import type { History, Match } from '../../../types/Routes';
 import Sample from '../../../models/sample';
 import { isFormValid } from '../../../forms/validators';
 
-export const sampleProps = (props, doSaveSample) => {
+function getSampleSubTypes(sampleType, sampleTypes) {
+  return sampleType && sampleTypes && sampleTypes[sampleType];
+}
+
+type Props = {
+  form: FormDetails,
+  predefined: Predefined,
+  appSession: AppSession,
+  updateForm: Function,
+  objectStore: { objectData?: ?ObjectData },
+  history: History,
+  match: Match<{ sampleId: number }>,
+  store: { sample?: ?SampleData }
+};
+
+export const sampleProps = (props: Props, doSaveSample: Function) => {
   return {
     objectData: props.objectStore.objectData,
     isFormValid: isFormValid(props.form),
+    updateSampleType: updateSampleType(
+      props.form,
+      props.appSession,
+      props.predefined.sampleTypes,
+      props.updateForm
+    ),
     sampleTypeDisplayName,
-    goBack: e => {
+    goBack: (e: DomEvent) => {
       e.preventDefault();
       props.history.goBack();
     },
-    clickSave: e => {
+    clickSave: (e: DomEvent) => {
       e.preventDefault();
       saveSample(doSaveSample)(
         props.form,
@@ -28,6 +58,26 @@ export const sampleProps = (props, doSaveSample) => {
     }
   };
 };
+
+function updateSampleType(
+  form,
+  appSession: AppSession,
+  sampleTypes,
+  updateForm: Function
+) {
+  return (obj: { rawValue?: ?string }) => {
+    const sampleSubTypes = getSampleSubTypes(obj.rawValue, sampleTypes);
+    if (sampleSubTypes && sampleSubTypes.length === 1) {
+      updateForm({
+        name: form.sampleSubType.name,
+        rawValue: sampleTypeDisplayName(sampleSubTypes[0], appSession)
+      });
+    } else {
+      updateForm({ name: form.sampleSubType.name, rawValue: '' });
+    }
+    updateForm(obj);
+  };
+}
 
 function getParentObject(isAdd, sampleData, objectData) {
   let parentObject;
@@ -44,7 +94,7 @@ function getParentObject(isAdd, sampleData, objectData) {
         objectId: objectData.uuid
       };
     }
-  } else if (isEdit) {
+  } else if (isEdit && sampleData) {
     parentObject = {
       objectId: sampleData.parentObject.sampleOrObjectData.objectId ||
         sampleData.parentObject.sampleOrObjectData.uuid,
@@ -65,35 +115,37 @@ const saveSample = doSaveSample => (
   appSession,
   history
 ) => {
-  let parentObject = getParentObject(!!!form.sampleNum, sampleData, objectData);
-  const data = Sample.prepareForSubmit({
-    ...normalizeForm(form),
-    ...getActors(form.persons.rawValue),
-    sampleTypeId: getSampleTypeId(
-      sampleTypes,
-      form.sampleType.value,
-      form.sampleSubType.value,
-      appSession
-    ),
-    originatedObjectUuid: objectData.uuid,
-    parentObject: parentObject,
-    museumId: appSession.museumId
-  });
-  return doSaveSample({
-    id: params.sampleId,
-    museumId: appSession.museumId,
-    token: appSession.accessToken,
-    data
-  })
-    .toPromise()
-    .then(value =>
-      history.push({
-        pathname: Config.magasin.urls.client.analysis.gotoSample(
-          appSession,
-          value.objectId || value
-        )
-      })
-    );
+  if (objectData) {
+    let parentObject = getParentObject(!form.sampleNum, sampleData, objectData);
+    const data = Sample.prepareForSubmit({
+      ...normalizeForm(form),
+      ...getActors(form.persons.rawValue),
+      sampleTypeId: getSampleTypeId(
+        sampleTypes,
+        form.sampleType.value,
+        form.sampleSubType.value,
+        appSession
+      ),
+      originatedObjectUuid: objectData.uuid,
+      parentObject: parentObject,
+      museumId: appSession.museumId
+    });
+    return doSaveSample({
+      id: params.sampleId,
+      museumId: appSession.museumId,
+      token: appSession.accessToken,
+      data
+    })
+      .toPromise()
+      .then(value =>
+        history.push({
+          pathname: Config.magasin.urls.client.analysis.gotoSample(
+            appSession,
+            value.objectId || value
+          )
+        })
+      );
+  }
 };
 
 function getSampleTypeId(sampleTypes, sampleType, sampleSubType, appSession) {
@@ -110,7 +162,7 @@ function getSampleTypeId(sampleTypes, sampleType, sampleSubType, appSession) {
   }
 }
 
-function sampleTypeDisplayName(v, appSession) {
+function sampleTypeDisplayName(v: SampleType, appSession: AppSession) {
   return appSession.language.isEn
     ? v.enSampleSubType || v.enSampleType
     : v.noSampleSubType || v.noSampleType;
@@ -126,8 +178,8 @@ function normalizeForm(frm: FormDetails) {
   );
 }
 
-function getActors(form: any) {
-  return form.reduce((akk: any, v: Person) => {
+function getActors(form: FormDetails) {
+  return form.reduce((akk: FormDetails, v: Person) => {
     switch (v.role) {
       case 'creator':
         return {

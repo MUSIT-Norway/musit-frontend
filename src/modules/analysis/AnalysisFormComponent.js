@@ -12,7 +12,7 @@ import ObjectResultTable from './components/ExpandableObjectResultTable';
 import Restrictions from './components/Restrictions';
 import Result from './components/Result';
 import { getStatusText } from './shared/getters';
-import type { Predefined } from './shared/predefinedType';
+import type { Predefined } from '../../types/predefined';
 import toString from 'lodash/toString';
 import toArray from 'lodash/toArray';
 import AttributeSelect from './components/DescriptionAttributeSelect';
@@ -104,8 +104,8 @@ const AnalysisFormComponent = ({
                       ))}
                   </select>
                 </div>
-                {form.analysisTypeCategory.rawValue &&
-                  form.analysisTypeCategory.rawValue !== '0' &&
+                {form.analysisTypeCategory.value &&
+                  form.analysisTypeCategory.value !== '0' &&
                   <div className="col-md-3">
                     <select
                       id="subType"
@@ -114,16 +114,15 @@ const AnalysisFormComponent = ({
                       onChange={updateAnalysisTypeId}
                     >
                       <option value="">{I18n.t('musit.analysis.chooseType')}</option>
-                      {predefined.analysisTypes &&
-                        predefined.analysisTypes
-                          .filter(
-                            b => b.category.toString() === form.analysisTypeCategory.value
-                          )
-                          .map(a => (
-                            <option key={a.id} value={a.id}>
-                              {appSession.language.isEn ? a.enName : a.noName}
-                            </option>
-                          ))}
+                      {predefined.analysisTypes
+                        .filter(
+                          b => b.category.toString() === form.analysisTypeCategory.value
+                        )
+                        .map(a => (
+                          <option key={a.id} value={a.id}>
+                            {appSession.language.isEn ? a.enName : a.noName}
+                          </option>
+                        ))}
                     </select>
                   </div>}
               </div>
@@ -133,27 +132,26 @@ const AnalysisFormComponent = ({
                 </p>
               </div>}
         </ValidatedFormGroup>
-        {extraDescriptionAttributes &&
-          extraDescriptionAttributes.map((attr, i) => (
-            <div className="form-group" key={i}>
-              <label className="control-label col-md-2" htmlFor="type">
-                {attr.attributeKey}
-              </label>
-              <div className="col-md-3">
-                {attr.allowedValues
-                  ? <AttributeSelect
-                      attr={attr}
-                      value={getExtraDescriptionAttributeValue(attr.attributeKey) || []}
-                      onChange={updateExtraDescriptionAttribute}
-                    />
-                  : <AttributeInput
-                      attr={attr}
-                      value={getExtraDescriptionAttributeValue(attr.attributeKey) || ''}
-                      onChange={updateExtraDescriptionAttribute}
-                    />}
-              </div>
+        {extraDescriptionAttributes.map((attr, i) => (
+          <div className="form-group" key={i}>
+            <label className="control-label col-md-2" htmlFor="type">
+              {attr.attributeKey}
+            </label>
+            <div className="col-md-3">
+              {attr.allowedValues
+                ? <AttributeSelect
+                    attr={attr}
+                    value={getExtraDescriptionAttributeValue(attr.attributeKey) || []}
+                    onChange={updateExtraDescriptionAttribute}
+                  />
+                : <AttributeInput
+                    attr={attr}
+                    value={getExtraDescriptionAttributeValue(attr.attributeKey) || ''}
+                    onChange={updateExtraDescriptionAttribute}
+                  />}
             </div>
-          ))}
+          </div>
+        ))}
         <div className="form-group">
           <label className="control-label col-md-2" htmlFor="reason">
             {I18n.t('musit.analysis.reason')}
@@ -166,12 +164,11 @@ const AnalysisFormComponent = ({
               onChange={updateStringField(form.reason.name)}
             >
               <option value="">{I18n.t('musit.analysis.chooseReason')}</option>
-              {predefined.purposes &&
-                predefined.purposes.map(a => (
-                  <option key={a.id} value={a.id}>
-                    {appSession.language.isEn ? a.enPurpose : a.noPurpose}
-                  </option>
-                ))}
+              {predefined.purposes.map(a => (
+                <option key={a.id} value={a.id}>
+                  {appSession.language.isEn ? a.enPurpose : a.noPurpose}
+                </option>
+              ))}
             </select>
           </div>
         </div>

@@ -1,13 +1,9 @@
 // @flow
 import { simpleGet, simplePost, simplePut } from '../shared/RxAjax';
 import Config from '../config';
-import MusitActor from './actor';
-import MusitObject from './object';
-import Sample from './sample';
 import { Observable } from 'rxjs';
 import type { Field } from '../forms/form';
 import type { Callback, AjaxGet, AjaxPost, AjaxPut } from './types/ajax';
-import flatten from 'lodash/flatten';
 import type { AnalysisCollection, Result, Restriction } from '../types/analysisTypes';
 import type { CollectionId } from 'types/ids';
 
@@ -30,7 +26,7 @@ type AnalysisResultSavePayload = {
   comment?: ?string
 };
 
-type FormValue = {
+export type FormValue = {
   name: string,
   defaultValue: ?string | boolean | Array<any>
 };
@@ -85,18 +81,6 @@ class MusitAnalysis {
     museumId: number,
     token: string,
     callback?: Callback
-  }) => Observable;
-
-  static getAnalysisWithDetails: (
-    ajaxGet: AjaxGet,
-    ajaxPost: AjaxPost
-  ) => (props: {
-    id: number,
-    museumId: number,
-    collectionId: string,
-    token: string,
-    callback?: Callback,
-    sampleTypes: mixed
   }) => Observable;
 
   static getAnalysisTypes: (
@@ -319,150 +303,6 @@ MusitAnalysis.getAnalysisById = (ajaxGet = simpleGet) => ({
   const url = Config.magasin.urls.api.analysis.getAnalysisById(museumId, id);
   return ajaxGet(url, token, callback).map(({ response }) => response);
 };
-
-function getEventObjectDetails(props, ajaxGet) {
-  return event => {
-    const params = {
-      id: event.objectId,
-      museumId: props.museumId,
-      collectionId: props.collectionId,
-      token: props.token
-    };
-    return MusitObject.getObjectDetails(ajaxGet)(params).flatMap(objRes => {
-      if (objRes.error) {
-        return Sample.loadSample(ajaxGet)(params).flatMap(sample => {
-          return MusitObject.getObjectDetails(ajaxGet)({
-            ...params,
-            id: sample.originatedObjectUuid
-          }).map(sampleObjectRes => {
-            const flattened = flatten(Object.values(props.sampleTypes));
-            const sampleType = flattened.find(
-              st => st.sampleTypeId === sample.sampleTypeId
-            );
-            return {
-              ...sample,
-              ...sampleObjectRes.response,
-              sampleType: sampleType.enSampleType,
-              sampleSubType: sampleType.enSampleSubType
-            };
-          });
-        });
-      }
-      return Observable.of(objRes.response);
-    });
-  };
-}
-
-function zipObjectInfoWithEvents(analysis) {
-  return arrayOfObjectDetails => {
-    const actualValues = arrayOfObjectDetails.filter(a => a);
-    if (actualValues.length === 0) {
-      return analysis;
-    }
-    const events = analysis.events.map(e => {
-      const od = arrayOfObjectDetails.find(objD => {
-        return objD.objectId === e.objectId || objD.uuid === e.objectId;
-      });
-      return od ? { ...e, ...od } : e;
-    });
-    return { ...analysis, events: events };
-  };
-}
-
-function getActorNames(actors, analysis) {
-  return MusitActor.getMultipleActorNames(actors, [
-    {
-      id: analysis.updatedBy,
-      fieldName: 'updatedByName'
-    },
-    {
-      id: analysis.registeredBy,
-      fieldName: 'registeredByName'
-    },
-    {
-      id: analysis.doneBy,
-      fieldName: 'doneByName'
-    },
-    {
-      id: analysis.responsible,
-      fieldName: 'responsibleName'
-    },
-    {
-      id: analysis.administrator,
-      fieldName: 'administratorName'
-    },
-    {
-      id: analysis.completedBy,
-      fieldName: 'completedByName'
-    },
-    {
-      id: analysis.restriction ? analysis.restriction.requester : '',
-      fieldName: 'restriction_requesterName'
-    }
-  ]);
-}
-
-MusitAnalysis.getAnalysisWithDetails = (
-  ajaxGet = simpleGet,
-  ajaxPost = simplePost
-) => props =>
-  MusitAnalysis.getAnalysisById(ajaxGet)(props)
-    .flatMap(analysis =>
-      MusitActor.getActors(ajaxPost)({
-        actorIds: [
-          analysis.registeredBy,
-          analysis.updatedBy,
-          analysis.doneBy,
-          analysis.responsible,
-          analysis.administrator,
-          analysis.completedBy,
-          analysis.restriction ? analysis.restriction.requester : ''
-        ].filter(p => p),
-        token: props.token
-      }).map(actors => {
-        if (actors) {
-          const actorNames = getActorNames(actors, analysis);
-          if (analysis.restriction) {
-            return {
-              ...analysis,
-              ...actorNames,
-              restriction: { ...analysis.restriction, ...actorNames.restriction }
-            };
-          }
-          return {
-            ...analysis,
-            ...actorNames
-          };
-        }
-        return analysis;
-      })
-    )
-    .flatMap(analysis => {
-      if (analysis.type === 'AnalysisCollection' && analysis.events.length > 0) {
-        return Observable.forkJoin(
-          analysis.events.map(getEventObjectDetails(props, ajaxGet))
-        ).map(zipObjectInfoWithEvents(analysis));
-      }
-      if (!analysis.objectId) {
-        return Observable.of(analysis);
-      }
-      return MusitObject.getObjectDetails(ajaxGet)({
-        id: analysis.objectId,
-        museumId: props.museumId,
-        collectionId: props.collectionId,
-        token: props.token
-      }).map(({ response }) => {
-        if (!response) {
-          return analysis;
-        }
-        return {
-          ...analysis,
-          museumNo: response.museumNo,
-          subNo: response.subNo,
-          term: response.term
-        };
-      });
-    });
 
 MusitAnalysis.getAnalysisTypes = (ajaxGet = simpleGet) => ({
   museumId,

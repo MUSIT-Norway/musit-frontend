@@ -20,3 +20,7 @@ export type History = {
   goBack: () => void,
   goForward: () => void
 };
+
+export type Match<P> = {
+  params: P
+};

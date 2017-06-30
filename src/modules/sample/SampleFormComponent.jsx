@@ -35,6 +35,7 @@ export type Props = {
   clickSave: () => void,
   appSession: AppSession,
   clickBack: (e: *) => void,
+  updateSampleType: Function,
   sampleTypeDisplayName: Function,
   isFormValid: (f: FormDetails) => boolean,
   objectData: ObjectOrSample,
@@ -46,6 +47,7 @@ export default function SampleFormComponent({
   parentSample,
   updateForm,
   clickSave,
+  updateSampleType,
   sampleTypeDisplayName,
   isFormValid,
   appSession,
@@ -174,24 +176,7 @@ export default function SampleFormComponent({
                   field={form.sampleType}
                   title={I18n.t('musit.sample.sampleType')}
                   defaultOption={I18n.t('musit.sample.chooseType')}
-                  onChange={obj => {
-                    if (
-                      predefined.sampleTypes &&
-                      predefined.sampleTypes[obj.rawValue] &&
-                      predefined.sampleTypes[obj.rawValue].length === 1
-                    ) {
-                      updateForm({
-                        name: form.sampleSubType.name,
-                        rawValue: sampleTypeDisplayName(
-                          predefined.sampleTypes[obj.rawValue][0],
-                          appSession
-                        )
-                      });
-                    } else {
-                      updateForm({ name: form.sampleSubType.name, rawValue: '' });
-                    }
-                    updateForm(obj);
-                  }}
+                  onChange={updateSampleType}
                   selectItems={
                     predefined.sampleTypes ? Object.keys(predefined.sampleTypes) : []
                   }

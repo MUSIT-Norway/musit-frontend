@@ -1,3 +1,4 @@
+// @flow
 import inject from 'react-rxjs/dist/RxInject';
 import PropTypes from 'prop-types';
 import AnalysisViewComponent from './AnalysisViewComponent';
@@ -9,7 +10,24 @@ import store$, { getAnalysis$, setLoading$, clearStore$ } from './analysisStore'
 import Analysis from '../../models/analysis';
 import analysisForm, { fieldsArray } from './analysisForm';
 import Config from '../../config';
-import { getExtraResultAttributes, getAnalysisType } from './shared/getters';
+import {
+  getExtraResultAttributes,
+  getAnalysisType,
+  getAnalysisPurpose,
+  getAnalysisTypeTerm,
+  getLabPlaceText,
+  getStatusText,
+  getExtraDescriptionAttributesWithValue,
+  getAnalysisObjects
+} from './shared/getters';
+import { onUnmount } from './shared/formProps';
+import type { AppSession } from '../../types/appSession';
+import type { Predefined } from '../../types/predefined';
+import type { Store } from './shared/storeType';
+import type { FormData } from './shared/formType';
+import type { Field } from '../../forms/form';
+import type { FormValue } from '../../models/analysis';
+import type { History } from '../../types/Routes';
 
 const { form$, ...formActions } = analysisForm;
 
@@ -27,7 +45,16 @@ const commands = {
   ...formActions
 };
 
-const props = props => {
+type UpstreamProps = {
+  store: Store,
+  match: { params: { analysisId: string } },
+  appSession: AppSession,
+  predefined: Predefined,
+  form: FormData,
+  history: History
+};
+
+export const props = (props: UpstreamProps) => {
   const analysisType = getAnalysisType(
     parseInt(props.store.analysis ? props.store.analysis.analysisTypeId : null, 10),
     props.predefined.analysisTypes
@@ -47,7 +74,27 @@ const props = props => {
   return {
     ...props,
     extraResultAttributes,
-    extraDescriptionAttributes,
+    extraDescriptionAttributes: getExtraDescriptionAttributesWithValue(
+      props.store.analysis,
+      extraDescriptionAttributes,
+      props.appSession.language
+    ),
+    analysisPurpose: getAnalysisPurpose(
+      props.form.reason.value,
+      props.predefined.purposes,
+      props.appSession.language
+    ),
+    analysisTypeTerm: getAnalysisTypeTerm(
+      props.form.analysisTypeId.value,
+      props.predefined.analysisTypes,
+      props.appSession.language
+    ),
+    statusText: getStatusText(props.form.status.value),
+    labPlaceText: getLabPlaceText(
+      props.predefined.analysisLabList,
+      props.form.orgId.value
+    ),
+    objects: getAnalysisObjects(props.form),
     clickEdit: () => {
       props.history.push(
         Config.magasin.urls.client.analysis.editAnalysis(
@@ -59,7 +106,22 @@ const props = props => {
   };
 };
 
-export const onMount = props => {
+type OnMountProps = {
+  loadForm: (fields: Array<FormValue>) => void,
+  setLoading: () => void,
+  match: { params: { analysisId?: string } },
+  appSession: AppSession,
+  predefined: Predefined,
+  getAnalysis: (params: {
+    id: ?string,
+    sampleTypes: any,
+    museumId: number,
+    collectionId: string,
+    token: string
+  }) => void
+};
+
+export const onMount = (props: OnMountProps) => {
   props.setLoading();
   props.getAnalysis({
     id: props.match.params.analysisId,
@@ -70,7 +132,15 @@ export const onMount = props => {
   });
 };
 
-export const onReceiveProps = fieldsArray => props => {
+type OnPropsProps = {
+  loadForm: (fields: Array<FormValue>) => void,
+  store: Store,
+  form: FormData
+};
+
+export const onReceiveProps = (fieldsArray: Array<Field<any>>) => (
+  props: OnPropsProps
+) => {
   if (props.store.analysis && !props.form.analysisTypeId.value) {
     props.loadForm(Analysis.fromJsonToForm(props.store.analysis, fieldsArray));
   }
@@ -79,10 +149,7 @@ export const onReceiveProps = fieldsArray => props => {
 const MountableAnalysisViewComponent = lifeCycle({
   onMount,
   onReceiveProps: onReceiveProps(fieldsArray),
-  onUnmount: props => {
-    props.clearForm();
-    props.clearStore();
-  }
+  onUnmount
 })(AnalysisViewComponent);
 
 export default flowRight([

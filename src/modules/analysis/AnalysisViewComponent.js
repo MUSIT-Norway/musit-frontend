@@ -5,26 +5,18 @@ import MetaInformation from '../../components/metainfo';
 import moment from 'moment';
 import ObjectTable from './components/ExpandableObjectResultTable';
 import toArray from 'lodash/toArray';
-import {
-  getAnalysisTypeTerm,
-  getLabPlaceText,
-  getStatusText,
-  getAnalysisPurpose
-} from './shared/getters';
 import Result from './components/Result';
 import { DATE_FORMAT_DISPLAY } from '../../shared/util';
-
-import type { Predefined } from './shared/predefinedType';
-import type { Person } from '../../components/person/PersonRoleDate';
-import type { AppSession } from '../../types/appSession';
+import type { Person } from '../../types/person';
 import type { FormData } from './shared/formType';
-import type { Store } from './shared/storeType';
 
 type Props = {
   form: FormData,
-  store: Store,
-  appSession: AppSession,
-  predefined: Predefined,
+  analysisPurpose: string,
+  analysisTypeTerm: string,
+  statusText: string,
+  labPlaceText: string,
+  objects: Array<any>,
   clickEdit: Function,
   clickCancel: Function,
   extraDescriptionAttributes: any,
@@ -33,9 +25,11 @@ type Props = {
 
 export default ({
   form,
-  store,
-  predefined,
-  appSession,
+  analysisPurpose,
+  analysisTypeTerm,
+  statusText,
+  labPlaceText,
+  objects,
   clickEdit,
   extraResultAttributes,
   extraDescriptionAttributes
@@ -61,40 +55,29 @@ export default ({
         </label>
         <div className="col-md-10">
           <p className="form-control-static" id="type">
-            {getAnalysisTypeTerm(
-              form.analysisTypeId.value,
-              predefined.analysisTypes,
-              appSession.language
-            )}
+            {analysisTypeTerm}
           </p>
         </div>
       </div>
-      {extraDescriptionAttributes &&
-        extraDescriptionAttributes.map((attr, i) => (
-          <div className="form-group" key={i}>
-            <label className="control-label col-md-2" htmlFor="type">
-              {attr.attributeKey}
-            </label>
-            <div className="col-md-3">
-              <p className="form-control-static">
-                {(store.analysis &&
-                  store.analysis.extraAttributes &&
-                  store.analysis.extraAttributes[attr.attributeKey]) || []}
-              </p>
-            </div>
+      {extraDescriptionAttributes.map((attr, i) => (
+        <div className="form-group" key={i}>
+          <label className="control-label col-md-2" htmlFor="type">
+            {attr.attributeKey}
+          </label>
+          <div className="col-md-3">
+            <p className="form-control-static">
+              {attr.attributeValue}
+            </p>
           </div>
-        ))}
+        </div>
+      ))}
       <div className="form-group">
         <label className="control-label col-md-2" htmlFor="reason">
           {I18n.t('musit.analysis.reason')}{' '}
         </label>
         <div className="col-md-10">
           <p className="form-control-static" id="reason">
-            {getAnalysisPurpose(
-              form.reason.value,
-              predefined.purposes,
-              appSession.language
-            )}
+            {analysisPurpose}
           </p>
         </div>
       </div>
@@ -104,7 +87,7 @@ export default ({
         </label>
         <div className="col-md-5">
           <p className="form-control-static" id="status">
-            {getStatusText(form.status.value)}
+            {statusText}
           </p>
         </div>
       </div>
@@ -114,7 +97,7 @@ export default ({
         </label>
         <div className="col-md-5">
           <p className="form-control-static" id="status">
-            {getLabPlaceText(predefined.analysisLabList, form.orgId.value)}
+            {labPlaceText}
           </p>
         </div>
       </div>
@@ -150,18 +133,17 @@ export default ({
           <div className="col-md-2"><strong>{I18n.t('musit.texts.role')}</strong></div>
           <div className="col-md-2"><strong>{I18n.t('musit.texts.date')}</strong></div>
         </div>
-        {form.persons.value &&
-          form.persons.value.map((p: Person, i: number) => (
-            <div className="row" key={i}>
-              <div className="col-md-4">{p.name}</div>
-              <div className="col-md-2">
-                {I18n.t(`musit.analysis.roles.${p.role || 'UNKNOWN'}`) || p.role}
-              </div>
-              <div className="col-md-2">
-                {p.date ? moment(p.date).format(DATE_FORMAT_DISPLAY) : null}
-              </div>
+        {toArray(form.persons.value).map((p: Person, i: number) => (
+          <div className="row" key={i}>
+            <div className="col-md-4">{p.name}</div>
+            <div className="col-md-2">
+              {I18n.t(`musit.analysis.roles.${p.role || 'UNKNOWN'}`) || p.role}
             </div>
-          ))}
+            <div className="col-md-2">
+              {p.date ? moment(p.date).format(DATE_FORMAT_DISPLAY) : null}
+            </div>
+          </div>
+        ))}
       </div>
       <hr />
       <div className="well">
@@ -172,20 +154,7 @@ export default ({
         </div>
         <div className="form-group">
           <div className="col-md-12 col-md-offset-0">
-            <ObjectTable
-              extraAttributes={extraResultAttributes}
-              data={
-                form.type.value === 'AnalysisCollection'
-                  ? toArray(form.events.value)
-                  : [
-                      {
-                        term: form.term.value,
-                        museumNo: form.museumNo.value,
-                        subNo: form.subNo.value
-                      }
-                    ]
-              }
-            />
+            <ObjectTable extraAttributes={extraResultAttributes} data={objects} />
           </div>
         </div>
         <hr />
@@ -209,7 +178,7 @@ export default ({
             </p>
           </div>
         </div>
-        {form.restrictions.rawValue &&
+        {form.restrictions.value &&
           <div>
             <div className="form-group">
               <label className="control-label col-md-2" htmlFor="requester">

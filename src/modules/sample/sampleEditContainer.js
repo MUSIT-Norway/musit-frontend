@@ -90,6 +90,8 @@ export default flowRight([
 export function convertSample(sample: SampleData, sampleTypes, appSession) {
   const sampleType = getSampleType(sample.sampleTypeId, sampleTypes);
   const formData = {};
+  const sampleTypeText = getSampleTypeWithLanguage(sampleType, appSession);
+  const sampleSubTypeText = getSampleSubTypeWithLanguage(sampleType, appSession);
   formData.persons = {
     name: 'persons',
     defaultValue: getPersonsFromResponse(sample)
@@ -112,11 +114,11 @@ export function convertSample(sample: SampleData, sampleTypes, appSession) {
   };
   formData.sampleType = {
     name: 'sampleType',
-    defaultValue: getSampleTypeWithLanguage(sampleType, appSession)
+    defaultValue: sampleTypeText
   };
   formData.sampleSubType = {
     name: 'sampleSubType',
-    defaultValue: getSampleSubTypeWithLanguage(sampleType, appSession)
+    defaultValue: sampleSubTypeText || sampleTypeText
   };
   formData.externalId = {
     name: 'externalId',

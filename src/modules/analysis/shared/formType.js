@@ -1,6 +1,6 @@
 // @flow
 import type { Field } from '../../../forms/form';
-import type { Person } from '../../../components/person/PersonRoleDate';
+import type { Person } from '../../../types/person';
 import type { ObjectData } from '../../../types/object';
 import type { SampleData } from '../../../types/samples';
 

@@ -46,17 +46,74 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
           <select
             className="form-control"
             id="type"
-            value=""
+            value="5"
           >
             <option
               value=""
             >
               Velg kategori
             </option>
+            <option
+              value="lolol"
+            >
+              Lolol
+            </option>
+            <option
+              value="lalala"
+            >
+              Lalala
+            </option>
+          </select>
+        </div>
+        <div
+          className="col-md-3"
+        >
+          <select
+            className="form-control"
+            id="subType"
+            value=""
+          >
+            <option
+              value=""
+            >
+              Velg type
+            </option>
+            <option
+              value={4}
+            >
+              Tullball
+            </option>
+            <option
+              value={3}
+            >
+              Tullball2
+            </option>
           </select>
         </div>
       </div>
     </ValidatedFormGroup>
+    <div
+      className="form-group"
+    >
+      <label
+        className="control-label col-md-2"
+        htmlFor="type"
+      >
+        method
+      </label>
+      <div
+        className="col-md-3"
+      >
+        <DescriptionAttributeInput
+          attr={
+            Object {
+              "attributeKey": "method",
+            }
+          }
+          value="test"
+        />
+      </div>
+    </div>
     <div
       className="form-group"
     >
@@ -79,6 +136,11 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
             value=""
           >
             Velg formål
+          </option>
+          <option
+            value={1}
+          >
+            mål mål
           </option>
         </select>
       </div>
@@ -167,6 +229,16 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
             value=""
           >
             Velg analysested
+          </option>
+          <option
+            value="d39305e8-56b2-4d8d-9351-66dab9c1d8e4"
+          >
+            Kokko
+          </option>
+          <option
+            value="d39305e8-56b2-4d8d-9351-66dab9c1d8e5"
+          >
+            Kokkosbolle
           </option>
         </select>
       </div>
