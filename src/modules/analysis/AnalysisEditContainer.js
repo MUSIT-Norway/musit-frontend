@@ -14,7 +14,7 @@ import flowRight from 'lodash/flowRight';
 import lifeCycle from '../../shared/lifeCycle';
 import { onMount, onReceiveProps } from './AnalysisViewContainer';
 import { loadPredefinedTypes } from '../../stores/predefined';
-import props from './shared/formProps';
+import props, { onUnmount } from './shared/formProps';
 
 const { form$, ...formActions } = analysisForm;
 
@@ -37,10 +37,7 @@ const commands = {
 const MountableAnalysisFormComponent = lifeCycle({
   onMount,
   onReceiveProps: onReceiveProps(fieldsArray),
-  onUnmount: props => {
-    props.clearForm();
-    props.clearStore();
-  }
+  onUnmount
 })(AnalysisFormComponent);
 
 export default flowRight([

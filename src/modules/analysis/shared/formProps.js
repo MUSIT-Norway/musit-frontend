@@ -87,7 +87,8 @@ export default (
     },
     getExtraDescriptionAttributeValue: (name: string) =>
       extraDescriptionAttributes && extraDescriptionAttributes[name],
-    extraDescriptionAttributes: analysisType && analysisType.extraDescriptionAttributes,
+    extraDescriptionAttributes: (analysisType &&
+      analysisType.extraDescriptionAttributes) || [],
     extraResultAttributes: extraResultAttributes,
     updateExtraResultAttribute: (name: string, value: string | number) => {
       props.updateExtraResultAttribute({
@@ -166,6 +167,16 @@ function parseOption(type) {
     }
   };
 }
+
+type OnUnmountProps = {
+  clearForm: Function,
+  clearStore: Function
+};
+
+export const onUnmount = (props: OnUnmountProps) => {
+  props.clearForm();
+  props.clearStore();
+};
 
 function clickSave(
   form,

@@ -33,7 +33,28 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         <p
           className="form-control-static"
           id="type"
-        />
+        >
+          kul analysetype
+        </p>
+      </div>
+    </div>
+    <div
+      className="form-group"
+    >
+      <label
+        className="control-label col-md-2"
+        htmlFor="type"
+      >
+        method
+      </label>
+      <div
+        className="col-md-3"
+      >
+        <p
+          className="form-control-static"
+        >
+          moro metode
+        </p>
       </div>
     </div>
     <div
@@ -52,7 +73,9 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         <p
           className="form-control-static"
           id="reason"
-        />
+        >
+          fin purpose
+        </p>
       </div>
     </div>
     <div
@@ -70,7 +93,9 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         <p
           className="form-control-static"
           id="status"
-        />
+        >
+          Fin status
+        </p>
       </div>
     </div>
     <div
@@ -88,7 +113,9 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         <p
           className="form-control-static"
           id="status"
-        />
+        >
+          Fin lab
+        </p>
       </div>
     </div>
     <div
@@ -158,6 +185,42 @@ exports[`AnalysisViewComponent should render properly 1`] = `
           </strong>
         </div>
       </div>
+      <div
+        className="row"
+      >
+        <div
+          className="col-md-4"
+        >
+          jarl
+        </div>
+        <div
+          className="col-md-2"
+        >
+          Ansvarlig
+        </div>
+        <div
+          className="col-md-2"
+        />
+      </div>
+      <div
+        className="row"
+      >
+        <div
+          className="col-md-4"
+        >
+          line
+        </div>
+        <div
+          className="col-md-2"
+        >
+          Creator
+        </div>
+        <div
+          className="col-md-2"
+        >
+          29.06.2017
+        </div>
+      </div>
     </div>
     <hr />
     <div
@@ -183,18 +246,33 @@ exports[`AnalysisViewComponent should render properly 1`] = `
             data={
               Array [
                 Object {
-                  "museumNo": undefined,
-                  "subNo": undefined,
-                  "term": undefined,
+                  "museumNumber": "123",
+                  "subNumber": "12345678911",
+                  "term": "Spyd",
+                  "uuid": "1cbf15cb-8348-4e66-99a4-bc314da57a42",
+                },
+                Object {
+                  "museumNumber": "124",
+                  "subNumber": "12345678912",
+                  "term": "Beltering",
+                  "uuid": "2cbf15cb-8348-4e66-99a4-bc314da57a42",
+                },
+                Object {
+                  "museumNumber": "125",
+                  "subNumber": "12345678913",
+                  "term": "Øsekar",
+                  "uuid": "3cbf15cb-8348-4e66-99a4-bc314da57a42",
                 },
               ]
             }
+            extraAttributes={Object {}}
           />
         </div>
       </div>
       <hr />
       <Result
         externalSource=""
+        extraAttributes={Object {}}
         updateComments={[Function]}
         updateExternalSource={[Function]}
         updateExtraResultAttribute={[Function]}
@@ -215,8 +293,110 @@ exports[`AnalysisViewComponent should render properly 1`] = `
             className="form-control-static"
             id="restrictions"
           >
-            Nei
+            Ja
           </p>
+        </div>
+      </div>
+      <div>
+        <div
+          className="form-group"
+        >
+          <label
+            className="control-label col-md-2"
+            htmlFor="requester"
+          >
+            Klausulert for
+          </label>
+          <div
+            className="col-md-10"
+          >
+            <p
+              className="form-control-static"
+              id="requester"
+            >
+              Jarl
+            </p>
+          </div>
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            className="control-label col-md-2"
+            htmlFor="reason"
+          >
+            Årsak til klausulering
+          </label>
+          <div
+            className="col-md-10"
+          >
+            <p
+              className="form-control-static"
+              id="reason"
+            >
+              fin årsak
+            </p>
+          </div>
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            className="control-label col-md-2"
+            htmlFor="caseNumbers"
+          >
+            Saksnummer
+          </label>
+          <div
+            className="col-md-10"
+          >
+            <p
+              className="form-control-static"
+              id="caseNumbers"
+            >
+              dddd, 44555, 55555
+            </p>
+          </div>
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            className="control-label col-md-2"
+            htmlFor="expirationDate"
+          >
+            Sluttdato
+          </label>
+          <div
+            className="col-md-10"
+          >
+            <p
+              className="form-control-static"
+              id="expirationDate"
+            >
+              29.03.2017
+            </p>
+          </div>
+        </div>
+        <div
+          className="form-group"
+        >
+          <label
+            className="control-label col-md-2"
+            htmlFor="cancelledReason"
+          >
+            Årsak til oppheving
+          </label>
+          <div
+            className="col-md-10"
+          >
+            <p
+              className="form-control-static"
+              id="cancelledReason"
+            >
+              meh
+            </p>
+          </div>
         </div>
       </div>
     </div>

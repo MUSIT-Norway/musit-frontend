@@ -26,6 +26,8 @@ const form: FormData = (fieldsArray.reduce(
   {}
 ): any);
 
+form.analysisTypeCategory.value = '5';
+
 describe('AnalysisFormComponent', () => {
   describe('getAnalysisTypeTerm', () => {
     it('should return empty string if not found', () => {
@@ -125,6 +127,12 @@ describe('AnalysisFormComponent', () => {
 
     const wrapper = shallow(
       <AnalysisFormComponent
+        extraDescriptionAttributes={[
+          {
+            attributeKey: 'method'
+          }
+        ]}
+        getExtraDescriptionAttributeValue={() => 'test'}
         appSession={appSession}
         form={form}
         updateForm={identity}
@@ -139,10 +147,38 @@ describe('AnalysisFormComponent', () => {
         store={store}
         location={location}
         predefined={{
-          purposes: [],
-          analysisTypes: [],
-          analysisLabList: [],
-          categories: {}
+          analysisLabList: [
+            {
+              id: 'd39305e8-56b2-4d8d-9351-66dab9c1d8e4',
+              fullName: 'Kokko'
+            },
+            {
+              id: 'd39305e8-56b2-4d8d-9351-66dab9c1d8e5',
+              fullName: 'Kokkosbolle'
+            }
+          ],
+          purposes: [
+            {
+              id: 1,
+              enPurpose: 'mål 1',
+              noPurpose: 'mål mål'
+            }
+          ],
+          analysisTypes: [
+            {
+              id: 4,
+              enName: 'Tull',
+              noName: 'Tullball',
+              category: '5'
+            },
+            {
+              id: 3,
+              enName: 'Tull2',
+              noName: 'Tullball2',
+              category: '5'
+            }
+          ],
+          categories: { lolol: 'lolol', lalala: 'lalala' }
         }}
       />
     );

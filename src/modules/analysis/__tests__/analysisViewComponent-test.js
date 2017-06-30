@@ -1,3 +1,4 @@
+// @flow
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
@@ -5,7 +6,6 @@ import AnalysisViewComponent from '../AnalysisViewComponent';
 import { fieldsArray } from '../analysisForm';
 import type { Field } from 'forms/form';
 import type { FormData } from '../shared/formType';
-import { appSession } from './../../../testutils/sampleDataForTest';
 
 declare var describe: any;
 declare var it: any;
@@ -32,41 +32,6 @@ const objectsData = [
   }
 ];
 
-const analysisTypes = [
-  {
-    category: 8,
-    id: 1,
-    name: '3D-skanning, laser'
-  },
-  {
-    category: 8,
-    id: 2,
-    name: '3D-skanning, strukturert lys'
-  }
-];
-
-const analysis = {
-  analysisTypeId: '8453873d-227c-4205-a231-bf7e04164fab',
-  eventDate: '2017-03-16T14:37:45+00:00',
-  id: 2,
-  museumNo: 'MusK58',
-  note: 'fdsfsd sdsa 2',
-  objectId: 'adea8141-8099-4f67-bff9-ea5090e18335',
-  partOf: 1,
-  registeredBy: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
-  registeredByName: 'Rituvesh Kumar',
-  registeredDate: '2017-04-03T10:36:34+00:00',
-  subNo: '2',
-  term: 'Mansjettknapp',
-  type: 'Analysis'
-};
-
-const store = {
-  analysisTypes: analysisTypes,
-  objectsData: objectsData,
-  analysis: analysis
-};
-
 const form: FormData = (fieldsArray.reduce(
   (acc, field: Field<any>) => ({
     ...acc,
@@ -78,23 +43,47 @@ const form: FormData = (fieldsArray.reduce(
   {}
 ): any);
 
+form.persons.value = [
+  {
+    name: 'jarl',
+    role: 'responsible'
+  },
+  {
+    name: 'line',
+    role: 'creator',
+    date: '2017-06-29T07:54:22+00:00'
+  }
+];
+
+form.restrictions.value = true;
+form.restrictions_requesterName.value = 'Jarl';
+form.restrictions_reason.value = 'fin årsak';
+form.restrictions_caseNumbers.value = ['dddd', '44555', '55555'];
+form.restrictions_expirationDate.value = '2017-03-29T07:54:22+00:00';
+form.restrictions_cancelledReason.value = 'meh';
+
+const extraAttributes = [
+  {
+    attributeKey: 'method',
+    attributeType: 'Int',
+    attributeValue: 'moro metode'
+  }
+];
+
 describe('AnalysisViewComponent', () => {
   it('should render properly', () => {
     const wrapper = shallow(
       <AnalysisViewComponent
         form={form}
-        match={{ params: { analysisId: '45' } }}
-        appSession={appSession}
-        store={store}
+        extraDescriptionAttributes={extraAttributes}
+        extraResultAttributes={{}}
+        statusText="Fin status"
+        labPlaceText="Fin lab"
+        analysisTypeTerm="kul analysetype"
+        analysisPurpose="fin purpose"
+        objects={objectsData}
         clickEdit={() => {}}
         clickCancel={() => {}}
-        predefined={{
-          sampleTypes: [],
-          analysisTypes: [],
-          purposes: [],
-          categories: {},
-          analysisLabList: []
-        }}
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();

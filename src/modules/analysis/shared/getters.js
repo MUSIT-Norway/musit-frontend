@@ -3,10 +3,13 @@ import keys from 'lodash/keys';
 import type {
   AnalysisType,
   AnalysisCollection,
-  ExtraResultAttributeValues
+  ExtraResultAttributeValues,
+  ExtraAttribute
 } from '../../../types/analysisTypes';
+import type { FormData } from '../shared/formType';
 import { I18n } from 'react-i18nify';
 import type { Language } from '../../../types/appSession';
+import toArray from 'lodash/toArray';
 
 export function getStatusText(status?: ?number): string {
   if (!status) {
@@ -87,7 +90,9 @@ export function getExtraDescriptionAttributes(
   return extraDescriptionAttributesType
     ? {
         ...(analysis && analysis.extraAttributes),
-        ...extraDescriptionAttributes,
+        ...keys(extraDescriptionAttributes)
+          .filter(k => extraDescriptionAttributes[k])
+          .reduce((acc, n) => ({ ...acc, [n]: extraDescriptionAttributes[n] }), {}),
         type: extraDescriptionAttributesType
       }
     : null;
@@ -145,3 +150,34 @@ export function getApiResult(
   }
   return value && value.toString();
 }
+
+export const getExtraDescriptionAttributesWithValue = (
+  analysis: ?AnalysisCollection,
+  extraDescriptionAttributes: Array<ExtraAttribute>,
+  language: Language
+) =>
+  extraDescriptionAttributes.map(attr => {
+    let attributeValue =
+      analysis && analysis.extraAttributes && analysis.extraAttributes[attr.attributeKey];
+    if (attr.allowedValues) {
+      const selected = attr.allowedValues.find(av => av.id === attributeValue);
+      if (selected) {
+        if (language.isEn) {
+          attributeValue = selected.enLabel;
+        }
+        attributeValue = selected.noLabel;
+      }
+    }
+    return { ...attr, attributeValue };
+  });
+
+export const getAnalysisObjects = (form: FormData) =>
+  form.type.value === 'AnalysisCollection'
+    ? toArray(form.events.value)
+    : [
+        {
+          term: form.term.value,
+          museumNo: form.museumNo.value,
+          subNo: form.subNo.value
+        }
+      ];

@@ -16,7 +16,7 @@ class MusitObject {
   static getObjectDetails: (
     ajaxGet: AjaxGet
   ) => (props: {
-    id: number,
+    id: string,
     museumId: number,
     collectionId: string,
     token: string,
@@ -46,7 +46,7 @@ class MusitObject {
   static getObjectLocation: (
     ajaxGet: AjaxGet
   ) => (props: {
-    objectId: number,
+    objectId: string,
     museumId: number,
     token: string,
     callback?: Callback
@@ -63,7 +63,7 @@ class MusitObject {
   static getObjectWithCurrentLocation: (
     ajaxGet: AjaxGet
   ) => (props: {
-    objectId: number,
+    objectId: string,
     museumId: number,
     collectionId: string,
     token: string,

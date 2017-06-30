@@ -10,7 +10,7 @@ import store$, {
 } from './analysisStore';
 import { makeUrlAware } from '../../stores/appSession';
 import flowRight from 'lodash/flowRight';
-import props from './shared/formProps';
+import props, { onUnmount } from './shared/formProps';
 import lifeCycle from '../../shared/lifeCycle';
 
 const { form$, ...formActions } = analysisForm;
@@ -29,12 +29,7 @@ const commands = {
   ...formActions
 };
 
-const ManagedAnalysisFormComponent = lifeCycle({
-  onUnmount: props => {
-    props.clearForm();
-    props.clearStore();
-  }
-})(AnalysisFormComponent);
+const ManagedAnalysisFormComponent = lifeCycle({ onUnmount })(AnalysisFormComponent);
 
 export default flowRight([
   inject(data, commands, props),
