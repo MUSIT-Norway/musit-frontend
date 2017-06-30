@@ -1,16 +1,25 @@
+// @flow
+
 import { mount } from 'enzyme';
 import React from 'react';
 import SampleAddComponent from '../SampleFormComponent';
 import sinon from 'sinon';
-import { expect } from 'chai';
 import { appSession } from '../../../testutils/sampleDataForTest';
+
+declare var describe: any;
+declare var it: any;
+declare var expect: any;
 
 describe('AnalysisSampleFormPageAdd', () => {
   it('should display correctly', () => {
     const updateForm = sinon.spy();
+    const isFormValid = sinon.spy();
+    const sampleTypeDisplayName = sinon.spy();
+    const clickBack = sinon.spy();
+    const clickSave = sinon.spy();
+
     const wrapper = mount(
       <SampleAddComponent
-        appSession={appSession}
         store={{
           sampleTypes: {
             Vev: [
@@ -190,14 +199,31 @@ describe('AnalysisSampleFormPageAdd', () => {
             }
           }
         }}
+        parentSample={null}
         updateForm={updateForm}
-        predefined={{ sampleTypes: [] }}
+        clickSave={clickSave}
+        appSession={appSession}
+        clickBack={clickBack}
+        sampleTypeDisplayName={sampleTypeDisplayName}
+        isFormValid={isFormValid}
         objectData={{
-          term: 'Carex saxatilis',
+          id: 123,
+          uuid: '0000-0000-123',
+          museumId: 99,
           museumNo: 'M1234',
-          subNo: 'a'
+          term: 'Carex saxatilis',
+          subNo: 'a',
+          objectType: 'collection',
+          currentLocation: {pathNames: null},
+          objectUUID: '0000-0000-123',
+          nodeId: 'blee'
         }}
-        isFormValid={true}
+        predefined={{
+          sampleTypes: {},
+          storageContainers: [],
+          storageMediums: [],
+          treatments: []
+        }}
       />
     );
     wrapper.find('.note').simulate('change', {
@@ -205,15 +231,15 @@ describe('AnalysisSampleFormPageAdd', () => {
         value: 'Bjarne'
       }
     });
-    expect(updateForm.getCall(0).args[0].name).to.equal('note');
-    expect(updateForm.getCall(0).args[0].rawValue).to.equal('Bjarne');
+    expect(updateForm.getCall(0).args[0].name).toEqual('note');
+    expect(updateForm.getCall(0).args[0].rawValue).toEqual('Bjarne');
 
     wrapper.find('.size').simulate('change', {
       target: {
         value: '5,23'
       }
     });
-    expect(updateForm.getCall(1).args[0].name).to.equal('size');
-    expect(updateForm.getCall(1).args[0].rawValue).to.equal('5,23');
+    expect(updateForm.getCall(1).args[0].name).toEqual('size');
+    expect(updateForm.getCall(1).args[0].rawValue).toEqual('5,23');
   });
 });
