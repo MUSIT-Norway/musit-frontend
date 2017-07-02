@@ -1,10 +1,9 @@
 // @flow
-
 import { mount } from 'enzyme';
 import React from 'react';
 import SampleAddComponent from '../SampleFormComponent';
 import sinon from 'sinon';
-import { appSession } from '../../../testutils/sampleDataForTest';
+import { appSession, history } from '../../../testutils/sampleDataForTest';
 import { createEnLangAppSessionContext } from '../../../testutils/appSessionContext';
 
 declare var describe: any;
@@ -36,6 +35,7 @@ describe('AnalysisSampleFormPageAdd', () => {
         updateForm={updateForm}
         clickSave={clickSave}
         appSession={appSession}
+        history={history}
         updateSampleType={updateSampleType}
         clickBack={clickBack}
         sampleTypeDisplayName={sampleTypeDisplayName}
@@ -142,6 +142,7 @@ describe('AnalysisSampleFormPageAdd', () => {
           }
         }}
         updateForm={updateForm}
+        history={history}
         clickSave={clickSave}
         appSession={appSession}
         clickBack={clickBack}

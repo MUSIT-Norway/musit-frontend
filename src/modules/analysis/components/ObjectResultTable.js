@@ -3,19 +3,26 @@ import React from 'react';
 import { I18n } from 'react-i18nify';
 import './ObjectResultTable.css';
 import Result from '../components/Result';
+import NavigateToObject from '../../../components/navigations/NavigateToObject';
+import type { AppSession } from '../../../types/appSession';
+import type { History } from '../../../types/Routes';
 
 type Props = {
   data: Array<Object>,
   handleClickRow: (object: Object) => void,
   updateForm?: Function,
-  extraAttributes?: any
+  extraAttributes?: any,
+  history: History,
+  appSession: AppSession
 };
 
 export default function ObjectResultTable({
   data,
   handleClickRow,
   extraAttributes,
-  updateForm
+  updateForm,
+  history,
+  appSession
 }: Props) {
   return (
     <table
@@ -103,6 +110,13 @@ export default function ObjectResultTable({
                           });
                           updateForm && updateForm({ name: 'events', rawValue: newData });
                         }}
+                      />
+                      <NavigateToObject
+                        objectId={
+                          row.originatedObjectUuid ? row.originatedObjectUuid : row.uuid
+                        }
+                        appSession={appSession}
+                        history={history}
                       />
                     </td>
                   </tr>

@@ -6,6 +6,7 @@ import AnalysisViewComponent from '../AnalysisViewComponent';
 import { fieldsArray } from '../analysisForm';
 import type { Field } from 'forms/form';
 import type { FormData } from '../shared/formType';
+import { appSession, history } from '../../../testutils/sampleDataForTest';
 
 declare var describe: any;
 declare var it: any;
@@ -84,6 +85,8 @@ describe('AnalysisViewComponent', () => {
         objects={objectsData}
         clickEdit={() => {}}
         clickCancel={() => {}}
+        appSession={appSession}
+        history={history}
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();

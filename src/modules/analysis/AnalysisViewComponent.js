@@ -9,6 +9,8 @@ import Result from './components/Result';
 import { DATE_FORMAT_DISPLAY } from '../../shared/util';
 import type { Person } from '../../types/person';
 import type { FormData } from './shared/formType';
+import type { AppSession } from '../../types/appSession';
+import type { History } from '../../types/Routes';
 
 type Props = {
   form: FormData,
@@ -20,7 +22,9 @@ type Props = {
   clickEdit: Function,
   clickCancel: Function,
   extraDescriptionAttributes: any,
-  extraResultAttributes: any
+  extraResultAttributes: any,
+  history: History,
+  appSession: AppSession
 };
 
 export default ({
@@ -32,7 +36,9 @@ export default ({
   objects,
   clickEdit,
   extraResultAttributes,
-  extraDescriptionAttributes
+  extraDescriptionAttributes,
+  history,
+  appSession
 }: Props) => (
   <div className="container">
     <div className="page-header">
@@ -154,7 +160,12 @@ export default ({
         </div>
         <div className="form-group">
           <div className="col-md-12 col-md-offset-0">
-            <ObjectTable extraAttributes={extraResultAttributes} data={objects} />
+            <ObjectTable
+              extraAttributes={extraResultAttributes}
+              data={objects}
+              appSession={appSession}
+              history={history}
+            />
           </div>
         </div>
         <hr />

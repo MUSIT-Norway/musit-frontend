@@ -38,7 +38,8 @@ type Props = {
   objects: Array<ObjectData & SampleData & { sampleType: string, sampleSubType: string }>,
   predefined: Predefined,
   clickSave: Function,
-  clickCancel: Function
+  clickCancel: Function,
+  history: Function
 };
 
 const AnalysisFormComponent = ({
@@ -59,7 +60,8 @@ const AnalysisFormComponent = ({
   appSession,
   objects,
   clickSave,
-  clickCancel
+  clickCancel,
+  history
 }: Props) => {
   return (
     <div className="container">
@@ -274,6 +276,8 @@ const AnalysisFormComponent = ({
                 data={objects}
                 extraAttributes={extraResultAttributes}
                 updateForm={updateForm}
+                appSession={appSession}
+                history={history}
               />
             </div>
           </div>

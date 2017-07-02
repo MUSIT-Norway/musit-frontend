@@ -4,6 +4,7 @@ import PersonRoleDate from '../../components/person/PersonRoleDate';
 import Sample from '../../models/sample';
 import type { ObjectData } from '../../types/object';
 import type { AppSession } from '../../types/appSession';
+import type { History } from '../../types/Routes';
 import type { SampleData } from '../../types/samples';
 import type { SampleDateExtended } from './sampleStore';
 import type { FormDetails } from './types/form';
@@ -15,6 +16,7 @@ import FieldTextArea from '../../forms/components/FieldTextArea';
 import MetaInformation from '../../components/metainfo';
 import ReadOnlySampleType from './components/ReadOnlySampleType';
 import { I18n } from 'react-i18nify';
+import NavigateToObject from '../../components/navigations/NavigateToObject';
 import MusitI18n from '../../components/MusitI18n';
 
 type Predefined = {
@@ -38,6 +40,9 @@ export type Props = {
   updateSampleType: Function,
   sampleTypeDisplayName: Function,
   isFormValid: (f: FormDetails) => boolean,
+  objectData: ObjectData & SampleData & { sampleType: string, sampleSubType: string },
+  predefined: Predefined,
+  history: History,
   objectData: ObjectOrSample,
   predefined: Predefined
 };
@@ -53,7 +58,8 @@ export default function SampleFormComponent({
   appSession,
   clickBack,
   objectData,
-  predefined
+  predefined,
+  history
 }: Props) {
   const canEditSampleType = !form.sampleNum;
 
@@ -99,6 +105,11 @@ export default function SampleFormComponent({
           <span>
             <strong>{I18n.t('musit.analysis.term')}</strong> {objectData.term}
           </span>
+          <NavigateToObject
+            objectId={objectData.uuid}
+            appSession={appSession}
+            history={history}
+          />
           {parentSample &&
             parentSample.sampleNum &&
             <span>

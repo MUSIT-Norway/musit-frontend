@@ -89,9 +89,9 @@ describe('AnalysisViewContainer', () => {
       expect(loadForm.calledOnce).toBe(true);
       expect(loadForm.getCall(0).args[0]).toEqual([
         { name: 'id', defaultValue: 2 },
-        { name: 'analysisTypeId', defaultValue: '8453873d-227c-4205-a231-bf7e04164fab' },
-        { name: 'doneBy' },
-        { name: 'doneDate' },
+        { name: 'analysisTypeId', defaultValue: 1 },
+        { name: 'doneBy', defaultValue: undefined },
+        { name: 'doneDate', defaultValue: undefined },
         { name: 'persons', defaultValue: [] },
         { name: 'registeredBy', defaultValue: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e' },
         { name: 'registeredByName', defaultValue: 'Rituvesh Kumar' },
@@ -99,10 +99,10 @@ describe('AnalysisViewContainer', () => {
           name: 'registeredDate',
           defaultValue: '2017-04-03T10:36:34+00:00'
         },
-        { name: 'responsible' },
-        { name: 'administrator' },
-        { name: 'completedBy' },
-        { name: 'completedDate' },
+        { name: 'responsible', defaultValue: undefined },
+        { name: 'administrator', defaultValue: undefined },
+        { name: 'completedBy', defaultValue: undefined },
+        { name: 'completedDate', defaultValue: undefined },
         {
           name: 'objectId',
           defaultValue: 'adea8141-8099-4f67-bff9-ea5090e18335'
@@ -116,23 +116,23 @@ describe('AnalysisViewContainer', () => {
           name: 'partOf',
           defaultValue: 1
         },
-        { name: 'result' },
-        { name: 'orgId' },
-        { name: 'reason' },
-        { name: 'externalSource' },
-        { name: 'comments' },
+        { name: 'result', defaultValue: undefined },
+        { name: 'orgId', defaultValue: undefined },
+        { name: 'reason', defaultValue: undefined },
+        { name: 'externalSource', defaultValue: undefined },
+        { name: 'comments', defaultValue: undefined },
         {
           name: 'restrictions',
           defaultValue: false
         },
-        { name: 'restrictions_requester' },
-        { name: 'restrictions_requesterName' },
-        { name: 'restrictions_expirationDate' },
-        { name: 'restrictions_reason' },
-        { name: 'restrictions_cancelledReason' },
-        { name: 'restrictions_caseNumbers' },
-        { name: 'caseNumbers' },
-        { name: 'completeAnalysis' },
+        { name: 'restrictions_requester', defaultValue: undefined },
+        { name: 'restrictions_requesterName', defaultValue: undefined },
+        { name: 'restrictions_expirationDate', defaultValue: undefined },
+        { name: 'restrictions_reason', defaultValue: undefined },
+        { name: 'restrictions_cancelledReason', defaultValue: undefined },
+        { name: 'restrictions_caseNumbers', defaultValue: undefined },
+        { name: 'caseNumbers', defaultValue: undefined },
+        { name: 'completeAnalysis', defaultValue: undefined },
         {
           name: 'museumNo',
           defaultValue: 'MusK58'
@@ -142,12 +142,12 @@ describe('AnalysisViewContainer', () => {
           name: 'term',
           defaultValue: 'Mansjettknapp'
         },
-        { name: 'events' },
-        { name: 'analysisTypeCategory' },
-        { name: 'updatedBy' },
-        { name: 'updatedByName' },
-        { name: 'updatedDate' },
-        { name: 'status' }
+        { name: 'events', defaultValue: [] },
+        { name: 'analysisTypeCategory', defaultValue: undefined },
+        { name: 'updatedBy', defaultValue: undefined },
+        { name: 'updatedByName', defaultValue: undefined },
+        { name: 'updatedDate', defaultValue: undefined },
+        { name: 'status', defaultValue: undefined }
       ]);
     });
   });

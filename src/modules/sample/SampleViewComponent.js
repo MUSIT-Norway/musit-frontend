@@ -4,10 +4,12 @@ import MetaInformation from '../../components/metainfo';
 import type { SampleData } from '../../types/samples';
 import moment from 'moment';
 import type { AppSession } from '../../types/appSession';
+import type { History } from '../../types/Routes';
 import type { FormDetails } from './types/form';
 import type { ObjectData } from '../../types/object';
 import ReadOnlySampleType from './components/ReadOnlySampleType';
 import { I18n } from 'react-i18nify';
+import NavigateToObject from '../../components/navigations/NavigateToObject';
 
 type Props = {
   form: FormDetails,
@@ -41,7 +43,8 @@ export type SampleProps = {
     form: FormDetails,
     object: mixed
   ) => ClickEventReturn,
-  goBack: () => void
+  goBack: () => void,
+  history: History
 };
 
 export default function SampleViewComponent(props: Props & SampleProps) {
@@ -103,6 +106,11 @@ export default function SampleViewComponent(props: Props & SampleProps) {
             {' '}
             {objectData.term}
           </span>
+          <NavigateToObject
+            objectId={objectData.uuid}
+            appSession={props.appSession}
+            history={props.history}
+          />
           {derivedFrom.sampleNum &&
             <span>
               <br />

@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NavigateToObject should render component 1`] = `
+<button
+  className="btn btn-link"
+  onClick={[Function]}
+  type="button"
+>
+  <strong>
+     Gå til objektet
+  </strong>
+</button>
+`;

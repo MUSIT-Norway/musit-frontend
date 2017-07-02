@@ -243,6 +243,20 @@ exports[`AnalysisViewComponent should render properly 1`] = `
           className="col-md-12 col-md-offset-0"
         >
           <ExpandableObjectTable
+            appSession={
+              Object {
+                "accessToken": "45667",
+                "actor": Object {
+                  "fn": "Test",
+                },
+                "collectionId": "1234",
+                "language": Object {
+                  "isEn": false,
+                  "isNo": true,
+                },
+                "museumId": 99,
+              }
+            }
             data={
               Array [
                 Object {
@@ -266,6 +280,14 @@ exports[`AnalysisViewComponent should render properly 1`] = `
               ]
             }
             extraAttributes={Object {}}
+            history={
+              Object {
+                "goBack": [Function],
+                "goForward": [Function],
+                "push": [Function],
+                "replace": [Function],
+              }
+            }
           />
         </div>
       </div>

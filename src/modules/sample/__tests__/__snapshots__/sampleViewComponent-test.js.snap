@@ -79,6 +79,18 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
         </strong>
          
       </span>
+      <NavigateToObject
+        appSession={
+          Object {
+            "actor": Object {
+              "dataportenId": "12345",
+              "fn": "Jarl",
+            },
+            "museumId": 99,
+            "token": "1234",
+          }
+        }
+      />
     </div>
     <hr />
     <h4>

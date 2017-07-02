@@ -1,6 +1,8 @@
 // @flow
 import React from 'react';
 import ObjectResultTable from './ObjectResultTable';
+import type { AppSession } from '../../../types/appSession';
+import type { History } from '../../../types/Routes';
 
 type Object = {
   objectId?: string,
@@ -11,7 +13,9 @@ type Props = {
   data: Array<Object>,
   renderExpanded?: (props: { index: number, data: Object }) => React.Element<*>,
   updateForm?: Function,
-  extraAttributes?: any
+  extraAttributes?: any,
+  history: History,
+  appSession: AppSession
 };
 
 type State = {
@@ -74,6 +78,8 @@ export default class ExpandableObjectTable extends React.Component {
         {...this.state}
         handleClickRow={this.handleRowClick.bind(this)}
         toRowId={ExpandableObjectTable.toRowId}
+        appSession={this.props.appSession}
+        history={this.props.history}
       />
     );
   }
