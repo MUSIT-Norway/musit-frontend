@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { ActorSuggest } from '../../components/suggest/ActorSuggest';
-import { Grid, Row, Col, Button } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import DropdownButton from '../../components/DropdownButton';
 import DatePicker from '../DatePicker';
@@ -33,9 +33,9 @@ type Props = {
 
 export const PersonRoleDate = ({
   personData,
-  appSession,
   updateForm,
   fieldName,
+  appSession,
   roles,
   showDateForRole,
   getDisplayNameForRole
@@ -43,97 +43,101 @@ export const PersonRoleDate = ({
   const pArr: Array<Person> = personData.length > 0 ? personData : defaultPersons;
   return (
     pArr &&
-    <Grid>
-      <Row>
-        <Col md={2}>
-          <strong>{I18n.t('musit.texts.name')}</strong>
-        </Col>
-        <Col md={2}>
-          <strong>{I18n.t('musit.texts.role')}</strong>
-        </Col>
-        {showDateForRole &&
-          <Col md={2}>
-            <strong>{I18n.t('musit.texts.date')}</strong>
-          </Col>}
-        <Col md={2} />
-      </Row>
-      <br />
-      {pArr.map((v, i) => (
-        <Row key={`id_${i}`}>
-          <Col md={2}>
-            <ActorSuggest
-              appSession={appSession}
-              key={`id_${i}`}
-              id={`id_${i}`}
-              value={v.name || ''}
-              placeHolder={I18n.t('musit.analysis.restrictions.findActor')}
-              onChange={newValue => {
-                updateForm({
-                  name: fieldName,
-                  rawValue: updatePerson(
-                    i,
-                    {
-                      ...v,
-                      name: newValue.fn,
-                      uuid: MusitActor.getActorId(newValue) || undefined
-                    },
-                    pArr
-                  )
-                });
-              }}
-            />
-          </Col>
-          <Col md={2}>
-            <DropdownButton
-              id={`role_${i}`}
-              items={roles}
-              displayItems={roles.map(
-                r => getDisplayNameForRole && getDisplayNameForRole(r)
-              )}
-              index={i}
-              onChange={role =>
-                updateForm({
-                  name: fieldName,
-                  rawValue: updateRole(i, role, pArr)
-                })}
-              title={
-                v.role
-                  ? (getDisplayNameForRole && getDisplayNameForRole(v.role)) || v.role
-                  : I18n.t('musit.texts.chooseRole')
-              }
-            />
-          </Col>
-          {showDateForRole &&
-            <Col md={2}>
-              {showDateForRole(v.role) &&
-                <DatePicker
-                  dateFormat={DATE_FORMAT_DISPLAY}
-                  value={v.date}
-                  onClear={newValue =>
-                    updateForm({
-                      name: fieldName,
-                      rawValue: updateDate(i, newValue, pArr)
-                    })}
+    <div>
+      <table className="table table-responsive" style={{ width: '60%' }}>
+        <thead>
+          <tr>
+            <th>
+              <strong>{I18n.t('musit.texts.name')}</strong>
+            </th>
+            <th>
+              <strong>{I18n.t('musit.texts.role')}</strong>
+            </th>
+            <th>
+              {showDateForRole && <strong>{I18n.t('musit.texts.date')}</strong>}
+            </th>
+            <th>{' '}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {pArr.map((v, i) => (
+            <tr key={`id_${i}`}>
+              <td>
+                <ActorSuggest
+                  appSession={appSession}
+                  key={`id_${i}`}
+                  id={`id_${i}`}
+                  value={v.name || ''}
+                  placeHolder={I18n.t('musit.analysis.restrictions.findActor')}
                   onChange={newValue => {
                     updateForm({
                       name: fieldName,
-                      rawValue: updateDate(i, newValue, pArr)
+                      rawValue: updatePerson(
+                        i,
+                        {
+                          ...v,
+                          name: newValue.fn,
+                          uuid: MusitActor.getActorId(newValue) || undefined
+                        },
+                        pArr
+                      )
                     });
                   }}
-                />}
-            </Col>}
-          <Col md={1}>
-            <FontAwesome
-              name={'times'}
-              onClick={() =>
-                updateForm({
-                  name: fieldName,
-                  rawValue: deletePerson(i, pArr)
-                })}
-            />
-          </Col>
-        </Row>
-      ))}
+                />
+              </td>
+              <td>
+                <DropdownButton
+                  id={`role_${i}`}
+                  items={roles}
+                  displayItems={roles.map(
+                    r => (getDisplayNameForRole && getDisplayNameForRole(r)) || r
+                  )}
+                  index={i}
+                  onChange={role =>
+                    updateForm({
+                      name: fieldName,
+                      rawValue: updateRole(i, role, pArr)
+                    })}
+                  title={
+                    v.role
+                      ? (getDisplayNameForRole && getDisplayNameForRole(v.role)) || v.role
+                      : I18n.t('musit.texts.chooseRole')
+                  }
+                />
+              </td>
+              <td>
+                {showDateForRole &&
+                  showDateForRole(v.role) &&
+                  <DatePicker
+                    dateFormat={DATE_FORMAT_DISPLAY}
+                    value={v.date}
+                    onClear={newValue =>
+                      updateForm({
+                        name: fieldName,
+                        rawValue: updateDate(i, newValue, pArr)
+                      })}
+                    onChange={newValue => {
+                      updateForm({
+                        name: fieldName,
+                        rawValue: updateDate(i, newValue, pArr)
+                      });
+                    }}
+                  />}
+              </td>
+              <td>
+                <FontAwesome
+                  name={'times'}
+                  onClick={() =>
+                    updateForm({
+                      name: fieldName,
+                      rawValue: deletePerson(i, pArr)
+                    })}
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
       <Row>
         <Col md={6}>
           <Button
@@ -147,7 +151,7 @@ export const PersonRoleDate = ({
           </Button>
         </Col>
       </Row>
-    </Grid>
+    </div>
   );
 };
 

@@ -31,9 +31,9 @@
           "stateProvince": "State/Province",
           "country": "Country",
           "place": "Collecting place",
-          "findingPlace": "Finding place",
+          "findingPlace": "Find place",
           "collectionDate": "Collecting date",
-          "collectingNumber": "Collecting No.",
+          "collectingNumber": "Find No.",
           "events": {
             "events": "Events",
             "doneDate": "Done date",

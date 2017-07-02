@@ -1,5 +1,5 @@
 // @flow
-import PersonRoleDate from '../PersonRoleDate';
+import ViewPersonRoleDate from '../ViewPersonRoleDate';
 import { shallow } from 'enzyme';
 import React from 'react';
 
@@ -7,10 +7,10 @@ declare var describe: any;
 declare var it: any;
 declare var expect: any;
 
-describe('PersonRoleDate', () => {
+describe('ViewPersonRoleDate', () => {
   it('should match snapshot', () => {
     const wrapperBefore = shallow(
-      <PersonRoleDate
+      <ViewPersonRoleDate
         personData={[]}
         roles={['doneBy', 'responsible', 'madman']}
         updateForm={x => x}
@@ -39,11 +39,19 @@ describe('PersonRoleDate', () => {
     );
 
     const wrapperAfter = shallow(
-      <PersonRoleDate
+      <ViewPersonRoleDate
         personData={[
-          { fn: 'Stein Olsen', role: 'doneBy', date: '12.01.2001' },
-          { fn: 'Thor Heyerdahl', role: 'responsible', date: '12.01.2001' },
-          { fn: 'Christian Radich', role: 'responsible', date: '12.01.2001' }
+          { fn: 'Stein Olsen', role: 'doneBy', date: '2017-07-02T17:42:28+00:00' },
+          {
+            fn: 'Thor Heyerdahl',
+            role: 'responsible',
+            date: '2017-07-02T17:42:28+00:00'
+          },
+          {
+            fn: 'Christian Radich',
+            role: 'responsible',
+            date: '2017-07-02T17:42:28+00:00'
+          }
         ]}
         appSession={{
           museumId: 99,
@@ -70,7 +78,6 @@ describe('PersonRoleDate', () => {
         }}
       />
     );
-    //Empty input gives one empty line in PersonRoleTable, thus difference is 2
-    expect(wrapperAfter.find('tr').length - wrapperBefore.find('tr').length).toBe(2);
+    expect(wrapperAfter.find('tr').length - wrapperBefore.find('tr').length).toBe(3);
   });
 });

@@ -2,12 +2,12 @@
 import React from 'react';
 import MetaInformation from '../../components/metainfo';
 import type { SampleData } from '../../types/samples';
-import moment from 'moment';
 import type { AppSession } from '../../types/appSession';
 import type { History } from '../../types/Routes';
 import type { FormDetails } from './types/form';
 import type { ObjectData } from '../../types/object';
 import ReadOnlySampleType from './components/ReadOnlySampleType';
+import ViewPersonRoleDate from '../../components/person/ViewPersonRoleDate';
 import { I18n } from 'react-i18nify';
 import NavigateToObject from '../../components/navigations/NavigateToObject';
 
@@ -134,25 +134,11 @@ export default function SampleViewComponent(props: Props & SampleProps) {
         </div>
         <hr />
         <h4>{I18n.t('musit.sample.personsAssociatedWithSampleTaking')}</h4>
-        <div>
-          <div className="row">
-            <div className="col-md-4"><strong>{I18n.t('musit.texts.name')}</strong></div>
-            <div className="col-md-2"><strong>{I18n.t('musit.texts.role')}</strong></div>
-            <div className="col-md-2"><strong>{I18n.t('musit.texts.date')}</strong></div>
-          </div>
-          {customProps.persons &&
-            customProps.persons.map((p, i) => (
-              <div className="row" key={i}>
-                <div className="col-md-4">{p.name}</div>
-                <div className="col-md-2">
-                  {I18n.t(`musit.sample.roles.${p.role}`) || p.role}
-                </div>
-                <div className="col-md-2">
-                  {p.date ? moment(p.date).format('DD.MM.YYYY') : null}
-                </div>
-              </div>
-            ))}
-        </div>
+        <ViewPersonRoleDate
+          personData={customProps.persons}
+          getDisplayNameForRole={(roleName: string) =>
+            I18n.t(`musit.sample.roles.${roleName}`)}
+        />
         <hr />
         <div className="form-group">
           <label className="control-label col-md-2">

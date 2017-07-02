@@ -1,5 +1,6 @@
+//@flow
 import React from 'react';
-import { DropdownButton, MenuItem, FormGroup } from 'react-bootstrap';
+import { DropdownButton, MenuItem } from 'react-bootstrap';
 
 type FieldDropDownProps = {
   id: string,
@@ -17,14 +18,12 @@ export default function({
   title
 }: FieldDropDownProps) {
   return (
-    <FormGroup controlId={id}>
-      <DropdownButton bsStyle="default" title={title} id={id}>
-        {items.map((v, i) => (
-          <MenuItem key={i} onClick={e => onChange(v)}>
-            {(displayItems && displayItems[i]) || v}
-          </MenuItem>
-        ))}
-      </DropdownButton>
-    </FormGroup>
+    <DropdownButton bsStyle="default" title={title} id={id}>
+      {items.map((v, i) => (
+        <MenuItem key={i} onClick={e => onChange(v)}>
+          {(displayItems && displayItems[i]) || v}
+        </MenuItem>
+      ))}
+    </DropdownButton>
   );
 }

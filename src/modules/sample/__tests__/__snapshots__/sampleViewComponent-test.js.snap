@@ -96,33 +96,9 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
     <h4>
       Personer tilknyttet prøveuttaket
     </h4>
-    <div>
-      <div
-        className="row"
-      >
-        <div
-          className="col-md-4"
-        >
-          <strong>
-            Navn
-          </strong>
-        </div>
-        <div
-          className="col-md-2"
-        >
-          <strong>
-            Rolle
-          </strong>
-        </div>
-        <div
-          className="col-md-2"
-        >
-          <strong>
-            Dato
-          </strong>
-        </div>
-      </div>
-    </div>
+    <Component
+      getDisplayNameForRole={[Function]}
+    />
     <hr />
     <div
       className="form-group"

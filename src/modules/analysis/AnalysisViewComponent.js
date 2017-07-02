@@ -7,7 +7,7 @@ import ObjectTable from './components/ExpandableObjectResultTable';
 import toArray from 'lodash/toArray';
 import Result from './components/Result';
 import { DATE_FORMAT_DISPLAY } from '../../shared/util';
-import type { Person } from '../../types/person';
+import ViewPersonRoleDate from '../../components/person/ViewPersonRoleDate';
 import type { FormData } from './shared/formType';
 import type { AppSession } from '../../types/appSession';
 import type { History } from '../../types/Routes';
@@ -133,24 +133,10 @@ export default ({
       </div>
       <hr />
       <h4>{I18n.t('musit.analysis.personTillAnalysis')}</h4>
-      <div>
-        <div className="row">
-          <div className="col-md-4"><strong>{I18n.t('musit.texts.name')}</strong></div>
-          <div className="col-md-2"><strong>{I18n.t('musit.texts.role')}</strong></div>
-          <div className="col-md-2"><strong>{I18n.t('musit.texts.date')}</strong></div>
-        </div>
-        {toArray(form.persons.value).map((p: Person, i: number) => (
-          <div className="row" key={i}>
-            <div className="col-md-4">{p.name}</div>
-            <div className="col-md-2">
-              {I18n.t(`musit.analysis.roles.${p.role || 'UNKNOWN'}`) || p.role}
-            </div>
-            <div className="col-md-2">
-              {p.date ? moment(p.date).format(DATE_FORMAT_DISPLAY) : null}
-            </div>
-          </div>
-        ))}
-      </div>
+      <ViewPersonRoleDate
+        personData={toArray(form.persons.value)}
+        getDisplayNameForRole={(r: string) => I18n.t(`musit.analysis.roles.${r}`)}
+      />
       <hr />
       <div className="well">
         <div className="form-group">

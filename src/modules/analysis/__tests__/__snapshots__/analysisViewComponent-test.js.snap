@@ -159,69 +159,22 @@ exports[`AnalysisViewComponent should render properly 1`] = `
     <h4>
       Personer tilknyttet analysen
     </h4>
-    <div>
-      <div
-        className="row"
-      >
-        <div
-          className="col-md-4"
-        >
-          <strong>
-            Navn
-          </strong>
-        </div>
-        <div
-          className="col-md-2"
-        >
-          <strong>
-            Rolle
-          </strong>
-        </div>
-        <div
-          className="col-md-2"
-        >
-          <strong>
-            Dato
-          </strong>
-        </div>
-      </div>
-      <div
-        className="row"
-      >
-        <div
-          className="col-md-4"
-        >
-          jarl
-        </div>
-        <div
-          className="col-md-2"
-        >
-          Ansvarlig
-        </div>
-        <div
-          className="col-md-2"
-        />
-      </div>
-      <div
-        className="row"
-      >
-        <div
-          className="col-md-4"
-        >
-          line
-        </div>
-        <div
-          className="col-md-2"
-        >
-          Creator
-        </div>
-        <div
-          className="col-md-2"
-        >
-          29.06.2017
-        </div>
-      </div>
-    </div>
+    <Component
+      getDisplayNameForRole={[Function]}
+      personData={
+        Array [
+          Object {
+            "name": "jarl",
+            "role": "responsible",
+          },
+          Object {
+            "date": "2017-06-29T07:54:22+00:00",
+            "name": "line",
+            "role": "creator",
+          },
+        ]
+      }
+    />
     <hr />
     <div
       className="well"
