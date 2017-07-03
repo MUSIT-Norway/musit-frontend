@@ -87,15 +87,33 @@ export function getExtraDescriptionAttributes(
     ? analysisType.extraDescriptionType
     : analysis && analysis.extraAttributes && analysis.extraAttributes.type;
 
-  return extraDescriptionAttributesType
+  const existingAttributesFromBackend = analysis && analysis.extraAttributes;
+
+  return extraDescriptionAttributesType &&
+    containsAttributes(extraDescriptionAttributes, existingAttributesFromBackend)
     ? {
-        ...(analysis && analysis.extraAttributes),
-        ...keys(extraDescriptionAttributes)
-          .filter(k => extraDescriptionAttributes[k])
-          .reduce((acc, n) => ({ ...acc, [n]: extraDescriptionAttributes[n] }), {}),
+        ...existingAttributesFromBackend,
+        ...extraDescriptionAttributes,
         type: extraDescriptionAttributesType
       }
     : null;
+}
+
+type ExtraDescriptionAttributes = { [string]: any };
+
+type ExtraDescriptionAttributesWithType = ExtraDescriptionAttributes & { type: string };
+
+export function containsAttributes(
+  extraDescriptionAttributes: ExtraDescriptionAttributes,
+  existingAttributesFromBackend: ?ExtraDescriptionAttributesWithType
+) {
+  const newAttributes = keys(extraDescriptionAttributes)
+    .filter(k => extraDescriptionAttributes[k])
+    .reduce((acc, n) => ({ ...acc, [n]: extraDescriptionAttributes[n] }), {});
+
+  const attributes = { ...existingAttributesFromBackend, ...newAttributes };
+
+  return keys(attributes).length > 0;
 }
 
 export function getExtraResultAttributes(
