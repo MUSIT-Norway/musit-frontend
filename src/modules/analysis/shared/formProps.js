@@ -58,7 +58,8 @@ export default (
   const extraResultAttributes = getExtraResultAttributes(
     analysisType,
     props.store.analysis,
-    props.store.extraResultAttributes
+    props.store.extraResultAttributes,
+    props.appSession.language
   );
 
   return {

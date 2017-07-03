@@ -10,6 +10,7 @@ import type { FormData } from '../shared/formType';
 import { I18n } from 'react-i18nify';
 import type { Language } from '../../../types/appSession';
 import toArray from 'lodash/toArray';
+import { getAnalysisResultFieldAllowedValues } from './analysisResult';
 
 export function getStatusText(status?: ?number): string {
   if (!status) {
@@ -119,26 +120,34 @@ export function containsAttributes(
 export function getExtraResultAttributes(
   analysisType: ?AnalysisType,
   analysis: ?AnalysisCollection,
-  extraResultAttributes: ?ExtraResultAttributeValues
+  extraResultAttributes: ?ExtraResultAttributeValues,
+  language: Language
 ): ?ExtraResultAttributeValues {
   const initial = analysisType && analysisType.extraResultType
     ? {
         type: analysisType.extraResultType
       }
     : {};
+  const extraResultType = initial.type;
   return analysisType && analysisType.extraResultAttributes
-    ? keys(analysisType.extraResultAttributes).reduce((acc, era) => {
+    ? keys(analysisType.extraResultAttributes).reduce((acc, field) => {
         const type =
           analysisType &&
           analysisType.extraResultAttributes &&
-          analysisType.extraResultAttributes[era];
-        const value = extraResultAttributes && extraResultAttributes[era]
-          ? extraResultAttributes[era]
-          : analysis ? getApiResult(era, type, analysis.result) : null;
+          analysisType.extraResultAttributes[field];
+        const value = extraResultAttributes && extraResultAttributes[field]
+          ? extraResultAttributes[field]
+          : analysis ? getApiResult(field, type, analysis.result) : null;
+        const allowedValues = getAnalysisResultFieldAllowedValues(
+          extraResultType,
+          field,
+          language
+        );
         return {
           ...acc,
-          [era]: {
+          [field]: {
             type,
+            allowedValues,
             value
           }
         };

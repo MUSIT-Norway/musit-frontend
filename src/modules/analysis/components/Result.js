@@ -1,7 +1,6 @@
 // @flow
 import React from 'react';
 import { I18n } from 'react-i18nify';
-import Sample from '../../../models/sample';
 
 type Props = {
   externalSource: ?string,
@@ -11,6 +10,77 @@ type Props = {
   extraAttributes: any,
   updateExtraResultAttribute: Function
 };
+
+type ResultFieldProps = {
+  attrKey: string,
+  attribute: {
+    value?: {
+      value?: ?string,
+      rawValue?: ?string
+    },
+    allowedValues?: Array<string>
+  },
+  onChange: Function
+};
+
+const Size = (props: ResultFieldProps) => (
+  <div>
+    <div className="col-md-3">
+      <input
+        className="form-control"
+        name={props.attrKey}
+        value={(props.attribute.value && props.attribute.value.rawValue) || ''}
+        onChange={e =>
+          props.onChange({
+            ...props.attribute.value,
+            value: parseFloat(e.target.value.replace(',', '.')),
+            rawValue: e.target.value
+          })}
+      />
+    </div>
+    <div className="col-md-2">
+      <select
+        className="form-control"
+        onChange={e =>
+          props.onChange({
+            ...props.attribute.value,
+            unit: e.target.value
+          })}
+        defaultValue={(props.attribute.value && props.attribute.value.unit) || ''}
+      >
+        <option value="">{I18n.t('musit.sample.chooseUnit')}</option>
+        {(props.attribute.allowedValues || [])
+          .map((unit, i) => <option key={i}>{unit}</option>)}
+      </select>
+    </div>
+  </div>
+);
+
+const StringSelect = (props: ResultFieldProps) => (
+  <div className="col-md-5">
+    <select
+      className="form-control"
+      name={props.attrKey}
+      onChange={e => props.onChange(e.target.value)}
+      defaultValue={props.attribute.value || ''}
+    >
+      <option value="">{I18n.t('musit.texts.chooseValue')}</option>
+      {(props.attribute.allowedValues || [])
+        .map((value, i) => <option key={i}>{value}</option>)}
+    </select>
+  </div>
+);
+
+const StringInput = (props: ResultFieldProps) => (
+  <div className="col-md-5">
+    <input
+      className="form-control"
+      name={props.attrKey}
+      value={props.attribute.value || ''}
+      onChange={e => props.onChange(e.target.value)}
+    />
+  </div>
+);
 
 export default function Result({
   externalSource,
@@ -23,63 +93,32 @@ export default function Result({
   return (
     <div>
       {extraAttributes &&
-        Object.keys(extraAttributes).filter(eat => eat !== 'type').map((attrKey, i) => {
-          return (
+        Object.keys(extraAttributes)
+          .filter(eat => eat !== 'type')
+          .map((attrKey: string, i: number) => (
             <div className="form-group" key={i}>
               <label className="control-label col-md-2" htmlFor="externalSource">
                 {attrKey}
               </label>
               {extraAttributes[attrKey].type === 'Size'
-                ? <div>
-                    <div className="col-md-3">
-                      <input
-                        className="form-control"
-                        name={attrKey}
-                        value={
-                          (extraAttributes[attrKey].value &&
-                            extraAttributes[attrKey].value.rawValue) ||
-                            ''
-                        }
-                        onChange={e =>
-                          updateExtraResultAttribute(attrKey, {
-                            ...extraAttributes[attrKey].value,
-                            value: parseFloat(e.target.value.replace(',', '.')),
-                            rawValue: e.target.value
-                          })}
+                ? <Size
+                    attrKey={attrKey}
+                    attribute={extraAttributes[attrKey]}
+                    onChange={value => updateExtraResultAttribute(attrKey, value)}
+                  />
+                : extraAttributes[attrKey].allowedValues
+                    ? <StringSelect
+                        attrKey={attrKey}
+                        attribute={extraAttributes[attrKey]}
+                        onChange={value => updateExtraResultAttribute(attrKey, value)}
                       />
-                    </div>
-                    <div className="col-md-2">
-                      <select
-                        className="form-control"
-                        onChange={e =>
-                          updateExtraResultAttribute(attrKey, {
-                            ...extraAttributes[attrKey].value,
-                            unit: e.target.value
-                          })}
-                        defaultValue={
-                          (extraAttributes[attrKey].value &&
-                            extraAttributes[attrKey].value.unit) ||
-                            ''
-                        }
-                      >
-                        <option value="">{I18n.t('musit.sample.chooseUnit')}</option>
-                        {Sample.sampleSizeUnits.map((unit, i) => (
-                          <option key={i}>{unit}</option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                : <div className="col-md-5">
-                    <input
-                      className="form-control"
-                      name={attrKey}
-                      value={extraAttributes[attrKey].value || ''}
-                      onChange={e => updateExtraResultAttribute(attrKey, e.target.value)}
-                    />
-                  </div>}
+                    : <StringInput
+                        attrKey={attrKey}
+                        attribute={extraAttributes[attrKey]}
+                        onChange={value => updateExtraResultAttribute(attrKey, value)}
+                      />}
             </div>
-          );
-        })}
+          ))}
       <div className="form-group">
         <label className="control-label col-md-2" htmlFor="externalSource">
           {I18n.t('musit.analysis.externalSource')}
