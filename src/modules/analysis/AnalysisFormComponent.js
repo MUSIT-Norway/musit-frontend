@@ -4,7 +4,7 @@ import { I18n } from 'react-i18nify';
 import type { AppSession } from '../../types/appSession';
 import type { ObjectData } from '../../types/object';
 import type { SampleData } from '../../types/samples';
-import type { ExtraAttribute } from '../../types/analysisTypes';
+import type { ExtraAttribute } from '../../types/analysis';
 import type { FormData } from './shared/formType';
 import PersonRoleDate from '../../components/person/PersonRoleDate';
 import MetaInformation from '../../components/metainfo';
@@ -67,9 +67,7 @@ const AnalysisFormComponent = ({
     <div className="container">
       <div className="page-header">
         <h1>
-          {form.id.value
-            ? I18n.t('musit.analysis.analysis')
-            : I18n.t('musit.analysis.registeringAnalysis')}
+          {I18n.t('musit.analysis.analysis')}
         </h1>
       </div>
       <form className="form-horizontal">

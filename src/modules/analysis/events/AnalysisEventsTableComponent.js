@@ -5,7 +5,7 @@ import { I18n } from 'react-i18nify';
 import moment from 'moment';
 import type { AnalysisCollectionExtended } from './analysisEventsStore';
 import type { Language } from 'types/appSession';
-import type { AnalysisType } from 'types/analysisTypes';
+import type { AnalysisType } from 'types/analysis';
 
 type TableProps = {
   events: Array<AnalysisCollectionExtended>,

@@ -5,7 +5,7 @@ import type {
   AnalysisCollection,
   ExtraResultAttributeValues,
   ExtraAttribute
-} from '../../../types/analysisTypes';
+} from '../../../types/analysis';
 import type { FormData } from '../shared/formType';
 import { I18n } from 'react-i18nify';
 import type { Language } from '../../../types/appSession';

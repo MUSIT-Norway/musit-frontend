@@ -6,7 +6,7 @@ import MusitActor from '../../../models/actor';
 import { uniq } from 'lodash';
 import { I18n } from 'react-i18nify';
 
-import type { AnalysisCollection, AnalysisType } from 'types/analysisTypes';
+import type { AnalysisCollection, AnalysisType } from 'types/analysis';
 import type { Actor } from 'types/actor';
 
 type Actions = {

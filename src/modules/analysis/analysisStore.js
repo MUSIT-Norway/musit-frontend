@@ -9,7 +9,7 @@ import MusitObject from '../../models/object';
 import Sample from '../../models/sample';
 import flatten from 'lodash/flatten';
 import type { Callback, AjaxGet, AjaxPost } from '../../models/types/ajax';
-import type { AnalysisCollection } from '../../types/analysisTypes';
+import type { AnalysisCollection } from '../../types/analysis';
 import type { Actor } from '../../types/actor';
 
 const initialState = {

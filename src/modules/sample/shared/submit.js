@@ -9,7 +9,7 @@ import type { ObjectData } from '../../../types/object';
 import type { SampleData } from '../../../types/samples';
 import type { AppSession } from '../../../types/appSession';
 import type { Person } from '../../../types/person';
-import type { SampleType } from '../../../types/sampleTypes';
+import type { SampleType } from '../../../types/sample';
 import type { History, Match } from '../../../types/Routes';
 import Sample from '../../../models/sample';
 import { isFormValid } from '../../../forms/validators';

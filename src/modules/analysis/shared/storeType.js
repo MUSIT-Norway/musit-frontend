@@ -1,5 +1,5 @@
 // @flow
-import type { AnalysisType, AnalysisCollection } from '../../../types/analysisTypes';
+import type { AnalysisType, AnalysisCollection } from '../../../types/analysis';
 
 export type Store = {
   analysis?: AnalysisCollection,

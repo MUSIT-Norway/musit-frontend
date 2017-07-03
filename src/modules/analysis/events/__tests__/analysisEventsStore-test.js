@@ -8,7 +8,7 @@ import {
   getUniqueRegisteredByActors
 } from '../analysisEventsStore';
 import MusitTestScheduler from '../../../../testutils/MusitTestScheduler';
-import type { AnalysisCollection } from 'types/analysisTypes';
+import type { AnalysisCollection } from 'types/analysis';
 declare var describe: any;
 declare var it: any;
 declare var expect: any;

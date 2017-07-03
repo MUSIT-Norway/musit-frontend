@@ -1,6 +1,6 @@
 // @flow
 
-import type { SampleTypesObject, SampleType } from '../../../types/sampleTypes';
+import type { SampleTypesObject, SampleType } from '../../../types/sample';
 import type { AppSession } from '../../../types/appSession';
 
 const findSampleType = (sampleTypes: SampleTypesObject, sampleTypesId: number) =>

@@ -8,8 +8,8 @@ import type {
   AnalysisTypesObject,
   AnalysisTypes,
   AnalysisType
-} from '../../../types/analysisTypes';
-import type { SampleTypesObject } from '../../../types/sampleTypes';
+} from '../../../types/analysis';
+import type { SampleTypesObject } from '../../../types/sample';
 import type { AppSession } from '../../../types/appSession';
 import { getSampleType, getSampleSubType } from '../../sample/shared/types';
 

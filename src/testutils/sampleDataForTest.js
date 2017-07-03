@@ -1,7 +1,7 @@
 // @flow
 import type { AppSession } from '../types/appSession';
 import type { History } from '../types/Routes';
-import type { AnalysisCollection } from '../types/analysisTypes';
+import type { AnalysisCollection } from '../types/analysis';
 
 export const appSession: AppSession = {
   museumId: 99,

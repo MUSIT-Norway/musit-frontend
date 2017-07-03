@@ -24,6 +24,7 @@ export default function ObjectResultTable({
   history,
   appSession
 }: Props) {
+  const enableResultForObject = data.length > 1;
   return (
     <table
       style={{
@@ -48,7 +49,7 @@ export default function ObjectResultTable({
               const rows = [
                 <tr
                   key={['objectRow', i].join('_')}
-                  onClick={() => handleClickRow(row)}
+                  onClick={() => enableResultForObject && handleClickRow(row)}
                   className={row.expanded ? 'expanded-row' : 'collapsed-row'}
                 >
                   <td name="type" width={10}>
@@ -63,7 +64,7 @@ export default function ObjectResultTable({
                   <td name="sampleType">
                     {row.sampleType ? row.sampleType + ' / ' + row.sampleSubType : ''}
                   </td>
-                  <td>{row.expanded ? '^' : '>'}</td>
+                  <td>{enableResultForObject && (row.expanded ? '^' : '>')}</td>
                 </tr>
               ];
               if (row.expanded) {

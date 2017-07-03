@@ -43,7 +43,7 @@ export default ({
   <div className="container">
     <div className="page-header">
       <h1>
-        {I18n.t('musit.analysis.viewAnalysis')}
+        {I18n.t('musit.analysis.analysis')}
       </h1>
     </div>
     <form className="form-horizontal">
@@ -132,7 +132,11 @@ export default ({
         </div>
       </div>
       <hr />
-      <h4>{I18n.t('musit.analysis.personTillAnalysis')}</h4>
+      <div className="form-group">
+        <label className="control-label">
+          {I18n.t('musit.analysis.personTillAnalysis')}
+        </label>
+      </div>
       <ViewPersonRoleDate
         personData={toArray(form.persons.value)}
         getDisplayNameForRole={(r: string) => I18n.t(`musit.analysis.roles.${r}`)}

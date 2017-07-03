@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { I18n } from 'react-i18nify';
-import { isMultipleSelectAttribute } from '../../../types/analysisTypes';
+import { isMultipleSelectAttribute } from '../../../types/analysis';
 
 type Props = {
   attr: {

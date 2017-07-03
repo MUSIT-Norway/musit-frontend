@@ -156,9 +156,15 @@ exports[`AnalysisViewComponent should render properly 1`] = `
       </div>
     </div>
     <hr />
-    <h4>
-      Personer tilknyttet analysen
-    </h4>
+    <div
+      className="form-group"
+    >
+      <label
+        className="control-label"
+      >
+        Personer tilknyttet analysen
+      </label>
+    </div>
     <Component
       getDisplayNameForRole={[Function]}
       personData={

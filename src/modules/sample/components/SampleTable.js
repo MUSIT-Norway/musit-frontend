@@ -8,7 +8,7 @@ import type {
   SampleStatus,
   SampleStatusData
 } from '../../../types/samples';
-import type { SampleTypesObject } from '../../../types/sampleTypes';
+import type { SampleTypesObject } from '../../../types/sample';
 import FontAwesome from 'react-fontawesome';
 import type { AppSession } from '../../../types/appSession';
 import type { ObjectData } from '../../../types/object';

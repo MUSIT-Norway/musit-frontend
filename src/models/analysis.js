@@ -4,7 +4,7 @@ import Config from '../config';
 import { Observable } from 'rxjs';
 import type { Field } from '../forms/form';
 import type { Callback, AjaxGet, AjaxPost, AjaxPut } from './types/ajax';
-import type { AnalysisCollection, Result, Restriction } from '../types/analysisTypes';
+import type { AnalysisCollection, Result, Restriction } from '../types/analysis';
 import type { CollectionId } from 'types/ids';
 
 export type AnalysisSavePayload = {

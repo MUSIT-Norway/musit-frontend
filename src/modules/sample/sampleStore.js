@@ -7,7 +7,7 @@ import predefined$ from '../../stores/predefined';
 import { KEEP_ALIVE } from '../../stores/constants';
 
 import type { SampleData } from 'types/samples';
-import type { SampleType } from 'types/sampleTypes';
+import type { SampleType } from 'types/sample';
 
 export type SampleDateExtended = { sampleType?: SampleType } & SampleData;
 

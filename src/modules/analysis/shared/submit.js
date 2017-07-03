@@ -1,10 +1,10 @@
 // @flow
-import type { ExtraResultAttributeValues, Size } from '../../../types/analysisTypes';
+import type { ExtraResultAttributeValues, Size } from '../../../types/analysis';
 import type { AppSession } from '../../../types/appSession';
 import type { ObjectData } from '../../../types/object';
 import type { History } from '../../../types/Routes';
 import type { SampleData } from '../../../types/samples';
-import type { Result } from '../../../types/analysisTypes';
+import type { Result } from '../../../types/analysis';
 import toArray from 'lodash/toArray';
 import omit from 'lodash/omit';
 import keys from 'lodash/keys';

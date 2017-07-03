@@ -14,7 +14,7 @@ import type { Predefined } from '../../../types/predefined';
 import type { Store } from '../shared/storeType';
 import type { DomEvent } from '../../../types/dom';
 import toArray from 'lodash/toArray';
-import { isMultipleSelectAttribute } from '../../../types/analysisTypes';
+import { isMultipleSelectAttribute } from '../../../types/analysis';
 import {
   getAnalysisTypeTerm,
   getAnalysisType,
