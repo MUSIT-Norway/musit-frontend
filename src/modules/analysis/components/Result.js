@@ -1,6 +1,9 @@
 // @flow
 import React from 'react';
 import { I18n } from 'react-i18nify';
+import type { AppSession } from '../../../types/appSession';
+import type { History } from '../../../types/Routes';
+import NavigateToObject from '../../../components/navigations/NavigateToObject';
 
 type Props = {
   externalSource: ?string,
@@ -8,7 +11,10 @@ type Props = {
   comments: ?string,
   updateComments: (value: string) => void,
   extraAttributes: any,
-  updateExtraResultAttribute: Function
+  updateExtraResultAttribute: Function,
+  history: History,
+  appSession: AppSession,
+  parentObjectId?: ?string
 };
 
 type ResultFieldProps = {
@@ -88,7 +94,10 @@ export default function Result({
   comments,
   updateComments,
   extraAttributes,
-  updateExtraResultAttribute
+  updateExtraResultAttribute,
+  history,
+  appSession,
+  parentObjectId
 }: Props) {
   return (
     <div>
@@ -130,6 +139,14 @@ export default function Result({
             value={externalSource || ''}
             onChange={e => updateExternalSource(e.target.value)}
           />
+        </div>
+        <div>
+          {parentObjectId &&
+          <NavigateToObject
+            objectId={parentObjectId}
+            appSession={appSession}
+            history={history}
+          />}
         </div>
       </div>
       <div className="form-group">

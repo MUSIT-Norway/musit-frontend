@@ -3,7 +3,6 @@ import React from 'react';
 import { I18n } from 'react-i18nify';
 import './ObjectResultTable.css';
 import Result from '../components/Result';
-import NavigateToObject from '../../../components/navigations/NavigateToObject';
 import type { AppSession } from '../../../types/appSession';
 import type { History } from '../../../types/Routes';
 
@@ -111,13 +110,11 @@ export default function ObjectResultTable({
                           });
                           updateForm && updateForm({ name: 'events', rawValue: newData });
                         }}
-                      />
-                      <NavigateToObject
-                        objectId={
-                          row.originatedObjectUuid ? row.originatedObjectUuid : row.uuid
-                        }
                         appSession={appSession}
                         history={history}
+                        parentObjectId={
+                          row.originatedObjectUuid ? row.originatedObjectUuid : row.uuid
+                        }
                       />
                     </td>
                   </tr>
