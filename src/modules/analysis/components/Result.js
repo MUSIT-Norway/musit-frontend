@@ -140,7 +140,7 @@ export default function Result({
             onChange={e => updateExternalSource(e.target.value)}
           />
         </div>
-        <div>
+        <div className="pull-right">
           {parentObjectId &&
             <NavigateToObject
               objectId={parentObjectId}
