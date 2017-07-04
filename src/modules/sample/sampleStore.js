@@ -43,6 +43,15 @@ const extendSample = (state, sample, apiSampleTypes) => {
   if (sample && apiSampleTypes) {
     const sampleType = apiSampleTypes.find(st => st.sampleTypeId === sample.sampleTypeId);
     const extendedSample = { ...sample, sampleType };
+    if (extendedSample.parentObject && extendedSample.parentObject.sampleOrObjectData) {
+      const parentObjSampleTypeId =
+        extendedSample.parentObject.sampleOrObjectData.sampleTypeId;
+      const parentSampleType = apiSampleTypes.find(
+        st => st.sampleTypeId === parentObjSampleTypeId
+      );
+
+      extendedSample.parentObject.sampleOrObjectData.sampleType = parentSampleType;
+    }
     return { ...state, sample: extendedSample, apiSampleTypes };
   } else {
     return { ...state, sample, apiSampleTypes };
@@ -58,7 +67,7 @@ const reducer$ = (actions: Action, predefined: Subject) =>
     actions.getPredefinedTypes$.map(types => state => ({ ...state, ...types })),
     actions.getSampleTypes$.map(sampleTypes => state => ({ ...state, sampleTypes })),
     actions.getSample$.map(sample => state =>
-      extendSample(state, sample, state.sampleTypes)),
+      extendSample(state, sample, state.apiSampleTypes)),
     actions.getSamplesForNode$.map(nodeSamples => state => ({
       ...state,
       nodeSamples

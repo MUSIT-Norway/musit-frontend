@@ -10,6 +10,7 @@ import ReadOnlySampleType from './components/ReadOnlySampleType';
 import ViewPersonRoleDate from '../../components/person/ViewPersonRoleDate';
 import { I18n } from 'react-i18nify';
 import NavigateToObject from '../../components/navigations/NavigateToObject';
+import MusitI18n from '../../components/MusitI18n';
 
 type Props = {
   form: FormDetails,
@@ -121,14 +122,18 @@ export default function SampleViewComponent(props: Props & SampleProps) {
               </span>
 
               <span style={{ marginRight: 20 }}>
-                <strong>{I18n.t('musit.sample.sampleType')}</strong>
-                {' '}
-                {derivedFrom.sampleTypeId}
+                <strong>{I18n.t('musit.sample.sampleType')} </strong>
+                <MusitI18n
+                  en={derivedFrom.sampleType.enSampleType}
+                  no={derivedFrom.sampleType.noSampleType}
+                />
               </span>
               <span style={{ marginRight: 20 }}>
-                <strong>{I18n.t('musit.sample.sampleSubType')}</strong>
-                {' '}
-                {derivedFrom.sampleTypeId}
+                <strong>{I18n.t('musit.sample.sampleSubType')} </strong>
+                <MusitI18n
+                  en={derivedFrom.sampleType.enSampleSubType}
+                  no={derivedFrom.sampleType.noSampleSubType}
+                />
               </span>
             </span>}
         </div>
