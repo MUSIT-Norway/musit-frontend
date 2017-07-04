@@ -8,13 +8,13 @@ describe('eventsStore', () => {
     // mock streams
     // prettier-ignore
     const streams = {
-      clearM:               '-1---',
-      loadPredefinedTypesM: '---1-',
-      getSampleTypesM:      '--1--',
-      getSampleM:           '-----',
-      predefinedM:          '----1',
-      getSamplesForNodeM:   '-----',
-      expected:             'aabcd'
+      clearM:               '-1---1-',
+      loadPredefinedTypesM: '---1---',
+      getSampleTypesM:      '--1----',
+      getSampleM:           '-------',
+      predefinedM:          '----1-2',
+      getSamplesForNodeM:   '-------',
+      expected:             'aabcdef'
     };
     const expectedStateMap = {
       a: {
@@ -30,6 +30,7 @@ describe('eventsStore', () => {
         storageMediums: [],
         treatments: [],
         sampleTypes: []
+        // apiSampleTypes: []
       },
       d: {
         data: [],
@@ -38,6 +39,20 @@ describe('eventsStore', () => {
         treatments: [],
         sampleTypes: [],
         apiSampleTypes: []
+      },
+      e: {
+        data: [],
+        apiSampleTypes: []
+      },
+      f: {
+        data: [],
+        apiSampleTypes: [
+          {
+            enSampleType: 'en',
+            noSampleType: 'no',
+            sampleTypeId: 1
+          }
+        ]
       }
     };
 
@@ -63,7 +78,18 @@ describe('eventsStore', () => {
     );
 
     const predefined$ = testScheduler.createHotObservable(streams.predefinedM, {
-      '1': { sampleTypes: { raw: [] } }
+      '1': { sampleTypes: { raw: [] } },
+      '2': {
+        sampleTypes: {
+          raw: [
+            {
+              enSampleType: 'en',
+              noSampleType: 'no',
+              sampleTypeId: 1
+            }
+          ]
+        }
+      }
     });
 
     const state$ = sampleStore$(
