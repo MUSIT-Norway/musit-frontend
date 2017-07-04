@@ -166,6 +166,15 @@ export default ({
           updateExternalSource={() => {}}
           comments={form.comments.value}
           updateComments={() => {}}
+          appSession={appSession}
+          history={history}
+          parentObjectId={
+            objects && objects.length === 1
+              ? objects[0].originatedObjectUuid
+                  ? objects[0].originatedObjectUuid
+                  : objects[0].uuid
+              : null
+          }
         />
         <div className="form-group">
           <label className="control-label col-md-2" htmlFor="restrictions">

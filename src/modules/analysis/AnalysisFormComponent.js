@@ -292,6 +292,15 @@ const AnalysisFormComponent = ({
             comments={toString(form.comments.rawValue)}
             updateComments={rawValue =>
               updateForm({ name: form.comments.name, rawValue })}
+            appSession={appSession}
+            history={history}
+            parentObjectId={
+              objects && objects.length === 1
+                ? objects[0].originatedObjectUuid
+                    ? objects[0].originatedObjectUuid
+                    : objects[0].uuid
+                : null
+            }
           />
           <div className="form-group">
             <label className="control-label col-md-2" htmlFor="isRestricted">

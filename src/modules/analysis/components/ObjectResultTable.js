@@ -3,9 +3,9 @@ import React from 'react';
 import { I18n } from 'react-i18nify';
 import './ObjectResultTable.css';
 import Result from '../components/Result';
-import NavigateToObject from '../../../components/navigations/NavigateToObject';
 import type { AppSession } from '../../../types/appSession';
 import type { History } from '../../../types/Routes';
+import FontAwesome from 'react-fontawesome';
 
 type Props = {
   data: Array<Object>,
@@ -64,7 +64,12 @@ export default function ObjectResultTable({
                   <td name="sampleType">
                     {row.sampleType ? row.sampleType + ' / ' + row.sampleSubType : ''}
                   </td>
-                  <td>{enableResultForObject && (row.expanded ? '^' : '>')}</td>
+                  <td>
+                    {enableResultForObject &&
+                      (row.expanded
+                        ? <FontAwesome name="chevron-up" />
+                        : <FontAwesome name="chevron-right" />)}
+                  </td>
                 </tr>
               ];
               if (row.expanded) {
@@ -111,13 +116,11 @@ export default function ObjectResultTable({
                           });
                           updateForm && updateForm({ name: 'events', rawValue: newData });
                         }}
-                      />
-                      <NavigateToObject
-                        objectId={
-                          row.originatedObjectUuid ? row.originatedObjectUuid : row.uuid
-                        }
                         appSession={appSession}
                         history={history}
+                        parentObjectId={
+                          row.originatedObjectUuid ? row.originatedObjectUuid : row.uuid
+                        }
                       />
                     </td>
                   </tr>
