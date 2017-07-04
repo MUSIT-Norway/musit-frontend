@@ -5,6 +5,7 @@ import './ObjectResultTable.css';
 import Result from '../components/Result';
 import type { AppSession } from '../../../types/appSession';
 import type { History } from '../../../types/Routes';
+import FontAwesome from 'react-fontawesome';
 
 type Props = {
   data: Array<Object>,
@@ -63,7 +64,12 @@ export default function ObjectResultTable({
                   <td name="sampleType">
                     {row.sampleType ? row.sampleType + ' / ' + row.sampleSubType : ''}
                   </td>
-                  <td>{enableResultForObject && (row.expanded ? '^' : '>')}</td>
+                  <td>
+                    {enableResultForObject &&
+                      (row.expanded
+                        ? <FontAwesome name="chevron-up" />
+                        : <FontAwesome name="chevron-right" />)}
+                  </td>
                 </tr>
               ];
               if (row.expanded) {
