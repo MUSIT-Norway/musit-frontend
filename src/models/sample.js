@@ -317,7 +317,7 @@ Sample.loadSampleDataForObject = (ajaxGet = simpleGet) => ({
   token,
   callback
 }) => {
-  const url = Config.magasin.urls.api.samples.samplesForObject(museumId, id);
+  const url = Config.magasin.urls.api.samples.originatedFromObject(museumId, id);
   return ajaxGet(url, token, callback).map(
     ({ response }) =>
       (response &&

@@ -275,9 +275,14 @@ describe('Config urls', () => {
           expected: '/api/management/sampletypes'
         },
         {
-          name: 'samplesForObject',
-          actual: urls.api.samples.samplesForObject(99, 123),
+          name: 'childrenSamples',
+          actual: urls.api.samples.childrenSamples(99, 123),
           expected: '/api/management/99/samples/123/children'
+        },
+        {
+          name: 'originatedFromObject',
+          actual: urls.api.samples.originatedFromObject(99, 123),
+          expected: '/api/management/99/samples/123/all'
         },
         {
           name: 'treatments',

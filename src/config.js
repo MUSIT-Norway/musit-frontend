@@ -140,8 +140,10 @@ export default {
         samples: {
           baseUrl: (mid: MuseumId): string => `/api/management/${mid}/samples`,
           sampleTypes: '/api/management/sampletypes',
-          samplesForObject: (mid: MuseumId, objectId: string): string =>
+          childrenSamples: (mid: MuseumId, objectId: string): string =>
             `/api/management/${mid}/samples/${objectId}/children`,
+          originatedFromObject: (mid: MuseumId, objectId: string): string =>
+            `/api/management/${mid}/samples/${objectId}/all`,
           treatments: '/api/management/treatments',
           storagecontainer: '/api/management/storagecontainer',
           storagemediums: '/api/management/storagemediums',
