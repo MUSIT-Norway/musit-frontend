@@ -252,8 +252,31 @@ exports[`AnalysisViewComponent should render properly 1`] = `
       </div>
       <hr />
       <Result
+        appSession={
+          Object {
+            "accessToken": "45667",
+            "actor": Object {
+              "fn": "Test",
+            },
+            "collectionId": "1234",
+            "language": Object {
+              "isEn": false,
+              "isNo": true,
+            },
+            "museumId": 99,
+          }
+        }
         externalSource=""
         extraAttributes={Object {}}
+        history={
+          Object {
+            "goBack": [Function],
+            "goForward": [Function],
+            "push": [Function],
+            "replace": [Function],
+          }
+        }
+        parentObjectId={null}
         updateComments={[Function]}
         updateExternalSource={[Function]}
         updateExtraResultAttribute={[Function]}

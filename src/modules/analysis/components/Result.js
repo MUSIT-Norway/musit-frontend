@@ -142,11 +142,11 @@ export default function Result({
         </div>
         <div>
           {parentObjectId &&
-          <NavigateToObject
-            objectId={parentObjectId}
-            appSession={appSession}
-            history={history}
-          />}
+            <NavigateToObject
+              objectId={parentObjectId}
+              appSession={appSession}
+              history={history}
+            />}
         </div>
       </div>
       <div className="form-group">

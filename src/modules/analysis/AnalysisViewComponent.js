@@ -169,7 +169,7 @@ export default ({
           appSession={appSession}
           history={history}
           parentObjectId={
-            objects.length === 1
+            objects && objects.length === 1
               ? objects[0].originatedObjectUuid
                   ? objects[0].originatedObjectUuid
                   : objects[0].uuid

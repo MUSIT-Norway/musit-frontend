@@ -365,8 +365,23 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
       </div>
       <hr />
       <Result
+        appSession={
+          Object {
+            "accessToken": "45667",
+            "actor": Object {
+              "fn": "Test",
+            },
+            "collectionId": "1234",
+            "language": Object {
+              "isEn": false,
+              "isNo": true,
+            },
+            "museumId": 99,
+          }
+        }
         comments=""
         externalSource=""
+        parentObjectId={null}
         updateComments={[Function]}
         updateExternalSource={[Function]}
       />
