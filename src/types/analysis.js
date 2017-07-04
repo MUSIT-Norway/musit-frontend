@@ -1,6 +1,7 @@
 // @flow
 import type { ObjectData } from '../types/object';
 import type { SampleData } from '../types/samples';
+import type { AnalysisResultTypes } from 'types/analysisResult';
 
 export const isMultipleSelectAttribute = (attributeType: string) =>
   /^Array\[.*]$/.test(attributeType);
@@ -30,7 +31,7 @@ export type AnalysisType = {
   name: string,
   extraDescriptionAttributes?: Array<ExtraAttribute>,
   extraDescriptionType?: string,
-  extraResultType?: string,
+  extraResultType?: AnalysisResultTypes,
   extraResultAttributes?: { [string]: string }
 };
 

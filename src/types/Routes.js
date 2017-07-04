@@ -22,5 +22,8 @@ export type History = {
 };
 
 export type Match<P> = {
-  params: P
+  isExact: boolean,
+  params: P,
+  path: string,
+  url: string
 };

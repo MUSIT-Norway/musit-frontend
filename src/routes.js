@@ -32,7 +32,8 @@ import AnalysisPlaces
 import SampleTypes from './modules/administration/sampleTypes/sampleTypesContainer';
 import AnalysisEventsViewContainer
   from './modules/analysis/events/analysisEventsViewContainer';
-
+import AnalysisResultExchangeContainer
+  from './modules/analysis/exchange/analysisResultExchangeContainer';
 import { replace } from 'lodash';
 
 /**
@@ -184,6 +185,11 @@ const AnalysisPage = props => (
       component={AnalysisEditContainer}
     />
     <Route path={rt(props, '/:analysisId')} exact component={AnalysisViewContainer} />
+    <Route
+      path={rt(props, '/:analysisId/exchange')}
+      exact
+      component={AnalysisResultExchangeContainer}
+    />
     <Route
       path={rt(props, '/sample/:objectId/add')}
       exact

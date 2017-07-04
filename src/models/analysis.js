@@ -6,6 +6,7 @@ import type { Field } from '../forms/form';
 import type { Callback, AjaxGet, AjaxPost, AjaxPut } from './types/ajax';
 import type { AnalysisCollection, Result, Restriction } from '../types/analysis';
 import type { CollectionId } from 'types/ids';
+import type { ImportAnalysisResult } from 'types/analysisResult';
 
 export type AnalysisSavePayload = {
   doneBy?: ?string,
@@ -122,6 +123,15 @@ class MusitAnalysis {
     museumId: number,
     token: string,
     result: ?AnalysisResultSavePayload
+  }) => Observable;
+
+  static importResult: (
+    ajaxPost: AjaxPost
+  ) => (props: {
+    analysisId: number,
+    museumId: number,
+    token: string,
+    result: ImportAnalysisResult
   }) => Observable;
 
   static loadPredefinedTypes: (
@@ -331,6 +341,18 @@ MusitAnalysis.addResult = (ajaxPost = simplePost) => ({
 }) =>
   ajaxPost(
     Config.magasin.urls.api.analysis.resultsUrl(museumId, analysisId),
+    result,
+    token
+  );
+
+MusitAnalysis.importResult = (ajaxPut = simplePut) => ({
+  analysisId,
+  museumId,
+  token,
+  result
+}) =>
+  ajaxPut(
+    Config.magasin.urls.api.analysis.importResults(museumId, analysisId),
     result,
     token
   );

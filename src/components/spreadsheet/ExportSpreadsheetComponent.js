@@ -7,7 +7,9 @@ import { stringToArrayBuffer } from './arrayBufferHelper';
 
 type Props = {
   content: Array<any>,
-  name: string
+  displayName: string,
+  fileName: string,
+  styles?: Array<string>
 };
 
 const downloadExcelSheet = (jsonContent: Array<any>, name: string) => {
@@ -22,8 +24,11 @@ const downloadExcelSheet = (jsonContent: Array<any>, name: string) => {
 const ExportSpreadsheetComponent = (props: Props) => (
   <div>
     {props.content &&
-      <button onClick={() => downloadExcelSheet(props.content, props.name)}>
-        {props.name}
+      <button
+        className={(props.styles || []).join(' ')}
+        onClick={() => downloadExcelSheet(props.content, props.fileName)}
+      >
+        {props.displayName}
       </button>}
   </div>
 );

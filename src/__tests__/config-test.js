@@ -235,6 +235,11 @@ describe('Config urls', () => {
           expected: '/api/management/99/analyses/123/results'
         },
         {
+          name: 'importResults',
+          actual: urls.api.analysis.importResults(99, 123),
+          expected: '/api/management/99/analyses/123/results/import'
+        },
+        {
           name: 'getAnalysisForObject',
           actual: urls.api.analysis.getAnalysisForObject(99, 123),
           expected: '/api/management/99/analyses/objects/123'

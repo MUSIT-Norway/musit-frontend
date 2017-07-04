@@ -177,6 +177,40 @@
           "responsible": "Responsible",
           "doneBy": "Done by",
           "completedBy": "Completed by"
+        },
+        "exchange": {
+          "pageHeader": "Import analysis result",
+          "downloadTemplate": "Download template",
+          "description": "Upload the filled out template and verify that the values are correct.",
+          "importButton": "Import",
+          "cancelImportButton": "Cancel",
+
+          "header": {
+            "type": "Type",
+            "analysisId": "Analysis id",
+            "objectId": "Object id",
+
+            "resultComment": "Comment",
+            "resultExternalRef": "External ref",
+
+            "resultAge": "Age",
+
+            "resultAgeEstimate": "Age estimate",
+            "resultStandardDeviation": "Standard deviation",
+
+            "resultMeasurementId": "Measurement Id",
+            "resultMeasurementType": "Measurement type",
+            "resultSizeUnit": "Size unit",
+            "resultSizeValue": "Size value",
+            "resultPrecision": "Precision",
+            "resultMethod": "Method",
+
+            "resultStorageMedium": "Storage medium",
+            "resultConcentrationUnit": "Concentration unit",
+            "resultConcentrationValue": "Concentration value",
+            "resultVolumeUnit": "Volume unit",
+            "resultVolumeValue": "Volume value"
+          }
         }
       },
       "unknown": "Unknown",
@@ -1035,6 +1069,39 @@
           "responsible": "Ansvarlig",
           "doneBy": "Analysert av",
           "completedBy": "Avsluttet av"
+        },
+        "exchange": {
+          "pageHeader": "Importer analyseresultater",
+          "downloadTemplate": "Last ned mal",
+          "description": "Last opp den utfylte malen og verifiser at de feltene stemmer.",
+          "importButton": "Importer",
+          "cancelImportButton": "Avbryt",
+          "header": {
+            "type": "Type",
+            "analysisId": "Analyse id",
+            "objectId": "Objekt id",
+
+            "resultComment": "Kommentar",
+            "resultExternalRef": "Ekstern ref",
+
+            "resultAge": "Alder",
+
+            "resultAgeEstimate": "Aldersestimat",
+            "resultStandardDeviation": "Standardavvik",
+
+            "resultMeasurementId": "Måle Id",
+            "resultMeasurementType": "måletype",
+            "resultSizeUnit": "Måleenhet",
+            "resultSizeValue": "Måleverdi",
+            "resultPrecision": "Presisjon",
+            "resultMethod": "Metode",
+
+            "resultStorageMedium": "Lagringsmedium",
+            "resultConcentrationUnit": "Konsentrasjonsenhet",
+            "resultConcentrationValue": "Konsentrasjonsverdi",
+            "resultVolumeUnit": "Volumenhet",
+            "resultVolumeValue": "Volumverdi"
+          }
         }
       },
       "unknown": "Ukjent",

@@ -126,6 +126,8 @@ export default {
             `/api/management/${mid}/analyses/${analysisId}/children`,
           saveResult: (mid: MuseumId, analysisId: number) =>
             `/api/management/${mid}/analyses/${analysisId}/results`,
+          importResults: (mid: MuseumId, analysisId: number) =>
+            `/api/management/${mid}/analyses/${analysisId}/results/import`,
           getAnalysisForObject: (mid: MuseumId, id: number) =>
             `/api/management/${mid}/analyses/objects/${id}`,
           analysesForObject: (mid: MuseumId, objectId: number): string =>

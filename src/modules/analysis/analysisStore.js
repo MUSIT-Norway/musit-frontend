@@ -99,7 +99,8 @@ export const store$ = (
   }
 ) => createStore('analysisStore', reducer$(actions$), Observable.of(initialState));
 
-export default store$();
+const storeSingleton = store$();
+export default storeSingleton;
 
 type SampleTypes = {
   [string]: Array<{ sampleTypeId: number, enSampleType: string, enSampleSubType: string }>
@@ -226,7 +227,7 @@ export function zipObjectInfoWithEvents(analysis: AnalysisCollection) {
           const od = arrayOfObjectDetails.find(objD => {
             return objD.objectId === e.objectId || objD.uuid === e.objectId;
           });
-          return od ? { ...e, ...od } : e;
+          return od ? { ...od, ...e } : e;
         })
       : [];
     return { ...analysis, events: events };
