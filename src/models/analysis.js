@@ -122,7 +122,8 @@ class MusitAnalysis {
     analysisId: number,
     museumId: number,
     token: string,
-    result: ?AnalysisResultSavePayload
+    result: ?AnalysisResultSavePayload,
+    callback?: Callback
   }) => Observable;
 
   static importResult: (
@@ -337,12 +338,14 @@ MusitAnalysis.addResult = (ajaxPost = simplePost) => ({
   analysisId,
   museumId,
   token,
-  result
+  result,
+  callback
 }) =>
   ajaxPost(
     Config.magasin.urls.api.analysis.resultsUrl(museumId, analysisId),
     result,
-    token
+    token,
+    callback
   );
 
 MusitAnalysis.importResult = (ajaxPut = simplePut) => ({

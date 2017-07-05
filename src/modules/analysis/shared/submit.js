@@ -13,6 +13,8 @@ import MusitAnalysis from '../../../models/analysis';
 import type { AnalysisSavePayload } from '../../../models/analysis';
 import Config from '../../../config';
 import type { FormData } from './formType';
+import { emitError, emitSuccess } from '../../../shared/errors';
+import { I18n } from 'react-i18nify';
 
 type ObjectWithUuidAndType = { objectId: ?string, objectType: string };
 
@@ -76,9 +78,43 @@ function getAnalysisUpsert(id, ajaxPut, museumId, data, token, ajaxPost) {
         id,
         museumId,
         data,
-        token
+        token,
+        callback: {
+          onComplete: () => {
+            emitSuccess({
+              type: 'saveSuccess',
+              message: I18n.t('musit.analysis.saveAnalysisSuccess')
+            });
+          },
+          onFailure: e => {
+            emitError({
+              type: 'errorOnSave',
+              error: e,
+              message: I18n.t('musit.analysis.saveAnalysisError')
+            });
+          }
+        }
       })
-    : MusitAnalysis.saveAnalysisEvent(ajaxPost)({ museumId, data, token });
+    : MusitAnalysis.saveAnalysisEvent(ajaxPost)({
+        museumId,
+        data,
+        token,
+        callback: {
+          onComplete: () => {
+            emitSuccess({
+              type: 'saveSuccess',
+              message: I18n.t('musit.analysis.saveAnalysisSuccess')
+            });
+          },
+          onFailure: e => {
+            emitError({
+              type: 'errorOnSave',
+              error: e,
+              message: I18n.t('musit.analysis.saveAnalysisError')
+            });
+          }
+        }
+      });
 }
 
 function getRestrictions(form: FormData) {
