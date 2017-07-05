@@ -19,7 +19,6 @@ import {
 import inject from 'react-rxjs/dist/RxInject';
 import { showModal } from '../../shared/modal';
 import connectToScanner from '../../stores/scanner';
-import { makeUrlAware } from '../../stores/appSession';
 import flowRight from 'lodash/flowRight';
 import { PickListComponent } from './PickListComponent';
 import { I18n } from 'react-i18nify';
@@ -372,6 +371,5 @@ export const processBarcode = (barCode, props) => {
 
 export default flowRight([
   inject(data, commands, customProps),
-  connectToScanner(processBarcode),
-  makeUrlAware
+  connectToScanner(processBarcode)
 ])(PickListComponent);

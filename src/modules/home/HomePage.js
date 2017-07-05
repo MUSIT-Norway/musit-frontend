@@ -18,8 +18,6 @@ import './index.css';
 import Config from '../../config';
 import Logos from '../../components/logos/Logos';
 import inject from 'react-rxjs/dist/RxInject';
-import flowRight from 'lodash/flowRight';
-import { makeUrlAware } from '../../stores/appSession';
 import type { AppSession } from '../../types/appSession';
 
 const reportURL = Config.magasin.urls.client.report.goToReport;
@@ -116,4 +114,4 @@ const props = props => ({
   goTo: url => () => props.history.push(url)
 });
 
-export default flowRight([inject(data, {}, props), makeUrlAware])(HomePage);
+export default inject(data, {}, props)(HomePage);

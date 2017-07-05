@@ -2,7 +2,6 @@ import { Observable } from 'rxjs';
 import inject from 'react-rxjs/dist/RxInject';
 import { toggleNode$, toggleObject$ } from '../../stores/pickList';
 import { showConfirm, showModal } from '../../shared/modal';
-import { makeUrlAware } from '../../stores/appSession';
 import {
   loadChildren$,
   loadNode$,
@@ -149,6 +148,5 @@ export const processBarcode = (barCode, props) => {
 
 export default flowRight([
   inject(data, commands, customProps),
-  connectToScanner(processBarcode),
-  makeUrlAware
+  connectToScanner(processBarcode)
 ])(TableComponent);

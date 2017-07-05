@@ -2,7 +2,6 @@
 import inject from 'react-rxjs/dist/RxInject';
 import PropTypes from 'prop-types';
 import AnalysisViewComponent from './AnalysisViewComponent';
-import { makeUrlAware } from '../../stores/appSession';
 import { loadPredefinedTypes } from '../../stores/predefined';
 import flowRight from 'lodash/flowRight';
 import lifeCycle from '../../shared/lifeCycle';
@@ -153,8 +152,6 @@ const MountableAnalysisViewComponent = lifeCycle({
   onUnmount
 })(AnalysisViewComponent);
 
-export default flowRight([
-  inject(data, commands, props),
-  loadPredefinedTypes,
-  makeUrlAware
-])(MountableAnalysisViewComponent);
+export default flowRight([inject(data, commands, props), loadPredefinedTypes])(
+  MountableAnalysisViewComponent
+);

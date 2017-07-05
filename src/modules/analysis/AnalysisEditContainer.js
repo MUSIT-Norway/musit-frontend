@@ -9,7 +9,6 @@ import store$, {
   clearStore$
 } from './analysisStore';
 import PropTypes from 'prop-types';
-import { makeUrlAware } from '../../stores/appSession';
 import flowRight from 'lodash/flowRight';
 import lifeCycle from '../../shared/lifeCycle';
 import { onMount, onReceiveProps } from './AnalysisViewContainer';
@@ -40,8 +39,6 @@ const MountableAnalysisFormComponent = lifeCycle({
   onUnmount
 })(AnalysisFormComponent);
 
-export default flowRight([
-  inject(data, commands, props),
-  loadPredefinedTypes,
-  makeUrlAware
-])(MountableAnalysisFormComponent);
+export default flowRight([inject(data, commands, props), loadPredefinedTypes])(
+  MountableAnalysisFormComponent
+);

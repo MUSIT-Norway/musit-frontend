@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import { I18n } from 'react-i18nify';
 import Config from '../../config';
 import inject from 'react-rxjs/dist/RxInject';
-import flowRight from 'lodash/flowRight';
-import { makeUrlAware } from '../../stores/appSession';
 import type { AppSession } from 'types/appSession';
 import type { History } from 'types/Routes';
 
@@ -77,4 +75,4 @@ const data = {
   appSession$: { type: PropTypes.object.isRequired }
 };
 
-export default flowRight([inject(data), makeUrlAware])(Administration);
+export default inject(data)(Administration);

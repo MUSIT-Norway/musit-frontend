@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 import lifeCycle from '../../shared/lifeCycle';
 import { simplePut } from '../../shared/RxAjax';
 import Sample, { getSampleType } from '../../models/sample';
-import { makeUrlAware } from '../../stores/appSession';
 import flowRight from 'lodash/flowRight';
 import store$, { getPredefinedTypes$, getSample$ } from './sampleStore';
 import objectStore$, { loadObject$, clearStore$ } from '../objects/objectStore';
@@ -81,11 +80,9 @@ const onUnmount = props => {
 
 const ManagedSampleFormComponent = lifeCycle({ onMount, onUnmount })(SampleFormComponent);
 
-export default flowRight([
-  inject(data, commands, props),
-  loadPredefinedTypes,
-  makeUrlAware
-])(ManagedSampleFormComponent);
+export default flowRight([inject(data, commands, props), loadPredefinedTypes])(
+  ManagedSampleFormComponent
+);
 
 export function convertSample(sample: SampleData, sampleTypes, appSession) {
   const sampleType = getSampleType(sample.sampleTypeId, sampleTypes);

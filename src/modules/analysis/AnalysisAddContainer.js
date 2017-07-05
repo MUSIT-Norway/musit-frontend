@@ -8,7 +8,6 @@ import store$, {
   updateExtraResultAttribute$,
   clearStore$
 } from './analysisStore';
-import { makeUrlAware } from '../../stores/appSession';
 import flowRight from 'lodash/flowRight';
 import props, { onUnmount } from './shared/formProps';
 import lifeCycle from '../../shared/lifeCycle';
@@ -31,8 +30,6 @@ const commands = {
 
 const ManagedAnalysisFormComponent = lifeCycle({ onUnmount })(AnalysisFormComponent);
 
-export default flowRight([
-  inject(data, commands, props),
-  loadPredefinedTypes,
-  makeUrlAware
-])(ManagedAnalysisFormComponent);
+export default flowRight([inject(data, commands, props), loadPredefinedTypes])(
+  ManagedAnalysisFormComponent
+);

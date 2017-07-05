@@ -9,8 +9,6 @@ import objectSearchStore$, {
 } from './objectSearchStore';
 import { toggleObject$ } from '../../stores/pickList';
 import { isItemAdded } from '../../stores/pickList';
-import flowRight from 'lodash/flowRight';
-import { makeUrlAware } from '../../stores/appSession';
 import ObjectSearchComponent from './ObjectSearchComponent';
 import MusitObject from '../../models/object';
 import lifeCycle from '../../shared/lifeCycle';
@@ -35,6 +33,6 @@ const props = props => ({
   goTo: props.history.push
 });
 
-export default flowRight([inject(data, commands, props), makeUrlAware])(
+export default inject(data, commands, props)(
   lifeCycle({ onMount: props => props.clearStore() })(ObjectSearchComponent)
 );

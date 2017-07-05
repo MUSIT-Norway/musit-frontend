@@ -1,7 +1,6 @@
 import inject from 'react-rxjs/dist/RxInject';
 import sampleForm from './sampleAddForm';
 import SampleFormComponent from './SampleFormComponent';
-import { makeUrlAware } from '../../stores/appSession';
 import flowRight from 'lodash/flowRight';
 import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
@@ -46,11 +45,9 @@ const onUnmount = props => {
 
 const ManagedSampleFormComponent = lifeCycle({ onMount, onUnmount })(SampleFormComponent);
 
-export default flowRight([
-  inject(data, commands, props),
-  loadPredefinedTypes,
-  makeUrlAware
-])(ManagedSampleFormComponent);
+export default flowRight([inject(data, commands, props), loadPredefinedTypes])(
+  ManagedSampleFormComponent
+);
 
 export function onMount(props) {
   const token = props.appSession.accessToken;

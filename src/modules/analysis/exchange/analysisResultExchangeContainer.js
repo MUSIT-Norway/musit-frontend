@@ -5,7 +5,6 @@ import lifeCycle from '../../../shared/lifeCycle';
 import inject from 'react-rxjs/dist/RxInject';
 import flowRight from 'lodash/flowRight';
 
-import { makeUrlAware } from '../../../stores/appSession';
 import { loadPredefinedTypes } from '../../../stores/predefined';
 import { getAnalysis$, setLoading$ } from '../analysisStore';
 import analysisExchangeStore$, {
@@ -101,8 +100,6 @@ const MountedAnalysisResultExchangeComponent = lifeCycle({ onMount, onUnmount })
   AnalysisResultExchangeComponent
 );
 
-export default flowRight([
-  inject(data, commands, props),
-  loadPredefinedTypes,
-  makeUrlAware
-])(MountedAnalysisResultExchangeComponent);
+export default flowRight([inject(data, commands, props), loadPredefinedTypes])(
+  MountedAnalysisResultExchangeComponent
+);

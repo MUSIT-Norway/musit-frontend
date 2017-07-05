@@ -12,7 +12,6 @@ import analysisEventsStore$, {
   filterEvents$
 } from './analysisEventsStore';
 import { loadPredefinedTypes } from '../../../stores/predefined';
-import { makeUrlAware } from '../../../stores/appSession';
 
 const data = {
   analysisEventsStore$,
@@ -38,8 +37,6 @@ const LoadedAnalysisEventsViewComponent = lifeCycle({
   }
 })(AnalysisEventsViewComponent);
 
-export default flowRight([
-  inject(data, commands, props),
-  loadPredefinedTypes,
-  makeUrlAware
-])(LoadedAnalysisEventsViewComponent);
+export default flowRight([inject(data, commands, props), loadPredefinedTypes])(
+  LoadedAnalysisEventsViewComponent
+);

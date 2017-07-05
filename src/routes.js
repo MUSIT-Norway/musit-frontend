@@ -1,5 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import flowRight from 'lodash/flowRight';
+import inject from 'react-rxjs/dist/RxInject';
+import PropTypes from 'prop-types';
+import { makeUrlAware } from './stores/appSession';
+
 import NotFound from './components/NotFound';
 import ScrollToTop, { scrollToTop } from './components/layout/ScrollToTop';
 import AboutView from './modules/about/AboutPage';
@@ -76,7 +81,7 @@ const AppPage = props => (
       <Route exact path={rt(props, '/about')} component={AboutPage} />
       <Route
         path={rt(props, '/museum/:museumId/collections/:collectionIds')}
-        component={MuseumAndCollectionPage}
+        component={MuseumAndCollectionPageUrlAware}
       />
 
       <Route component={NotFoundPage} />
@@ -99,6 +104,14 @@ const MuseumAndCollectionPage = props => (
 
     <Route component={NotFoundPage} />
   </Switch>
+);
+
+const data = {
+  appSession$: { type: PropTypes.object.isRequired }
+};
+
+const MuseumAndCollectionPageUrlAware = flowRight([inject(data), makeUrlAware])(
+  MuseumAndCollectionPage
 );
 
 const PicklistPage = props => (

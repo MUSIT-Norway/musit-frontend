@@ -35,7 +35,6 @@ export default class TableComponent extends React.Component {
     clearRootNode: PropTypes.func.isRequired,
     emitError: PropTypes.func.isRequired,
     emitSuccess: PropTypes.func.isRequired,
-    refreshSession: PropTypes.func.isRequired,
     pickList: PropTypes.object.isRequired,
     isItemAdded: PropTypes.func.isRequired,
     toggleScanner: PropTypes.func.isRequired,

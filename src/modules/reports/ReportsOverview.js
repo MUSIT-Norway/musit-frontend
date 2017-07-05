@@ -4,8 +4,6 @@ import { Table, PageHeader, Panel, Grid, Row } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
 import Config from '../../config';
 import inject from 'react-rxjs/dist/RxInject';
-import flowRight from 'lodash/flowRight';
-import { makeUrlAware } from '../../stores/appSession';
 
 const reports = [
   {
@@ -68,4 +66,4 @@ const data = {
   appSession$: { type: PropTypes.object.isRequired }
 };
 
-export default flowRight([inject(data), makeUrlAware])(ReportsOverview);
+export default inject(data)(ReportsOverview);

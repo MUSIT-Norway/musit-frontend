@@ -6,8 +6,6 @@ import { formatFloatToString } from './../../shared/util';
 import { Observable } from 'rxjs';
 import store$, { loadKDReport$, clear$ } from './reportStore';
 import inject from 'react-rxjs/dist/RxInject';
-import { makeUrlAware } from '../../stores/appSession';
-import flowRight from 'lodash/flowRight';
 
 export class KDReport extends Component {
   static propTypes = {
@@ -109,4 +107,4 @@ const commands = {
   clear$
 };
 
-export default flowRight([inject(data, commands), makeUrlAware])(KDReport);
+export default inject(data, commands)(KDReport);

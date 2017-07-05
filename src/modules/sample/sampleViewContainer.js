@@ -4,7 +4,6 @@ import type { SampleProps } from './SampleViewComponent';
 import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
 import lifeCycle from '../../shared/lifeCycle';
-import { makeUrlAware } from '../../stores/appSession';
 import flowRight from 'lodash/flowRight';
 import sampleStore$, { getSample$, clear$ } from './sampleStore';
 import objectStore$, { loadObject$, clearStore$ } from '../objects/objectStore';
@@ -93,11 +92,9 @@ const onUnmount = props => {
 
 const ManagedSampleViewComponent = lifeCycle({ onMount, onUnmount })(SampleViewComponent);
 
-export default flowRight([
-  inject(data, commands, props),
-  loadPredefinedTypes,
-  makeUrlAware
-])(ManagedSampleViewComponent);
+export default flowRight([inject(data, commands, props), loadPredefinedTypes])(
+  ManagedSampleViewComponent
+);
 
 export function clickEditSample(appSession, sampleId, objectData, goTo) {
   return e => {
