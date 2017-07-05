@@ -13,6 +13,8 @@ import type { SampleType } from '../../../types/sample';
 import type { History, Match } from '../../../types/Routes';
 import Sample from '../../../models/sample';
 import { isFormValid } from '../../../forms/validators';
+import { I18n } from 'react-i18nify';
+import { emitError, emitSuccess } from '../../../shared/errors';
 
 function getSampleSubTypes(sampleType, sampleTypes) {
   return sampleType && sampleTypes && sampleTypes[sampleType];
@@ -139,7 +141,22 @@ const saveSample = doSaveSample => (
       id: params.sampleId,
       museumId: appSession.museumId,
       token: appSession.accessToken,
-      data
+      data,
+      callback: {
+        onComplete: () => {
+          emitSuccess({
+            type: 'saveSuccess',
+            message: I18n.t('musit.sample.saveSampleSuccess')
+          });
+        },
+        onFailure: e => {
+          emitError({
+            type: 'errorOnSave',
+            error: e,
+            message: I18n.t('musit.sample.saveSampleError')
+          });
+        }
+      }
     })
       .toPromise()
       .then(value =>

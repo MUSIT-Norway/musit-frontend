@@ -110,10 +110,14 @@
         "chooseTreatment": "Select treatment",
         "hasResidualMaterial": "Has residual material",
         "comments": "Comment",
-        "updateSample": "Edit"
+        "updateSample": "Edit",
+        "saveSampleError": "Unable to save sample",
+        "saveSampleSuccess": "Sample saved"
       },
       "analysis": {
         "analysis": "Analysis",
+        "saveAnalysisError": "Unable to save analysis",
+        "saveAnalysisSuccess": "Analysis saved",
         "filterTheList": "Filter the list",
         "analysisType": "Type of analysis",
         "chooseCategory": "Select category",
@@ -1000,10 +1004,14 @@
         "chooseTreatment": "Velg behandling",
         "hasResidualMaterial": "Har restmateriale",
         "comments": "Kommentar",
-        "updateSample": "Endre prøve"
+        "updateSample": "Endre prøve",
+        "saveSampleError": "Kunne ikke lagre prøven",
+        "saveSampleSuccess": "Prøven ble lagret"
       },
       "analysis": {
         "analysis": "Analyse",
+        "saveAnalysisError": "Kunne ikke lagre analyse",
+        "saveAnalysisSuccess": "Analyse ble lagret",
         "filterTheList": "Filtrer listen",
         "analysisType": "Type analyse",
         "chooseCategory": "Velg kategori",
