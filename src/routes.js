@@ -76,7 +76,7 @@ const MusitRouter = () => (
 const AppPage = props => (
   <AppComponent {...props} goTo={props.history.push}>
     <Switch>
-      <Route exact path={rt(props, '/')} component={HomePage} />
+      <Route exact path={rt(props, '/')} component={AboutPage} />
       <Route exact path={rt(props, '/home')} component={HomePage} />
       <Route exact path={rt(props, '/about')} component={AboutPage} />
       <Route
