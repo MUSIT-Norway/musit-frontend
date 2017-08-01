@@ -1,11 +1,13 @@
-/* eslint-disable */
-import { Subject, Observable } from 'rxjs/Rx';
+// @flow
+import { Observable } from 'rxjs/Rx';
 import { store$ } from '../predefined';
 import Sample from '../../models/sample';
 import Analysis from '../../models/analysis';
 import MusitTestScheduler from '../../testutils/MusitTestScheduler';
 
-const diff = require('deep-diff').diff;
+declare var describe: any;
+declare var it: any;
+declare var expect: any;
 
 describe('predefined', () => {
   it('should load types', () => {
@@ -19,7 +21,8 @@ describe('predefined', () => {
       setLoadingAnalysisTypesM: '---1-----',
       loadAnalysisTypesM:       '----1----',
       expected:                 'abcde----'
-  }
+    };
+
     const expectedStateMap = {
       a: {
         loadingAnalysisTypes: false,
@@ -62,9 +65,10 @@ describe('predefined', () => {
     const setLoadingSampleTypes$ = testScheduler.createHotObservable(
       stream.setLoadingSampleTypesM
     );
+
     const loadSampleTypes$ = testScheduler
       .createHotObservable(stream.loadSampleTypesM, {
-        1: { token: '12134', museumId: 99, collectionId: 'sfsfdfs' }
+        [1]: { token: '12134', museumId: 99, collectionId: 'sfsfdfs' }
       })
       .flatMap(
         Sample.loadPredefinedTypes(() => {
@@ -73,12 +77,14 @@ describe('predefined', () => {
           });
         })
       );
+
     const setLoadingAnalysisTypes$ = testScheduler.createHotObservable(
       stream.setLoadingAnalysisTypesM
     );
+
     const loadAnalysisTypes$ = testScheduler
       .createHotObservable(stream.loadAnalysisTypesM, {
-        1: { token: '12134', museumId: 99, collectionId: 'sfsfdfs' }
+        [1]: { token: '12134', museumId: 99 }
       })
       .flatMap(
         Analysis.loadPredefinedTypes(() => {

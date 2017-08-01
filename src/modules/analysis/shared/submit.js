@@ -10,7 +10,7 @@ import omit from 'lodash/omit';
 import keys from 'lodash/keys';
 import { Observable } from 'rxjs';
 import MusitAnalysis from '../../../models/analysis';
-import type { AnalysisSavePayload } from '../../../models/analysis';
+import type { AnalysisSavePayload } from '../../../models/analysis/analysis';
 import Config from '../../../config';
 import type { FormData } from './formType';
 import { emitError, emitSuccess } from '../../../shared/errors';

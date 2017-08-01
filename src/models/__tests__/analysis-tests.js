@@ -1,5 +1,5 @@
 // @flow
-import { extractResponseArray } from '../analysis';
+import { extractResponseArray } from '../analysis/analysis';
 declare var describe: any;
 declare var it: any;
 declare var expect: any;

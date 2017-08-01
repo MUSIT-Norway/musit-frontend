@@ -25,7 +25,7 @@ import type { Predefined } from '../../types/predefined';
 import type { Store } from './shared/storeType';
 import type { FormData } from './shared/formType';
 import type { Field } from '../../forms/form';
-import type { FormValue } from '../../models/analysis';
+import type { FormValue } from '../../models/analysis/analysisForm';
 import type { History } from '../../types/Routes';
 
 const { form$, ...formActions } = analysisForm;
