@@ -164,7 +164,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
         <p
           className="form-control-static"
         >
-          1234
+          Museum
         </p>
       </div>
     </div>

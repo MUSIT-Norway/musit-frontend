@@ -4,7 +4,7 @@ import Config from '../../config';
 import { simpleGet } from '../../shared/RxAjax';
 import type { Callback, AjaxGet } from '../types/ajax';
 import type { AnalysisType } from 'types/analysis';
-import type { Predefined, Purposes, Categories, AnalysisLabList } from 'types/predefined';
+import type { Purposes, Categories, AnalysisLabList } from 'types/predefined';
 
 export const getAnalysisTypesForCollection: (
   ajaxGet: AjaxGet

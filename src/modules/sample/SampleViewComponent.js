@@ -179,7 +179,7 @@ export default function SampleViewComponent(props: Props & SampleProps) {
           </label>
           <div className="col-md-2">
             <p className="form-control-static">
-              {sample.externalId ? sample.externalId.value : ''}
+              {sample.externalId && sample.externalId.source}
             </p>
           </div>
         </div>
