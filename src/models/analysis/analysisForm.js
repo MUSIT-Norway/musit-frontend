@@ -1,8 +1,6 @@
 // @flow
 import type { Field } from '../../forms/form';
 import type { AnalysisCollection } from '../../types/analysis';
-import type { CollectionId } from 'types/ids';
-import type { ImportAnalysisResult } from 'types/analysisResult';
 
 export type FormValue = {
   name: string,

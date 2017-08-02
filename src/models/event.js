@@ -24,7 +24,7 @@ class Event {
     collectionId: string,
     token: string,
     callback?: Callback
-  }) => Observable;
+  }) => Observable<*>;
 }
 
 Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) => props =>
@@ -79,6 +79,7 @@ Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) => prop
       if (events.length === 0) {
         return Observable.of(events);
       }
+      // $FlowFixMe | We are passing an array to forkJoin which is not supported by flow-typed definition for rxjs.
       return Observable.forkJoin(
         events.map(e => {
           if (e.type === 'SampleCreated') {

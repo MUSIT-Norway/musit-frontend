@@ -5,7 +5,7 @@ import type { AjaxGet } from './types/ajax';
 import { Observable } from 'rxjs';
 
 class Template {
-  static loadTemplates: (ajaxGet: AjaxGet) => (props: { token: string }) => Observable;
+  static loadTemplates: (ajaxGet: AjaxGet) => (props: { token: string }) => Observable<*>;
   static renderTemplate: (
     ajaxFn: Function
   ) => (props: {
@@ -13,7 +13,7 @@ class Template {
     codeFormat: number,
     nodes: Array<{ uuid: string, name: string }>,
     token: string
-  }) => Observable;
+  }) => Observable<*>;
 }
 
 Template.loadTemplates = (ajaxGet = simpleGet) => ({ token }) =>

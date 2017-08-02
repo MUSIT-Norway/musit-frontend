@@ -61,6 +61,7 @@ export type Result = {
 export type AnalysisCollection = {
   id: number,
   analysisTypeId: number,
+  objectId?: ?string,
   doneBy?: ?string,
   doneDate?: ?string,
   doneByName?: ?string,

@@ -2,24 +2,32 @@
 import { Observable, Subject } from 'rxjs';
 import MusitObject from '../../models/object';
 import MusitNode from '../../models/node';
+import type { NodeStats, Node } from '../../models/node';
+import type { ObjectData } from 'types/object';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 
-export const clearRootNode$ = createAction('clearRootNode$');
-export const setLoading$ = createAction('setLoading$');
-export const loadNodes$ = createAction('loadNodes$').switchMap(MusitNode.getNodes());
-export const loadObjects$ = createAction('loadObjects$').switchMap(
-  MusitObject.getObjects()
+export const clearRootNode$: Subject<*> = createAction('clearRootNode$');
+export const setLoading$: Subject<*> = createAction('setLoading$');
+export const loadNodes$: Subject<Array<Node>> = createAction('loadNodes$').switchMap(
+  MusitNode.getNodes()
 );
-export const loadStats$ = createAction('loadStats$').switchMap(MusitNode.getStats());
-export const loadRootNode$ = createAction('loadRootNode$').switchMap(MusitNode.getNode());
+export const loadObjects$: Subject<Array<ObjectData>> = createAction(
+  'loadObjects$'
+).switchMap(MusitObject.getObjects());
+export const loadStats$: Subject<NodeStats> = createAction('loadStats$').switchMap(
+  MusitNode.getStats()
+);
+export const loadRootNode$: Subject<Node> = createAction('loadRootNode$').switchMap(
+  MusitNode.getNode()
+);
 
 type Actions = {
-  clearRootNode$: Subject,
-  loadStats$: Subject,
-  loadRootNode$: Subject,
-  setLoading$: Subject,
-  loadNodes$: Subject,
-  loadObjects$: Subject
+  clearRootNode$: Subject<*>,
+  loadStats$: Subject<*>,
+  loadRootNode$: Subject<*>,
+  setLoading$: Subject<*>,
+  loadNodes$: Subject<*>,
+  loadObjects$: Subject<*>
 };
 
 export const reducer$ = (actions: Actions) =>

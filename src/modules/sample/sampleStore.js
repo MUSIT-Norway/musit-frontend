@@ -5,52 +5,44 @@ import { Observable, Subject } from 'rxjs';
 import Sample from '../../models/sample';
 import predefined$ from '../../stores/predefined';
 import { KEEP_ALIVE } from '../../stores/constants';
-
-import type { SampleData } from 'types/samples';
-import type { SampleType } from 'types/sample';
+import type { SampleData } from '../../types/samples';
+import type { Predefined } from 'types/predefined';
+import type { SampleType, SampleTypes, PredefinedSampleTypes } from '../../types/sample';
 
 export type SampleDateExtended = { sampleType?: SampleType } & SampleData;
 
-export type Action = {
-  getPredefinedTypes$: Subject,
-  clear$: Subject,
-  getSampleTypes$: Subject,
-  getSample$: Subject,
-  getSamplesForNode$: Subject
-};
-
 const initialState = { data: [] };
 
-export const getPredefinedTypes$ = createAction('getPredefinedTypes$').switchMap(
-  Sample.loadPredefinedTypes()
-);
+export const getPredefinedTypes$: Subject<PredefinedSampleTypes> = createAction(
+  'getPredefinedTypes$'
+).switchMap(Sample.loadPredefinedTypes());
 
-export const getSampleTypes$ = createAction('getSampleTypes$').switchMap(
-  Sample.loadAllSampleTypes()
-);
+export const getSampleTypes$: Subject<SampleTypes> = createAction(
+  'getSampleTypes$'
+).switchMap(Sample.loadAllSampleTypes());
 
-export const getSample$ = createAction('getSample$').switchMap(props =>
-  Sample.loadSample()(props).do(props.onComplete)
-);
+export const getSample$: Subject<SampleDateExtended> = createAction(
+  'getSample$'
+).switchMap(props => Sample.loadSample()(props).do(props.onComplete));
 
-export const clear$ = createAction('clear$');
+export const clear$: Subject<*> = createAction('clear$');
 
-export const getSamplesForNode$ = createAction('getSamplesForNode$').switchMap(
-  Sample.loadSamplesForNode()
-);
+export const getSamplesForNode$: Subject<Array<SampleData>> = createAction(
+  'getSamplesForNode$'
+).switchMap(Sample.loadSamplesForNode());
 
-const extendSample = (state, sample, apiSampleTypes) => {
+const extendSample = (state, sample: SampleDateExtended, apiSampleTypes) => {
   if (sample && apiSampleTypes) {
     const sampleType = apiSampleTypes.find(st => st.sampleTypeId === sample.sampleTypeId);
     const extendedSample = { ...sample, sampleType };
-    if (extendedSample.parentObject && extendedSample.parentObject.sampleOrObjectData) {
-      const parentObjSampleTypeId =
-        extendedSample.parentObject.sampleOrObjectData.sampleTypeId;
-      const parentSampleType = apiSampleTypes.find(
+    const sampleOrObjectData = extendedSample.parentObject
+      ? extendedSample.parentObject.sampleOrObjectData
+      : null;
+    if (sampleOrObjectData) {
+      const parentObjSampleTypeId = sampleOrObjectData.sampleTypeId;
+      sampleOrObjectData.sampleType = apiSampleTypes.find(
         st => st.sampleTypeId === parentObjSampleTypeId
       );
-
-      extendedSample.parentObject.sampleOrObjectData.sampleType = parentSampleType;
     }
     return { ...state, sample: extendedSample, apiSampleTypes };
   } else {
@@ -58,7 +50,15 @@ const extendSample = (state, sample, apiSampleTypes) => {
   }
 };
 
-const reducer$ = (actions: Action, predefined: Subject) =>
+export type Actions = {
+  getPredefinedTypes$: Subject<*>,
+  clear$: Subject<*>,
+  getSampleTypes$: Subject<*>,
+  getSample$: Subject<*>,
+  getSamplesForNode$: Subject<*>
+};
+
+const reducer$ = (actions: Actions, predefined: Subject<Predefined>) =>
   Observable.merge(
     actions.clear$.map(() => state => ({
       ...initialState,
@@ -81,14 +81,14 @@ const reducer$ = (actions: Action, predefined: Subject) =>
   );
 
 export const sampleStore$ = (
-  actions: Action = {
+  actions: Actions = {
     getPredefinedTypes$,
     clear$,
     getSampleTypes$,
     getSample$,
     getSamplesForNode$
   },
-  predefined: Subject = predefined$
+  predefined: Subject<Predefined> = predefined$
 ) =>
   createStore(
     'sampleStore$',

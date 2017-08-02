@@ -18,7 +18,7 @@ export const addResult: (
   token: string,
   result: ?AnalysisResultSavePayload,
   callback?: Callback
-}) => Observable = (ajaxPost = simplePost) => ({
+}) => Observable<number> = (ajaxPost = simplePost) => ({
   analysisId,
   museumId,
   token,
@@ -39,7 +39,12 @@ export const importResult: (
   museumId: number,
   token: string,
   result: ImportAnalysisResult
-}) => Observable = (ajaxPut = simplePut) => ({ analysisId, museumId, token, result }) =>
+}) => Observable<*> = (ajaxPut = simplePut) => ({
+  analysisId,
+  museumId,
+  token,
+  result
+}) =>
   ajaxPut(
     Config.magasin.urls.api.analysis.importResults(museumId, analysisId),
     result,

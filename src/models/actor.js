@@ -5,6 +5,7 @@ import { simpleGet, simplePost } from '../shared/RxAjax';
 import { Observable } from 'rxjs';
 import type { Callback, AjaxGet, AjaxPost } from './types/ajax';
 import type { Actor } from 'types/actor';
+import type { Restriction } from 'types/analysis';
 
 type ActorMetaData = {
   doneBy?: ?string,
@@ -14,7 +15,7 @@ type ActorMetaData = {
   administrator?: ?string,
   updatedBy?: ?string,
   updatedByName?: ?string,
-  restriction?: { requesterName: ?string }
+  restriction?: Restriction
 };
 
 type ActorFieldName =
@@ -61,7 +62,9 @@ class MusitActor {
   }) => Observable<Array<Actor>>;
   static getActor: (
     ajaxGet: AjaxGet
-  ) => (props: { actorId: string, token: string, callback?: Callback }) => Observable;
+  ) => (props: { actorId: string, token: string, callback?: Callback }) => Observable<
+    Actor
+  >;
 }
 
 /**

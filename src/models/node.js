@@ -8,11 +8,25 @@ import { Observable, Subject } from 'rxjs';
 import type { Callback, AjaxGet, AjaxPost, AjaxPut, AjaxDel } from './types/ajax';
 import type { Breadcrumb } from './types/breadcrumb';
 
-type Node = { type: string };
+export type Node = {
+  type: string,
+  updatedBy?: ?string
+};
 
 type Paging = {
   page: number,
   limit: number
+};
+
+export type NodeStats = {
+  numNodes: number,
+  numObjects: number,
+  totalObjects: number
+};
+
+export type MoveResult = {
+  moved: number,
+  failed: number
 };
 
 class MusitNode {
@@ -24,7 +38,7 @@ class MusitNode {
     museumId: number,
     token: string,
     callback?: Callback
-  }) => Observable;
+  }) => Observable<Node>;
   static getNodeWithUpdatedBy: (
     ajaxGet: AjaxGet
   ) => (props: {
@@ -32,7 +46,7 @@ class MusitNode {
     museumId: number,
     token: string,
     callback?: Callback
-  }) => Observable;
+  }) => Observable<Node & { updatedByName: ?string }>;
   static addNode: (
     ajaxPost: AjaxPost
   ) => (props: {
@@ -41,7 +55,7 @@ class MusitNode {
     token: string,
     data: mixed,
     callback?: Callback
-  }) => Observable;
+  }) => Observable<Node>;
   static editNode: (
     ajaxPut: AjaxPut
   ) => (props: {
@@ -50,7 +64,7 @@ class MusitNode {
     token: string,
     data: mixed,
     callback?: Callback
-  }) => Observable;
+  }) => Observable<Node>;
   static getNodes: (
     ajaxGet: AjaxGet
   ) => (props: {
@@ -59,7 +73,7 @@ class MusitNode {
     museumId: number,
     token: string,
     callback?: Callback
-  }) => Observable;
+  }) => Observable<Array<Node>>;
   static getStats: (
     ajaxGet: AjaxGet
   ) => (props: {
@@ -67,7 +81,7 @@ class MusitNode {
     museumId: number,
     token: string,
     callback?: Callback
-  }) => Observable;
+  }) => Observable<NodeStats>;
   static deleteNode: (
     ajaxDel: AjaxDel
   ) => (props: {
@@ -75,7 +89,7 @@ class MusitNode {
     museumId: number,
     token: string,
     callback?: Callback
-  }) => Observable;
+  }) => Observable<string>;
   static moveNode: (
     ajaxPut: AjaxPut
   ) => (props: {
@@ -85,20 +99,20 @@ class MusitNode {
     museumId: number,
     token: string,
     callback?: Callback
-  }) => Observable;
+  }) => Observable<MoveResult>;
   static pickNode: (
-    pickNode$: Subject
+    pickNode$: Subject<*>
   ) => (props: {
     node: mixed,
     breadcrumb: Breadcrumb
-  }) => Observable;
+  }) => void;
   static findByBarcode: (
     ajaxGet: AjaxGet
   ) => (props: {
     barcode: number,
     museumId: number,
     token: string
-  }) => Observable;
+  }) => Observable<*>;
   static findNodeOrObjectByBarcode: (
     ajaxGet: AjaxGet
   ) => (props: {
@@ -106,14 +120,14 @@ class MusitNode {
     museumId: number,
     collectionId: string,
     token: string
-  }) => Observable;
+  }) => Observable<*>;
   static findByUUID: (
     ajaxGet: AjaxGet
   ) => (props: {
     uuid: string,
     museumId: number,
     token: string
-  }) => Observable;
+  }) => Observable<*>;
 }
 
 MusitNode.isRootNode = node => node.type === 'Root' || node.type === 'RootLoan';
@@ -126,17 +140,16 @@ MusitNode.getNode = (ajaxGet = simpleGet) => ({ id, museumId, token, callback })
   ).map(node => node.response && mapToFrontend(node.response));
 
 MusitNode.getNodeWithUpdatedBy = (ajaxGet = simpleGet) => props =>
-  MusitNode.getNode(ajaxGet)(props).flatMap(node =>
-    MusitActor.getActor(ajaxGet)({
-      token: props.token,
-      actorId: node.updatedBy
-    }).map(actor => {
-      if (!actor) {
-        return node;
-      }
-      return { ...node, updatedByName: actor.fn };
-    })
-  );
+  MusitNode.getNode(ajaxGet)(props).flatMap(node => {
+    if (node.updatedBy) {
+      const updatedBy = node.updatedBy;
+      return MusitActor.getActor(ajaxGet)({
+        token: props.token,
+        actorId: updatedBy
+      }).map(actor => ({ ...node, updatedByName: actor ? actor.fn : null }));
+    }
+    return Observable.of({ ...node, updatedByName: null });
+  });
 
 MusitNode.addNode = (ajaxPost = simplePost) => ({
   id,

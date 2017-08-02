@@ -1,6 +1,6 @@
 // @flow
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import MusitObject from '../../models/object';
 import Sample from '../../models/sample';
 import Event from '../../models/event';
@@ -13,32 +13,32 @@ export const initialState = {
   loadingSamples: false
 };
 
-const setLoading$ = createAction('setLoading');
+const setLoading$: Subject<*> = createAction('setLoading');
 
 const flagLoading = s => () => setLoading$.next(s);
 
-export const loadObject$: Observable = createAction('loadObject$')
+export const loadObject$: Subject<*> = createAction('loadObject$')
   .do(flagLoading({ loadingObjectData: true }))
   .switchMap(params => MusitObject.getObjectWithCurrentLocation()(params));
 
-export const loadSampleEvents$: Observable = createAction('loadSampleEvents$')
+export const loadSampleEvents$: Subject<*> = createAction('loadSampleEvents$')
   .do(flagLoading({ loadingSamples: true }))
   .switchMap(Sample.loadSampleDataForObject());
 
-export const loadMoveAndAnalysisEvents$: Observable = createAction(
+export const loadMoveAndAnalysisEvents$: Subject<*> = createAction(
   'loadMoveAndAnalysisEvents$'
 )
   .do(flagLoading({ loadingEvents: true }))
   .switchMap(Event.getAnalysesAndMoves());
 
-export const clearStore$: Observable = createAction('clearStore$');
+export const clearStore$: Subject<*> = createAction('clearStore$');
 
 type Actions = {
-  loadSampleEvents$: Observable,
-  loadMoveAndAnalysisEvents$: Observable,
-  loadObject$: Observable,
-  clearStore$: Observable,
-  setLoading$: Observable
+  loadSampleEvents$: Subject<*>,
+  loadMoveAndAnalysisEvents$: Subject<*>,
+  loadObject$: Subject<*>,
+  clearStore$: Subject<*>,
+  setLoading$: Subject<*>
 };
 
 const reducer$ = (actions: Actions) =>

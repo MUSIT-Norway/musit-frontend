@@ -250,11 +250,6 @@ describe('Config urls', () => {
           expected: '/api/management/99/analyses/objects/123'
         },
         {
-          name: 'saveAnalysisType',
-          actual: urls.api.analysis.saveAnalysisType(99, 123),
-          expected: '/api/management/99/analyses/types'
-        },
-        {
           name: 'getPurposes',
           actual: urls.api.analysis.getPurposes,
           expected: '/api/management/purposes'

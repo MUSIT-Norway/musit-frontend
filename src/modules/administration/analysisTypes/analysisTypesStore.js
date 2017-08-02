@@ -3,12 +3,12 @@ import { Observable, Subject } from 'rxjs';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import Analysis from '../../../models/analysis';
 
-export const getAnalysisTypes$ = createAction('getAnalysisTypes$').switchMap(
+export const getAnalysisTypes$: Subject<*> = createAction('getAnalysisTypes$').switchMap(
   Analysis.getAnalysisTypes()
 );
 
 type Actions = {
-  getAnalysisTypes$: Subject
+  getAnalysisTypes$: Subject<*>
 };
 
 export const reducer$ = (actions: Actions) =>

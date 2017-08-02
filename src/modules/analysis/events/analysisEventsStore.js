@@ -10,9 +10,9 @@ import type { AnalysisCollection, AnalysisType } from 'types/analysis';
 import type { Actor } from 'types/actor';
 
 type Actions = {
-  setLoading$: Subject,
-  getAnalysisEvents$: Subject,
-  filterEvents$: Subject
+  setLoading$: Subject<*>,
+  getAnalysisEvents$: Subject<*>,
+  filterEvents$: Subject<*>
 };
 
 export type Extension = {
@@ -22,9 +22,11 @@ export type Extension = {
 
 export type AnalysisCollectionExtended = AnalysisCollection & Extension;
 
-export const setLoading$ = createAction('setLoading$');
-export const filterEvents$ = createAction('filterEvents$');
-export const getAnalysisEvents$ = createAction('getAnalysisEvent$').switchMap(props =>
+export const setLoading$: Subject<*> = createAction('setLoading$');
+export const filterEvents$: Subject<*> = createAction('filterEvents$');
+export const getAnalysisEvents$: Subject<*> = createAction(
+  'getAnalysisEvent$'
+).switchMap(props =>
   MusitAnalysis.getAnalysisEvents()(props).flatMap(events =>
     MusitActor.getActors()({
       token: props.token,
@@ -35,7 +37,8 @@ export const getAnalysisEvents$ = createAction('getAnalysisEvent$').switchMap(pr
 
 export const getUniqueRegisteredByActors = (
   events: Array<AnalysisCollection>
-): Array<string> => uniq(events.map(event => event.registeredBy)).filter(v => v);
+): Array<string> =>
+  (uniq(events.map(event => event.registeredBy)).filter(v => v): Array<any>);
 
 export const combineDataSources = (
   actors: Array<Actor>,

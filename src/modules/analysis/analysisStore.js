@@ -23,37 +23,39 @@ const initialState = {
   analysisTypeCategories: []
 };
 
-export const getAnalysisTypes$ = createAction('getAnalysisTypes$').switchMap(
+export const getAnalysisTypes$: Subject<*> = createAction('getAnalysisTypes$').switchMap(
   MusitAnalysis.getAnalysisTypesForCollection()
 );
 
-export const setLoading$ = createAction('setLoading$');
-export const getAnalysis$ = createAction('getAnalysis$').switchMap(props =>
+export const setLoading$: Subject<*> = createAction('setLoading$');
+export const getAnalysis$: Subject<*> = createAction('getAnalysis$').switchMap(props =>
   MusitAnalysis.getAnalysisById(simpleGet)(props).flatMap(
     getAnalysisDetails(simpleGet, simplePost, props)
   )
 );
 
-export const updateExtraDescriptionAttribute$ = createAction(
+export const updateExtraDescriptionAttribute$: Subject<*> = createAction(
   'updateExtraDescriptionAttribute$'
 );
 
-export const clearStore$ = createAction('clearStore$');
+export const clearStore$: Subject<*> = createAction('clearStore$');
 
-export const updateExtraResultAttribute$ = createAction('updateExtraResultAttribute$');
+export const updateExtraResultAttribute$: Subject<*> = createAction(
+  'updateExtraResultAttribute$'
+);
 
-export const loadPredefinedTypes$ = createAction(
+export const loadPredefinedTypes$: Subject<*> = createAction(
   'loadPredefinedTypes$'
 ).switchMap(props => MusitAnalysis.loadPredefinedTypes()(props));
 
 type Actions = {
-  setLoading$: Subject,
-  getAnalysis$: Subject,
-  getAnalysisTypes$: Subject,
-  loadPredefinedTypes$: Subject,
-  updateExtraDescriptionAttribute$: Subject,
-  updateExtraResultAttribute$: Subject,
-  clearStore$: Subject
+  setLoading$: Subject<*>,
+  getAnalysis$: Subject<*>,
+  getAnalysisTypes$: Subject<*>,
+  loadPredefinedTypes$: Subject<*>,
+  updateExtraDescriptionAttribute$: Subject<*>,
+  updateExtraResultAttribute$: Subject<*>,
+  clearStore$: Subject<*>
 };
 
 export const reducer$ = (actions: Actions) =>
@@ -117,7 +119,7 @@ export function getAnalysisDetails(
     callback?: Callback,
     sampleTypes: SampleTypes
   }
-): (analysis: AnalysisCollection) => Observable {
+): (analysis: AnalysisCollection) => Observable<*> {
   return (analysis: AnalysisCollection) =>
     MusitActor.getActors(ajaxPost)({
       actorIds: [
@@ -149,16 +151,20 @@ export function getAnalysisDetails(
         return analysis;
       })
       .flatMap(analysis => {
-        if (analysis.type === 'AnalysisCollection' && analysis.events.length > 0) {
-          return Observable.forkJoin(
-            analysis.events.map(getEventObjectDetails(props, ajaxGet))
-          ).map(zipObjectInfoWithEvents(analysis));
+        if (analysis.type === 'AnalysisCollection') {
+          const events = analysis.events;
+          if (events && events.length > 0) {
+            // $FlowFixMe | We are passing an array to forkJoin which is not supported by flow-typed definition for rxjs.
+            return Observable.forkJoin(
+              events.map(getEventObjectDetails(props, ajaxGet))
+            ).map(zipObjectInfoWithEvents(analysis));
+          }
         }
         if (!analysis.objectId) {
           return Observable.of(analysis);
         }
         return MusitObject.getObjectDetails(ajaxGet)({
-          id: analysis.objectId,
+          id: (analysis.objectId: any),
           museumId: props.museumId,
           collectionId: props.collectionId,
           token: props.token

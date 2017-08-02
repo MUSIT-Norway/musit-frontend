@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import Config from '../../config';
 import { simplePost, simpleGet, simplePut } from '../../shared/RxAjax';
 import type { Callback, AjaxPost, AjaxGet, AjaxPut } from '../types/ajax';
-import type { ImportAnalysisResult } from 'types/analysisResult';
+import type { AnalysisCollection } from 'types/analysis';
 import type { Result, Restriction } from '../../types/analysis';
 import type { CollectionId } from 'types/ids';
 
@@ -19,26 +19,6 @@ export type AnalysisSavePayload = {
   result?: ?Result
 };
 
-export const getAnalysisTypesForCollection: (
-  ajaxGet: AjaxGet
-) => (props: {
-  museumId: number,
-  collectionId: string,
-  token: string,
-  callback?: Callback
-}) => Observable = (ajaxGet = simpleGet) => ({
-  museumId,
-  collectionId,
-  token,
-  callback
-}) => {
-  const url = Config.magasin.urls.api.analysisType.getAnalysisTypesForCollection(
-    museumId,
-    collectionId
-  );
-  return ajaxGet(url, token, callback).map(({ response }) => response);
-};
-
 export const saveAnalysisEvent: (
   ajaxPost: AjaxPost
 ) => (props: {
@@ -46,7 +26,12 @@ export const saveAnalysisEvent: (
   data: AnalysisSavePayload,
   token: string,
   callback?: Callback
-}) => Observable = (ajaxPost = simplePost) => ({ museumId, data, token, callback }) => {
+}) => Observable<AnalysisCollection> = (ajaxPost = simplePost) => ({
+  museumId,
+  data,
+  token,
+  callback
+}) => {
   const url = Config.magasin.urls.api.analysis.saveAnalysisEvent(museumId);
   return ajaxPost(url, data, token, callback).map(({ response }) => response);
 };
@@ -59,7 +44,13 @@ export const editAnalysisEvent: (
   data: AnalysisSavePayload,
   token: string,
   callback?: Callback
-}) => Observable = (ajaxPut = simplePut) => ({ id, museumId, data, token, callback }) => {
+}) => Observable<AnalysisCollection> = (ajaxPut = simplePut) => ({
+  id,
+  museumId,
+  data,
+  token,
+  callback
+}) => {
   const url = Config.magasin.urls.api.analysis.getAnalysisById(museumId, id);
   return ajaxPut(url, data, token, callback).map(({ response }) => response);
 };
@@ -71,7 +62,12 @@ export const getAnalysesForObject: (
   museumId: number,
   token: string,
   callback?: Callback
-}) => Observable = (ajaxGet = simpleGet) => ({ museumId, token, id, callback }) => {
+}) => Observable<Array<AnalysisCollection>> = (ajaxGet = simpleGet) => ({
+  museumId,
+  token,
+  id,
+  callback
+}) => {
   const url = Config.magasin.urls.api.analysis.analysesForObject(museumId, id);
   return ajaxGet(url, token, callback).map(({ response }) => {
     if (!Array.isArray(response)) {
@@ -88,7 +84,12 @@ export const getAnalysisById: (
   museumId: number,
   token: string,
   callback?: Callback
-}) => Observable = (ajaxGet = simpleGet) => ({ museumId, id, token, callback }) => {
+}) => Observable<AnalysisCollection> = (ajaxGet = simpleGet) => ({
+  museumId,
+  id,
+  token,
+  callback
+}) => {
   const url = Config.magasin.urls.api.analysis.getAnalysisById(museumId, id);
   return ajaxGet(url, token, callback).map(({ response }) => response);
 };
@@ -99,7 +100,11 @@ export const getAnalysisEvents: (
   museumId: number,
   token: string,
   collectionId: CollectionId
-}) => Observable = (ajaxGet = simpleGet) => ({ museumId, token, collectionId }) => {
+}) => Observable<Array<AnalysisCollection>> = (ajaxGet = simpleGet) => ({
+  museumId,
+  token,
+  collectionId
+}) => {
   const url = Config.magasin.urls.api.analysis.getAnalysisEvents(museumId, [
     collectionId
   ]);

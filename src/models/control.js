@@ -27,7 +27,7 @@ class Control {
     museumId: number,
     token: string,
     callback?: Callback
-  }) => Observable;
+  }) => Observable<Array<ControlType>>;
   static addControl: (
     ajaxPost: AjaxPost
   ) => (props: {
@@ -37,7 +37,7 @@ class Control {
     museumId: number,
     token: string,
     callback?: Callback
-  }) => Observable;
+  }) => Observable<ControlType>;
   static getControl: (
     ajaxGet: AjaxGet,
     ajaxPost: AjaxPost
@@ -47,7 +47,7 @@ class Control {
     museumId: number,
     token: string,
     callback?: Callback
-  }) => Observable;
+  }) => Observable<ControlType>;
 }
 
 Control.loadControls = (ajaxGet = simpleGet) => ({ nodeId, museumId, token, callback }) =>

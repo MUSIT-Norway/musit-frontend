@@ -2,11 +2,11 @@
 
 import {
   getAnalysisTypes,
-  saveAnalysisType,
   getAnalysisCategories,
   getPurposes,
   getAnalysisLabList,
-  loadPredefinedTypes
+  loadPredefinedTypes,
+  getAnalysisTypesForCollection
 } from './analysisTypes';
 
 import { importResult, addResult } from './analysisResult';
@@ -16,15 +16,13 @@ import {
   getAnalysisById,
   editAnalysisEvent,
   getAnalysesForObject,
-  getAnalysisEvents,
-  getAnalysisTypesForCollection
+  getAnalysisEvents
 } from './analysis';
 
 import { fromJsonToForm } from './analysisForm';
 
 export default {
   getAnalysisTypes,
-  saveAnalysisType,
   getAnalysisCategories,
   getPurposes,
   getAnalysisLabList,

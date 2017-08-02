@@ -11,7 +11,7 @@ class Report {
   ) => (props: {
     token: string,
     museumId: number
-  }) => Observable;
+  }) => Observable<*>;
 }
 
 Report.getKDReport = (ajaxGet = simpleGet) => ({ token, museumId }) => {

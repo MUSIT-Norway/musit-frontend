@@ -40,8 +40,9 @@ export function submitForm(
   const token = appSession.accessToken;
   const museumId = appSession.museumId;
   const upsertAnalysis$ = getAnalysisUpsert(id, ajaxPut, museumId, data, token, ajaxPost);
-  return upsertAnalysis$.toPromise().then((analysis: Analysis) =>
-    Observable.forkJoin(
+  return upsertAnalysis$.toPromise().then((analysis: Analysis) => {
+    // $FlowFixMe | We are passing an array to forkJoin which is not supported by flow-typed definition for rxjs.
+    return Observable.forkJoin(
       zipEventsWithId(events, analysis.events)
         .map(evt =>
           MusitAnalysis.addResult(ajaxPost)({
@@ -68,8 +69,8 @@ export function submitForm(
             parseInt(analysis.id, 10)
           )
         )
-      )
-  );
+      );
+  });
 }
 
 function getAnalysisUpsert(id, ajaxPut, museumId, data, token, ajaxPost) {

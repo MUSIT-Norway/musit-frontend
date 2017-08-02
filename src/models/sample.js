@@ -26,7 +26,7 @@ class Sample {
     token: string,
     data: mixed,
     callback?: Callback
-  }) => Observable;
+  }) => Observable<*>;
   static editSample: (
     ajaxPut: AjaxPut
   ) => (props: {
@@ -35,7 +35,7 @@ class Sample {
     token: string,
     data: mixed,
     callback?: Callback
-  }) => Observable;
+  }) => Observable<*>;
   static loadSample: (
     ajaxGet: AjaxGet
   ) => (props: {
@@ -44,7 +44,7 @@ class Sample {
     collectionId: string,
     token: string,
     callback?: Callback
-  }) => Observable;
+  }) => Observable<*>;
   static loadSampleDataForObject: (
     ajaxGet: AjaxGet
   ) => (props: {
@@ -52,7 +52,7 @@ class Sample {
     museumId: number,
     token: string,
     callback?: Callback
-  }) => Observable;
+  }) => Observable<*>;
   static prepareForSubmit: (tmpData: {
     size?: { value: number, unit: string },
     parentObject: { objectId: number, objectType: string, sampleOrObjectData: any },
@@ -67,35 +67,35 @@ class Sample {
   ) => (props: {
     token: string,
     isEn: string
-  }) => Observable;
+  }) => Observable<*>;
   static loadAllSampleTypes: (
     ajaxGet: AjaxGet
   ) => (props: {
     token: string,
     language: string
-  }) => Observable;
+  }) => Observable<*>;
   static loadTreatments: (
     ajaxGet: AjaxGet
   ) => (props: {
     token: string
-  }) => Observable;
+  }) => Observable<*>;
   static loadStorageContainer: (
     ajaxGet: AjaxGet
   ) => (props: {
     token: string
-  }) => Observable;
+  }) => Observable<*>;
   static loadStorageMediums: (
     ajaxGet: AjaxGet
   ) => (props: {
     token: string
-  }) => Observable;
+  }) => Observable<*>;
   static loadPredefinedTypes: (
     ajaxGet: AjaxGet
   ) => (props: {
     token: string,
     isEn: string,
     onComplete: (predefinedTypes: mixed) => void
-  }) => Observable;
+  }) => Observable<*>;
   static sampleStatuses: Array<SampleStatus>;
   static sampleSizeUnits: Array<string>;
   static loadSamplesForNode: (
@@ -106,16 +106,16 @@ class Sample {
     token: string,
     collectionId: string,
     callback?: Callback
-  }) => Observable;
+  }) => Observable<*>;
 }
 
 Sample.loadPredefinedTypes = (ajaxGet = simpleGet) => props => {
-  return Observable.forkJoin([
+  return Observable.forkJoin(
     Sample.loadStorageContainer(ajaxGet)(props),
     Sample.loadStorageMediums(ajaxGet)(props),
     Sample.loadTreatments(ajaxGet)(props),
     Sample.loadSampleTypes(ajaxGet)(props)
-  ])
+  )
     .map(([storageContainers, storageMediums, treatments, sampleTypes]) => ({
       storageContainers,
       storageMediums,

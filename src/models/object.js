@@ -8,6 +8,7 @@ import type { Callback, AjaxGet, AjaxPost, AjaxPut } from './types/ajax';
 import type { ObjectData } from '../types/object';
 import { Observable, Subject } from 'rxjs';
 import type { Breadcrumb } from './types/breadcrumb';
+
 type MuseumId = number;
 
 class MusitObject {
@@ -21,7 +22,7 @@ class MusitObject {
     collectionId: string,
     token: string,
     callback?: Callback
-  }) => Observable;
+  }) => Observable<*>;
   static moveObjects: (
     props: {
       object: ObjectData,
@@ -34,7 +35,7 @@ class MusitObject {
     },
     ajaxGet: AjaxGet,
     ajaxPut: AjaxPut
-  ) => Observable;
+  ) => void;
   static getObjectLocations: (
     ajaxPost: AjaxPost
   ) => (props: {
@@ -42,7 +43,7 @@ class MusitObject {
     museumId: MuseumId,
     token: string,
     callback: ?any
-  }) => Observable;
+  }) => Observable<*>;
   static getObjectLocation: (
     ajaxGet: AjaxGet
   ) => (props: {
@@ -50,7 +51,7 @@ class MusitObject {
     museumId: number,
     token: string,
     callback?: Callback
-  }) => Observable;
+  }) => Observable<*>;
   static getMainObject: (
     ajaxGet: AjaxGet
   ) => (props: {
@@ -59,7 +60,7 @@ class MusitObject {
     collectionId: string,
     token: string,
     callback?: Callback
-  }) => Observable;
+  }) => Observable<*>;
   static getObjectWithCurrentLocation: (
     ajaxGet: AjaxGet
   ) => (props: {
@@ -68,10 +69,10 @@ class MusitObject {
     collectionId: string,
     token: string,
     callback?: Callback
-  }) => Observable;
+  }) => Observable<ObjectData>;
 
   static pickObject: (
-    pickObject$: Subject,
+    pickObject$: Subject<*>,
     ajaxGet: AjaxGet
   ) => (props: {
     object: ObjectData,
@@ -80,7 +81,7 @@ class MusitObject {
     collectionId: string,
     token: string,
     callback?: Callback
-  }) => Observable;
+  }) => void;
   static getObjects: (
     ajaxGet: AjaxGet
   ) => (props: {
@@ -90,7 +91,7 @@ class MusitObject {
     collectionId: string,
     token: string,
     callback?: Callback
-  }) => Observable;
+  }) => Observable<ObjectData>;
   static moveSingleObject: (
     ajaxPut: AjaxPut
   ) => (props: {
@@ -100,7 +101,7 @@ class MusitObject {
     museumId: number,
     token: string,
     callback?: Callback
-  }) => Observable;
+  }) => Observable<*>;
   static getLocationHistory: (
     ajaxGet: AjaxGet
   ) => (props: {
@@ -108,7 +109,7 @@ class MusitObject {
     museumId: number,
     token: string,
     callback?: Callback
-  }) => Observable;
+  }) => Observable<*>;
   static findByBarcode: (
     ajaxGet: AjaxGet
   ) => (props: {
@@ -116,7 +117,7 @@ class MusitObject {
     museumId: number,
     collectionId: string,
     token: string
-  }) => Observable;
+  }) => Observable<*>;
   static searchForObjects: (
     ajaxGet: AjaxGet
   ) => (props: {
@@ -129,7 +130,7 @@ class MusitObject {
     collectionId: string,
     token: string,
     callback?: Callback
-  }) => Observable;
+  }) => Observable<*>;
 }
 
 MusitObject.getObjectDescription = obj => {
@@ -213,7 +214,7 @@ MusitObject.getObjectWithCurrentLocation = (ajaxGet = simpleGet) => ({
   collectionId,
   callback
 }) =>
-  Observable.forkJoin([
+  Observable.forkJoin(
     MusitObject.getObjectDetails(ajaxGet)({
       id: objectId,
       museumId,
@@ -222,7 +223,7 @@ MusitObject.getObjectWithCurrentLocation = (ajaxGet = simpleGet) => ({
       callback
     }),
     MusitObject.getObjectLocation(ajaxGet)({ objectId, museumId, token, callback })
-  ]).map(([{ response }, l]) => ({ ...response, currentLocation: l }));
+  ).map(([{ response }, l]) => ({ ...response, currentLocation: l }));
 
 MusitObject.getMainObject = (ajaxGet = simpleGet) => ({
   id,

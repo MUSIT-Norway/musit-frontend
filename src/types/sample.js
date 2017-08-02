@@ -7,8 +7,15 @@ export type SampleType = {
   sampleTypeId: number
 };
 
-export type SampleTypes = SampleType[];
+export type SampleTypes = Array<SampleType>;
 
 export type SampleTypesObject = {
+  sampleTypes: SampleTypes
+};
+
+export type PredefinedSampleTypes = {
+  storageContainers: Array<any>,
+  storageMediums: Array<any>,
+  treatments: Array<any>,
   sampleTypes: SampleTypes
 };

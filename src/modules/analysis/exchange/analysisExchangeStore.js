@@ -18,10 +18,10 @@ import type { AnalysisResultTypes } from 'types/analysisResult';
 import type { ResultExchangeTemplates } from './exchangeTemplate';
 
 type Actions = {
-  importResult$: Subject,
-  uploadResultFailed$: Subject,
-  clearStore$: Subject,
-  setAnalysisTypes$: Subject
+  importResult$: Subject<*>,
+  uploadResultFailed$: Subject<*>,
+  clearStore$: Subject<*>,
+  setAnalysisTypes$: Subject<*>
 };
 
 //todo this should be declared in the analysis store
@@ -63,10 +63,10 @@ export type StoreState = {
   analysisResultType: ?AnalysisResultTypes
 } & AnalysisStoreState;
 
-export const importResult$ = createAction('importResult');
-export const uploadResultFailed$ = createAction('uploadResultFailed');
-export const clearStore$ = createAction('clearStore').do(clearAnalysisStore$);
-export const setAnalysisTypes$ = createAction('setAnalysisTypes');
+export const importResult$: Subject<*> = createAction('importResult');
+export const uploadResultFailed$: Subject<*> = createAction('uploadResultFailed');
+export const clearStore$: Subject<*> = createAction('clearStore').do(clearAnalysisStore$);
+export const setAnalysisTypes$: Subject<*> = createAction('setAnalysisTypes');
 
 const findAnalysisResultType = (
   analysisStore: AnalysisStoreState,
@@ -132,7 +132,7 @@ const mapAnalysisTypesToState = (
   };
 };
 
-export const reducer$ = (actions: Actions, analysisStore$: Observable) =>
+export const reducer$ = (actions: Actions, analysisStore$: Observable<*>) =>
   Observable.merge(
     analysisStore$.map(analysisStore => state =>
       mapAnalysisStoreToState(analysisStore, state)),
@@ -155,6 +155,7 @@ export const initStoreState = () => ({
   analysisTypes: [],
   analysisResultType: null
 });
+
 export const analysisExchangeStore$ = (
   actions$: Actions = {
     importResult$,
@@ -162,7 +163,7 @@ export const analysisExchangeStore$ = (
     clearStore$,
     setAnalysisTypes$
   },
-  analysisStore$: Observable = analysisStoreInstance$
+  analysisStore$: Observable<*> = analysisStoreInstance$
 ) =>
   createStore(
     'analysisExchangeStore',
@@ -171,4 +172,5 @@ export const analysisExchangeStore$ = (
   );
 
 const analysisExchangeStoreSingleton = analysisExchangeStore$();
+
 export default analysisExchangeStoreSingleton;
