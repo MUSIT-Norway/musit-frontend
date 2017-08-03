@@ -406,7 +406,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
             >
               <input
                 name="options"
-                onChange="restrictions"
+                onClick="restrictions"
                 type="radio"
               />
                
@@ -417,7 +417,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
             >
               <input
                 name="options"
-                onChange="restrictions"
+                onClick="restrictions"
                 type="radio"
               />
                

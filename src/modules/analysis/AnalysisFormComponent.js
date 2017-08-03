@@ -314,7 +314,7 @@ const AnalysisFormComponent = ({
                   <input
                     type="radio"
                     name="options"
-                    onChange={updateBooleanField(form.restrictions.name, true)}
+                    onClick={updateBooleanField(form.restrictions.name, true)}
                   />
                   {' '}
                   {I18n.t('musit.texts.yes')}
@@ -325,7 +325,7 @@ const AnalysisFormComponent = ({
                   <input
                     type="radio"
                     name="options"
-                    onChange={updateBooleanField(form.restrictions.name, false)}
+                    onClick={updateBooleanField(form.restrictions.name, false)}
                   />
                   {' '}
                   {I18n.t('musit.texts.no')}
