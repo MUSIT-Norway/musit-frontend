@@ -273,7 +273,7 @@ const customProps = props => ({
       props.history.push({
         pathname: Config.magasin.urls.client.analysis.addFromSample(
           appSession,
-          items[0].objectId
+          items[0].sampleObject ? items[0].sampleObject.objectId : items[0].objectId
         )
       });
     } else if (items[0].objectType === 'collection') {
