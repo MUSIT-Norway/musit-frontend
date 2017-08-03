@@ -48,6 +48,7 @@ class MusitObject {
     ajaxGet: AjaxGet
   ) => (props: {
     objectId: string,
+    objectType?: ?string,
     museumId: number,
     token: string,
     callback?: Callback
@@ -197,12 +198,17 @@ MusitObject.getObjectLocations = (ajaxPost = simplePost) => ({
 
 MusitObject.getObjectLocation = (ajaxGet = simpleGet) => ({
   objectId,
+  objectType,
   museumId,
   token,
   callback
 }) =>
   ajaxGet(
-    Config.magasin.urls.api.storagefacility.currentLocation(museumId, objectId),
+    Config.magasin.urls.api.storagefacility.currentLocation(
+      museumId,
+      objectId,
+      objectType
+    ),
     token,
     callback
   ).map(({ response }) => ({ ...response, breadcrumb: getPath(response) }));

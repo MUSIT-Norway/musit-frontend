@@ -175,8 +175,12 @@ export default {
             limit: ?number
           ): string =>
             `/api/storagefacility/museum/${mid}/storagenodes/${uuid}/children?page=${pageNum || 1}&limit=${limit || 25}`,
-          currentLocation: (mid: MuseumId, objectId: string): string =>
-            `/api/storagefacility/museum/${mid}/storagenodes/objects/${objectId}/currentlocation`,
+          currentLocation: (
+            mid: MuseumId,
+            objectId: string,
+            objectType?: ?string
+          ): string =>
+            `/api/storagefacility/museum/${mid}/storagenodes/objects/${objectId}/currentlocation?objectType=${objectType || 'collection'}`,
           currentLocations: (mid: MuseumId): string =>
             `/api/storagefacility/museum/${mid}/storagenodes/objects/currentlocations`,
           moveObject: (mid: MuseumId): string =>

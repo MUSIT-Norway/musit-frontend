@@ -108,7 +108,7 @@ describe('Config urls', () => {
         {
           name: 'currentLocation',
           actual: urls.api.storagefacility.currentLocation(99, 123),
-          expected: '/api/storagefacility/museum/99/storagenodes/objects/123/currentlocation'
+          expected: '/api/storagefacility/museum/99/storagenodes/objects/123/currentlocation?objectType=collection'
         },
         {
           name: 'currentLocations',

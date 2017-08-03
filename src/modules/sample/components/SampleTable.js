@@ -52,7 +52,9 @@ const pickObjectParams = (
         appSession
       )
     },
-    breadcrumb: s.breadcrumb ? s.breadcrumb : [],
+    breadcrumb: s.currentLocation && s.currentLocation.breadcrumb
+      ? s.currentLocation.breadcrumb
+      : [],
     museumId: appSession.museumId,
     collectionId: appSession.collectionId,
     token: appSession.accessToken

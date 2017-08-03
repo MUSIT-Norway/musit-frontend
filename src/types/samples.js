@@ -67,7 +67,8 @@ export type SampleData = Sample & {
   hasAnalyse: boolean,
   breadcrumb: [],
   updatedDate?: ?string,
-  registeredDate: string
+  registeredDate: string,
+  currentLocation?: ?{ breadcrumb: ?Array<any>, pathNames: ?Array<any> }
 };
 
 export type Samples = SampleData[];

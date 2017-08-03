@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import MusitObject from '../../models/object';
 import Sample from '../../models/sample';
 import Event from '../../models/event';
+
 export const initialState = {
   objectData: {},
   events: [],
@@ -19,11 +20,23 @@ const flagLoading = s => () => setLoading$.next(s);
 
 export const loadObject$: Subject<*> = createAction('loadObject$')
   .do(flagLoading({ loadingObjectData: true }))
-  .switchMap(params => MusitObject.getObjectWithCurrentLocation()(params));
+  .switchMap(MusitObject.getObjectWithCurrentLocation());
 
 export const loadSampleEvents$: Subject<*> = createAction('loadSampleEvents$')
   .do(flagLoading({ loadingSamples: true }))
-  .switchMap(Sample.loadSampleDataForObject());
+  .switchMap(params => {
+    return Sample.loadSampleDataForObject()(params).flatMap(samples => {
+      return Observable.forkJoin(
+        samples.map(sample => {
+          return MusitObject.getObjectLocation()({
+            ...params,
+            objectType: 'sample',
+            objectId: sample.objectId
+          }).map(currentLocation => ({ ...sample, currentLocation }));
+        })
+      );
+    });
+  });
 
 export const loadMoveAndAnalysisEvents$: Subject<*> = createAction(
   'loadMoveAndAnalysisEvents$'

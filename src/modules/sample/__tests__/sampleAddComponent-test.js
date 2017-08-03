@@ -114,7 +114,7 @@ describe('AnalysisSampleFormPageAdd', () => {
           term: 'Carex saxatilis',
           subNo: 'a',
           objectType: 'collection',
-          currentLocation: { pathNames: null },
+          currentLocation: { pathNames: null, breadcrumb: null },
           parentObject: {
             objectId: '000-0000-0001',
             objectType: 'collection',
