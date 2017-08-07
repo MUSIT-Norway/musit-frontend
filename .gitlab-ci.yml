@@ -5,7 +5,6 @@
 stages:
   - test
   - build
-  - cleanup
 
 test:
   stage: test
@@ -63,16 +62,3 @@ build:
   only:
     - master@MUSIT-Norway/musit-frontend
 
-cleanup:
-  stage: cleanup
-  tags:
-    - docker
-    - musit
-    - utv
-  services:
-    - $MUSIT_DOCKER_REGISTRY/library/docker:dind
-  script:
-    - ./gitlab-clean
-  only:
-    - master@MUSIT-Norway/musit-frontend
-  allow_failure: true
