@@ -26,6 +26,9 @@ export const loadSampleEvents$: Subject<*> = createAction('loadSampleEvents$')
   .do(flagLoading({ loadingSamples: true }))
   .switchMap(params => {
     return Sample.loadSampleDataForObject()(params).flatMap(samples => {
+      if (!samples || samples.length === 0) {
+        return Observable.of([]);
+      }
       return Observable.forkJoin(
         samples.map(sample => {
           return MusitObject.getObjectLocation()({
