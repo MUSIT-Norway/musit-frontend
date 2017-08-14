@@ -42,6 +42,9 @@ export default ({
 }: Props) => (
   <div className="container">
     <div className="page-header">
+      <button className="btn btn-default pull-right" onClick={clickEdit}>
+        {I18n.t('musit.texts.change')}
+      </button>
       <h1>
         {I18n.t('musit.analysis.analysis')}
       </h1>
@@ -52,7 +55,6 @@ export default ({
         updatedDate={form.updatedDate.value}
         registeredBy={form.registeredByName.value}
         registeredDate={form.registeredDate.value}
-        onClickEdit={clickEdit}
       />
       <hr />
       <div className="form-group">

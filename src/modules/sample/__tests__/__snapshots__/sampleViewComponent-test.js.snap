@@ -10,6 +10,12 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
     <div
       className="page-header"
     >
+      <button
+        className="btn btn-default pull-right"
+        onClick={[Function]}
+      >
+        Endre prøve
+      </button>
       <h1>
         Prøve
       </h1>
@@ -22,12 +28,6 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
         onClick={[Function]}
       >
         Opprett analyse
-      </button>
-      <button
-        className="btn btn-default"
-        onClick={[Function]}
-      >
-        Endre prøve
       </button>
       <button
         className="btn btn-default"

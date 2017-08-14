@@ -61,16 +61,20 @@ export default function SampleViewComponent(props: Props & SampleProps) {
     <div className="container">
       <form className="form-horizontal">
         <div className="page-header">
+          <button
+            className="btn btn-default pull-right"
+            onClick={customProps.clickEditSample}
+          >
+            {I18n.t('musit.sample.updateSample')}
+          </button>
           <h1>
             {I18n.t('musit.sample.sample')}
           </h1>
+
         </div>
         <div className="pull-right">
           <button className="btn btn-default" onClick={customProps.clickCreateAnalysis}>
             {I18n.t('musit.analysis.createAnalysis')}
-          </button>
-          <button className="btn btn-default" onClick={customProps.clickEditSample}>
-            {I18n.t('musit.sample.updateSample')}
           </button>
           <button className="btn btn-default" onClick={customProps.clickCreateSample}>
             {` ${I18n.t('musit.analysis.createSample')}`}

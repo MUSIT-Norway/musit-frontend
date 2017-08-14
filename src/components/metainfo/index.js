@@ -18,8 +18,7 @@ export default function MetaInformation({
   updatedBy,
   updatedDate,
   registeredBy,
-  registeredDate,
-  onClickEdit
+  registeredDate
 }: Props) {
   return (
     <div>
@@ -38,10 +37,6 @@ export default function MetaInformation({
             {registeredDate && moment(registeredDate).format(DateFormat)}
           </p>
         </div>
-        {onClickEdit &&
-          <button className="btn btn-default pull-right" onClick={onClickEdit}>
-            {I18n.t('musit.texts.change')}
-          </button>}
       </div>
       {updatedBy &&
         <div className="form-group">

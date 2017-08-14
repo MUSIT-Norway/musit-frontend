@@ -7,6 +7,12 @@ exports[`AnalysisViewComponent should render properly 1`] = `
   <div
     className="page-header"
   >
+    <button
+      className="btn btn-default pull-right"
+      onClick={[Function]}
+    >
+      Endre
+    </button>
     <h1>
       Analyse
     </h1>
@@ -14,9 +20,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
   <form
     className="form-horizontal"
   >
-    <MetaInformation
-      onClickEdit={[Function]}
-    />
+    <MetaInformation />
     <hr />
     <div
       className="form-group"
