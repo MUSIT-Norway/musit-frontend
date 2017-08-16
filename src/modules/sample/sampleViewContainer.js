@@ -182,7 +182,8 @@ function mergeSampleWithObject(
     ...objectData,
     ...sample,
     sampleType: sampleTypeStr,
-    sampleSubType: sampleSubTypeStr
+    sampleSubType: sampleSubTypeStr,
+    sampleTypeObj: sampleType
   };
 }
 

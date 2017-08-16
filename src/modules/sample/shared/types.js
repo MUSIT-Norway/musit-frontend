@@ -6,6 +6,19 @@ import type { AppSession } from '../../../types/appSession';
 const findSampleType = (sampleTypes: SampleTypesObject, sampleTypesId: number) =>
   sampleTypes.sampleTypes.find(f => f.sampleTypeId === sampleTypesId);
 
+export const getSampleTypeObj = (
+  sampleTypes: SampleTypesObject,
+  sampleTypesId: number
+) => {
+  if (sampleTypes && sampleTypes.sampleTypes && sampleTypesId) {
+    const sampleTypeFound: ?SampleType = findSampleType(sampleTypes, sampleTypesId);
+    if (sampleTypeFound) {
+      return sampleTypeFound;
+    }
+  }
+  return null;
+};
+
 export const getSampleType = (
   sampleTypes: SampleTypesObject,
   sampleTypesId: number,

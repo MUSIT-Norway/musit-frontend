@@ -15,7 +15,8 @@ import type { ObjectData } from '../../../types/object';
 import {
   getSampleType,
   getSampleSubType,
-  getSampleTypeAndSubType
+  getSampleTypeAndSubType,
+  getSampleTypeObj
 } from '../shared/types';
 
 type Props = {
@@ -50,7 +51,11 @@ const pickObjectParams = (
         sampleTypes,
         s.sampleTypeId,
         appSession
-      )
+      ),
+      sampleTypeObj: getSampleTypeObj(sampleTypes, s.sampleTypeId),
+      sampleTypeId: s.sampleTypeId,
+      sampleType: getSampleType(sampleTypes, s.sampleTypeId, appSession),
+      sampleSubType: getSampleSubType(sampleTypes, s.sampleTypeId, appSession)
     },
     breadcrumb: s.currentLocation && s.currentLocation.breadcrumb
       ? s.currentLocation.breadcrumb

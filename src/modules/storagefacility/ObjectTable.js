@@ -4,7 +4,12 @@ import { FormGroup, Table } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import { I18n } from 'react-i18nify';
 import MusitObject from '../../models/object';
-import { getSampleTypeAndSubType } from '../sample/shared/types';
+import {
+  getSampleTypeAndSubType,
+  getSampleType,
+  getSampleSubType,
+  getSampleTypeObj
+} from '../sample/shared/types';
 
 export default class ObjectGrid extends Component {
   static propTypes = {
@@ -19,58 +24,75 @@ export default class ObjectGrid extends Component {
   };
 
   render() {
-    const sampleObject = c => {
+    const sampleObject = obj => {
       return {
-        ...c,
-        uuid: c.sampleObject.objectId,
+        ...obj,
+        uuid: obj.sampleObject.objectId,
         collection: this.props.appSession.collectionId,
-        id: c.sampleObject.objectId,
-        museumNo: c.museumNo,
+        id: obj.sampleObject.objectId,
+        museumNo: obj.museumNo,
         objectType: 'sample',
-        subNo: c.subNo,
-        term: c.term,
-        sampleNum: c.sampleObject.sampleNum,
+        subNo: obj.subNo,
+        term: obj.term,
+        sampleNum: obj.sampleObject.sampleNum,
         sampleTypeAndSubType: getSampleTypeAndSubType(
           { sampleTypes: this.props.sampleStore.sampleTypes },
-          c.sampleObject.sampleTypeId,
+          obj.sampleObject.sampleTypeId,
+          this.props.appSession
+        ),
+        sampleTypeObj: getSampleTypeObj(
+          { sampleTypes: this.props.sampleStore.sampleTypes },
+          obj.sampleObject.sampleTypeId
+        ),
+        sampleTypeId: obj.sampleObject.sampleTypeId,
+        sampleType: getSampleType(
+          { sampleTypes: this.props.sampleStore.sampleTypes },
+          obj.sampleObject.sampleTypeId,
+          this.props.appSession
+        ),
+        sampleSubType: getSampleSubType(
+          { sampleTypes: this.props.sampleStore.sampleTypes },
+          obj.sampleObject.sampleTypeId,
           this.props.appSession
         )
       };
     };
-    const showTableData = c => {
-      const isMainObject = !c.mainObjectId || MusitObject.isMainObject(c);
-      const isChildObject = c.mainObjectId && !isMainObject;
+    const showTableData = rowData => {
+      const isMainObject = !rowData.mainObjectId || MusitObject.isMainObject(rowData);
+      const isChildObject = rowData.mainObjectId && !isMainObject;
       return (
         <tr
-          key={c.id}
+          key={rowData.id}
           className={isChildObject ? 'childObject' : isMainObject && 'mainObject'}
-          onClick={() => this.props.goToObject(c.uuid, c.objectType)}
+          onClick={() => this.props.goToObject(rowData.uuid, rowData.objectType)}
         >
           <td style={{ width: '20px' }}>
-            {c.objectType && c.objectType === 'sample'
+            {rowData.objectType && rowData.objectType === 'sample'
               ? <span className="icon icon-musit-testtube" />
               : <span className="icon icon-musitobject" />}
           </td>
           <td>
-            {c.museumNo}
+            {rowData.museumNo}
           </td>
           <td>
-            {c.subNo}
+            {rowData.subNo}
           </td>
           <td>
-            {c.term}
+            {rowData.term}
           </td>
           <td>
-            {c.sampleObject && c.sampleObject.sampleNum ? c.sampleObject.sampleNum : ''}
+            {rowData.sampleObject && rowData.sampleObject.sampleNum
+              ? rowData.sampleObject.sampleNum
+              : ''}
           </td>
           <td>
-            {c.sampleObject &&
-              c.sampleObject.sampleTypeId &&
+            {rowData.sampleObject &&
+              rowData.sampleObject.sampleTypeId &&
               this.props.appSession &&
               this.props.sampleStore.sampleTypes
               ? getSampleTypeAndSubType(
                   { sampleTypes: this.props.sampleStore.sampleTypes },
-                  c.sampleObject.sampleTypeId,
+                  rowData.sampleObject.sampleTypeId,
                   this.props.appSession
                 )
               : ''}
@@ -82,7 +104,7 @@ export default class ObjectGrid extends Component {
                 href=""
                 onClick={e => {
                   e.preventDefault();
-                  this.props.showMoveHistory(c);
+                  this.props.showMoveHistory(rowData);
                   e.stopPropagation();
                 }}
                 title={I18n.t('musit.grid.object.iconTooltip.moveObjectHistory')}
@@ -97,7 +119,7 @@ export default class ObjectGrid extends Component {
                 href=""
                 onClick={e => {
                   e.preventDefault();
-                  this.props.onMove(c);
+                  this.props.onMove(rowData);
                   e.stopPropagation();
                 }}
                 title={I18n.t('musit.grid.object.iconTooltip.moveObject')}
@@ -112,12 +134,12 @@ export default class ObjectGrid extends Component {
                 href=""
                 onClick={e => {
                   e.preventDefault();
-                  this.props.pickObject(c);
+                  this.props.pickObject(rowData);
                   e.stopPropagation();
                 }}
                 title={I18n.t('musit.grid.object.iconTooltip.addToPickList')}
               >
-                {this.props.isObjectAdded(c)
+                {this.props.isObjectAdded(rowData)
                   ? <FontAwesome
                       style={{ fontSize: '1.5em', color: 'Gray' }}
                       name="shopping-cart"
@@ -174,10 +196,10 @@ export default class ObjectGrid extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.props.tableData.map(c => showTableData(c))}
+                {this.props.tableData.map(rowData => showTableData(rowData))}
                 {this.props.sampleStore.nodeSamples &&
-                  this.props.sampleStore.nodeSamples.map(c =>
-                    showTableData(sampleObject(c))
+                  this.props.sampleStore.nodeSamples.map(data =>
+                    showTableData(sampleObject(data))
                   )}
               </tbody>
             </Table>

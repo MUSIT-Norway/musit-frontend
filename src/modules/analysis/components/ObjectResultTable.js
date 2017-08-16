@@ -6,6 +6,7 @@ import Result from '../components/Result';
 import type { AppSession } from '../../../types/appSession';
 import type { History } from '../../../types/Routes';
 import FontAwesome from 'react-fontawesome';
+import MusitI18n from '../../../components/MusitI18n';
 
 type Props = {
   data: Array<Object>,
@@ -62,7 +63,21 @@ export default function ObjectResultTable({
                   <td name="term">{row.term}</td>
                   <td name="sampleNum"><span>{row.sampleNum || ''}</span></td>
                   <td name="sampleType">
-                    {row.sampleType ? row.sampleType + ' / ' + row.sampleSubType : ''}
+                    {row.sampleTypeObj &&
+                      row.sampleTypeObj.enSampleType &&
+                      <MusitI18n
+                        en={row.sampleTypeObj.enSampleType}
+                        no={row.sampleTypeObj.noSampleType}
+                      />}
+                    {row.sampleTypeObj &&
+                      row.sampleTypeObj.enSampleSubType &&
+                      <span>
+                        <span>{' / '}</span>
+                        <MusitI18n
+                          en={row.sampleTypeObj.enSampleSubType}
+                          no={row.sampleTypeObj.noSampleSubType}
+                        />
+                      </span>}
                   </td>
                   <td>
                     {enableResultForObject &&

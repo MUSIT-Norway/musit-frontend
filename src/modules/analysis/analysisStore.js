@@ -11,6 +11,7 @@ import flatten from 'lodash/flatten';
 import type { Callback, AjaxGet, AjaxPost } from '../../models/types/ajax';
 import type { AnalysisCollection } from '../../types/analysis';
 import type { Actor } from '../../types/actor';
+import type { SampleType } from 'types/sample';
 
 const initialState = {
   analysisTypes: [],
@@ -105,7 +106,7 @@ const storeSingleton = store$();
 export default storeSingleton;
 
 type SampleTypes = {
-  [string]: Array<{ sampleTypeId: number, enSampleType: string, enSampleSubType: string }>
+  [string]: Array<SampleType>
 };
 
 export function getAnalysisDetails(
@@ -211,8 +212,7 @@ function getEventObjectDetails(props: AjaxParams, ajaxGet: AjaxGet) {
             return {
               ...sample,
               ...sampleObjectRes.response,
-              sampleType: sampleType.enSampleType,
-              sampleSubType: sampleType.enSampleSubType
+              sampleTypeObj: sampleType
             };
           });
         });
