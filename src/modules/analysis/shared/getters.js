@@ -88,11 +88,23 @@ export function getExtraDescriptionAttributes(
     ? analysisType.extraDescriptionType
     : analysis && analysis.extraAttributes && analysis.extraAttributes.type;
 
+  const initialExtraDescriptionAttributes =
+    analysisType &&
+    analysisType.extraDescriptionAttributes &&
+    analysisType.extraDescriptionAttributes.reduce(
+      (acc, eda) => ({
+        ...acc,
+        [eda.attributeKey]: eda.attributeType === 'String' ? '' : null
+      }),
+      {}
+    );
+
   const existingAttributesFromBackend = analysis && analysis.extraAttributes;
 
   return extraDescriptionAttributesType &&
     containsAttributes(extraDescriptionAttributes, existingAttributesFromBackend)
     ? {
+        ...initialExtraDescriptionAttributes,
         ...existingAttributesFromBackend,
         ...extraDescriptionAttributes,
         type: extraDescriptionAttributesType
