@@ -251,6 +251,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
                 "replace": [Function],
               }
             }
+            viewMode={true}
           />
         </div>
       </div>
@@ -284,6 +285,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         updateComments={[Function]}
         updateExternalSource={[Function]}
         updateExtraResultAttribute={[Function]}
+        viewMode={true}
       />
       <div
         className="form-group"

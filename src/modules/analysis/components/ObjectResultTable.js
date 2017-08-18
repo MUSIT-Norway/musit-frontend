@@ -14,7 +14,8 @@ type Props = {
   updateForm?: Function,
   extraAttributes?: any,
   history: History,
-  appSession: AppSession
+  appSession: AppSession,
+  viewMode?: ?boolean
 };
 
 export default function ObjectResultTable({
@@ -23,7 +24,8 @@ export default function ObjectResultTable({
   extraAttributes,
   updateForm,
   history,
-  appSession
+  appSession,
+  viewMode
 }: Props) {
   const enableResultForObject = data.length > 1;
   return (
@@ -136,6 +138,7 @@ export default function ObjectResultTable({
                         parentObjectId={
                           row.originatedObjectUuid ? row.originatedObjectUuid : row.uuid
                         }
+                        viewMode={viewMode}
                       />
                     </td>
                   </tr>

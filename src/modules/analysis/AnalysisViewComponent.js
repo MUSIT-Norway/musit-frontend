@@ -157,6 +157,7 @@ export default ({
               data={objects}
               appSession={appSession}
               history={history}
+              viewMode={true}
             />
           </div>
         </div>
@@ -177,6 +178,7 @@ export default ({
                   : objects[0].uuid
               : null
           }
+          viewMode={true}
         />
         <div className="form-group">
           <label className="control-label col-md-2" htmlFor="restrictions">

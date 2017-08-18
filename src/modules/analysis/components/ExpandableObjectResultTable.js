@@ -15,7 +15,8 @@ type Props = {
   updateForm?: Function,
   extraAttributes?: any,
   history: History,
-  appSession: AppSession
+  appSession: AppSession,
+  viewMode?: ?boolean
 };
 
 type State = {
@@ -80,6 +81,7 @@ export default class ExpandableObjectTable extends React.Component {
         toRowId={ExpandableObjectTable.toRowId}
         appSession={this.props.appSession}
         history={this.props.history}
+        viewMode={this.props.viewMode}
       />
     );
   }

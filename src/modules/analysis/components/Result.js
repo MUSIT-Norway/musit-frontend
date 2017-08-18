@@ -14,7 +14,8 @@ type Props = {
   updateExtraResultAttribute: Function,
   history: History,
   appSession: AppSession,
-  parentObjectId?: ?string
+  parentObjectId?: ?string,
+  viewMode?: ?boolean
 };
 
 type ResultFieldProps = {
@@ -87,6 +88,10 @@ const StringInput = (props: ResultFieldProps) => (
     />
   </div>
 );
+const showViewMode = (viewMode, viewModeValue, addOrEditModelValue) =>
+  viewMode
+    ? <p className="form-control-static col-md-5">{viewModeValue}</p>
+    : addOrEditModelValue;
 
 export default function Result({
   externalSource,
@@ -97,7 +102,8 @@ export default function Result({
   updateExtraResultAttribute,
   history,
   appSession,
-  parentObjectId
+  parentObjectId,
+  viewMode
 }: Props) {
   return (
     <div>
@@ -110,36 +116,56 @@ export default function Result({
                 {attrKey}
               </label>
               {extraAttributes[attrKey].type === 'Size'
-                ? <Size
-                    attrKey={attrKey}
-                    attribute={extraAttributes[attrKey]}
-                    onChange={value => updateExtraResultAttribute(attrKey, value)}
-                  />
+                ? showViewMode(
+                    viewMode,
+                    extraAttributes[attrKey].value &&
+                      extraAttributes[attrKey].value.rawValue &&
+                      extraAttributes[attrKey].value.rawValue +
+                        ' ' +
+                        extraAttributes[attrKey].value.unit,
+                    <Size
+                      attrKey={attrKey}
+                      attribute={extraAttributes[attrKey]}
+                      onChange={value => updateExtraResultAttribute(attrKey, value)}
+                    />
+                  )
                 : extraAttributes[attrKey].allowedValues
-                    ? <StringSelect
-                        attrKey={attrKey}
-                        attribute={extraAttributes[attrKey]}
-                        onChange={value => updateExtraResultAttribute(attrKey, value)}
-                      />
-                    : <StringInput
-                        attrKey={attrKey}
-                        attribute={extraAttributes[attrKey]}
-                        onChange={value => updateExtraResultAttribute(attrKey, value)}
-                      />}
+                    ? showViewMode(
+                        viewMode,
+                        extraAttributes[attrKey].value && extraAttributes[attrKey].value,
+                        <StringSelect
+                          attrKey={attrKey}
+                          attribute={extraAttributes[attrKey]}
+                          onChange={value => updateExtraResultAttribute(attrKey, value)}
+                        />
+                      )
+                    : showViewMode(
+                        viewMode,
+                        extraAttributes[attrKey].value && extraAttributes[attrKey].value,
+                        <StringInput
+                          attrKey={attrKey}
+                          attribute={extraAttributes[attrKey]}
+                          onChange={value => updateExtraResultAttribute(attrKey, value)}
+                        />
+                      )}
             </div>
           ))}
       <div className="form-group">
         <label className="control-label col-md-2" htmlFor="externalSource">
           {I18n.t('musit.analysis.externalSource')}
         </label>
-        <div className="col-md-5">
-          <input
-            className="form-control"
-            id="externalSource"
-            value={externalSource || ''}
-            onChange={e => updateExternalSource(e.target.value)}
-          />
-        </div>
+        {showViewMode(
+          viewMode,
+          externalSource,
+          <div className="col-md-5">
+            <input
+              className="form-control"
+              id="externalSource"
+              value={externalSource || ''}
+              onChange={e => updateExternalSource(e.target.value)}
+            />
+          </div>
+        )}
         <div className="pull-right">
           {parentObjectId &&
             <NavigateToObject
@@ -153,15 +179,19 @@ export default function Result({
         <label className="control-label col-md-2" htmlFor="resultNote">
           {I18n.t('musit.analysis.commentsToResult')}
         </label>
-        <div className="col-md-5">
-          <textarea
-            className="form-control"
-            rows={5}
-            id="resultNote"
-            value={comments || ''}
-            onChange={e => updateComments(e.target.value)}
-          />
-        </div>
+        {showViewMode(
+          viewMode,
+          comments,
+          <div className="col-md-5">
+            <textarea
+              className="form-control"
+              rows={5}
+              id="resultNote"
+              value={comments || ''}
+              onChange={e => updateComments(e.target.value)}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
