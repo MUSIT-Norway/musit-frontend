@@ -191,9 +191,9 @@ type AjaxParams = {
 };
 
 function getEventObjectDetails(props: AjaxParams, ajaxGet: AjaxGet) {
-  return (event: { objectId: string }) => {
+  return (event: { affectedThing: string }) => {
     const params = {
-      id: event.objectId,
+      id: event.affectedThing,
       museumId: props.museumId,
       collectionId: props.collectionId,
       token: props.token
@@ -231,7 +231,7 @@ export function zipObjectInfoWithEvents(analysis: AnalysisCollection) {
     const events = analysis.events
       ? analysis.events.map(e => {
           const od = arrayOfObjectDetails.find(objD => {
-            return objD.objectId === e.objectId || objD.uuid === e.objectId;
+            return objD.objectId === e.affectedThing || objD.uuid === e.affectedThing;
           });
           return od ? { ...od, ...e } : e;
         })

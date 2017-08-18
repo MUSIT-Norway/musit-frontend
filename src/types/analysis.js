@@ -43,13 +43,15 @@ export type AnalysisTypesObject = {
 };
 
 export type Restriction = {
-  requester?: ?string,
+  requester: ?string,
   requesterName?: ?string,
-  reason?: ?string,
   expirationDate?: ?string,
-  cancelledReason?: ?string,
-  caseNumbers?: ?Array<string>
-};
+  reason?: ?string,
+  caseNumbers?: ?Array<string>,
+  registeredStamp?: ?{ user: string, date: string },
+  cancelledStamp?: ?{ user: string, date: string },
+  cancelledReason?: ?string
+} & { cancelledBy?: ?string, cancelledByName?: ?string, cancelledDate?: ?string };
 
 export type Result = {
   type: ?string,
@@ -79,7 +81,9 @@ export type AnalysisCollection = {
   note?: ?string,
   extraAttributes?: { type: string },
   result?: ?Result,
-  events: ?Array<ObjectData & SampleData>,
+  events: ?Array<
+    ObjectData & SampleData & { affectedThing: string, affectedType: string }
+  >,
   restriction?: ?Restriction,
   reason?: ?string,
   status?: ?number,

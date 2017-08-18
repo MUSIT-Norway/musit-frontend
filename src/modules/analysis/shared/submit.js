@@ -15,16 +15,46 @@ import Config from '../../../config';
 import type { FormData } from './formType';
 import { emitError, emitSuccess } from '../../../shared/errors';
 import { I18n } from 'react-i18nify';
+import type { Restriction } from '../../../types/analysis';
 
 type ObjectWithUuidAndType = { objectId: ?string, objectType: string };
 
 type Analysis = {
   id: number,
-  events: ?Array<ObjectData & SampleData>
+  events: ?Array<
+    ObjectData & SampleData & { affectedThing: string, affectedType: string }
+  >
 };
 
 export type Location = {
   state?: Array<ObjectData & SampleData>
+};
+
+const getArrayOfResultsToSave = function(
+  events,
+  analysis,
+  ajaxPost,
+  token,
+  museumId,
+  result
+): Array<Observable<number>> {
+  return zipEventsWithId(events, analysis.events)
+    .map(evt =>
+      MusitAnalysis.addResult(ajaxPost)({
+        token,
+        museumId,
+        result: { ...evt.result, type: result && result.type },
+        analysisId: parseInt(evt.id, 10)
+      })
+    )
+    .concat(
+      MusitAnalysis.addResult(ajaxPost)({
+        token,
+        museumId,
+        result,
+        analysisId: parseInt(analysis.id, 10)
+      })
+    );
 };
 
 export function submitForm(
@@ -40,36 +70,25 @@ export function submitForm(
   const token = appSession.accessToken;
   const museumId = appSession.museumId;
   const upsertAnalysis$ = getAnalysisUpsert(id, ajaxPut, museumId, data, token, ajaxPost);
-  return upsertAnalysis$.toPromise().then((analysis: Analysis) => {
+  return upsertAnalysis$.toPromise().then((analysis?: Analysis) => {
+    if (!analysis) {
+      return Observable.empty();
+    }
     // $FlowFixMe | We are passing an array to forkJoin which is not supported by flow-typed definition for rxjs.
     return Observable.forkJoin(
-      zipEventsWithId(events, analysis.events)
-        .map(evt =>
-          MusitAnalysis.addResult(ajaxPost)({
-            token,
-            museumId,
-            result: { ...evt.result, type: result && result.type },
-            analysisId: parseInt(evt.id, 10)
-          })
-        )
-        .concat(
-          MusitAnalysis.addResult(ajaxPost)({
-            token,
-            museumId,
-            result,
-            analysisId: parseInt(analysis.id, 10)
-          })
-        )
+      getArrayOfResultsToSave(events, analysis, ajaxPost, token, museumId, result)
     )
       .toPromise()
-      .then(() =>
-        history.push(
-          Config.magasin.urls.client.analysis.viewAnalysis(
-            appSession,
-            parseInt(analysis.id, 10)
-          )
-        )
-      );
+      .then(() => {
+        if (analysis) {
+          return history.push(
+            Config.magasin.urls.client.analysis.viewAnalysis(
+              appSession,
+              parseInt(analysis.id, 10)
+            )
+          );
+        }
+      });
   });
 }
 
@@ -222,6 +241,6 @@ function zipEventsWithId(formEvents, apiEvents) {
     const event =
       apiEvents &&
       apiEvents.find(evtFromServer => evtFromServer.objectId === eventObjectId);
-    return { ...evt, id: event ? event.id : null };
+    return { ...evt, id: event ? event.id : evt.id };
   });
 }
