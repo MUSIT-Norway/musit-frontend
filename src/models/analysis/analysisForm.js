@@ -4,13 +4,10 @@ import type { AnalysisCollection } from '../../types/analysis';
 
 export type FormValue = {
   name: string,
-  defaultValue: ?string | boolean | Array<any>
+  defaultValue: ?any
 };
 
-const toField = (
-  name: string,
-  defaultValue: ?string | boolean | Array<any>
-): FormValue => ({
+const toField = (name: string, defaultValue: ?any): FormValue => ({
   name,
   defaultValue
 });
@@ -74,31 +71,9 @@ export const fromJsonToForm: (
   formValues.persons = toField('persons', persons);
 
   const restriction = json.restriction;
-  formValues.restrictions = toField('restrictions', !!restriction);
-  if (restriction) {
-    formValues.restrictions_requester = toField(
-      'restrictions_requester',
-      restriction.requester
-    );
-    formValues.restrictions_requesterName = toField(
-      'restrictions_requesterName',
-      restriction.requesterName
-    );
-    formValues.restrictions_reason = toField('restrictions_reason', restriction.reason);
-    formValues.restrictions_caseNumbers = toField(
-      'restrictions_caseNumbers',
-      restriction.caseNumbers
-    );
-    formValues.restrictions_cancelledReason = toField(
-      'restrictions_cancelledReason',
-      restriction.cancelledReason
-    );
-    formValues.restrictions_expirationDate = toField(
-      'restrictions_expirationDate',
-      restriction.expirationDate
-    );
-  }
-
+  const hasRestriction = !!restriction && !restriction.cancelledStamp;
+  formValues.restrictions = toField('restrictions', hasRestriction);
+  formValues.restriction = toField('restriction', hasRestriction ? restriction : null);
   const result = json.result;
   if (result) {
     formValues.comments = toField('comments', result.comment);

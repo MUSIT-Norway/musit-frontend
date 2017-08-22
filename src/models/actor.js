@@ -31,10 +31,8 @@ type ActorFieldName =
   | 'completedBy'
   | 'completedByName'
   | 'doneBy'
-  | 'restrictions_requester'
-  | 'restrictions_requesterName'
-  | 'restriction_requester'
-  | 'restriction_requesterName';
+  | 'restriction_requesterName'
+  | 'restriction_cancelledByName';
 
 type ActorField = {
   id: string,
@@ -116,6 +114,9 @@ MusitActor.getMultipleActorNames = (
     }
     if (next.fieldName === 'restriction_requesterName') {
       return { ...acc, restriction: { ...acc.restriction, requesterName: actor.fn } };
+    }
+    if (next.fieldName === 'restriction_cancelledByName') {
+      return { ...acc, restriction: { ...acc.restriction, cancelledByName: actor.fn } };
     }
     return { ...acc, [next.fieldName]: actor.fn };
   }, {});

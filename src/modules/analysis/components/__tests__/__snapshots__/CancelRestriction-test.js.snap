@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CancelRestriction should render cancel reason and cancelledByName 1`] = `
+<div>
+  <div
+    className="form-group"
+  >
+    <label
+      className="control-label col-md-2"
+      htmlFor="restrictedBy"
+    >
+      Klausulert for
+    </label>
+    <div
+      className="col-md-10"
+    >
+      <StatefulActorSuggest
+        appSession={
+          Object {
+            "accessToken": "45667",
+            "actor": Object {
+              "fn": "Test",
+            },
+            "collectionId": "1234",
+            "language": Object {
+              "isEn": false,
+              "isNo": true,
+            },
+            "museumId": 99,
+          }
+        }
+        onChange={[Function]}
+        value="Dummy userrr"
+      />
+    </div>
+  </div>
+  <div
+    className="form-group"
+  >
+    <label
+      className="control-label col-md-2"
+      htmlFor="cancelCause"
+    >
+      Reason For Cancelling
+    </label>
+    <div
+      className="col-md-10"
+    >
+      <input
+        className="form-control"
+        id="cancelCause"
+        onChange={[Function]}
+        value="Cancel thizz"
+      />
+    </div>
+  </div>
+</div>
+`;

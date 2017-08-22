@@ -14,137 +14,73 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
   <form
     className="form-horizontal"
   >
-    <ValidatedFormGroup
-      fields={
+    <FormAnalysisType
+      categories={
+        Object {
+          "lalala": "lalala",
+          "lolol": "lolol",
+        }
+      }
+      category={null}
+      elementWidth={6}
+      hasError={false}
+      id="type"
+      label="Type analyse"
+      labelWidth={2}
+      language={
+        Object {
+          "isEn": false,
+          "isNo": true,
+        }
+      }
+      type={null}
+      types={
         Array [
           Object {
-            "defaultValue": null,
-            "mapper": Object {
-              "fromRaw": [Function],
-              "toRaw": [Function],
-            },
-            "name": "analysisTypeId",
-            "rawValue": null,
-            "validator": Object {
-              "rawValidator": [Function],
-              "valueValidator": [Function],
-            },
+            "category": "5",
+            "enName": "Tull",
+            "id": 4,
+            "noName": "Tullball",
+          },
+          Object {
+            "category": "5",
+            "enName": "Tull2",
+            "id": 3,
+            "noName": "Tullball2",
           },
         ]
       }
-    >
-      <label
-        className="control-label col-md-2"
-        htmlFor="type"
-      >
-        Type analyse
-      </label>
-      <div>
-        <div
-          className="col-md-3"
-        >
-          <select
-            className="form-control"
-            id="type"
-            value="5"
-          >
-            <option
-              value=""
-            >
-              Velg kategori
-            </option>
-            <option
-              value="lolol"
-            >
-              Lolol
-            </option>
-            <option
-              value="lalala"
-            >
-              Lalala
-            </option>
-          </select>
-        </div>
-        <div
-          className="col-md-3"
-        >
-          <select
-            className="form-control"
-            id="subType"
-            value=""
-          >
-            <option
-              value=""
-            >
-              Velg type
-            </option>
-            <option
-              value={4}
-            >
-              Tullball
-            </option>
-            <option
-              value={3}
-            >
-              Tullball2
-            </option>
-          </select>
-        </div>
-      </div>
-    </ValidatedFormGroup>
-    <div
-      className="form-group"
-    >
-      <label
-        className="control-label col-md-2"
-        htmlFor="type"
-      >
-        method
-      </label>
-      <div
-        className="col-md-3"
-      >
-        <DescriptionAttributeInput
-          attr={
-            Object {
-              "attributeKey": "method",
-            }
-          }
-          value="test"
-        />
-      </div>
-    </div>
-    <div
-      className="form-group"
-    >
-      <label
-        className="control-label col-md-2"
-        htmlFor="reason"
-      >
-        Formål med analysen
-      </label>
-      <div
-        className="col-md-3"
-      >
-        <select
-          className="form-control"
-          id="reason"
-          onChange="reason"
-          value=""
-        >
-          <option
-            value=""
-          >
-            Velg formål
-          </option>
-          <option
-            value={1}
-          >
-            mål mål
-          </option>
-        </select>
-      </div>
-    </div>
+    />
+    <FormDescriptionAttribute
+      attr={
+        Object {
+          "attributeKey": "method",
+        }
+      }
+      elementWidth={3}
+      id="type"
+      label="method"
+      labelWidth={2}
+      onChange="method"
+      value="test"
+    />
+    <FormSelect
+      chooseLabel="Velg formål"
+      elementWidth={3}
+      id="reason"
+      label="Formål med analysen"
+      labelWidth={2}
+      onChange="reason"
+      value=""
+      values={
+        Array [
+          Object {
+            "id": 1,
+            "value": "mål mål",
+          },
+        ]
+      }
+    />
     <ValidatedFormGroup
       fields={
         Array [
@@ -207,85 +143,45 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
         </select>
       </div>
     </ValidatedFormGroup>
-    <div
-      className="form-group"
-    >
-      <label
-        className="control-label col-md-2"
-        htmlFor="place"
-      >
-        Analysested
-      </label>
-      <div
-        className="col-md-3"
-      >
-        <select
-          className="form-control"
-          id="place"
-          onChange="orgId"
-          value=""
-        >
-          <option
-            value=""
-          >
-            Velg analysested
-          </option>
-          <option
-            value="d39305e8-56b2-4d8d-9351-66dab9c1d8e4"
-          >
-            Kokko
-          </option>
-          <option
-            value="d39305e8-56b2-4d8d-9351-66dab9c1d8e5"
-          >
-            Kokkosbolle
-          </option>
-        </select>
-      </div>
-    </div>
-    <div
-      className="form-group"
-    >
-      <label
-        className="control-label col-md-2"
-        htmlFor="casenumber"
-      >
-        Saksnummer
-      </label>
-      <div
-        className="col-md-3"
-      >
-        <input
-          className="form-control"
-          id="casenumber"
-          onChange="caseNumbers"
-          type="text"
-          value=""
-        />
-      </div>
-    </div>
+    <FormSelect
+      chooseLabel="Velg analysested"
+      elementWidth={3}
+      id="place"
+      label="Analysested"
+      labelWidth={2}
+      onChange="orgId"
+      value={null}
+      values={
+        Array [
+          Object {
+            "id": "d39305e8-56b2-4d8d-9351-66dab9c1d8e4",
+            "value": "Kokko",
+          },
+          Object {
+            "id": "d39305e8-56b2-4d8d-9351-66dab9c1d8e5",
+            "value": "Kokkosbolle",
+          },
+        ]
+      }
+    />
+    <FormInput
+      elementWidth={3}
+      id="casenumber"
+      label="Saksnummer"
+      labelWidth={2}
+      onChange="caseNumbers"
+      value=""
+    />
     <hr />
-    <div
-      className="form-group"
-    >
-      <label
-        className="control-label col-md-2"
-        htmlFor="note"
-      >
-        Kommentar
-      </label>
-      <div
-        className="col-md-6"
-      >
-        <textarea
-          className="form-control"
-          id="note"
-          onChange="note"
-          rows={5}
-          value=""
-        />
-      </div>
-    </div>
+    <FormTextArea
+      elementWidth={6}
+      id="note"
+      label="Kommentar"
+      labelWidth={2}
+      onChange="note"
+      rows={5}
+      value=""
+    />
     <div
       className="form-group"
     >
@@ -426,6 +322,435 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
           </div>
         </div>
       </div>
+      <FormRestriction
+        appSession={
+          Object {
+            "accessToken": "45667",
+            "actor": Object {
+              "fn": "Test",
+            },
+            "collectionId": "1234",
+            "language": Object {
+              "isEn": false,
+              "isNo": true,
+            },
+            "museumId": 99,
+          }
+        }
+        clickSave={[Function]}
+        form={
+          Object {
+            "administrator": Object {
+              "defaultValue": null,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "administrator",
+              "rawValue": null,
+              "validator": Object {
+                "rawValidator": null,
+              },
+            },
+            "analysisTypeCategory": Object {
+              "defaultValue": null,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "analysisTypeCategory",
+              "rawValue": null,
+              "validator": Object {
+                "rawValidator": null,
+              },
+              "value": "5",
+            },
+            "analysisTypeId": Object {
+              "defaultValue": null,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "analysisTypeId",
+              "rawValue": null,
+              "validator": Object {
+                "rawValidator": [Function],
+                "valueValidator": [Function],
+              },
+            },
+            "caseNumbers": Object {
+              "defaultValue": Array [],
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "caseNumbers",
+              "rawValue": Array [],
+              "validator": Object {
+                "rawValidator": null,
+              },
+            },
+            "comments": Object {
+              "defaultValue": null,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "comments",
+              "rawValue": null,
+              "validator": Object {
+                "rawValidator": null,
+              },
+            },
+            "completeAnalysis": Object {
+              "defaultValue": null,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "completeAnalysis",
+              "rawValue": false,
+              "validator": Object {},
+            },
+            "completedBy": Object {
+              "defaultValue": null,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "completedBy",
+              "rawValue": null,
+              "validator": Object {
+                "rawValidator": null,
+              },
+            },
+            "completedDate": Object {
+              "defaultValue": null,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "completedDate",
+              "rawValue": null,
+              "validator": Object {
+                "rawValidator": null,
+              },
+            },
+            "doneBy": Object {
+              "defaultValue": null,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "doneBy",
+              "rawValue": null,
+              "validator": Object {
+                "rawValidator": null,
+              },
+            },
+            "doneDate": Object {
+              "defaultValue": null,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "doneDate",
+              "rawValue": null,
+              "validator": Object {
+                "rawValidator": null,
+              },
+            },
+            "events": Object {
+              "defaultValue": Array [],
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "events",
+              "rawValue": Array [],
+              "validator": Object {
+                "rawValidator": null,
+              },
+            },
+            "externalSource": Object {
+              "defaultValue": Array [],
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "externalSource",
+              "rawValue": Array [],
+              "validator": Object {
+                "rawValidator": null,
+              },
+            },
+            "id": Object {
+              "defaultValue": null,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "id",
+              "rawValue": null,
+              "validator": Object {
+                "rawValidator": null,
+              },
+            },
+            "museumNo": Object {
+              "defaultValue": null,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "museumNo",
+              "rawValue": null,
+              "validator": Object {
+                "rawValidator": null,
+              },
+            },
+            "note": Object {
+              "defaultValue": null,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "note",
+              "rawValue": null,
+              "validator": Object {
+                "rawValidator": null,
+              },
+            },
+            "objectId": Object {
+              "defaultValue": null,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "objectId",
+              "rawValue": null,
+              "validator": Object {
+                "rawValidator": null,
+              },
+            },
+            "orgId": Object {
+              "defaultValue": null,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "orgId",
+              "rawValue": null,
+              "validator": Object {
+                "rawValidator": null,
+                "valueValidator": [Function],
+              },
+            },
+            "partOf": Object {
+              "defaultValue": null,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "partOf",
+              "rawValue": null,
+              "validator": Object {
+                "rawValidator": null,
+              },
+            },
+            "persons": Object {
+              "defaultValue": Array [],
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "persons",
+              "rawValue": Array [],
+              "validator": Object {
+                "rawValidator": null,
+              },
+            },
+            "reason": Object {
+              "defaultValue": null,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "reason",
+              "rawValue": null,
+              "validator": Object {
+                "rawValidator": null,
+              },
+            },
+            "registeredBy": Object {
+              "defaultValue": null,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "registeredBy",
+              "rawValue": null,
+              "validator": Object {
+                "rawValidator": null,
+              },
+            },
+            "registeredByName": Object {
+              "defaultValue": null,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "registeredByName",
+              "rawValue": null,
+              "validator": Object {
+                "rawValidator": null,
+              },
+            },
+            "registeredDate": Object {
+              "defaultValue": null,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "registeredDate",
+              "rawValue": null,
+              "validator": Object {
+                "rawValidator": null,
+              },
+            },
+            "responsible": Object {
+              "defaultValue": null,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "responsible",
+              "rawValue": null,
+              "validator": Object {
+                "rawValidator": null,
+              },
+            },
+            "restriction": Object {
+              "defaultValue": Object {},
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "restriction",
+              "rawValue": Object {},
+              "validator": Object {},
+            },
+            "restrictions": Object {
+              "defaultValue": false,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "restrictions",
+              "rawValue": false,
+              "validator": Object {},
+            },
+            "result": Object {
+              "defaultValue": null,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "result",
+              "rawValue": null,
+              "validator": Object {
+                "rawValidator": null,
+              },
+            },
+            "status": Object {
+              "defaultValue": 1,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "status",
+              "rawValue": "1",
+              "validator": Object {
+                "rawValidator": [Function],
+                "valueValidator": [Function],
+              },
+            },
+            "subNo": Object {
+              "defaultValue": null,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "subNo",
+              "rawValue": null,
+              "validator": Object {
+                "rawValidator": null,
+              },
+            },
+            "term": Object {
+              "defaultValue": null,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "term",
+              "rawValue": null,
+              "validator": Object {
+                "rawValidator": null,
+              },
+            },
+            "type": Object {
+              "defaultValue": null,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "type",
+              "rawValue": null,
+              "validator": Object {
+                "rawValidator": null,
+              },
+            },
+            "updatedBy": Object {
+              "defaultValue": null,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "updatedBy",
+              "rawValue": null,
+              "validator": Object {
+                "rawValidator": null,
+              },
+            },
+            "updatedByName": Object {
+              "defaultValue": null,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "updatedByName",
+              "rawValue": null,
+              "validator": Object {
+                "rawValidator": null,
+              },
+            },
+            "updatedDate": Object {
+              "defaultValue": null,
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "updatedDate",
+              "rawValue": null,
+              "validator": Object {
+                "rawValidator": null,
+              },
+            },
+          }
+        }
+        toggleCancelDialog={[Function]}
+        updateForm={[Function]}
+      />
     </div>
     <hr />
     <button

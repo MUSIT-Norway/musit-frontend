@@ -3,7 +3,8 @@ import createForm, {
   getStrField,
   getArrField,
   getBoolField,
-  getNumberField
+  getNumberField,
+  getCompositeField
 } from '../../forms/form';
 
 export const fieldsArray = [
@@ -29,12 +30,7 @@ export const fieldsArray = [
   getArrField('externalSource', []),
   getStrField('comments'),
   getBoolField('restrictions', false),
-  getStrField('restrictions_requester'),
-  getStrField('restrictions_requesterName', null, false),
-  getStrField('restrictions_expirationDate'),
-  getStrField('restrictions_reason'),
-  getStrField('restrictions_cancelledReason'),
-  getArrField('restrictions_caseNumbers'),
+  getCompositeField('restriction', {}),
   getArrField('caseNumbers'),
   getBoolField('completeAnalysis'),
   getStrField('museumNo'),

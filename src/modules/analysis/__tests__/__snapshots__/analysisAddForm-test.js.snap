@@ -21,7 +21,7 @@ Object {
   },
   "name": "someStr",
   "validator": Object {
-    "rawValidator": undefined,
+    "rawValidator": null,
   },
 }
 `;

@@ -3,6 +3,7 @@ import type { Field } from '../../../forms/form';
 import type { Person } from '../../../types/person';
 import type { ObjectData } from '../../../types/object';
 import type { SampleData } from '../../../types/samples';
+import type { Restriction } from '../../../types/analysis';
 
 export type FormData = {
   id: Field<number>,
@@ -31,12 +32,7 @@ export type FormData = {
   completeAnalysis: Field<string>,
   // restriction
   restrictions: Field<boolean>,
-  restrictions_requester: Field<string>,
-  restrictions_requesterName: Field<string>,
-  restrictions_expirationDate: Field<string>,
-  restrictions_reason: Field<string>,
-  restrictions_caseNumbers: Field<Array<string>>,
-  restrictions_cancelledReason: Field<string>,
+  restriction: Field<Restriction>,
   // object details
   museumNo: Field<string>,
   subNo: Field<string>,

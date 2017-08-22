@@ -13,19 +13,16 @@ declare var expect: any;
 describe('AnalysisViewContainer', () => {
   describe('onMount', () => {
     it('should call setLoading and getAnalysis', () => {
-      const setLoading = sinon.spy();
       const getAnalysis = sinon.spy();
       const params = { analysisId: 2 };
       const predefined = { sampleTypes: {} };
       const props = {
-        setLoading,
         getAnalysis,
         match: { params },
         appSession,
         predefined
       };
       onMount(props);
-      expect(setLoading.calledOnce).toBe(true);
       expect(getAnalysis.calledOnce).toBe(true);
       expect(getAnalysis.getCall(0).args[0].museumId).toEqual(99);
       expect(getAnalysis.getCall(0).args[0].collectionId).toEqual('1234');
@@ -125,12 +122,7 @@ describe('AnalysisViewContainer', () => {
           name: 'restrictions',
           defaultValue: false
         },
-        { name: 'restrictions_requester', defaultValue: undefined },
-        { name: 'restrictions_requesterName', defaultValue: undefined },
-        { name: 'restrictions_expirationDate', defaultValue: undefined },
-        { name: 'restrictions_reason', defaultValue: undefined },
-        { name: 'restrictions_cancelledReason', defaultValue: undefined },
-        { name: 'restrictions_caseNumbers', defaultValue: undefined },
+        { name: 'restriction', defaultValue: null },
         { name: 'caseNumbers', defaultValue: undefined },
         { name: 'completeAnalysis', defaultValue: undefined },
         {

@@ -1,23 +1,31 @@
 // @flow
-import React, { Children } from 'react';
+import React from 'react';
 import type { Field } from 'forms/form';
 
 type VFGProps = {
   fields?: Array<Field<*>>,
-  field?: Field<*>,
-  children?: Children
+  field?: Field<*>
 };
 
-export default function ValidatedFormGroup({ fields, field, children }: VFGProps) {
+export function isValid({ fields, field }: VFGProps) {
   if (!(fields && fields.length > 0) && !field) {
     throw new Error('No fields supplied. Fruitless. Exiting.');
   }
-  const isValid = fields
-    ? fields.reduce((acc, f) => acc && !(f.status && !f.status.valid), true)
+  return fields
+    ? fields.reduce(
+        (acc, field) => acc && field && !(field.status && !field.status.valid),
+        true
+      )
     : field && field.status && field.status.valid;
+}
+
+/**
+ * @deprecated use FormElement component in ../components.js and pass in the hasError boolean property
+ */
+export default function ValidatedFormGroup(props: VFGProps & { children?: any }) {
   return (
-    <div className={`form-group${!isValid ? ' has-error' : ''}`}>
-      {children}
+    <div className={`form-group${!isValid(props) ? ' has-error' : ''}`}>
+      {props.children}
     </div>
   );
 }

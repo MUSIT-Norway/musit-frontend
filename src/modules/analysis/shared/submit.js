@@ -137,16 +137,8 @@ function getAnalysisUpsert(id, ajaxPut, museumId, data, token, ajaxPost) {
       });
 }
 
-function getRestrictions(form: FormData) {
-  return form.restrictions.value
-    ? {
-        requester: form.restrictions_requester.value,
-        expirationDate: form.restrictions_expirationDate.value,
-        reason: form.restrictions_reason.value,
-        caseNumbers: form.restrictions_caseNumbers.value,
-        cancelledReason: form.restrictions_cancelledReason.value
-      }
-    : null;
+function getRestrictions(form: FormData): ?Restriction {
+  return form.restrictions.value ? (form.restriction.value: any) : null;
 }
 
 export function getResult(

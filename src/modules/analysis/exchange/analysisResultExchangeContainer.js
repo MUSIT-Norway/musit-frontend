@@ -6,7 +6,7 @@ import inject from 'react-rxjs/dist/RxInject';
 import flowRight from 'lodash/flowRight';
 
 import { loadPredefinedTypes } from '../../../stores/predefined';
-import { getAnalysis$, setLoading$ } from '../analysisStore';
+import { getAnalysis$ } from '../analysisStore';
 import analysisExchangeStore$, {
   importResult$,
   uploadResultFailed$,
@@ -62,7 +62,6 @@ const data = {
 
 const commands = {
   getAnalysis$,
-  setLoading$,
   importResult$,
   uploadResultFailed$,
   clearStore$,

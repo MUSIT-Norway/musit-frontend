@@ -3,10 +3,10 @@ import analysisForm, { fieldsArray } from './analysisForm';
 import AnalysisFormComponent from './AnalysisFormComponent';
 import store$, {
   getAnalysis$,
-  setLoading$,
   updateExtraDescriptionAttribute$,
   updateExtraResultAttribute$,
-  clearStore$
+  clearStore$,
+  toggleCancelDialog$
 } from './analysisStore';
 import PropTypes from 'prop-types';
 import flowRight from 'lodash/flowRight';
@@ -25,10 +25,10 @@ const data = {
 };
 
 const commands = {
+  toggleCancelDialog$,
   updateExtraDescriptionAttribute$,
   updateExtraResultAttribute$,
   getAnalysis$,
-  setLoading$,
   clearStore$,
   ...formActions
 };

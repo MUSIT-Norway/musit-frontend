@@ -6,7 +6,7 @@ import AnalysisViewComponent from '../AnalysisViewComponent';
 import { fieldsArray } from '../analysisForm';
 import type { Field } from 'forms/form';
 import type { FormData } from '../shared/formType';
-import { appSession, history } from '../../../testutils/sampleDataForTest';
+import { appSession, analysis, history } from '../../../testutils/sampleDataForTest';
 
 declare var describe: any;
 declare var it: any;
@@ -57,11 +57,14 @@ form.persons.value = [
 ];
 
 form.restrictions.value = true;
-form.restrictions_requesterName.value = 'Jarl';
-form.restrictions_reason.value = 'fin årsak';
-form.restrictions_caseNumbers.value = ['dddd', '44555', '55555'];
-form.restrictions_expirationDate.value = '2017-03-29T07:54:22+00:00';
-form.restrictions_cancelledReason.value = 'meh';
+form.restriction.value = {
+  requester: '3cbf15cb-8348-4e66-99a4-bc314da57444',
+  requesterName: 'Jarl',
+  reason: 'fin årsak',
+  caseNumbers: ['dddd', '44555', '55555'],
+  expirationDate: '2017-03-29T07:54:22+00:00',
+  cancelledReason: 'meh'
+};
 
 const extraAttributes = [
   {
@@ -76,6 +79,7 @@ describe('AnalysisViewComponent', () => {
     const wrapper = shallow(
       <AnalysisViewComponent
         form={form}
+        store={{ analysis, showCancelDialog: false }}
         extraDescriptionAttributes={extraAttributes}
         extraResultAttributes={{}}
         statusText="Fin status"
@@ -87,6 +91,11 @@ describe('AnalysisViewComponent', () => {
         clickCancel={() => {}}
         appSession={appSession}
         history={history}
+        hasRestrictions={true}
+        updateRestriction={() => null}
+        loadingAnalysis={false}
+        cancelRestriction={() => null}
+        toggleCancelDialog={() => null}
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();

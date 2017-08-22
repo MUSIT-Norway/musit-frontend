@@ -2,18 +2,19 @@
 import React from 'react';
 import { I18n } from 'react-i18nify';
 import MetaInformation from '../../components/metainfo';
-import moment from 'moment';
 import ObjectTable from './components/ExpandableObjectResultTable';
 import toArray from 'lodash/toArray';
 import Result from './components/Result';
-import { DATE_FORMAT_DISPLAY } from '../../shared/util';
 import ViewPersonRoleDate from '../../components/person/ViewPersonRoleDate';
 import type { FormData } from './shared/formType';
 import type { AppSession } from '../../types/appSession';
+import type { AnalysisCollection } from '../../types/analysis';
 import type { History } from '../../types/Routes';
+import ViewRestriction from './components/ViewRestriction';
 
 type Props = {
   form: FormData,
+  store: { analysis: AnalysisCollection, showRestrictionCancelDialog?: ?boolean },
   analysisPurpose: string,
   analysisTypeTerm: string,
   statusText: string,
@@ -24,234 +25,180 @@ type Props = {
   extraDescriptionAttributes: any,
   extraResultAttributes: any,
   history: History,
-  appSession: AppSession
+  appSession: AppSession,
+  cancelRestriction: Function,
+  updateRestriction: Function,
+  loadingAnalysis: boolean,
+  hasRestrictions: boolean,
+  toggleCancelDialog: Function
 };
 
-export default ({
-  form,
-  analysisPurpose,
-  analysisTypeTerm,
-  statusText,
-  labPlaceText,
-  objects,
-  clickEdit,
-  extraResultAttributes,
-  extraDescriptionAttributes,
-  history,
-  appSession
-}: Props) => (
-  <div className="container">
-    <div className="page-header">
-      <button className="btn btn-default pull-right" onClick={clickEdit}>
-        {I18n.t('musit.texts.change')}
-      </button>
-      <h1>
-        {I18n.t('musit.analysis.analysis')}
-      </h1>
-    </div>
-    <form className="form-horizontal">
-      <MetaInformation
-        updatedBy={form.updatedByName.value}
-        updatedDate={form.updatedDate.value}
-        registeredBy={form.registeredByName.value}
-        registeredDate={form.registeredDate.value}
-      />
-      <hr />
-      <div className="form-group">
-        <label className="control-label col-md-2" htmlFor="type">
-          {I18n.t('musit.analysis.analysisType')}
-        </label>
-        <div className="col-md-10">
-          <p className="form-control-static" id="type">
-            {analysisTypeTerm}
-          </p>
+export default (props: Props) =>
+  !props.loadingAnalysis
+    ? <div className="container">
+        <div className="page-header">
+          <button className="btn btn-default pull-right" onClick={props.clickEdit}>
+            {I18n.t('musit.texts.change')}
+          </button>
+          <h1>
+            {I18n.t('musit.analysis.analysis')}
+          </h1>
         </div>
-      </div>
-      {extraDescriptionAttributes.map((attr, i) => (
-        <div className="form-group" key={i}>
-          <label className="control-label col-md-2" htmlFor="type">
-            {attr.attributeKey}
-          </label>
-          <div className="col-md-3">
-            <p className="form-control-static">
-              {attr.attributeValue}
-            </p>
+        <form className="form-horizontal">
+          <MetaInformation
+            updatedBy={props.form.updatedByName.value}
+            updatedDate={props.form.updatedDate.value}
+            registeredBy={props.form.registeredByName.value}
+            registeredDate={props.form.registeredDate.value}
+          />
+          <hr />
+          <div className="form-group">
+            <label className="control-label col-md-2" htmlFor="type">
+              {I18n.t('musit.analysis.analysisType')}
+            </label>
+            <div className="col-md-10">
+              <p className="form-control-static" id="type">
+                {props.analysisTypeTerm}
+              </p>
+            </div>
           </div>
-        </div>
-      ))}
-      <div className="form-group">
-        <label className="control-label col-md-2" htmlFor="reason">
-          {I18n.t('musit.analysis.reason')}{' '}
-        </label>
-        <div className="col-md-10">
-          <p className="form-control-static" id="reason">
-            {analysisPurpose}
-          </p>
-        </div>
-      </div>
-      <div className="form-group">
-        <label className="control-label col-md-2" htmlFor="status">
-          {I18n.t('musit.analysis.status')}
-        </label>
-        <div className="col-md-5">
-          <p className="form-control-static" id="status">
-            {statusText}
-          </p>
-        </div>
-      </div>
-      <div className="form-group">
-        <label className="control-label col-md-2" htmlFor="status">
-          {I18n.t('musit.analysis.place')}
-        </label>
-        <div className="col-md-5">
-          <p className="form-control-static" id="status">
-            {labPlaceText}
-          </p>
-        </div>
-      </div>
+          {props.extraDescriptionAttributes.map((attr, i) => (
+            <div className="form-group" key={i}>
+              <label className="control-label col-md-2" htmlFor="type">
+                {attr.attributeKey}
+              </label>
+              <div className="col-md-3">
+                <p className="form-control-static">
+                  {attr.attributeValue}
+                </p>
+              </div>
+            </div>
+          ))}
+          <div className="form-group">
+            <label className="control-label col-md-2" htmlFor="reason">
+              {I18n.t('musit.analysis.reason')}{' '}
+            </label>
+            <div className="col-md-10">
+              <p className="form-control-static" id="reason">
+                {props.analysisPurpose}
+              </p>
+            </div>
+          </div>
+          <div className="form-group">
+            <label className="control-label col-md-2" htmlFor="status">
+              {I18n.t('musit.analysis.status')}
+            </label>
+            <div className="col-md-5">
+              <p className="form-control-static" id="status">
+                {props.statusText}
+              </p>
+            </div>
+          </div>
+          <div className="form-group">
+            <label className="control-label col-md-2" htmlFor="status">
+              {I18n.t('musit.analysis.place')}
+            </label>
+            <div className="col-md-5">
+              <p className="form-control-static" id="status">
+                {props.labPlaceText}
+              </p>
+            </div>
+          </div>
 
-      <div className="form-group">
-        <label className="control-label col-md-2" htmlFor="caseNumber">
-          {I18n.t('musit.analysis.caseNumber')}
-        </label>
-        <div className="col-md-10">
-          <p className="form-control-static" id="caseNumber">
-            {form.caseNumbers.value &&
-              Array.isArray(form.caseNumbers.value) &&
-              form.caseNumbers.value.join(', ')}
-          </p>
-        </div>
-      </div>
-      <hr />
-      <div className="form-group">
-        <label className="control-label col-md-2" htmlFor="note">
-          {I18n.t('musit.analysis.note')}
-        </label>
-        <div className="col-md-10">
-          <p className="form-control-static" id="note">
-            {form.note.value}
-          </p>
-        </div>
-      </div>
-      <hr />
-      <div className="form-group">
-        <label className="control-label">
-          {I18n.t('musit.analysis.personTillAnalysis')}
-        </label>
-      </div>
-      <ViewPersonRoleDate
-        personData={toArray(form.persons.value)}
-        getDisplayNameForRole={(r: string) => I18n.t(`musit.analysis.roles.${r}`)}
-      />
-      <hr />
-      <div className="well">
-        <div className="form-group">
-          <label className="col-md-12" htmlFor="objects">
-            {I18n.t('musit.analysis.objectOrSample')}
-          </label>
-        </div>
-        <div className="form-group">
-          <div className="col-md-12 col-md-offset-0">
-            <ObjectTable
-              extraAttributes={extraResultAttributes}
-              data={objects}
-              appSession={appSession}
-              history={history}
+          <div className="form-group">
+            <label className="control-label col-md-2" htmlFor="caseNumber">
+              {I18n.t('musit.analysis.caseNumber')}
+            </label>
+            <div className="col-md-10">
+              <p className="form-control-static" id="caseNumber">
+                {props.form.caseNumbers.value &&
+                  Array.isArray(props.form.caseNumbers.value) &&
+                  props.form.caseNumbers.value.join(', ')}
+              </p>
+            </div>
+          </div>
+          <hr />
+          <div className="form-group">
+            <label className="control-label col-md-2" htmlFor="note">
+              {I18n.t('musit.analysis.note')}
+            </label>
+            <div className="col-md-10">
+              <p className="form-control-static" id="note">
+                {props.form.note.value}
+              </p>
+            </div>
+          </div>
+          <hr />
+          <div className="form-group">
+            <label className="control-label">
+              {I18n.t('musit.analysis.personTillAnalysis')}
+            </label>
+          </div>
+          <ViewPersonRoleDate
+            personData={toArray(props.form.persons.value)}
+            getDisplayNameForRole={(r: string) => I18n.t(`musit.analysis.roles.${r}`)}
+          />
+          <hr />
+          <div className="well">
+            <div className="form-group">
+              <label className="col-md-12" htmlFor="objects">
+                {I18n.t('musit.analysis.objectOrSample')}
+              </label>
+            </div>
+            <div className="form-group">
+              <div className="col-md-12 col-md-offset-0">
+                <ObjectTable
+                  extraAttributes={props.extraResultAttributes}
+                  data={props.objects}
+                  appSession={props.appSession}
+                  history={props.history}
+                  viewMode={true}
+                />
+              </div>
+            </div>
+            <hr />
+            <Result
+              extraAttributes={props.extraResultAttributes}
+              updateExtraResultAttribute={() => {}}
+              externalSource={toArray(props.form.externalSource.value).join(',')}
+              updateExternalSource={() => {}}
+              comments={props.form.comments.value}
+              updateComments={() => {}}
+              appSession={props.appSession}
+              history={props.history}
+              parentObjectId={
+                props.objects && props.objects.length === 1
+                  ? props.objects[0].originatedObjectUuid
+                      ? props.objects[0].originatedObjectUuid
+                      : props.objects[0].uuid
+                  : null
+              }
               viewMode={true}
             />
+            <div className="form-group">
+              <label className="control-label col-md-2" htmlFor="restrictions">
+                {I18n.t('musit.analysis.restrictions.restrictions')}
+              </label>
+              <div className="col-md-10">
+                <p className="form-control-static" id="restrictions">
+                  {props.hasRestrictions
+                    ? I18n.t('musit.texts.yes')
+                    : I18n.t('musit.texts.no')}
+                </p>
+              </div>
+            </div>
+            {props.hasRestrictions &&
+              props.store.analysis &&
+              props.store.analysis.restriction &&
+              <ViewRestriction
+                restriction={props.store.analysis.restriction}
+                appSession={props.appSession}
+                updateRestriction={props.updateRestriction}
+                showCancelDialog={props.store.showRestrictionCancelDialog}
+                toggleCancelDialog={props.toggleCancelDialog}
+                cancelRestriction={props.cancelRestriction}
+              />}
           </div>
-        </div>
-        <hr />
-        <Result
-          extraAttributes={extraResultAttributes}
-          updateExtraResultAttribute={() => {}}
-          externalSource={toArray(form.externalSource.value).join(',')}
-          updateExternalSource={() => {}}
-          comments={form.comments.value}
-          updateComments={() => {}}
-          appSession={appSession}
-          history={history}
-          parentObjectId={
-            objects && objects.length === 1
-              ? objects[0].originatedObjectUuid
-                  ? objects[0].originatedObjectUuid
-                  : objects[0].uuid
-              : null
-          }
-          viewMode={true}
-        />
-        <div className="form-group">
-          <label className="control-label col-md-2" htmlFor="restrictions">
-            {I18n.t('musit.analysis.restrictions.restrictions')}
-          </label>
-          <div className="col-md-10">
-            <p className="form-control-static" id="restrictions">
-              {form.restrictions.value
-                ? I18n.t('musit.texts.yes')
-                : I18n.t('musit.texts.no')}
-            </p>
-          </div>
-        </div>
-        {form.restrictions.value &&
-          <div>
-            <div className="form-group">
-              <label className="control-label col-md-2" htmlFor="requester">
-                {I18n.t('musit.analysis.restrictions.restrictionsFor')}
-              </label>
-              <div className="col-md-10">
-                <p className="form-control-static" id="requester">
-                  {form.restrictions_requesterName.value || ''}
-                </p>
-              </div>
-            </div>
-            <div className="form-group">
-              <label className="control-label col-md-2" htmlFor="reason">
-                {I18n.t('musit.analysis.restrictions.reasonForRestriction')}
-              </label>
-              <div className="col-md-10">
-                <p className="form-control-static" id="reason">
-                  {form.restrictions_reason.value || ''}
-                </p>
-              </div>
-            </div>
-            <div className="form-group">
-              <label className="control-label col-md-2" htmlFor="caseNumbers">
-                {I18n.t('musit.analysis.restrictions.caseNumber')}
-              </label>
-              <div className="col-md-10">
-                <p className="form-control-static" id="caseNumbers">
-                  {form.restrictions_caseNumbers.value &&
-                    Array.isArray(form.restrictions_caseNumbers.value)
-                    ? form.restrictions_caseNumbers.value.join(', ')
-                    : ''}
-                </p>
-              </div>
-            </div>
-            <div className="form-group">
-              <label className="control-label col-md-2" htmlFor="expirationDate">
-                {I18n.t('musit.analysis.restrictions.endDate')}
-              </label>
-              <div className="col-md-10">
-                <p className="form-control-static" id="expirationDate">
-                  {form.restrictions_expirationDate.value &&
-                    moment(form.restrictions_expirationDate.value).format(
-                      DATE_FORMAT_DISPLAY
-                    )}
-                </p>
-              </div>
-            </div>
-            <div className="form-group">
-              <label className="control-label col-md-2" htmlFor="cancelledReason">
-                {I18n.t('musit.analysis.reasonForCancellation')}
-              </label>
-              <div className="col-md-10">
-                <p className="form-control-static" id="cancelledReason">
-                  {form.restrictions_cancelledReason.value || ''}
-                </p>
-              </div>
-            </div>
-          </div>}
+        </form>
       </div>
-    </form>
-  </div>
-);
+    : <div className="loading" />;

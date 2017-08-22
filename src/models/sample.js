@@ -71,8 +71,7 @@ class Sample {
   static loadAllSampleTypes: (
     ajaxGet: AjaxGet
   ) => (props: {
-    token: string,
-    language: string
+    token: string
   }) => Observable<*>;
   static loadTreatments: (
     ajaxGet: AjaxGet

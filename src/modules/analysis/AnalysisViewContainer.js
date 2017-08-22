@@ -5,7 +5,13 @@ import AnalysisViewComponent from './AnalysisViewComponent';
 import { loadPredefinedTypes } from '../../stores/predefined';
 import flowRight from 'lodash/flowRight';
 import lifeCycle from '../../shared/lifeCycle';
-import store$, { getAnalysis$, setLoading$, clearStore$ } from './analysisStore';
+import store$, {
+  getAnalysis$,
+  clearStore$,
+  updateAnalysis$,
+  updateRestriction$,
+  toggleCancelDialog$
+} from './analysisStore';
 import Analysis from '../../models/analysis';
 import analysisForm, { fieldsArray } from './analysisForm';
 import Config from '../../config';
@@ -27,6 +33,8 @@ import type { FormData } from './shared/formType';
 import type { Field } from '../../forms/form';
 import type { FormValue } from '../../models/analysis/analysisForm';
 import type { History } from '../../types/Routes';
+import { emitError, emitSuccess } from '../../shared/errors';
+import { I18n } from 'react-i18nify';
 
 const { form$, ...formActions } = analysisForm;
 
@@ -38,8 +46,10 @@ const data = {
 };
 
 const commands = {
+  toggleCancelDialog$,
   getAnalysis$,
-  setLoading$,
+  updateAnalysis$,
+  updateRestriction$,
   clearStore$,
   ...formActions
 };
@@ -50,7 +60,8 @@ type UpstreamProps = {
   appSession: AppSession,
   predefined: Predefined,
   form: FormData,
-  history: History
+  history: History,
+  updateAnalysis: Function
 };
 
 export const props = (props: UpstreamProps) => {
@@ -71,8 +82,15 @@ export const props = (props: UpstreamProps) => {
     ? analysisType.extraDescriptionAttributes
     : [];
 
+  const hasRestrictions =
+    props.form.restrictions &&
+    props.store.analysis &&
+    props.store.analysis.restriction &&
+    !props.store.analysis.restriction.cancelledStamp;
+
   return {
     ...props,
+    hasRestrictions,
     extraResultAttributes,
     extraDescriptionAttributes: getExtraDescriptionAttributesWithValue(
       props.store.analysis,
@@ -102,6 +120,37 @@ export const props = (props: UpstreamProps) => {
           props.match.params.analysisId
         )
       );
+    },
+    cancelRestriction: () => {
+      props.updateAnalysis({
+        id: props.store.analysis ? props.store.analysis.id : null,
+        museumId: props.appSession.museumId,
+        data: {
+          ...props.store.analysis,
+          objects: props.store.analysis && props.store.analysis.events
+            ? props.store.analysis.events.map(e => ({
+                objectId: e.affectedThing,
+                objectType: e.affectedType
+              }))
+            : []
+        },
+        token: props.appSession.accessToken,
+        callback: {
+          onComplete: () => {
+            emitSuccess({
+              type: 'saveSuccess',
+              message: I18n.t('musit.analysis.saveAnalysisSuccess')
+            });
+          },
+          onFailure: e => {
+            emitError({
+              type: 'errorOnSave',
+              error: e,
+              message: I18n.t('musit.analysis.saveAnalysisError')
+            });
+          }
+        }
+      });
     }
   };
 };
@@ -122,7 +171,6 @@ type OnMountProps = {
 };
 
 export const onMount = (props: OnMountProps) => {
-  props.setLoading();
   props.getAnalysis({
     id: props.match.params.analysisId,
     sampleTypes: props.predefined.sampleTypes,

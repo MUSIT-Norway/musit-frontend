@@ -8,10 +8,6 @@ import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import { appSession } from './../../../testutils/sampleDataForTest';
 
-declare var describe: any;
-declare var it: any;
-declare var expect: any;
-
 const identity = (i: any): any => i;
 const promise = (i: any): any => new Promise(res => res(i));
 
@@ -93,6 +89,7 @@ describe('AnalysisFormComponent', () => {
   it('should render objects from events', () => {
     const location = {};
     const store = {
+      showCancelDialog: false,
       analysis: {
         id: 1234,
         analysisTypeId: '1234',
@@ -138,9 +135,11 @@ describe('AnalysisFormComponent', () => {
         updateForm={identity}
         submitForm={identity}
         clickCancel={identity}
+        toggleCancelDialog={identity}
         updateStringField={identity}
         updateArrayField={identity}
         updateBooleanField={identity}
+        updateExtraDescriptionAttribute={identity}
         clickSave={identity}
         saveAnalysis={promise}
         saveResult={promise}

@@ -43,15 +43,19 @@ export type AnalysisTypesObject = {
 };
 
 export type Restriction = {
-  requester: ?string,
-  requesterName?: ?string,
+  requester?: ?string,
   expirationDate?: ?string,
   reason?: ?string,
   caseNumbers?: ?Array<string>,
   registeredStamp?: ?{ user: string, date: string },
   cancelledStamp?: ?{ user: string, date: string },
   cancelledReason?: ?string
-} & { cancelledBy?: ?string, cancelledByName?: ?string, cancelledDate?: ?string };
+} & {
+  requesterName?: ?string,
+  cancelledBy?: ?string,
+  cancelledByName?: ?string,
+  cancelledDate?: ?string
+};
 
 export type Result = {
   type: ?string,

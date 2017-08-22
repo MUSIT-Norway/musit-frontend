@@ -12,7 +12,7 @@ import {
   composeValidators
 } from './validators';
 
-export type RawValue = string | number | Array<*>;
+export type RawValue = any;
 
 export type Field<T> = {
   name: string,
@@ -28,8 +28,8 @@ export type Field<T> = {
     toRaw: (t: ?T) => ?RawValue
   },
   validator: {
-    rawValidator?: (field: string) => (s: ?RawValue) => ?string,
-    valueValidator?: (field: string) => (t: ?T) => ?string
+    rawValidator?: ?(field: string) => (s: ?RawValue) => ?string,
+    valueValidator?: ?(field: string) => (t: ?T) => ?string
   }
 };
 
@@ -73,9 +73,18 @@ export const getStrField = (
   defaultValue: defaultValue,
   mapper: stringMapper,
   validator: {
-    rawValidator: required ? isRequired : undefined
+    rawValidator: required ? isRequired : null
   }
 });
+
+export function getCompositeField<T>(field: string, defaultValue?: ?T): Field<T> {
+  return {
+    name: field,
+    defaultValue: defaultValue,
+    mapper: noMapper,
+    validator: {}
+  };
+}
 
 export const getBoolField = (
   field: string,
@@ -96,7 +105,7 @@ export const getArrField = (
   defaultValue: defaultValue,
   mapper: noMapper,
   validator: {
-    rawValidator: required ? isNonEmptyArray : undefined
+    rawValidator: required ? isNonEmptyArray : null
   }
 });
 
@@ -114,7 +123,7 @@ export const getNumberField = (
   validator: {
     rawValidator: required
       ? composeValidators(isRequired, isNumber(0, decimalPrecision))
-      : undefined,
+      : null,
     valueValidator: isNumberInRange(rangeFrom, rangeTo)
   }
 });

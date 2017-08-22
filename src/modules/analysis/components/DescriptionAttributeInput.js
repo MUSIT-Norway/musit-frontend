@@ -1,12 +1,11 @@
 // @flow
 import React from 'react';
+import type { DomEvent } from '../../../types/dom';
+import type { DescriptionAttributeType } from './DescriptionAttributeType';
 
 type Props = {
-  attr: {
-    attributeKey: string,
-    attributeType: string
-  },
-  onChange: (name: string, type: string) => (e: *) => void,
+  attr: DescriptionAttributeType,
+  onChange: (e: DomEvent) => void,
   value: ?string | ?Array<string | number>
 };
 
@@ -16,8 +15,8 @@ const DescriptionAttributeInput = (props: Props) => {
       className="form-control"
       type="text"
       name={props.attr.attributeKey}
-      onChange={props.onChange(props.attr.attributeKey, props.attr.attributeType)}
-      value={(props.value && props.value.toString()) || ''}
+      onChange={props.onChange}
+      value={props.value ? props.value.toString() : ''}
     />
   );
 };

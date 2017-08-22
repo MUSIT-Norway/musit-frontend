@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ViewRestriction should render restriction 1`] = `
+<div>
+  <div
+    className="form-group"
+  >
+    <label
+      className="control-label col-md-2"
+      htmlFor="restrictedBy"
+    >
+      Klausulert for
+    </label>
+    <div
+      className="col-md-10"
+    >
+      <p
+        className="form-control-static"
+      >
+        dummy user
+      </p>
+    </div>
+  </div>
+  <div
+    className="form-group"
+  >
+    <label
+      className="control-label col-md-2"
+      htmlFor="restrictionCause"
+    >
+      Årsak til klausulering
+    </label>
+    <div
+      className="col-md-10"
+    >
+      <p
+        className="form-control-static"
+      >
+        Initial reason
+      </p>
+    </div>
+  </div>
+  <div
+    className="form-group"
+  >
+    <label
+      className="control-label col-md-2"
+      htmlFor="restrictionCaseNumbers"
+    >
+      Saksnummer
+    </label>
+    <div
+      className="col-md-5"
+    >
+      <p
+        className="form-control-static"
+      >
+        This, is, not, it
+      </p>
+    </div>
+  </div>
+  <div
+    className="form-group"
+  >
+    <label
+      className="control-label col-md-2"
+      htmlFor="restrictionExpirationEndDate"
+    >
+      Sluttdato
+    </label>
+    <div
+      className="col-md-5"
+    >
+      <p
+        className="form-control-static"
+      >
+        21.08.2017
+      </p>
+      <button
+        onClick={[Function]}
+      >
+        Click me please
+      </button>
+    </div>
+  </div>
+</div>
+`;

@@ -1,29 +1,19 @@
 // @flow
 import React from 'react';
-import { ActorSuggest } from '../../../components/suggest/ActorSuggest';
-import MusitActor from '../../../models/actor';
 import DatePicker from '../../../components/DatePicker';
 import { DATE_FORMAT_DISPLAY, formatISOString } from '../../../shared/util';
 import { I18n } from 'react-i18nify';
 import type { AppSession } from '../../../types/appSession';
-import type { Field, Update } from '../../../forms/form';
-import type { Actor } from 'types/actor';
-
-type Form = {
-  restrictions_requesterName: Field<string>,
-  restrictions_requester: Field<string>,
-  restrictions_caseNumbers: Field<Array<string>>,
-  restrictions_reason: Field<string>,
-  restrictions_expirationDate: Field<string>
-};
+import type { Restriction } from '../../../types/analysis';
+import StatefulActorSuggest from './StatefulActorSuggest';
 
 type Props = {
   appSession: AppSession,
-  form: Form,
-  updateForm: (update: Update<*>) => void
+  restriction: Restriction,
+  updateRestriction: (restriction: Restriction) => void
 };
 
-export default function Restrictions({ appSession, form, updateForm }: Props) {
+export default function AddRestriction(props: Props) {
   return (
     <div>
       <div className="form-group">
@@ -31,21 +21,14 @@ export default function Restrictions({ appSession, form, updateForm }: Props) {
           {I18n.t('musit.analysis.restrictions.restrictionsFor')}
         </label>
         <div className="col-md-10">
-          <ActorSuggest
-            appSession={appSession}
-            id="restrictions_requester"
-            value={form.restrictions_requesterName.rawValue || ''}
-            placeHolder="Find actor"
-            onChange={(actor: Actor) => {
-              updateForm({
-                name: form.restrictions_requesterName.name,
-                rawValue: actor.fn
-              });
-              updateForm({
-                name: form.restrictions_requester.name,
-                rawValue: MusitActor.getActorId(actor)
-              });
-            }}
+          <StatefulActorSuggest
+            value={props.restriction.requesterName}
+            appSession={props.appSession}
+            onChange={actorId =>
+              props.updateRestriction({
+                ...props.restriction,
+                requester: actorId
+              })}
           />
         </div>
       </div>
@@ -57,11 +40,11 @@ export default function Restrictions({ appSession, form, updateForm }: Props) {
           <input
             className="form-control"
             id="restrictionCause"
-            value={form.restrictions_reason.rawValue || ''}
+            value={props.restriction.reason || ''}
             onChange={e =>
-              updateForm({
-                name: form.restrictions_reason.name,
-                rawValue: e.target.value
+              props.updateRestriction({
+                ...props.restriction,
+                reason: e.target.value
               })}
           />
         </div>
@@ -75,14 +58,14 @@ export default function Restrictions({ appSession, form, updateForm }: Props) {
             className="form-control"
             id="restrictionCaseNumbers"
             value={
-              (Array.isArray(form.restrictions_caseNumbers.rawValue) &&
-                form.restrictions_caseNumbers.rawValue.join(', ')) ||
+              (Array.isArray(props.restriction.caseNumbers) &&
+                props.restriction.caseNumbers.join(', ')) ||
                 ''
             }
             onChange={e =>
-              updateForm({
-                name: form.restrictions_caseNumbers.name,
-                rawValue: e.target.value.split(',').map(v => v.trim())
+              props.updateRestriction({
+                ...props.restriction,
+                caseNumbers: e.target.value.split(',').map(v => v.trim()).filter(v => v)
               })}
           />
         </div>
@@ -94,17 +77,17 @@ export default function Restrictions({ appSession, form, updateForm }: Props) {
         <div className="col-md-5">
           <DatePicker
             dateFormat={DATE_FORMAT_DISPLAY}
-            value={form.restrictions_expirationDate.rawValue || ''}
+            value={props.restriction.expirationDate || ''}
             onClear={() =>
-              updateForm({
-                name: form.restrictions_expirationDate.name,
-                rawValue: null
+              props.updateRestriction({
+                ...props.restriction,
+                expirationDate: null
               })}
             onChange={selectedDate => {
               if (selectedDate !== 'Invalid date') {
-                updateForm({
-                  name: form.restrictions_expirationDate.name,
-                  rawValue: formatISOString(selectedDate)
+                props.updateRestriction({
+                  ...props.restriction,
+                  expirationDate: formatISOString(selectedDate)
                 });
               }
             }}

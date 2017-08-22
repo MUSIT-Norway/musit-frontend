@@ -1,5 +1,5 @@
 // @flow
-import { simpleGet, simplePost } from '../../shared/RxAjax';
+import { simpleGet, simplePost, simplePut } from '../../shared/RxAjax';
 import { Observable, Subject } from 'rxjs';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import MusitAnalysis from '../../models/analysis';
@@ -21,19 +21,35 @@ const initialState = {
   loading: false,
   extraDescriptionAttributes: {},
   extraResultAttributes: {},
-  analysisTypeCategories: []
+  analysisTypeCategories: [],
+  restriction: null
 };
 
+export const toggleCancelDialog$: Subject<*> = createAction('toggleCancelDialog$');
+
+const setLoading$: Subject<*> = createAction('setLoading$');
+
+const flagLoading = s => () => setLoading$.next(s);
+
 export const getAnalysisTypes$: Subject<*> = createAction('getAnalysisTypes$').switchMap(
-  MusitAnalysis.getAnalysisTypesForCollection()
+  MusitAnalysis.getAnalysisTypesForCollection(simpleGet)
 );
 
-export const setLoading$: Subject<*> = createAction('setLoading$');
-export const getAnalysis$: Subject<*> = createAction('getAnalysis$').switchMap(props =>
-  MusitAnalysis.getAnalysisById(simpleGet)(props).flatMap(
-    getAnalysisDetails(simpleGet, simplePost, props)
+export const getAnalysis$: Subject<*> = createAction('getAnalysis$')
+  .do(flagLoading({ loadingAnalysis: true }))
+  .switchMap(props =>
+    MusitAnalysis.getAnalysisById(simpleGet)(props).flatMap(
+      getAnalysisDetails(simpleGet, simplePost, props)
+    )
   )
-);
+  .do(flagLoading({ loadingAnalysis: false }));
+
+export const updateAnalysis$: Subject<*> = createAction('updateAnalysis$')
+  .do(flagLoading({ loadingAnalysis: true }))
+  .switchMap(MusitAnalysis.editAnalysisEvent(simplePut))
+  .do(flagLoading({ loadingAnalysis: false }));
+
+export const updateRestriction$: Subject<*> = createAction('updateRestriction$');
 
 export const updateExtraDescriptionAttribute$: Subject<*> = createAction(
   'updateExtraDescriptionAttribute$'
@@ -47,26 +63,42 @@ export const updateExtraResultAttribute$: Subject<*> = createAction(
 
 export const loadPredefinedTypes$: Subject<*> = createAction(
   'loadPredefinedTypes$'
-).switchMap(props => MusitAnalysis.loadPredefinedTypes()(props));
+).switchMap(props => MusitAnalysis.loadPredefinedTypes(simpleGet)(props));
 
 type Actions = {
   setLoading$: Subject<*>,
   getAnalysis$: Subject<*>,
+  updateAnalysis$: Subject<*>,
+  updateRestriction$: Subject<*>,
   getAnalysisTypes$: Subject<*>,
   loadPredefinedTypes$: Subject<*>,
   updateExtraDescriptionAttribute$: Subject<*>,
   updateExtraResultAttribute$: Subject<*>,
-  clearStore$: Subject<*>
+  clearStore$: Subject<*>,
+  toggleCancelDialog$: Subject<*>
 };
 
-export const reducer$ = (actions: Actions) =>
-  Observable.merge(
-    actions.clearStore$.map(() => () => initialState),
-    actions.setLoading$.map(() => state => ({ ...state, loading: true })),
-    actions.getAnalysis$.map(analysis => state => ({
+export const reducer$ = (actions: Actions) => {
+  return Observable.merge(
+    actions.toggleCancelDialog$.map(() => state => ({
       ...state,
-      analysis,
-      loading: false
+      showRestrictionCancelDialog: !state.showRestrictionCancelDialog
+    })),
+    actions.setLoading$.map(loading => state => ({ ...state, ...loading })),
+    actions.clearStore$.map(() => () => initialState),
+    Observable.merge(
+      actions.getAnalysis$,
+      actions.updateAnalysis$
+    ).map(analysis => state => ({
+      ...state,
+      analysis
+    })),
+    actions.updateRestriction$.map(restriction => state => ({
+      ...state,
+      analysis: {
+        ...state.analysis,
+        restriction
+      }
     })),
     actions.getAnalysisTypes$.map(analysisTypes => state => ({
       ...state,
@@ -89,16 +121,20 @@ export const reducer$ = (actions: Actions) =>
       extraResultAttributes: { ...state.extraResultAttributes, [name]: value }
     }))
   );
+};
 
 export const store$ = (
   actions$: Actions = {
-    getAnalysisTypes$,
     setLoading$,
+    getAnalysisTypes$,
     getAnalysis$,
+    updateAnalysis$,
+    updateRestriction$,
     loadPredefinedTypes$,
     updateExtraDescriptionAttribute$,
     updateExtraResultAttribute$,
-    clearStore$
+    clearStore$,
+    toggleCancelDialog$
   }
 ) => createStore('analysisStore', reducer$(actions$), Observable.of(initialState));
 
@@ -130,7 +166,10 @@ export function getAnalysisDetails(
         analysis.responsible || '',
         analysis.administrator || '',
         analysis.completedBy || '',
-        analysis.restriction ? analysis.restriction.requester || '' : ''
+        analysis.restriction ? analysis.restriction.requester || '' : '',
+        analysis.restriction && analysis.restriction.cancelledStamp
+          ? analysis.restriction.cancelledStamp.user || ''
+          : ''
       ].filter(p => p),
       token: props.token
     })
@@ -269,6 +308,12 @@ export function getActorNames(actors: Array<Actor>, analysis: AnalysisCollection
     {
       id: analysis.restriction ? analysis.restriction.requester || '' : '',
       fieldName: 'restriction_requesterName'
+    },
+    {
+      id: analysis.restriction && analysis.restriction.cancelledStamp
+        ? analysis.restriction.cancelledStamp.user || ''
+        : '',
+      fieldName: 'restriction_cancelledByName'
     }
   ]);
 }
