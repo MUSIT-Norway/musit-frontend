@@ -21,8 +21,7 @@ const initialState = {
   loading: false,
   extraDescriptionAttributes: {},
   extraResultAttributes: {},
-  analysisTypeCategories: [],
-  restriction: null
+  analysisTypeCategories: []
 };
 
 export const toggleCancelDialog$: Subject<*> = createAction('toggleCancelDialog$');

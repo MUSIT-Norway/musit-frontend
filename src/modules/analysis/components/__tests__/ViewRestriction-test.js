@@ -41,6 +41,7 @@ describe('ViewRestrictionComponent', () => {
         cancelRestriction={cancelRestriction}
         showCancelDialog={showCancelDialog}
         toggleCancelDialog={toggleCancelDialog}
+        isRestrictionValidForCancellation={false}
       />
     );
 
@@ -59,6 +60,7 @@ describe('ViewRestrictionComponent', () => {
         cancelRestriction={cancelRestriction}
         showCancelDialog={showCancelDialog}
         toggleCancelDialog={toggleCancelDialog}
+        isRestrictionValidForCancellation={false}
       />
     );
 

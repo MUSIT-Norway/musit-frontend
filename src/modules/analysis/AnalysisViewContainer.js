@@ -35,6 +35,7 @@ import type { FormValue } from '../../models/analysis/analysisForm';
 import type { History } from '../../types/Routes';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { I18n } from 'react-i18nify';
+import { isRestrictionValidForCancellation } from './shared/formProps';
 
 const { form$, ...formActions } = analysisForm;
 
@@ -90,6 +91,9 @@ export const props = (props: UpstreamProps) => {
 
   return {
     ...props,
+    isRestrictionValidForCancellation: isRestrictionValidForCancellation(
+      props.store.analysis && props.store.analysis.restriction
+    ),
     hasRestrictions,
     extraResultAttributes,
     extraDescriptionAttributes: getExtraDescriptionAttributesWithValue(

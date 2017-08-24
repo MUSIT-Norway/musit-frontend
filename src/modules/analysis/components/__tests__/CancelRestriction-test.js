@@ -42,6 +42,7 @@ describe('CancelRestriction', () => {
           cancelledByName: 'Dummy userrr'
         }}
         updateRestriction={updateRestriction}
+        isRestrictionValidForCancellation={false}
       />
     );
 
@@ -61,6 +62,7 @@ describe('CancelRestriction', () => {
         appSession={appSession}
         restriction={restriction}
         updateRestriction={updateRestriction}
+        isRestrictionValidForCancellation={false}
       />
     );
 
@@ -79,6 +81,7 @@ describe('CancelRestriction', () => {
         appSession={appSession}
         restriction={restriction}
         updateRestriction={updateRestriction}
+        isRestrictionValidForCancellation={false}
       />
     );
 
@@ -102,6 +105,7 @@ describe('CancelRestriction', () => {
         appSession={appSession}
         restriction={restriction}
         updateRestriction={updateRestriction}
+        isRestrictionValidForCancellation={false}
       />
     );
 

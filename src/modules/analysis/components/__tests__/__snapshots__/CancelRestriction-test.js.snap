@@ -3,13 +3,13 @@
 exports[`CancelRestriction should render cancel reason and cancelledByName 1`] = `
 <div>
   <div
-    className="form-group"
+    className="form-group has-error"
   >
     <label
       className="control-label col-md-2"
       htmlFor="restrictedBy"
     >
-      Klausulert for
+      Opphevet av
     </label>
     <div
       className="col-md-10"
@@ -35,13 +35,13 @@ exports[`CancelRestriction should render cancel reason and cancelledByName 1`] =
     </div>
   </div>
   <div
-    className="form-group"
+    className="form-group has-error"
   >
     <label
       className="control-label col-md-2"
       htmlFor="cancelCause"
     >
-      Reason For Cancelling
+      Årsak til oppheving
     </label>
     <div
       className="col-md-10"

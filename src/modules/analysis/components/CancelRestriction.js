@@ -9,15 +9,18 @@ type Props = {
   appSession: AppSession,
   restriction: Restriction,
   updateRestriction: (restriction: Restriction) => void,
-  clickCancel: () => void
+  clickCancel: () => void,
+  isRestrictionValidForCancellation: boolean
 };
 
 export default function CancelRestriction(props: Props) {
   return (
     <div>
-      <div className="form-group">
+      <div
+        className={`form-group ${!props.isRestrictionValidForCancellation ? 'has-error' : ''}`}
+      >
         <label className="control-label col-md-2" htmlFor="restrictedBy">
-          {I18n.t('musit.analysis.restrictions.restrictionsFor')}
+          {I18n.t('musit.analysis.restrictions.cancelledBy')}
         </label>
         <div className="col-md-10">
           <StatefulActorSuggest
@@ -31,7 +34,9 @@ export default function CancelRestriction(props: Props) {
           />
         </div>
       </div>
-      <div className="form-group">
+      <div
+        className={`form-group ${!props.isRestrictionValidForCancellation ? 'has-error' : ''}`}
+      >
         <label className="control-label col-md-2" htmlFor="cancelCause">
           {I18n.t('musit.analysis.restrictions.reasonForCancelling')}
         </label>
@@ -48,12 +53,14 @@ export default function CancelRestriction(props: Props) {
           />
           {!props.restriction.cancelledStamp &&
             <button
+              className="btn btn-default"
+              disabled={!props.isRestrictionValidForCancellation}
               onClick={(e: any) => {
                 e.preventDefault();
                 props.clickCancel();
               }}
             >
-              Cancel now
+              {I18n.t('musit.analysis.restrictions.cancelRestriction')}
             </button>}
 
         </div>

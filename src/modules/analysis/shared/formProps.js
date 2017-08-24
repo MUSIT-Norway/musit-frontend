@@ -15,6 +15,7 @@ import type { Store } from '../shared/storeType';
 import type { DomEvent } from '../../../types/dom';
 import toArray from 'lodash/toArray';
 import { isMultipleSelectAttribute } from '../../../types/analysis';
+import type { Restriction } from '../../../types/analysis';
 import {
   getAnalysisTypeTerm,
   getAnalysisType,
@@ -64,6 +65,9 @@ export default (
 
   return {
     ...props,
+    isRestrictionValidForCancellation: isRestrictionValidForCancellation(
+      (props.form.restriction.value: any)
+    ),
     objects: getObjects(toArray(props.form.events.value), props.location),
     analysisType,
     updateStringField: updateStringField(props.updateForm),
@@ -106,6 +110,14 @@ export default (
     clickCancel: clickCancel(props)
   };
 };
+
+export function isRestrictionValidForCancellation(restriction: ?Restriction): boolean {
+  return !!(restriction &&
+    restriction.cancelledReason &&
+    restriction.cancelledReason.trim().length > 0 &&
+    restriction.cancelledBy &&
+    restriction.cancelledBy.trim().length > 0);
+}
 
 function updateStringField(updateForm) {
   return (name: string) => (evt: DomEvent) =>

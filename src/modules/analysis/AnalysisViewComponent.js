@@ -30,7 +30,8 @@ type Props = {
   updateRestriction: Function,
   loadingAnalysis: boolean,
   hasRestrictions: boolean,
-  toggleCancelDialog: Function
+  toggleCancelDialog: Function,
+  isRestrictionValidForCancellation: boolean
 };
 
 export default (props: Props) =>
@@ -196,6 +197,9 @@ export default (props: Props) =>
                 updateRestriction={props.updateRestriction}
                 showCancelDialog={props.store.showRestrictionCancelDialog}
                 toggleCancelDialog={props.toggleCancelDialog}
+                isRestrictionValidForCancellation={
+                  props.isRestrictionValidForCancellation
+                }
                 cancelRestriction={props.cancelRestriction}
               />}
           </div>

@@ -14,7 +14,8 @@ type ViewRestrictionComponentProps = {
   updateRestriction: (restriction: Restriction) => void,
   cancelRestriction: () => void,
   showCancelDialog?: ?boolean,
-  toggleCancelDialog: () => void
+  toggleCancelDialog: () => void,
+  isRestrictionValidForCancellation: boolean
 };
 
 export default function ViewRestrictionComponent(props: ViewRestrictionComponentProps) {
@@ -23,6 +24,7 @@ export default function ViewRestrictionComponent(props: ViewRestrictionComponent
         appSession={props.appSession}
         restriction={props.restriction}
         updateRestriction={props.updateRestriction}
+        isRestrictionValidForCancellation={props.isRestrictionValidForCancellation}
         clickCancel={() => {
           props.cancelRestriction();
           props.toggleCancelDialog();
@@ -81,12 +83,13 @@ export function ViewRestriction(props: ViewRestrictionProps) {
               : ''}
           </p>
           <button
+            className="btn btn-default"
             onClick={(e: any) => {
               e.preventDefault();
               props.clickCancel();
             }}
           >
-            Click me please
+            {I18n.t('musit.analysis.restrictions.cancelRestriction')}
           </button>
         </div>
       </div>

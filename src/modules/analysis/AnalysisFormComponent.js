@@ -46,7 +46,8 @@ type Props = {
   clickCancel: Function,
   history: Function,
   loadingAnalysis: boolean,
-  toggleCancelDialog: Function
+  toggleCancelDialog: Function,
+  isRestrictionValidForCancellation: boolean
 };
 
 export default function AnalysisFormComponent(props: Props) {
@@ -272,6 +273,7 @@ export default function AnalysisFormComponent(props: Props) {
               clickSave={props.clickSave}
               showCancelDialog={props.store.showRestrictionCancelDialog}
               toggleCancelDialog={props.toggleCancelDialog}
+              isRestrictionValidForCancellation={props.isRestrictionValidForCancellation}
             />
           </div>
           <hr />
@@ -315,6 +317,7 @@ function FormRestriction(props) {
             cancelRestriction={() => {
               props.clickSave({ preventDefault: () => null });
             }}
+            isRestrictionValidForCancellation={props.isRestrictionValidForCancellation}
           />
         : null;
 }

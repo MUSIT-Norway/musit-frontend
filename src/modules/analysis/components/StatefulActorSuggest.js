@@ -4,6 +4,7 @@ import { ActorSuggest } from '../../../components/suggest/ActorSuggest';
 import MusitActor from '../../../models/actor';
 import type { AppSession } from '../../../types/appSession';
 import type { Actor } from 'types/actor';
+import { I18n } from 'react-i18nify';
 
 export type Props = {
   appSession: AppSession,
@@ -30,7 +31,7 @@ export default class StatefulActorSuggest extends React.Component {
         appSession={this.props.appSession}
         id="restrictions_requester"
         value={this.state.name || this.props.value || ''}
-        placeHolder="Find actor"
+        placeHolder={I18n.t('musit.analysis.restrictions.findActor')}
         onChange={(actor: Actor) => {
           this.props.onChange(MusitActor.getActorId(actor));
           this.setState({ name: actor.fn });

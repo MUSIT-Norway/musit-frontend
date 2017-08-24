@@ -77,9 +77,10 @@ exports[`ViewRestriction should render restriction 1`] = `
         21.08.2017
       </p>
       <button
+        className="btn btn-default"
         onClick={[Function]}
       >
-        Click me please
+        Opphev klausulering
       </button>
     </div>
   </div>

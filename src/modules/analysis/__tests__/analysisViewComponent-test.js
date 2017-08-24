@@ -96,6 +96,7 @@ describe('AnalysisViewComponent', () => {
         loadingAnalysis={false}
         cancelRestriction={() => null}
         toggleCancelDialog={() => null}
+        isRestrictionValidForCancellation={false}
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();

@@ -170,7 +170,10 @@
           "caseNumber": "Case number",
           "addMoreCaseNumbers": "Add Multiple Issue Numbers",
           "endDate": "End Date",
-          "findActor": "Find an actor"
+          "findActor": "Find an actor",
+          "cancelRestriction": "Cancel restriction",
+          "reasonForCancelling": "Cause for cancelling",
+          "cancelledBy": "Cancelled by"
         },
         "registeringAnalysis": "Analysis",
         "reasonForCancellation": "Reason for cancellation",
@@ -1064,7 +1067,10 @@
           "caseNumber": "Saksnummer",
           "addMoreCaseNumbers": " Legg til flere saksnummer",
           "endDate": "Sluttdato",
-          "findActor": "Finn aktør"
+          "findActor": "Finn aktør",
+          "cancelRestriction": "Opphev klausulering",
+          "reasonForCancelling": "Årsak til oppheving",
+          "cancelledBy": "Opphevet av"
         },
         "registeringAnalysis": "Analyse",
         "reasonForCancellation": "Årsak til oppheving",
