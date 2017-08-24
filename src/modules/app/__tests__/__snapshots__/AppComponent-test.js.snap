@@ -197,7 +197,7 @@ exports[`AppComponent remders 1`] = `
     </span>
   </div>
   <footer
-    className="footer version well"
+    className="footer navbar-fixed-bottom backgroundUTV"
   >
     Backend build: 
     <a

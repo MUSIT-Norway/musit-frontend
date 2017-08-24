@@ -21,6 +21,8 @@ import {
 import Config from '../../config';
 import { backendVersion, frontendVersion, VersionInfo } from '../../build';
 import featureToggles from '../../featureToggles';
+import classnames from 'classnames';
+import env from '../../shared/environment';
 
 export class AppComponent extends Component {
   static propTypes = {
@@ -100,17 +102,11 @@ export class AppComponent extends Component {
   }
 
   getFooterClass() {
-    let returnClassName;
-    if (window.location.href.toLowerCase().includes('test:')) {
-      returnClassName = 'footer backgroundUTV';
-    } else if (window.location.href.toLowerCase().includes('utv.uio.no')) {
-      returnClassName = 'footer backgroundUTV';
-    } else if (window.location.href.toLowerCase().includes('test.uio.no')) {
-      returnClassName = 'footer backgroundTEST';
-    } else {
-      returnClassName = 'footer version well';
-    }
-    return returnClassName;
+    return classnames('footer', 'navbar-fixed-bottom', {
+      backgroundUTV: env === 'utv',
+      backgroundTEST: env === 'test',
+      'version well': env === 'prod'
+    });
   }
 
   isSessionLoaded() {
