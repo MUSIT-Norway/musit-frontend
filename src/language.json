@@ -122,6 +122,24 @@
         "analysisType": "Type of analysis",
         "chooseCategory": "Select category",
         "chooseType": "Select Type",
+        "analysisAttributes": {
+          "method": "Method",
+          "extractionType": "Type of Extraction",
+          "types": "Types"
+        },
+        "analysisExtraResultAttributes": {
+          "ageEstimate": "Age estimate",
+          "standardDeviation": "Standard deviation",
+          "age": "Age",
+          "storageMedium": "Storage medium",
+          "concentration": "Concentration",
+          "volume": "Volume",
+          "measurementId": "Measurement id",
+          "measurementType": "Measurement type",
+          "size": "Size",
+          "precision": "Precision",
+          "method": "Method"
+        },
         "category": {
           "1": "Chemical analysis",
           "2": "Colour analysis",
@@ -1019,6 +1037,24 @@
         "analysisType": "Type analyse",
         "chooseCategory": "Velg kategori",
         "chooseType": "Velg type",
+        "analysisAttributes": {
+          "method": "Metode",
+          "extractionType": "Type Ekstraksjon",
+          "types": "Typer"
+        },
+        "analysisExtraResultAttributes": {
+          "ageEstimate": "Estimat Alder",
+          "standardDeviation": "Standardavvik",
+          "age": "Alder",
+          "storageMedium": "Lagringsmedium",
+          "concentration": "Konsentrasjon",
+          "volume": "Volum",
+          "measurementId": "Mål-id",
+          "measurementType": "Mål-type",
+          "size": "Størrelse",
+          "precision": "Presisjon",
+          "method": "Metode"
+        },
         "category": {
           "1": "Kjemisk analyse",
           "2": "Fargeanalyse",

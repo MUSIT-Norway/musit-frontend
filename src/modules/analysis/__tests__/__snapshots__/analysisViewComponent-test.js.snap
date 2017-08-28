@@ -49,7 +49,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         className="control-label col-md-2"
         htmlFor="type"
       >
-        method
+        Metode
       </label>
       <div
         className="col-md-3"

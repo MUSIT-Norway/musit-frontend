@@ -94,7 +94,7 @@ export default function AnalysisFormComponent(props: Props) {
           {props.extraDescriptionAttributes.map((attr, i) => (
             <FormDescriptionAttribute
               id="type"
-              label={attr.attributeKey}
+              label={I18n.t('musit.analysis.analysisAttributes.' + attr.attributeKey)}
               labelWidth={2}
               elementWidth={3}
               key={i}

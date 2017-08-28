@@ -113,7 +113,7 @@ export default function Result({
           .map((attrKey: string, i: number) => (
             <div className="form-group" key={i}>
               <label className="control-label col-md-2" htmlFor="externalSource">
-                {attrKey}
+                {I18n.t('musit.analysis.analysisExtraResultAttributes.' + attrKey)}
               </label>
               {extraAttributes[attrKey].type === 'Size'
                 ? showViewMode(

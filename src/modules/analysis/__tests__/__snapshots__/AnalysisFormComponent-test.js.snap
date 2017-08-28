@@ -59,7 +59,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
       }
       elementWidth={3}
       id="type"
-      label="method"
+      label="Metode"
       labelWidth={2}
       onChange="method"
       value="test"

@@ -66,7 +66,7 @@ export default (props: Props) =>
           {props.extraDescriptionAttributes.map((attr, i) => (
             <div className="form-group" key={i}>
               <label className="control-label col-md-2" htmlFor="type">
-                {attr.attributeKey}
+                {I18n.t('musit.analysis.analysisAttributes.' + attr.attributeKey)}
               </label>
               <div className="col-md-3">
                 <p className="form-control-static">
