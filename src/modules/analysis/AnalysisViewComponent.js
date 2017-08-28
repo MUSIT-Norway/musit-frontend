@@ -4,7 +4,7 @@ import { I18n } from 'react-i18nify';
 import MetaInformation from '../../components/metainfo';
 import ObjectTable from './components/ExpandableObjectResultTable';
 import toArray from 'lodash/toArray';
-import Result from './components/Result';
+import ViewResult from './components/ViewResult';
 import ViewPersonRoleDate from '../../components/person/ViewPersonRoleDate';
 import type { FormData } from './shared/formType';
 import type { AppSession } from '../../types/appSession';
@@ -158,13 +158,10 @@ export default (props: Props) =>
               </div>
             </div>
             <hr />
-            <Result
+            <ViewResult
               extraAttributes={props.extraResultAttributes}
-              updateExtraResultAttribute={() => {}}
               externalSource={toArray(props.form.externalSource.value).join(',')}
-              updateExternalSource={() => {}}
               comments={props.form.comments.value}
-              updateComments={() => {}}
               appSession={props.appSession}
               history={props.history}
               parentObjectId={
@@ -174,7 +171,6 @@ export default (props: Props) =>
                       : props.objects[0].uuid
                   : null
               }
-              viewMode={true}
             />
             <div className="form-group">
               <label className="control-label col-md-2" htmlFor="restrictions">

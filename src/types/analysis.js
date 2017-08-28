@@ -6,15 +6,17 @@ import type { AnalysisResultTypes } from 'types/analysisResult';
 export const isMultipleSelectAttribute = (attributeType: string) =>
   /^Array\[.*]$/.test(attributeType);
 
-export type Size = { value: number, unit: string, rawValue: ?string };
+export type Size = { value: number, unit: string, rawValue?: ?string };
 
-export type ExtraResultAttributeValues = {
-  [string]:
-    | ?string
-    | ?{
+export type ExtraResultAttribute =
+  | string
+  | {
       type: ?string,
       value: ?string | ?number | ?Size
-    }
+    };
+
+export type ExtraResultAttributeValues = {
+  [string]: ?ExtraResultAttribute
 };
 
 export type ExtraAttribute = {

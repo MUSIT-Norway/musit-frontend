@@ -2,7 +2,7 @@
 
 exports[`NavigateToObject should render component 1`] = `
 <button
-  className="btn btn-link"
+  className="btn btn-link "
   onClick={[Function]}
   type="button"
 >

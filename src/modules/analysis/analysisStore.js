@@ -77,6 +77,16 @@ type Actions = {
   toggleCancelDialog$: Subject<*>
 };
 
+const updateResultAttribute = ({ name, value }) => state => ({
+  ...state,
+  extraResultAttributes: {
+    ...state.extraResultAttributes,
+    [name]: value.rawValue
+      ? { ...value, value: parseFloat(value.rawValue.replace(',', '.')) }
+      : value
+  }
+});
+
 export const reducer$ = (actions: Actions) => {
   return Observable.merge(
     actions.toggleCancelDialog$.map(() => state => ({
@@ -115,10 +125,7 @@ export const reducer$ = (actions: Actions) => {
       ...state,
       extraDescriptionAttributes: { ...state.extraDescriptionAttributes, [name]: value }
     })),
-    actions.updateExtraResultAttribute$.map(({ name, value }) => state => ({
-      ...state,
-      extraResultAttributes: { ...state.extraResultAttributes, [name]: value }
-    }))
+    actions.updateExtraResultAttribute$.map(updateResultAttribute)
   );
 };
 

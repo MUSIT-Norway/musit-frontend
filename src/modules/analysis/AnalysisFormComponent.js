@@ -11,7 +11,7 @@ import MetaInformation from '../../components/metainfo';
 import ObjectResultTable from './components/ExpandableObjectResultTable';
 import AddRestriction from './components/AddRestriction';
 import ViewRestriction from './components/ViewRestriction';
-import Result from './components/Result';
+import EditResult from './components/EditResult';
 import FormDescriptionAttribute from './components/FormDescriptionAttribute';
 import FormAnalysisType from './components/FormAnalysisType';
 import { getStatusText } from './shared/getters';
@@ -20,7 +20,6 @@ import type { Restriction } from '../../types/analysis';
 import toString from 'lodash/toString';
 import toArray from 'lodash/toArray';
 import ValidatedFormGroup, { isValid } from '../../forms/components/ValidatedFormGroup';
-import { isFormValid } from '../../forms/validators';
 import { FormInput, FormSelect, FormTextArea, FormText } from '../../forms/components';
 import type { AnalysisCollection } from '../../types/analysis';
 
@@ -47,6 +46,7 @@ type Props = {
   history: Function,
   loadingAnalysis: boolean,
   toggleCancelDialog: Function,
+  isFormValid: boolean,
   isRestrictionValidForCancellation: boolean
 };
 
@@ -207,7 +207,7 @@ export default function AnalysisFormComponent(props: Props) {
               </div>
             </div>
             <hr />
-            <Result
+            <EditResult
               extraAttributes={props.extraResultAttributes}
               updateExtraResultAttribute={props.updateExtraResultAttribute}
               externalSource={toArray(props.form.externalSource.rawValue).join(',')}
@@ -279,7 +279,7 @@ export default function AnalysisFormComponent(props: Props) {
           <hr />
           <button
             className="btn btn-primary"
-            disabled={!isFormValid(props.form)}
+            disabled={!props.isFormValid}
             onClick={props.clickSave}
           >
             {I18n.t('musit.texts.save')}

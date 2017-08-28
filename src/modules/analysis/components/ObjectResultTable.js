@@ -2,7 +2,7 @@
 import React from 'react';
 import { I18n } from 'react-i18nify';
 import './ObjectResultTable.css';
-import Result from '../components/Result';
+import Result from './EditResult';
 import type { AppSession } from '../../../types/appSession';
 import type { History } from '../../../types/Routes';
 import FontAwesome from 'react-fontawesome';

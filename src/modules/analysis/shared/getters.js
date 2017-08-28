@@ -76,7 +76,7 @@ export function getAnalysisType(
   analysisTypeId: ?number,
   analysisTypes: Array<AnalysisType>
 ): ?AnalysisType {
-  return analysisTypes && analysisTypes.find(at => at.id === analysisTypeId);
+  return analysisTypeId ? analysisTypes.find(at => at.id === analysisTypeId) : null;
 }
 
 export function getExtraDescriptionAttributes(

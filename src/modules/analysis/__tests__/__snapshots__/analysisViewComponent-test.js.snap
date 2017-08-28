@@ -282,10 +282,6 @@ exports[`AnalysisViewComponent should render properly 1`] = `
           }
         }
         parentObjectId={null}
-        updateComments={[Function]}
-        updateExternalSource={[Function]}
-        updateExtraResultAttribute={[Function]}
-        viewMode={true}
       />
       <div
         className="form-group"

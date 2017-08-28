@@ -2,57 +2,46 @@
 
 exports[`CancelRestriction should render cancel reason and cancelledByName 1`] = `
 <div>
-  <div
-    className="form-group has-error"
+  <FormElement
+    elementWidth={10}
+    hasError={true}
+    id="restrictedBy"
+    label="Opphevet av"
+    labelWidth={2}
   >
-    <label
-      className="control-label col-md-2"
-      htmlFor="restrictedBy"
-    >
-      Opphevet av
-    </label>
-    <div
-      className="col-md-10"
-    >
-      <StatefulActorSuggest
-        appSession={
-          Object {
-            "accessToken": "45667",
-            "actor": Object {
-              "fn": "Test",
-            },
-            "collectionId": "1234",
-            "language": Object {
-              "isEn": false,
-              "isNo": true,
-            },
-            "museumId": 99,
-          }
+    <StatefulActorSuggest
+      appSession={
+        Object {
+          "accessToken": "45667",
+          "actor": Object {
+            "fn": "Test",
+          },
+          "collectionId": "1234",
+          "language": Object {
+            "isEn": false,
+            "isNo": true,
+          },
+          "museumId": 99,
         }
-        onChange={[Function]}
-        value="Dummy userrr"
-      />
-    </div>
-  </div>
-  <div
-    className="form-group has-error"
+      }
+      id="restrictedBy"
+      onChange={[Function]}
+      value="Dummy userrr"
+    />
+  </FormElement>
+  <FormElement
+    elementWidth={10}
+    hasError={true}
+    id="cancelCause"
+    label="Årsak til oppheving"
+    labelWidth={2}
   >
-    <label
-      className="control-label col-md-2"
-      htmlFor="cancelCause"
-    >
-      Årsak til oppheving
-    </label>
-    <div
-      className="col-md-10"
-    >
-      <input
-        className="form-control"
-        id="cancelCause"
-        onChange={[Function]}
-        value="Cancel thizz"
-      />
-    </div>
-  </div>
+    <input
+      className="form-control"
+      id="cancelCause"
+      onChange={[Function]}
+      value="Cancel thizz"
+    />
+  </FormElement>
 </div>
 `;

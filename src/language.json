@@ -494,7 +494,8 @@
         "role": "Role",
         "date": "Date",
         "chooseRole": "Select role",
-        "attachment": "Attachment"
+        "attachment": "Attachment",
+        "findActor": "Find actor"
       },
       "viewControl": {
         "title": "View control",
@@ -1410,7 +1411,8 @@
         "role": "Rolle",
         "date": "Dato",
         "chooseRole": "Velg rolle",
-        "attachment": "Vedlegg"
+        "attachment": "Vedlegg",
+        "findActor": "Finn aktør"
       },
       "viewControl": {
         "title": "Vis kontroll",

@@ -5,6 +5,7 @@ import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import sinon from 'sinon';
 import { appSession } from '../../../../testutils/sampleDataForTest';
+import { FormElement } from '../../../../forms/components';
 import StatefulActorSuggest from '../../components/StatefulActorSuggest';
 
 declare var describe: any;
@@ -109,7 +110,7 @@ describe('CancelRestriction', () => {
       />
     );
 
-    Comp.find('#cancelCause').simulate('change', {
+    Comp.find('input#cancelCause').simulate('change', {
       target: { value: 'Some weird cause' }
     });
     expect(updateRestriction.calledOnce).toBe(true);

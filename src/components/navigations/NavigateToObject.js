@@ -8,14 +8,15 @@ import type { History } from '../../types/Routes';
 type Props = {
   appSession: AppSession,
   objectId: string,
-  history: History
+  history: History,
+  className?: string
 };
 
 const NavigateToObject = (props: Props) => {
   return (
     <button
       type="button"
-      className="btn btn-link"
+      className={`btn btn-link ${props.className || ''}`}
       onClick={e => {
         e.preventDefault();
         props.history.push(

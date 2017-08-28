@@ -7,6 +7,7 @@ import type { Actor } from 'types/actor';
 import { I18n } from 'react-i18nify';
 
 export type Props = {
+  id: string,
   appSession: AppSession,
   onChange: (actorId: ?string) => void,
   value?: ?string
@@ -29,9 +30,9 @@ export default class StatefulActorSuggest extends React.Component {
     return (
       <ActorSuggest
         appSession={this.props.appSession}
-        id="restrictions_requester"
+        id={this.props.id}
         value={this.state.name || this.props.value || ''}
-        placeHolder={I18n.t('musit.analysis.restrictions.findActor')}
+        placeHolder={I18n.t('musit.texts.findActor')}
         onChange={(actor: Actor) => {
           this.props.onChange(MusitActor.getActorId(actor));
           this.setState({ name: actor.fn });

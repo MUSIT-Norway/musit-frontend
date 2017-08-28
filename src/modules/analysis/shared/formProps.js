@@ -22,6 +22,13 @@ import {
   getExtraDescriptionAttributes,
   getExtraResultAttributes
 } from './getters';
+import { isFormValid } from '../../../forms/validators';
+import type {
+  AnalysisType,
+  Size,
+  ExtraResultAttribute,
+  ExtraResultAttributeValues
+} from 'types/analysis';
 
 type Props = {
   updateForm: Function,
@@ -35,12 +42,12 @@ type Props = {
   updateExtraResultAttribute: Function
 };
 
-export default (
+export default function formProps(
   props: Props,
   ajaxPost: Function = simplePost,
   ajaxPut: Function = simplePut
-) => {
-  const analysisType = getAnalysisType(
+) {
+  const analysisType: ?AnalysisType = getAnalysisType(
     parseInt(
       props.store.analysis
         ? props.store.analysis.analysisTypeId
@@ -65,6 +72,8 @@ export default (
 
   return {
     ...props,
+    isFormValid: isFormValid(props.form) &&
+      isResultValid(analysisType, extraResultAttributes),
     isRestrictionValidForCancellation: isRestrictionValidForCancellation(
       (props.form.restriction.value: any)
     ),
@@ -109,7 +118,7 @@ export default (
     ),
     clickCancel: clickCancel(props)
   };
-};
+}
 
 export function isRestrictionValidForCancellation(restriction: ?Restriction): boolean {
   return !!(restriction &&
@@ -233,4 +242,49 @@ export function getExtraAttributeValue(evt: DomEvent, type: string) {
     return values[0];
   }
   return evt.target.value;
+}
+
+function isResultValid(
+  analysisType?: ?AnalysisType,
+  resultAttributes?: ?ExtraResultAttributeValues
+): boolean {
+  if (!analysisType) {
+    return false;
+  }
+  const extraResultAttributes = analysisType.extraResultAttributes;
+  if (!extraResultAttributes) {
+    return true;
+  }
+  return Object.keys(
+    extraResultAttributes
+  ).reduce((resultValid: boolean, attributeKey: string) => {
+    const attributeValid: boolean = isResultAttributeValid(
+      extraResultAttributes && extraResultAttributes[attributeKey],
+      resultAttributes && resultAttributes[attributeKey]
+    );
+    return resultValid && attributeValid;
+  }, true);
+}
+
+function isResultAttributeValid(type?: ?string, attr?: ?ExtraResultAttribute): boolean {
+  if (!attr || !attr.value) {
+    return true;
+  }
+  if (type === 'String') {
+    return typeof attr.value === 'string' && attr.value.length > 0;
+  }
+  if (type === 'Int') {
+    return typeof attr.value === 'number';
+  }
+  if (type === 'Size') {
+    if (!attr) {
+      return false;
+    }
+    const size: ?Size = (attr.value: any);
+    if (!size) {
+      return false;
+    }
+    return !!(size.value && size.unit);
+  }
+  return true;
 }
