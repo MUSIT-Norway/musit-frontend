@@ -44,7 +44,6 @@ type ParentProps = {
 };
 
 type MountProps = {
-  setLoading: () => void,
   clearStore: () => void,
   uploadResultFailed: (errors: Array<string>) => void,
   getAnalysis: GetAnalysis,
@@ -81,7 +80,6 @@ const props = (props: MountProps) => ({
 
 export const onMount = (props: MountProps) => {
   props.setAnalysisTypes(props.predefined.analysisTypes);
-  props.setLoading();
   props.getAnalysis({
     id: props.match.params.analysisId,
     sampleTypes: props.predefined.sampleTypes,
