@@ -4,6 +4,7 @@ import { I18n } from 'react-i18nify';
 import { isMultipleSelectAttribute } from '../../../types/analysis';
 import type { DomEvent } from '../../../types/dom';
 import type { DescriptionAttributeType } from './DescriptionAttributeType';
+import MusitI18n from '../../../components/MusitI18n';
 
 type Props = {
   attr: DescriptionAttributeType,
@@ -26,7 +27,7 @@ const DescriptionAttributeSelect = (props: Props) => {
       {props.attr.allowedValues &&
         props.attr.allowedValues.map((av, i) => (
           <option key={i} value={av.id}>
-            {av.enLabel}
+            <MusitI18n en={av.enLabel} no={av.noLabel} />
           </option>
         ))}
     </select>
