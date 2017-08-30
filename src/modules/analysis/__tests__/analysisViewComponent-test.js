@@ -102,3 +102,66 @@ describe('AnalysisViewComponent', () => {
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 });
+
+const extraAttributeTypes = [
+  {
+    attributeKey: 'types',
+    attributeType: 'Array[Int]',
+    allowedValues: [
+      { id: 1, enLabel: 'Lead 210 Pb', noLabel: 'Bly 210 Pb' },
+      { id: 2, enLabel: 'Strontium 87Sr/86Sr', noLabel: 'Strontium 87Sr/86Sr' },
+      {
+        id: 3,
+        enLabel: 'Strontium/Neodymium (Sr/Nd)',
+        noLabel: 'Strontium/Neodymium (Sr/Nd)'
+      },
+      { id: 4, enLabel: 'Carbon 13C/12C', noLabel: 'Karbon 13C/12C' },
+      { id: 5, enLabel: 'Nitrogen 15N/14N', noLabel: 'Nitrogen 15N/14N' },
+      { id: 6, enLabel: 'Oxygen O18/O16', noLabel: 'Oksygen O18/O16' },
+      { id: 7, enLabel: 'Sulphur 34S/32S', noLabel: 'Svovel 34S/32S' },
+      { id: 8, enLabel: 'Hydrogen 2H/1H', noLabel: 'Hydrogen 2H/1H' }
+    ],
+    attributeValue: [1, 2, 3, 4, 5, 6]
+  }
+];
+
+describe('AnalysisViewComponent with extra attribute types', () => {
+  it('should render Analysis view component', () => {
+    const wrapper = shallow(
+      <AnalysisViewComponent
+        form={form}
+        store={{ analysis, showCancelDialog: false }}
+        extraDescriptionAttributes={extraAttributeTypes}
+        extraResultAttributes={{}}
+        statusText="Fin status"
+        labPlaceText="Fin lab"
+        analysisTypeTerm="Isotope analysis"
+        analysisPurpose="fin purpose"
+        objects={objectsData}
+        clickEdit={() => {}}
+        clickCancel={() => {}}
+        appSession={appSession}
+        history={history}
+        hasRestrictions={true}
+        updateRestriction={() => null}
+        loadingAnalysis={false}
+        cancelRestriction={() => null}
+        toggleCancelDialog={() => null}
+        isRestrictionValidForCancellation={false}
+      />
+    );
+
+    expect(
+      wrapper.find('#avc--extraDescriptionAttributesTypes > li').getNodes()[0].props
+        .children.props.en
+    ).toBe('Lead 210 Pb');
+    wrapper
+      .find('#avc--extraDescriptionAttributesTypes > li')
+      .getNodes()
+      .map((list, i) => {
+        expect(list.props.children.props.en).toBe(
+          extraAttributeTypes[0].allowedValues[i].enLabel
+        );
+      });
+  });
+});

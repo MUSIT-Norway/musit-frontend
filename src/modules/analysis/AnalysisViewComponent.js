@@ -11,6 +11,7 @@ import type { AppSession } from '../../types/appSession';
 import type { AnalysisCollection } from '../../types/analysis';
 import type { History } from '../../types/Routes';
 import ViewRestriction from './components/ViewRestriction';
+import MusitI18n from '../../components/MusitI18n';
 
 type Props = {
   form: FormData,
@@ -68,10 +69,22 @@ export default (props: Props) =>
               <label className="control-label col-md-2" htmlFor="type">
                 {I18n.t('musit.analysis.analysisAttributes.' + attr.attributeKey)}
               </label>
-              <div className="col-md-3">
-                <p className="form-control-static">
-                  {attr.attributeValue}
-                </p>
+              <div className="col-md-3" id="idExtraDescriptionAttributes">
+                {Array.isArray(attr.attributeValue)
+                  ? <ul class="list-unstyled" id="avc--extraDescriptionAttributesTypes">
+                      {attr.attributeValue.map(attrId =>
+                        attr.allowedValues
+                          .filter(allowedValue => allowedValue.id === attrId)
+                          .map(fav => (
+                            <li>
+                              <MusitI18n key={fav.id} en={fav.enLabel} no={fav.noLabel} />
+                            </li>
+                          ))
+                      )}
+                    </ul>
+                  : <p className="form-control-static">
+                      {attr.attributeValue}
+                    </p>}
               </div>
             </div>
           ))}

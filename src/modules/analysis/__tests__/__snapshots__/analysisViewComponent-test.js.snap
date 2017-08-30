@@ -53,6 +53,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
       </label>
       <div
         className="col-md-3"
+        id="idExtraDescriptionAttributes"
       >
         <p
           className="form-control-static"
