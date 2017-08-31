@@ -62,3 +62,34 @@ build:
   only:
     - master@MUSIT-Norway/musit-frontend
 
+build release branch:
+  stage: build
+  tags:
+    - docker
+    - musit
+    - utv
+  image: $MUSIT_DOCKER_REGISTRY/musit/docker-node
+  variables:
+    DOCKER_DRIVER: overlay
+
+  services:
+    - $MUSIT_DOCKER_REGISTRY/library/docker:dind
+
+  before_script:
+    - echo "Running build $CI_BUILD_ID"
+    - mkdir $HOME/.docker
+    - echo $DOCKER_AUTH_CONFIG > $HOME/.docker/config.json
+    - apt-get update -qq && apt-get install -qy libelf1
+    - docker info
+    # Ensure that we are building the client from the correct Docker image.
+    - sed -e "s/FROM node/FROM $MUSIT_DOCKER_REGISTRY\/library\/node/g" Dockerfile > Dockerfile.tmp && mv Dockerfile.tmp Dockerfile
+
+  script:
+    - sed -i 's/LOCAL_DEVELOPMENT/'$CI_COMMIT_SHA'/g' $CI_PROJECT_DIR/src/build.js
+    - docker build -t $MUSIT_DOCKER_REGISTRY/musit/webpack:utv .
+    - docker push $MUSIT_DOCKER_REGISTRY/musit/webpack:utv
+
+  only:
+    - release@MUSIT-Norway/musit-frontend
+
+  when: manual
