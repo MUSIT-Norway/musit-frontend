@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import React from 'react';
 import SampleAddComponent from '../SampleFormComponent';
 import sinon from 'sinon';
-import { appSession, history } from '../../../testutils/sampleDataForTest';
+import { appSession, history, sample } from '../../../testutils/sampleDataForTest';
 import { createEnLangAppSessionContext } from '../../../testutils/appSessionContext';
 
 declare var describe: any;
@@ -30,8 +30,10 @@ describe('AnalysisSampleFormPageAdd', () => {
             ]
           }
         }}
+        canEditSampleType={true}
+        showSampleSubType={false}
         form={formDefinition}
-        parentSample={null}
+        parentSample={sample}
         updateForm={updateForm}
         clickSave={clickSave}
         appSession={appSession}
@@ -53,6 +55,10 @@ describe('AnalysisSampleFormPageAdd', () => {
           nodeId: 'blee'
         }}
         predefined={{
+          analysisTypes: [],
+          purposes: [],
+          analysisLabList: [],
+          categories: {},
           sampleTypes: {},
           storageContainers: [],
           storageMediums: [],
@@ -99,48 +105,9 @@ describe('AnalysisSampleFormPageAdd', () => {
         }}
         form={formDefinition}
         updateSampleType={updateSampleType}
-        parentSample={{
-          id: '123',
-          uuid: '0000-0000-123',
-          objectId: '0000-0000-123',
-          originatedObjectUuid: '0000-0000-123',
-          museumId: 99,
-          status: 1,
-          leftoverSample: 1,
-          isExtracted: false,
-          isDeleted: false,
-          sampleTypeId: 1,
-          museumNo: 'M1234',
-          term: 'Carex saxatilis',
-          subNo: 'a',
-          objectType: 'collection',
-          currentLocation: { pathNames: null, breadcrumb: null },
-          parentObject: {
-            objectId: '000-0000-0001',
-            objectType: 'collection',
-            sampleOrObjectData: {}
-          },
-          registeredDate: 'some date',
-          registeredStamp: { user: '000-0000-0001', date: '2017' },
-          // updatedStamp: {name: null},
-          objectUUID: '0000-0000-123',
-          sampleSubType: 'some sub type',
-          doneBy: 'none',
-          hasAnalyse: false,
-          date: 'some date',
-          breadcrumb: [],
-          details: 'some details',
-          nodeId: 'blee',
-          sampleNum: 12,
-          sampleType: {
-            sampleTypeId: 1,
-            sampleType: null,
-            enSampleType: 'en',
-            noSampleType: 'no',
-            noSampleSubType: null,
-            enSampleSubType: null
-          }
-        }}
+        parentSample={sample}
+        canEditSampleType={true}
+        showSampleSubType={false}
         updateForm={updateForm}
         history={history}
         clickSave={clickSave}
@@ -161,6 +128,10 @@ describe('AnalysisSampleFormPageAdd', () => {
           nodeId: 'blee'
         }}
         predefined={{
+          analysisTypes: [],
+          purposes: [],
+          analysisLabList: [],
+          categories: {},
           sampleTypes: {},
           storageContainers: [],
           storageMediums: [],

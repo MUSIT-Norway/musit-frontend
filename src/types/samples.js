@@ -1,5 +1,5 @@
 // @flow
-
+import type { SampleType } from './sample';
 import type { ActorStamp } from './actor';
 import type { ObjectId, MuseumId, ActorId, SampleId, SampleTypeId } from './ids';
 
@@ -80,3 +80,5 @@ export type SampleStatusData = {
 };
 
 export type SampleStatus = SampleStatusData[];
+
+export type SampleDateExtended = { sampleType?: SampleType } & SampleData;

@@ -2,6 +2,7 @@
 import type { AppSession } from '../types/appSession';
 import type { History } from '../types/Routes';
 import type { AnalysisCollection } from '../types/analysis';
+import type { SampleDateExtended } from '../types/samples';
 
 export const appSession: AppSession = {
   museumId: 99,
@@ -38,4 +39,47 @@ export const analysis: AnalysisCollection = {
   events: [],
   term: 'Mansjettknapp',
   type: 'Analysis'
+};
+
+export const sample: SampleDateExtended = {
+  id: '123',
+  uuid: '0000-0000-123',
+  objectId: '0000-0000-123',
+  originatedObjectUuid: '0000-0000-123',
+  museumId: 99,
+  status: 1,
+  leftoverSample: 1,
+  isExtracted: false,
+  isDeleted: false,
+  sampleTypeId: 1,
+  museumNo: 'M1234',
+  term: 'Carex saxatilis',
+  subNo: 'a',
+  objectType: 'collection',
+  currentLocation: { pathNames: null, breadcrumb: null },
+  parentObject: {
+    objectId: '000-0000-0001',
+    objectType: 'collection',
+    sampleOrObjectData: {}
+  },
+  registeredDate: 'some date',
+  registeredStamp: { user: '000-0000-0001', date: '2017' },
+  // updatedStamp: {name: null},
+  objectUUID: '0000-0000-123',
+  sampleSubType: 'some sub type',
+  doneBy: 'none',
+  hasAnalyse: false,
+  date: 'some date',
+  breadcrumb: [],
+  details: 'some details',
+  nodeId: 'blee',
+  sampleNum: 12,
+  sampleType: {
+    sampleTypeId: 1,
+    sampleType: null,
+    enSampleType: 'en',
+    noSampleType: 'no',
+    noSampleSubType: null,
+    enSampleSubType: null
+  }
 };

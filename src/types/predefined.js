@@ -12,5 +12,8 @@ export type Predefined = {
   purposes: Purposes,
   analysisLabList: AnalysisLabList,
   sampleTypes: SampleTypes,
-  categories: Categories
+  categories: Categories,
+  storageContainers: Array<any>,
+  storageMediums: Array<any>,
+  treatments: Array<any>
 };

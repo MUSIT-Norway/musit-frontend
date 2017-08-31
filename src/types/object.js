@@ -83,7 +83,7 @@ export type MusitObject = {
 export type ObjectData = {
   // not provided from the backend
   objectId?: ?string,
-  objectUUID: string,
+  objectUUID?: ?string,
   currentLocation: { pathNames: ?Array<NamedPathElement> },
   nodeId: string
 } & MusitObject;

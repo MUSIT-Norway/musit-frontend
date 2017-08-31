@@ -1,13 +1,13 @@
 // @flow
 import React from 'react';
-import PersonRoleDate from '../../components/person/PersonRoleDate';
-import Sample from '../../models/sample';
-import type { ObjectData } from '../../types/object';
+import { I18n } from 'react-i18nify';
 import type { AppSession } from '../../types/appSession';
 import type { History } from '../../types/Routes';
-import type { SampleData } from '../../types/samples';
+import type { DomEvent } from '../../types/dom';
+import type { Predefined } from '../../types/predefined';
 import type { SampleDateExtended } from './sampleStore';
 import type { FormDetails } from './types/form';
+import type { ObjectOrSample } from './types';
 import ValidatedFormGroup from '../../forms/components/ValidatedFormGroup';
 import FieldCheckBox from '../../forms/components/FieldCheckBox';
 import FieldDropDown from '../../forms/components/FieldDropDown';
@@ -15,20 +15,9 @@ import FieldInput from '../../forms/components/FieldInput';
 import FieldTextArea from '../../forms/components/FieldTextArea';
 import MetaInformation from '../../components/metainfo';
 import ReadOnlySampleType from './components/ReadOnlySampleType';
-import { I18n } from 'react-i18nify';
-import NavigateToObject from '../../components/navigations/NavigateToObject';
-import MusitI18n from '../../components/MusitI18n';
-
-type Predefined = {
-  sampleTypes: any,
-  storageContainers: Array<any>,
-  storageMediums: Array<any>,
-  treatments: Array<any>
-};
-
-export type ObjectWithSampleAndTypes = ObjectData &
-  SampleData & { sampleType: string, sampleSubType: string };
-export type ObjectOrSample = ObjectWithSampleAndTypes | ObjectData;
+import ObjectAndSampleDetails from './components/ObjectAndSampleDetails';
+import PersonRoleDate from '../../components/person/PersonRoleDate';
+import Sample from '../../models/sample';
 
 export type Props = {
   form: FormDetails,
@@ -36,41 +25,22 @@ export type Props = {
   updateForm: Function,
   clickSave: () => void,
   appSession: AppSession,
-  clickBack: (e: *) => void,
+  clickBack: (e: DomEvent) => void,
   updateSampleType: Function,
   sampleTypeDisplayName: Function,
   isFormValid: (f: FormDetails) => boolean,
-  objectData: ObjectData & SampleData & { sampleType: string, sampleSubType: string },
   predefined: Predefined,
   history: History,
   objectData: ObjectOrSample,
-  predefined: Predefined
+  showSampleSubType: boolean,
+  canEditSampleType: boolean
 };
 
-export default function SampleFormComponent({
-  form,
-  parentSample,
-  updateForm,
-  clickSave,
-  updateSampleType,
-  sampleTypeDisplayName,
-  isFormValid,
-  appSession,
-  clickBack,
-  objectData,
-  predefined,
-  history
-}: Props) {
-  const canEditSampleType = !form.sampleNum;
-
-  // true if sampleType has value and the sampleType exists in sampleTypes from store (backend)
-  const shouldShowSampleSubType =
-    form.sampleType.rawValue &&
-    form.sampleType.rawValue.trim().length > 0 &&
-    predefined.sampleTypes &&
-    predefined.sampleTypes[form.sampleType.rawValue] &&
-    predefined.sampleTypes[form.sampleType.rawValue].length > 1;
-
+export default function SampleFormComponent(props: Props) {
+  const form = props.form;
+  const predefined = props.predefined;
+  const parentSample = props.parentSample;
+  const objectData = props.objectData;
   return (
     <div className="container">
       <form className="form-horizontal">
@@ -95,56 +65,18 @@ export default function SampleFormComponent({
             ? I18n.t('musit.sample.derivedFromObjectAndSample')
             : I18n.t('musit.sample.derivedFromObject')}
         </h4>
-        <div>
-          <span style={{ marginRight: 20 }}>
-            <strong>{I18n.t('musit.analysis.museumNumber')}</strong> {objectData.museumNo}
-          </span>
-          <span style={{ marginRight: 20 }}>
-            <strong>{I18n.t('musit.analysis.underNumber')}</strong> {objectData.subNo}
-          </span>
-          <span>
-            <strong>{I18n.t('musit.analysis.term')}</strong> {objectData.term}
-          </span>
-          <NavigateToObject
-            objectId={objectData.uuid}
-            appSession={appSession}
-            history={history}
-          />
-          {parentSample &&
-            parentSample.sampleNum &&
-            <span>
-              <br />
-              <span style={{ marginRight: 20 }}>
-                <strong>{I18n.t('musit.sample.sampleNumber')}</strong>
-                {' '}
-                {parentSample.sampleNum}
-              </span>
-              <span style={{ marginRight: 20 }}>
-                <strong>{I18n.t('musit.sample.sampleType')}</strong>
-                {' '}
-                {parentSample.sampleType &&
-                  <MusitI18n
-                    en={parentSample.sampleType.enSampleType}
-                    no={parentSample.sampleType.noSampleType}
-                  />}
-              </span>
-              <span style={{ marginRight: 20 }}>
-                <strong>{I18n.t('musit.sample.sampleSubType')}</strong>
-                {' '}
-                {parentSample.sampleType &&
-                  <MusitI18n
-                    en={parentSample.sampleType.enSampleSubType}
-                    no={parentSample.sampleType.noSampleSubType}
-                  />}
-              </span>
-            </span>}
-        </div>
+        <ObjectAndSampleDetails
+          appSession={props.appSession}
+          history={props.history}
+          objectData={objectData}
+          parentSample={parentSample}
+        />
         <hr />
         <h4>{I18n.t('musit.sample.personsAssociatedWithSampleTaking')}</h4>
         <PersonRoleDate
-          appSession={appSession}
+          appSession={props.appSession}
           personData={form.persons.rawValue}
-          updateForm={updateForm}
+          updateForm={props.updateForm}
           fieldName={form.persons.name}
           roles={['responsible', 'creator']}
           showDateForRole={(roleName: string) => roleName !== 'responsible'}
@@ -158,7 +90,7 @@ export default function SampleFormComponent({
               <FieldInput
                 field={form.sampleNum}
                 title={I18n.t('musit.sample.sampleNumber')}
-                onChange={updateForm}
+                onChange={props.updateForm}
                 readOnly={true}
               />
             </ValidatedFormGroup>}
@@ -166,41 +98,41 @@ export default function SampleFormComponent({
             <FieldInput
               field={form.sampleId}
               title={I18n.t('musit.sample.sampleId')}
-              onChange={updateForm}
+              onChange={props.updateForm}
             />
           </ValidatedFormGroup>
           <ValidatedFormGroup fields={[form.externalId, form.externalIdSource]}>
             <FieldInput
               field={form.externalId}
               title={I18n.t('musit.sample.externalId')}
-              onChange={updateForm}
+              onChange={props.updateForm}
             />
             <FieldInput
               field={form.externalIdSource}
               title={I18n.t('musit.sample.externalIdSource')}
-              onChange={updateForm}
+              onChange={props.updateForm}
             />
           </ValidatedFormGroup>
-          {canEditSampleType
+          {props.canEditSampleType
             ? <ValidatedFormGroup fields={[form.sampleType, form.sampleSubType]}>
                 <FieldDropDown
                   field={form.sampleType}
                   title={I18n.t('musit.sample.sampleType')}
                   defaultOption={I18n.t('musit.sample.chooseType')}
-                  onChange={updateSampleType}
+                  onChange={props.updateSampleType}
                   selectItems={
                     predefined.sampleTypes ? Object.keys(predefined.sampleTypes) : []
                   }
                 />
-                {shouldShowSampleSubType &&
+                {props.showSampleSubType &&
                   <FieldDropDown
                     field={form.sampleSubType}
                     title={I18n.t('musit.sample.sampleSubType')}
                     defaultOption={I18n.t('musit.sample.chooseSubType')}
-                    valueFn={sampleTypeDisplayName}
-                    displayFn={sampleTypeDisplayName}
-                    appSession={appSession}
-                    onChange={updateForm}
+                    valueFn={props.sampleTypeDisplayName}
+                    displayFn={props.sampleTypeDisplayName}
+                    appSession={props.appSession}
+                    onChange={props.updateForm}
                     selectItems={
                       predefined.sampleTypes
                         ? predefined.sampleTypes[form.sampleType.rawValue]
@@ -216,7 +148,7 @@ export default function SampleFormComponent({
             <FieldTextArea
               field={form.description}
               title={I18n.t('musit.sample.description')}
-              onChangeInput={updateForm}
+              onChangeInput={props.updateForm}
               inputProps={{ rows: 5 }}
               controlWidth={8}
             />
@@ -227,8 +159,8 @@ export default function SampleFormComponent({
               title={I18n.t('musit.sample.status')}
               defaultOption={I18n.t('musit.sample.chooseStatus')}
               valueFn={v => v.id}
-              displayFn={v => (appSession.language.isEn ? v.enStatus : v.noStatus)}
-              onChange={updateForm}
+              displayFn={v => (props.appSession.language.isEn ? v.enStatus : v.noStatus)}
+              onChange={props.updateForm}
               selectItems={Sample.sampleStatuses}
             />
           </ValidatedFormGroup>
@@ -236,14 +168,14 @@ export default function SampleFormComponent({
             <FieldInput
               field={form.size}
               title={I18n.t('musit.sample.volumeOrWeight')}
-              onChange={updateForm}
+              onChange={props.updateForm}
               inputProps={{ className: 'size' }}
             />
             <FieldDropDown
               field={form.sizeUnit}
               title=""
               defaultOption={I18n.t('musit.sample.chooseUnit')}
-              onChange={updateForm}
+              onChange={props.updateForm}
               selectItems={Sample.sampleSizeUnits}
             />
           </ValidatedFormGroup>
@@ -252,12 +184,12 @@ export default function SampleFormComponent({
               field={form.container}
               title={I18n.t('musit.sample.storageContainer')}
               defaultOption={I18n.t('musit.sample.chooseStorageContainer')}
-              onChange={updateForm}
+              onChange={props.updateForm}
               selectItems={
                 predefined.storageContainers
                   ? predefined.storageContainers.map(
                       c =>
-                        appSession.language.isEn
+                        props.appSession.language.isEn
                           ? c.enStorageContainer
                           : c.noStorageContainer
                     )
@@ -270,12 +202,14 @@ export default function SampleFormComponent({
               field={form.storageMedium}
               title={I18n.t('musit.sample.storageMedium')}
               defaultOption={I18n.t('musit.sample.chooseStorageMedium')}
-              onChange={updateForm}
+              onChange={props.updateForm}
               selectItems={
                 predefined.storageMediums
                   ? predefined.storageMediums.map(
                       m =>
-                        appSession.language.isEn ? m.enStorageMedium : m.noStorageMedium
+                        props.appSession.language.isEn
+                          ? m.enStorageMedium
+                          : m.noStorageMedium
                     )
                   : []
               }
@@ -286,11 +220,12 @@ export default function SampleFormComponent({
               field={form.treatment}
               title={I18n.t('musit.sample.treatment')}
               defaultOption={I18n.t('musit.sample.chooseTreatment')}
-              onChange={updateForm}
+              onChange={props.updateForm}
               selectItems={
                 predefined.treatments
                   ? predefined.treatments.map(
-                      t => (appSession.language.isEn ? t.enTreatment : t.noTreatment)
+                      t =>
+                        props.appSession.language.isEn ? t.enTreatment : t.noTreatment
                     )
                   : []
               }
@@ -302,7 +237,7 @@ export default function SampleFormComponent({
               title={I18n.t('musit.sample.hasResidualMaterial')}
               yesValue={3}
               noValue={2}
-              onChange={updateForm}
+              onChange={props.updateForm}
               defaultValue="1"
             />
           </ValidatedFormGroup>
@@ -310,16 +245,24 @@ export default function SampleFormComponent({
             <FieldTextArea
               field={form.note}
               title={I18n.t('musit.sample.comments')}
-              onChangeInput={updateForm}
+              onChangeInput={props.updateForm}
               inputProps={{ rows: 5, className: 'note' }}
               controlWidth={8}
             />
           </ValidatedFormGroup>
         </div>
-        <button className="btn btn-primary" disabled={!isFormValid} onClick={clickSave}>
+        <button
+          className="btn btn-primary"
+          disabled={!props.isFormValid}
+          onClick={props.clickSave}
+        >
           {I18n.t('musit.texts.save')}
         </button>
-        <button className="btn btn-link" style={{ marginLeft: 20 }} onClick={clickBack}>
+        <button
+          className="btn btn-link"
+          style={{ marginLeft: 20 }}
+          onClick={props.clickBack}
+        >
           {I18n.t('musit.texts.cancel')}
         </button>
       </form>

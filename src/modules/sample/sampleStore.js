@@ -5,8 +5,8 @@ import { Observable, Subject } from 'rxjs';
 import Sample from '../../models/sample';
 import predefined$ from '../../stores/predefined';
 import { KEEP_ALIVE } from '../../stores/constants';
-import type { SampleData } from '../../types/samples';
 import type { Predefined } from 'types/predefined';
+import type { SampleData } from '../../types/samples';
 import type { SampleType, SampleTypes, PredefinedSampleTypes } from '../../types/sample';
 
 export type SampleDateExtended = { sampleType?: SampleType } & SampleData;

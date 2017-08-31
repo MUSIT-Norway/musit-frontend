@@ -35,6 +35,11 @@ export const sampleProps = (props: Props, doSaveSample: Function) => {
   return {
     objectData: props.objectStore.objectData,
     isFormValid: isFormValid(props.form),
+    showSampleSubType: showSampleSubType(
+      props.form.sampleType.rawValue,
+      props.predefined.sampleTypes
+    ),
+    canEditSampleType: !props.form.sampleNum,
     updateSampleType: updateSampleType(
       props.form,
       props.appSession,
@@ -60,6 +65,22 @@ export const sampleProps = (props: Props, doSaveSample: Function) => {
     }
   };
 };
+
+/**
+ * returns true if sampleType has value and the sampleType exists in sampleTypes from store (backend).
+ * else undefined.
+ *
+ * @param sampleTypeStr
+ * @param sampleTypes
+ * @returns {boolean}
+ */
+function showSampleSubType(sampleTypeStr: ?string, sampleTypes: ?any): boolean {
+  return !!(sampleTypeStr &&
+    sampleTypeStr.trim().length > 0 &&
+    sampleTypes &&
+    sampleTypes[sampleTypeStr] &&
+    sampleTypes[sampleTypeStr].length > 1);
+}
 
 function updateSampleType(
   form,
