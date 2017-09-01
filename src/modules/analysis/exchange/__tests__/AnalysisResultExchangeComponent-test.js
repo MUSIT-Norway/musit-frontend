@@ -71,6 +71,7 @@ describe('AnalysisResultExchangeComponent', () => {
       analysisId: 1,
       type: 'sample',
       objectId: null,
+      affectedThing: null,
       museumNo: null,
       subNo: null,
       arkFindingNo: null,

@@ -70,6 +70,7 @@ export type MeasurementResultExchangeTemplate = BaseExchangeTemplate & {
   resultPrecision: ?string,
   resultMethod: ?string
 };
+
 export const measurementResultHeader = [
   'resultExternalRef',
   'resultComment',
@@ -173,6 +174,7 @@ export const createAnalysisCollectionRow = (
     analysisId: analysisCollection.id,
     // object fields
     objectId: null,
+    affectedThing: null,
     museumNo: null,
     subNo: null,
     arkFindingNo: null,
@@ -197,13 +199,13 @@ export const createEventRow = (
         type: event.objectType,
         analysisId: event.id,
         // object fields
-        objectId: event.originatedObjectUuid || event.objectId,
+        objectId: event.originatedObjectUuid || event.affectedThing,
         museumNo: event.museumNo || null,
         subNo: event.subNo || null,
         arkFindingNo: event.arkFindingNo || null,
         term: event.term || null,
         // sample fields
-        sampleObjectId: event.originatedObjectUuid ? event.objectId : null,
+        sampleObjectId: event.originatedObjectUuid ? event.affectedThing : null,
         sampleNum: event.sampleNum || null,
         sampleId: event.sampleId || null,
         sampleType: event.sampleType || null

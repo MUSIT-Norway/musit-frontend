@@ -244,6 +244,7 @@ const analysisStoreObjectDataFixture: AnalysisStoreState = {
         registeredBy: '93025486-349f-4e48-9605-7e8d34d7ef51',
         registeredDate: '2017-06-20T10:50:34+00:00',
         objectId: '12080e3e-2ca2-41b1-9d4a-4d72e292dcd8',
+        affectedThing: '12080e3e-2ca2-41b1-9d4a-4d72e292dcd8',
         objectType: 'collection',
         partOf: 1,
         type: 'Analysis',
@@ -289,6 +290,7 @@ const analysisStoreSampleDataFixture: AnalysisStoreState = {
         registeredBy: '93025486-349f-4e48-9605-7e8d34d7ef51',
         registeredDate: '2017-06-22T12:22:06+00:00',
         objectId: 'c71a4198-0063-4bc2-9a48-8b1395f206b3',
+        affectedThing: 'c71a4198-0063-4bc2-9a48-8b1395f206b3',
         objectType: 'sample',
         partOf: 22,
         type: 'Analysis',
@@ -338,7 +340,7 @@ const expectedTemplateRowForObject: ResultExchangeTemplates = {
   type: 'collection',
   analysisId: event.id,
   // object
-  objectId: event.objectId,
+  objectId: event.affectedThing,
   museumNo: event.museumNo || null,
   subNo: event.subNo || null,
   arkFindingNo: event.arkFindingNo || null,
@@ -356,6 +358,7 @@ const expectedTemplateRowForObject: ResultExchangeTemplates = {
 const createAnalysisCollectionRow = (id: number) => ({
   type: 'analysis',
   analysisId: id,
+  affectedThing: null,
   // object
   objectId: null,
   museumNo: null,

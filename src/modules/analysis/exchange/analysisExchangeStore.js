@@ -29,6 +29,7 @@ export type Event = {
   id: number,
   objectType: 'collection' | 'sample',
   objectId: string,
+  affectedThing?: ?string,
   museumNo?: ?string,
   subNo?: ?string,
   arkFindingNo?: ?string,
