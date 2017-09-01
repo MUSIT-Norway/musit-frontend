@@ -3,21 +3,20 @@ import React from 'react';
 import NavigateToObject from '../../../components/navigations/NavigateToObject';
 import MusitI18n from '../../../components/MusitI18n';
 import { I18n } from 'react-i18nify';
-import type { SampleDateExtended } from '../sampleStore';
+import type { SampleDataExtended } from '../sampleStore';
 import type { ObjectOrSample } from '../types';
 import type { AppSession } from '../../../types/appSession';
 import type { History } from '../../../types/Routes';
 
 export type Props = {
-  objectData: ObjectOrSample,
-  parentSample: ?SampleDateExtended,
+  objectData: ObjectOrSample & { derivedFrom: ?SampleDataExtended },
   history: History,
   appSession: AppSession
 };
 
 export default function ObjectAndSampleDetails(props: Props) {
-  const parentSample = props.parentSample;
   const objectData = props.objectData;
+  const derivedFrom = objectData.derivedFrom;
   return (
     <div>
       <span style={{ marginRight: 20 }}>
@@ -40,31 +39,31 @@ export default function ObjectAndSampleDetails(props: Props) {
         appSession={props.appSession}
         history={props.history}
       />
-      {parentSample &&
-        parentSample.sampleNum &&
+      {derivedFrom &&
+        derivedFrom.sampleNum &&
         <span>
           <br />
           <span style={{ marginRight: 20 }}>
             <strong>{I18n.t('musit.sample.sampleNumber')}</strong>
             {' '}
-            {parentSample.sampleNum}
+            {derivedFrom.sampleNum}
           </span>
           <span style={{ marginRight: 20 }}>
             <strong>{I18n.t('musit.sample.sampleType')}</strong>
             {' '}
-            {parentSample.sampleType &&
+            {derivedFrom.sampleType &&
               <MusitI18n
-                en={parentSample.sampleType.enSampleType}
-                no={parentSample.sampleType.noSampleType}
+                en={derivedFrom.sampleType.enSampleType}
+                no={derivedFrom.sampleType.noSampleType}
               />}
           </span>
           <span style={{ marginRight: 20 }}>
             <strong>{I18n.t('musit.sample.sampleSubType')}</strong>
             {' '}
-            {parentSample.sampleType &&
+            {derivedFrom.sampleType &&
               <MusitI18n
-                en={parentSample.sampleType.enSampleSubType}
-                no={parentSample.sampleType.noSampleSubType}
+                en={derivedFrom.sampleType.enSampleSubType}
+                no={derivedFrom.sampleType.noSampleSubType}
               />}
           </span>
         </span>}

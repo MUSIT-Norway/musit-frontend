@@ -17,14 +17,14 @@ describe('ObjectAndSampleDetails', () => {
       term: 'Fishy fish',
       currentLocation: { pathNames: [] },
       objectType: 'collection',
-      nodeId: ''
+      nodeId: '',
+      derivedFrom: sample
     };
     const wrapper = shallow(
       <ObjectAndSampleDetails
         history={history}
         appSession={appSession}
         objectData={objectData}
-        parentSample={sample}
       />
     );
     expect(

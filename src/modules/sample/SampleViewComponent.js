@@ -1,16 +1,15 @@
 // @flow
 import React from 'react';
-import MetaInformation from '../../components/metainfo';
+import { I18n } from 'react-i18nify';
 import type { SampleData } from '../../types/samples';
 import type { AppSession } from '../../types/appSession';
 import type { History } from '../../types/Routes';
 import type { FormDetails } from './types/form';
 import type { ObjectData } from '../../types/object';
+import MetaInformation from '../../components/metainfo';
 import ReadOnlySampleType from './components/ReadOnlySampleType';
 import ViewPersonRoleDate from '../../components/person/ViewPersonRoleDate';
-import { I18n } from 'react-i18nify';
-import NavigateToObject from '../../components/navigations/NavigateToObject';
-import MusitI18n from '../../components/MusitI18n';
+import ObjectAndSampleDetails from './components/ObjectAndSampleDetails';
 
 type Props = {
   form: FormDetails,
@@ -93,54 +92,12 @@ export default function SampleViewComponent(props: Props & SampleProps) {
           {derivedFrom.sampleNum
             ? I18n.t('musit.sample.derivedFromObjectAndSample')
             : I18n.t('musit.sample.derivedFromObject')}
-
         </h4>
-        <div>
-          <span style={{ marginRight: 20 }}>
-            <strong>{I18n.t('musit.analysis.museumNumber')}</strong>
-            {' '}
-            {objectData.museumNo}
-          </span>
-          <span style={{ marginRight: 20 }}>
-            <strong>{I18n.t('musit.analysis.underNumber')}</strong>
-            {' '}
-            {objectData.subNo}
-          </span>
-          <span>
-            <strong>{I18n.t('musit.analysis.term')}</strong>
-            {' '}
-            {objectData.term}
-          </span>
-          <NavigateToObject
-            objectId={objectData.uuid}
-            appSession={props.appSession}
-            history={props.history}
-          />
-          {derivedFrom.sampleNum &&
-            <span>
-              <br />
-              <span style={{ marginRight: 20 }}>
-                <strong>{I18n.t('musit.sample.sampleNumber')}</strong>
-                {' '}
-                {derivedFrom.sampleNum}
-              </span>
-
-              <span style={{ marginRight: 20 }}>
-                <strong>{I18n.t('musit.sample.sampleType')} </strong>
-                <MusitI18n
-                  en={derivedFrom.sampleType.enSampleType}
-                  no={derivedFrom.sampleType.noSampleType}
-                />
-              </span>
-              <span style={{ marginRight: 20 }}>
-                <strong>{I18n.t('musit.sample.sampleSubType')} </strong>
-                <MusitI18n
-                  en={derivedFrom.sampleType.enSampleSubType}
-                  no={derivedFrom.sampleType.noSampleSubType}
-                />
-              </span>
-            </span>}
-        </div>
+        <ObjectAndSampleDetails
+          appSession={props.appSession}
+          history={props.history}
+          objectData={{ ...objectData, derivedFrom }}
+        />
         <hr />
         <h4>{I18n.t('musit.sample.personsAssociatedWithSampleTaking')}</h4>
         <ViewPersonRoleDate

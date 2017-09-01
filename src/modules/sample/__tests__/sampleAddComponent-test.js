@@ -33,7 +33,6 @@ describe('AnalysisSampleFormPageAdd', () => {
         canEditSampleType={true}
         showSampleSubType={false}
         form={formDefinition}
-        parentSample={sample}
         updateForm={updateForm}
         clickSave={clickSave}
         appSession={appSession}
@@ -42,18 +41,21 @@ describe('AnalysisSampleFormPageAdd', () => {
         clickBack={clickBack}
         sampleTypeDisplayName={sampleTypeDisplayName}
         isFormValid={isFormValid}
-        objectData={{
-          id: 123,
-          uuid: '0000-0000-123',
-          museumId: 99,
-          museumNo: 'M1234',
-          term: 'Carex saxatilis',
-          subNo: 'a',
-          objectType: 'collection',
-          currentLocation: { pathNames: null },
-          objectUUID: '0000-0000-123',
-          nodeId: 'blee'
-        }}
+        objectData={[
+          {
+            id: 123,
+            uuid: '0000-0000-123',
+            museumId: 99,
+            museumNo: 'M1234',
+            term: 'Carex saxatilis',
+            subNo: 'a',
+            objectType: 'collection',
+            currentLocation: { pathNames: null },
+            objectUUID: '0000-0000-123',
+            nodeId: 'blee',
+            derivedFrom: sample
+          }
+        ]}
         predefined={{
           analysisTypes: [],
           purposes: [],
@@ -105,7 +107,6 @@ describe('AnalysisSampleFormPageAdd', () => {
         }}
         form={formDefinition}
         updateSampleType={updateSampleType}
-        parentSample={sample}
         canEditSampleType={true}
         showSampleSubType={false}
         updateForm={updateForm}
@@ -115,18 +116,21 @@ describe('AnalysisSampleFormPageAdd', () => {
         clickBack={clickBack}
         sampleTypeDisplayName={sampleTypeDisplayName}
         isFormValid={isFormValid}
-        objectData={{
-          id: 123,
-          uuid: '0000-0000-123',
-          museumId: 99,
-          museumNo: 'M1234',
-          term: 'Carex saxatilis',
-          subNo: 'a',
-          objectType: 'collection',
-          currentLocation: { pathNames: null },
-          objectUUID: '0000-0000-123',
-          nodeId: 'blee'
-        }}
+        objectData={[
+          {
+            id: 123,
+            uuid: '0000-0000-123',
+            museumId: 99,
+            museumNo: 'M1234',
+            term: 'Carex saxatilis',
+            subNo: 'a',
+            objectType: 'collection',
+            currentLocation: { pathNames: null },
+            objectUUID: '0000-0000-123',
+            nodeId: 'blee',
+            derivedFrom: sample
+          }
+        ]}
         predefined={{
           analysisTypes: [],
           purposes: [],

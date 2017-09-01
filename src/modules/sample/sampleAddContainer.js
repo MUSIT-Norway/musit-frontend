@@ -26,7 +26,7 @@ const data = {
 const props = (props, ajaxPost = simplePost) => ({
   ...props,
   ...sampleProps(props, Sample.addSample(ajaxPost)),
-  parentSample: props.store.sample
+  objectData: [{ ...props.objectStore.objectData, derivedFrom: props.store.sample }]
 });
 
 const commands = {

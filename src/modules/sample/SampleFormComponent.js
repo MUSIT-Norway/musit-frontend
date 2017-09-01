@@ -5,7 +5,7 @@ import type { AppSession } from '../../types/appSession';
 import type { History } from '../../types/Routes';
 import type { DomEvent } from '../../types/dom';
 import type { Predefined } from '../../types/predefined';
-import type { SampleDateExtended } from './sampleStore';
+import type { SampleDataExtended } from './sampleStore';
 import type { FormDetails } from './types/form';
 import type { ObjectOrSample } from './types';
 import ValidatedFormGroup from '../../forms/components/ValidatedFormGroup';
@@ -21,7 +21,6 @@ import Sample from '../../models/sample';
 
 export type Props = {
   form: FormDetails,
-  parentSample: ?SampleDateExtended,
   updateForm: Function,
   clickSave: () => void,
   appSession: AppSession,
@@ -31,7 +30,7 @@ export type Props = {
   isFormValid: (f: FormDetails) => boolean,
   predefined: Predefined,
   history: History,
-  objectData: ObjectOrSample,
+  objectData: Array<ObjectOrSample & { derivedFrom: ?SampleDataExtended }>,
   showSampleSubType: boolean,
   canEditSampleType: boolean
 };
@@ -39,7 +38,6 @@ export type Props = {
 export default function SampleFormComponent(props: Props) {
   const form = props.form;
   const predefined = props.predefined;
-  const parentSample = props.parentSample;
   const objectData = props.objectData;
   return (
     <div className="container">
@@ -61,16 +59,21 @@ export default function SampleFormComponent(props: Props) {
             <hr />
           </div>}
         <h4>
-          {parentSample && parentSample.sampleNum
+          {objectData &&
+            objectData.length === 1 &&
+            objectData[0].derivedFrom &&
+            objectData[0].derivedFrom.sampleNum
             ? I18n.t('musit.sample.derivedFromObjectAndSample')
             : I18n.t('musit.sample.derivedFromObject')}
         </h4>
-        <ObjectAndSampleDetails
-          appSession={props.appSession}
-          history={props.history}
-          objectData={objectData}
-          parentSample={parentSample}
-        />
+        {objectData.map((od, i) => (
+          <ObjectAndSampleDetails
+            key={i}
+            appSession={props.appSession}
+            history={props.history}
+            objectData={od}
+          />
+        ))}
         <hr />
         <h4>{I18n.t('musit.sample.personsAssociatedWithSampleTaking')}</h4>
         <PersonRoleDate

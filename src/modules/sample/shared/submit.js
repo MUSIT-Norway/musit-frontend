@@ -33,7 +33,6 @@ type Props = {
 
 export const sampleProps = (props: Props, doSaveSample: Function) => {
   return {
-    objectData: props.objectStore.objectData,
     isFormValid: isFormValid(props.form),
     showSampleSubType: showSampleSubType(
       props.form.sampleType.rawValue,

@@ -42,7 +42,13 @@ const props = (props, ajaxPut = simplePut) => {
   return {
     ...props,
     ...sampleProps(props, Sample.editSample(ajaxPut)),
-    parentSample: props.store.sample && props.store.sample.parentObject.sampleOrObjectData
+    objectData: [
+      {
+        ...props.objectStore.objectData,
+        derivedFrom: props.store.sample &&
+          props.store.sample.parentObject.sampleOrObjectData
+      }
+    ]
   };
 };
 

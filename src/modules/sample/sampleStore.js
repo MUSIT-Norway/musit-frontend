@@ -9,7 +9,7 @@ import type { Predefined } from 'types/predefined';
 import type { SampleData } from '../../types/samples';
 import type { SampleType, SampleTypes, PredefinedSampleTypes } from '../../types/sample';
 
-export type SampleDateExtended = { sampleType?: SampleType } & SampleData;
+export type SampleDataExtended = { sampleType?: SampleType } & SampleData;
 
 const initialState = { data: [] };
 
@@ -21,7 +21,7 @@ export const getSampleTypes$: Subject<SampleTypes> = createAction(
   'getSampleTypes$'
 ).switchMap(Sample.loadAllSampleTypes());
 
-export const getSample$: Subject<SampleDateExtended> = createAction(
+export const getSample$: Subject<SampleDataExtended> = createAction(
   'getSample$'
 ).switchMap(props => Sample.loadSample()(props).do(props.onComplete));
 
@@ -31,7 +31,7 @@ export const getSamplesForNode$: Subject<Array<SampleData>> = createAction(
   'getSamplesForNode$'
 ).switchMap(Sample.loadSamplesForNode());
 
-const extendSample = (state, sample: SampleDateExtended, apiSampleTypes) => {
+const extendSample = (state, sample: SampleDataExtended, apiSampleTypes) => {
   if (sample && apiSampleTypes) {
     const sampleType = apiSampleTypes.find(st => st.sampleTypeId === sample.sampleTypeId);
     const extendedSample = { ...sample, sampleType };

@@ -48,50 +48,23 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
     <h4>
       Avledet fra objekt
     </h4>
-    <div>
-      <span
-        style={
-          Object {
-            "marginRight": 20,
-          }
+    <ObjectAndSampleDetails
+      appSession={
+        Object {
+          "actor": Object {
+            "dataportenId": "12345",
+            "fn": "Jarl",
+          },
+          "museumId": 99,
+          "token": "1234",
         }
-      >
-        <strong>
-          Museumsnr.
-        </strong>
-         
-      </span>
-      <span
-        style={
-          Object {
-            "marginRight": 20,
-          }
+      }
+      objectData={
+        Object {
+          "derivedFrom": Object {},
         }
-      >
-        <strong>
-          Unr.
-        </strong>
-         
-      </span>
-      <span>
-        <strong>
-          Gjenstand/Takson
-        </strong>
-         
-      </span>
-      <NavigateToObject
-        appSession={
-          Object {
-            "actor": Object {
-              "dataportenId": "12345",
-              "fn": "Jarl",
-            },
-            "museumId": 99,
-            "token": "1234",
-          }
-        }
-      />
-    </div>
+      }
+    />
     <hr />
     <h4>
       Personer tilknyttet prøveuttaket
