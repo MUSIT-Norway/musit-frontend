@@ -1,6 +1,8 @@
 // @flow
 
 import type { SampleTypesObject, SampleType } from '../../../types/sample';
+import type { SampleData } from '../../../types/samples';
+import type { ObjectData } from '../../../types/object';
 import type { AppSession } from '../../../types/appSession';
 
 const findSampleType = (sampleTypes: SampleTypesObject, sampleTypesId: number) =>
@@ -78,3 +80,45 @@ export const getSampleTypeAndSubType = (
   }
   return sampleType ? sampleType : '';
 };
+
+export type FlattenedSampleObject = any;
+
+export function flattenSample(
+  appSession: AppSession,
+  sampleTypes: Array<any>,
+  objectData: ObjectData,
+  sampleData: SampleData
+): FlattenedSampleObject {
+  return {
+    ...objectData,
+    id: sampleData.objectId,
+    uuid: sampleData.objectId,
+    objectId: sampleData.objectId,
+    objectType: 'sample',
+    collection: appSession.collectionId,
+    museumNo: objectData.museumNo,
+    subNo: objectData.subNo,
+    term: objectData.term,
+    sampleNum: sampleData.sampleNum,
+    sampleTypeAndSubType: getSampleTypeAndSubType(
+      { sampleTypes: sampleTypes },
+      sampleData.sampleTypeId,
+      appSession
+    ),
+    sampleTypeObj: getSampleTypeObj(
+      { sampleTypes: sampleTypes },
+      sampleData.sampleTypeId
+    ),
+    sampleTypeId: sampleData.sampleTypeId,
+    sampleType: getSampleType(
+      { sampleTypes: sampleTypes },
+      sampleData.sampleTypeId,
+      appSession
+    ),
+    sampleSubType: getSampleSubType(
+      { sampleTypes: sampleTypes },
+      sampleData.sampleTypeId,
+      appSession
+    )
+  };
+}

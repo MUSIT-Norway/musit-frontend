@@ -14,9 +14,10 @@ import {
   getSampleSubTypeWithLanguage,
   getSampleTypeWithLanguage
 } from './sampleViewContainer';
-import { sampleProps } from './shared/submit';
+import { sampleProps, saveSample, callback, onComplete } from './shared/submit';
 import { loadPredefinedTypes } from '../../stores/predefined';
 import type { SampleData } from '../../types/samples';
+import type { DomEvent } from '../../types/dom';
 
 const { form$, loadForm$, updateForm$, clearForm$ } = sampleForm;
 
@@ -41,14 +42,28 @@ const commands = {
 const props = (props, ajaxPut = simplePut) => {
   return {
     ...props,
-    ...sampleProps(props, Sample.editSample(ajaxPut)),
+    ...sampleProps(props),
     objectData: [
       {
         ...props.objectStore.objectData,
         derivedFrom: props.store.sample &&
           props.store.sample.parentObject.sampleOrObjectData
       }
-    ]
+    ],
+    clickSave: (e: DomEvent) => {
+      e.preventDefault();
+      saveSample(Sample.editSample(ajaxPut))(
+        props.form,
+        props.store.sample,
+        props.predefined.sampleTypes,
+        props.objectStore.objectData,
+        props.match.params,
+        props.appSession,
+        props.history,
+        callback,
+        onComplete(props.history, props.appSession)
+      );
+    }
   };
 };
 

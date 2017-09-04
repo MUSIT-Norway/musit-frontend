@@ -47,6 +47,8 @@ export default {
             `${clientContextUrl(appSession)}/analysis/${analysisId}`,
           addSample: (appSession: AppSession, objectId: string) =>
             `${clientContextUrl(appSession)}/analysis/sample/${objectId}/add`,
+          addMultipleSamples: (appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/analysis/sample/add`,
           addFromSample: (appSession: AppSession, sampleId: string) =>
             `${clientContextUrl(appSession)}/analysis/sample/${sampleId}/fromSample`,
           gotoSample: (appSession: AppSession, sampleId: string) =>

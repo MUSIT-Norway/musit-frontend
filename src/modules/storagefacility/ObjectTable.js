@@ -3,13 +3,9 @@ import PropTypes from 'prop-types';
 import { FormGroup, Table } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import { I18n } from 'react-i18nify';
-import MusitObject from '../../models/object';
-import {
-  getSampleTypeAndSubType,
-  getSampleType,
-  getSampleSubType,
-  getSampleTypeObj
-} from '../sample/shared/types';
+import { flattenSample } from '../sample/shared/types';
+import omit from 'lodash/omit';
+import TableData from './TableData';
 
 export default class ObjectGrid extends Component {
   static propTypes = {
@@ -24,133 +20,6 @@ export default class ObjectGrid extends Component {
   };
 
   render() {
-    const sampleObject = obj => {
-      return {
-        ...obj,
-        uuid: obj.sampleObject.objectId,
-        collection: this.props.appSession.collectionId,
-        id: obj.sampleObject.objectId,
-        museumNo: obj.museumNo,
-        objectType: 'sample',
-        subNo: obj.subNo,
-        term: obj.term,
-        sampleNum: obj.sampleObject.sampleNum,
-        sampleTypeAndSubType: getSampleTypeAndSubType(
-          { sampleTypes: this.props.sampleStore.sampleTypes },
-          obj.sampleObject.sampleTypeId,
-          this.props.appSession
-        ),
-        sampleTypeObj: getSampleTypeObj(
-          { sampleTypes: this.props.sampleStore.sampleTypes },
-          obj.sampleObject.sampleTypeId
-        ),
-        sampleTypeId: obj.sampleObject.sampleTypeId,
-        sampleType: getSampleType(
-          { sampleTypes: this.props.sampleStore.sampleTypes },
-          obj.sampleObject.sampleTypeId,
-          this.props.appSession
-        ),
-        sampleSubType: getSampleSubType(
-          { sampleTypes: this.props.sampleStore.sampleTypes },
-          obj.sampleObject.sampleTypeId,
-          this.props.appSession
-        )
-      };
-    };
-    const showTableData = rowData => {
-      const isMainObject = !rowData.mainObjectId || MusitObject.isMainObject(rowData);
-      const isChildObject = rowData.mainObjectId && !isMainObject;
-      return (
-        <tr
-          key={rowData.id}
-          className={isChildObject ? 'childObject' : isMainObject && 'mainObject'}
-          onClick={() => this.props.goToObject(rowData.uuid, rowData.objectType)}
-        >
-          <td style={{ width: '20px' }}>
-            {rowData.objectType && rowData.objectType === 'sample'
-              ? <span className="icon icon-musit-testtube" />
-              : <span className="icon icon-musitobject" />}
-          </td>
-          <td>
-            {rowData.museumNo}
-          </td>
-          <td>
-            {rowData.subNo}
-          </td>
-          <td>
-            {rowData.term}
-          </td>
-          <td>
-            {rowData.sampleObject && rowData.sampleObject.sampleNum
-              ? rowData.sampleObject.sampleNum
-              : ''}
-          </td>
-          <td>
-            {rowData.sampleObject &&
-              rowData.sampleObject.sampleTypeId &&
-              this.props.appSession &&
-              this.props.sampleStore.sampleTypes
-              ? getSampleTypeAndSubType(
-                  { sampleTypes: this.props.sampleStore.sampleTypes },
-                  rowData.sampleObject.sampleTypeId,
-                  this.props.appSession
-                )
-              : ''}
-          </td>
-          <td>
-            {isMainObject &&
-              <a
-                className="onShowMoveHistory"
-                href=""
-                onClick={e => {
-                  e.preventDefault();
-                  this.props.showMoveHistory(rowData);
-                  e.stopPropagation();
-                }}
-                title={I18n.t('musit.grid.object.iconTooltip.moveObjectHistory')}
-              >
-                <span className="icon icon-musitmovehistoryicon" />
-              </a>}
-          </td>
-          <td>
-            {isMainObject &&
-              <a
-                className="onMoveClick"
-                href=""
-                onClick={e => {
-                  e.preventDefault();
-                  this.props.onMove(rowData);
-                  e.stopPropagation();
-                }}
-                title={I18n.t('musit.grid.object.iconTooltip.moveObject')}
-              >
-                <FontAwesome style={{ fontSize: '1.5em' }} name="truck" />
-              </a>}
-          </td>
-          <td>
-            {isMainObject &&
-              <a
-                className="onPickObject"
-                href=""
-                onClick={e => {
-                  e.preventDefault();
-                  this.props.pickObject(rowData);
-                  e.stopPropagation();
-                }}
-                title={I18n.t('musit.grid.object.iconTooltip.addToPickList')}
-              >
-                {this.props.isObjectAdded(rowData)
-                  ? <FontAwesome
-                      style={{ fontSize: '1.5em', color: 'Gray' }}
-                      name="shopping-cart"
-                    />
-                  : <FontAwesome style={{ fontSize: '1.5em' }} name="shopping-cart" />}
-
-              </a>}
-          </td>
-        </tr>
-      );
-    };
     return (
       <div>
         <FormGroup>
@@ -182,10 +51,19 @@ export default class ObjectGrid extends Component {
                       href=""
                       onClick={e => {
                         e.preventDefault();
-                        this.props.tableData.forEach(o => this.props.pickObject(o));
-                        this.props.sampleStore.nodeSamples &&
-                          this.props.sampleStore.nodeSamples.forEach(o =>
-                            this.props.pickObject(sampleObject(o))
+                        this.props.tableData
+                          .concat(this.props.sampleStore.nodeSamples || [])
+                          .forEach(data =>
+                            this.props.pickObject(
+                              data.sampleObject
+                                ? flattenSample(
+                                    this.props.appSession,
+                                    this.props.sampleStore.sampleTypes,
+                                    omit(data, 'sampleObject'),
+                                    data.sampleObject
+                                  )
+                                : data
+                            )
                           );
                       }}
                       title={I18n.t('musit.grid.object.iconTooltip.addAllToPickList')}
@@ -196,11 +74,31 @@ export default class ObjectGrid extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.props.tableData.map(rowData => showTableData(rowData))}
-                {this.props.sampleStore.nodeSamples &&
-                  this.props.sampleStore.nodeSamples.map(data =>
-                    showTableData(sampleObject(data))
-                  )}
+                {this.props.tableData
+                  .concat(this.props.sampleStore.nodeSamples || [])
+                  .map((data, i) => (
+                    <TableData
+                      key={i}
+                      rowData={
+                        data.sampleObject
+                          ? flattenSample(
+                              this.props.appSession,
+                              this.props.sampleStore.sampleTypes,
+                              omit(data, 'sampleObject'),
+                              data.sampleObject
+                            )
+                          : data
+                      }
+                      appSession={this.props.appSession}
+                      sampleTypes={this.props.sampleStore.sampleTypes}
+                      isObjectAdded={this.props.isObjectAdded}
+                      pickObject={this.props.pickObject}
+                      isMainObject={this.props.isMainObject}
+                      onMove={this.props.onMove}
+                      showMoveHistory={this.props.showMoveHistory}
+                      goToObject={this.props.goToObject}
+                    />
+                  ))}
               </tbody>
             </Table>
           </div>

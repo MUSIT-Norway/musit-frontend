@@ -31,7 +31,7 @@ type Props = {
   store: { sample?: ?SampleData }
 };
 
-export const sampleProps = (props: Props, doSaveSample: Function) => {
+export const sampleProps = (props: Props) => {
   return {
     isFormValid: isFormValid(props.form),
     showSampleSubType: showSampleSubType(
@@ -49,18 +49,6 @@ export const sampleProps = (props: Props, doSaveSample: Function) => {
     goBack: (e: DomEvent) => {
       e.preventDefault();
       props.history.goBack();
-    },
-    clickSave: (e: DomEvent) => {
-      e.preventDefault();
-      saveSample(doSaveSample)(
-        props.form,
-        props.store.sample,
-        props.predefined.sampleTypes,
-        props.objectStore.objectData,
-        props.match.params,
-        props.appSession,
-        props.history
-      );
     }
   };
 };
@@ -133,60 +121,80 @@ function getParentObject(isAdd, sampleData, objectData) {
   return parentObject;
 }
 
-const saveSample = doSaveSample => (
-  form,
-  sampleData,
-  sampleTypes,
-  objectData,
-  params,
-  appSession,
-  history
+export const callback = {
+  onComplete: () => {
+    emitSuccess({
+      type: 'saveSuccess',
+      message: I18n.t('musit.sample.saveSampleSuccess')
+    });
+  },
+  onFailure: (e: any) => {
+    emitError({
+      type: 'errorOnSave',
+      error: e,
+      message: I18n.t('musit.sample.saveSampleError')
+    });
+  }
+};
+
+export const onComplete = (history: History, appSession: AppSession) => (value: {
+  response: { objectId?: string } | string
+}) => {
+  const objectId: ?string = typeof value.response === 'string'
+    ? value.response
+    : value.response.objectId;
+  if (objectId) {
+    history.push({
+      pathname: Config.magasin.urls.client.analysis.gotoSample(appSession, objectId)
+    });
+  }
+};
+
+export const getSampleData = function(
+  form: FormDetails,
+  sampleData: ?SampleData,
+  objectData: ObjectData,
+  sampleTypes: any,
+  appSession: AppSession
+) {
+  const parentObject = getParentObject(!form.sampleNum, sampleData, objectData);
+  return Sample.prepareForSubmit({
+    ...normalizeForm(form),
+    ...getActors(form.persons.rawValue),
+    sampleTypeId: getSampleTypeId(
+      sampleTypes,
+      form.sampleType.value,
+      form.sampleSubType.value,
+      appSession
+    ),
+    originatedObjectUuid: objectData.uuid,
+    parentObject: parentObject,
+    museumId: appSession.museumId
+  });
+};
+
+export const saveSample = (doSaveSample: Function) => (
+  form: FormDetails,
+  sampleData: ?SampleData,
+  sampleTypes: any,
+  objectData: ?ObjectData,
+  params: { sampleId: ?string },
+  appSession: AppSession,
+  history: History,
+  callback: { onComplete: Function, onFailure: Function },
+  onComplete: Function
 ) => {
   if (objectData) {
-    let parentObject = getParentObject(!form.sampleNum, sampleData, objectData);
-    const data = Sample.prepareForSubmit({
-      ...normalizeForm(form),
-      ...getActors(form.persons.rawValue),
-      sampleTypeId: getSampleTypeId(
-        sampleTypes,
-        form.sampleType.value,
-        form.sampleSubType.value,
-        appSession
-      ),
-      originatedObjectUuid: objectData.uuid,
-      parentObject: parentObject,
-      museumId: appSession.museumId
-    });
+    const data = getSampleData(form, sampleData, objectData, sampleTypes, appSession);
     return doSaveSample({
       id: params.sampleId,
       museumId: appSession.museumId,
       token: appSession.accessToken,
       data,
-      callback: {
-        onComplete: () => {
-          emitSuccess({
-            type: 'saveSuccess',
-            message: I18n.t('musit.sample.saveSampleSuccess')
-          });
-        },
-        onFailure: e => {
-          emitError({
-            type: 'errorOnSave',
-            error: e,
-            message: I18n.t('musit.sample.saveSampleError')
-          });
-        }
-      }
+      callback
     })
       .toPromise()
-      .then(value =>
-        history.push({
-          pathname: Config.magasin.urls.client.analysis.gotoSample(
-            appSession,
-            value.objectId || value
-          )
-        })
-      );
+      .then(onComplete);
   }
 };
 

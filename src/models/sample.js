@@ -200,7 +200,7 @@ Sample.prepareForSubmit = tmpData => ({
 
 Sample.addSample = (ajaxPost = simplePost) => ({ museumId, token, data, callback }) => {
   const url = Config.magasin.urls.api.samples.baseUrl(museumId);
-  return ajaxPost(url, data, token, callback).map(({ response }) => response);
+  return ajaxPost(url, data, token, callback);
 };
 
 Sample.editSample = (ajaxPut = simplePut) => ({
@@ -212,7 +212,7 @@ Sample.editSample = (ajaxPut = simplePut) => ({
 }) => {
   const baseUrl = Config.magasin.urls.api.samples.baseUrl(museumId);
   const url = `${baseUrl}/${id}`;
-  return ajaxPut(url, data, token, callback).map(({ response }) => response);
+  return ajaxPut(url, data, token, callback);
 };
 
 Sample.loadSample = (ajaxGet = simpleGet, ajaxPost = simplePost) => ({

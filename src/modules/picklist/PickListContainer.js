@@ -268,19 +268,27 @@ const customProps = props => ({
   moveObject: MusitObject.moveSingleObject(),
   isTypeNode: 'nodes' === props.type,
   moveItems,
-  createSample: (items, appSession) => {
+  createSample: items => {
     if (items[0].objectType === 'sample') {
       props.history.push({
         pathname: Config.magasin.urls.client.analysis.addFromSample(
-          appSession,
+          props.appSession,
           items[0].sampleObject ? items[0].sampleObject.objectId : items[0].objectId
         )
       });
     } else if (items[0].objectType === 'collection') {
       props.history.push({
-        pathname: Config.magasin.urls.client.analysis.addSample(appSession, items[0].uuid)
+        pathname: Config.magasin.urls.client.analysis.addSample(
+          props.appSession,
+          items[0].uuid
+        )
       });
     }
+  },
+  createMultipleSamples: () => {
+    props.history.push({
+      pathname: Config.magasin.urls.client.analysis.addMultipleSamples(props.appSession)
+    });
   },
   createAnalysis: (items, appSession) => {
     props.history.push({

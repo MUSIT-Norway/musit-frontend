@@ -5,6 +5,7 @@ import type { AppSession } from '../../types/appSession';
 import type { History } from '../../types/Routes';
 import type { DomEvent } from '../../types/dom';
 import type { Predefined } from '../../types/predefined';
+import type { ObjectData } from '../../types/object';
 import type { SampleDataExtended } from './sampleStore';
 import type { FormDetails } from './types/form';
 import type { ObjectOrSample } from './types';
@@ -32,13 +33,57 @@ export type Props = {
   history: History,
   objectData: Array<ObjectOrSample & { derivedFrom: ?SampleDataExtended }>,
   showSampleSubType: boolean,
-  canEditSampleType: boolean
+  canEditSampleType: boolean,
+  store: {
+    sampleResponses?: ?{
+      success: Array<{ response: string, objectData: ObjectData }>,
+      failure: Array<{ error: Error, objectData: ObjectData }>
+    }
+  },
+  putSamplesInPicklist: Function
 };
+
+function Link(props) {
+  return (
+    <a
+      onClick={e => {
+        e.preventDefault();
+        props.onClick();
+      }}
+    >
+      {props.text}
+    </a>
+  );
+}
 
 export default function SampleFormComponent(props: Props) {
   const form = props.form;
   const predefined = props.predefined;
   const objectData = props.objectData;
+  if (objectData.length === 0) {
+    return (
+      <div className="container">
+        <h1>{I18n.t('musit.sample.noObjects')}</h1>
+      </div>
+    );
+  }
+  if (props.store.sampleResponses) {
+    return (
+      <div className="container">
+        <div className="page-header">
+          <h1>
+            {I18n.t('musit.sample.createdSamples', {
+              count: props.store.sampleResponses.success.length
+            })}
+          </h1>
+        </div>
+        <Link
+          text={I18n.t('musit.sample.addToPickList')}
+          onClick={props.putSamplesInPicklist}
+        />
+      </div>
+    );
+  }
   return (
     <div className="container">
       <form className="form-horizontal">

@@ -6,12 +6,13 @@ import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
 import lifeCycle from '../../shared/lifeCycle';
 import sampleStore$, { getSample$, clear$ } from './sampleStore';
-import { sampleProps } from './shared/submit';
+import { sampleProps, saveSample, callback, onComplete } from './shared/submit';
 import Sample from '../../models/sample';
 import { simplePost } from '../../shared/RxAjax';
 import objectStore$, { loadObject$ } from '../objects/objectStore';
 import { retrieveSample } from './sampleViewContainer';
 import { loadPredefinedTypes } from '../../stores/predefined';
+import type { DomEvent } from '../../types/dom';
 
 const { form$, updateForm$, loadForm$, clearForm$ } = sampleForm;
 
@@ -25,8 +26,22 @@ const data = {
 
 const props = (props, ajaxPost = simplePost) => ({
   ...props,
-  ...sampleProps(props, Sample.addSample(ajaxPost)),
-  objectData: [{ ...props.objectStore.objectData, derivedFrom: props.store.sample }]
+  ...sampleProps(props),
+  objectData: [{ ...props.objectStore.objectData, derivedFrom: props.store.sample }],
+  clickSave: (e: DomEvent) => {
+    e.preventDefault();
+    saveSample(Sample.addSample(ajaxPost))(
+      props.form,
+      props.store.sample,
+      props.predefined.sampleTypes,
+      props.objectStore.objectData,
+      props.match.params,
+      props.appSession,
+      props.history,
+      callback,
+      onComplete(props.history, props.appSession)
+    );
+  }
 });
 
 const commands = {

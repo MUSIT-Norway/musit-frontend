@@ -33,6 +33,7 @@ describe('AnalysisSampleFormPageAdd', () => {
         canEditSampleType={true}
         showSampleSubType={false}
         form={formDefinition}
+        putSamplesInPicklist={() => null}
         updateForm={updateForm}
         clickSave={clickSave}
         appSession={appSession}
@@ -109,6 +110,7 @@ describe('AnalysisSampleFormPageAdd', () => {
         updateSampleType={updateSampleType}
         canEditSampleType={true}
         showSampleSubType={false}
+        putSamplesInPicklist={() => null}
         updateForm={updateForm}
         history={history}
         clickSave={clickSave}

@@ -26,6 +26,7 @@ import AnalysisAddContainer from './modules/analysis/AnalysisAddContainer';
 import AnalysisViewContainer from './modules/analysis/AnalysisViewContainer';
 import AnalysisEditContainer from './modules/analysis/AnalysisEditContainer';
 import SampleFormAddContainer from './modules/sample/sampleAddContainer';
+import SampleForPicklistContainer from './modules/sample/sampleForPicklistContainer';
 import SampleViewContainer from './modules/sample/sampleViewContainer';
 import SampleEditContainer from './modules/sample/sampleEditContainer';
 import ViewObjectContainer from './modules/objects/viewObjectContainer';
@@ -203,6 +204,7 @@ const AnalysisPage = props => (
       exact
       component={AnalysisResultExchangeContainer}
     />
+    <Route path={rt(props, '/sample/add')} exact component={SampleForPicklistContainer} />
     <Route
       path={rt(props, '/sample/:objectId/add')}
       exact

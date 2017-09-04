@@ -218,7 +218,9 @@ export class PickListComponent extends React.Component {
                         }}
                         onClick={() => {
                           if (marked.length === 1) {
-                            this.props.createSample(markedValues, this.props.appSession);
+                            this.props.createSample(markedValues);
+                          } else if (marked.length > 1) {
+                            this.props.createMultipleSamples();
                           }
                         }}
                         title={I18n.t('musit.analysis.createSample')}

@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TableData should render properly  1`] = `
+<tr
+  className="mainObject"
+  onClick={[Function]}
+>
+  <td
+    style={
+      Object {
+        "width": "20px",
+      }
+    }
+  >
+    <span
+      className="icon icon-musitobject"
+    />
+  </td>
+  <td>
+    TRH-V-1-2
+  </td>
+  <td>
+    2
+  </td>
+  <td>
+    Carex
+  </td>
+  <td />
+  <td />
+  <td>
+    <a
+      className="onShowMoveHistory"
+      href=""
+      onClick={[Function]}
+      title="Flyttehistorikk"
+    >
+      <span
+        className="icon icon-musitmovehistoryicon"
+      />
+    </a>
+  </td>
+  <td>
+    <a
+      className="onMoveClick"
+      href=""
+      onClick={[Function]}
+      title="Flytt objektet"
+    >
+      <FontAwesome
+        name="truck"
+        style={
+          Object {
+            "fontSize": "1.5em",
+          }
+        }
+      />
+    </a>
+  </td>
+  <td>
+    <a
+      className="onPickObject"
+      href=""
+      onClick={[Function]}
+      title="Legg til plukklisten"
+    >
+      <FontAwesome
+        name="shopping-cart"
+        style={
+          Object {
+            "fontSize": "1.5em",
+          }
+        }
+      />
+    </a>
+  </td>
+</tr>
+`;

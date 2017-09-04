@@ -8,13 +8,15 @@ describe('eventsStore', () => {
     // mock streams
     // prettier-ignore
     const streams = {
-      clearM:               '-1---1-',
-      loadPredefinedTypesM: '---1---',
-      getSampleTypesM:      '--1----',
-      getSampleM:           '-------',
-      predefinedM:          '----1-2',
-      getSamplesForNodeM:   '-------',
-      expected:             'aabcdef'
+      clearM:                   '-1---1-',
+      loadPredefinedTypesM:     '---1---',
+      getSampleTypesM:          '--1----',
+      getSampleM:               '-------',
+      createSamplesForObjectsM: '-------',
+      clearSampleResponsesM:    '-------',
+      predefinedM:              '----1-2',
+      getSamplesForNodeM:       '-------',
+      expected:                 'aabcdef'
     };
     const expectedStateMap = {
       a: {
@@ -58,6 +60,12 @@ describe('eventsStore', () => {
 
     // mock up$ and down$ events
     const clear$ = testScheduler.createHotObservable(streams.clearM);
+    const createSamplesForObjects$ = testScheduler.createHotObservable(
+      streams.createSamplesForObjectsM
+    );
+    const clearSampleResponses$ = testScheduler.createHotObservable(
+      streams.clearSampleResponsesM
+    );
     const getSample$ = testScheduler.createHotObservable(streams.getSampleM);
     const getPredefinedTypes$ = testScheduler.createHotObservable(
       streams.loadPredefinedTypesM,
@@ -98,7 +106,9 @@ describe('eventsStore', () => {
         getPredefinedTypes$,
         getSampleTypes$,
         getSample$,
-        getSamplesForNode$
+        getSamplesForNode$,
+        createSamplesForObjects$,
+        clearSampleResponses$
       },
       predefined$
     );

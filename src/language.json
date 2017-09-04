@@ -80,6 +80,9 @@
         }
       },
       "sample": {
+        "createdSamples": "Created %{count} samples",
+        "addToPickList": "Add samples to picklist",
+        "noObjects": "No objects in picklist",
         "sample": "Sample",
         "registerSample": "Sample",
         "derivedFromObject": "Derived from object",
@@ -996,6 +999,9 @@
         }
       },
       "sample": {
+        "createdSamples": "Oppretet %{count} prøver",
+        "addToPickList": "Legg prøvene i plukklista",
+        "noObjects": "Ingen objekter i plukklista",
         "sample": "Prøve",
         "registerSample": "Prøve",
         "derivedFromObject": "Avledet fra objekt",
