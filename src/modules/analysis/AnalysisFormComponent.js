@@ -20,7 +20,13 @@ import type { Restriction } from '../../types/analysis';
 import toString from 'lodash/toString';
 import toArray from 'lodash/toArray';
 import ValidatedFormGroup, { isValid } from '../../forms/components/ValidatedFormGroup';
-import { FormInput, FormSelect, FormTextArea, FormText } from '../../forms/components';
+import {
+  FormInput,
+  FormSelect,
+  FormTextArea,
+  FormText,
+  FormInputSelect
+} from '../../forms/components';
 import type { AnalysisCollection } from '../../types/analysis';
 
 type Props = {
@@ -106,7 +112,7 @@ export default function AnalysisFormComponent(props: Props) {
               attr={attr}
             />
           ))}
-          <FormSelect
+          <FormInputSelect
             id="reason"
             label={I18n.t('musit.analysis.reason')}
             labelWidth={2}

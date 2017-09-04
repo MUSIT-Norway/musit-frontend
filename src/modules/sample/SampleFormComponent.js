@@ -14,6 +14,7 @@ import FieldCheckBox from '../../forms/components/FieldCheckBox';
 import FieldDropDown from '../../forms/components/FieldDropDown';
 import FieldInput from '../../forms/components/FieldInput';
 import FieldTextArea from '../../forms/components/FieldTextArea';
+import { FieldComboDropDownStr } from '../../forms/components/FieldComboDropDown';
 import MetaInformation from '../../components/metainfo';
 import ReadOnlySampleType from './components/ReadOnlySampleType';
 import ObjectAndSampleDetails from './components/ObjectAndSampleDetails';
@@ -274,7 +275,7 @@ export default function SampleFormComponent(props: Props) {
             />
           </ValidatedFormGroup>
           <ValidatedFormGroup fields={[form.container]}>
-            <FieldDropDown
+            <FieldComboDropDownStr
               field={form.container}
               title={I18n.t('musit.sample.storageContainer')}
               defaultOption={I18n.t('musit.sample.chooseStorageContainer')}
@@ -292,7 +293,7 @@ export default function SampleFormComponent(props: Props) {
             />
           </ValidatedFormGroup>
           <ValidatedFormGroup fields={[form.storageMedium]}>
-            <FieldDropDown
+            <FieldComboDropDownStr
               field={form.storageMedium}
               title={I18n.t('musit.sample.storageMedium')}
               defaultOption={I18n.t('musit.sample.chooseStorageMedium')}

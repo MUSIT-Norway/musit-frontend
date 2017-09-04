@@ -118,3 +118,27 @@ export function FormSelect(props: SelectProps) {
     </FormElement>
   );
 }
+
+export function FormInputSelect(props: SelectProps) {
+  return (
+    <FormElement
+      id={props.id}
+      label={props.label}
+      labelWidth={props.labelWidth}
+      elementWidth={props.elementWidth}
+    >
+      <input
+        id={props.id}
+        list={`${props.id}-list`}
+        type="text"
+        className="form-control"
+        value={props.value || ''}
+        onChange={props.onChange}
+        style={{ fontWeight: 'normal' }}
+      />
+      <datalist id={`${props.id}-list`}>
+        {props.values && props.values.map((a, i) => <option key={i} value={a.value} />)}
+      </datalist>
+    </FormElement>
+  );
+}

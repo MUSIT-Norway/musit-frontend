@@ -6,8 +6,14 @@ import type { AppSession } from '../../types/appSession';
 type FieldDropDownProps = {
   field: Field<string>,
   defaultOption?: string,
-  valueFn?: Function,
-  displayFn?: Function,
+  valueFn?: (
+    { id: number, noStatus: string, enStatus: string },
+    a?: AppSession
+  ) => number,
+  displayFn?: (
+    { id: number, noStatus: string, enStatus: string },
+    a?: AppSession
+  ) => string,
   title: string,
   onChange: Function,
   selectItems: Array<*>,

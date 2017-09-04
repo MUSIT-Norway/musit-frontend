@@ -64,7 +64,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
       onChange="method"
       value="test"
     />
-    <FormSelect
+    <FormInputSelect
       chooseLabel="Velg formål"
       elementWidth={3}
       id="reason"

@@ -25,6 +25,8 @@ export function getStatusText(status?: ?number): string {
       return I18n.t('musit.analysis.statusType.3');
     case 4:
       return I18n.t('musit.analysis.statusType.4');
+    case -1:
+      return 'Annet';
     default:
       return 'N/A: ' + status;
   }
@@ -48,14 +50,14 @@ export function getAnalysisPurpose(
   reason: ?string,
   purposes: ?Array<{ id: string, enPurpose: string, noPurpose: string }>,
   language: Language
-) {
+): string {
   if (reason && purposes) {
     const foundType = purposes.find(a => `${a.id}` === reason);
     if (foundType) {
       return language.isEn ? foundType.enPurpose : foundType.noPurpose;
     }
   }
-  return '';
+  return reason || '';
 }
 
 export function getAnalysisTypeTerm(
