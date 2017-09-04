@@ -19,6 +19,7 @@ import ReadOnlySampleType from './components/ReadOnlySampleType';
 import ObjectAndSampleDetails from './components/ObjectAndSampleDetails';
 import PersonRoleDate from '../../components/person/PersonRoleDate';
 import Sample from '../../models/sample';
+import Config from '../../config';
 
 export type Props = {
   form: FormDetails,
@@ -36,8 +37,14 @@ export type Props = {
   canEditSampleType: boolean,
   store: {
     sampleResponses?: ?{
-      success: Array<{ response: string, objectData: ObjectData }>,
-      failure: Array<{ error: Error, objectData: ObjectData }>
+      success: Array<{
+        response: string,
+        objectData: ObjectData & { sampleNum?: string, objectId?: string }
+      }>,
+      failure: Array<{
+        error: Error,
+        objectData: ObjectData & { sampleNum?: string, objectId?: string }
+      }>
     }
   },
   putSamplesInPicklist: Function
@@ -67,13 +74,14 @@ export default function SampleFormComponent(props: Props) {
       </div>
     );
   }
-  if (props.store.sampleResponses) {
+  const sampleResponses = props.store.sampleResponses;
+  if (sampleResponses) {
     return (
       <div className="container">
         <div className="page-header">
           <h1>
             {I18n.t('musit.sample.createdSamples', {
-              count: props.store.sampleResponses.success.length
+              count: sampleResponses.success.length
             })}
           </h1>
         </div>
@@ -81,6 +89,44 @@ export default function SampleFormComponent(props: Props) {
           text={I18n.t('musit.sample.addToPickList')}
           onClick={props.putSamplesInPicklist}
         />
+        {sampleResponses.failure.length > 0 &&
+          <div>
+            <h3>{I18n.t('musit.sample.theseFailed')}</h3>
+            <table className="table">
+              <tr>
+                <th>Object</th>
+                <th>Error</th>
+              </tr>
+              {sampleResponses.failure.map(f => {
+                return (
+                  <tr>
+                    <td>
+                      {f.objectData.sampleNum
+                        ? <a
+                            target="_blank"
+                            href={Config.magasin.urls.client.analysis.gotoSample(
+                              props.appSession,
+                              f.objectData.objectId || ''
+                            )}
+                          >
+                            Sample{' '}{f.objectData.objectId}
+                          </a>
+                        : <a
+                            target="_blank"
+                            href={Config.magasin.urls.client.object.gotoObject(
+                              props.appSession,
+                              f.objectData.uuid
+                            )}
+                          >
+                            Sample{' '}{f.objectData.uuid}
+                          </a>}
+                    </td>
+                    <td>{f.error.message}</td>
+                  </tr>
+                );
+              })}
+            </table>
+          </div>}
       </div>
     );
   }

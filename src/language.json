@@ -80,6 +80,7 @@
         }
       },
       "sample": {
+        "theseFailed": "The following samples failed and was not created",
         "createdSamples": "Created %{count} samples",
         "addToPickList": "Add samples to picklist",
         "noObjects": "No objects in picklist",
@@ -999,7 +1000,8 @@
         }
       },
       "sample": {
-        "createdSamples": "Oppretet %{count} prøver",
+        "theseFailed": "Følgende prøver feilet og ble ikke opprettet",
+        "createdSamples": "Opprettet %{count} prøver",
         "addToPickList": "Legg prøvene i plukklista",
         "noObjects": "Ingen objekter i plukklista",
         "sample": "Prøve",
