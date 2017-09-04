@@ -174,7 +174,6 @@ export const createAnalysisCollectionRow = (
     analysisId: analysisCollection.id,
     // object fields
     objectId: null,
-    affectedThing: null,
     museumNo: null,
     subNo: null,
     arkFindingNo: null,

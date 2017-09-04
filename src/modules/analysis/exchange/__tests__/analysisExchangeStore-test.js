@@ -358,7 +358,6 @@ const expectedTemplateRowForObject: ResultExchangeTemplates = {
 const createAnalysisCollectionRow = (id: number) => ({
   type: 'analysis',
   analysisId: id,
-  affectedThing: null,
   // object
   objectId: null,
   museumNo: null,
