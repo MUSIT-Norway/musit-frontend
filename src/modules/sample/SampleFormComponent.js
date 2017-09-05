@@ -9,6 +9,7 @@ import type { ObjectData } from '../../types/object';
 import type { SampleDataExtended } from './sampleStore';
 import type { FormDetails } from './types/form';
 import type { ObjectOrSample } from './types';
+import type { ValueExtractor } from '../../forms/components/FieldDropDown';
 import ValidatedFormGroup from '../../forms/components/ValidatedFormGroup';
 import FieldCheckBox from '../../forms/components/FieldCheckBox';
 import FieldDropDown from '../../forms/components/FieldDropDown';
@@ -22,6 +23,17 @@ import PersonRoleDate from '../../components/person/PersonRoleDate';
 import Sample from '../../models/sample';
 import Config from '../../config';
 
+export type SampleResponses = {
+  success: Array<{
+    response: string,
+    objectData: ObjectData & { sampleNum?: string, objectId?: string }
+  }>,
+  failure: Array<{
+    error: Error,
+    objectData: ObjectData & { sampleNum?: string, objectId?: string }
+  }>
+};
+
 export type Props = {
   form: FormDetails,
   updateForm: Function,
@@ -29,40 +41,16 @@ export type Props = {
   appSession: AppSession,
   clickBack: (e: DomEvent) => void,
   updateSampleType: Function,
-  sampleTypeDisplayName: Function,
+  sampleTypeDisplayName: ValueExtractor,
   isFormValid: (f: FormDetails) => boolean,
   predefined: Predefined,
   history: History,
   objectData: Array<ObjectOrSample & { derivedFrom: ?SampleDataExtended }>,
   showSampleSubType: boolean,
   canEditSampleType: boolean,
-  store: {
-    sampleResponses?: ?{
-      success: Array<{
-        response: string,
-        objectData: ObjectData & { sampleNum?: string, objectId?: string }
-      }>,
-      failure: Array<{
-        error: Error,
-        objectData: ObjectData & { sampleNum?: string, objectId?: string }
-      }>
-    }
-  },
-  putSamplesInPicklist: Function
+  store: { sampleResponses?: ?SampleResponses },
+  putSamplesInPicklist: () => void
 };
-
-function Link(props) {
-  return (
-    <a
-      onClick={e => {
-        e.preventDefault();
-        props.onClick();
-      }}
-    >
-      {props.text}
-    </a>
-  );
-}
 
 export default function SampleFormComponent(props: Props) {
   const form = props.form;
@@ -78,57 +66,11 @@ export default function SampleFormComponent(props: Props) {
   const sampleResponses = props.store.sampleResponses;
   if (sampleResponses) {
     return (
-      <div className="container">
-        <div className="page-header">
-          <h1>
-            {I18n.t('musit.sample.createdSamples', {
-              count: sampleResponses.success.length
-            })}
-          </h1>
-        </div>
-        <Link
-          text={I18n.t('musit.sample.addToPickList')}
-          onClick={props.putSamplesInPicklist}
-        />
-        {sampleResponses.failure.length > 0 &&
-          <div>
-            <h3>{I18n.t('musit.sample.theseFailed')}</h3>
-            <table className="table">
-              <tr>
-                <th>Object</th>
-                <th>Error</th>
-              </tr>
-              {sampleResponses.failure.map(f => {
-                return (
-                  <tr>
-                    <td>
-                      {f.objectData.sampleNum
-                        ? <a
-                            target="_blank"
-                            href={Config.magasin.urls.client.analysis.gotoSample(
-                              props.appSession,
-                              f.objectData.objectId || ''
-                            )}
-                          >
-                            Sample{' '}{f.objectData.objectId}
-                          </a>
-                        : <a
-                            target="_blank"
-                            href={Config.magasin.urls.client.object.gotoObject(
-                              props.appSession,
-                              f.objectData.uuid
-                            )}
-                          >
-                            Sample{' '}{f.objectData.uuid}
-                          </a>}
-                    </td>
-                    <td>{f.error.message}</td>
-                  </tr>
-                );
-              })}
-            </table>
-          </div>}
-      </div>
+      <DisplayCreatedSamples
+        sampleResponses={sampleResponses}
+        putSamplesInPicklist={props.putSamplesInPicklist}
+        appSession={props.appSession}
+      />
     );
   }
   return (
@@ -253,7 +195,7 @@ export default function SampleFormComponent(props: Props) {
               field={form.status}
               title={I18n.t('musit.sample.status')}
               defaultOption={I18n.t('musit.sample.chooseStatus')}
-              valueFn={v => v.id}
+              valueFn={v => (v.id ? v.id.toString() : '')}
               displayFn={v => (props.appSession.language.isEn ? v.enStatus : v.noStatus)}
               onChange={props.updateForm}
               selectItems={Sample.sampleStatuses}
@@ -361,6 +303,84 @@ export default function SampleFormComponent(props: Props) {
           {I18n.t('musit.texts.cancel')}
         </button>
       </form>
+    </div>
+  );
+}
+
+function Link(props) {
+  return (
+    <button
+      className="btn btn-link"
+      onClick={e => {
+        e.preventDefault();
+        props.onClick();
+      }}
+    >
+      {props.text}
+    </button>
+  );
+}
+
+export function DisplayCreatedSamples(props: {
+  sampleResponses: SampleResponses,
+  appSession: AppSession,
+  putSamplesInPicklist: () => void
+}) {
+  return (
+    <div className="container">
+      <div className="page-header">
+        <h1>
+          {I18n.t('musit.sample.createdSamples', {
+            count: props.sampleResponses.success.length
+          })}
+        </h1>
+      </div>
+      <Link
+        text={I18n.t('musit.sample.addToPickList')}
+        onClick={props.putSamplesInPicklist}
+      />
+      {props.sampleResponses.failure.length > 0 &&
+        <div>
+          <h3>{I18n.t('musit.sample.theseFailed')}</h3>
+          <table className="table">
+            <tr>
+              <th>{I18n.t('musit.objects.objectsView.object')}</th>
+              <th>{I18n.t('musit.texts.error')}</th>
+            </tr>
+            {props.sampleResponses.failure.map(f => {
+              return (
+                <tr>
+                  <td>
+                    {f.objectData.sampleNum
+                      ? <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href={Config.magasin.urls.client.analysis.gotoSample(
+                            props.appSession,
+                            f.objectData.objectId || ''
+                          )}
+                        >
+                          {I18n.t('musit.sample.sample')}{' '}{f.objectData.objectId}
+                        </a>
+                      : <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href={Config.magasin.urls.client.object.gotoObject(
+                            props.appSession,
+                            f.objectData.uuid
+                          )}
+                        >
+                          {I18n.t('musit.objects.objectsView.object')}
+                          {' '}
+                          {f.objectData.uuid}
+                        </a>}
+                  </td>
+                  <td>{f.error.message}</td>
+                </tr>
+              );
+            })}
+          </table>
+        </div>}
     </div>
   );
 }

@@ -3,17 +3,16 @@ import React from 'react';
 import type { Field } from 'forms/form';
 import type { AppSession } from '../../types/appSession';
 
-type FieldDropDownProps = {
+export type ValueExtractor = (
+  o: { id: number, noStatus: string, enStatus: string },
+  a: ?AppSession
+) => string;
+
+export type FieldDropDownProps = {
   field: Field<string>,
   defaultOption?: string,
-  valueFn?: (
-    { id: number, noStatus: string, enStatus: string },
-    a?: AppSession
-  ) => number,
-  displayFn?: (
-    { id: number, noStatus: string, enStatus: string },
-    a?: AppSession
-  ) => string,
+  valueFn?: ValueExtractor,
+  displayFn?: ValueExtractor,
   title: string,
   onChange: Function,
   selectItems: Array<*>,
