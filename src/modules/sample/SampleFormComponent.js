@@ -253,7 +253,7 @@ export default function SampleFormComponent(props: Props) {
             />
           </ValidatedFormGroup>
           <ValidatedFormGroup fields={[form.treatment]}>
-            <FieldDropDown
+            <FieldComboDropDownStr
               field={form.treatment}
               title={I18n.t('musit.sample.treatment')}
               defaultOption={I18n.t('musit.sample.chooseTreatment')}
