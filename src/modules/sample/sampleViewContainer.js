@@ -14,8 +14,6 @@ import values from 'lodash/values';
 import flatten from 'lodash/flatten';
 import Sample, { getSampleType } from '../../models/sample';
 
-import type { AppSession } from 'types/appSession';
-
 const data = {
   appSession$: { type: PropTypes.instanceOf(Observable).isRequired },
   predefined$: { type: PropTypes.object.isRequired },
@@ -171,20 +169,12 @@ export function getSampleSubTypeWithLanguage(sampleType, appSession) {
   return null;
 }
 
-function addSampleTypeInformation(
-  sample: SampleData,
-  sampleTypes: any,
-  appSession: AppSession
-) {
+function addSampleTypeInformation(sample: SampleData, sampleTypes: any) {
   const sampleType = getSampleType(sample.sampleTypeId, sampleTypes);
-  const sampleTypeStr = getSampleTypeWithLanguage(sampleType, appSession);
-  const sampleSubTypeStr = getSampleSubTypeWithLanguage(sampleType, appSession);
 
   return {
     ...sample,
-    sampleType: sampleTypeStr,
-    sampleSubType: sampleSubTypeStr,
-    sampleTypeObj: sampleType
+    sampleType: sampleType
   };
 }
 

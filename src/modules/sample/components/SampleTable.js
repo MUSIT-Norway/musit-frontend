@@ -52,10 +52,8 @@ const pickObjectParams = (
         s.sampleTypeId,
         appSession
       ),
-      sampleTypeObj: getSampleTypeObj(sampleTypes, s.sampleTypeId),
-      sampleTypeId: s.sampleTypeId,
-      sampleType: getSampleType(sampleTypes, s.sampleTypeId, appSession),
-      sampleSubType: getSampleSubType(sampleTypes, s.sampleTypeId, appSession)
+      sampleType: getSampleTypeObj(sampleTypes, s.sampleTypeId),
+      sampleTypeId: s.sampleTypeId
     },
     breadcrumb:
       s.currentLocation && s.currentLocation.breadcrumb

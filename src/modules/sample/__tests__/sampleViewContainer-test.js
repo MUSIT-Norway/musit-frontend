@@ -166,9 +166,7 @@ describe('SampleViewContainer', () => {
               name: 'Test user',
               date: 1496233429479
             },
-            isDeleted: false,
-            sampleType: null,
-            sampleSubType: null
+            isDeleted: false
           }
         }
       ]);
