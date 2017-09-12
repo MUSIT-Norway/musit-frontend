@@ -23,7 +23,7 @@ import type {
   MeasurementResultExchangeTemplate,
   ExtractionResultExchangeTemplate
 } from './exchangeTemplate';
-import { simpleGet } from '../../../shared/RxAjax';
+import { simplePut } from '../../../shared/RxAjax';
 
 export const uploadAnalysisResultAction = (
   appSession: AppSession,
@@ -38,7 +38,7 @@ export const uploadAnalysisResultAction = (
     try {
       const request = createRequest(analysisResultType || 'GenericResult', rows);
 
-      Analysis.importResult(simpleGet)({
+      Analysis.importResult(simplePut)({
         analysisId: analysis.id,
         museumId: appSession.museumId,
         token: appSession.accessToken,

@@ -2,7 +2,7 @@
 import { Observable } from 'rxjs';
 import Config from '../../config';
 import { simplePost, simplePut } from '../../shared/RxAjax';
-import type { Callback, AjaxPost } from '../../types/ajax';
+import type { Callback, AjaxPut, AjaxPost } from '../../types/ajax';
 import type { ImportAnalysisResult } from 'types/analysisResult';
 
 type AnalysisResultSavePayload = {
@@ -33,7 +33,7 @@ export const addResult: (
   );
 
 export const importResult: (
-  ajaxPost: AjaxPost
+  ajaxPost: AjaxPut
 ) => (props: {
   analysisId: number,
   museumId: number,
