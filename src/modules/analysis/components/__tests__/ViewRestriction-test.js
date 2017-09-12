@@ -7,10 +7,6 @@ import sinon from 'sinon';
 import { appSession } from '../../../../testutils/sampleDataForTest';
 import CancelRestriction from '../CancelRestriction';
 
-declare var describe: any;
-declare var it: any;
-declare var expect: any;
-
 const restriction = {
   reason: 'Initial reason',
   expirationDate: '2017-08-21T08:17:03+00:00',
@@ -66,7 +62,9 @@ describe('ViewRestrictionComponent', () => {
 
     expect(Comp.find(ViewRestriction).length).toBe(0);
     expect(Comp.find(CancelRestriction).length).toBe(1);
-    Comp.find(CancelRestriction).props().clickCancel();
+    Comp.find(CancelRestriction)
+      .props()
+      .clickCancel();
     expect(cancelRestriction.calledOnce).toBe(true);
     expect(toggleCancelDialog.calledOnce).toBe(true);
   });

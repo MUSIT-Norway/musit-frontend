@@ -3,15 +3,11 @@ import React from 'react';
 import ObjectResultTable from './ObjectResultTable';
 import type { AppSession } from '../../../types/appSession';
 import type { History } from '../../../types/Routes';
-
-type Object = {
-  objectId?: string,
-  uuid?: string
-};
+import type { AnalysisEvent } from '../../../types/analysis';
 
 type Props = {
-  data: Array<Object>,
-  renderExpanded?: (props: { index: number, data: Object }) => React.Element<*>,
+  data: Array<AnalysisEvent>,
+  renderExpanded?: (props: { index: number, data: Object }) => React$Element<*>,
   updateForm?: Function,
   extraAttributes?: any,
   history: History,
@@ -23,10 +19,7 @@ type State = {
   expandedRowIds: Array<string>
 };
 
-export default class ExpandableObjectTable extends React.Component {
-  state: State;
-  props: Props;
-
+export default class ExpandableObjectTable extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -49,8 +42,8 @@ export default class ExpandableObjectTable extends React.Component {
     this.setState({ expandedRowIds: newExpandedRows });
   }
 
-  static isRowIdExpanded(currentExpandedRows: Array<string>, rowId: string) {
-    return currentExpandedRows.find(er => er === rowId);
+  static isRowIdExpanded(currentExpandedRows: Array<string>, rowId: string): boolean {
+    return !!currentExpandedRows.find(er => er === rowId);
   }
 
   static toRowId(row: Object) {

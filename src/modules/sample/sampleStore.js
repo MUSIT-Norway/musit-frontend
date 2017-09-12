@@ -1,23 +1,30 @@
 // @flow
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
-import { Observable, Subject } from 'rxjs';
+import type { Reducer } from 'react-rxjs/dist/RxStore';
+import { Observable } from 'rxjs';
 import Sample from '../../models/sample';
 import predefined$ from '../../stores/predefined';
 import { KEEP_ALIVE } from '../../stores/constants';
 import type { Predefined } from 'types/predefined';
-import type { SampleData } from '../../types/samples';
+import type { SampleData, SampleDataExtended } from '../../types/samples';
 import type { ObjectData } from '../../types/object';
 import type { SampleType, SampleTypes, PredefinedSampleTypes } from '../../types/sample';
-import type { Callback } from '../../models/types/ajax';
+import type { Callback } from '../../types/ajax';
 import { getSampleData } from './shared/submit';
 import type { FormDetails } from './types/form';
 import type { AppSession } from '../../types/appSession';
+import { simpleGet, simplePost } from '../../shared/RxAjax';
 
-export type SampleDataExtended = { sampleType?: SampleType } & SampleData;
+export type State = {
+  apiSampleTypes?: ?Array<SampleType>,
+  sample?: ?SampleDataExtended
+};
 
-const initialState = { data: [] };
+const initialState: State = { data: [] };
 
-export const clearSampleResponses$: Subject<*> = createAction('clearSampleResponses$');
+export const clearSampleResponses$: Observable<void> = createAction(
+  'clearSampleResponses$'
+);
 
 export type SampleId = string;
 
@@ -25,7 +32,7 @@ export type SampleResponse = { response: ?SampleId, status?: number, error: ?Err
 
 export type CreateSamplesResponse = { response: Array<SampleResponse>, error: ?Error };
 
-export const createSamplesForObjects$: Subject<
+export const createSamplesForObjects$: Observable<
   Array<CreateSamplesResponse>
 > = createAction(
   'createSamplesForObjects$'
@@ -38,7 +45,7 @@ export const createSamplesForObjects$: Subject<
     callback: Callback
   }) => {
     const tasks$ = props.objectData.map(od => {
-      return Sample.addSample()({
+      return Sample.addSample(simplePost)({
         museumId: props.appSession.museumId,
         token: props.appSession.accessToken,
         data: getSampleData(props.form, null, od, props.sampleTypes, props.appSession)
@@ -47,7 +54,7 @@ export const createSamplesForObjects$: Subject<
         .flatMap((res: SampleResponse) => {
           const sampleId = res.response;
           if (res.status === 201 && sampleId) {
-            return Sample.loadSample()({
+            return Sample.loadSample(simpleGet)({
               id: sampleId,
               museumId: props.appSession.museumId,
               collectionId: props.appSession.collectionId,
@@ -69,54 +76,61 @@ export const createSamplesForObjects$: Subject<
   }
 );
 
-export const getPredefinedTypes$: Subject<PredefinedSampleTypes> = createAction(
+export const getPredefinedTypes$: Observable<PredefinedSampleTypes> = createAction(
   'getPredefinedTypes$'
-).switchMap(Sample.loadPredefinedTypes());
+).switchMap(Sample.loadPredefinedTypes(simpleGet));
 
-export const getSampleTypes$: Subject<SampleTypes> = createAction(
+export const getSampleTypes$: Observable<SampleTypes> = createAction(
   'getSampleTypes$'
-).switchMap(Sample.loadAllSampleTypes());
+).switchMap(Sample.loadAllSampleTypes(simpleGet));
 
-export const getSample$: Subject<SampleDataExtended> = createAction(
+export const getSample$: Observable<SampleDataExtended> = createAction(
   'getSample$'
-).switchMap(props => Sample.loadSample()(props).do(props.onComplete));
+).switchMap(props => Sample.loadSample(simpleGet)(props).do(props.onComplete));
 
-export const clear$: Subject<*> = createAction('clear$');
+export const clear$: Observable<void> = createAction('clear$');
 
-export const getSamplesForNode$: Subject<Array<SampleData>> = createAction(
+export const getSamplesForNode$: Observable<Array<SampleData>> = createAction(
   'getSamplesForNode$'
-).switchMap(Sample.loadSamplesForNode());
+).switchMap(Sample.loadSamplesForNode(simpleGet));
 
-const extendSample = (state, sample: SampleDataExtended, apiSampleTypes) => {
-  if (sample && apiSampleTypes) {
-    const sampleType = apiSampleTypes.find(st => st.sampleTypeId === sample.sampleTypeId);
-    const extendedSample = { ...sample, sampleType };
-    const sampleOrObjectData = extendedSample.parentObject
-      ? extendedSample.parentObject.sampleOrObjectData
-      : null;
-    if (sampleOrObjectData) {
-      const parentObjSampleTypeId = sampleOrObjectData.sampleTypeId;
-      sampleOrObjectData.sampleType = apiSampleTypes.find(
-        st => st.sampleTypeId === parentObjSampleTypeId
-      );
-    }
-    return { ...state, sample: extendedSample, apiSampleTypes };
-  } else {
+const extendSample = (
+  state: State,
+  sample: ?SampleDataExtended,
+  apiSampleTypes: ?Array<SampleType>
+) => {
+  if (!sample || !apiSampleTypes) {
     return { ...state, sample, apiSampleTypes };
   }
+  const sampleTypeId = sample.sampleTypeId;
+  const sampleType = apiSampleTypes.find(st => st.sampleTypeId === sampleTypeId);
+  const extendedSample = { ...sample, sampleType };
+  const sampleOrObjectData = extendedSample.parentObject
+    ? extendedSample.parentObject.sampleOrObjectData
+    : null;
+  if (sampleOrObjectData) {
+    const parentObjSampleTypeId = sampleOrObjectData.sampleTypeId;
+    sampleOrObjectData.sampleType = apiSampleTypes.find(
+      st => st.sampleTypeId === parentObjSampleTypeId
+    );
+  }
+  return { ...state, sample: extendedSample, apiSampleTypes };
 };
 
 export type Actions = {
-  getPredefinedTypes$: Subject<*>,
-  clear$: Subject<*>,
-  getSampleTypes$: Subject<*>,
-  getSample$: Subject<*>,
-  getSamplesForNode$: Subject<*>,
-  createSamplesForObjects$: Subject<Array<CreateSamplesResponse>>,
-  clearSampleResponses$: Subject<void>
+  getPredefinedTypes$: Observable<*>,
+  clear$: Observable<void>,
+  getSampleTypes$: Observable<*>,
+  getSample$: Observable<*>,
+  getSamplesForNode$: Observable<*>,
+  createSamplesForObjects$: Observable<Array<CreateSamplesResponse>>,
+  clearSampleResponses$: Observable<void>
 };
 
-const reducer$ = (actions: Actions, predefined: Subject<Predefined>) =>
+const reducer$ = (
+  actions: Actions,
+  predefined: Observable<Predefined>
+): Observable<Reducer<State>> =>
   Observable.merge(
     actions.clear$.map(() => state => ({
       ...initialState,
@@ -136,7 +150,8 @@ const reducer$ = (actions: Actions, predefined: Subject<Predefined>) =>
     actions.getPredefinedTypes$.map(types => state => ({ ...state, ...types })),
     actions.getSampleTypes$.map(sampleTypes => state => ({ ...state, sampleTypes })),
     actions.getSample$.map(sample => state =>
-      extendSample(state, sample, state.apiSampleTypes)),
+      extendSample(state, sample, state.apiSampleTypes)
+    ),
     actions.getSamplesForNode$.map(nodeSamples => state => ({
       ...state,
       nodeSamples
@@ -146,7 +161,8 @@ const reducer$ = (actions: Actions, predefined: Subject<Predefined>) =>
         state,
         state.sample,
         predefined.sampleTypes ? predefined.sampleTypes.raw : null
-      ))
+      )
+    )
   );
 
 export const sampleStore$ = (
@@ -159,13 +175,7 @@ export const sampleStore$ = (
     createSamplesForObjects$,
     clearSampleResponses$
   },
-  predefined: Subject<Predefined> = predefined$
-) =>
-  createStore(
-    'sampleStore$',
-    reducer$(actions, predefined),
-    Observable.of(initialState),
-    KEEP_ALIVE
-  );
+  predefined: Observable<Predefined> = predefined$
+) => createStore('sampleStore$', reducer$(actions, predefined), initialState, KEEP_ALIVE);
 
 export default sampleStore$();

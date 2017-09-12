@@ -6,31 +6,36 @@ import AnalysisViewComponent from '../AnalysisViewComponent';
 import { fieldsArray } from '../analysisForm';
 import type { Field } from 'forms/form';
 import type { FormData } from '../shared/formType';
-import { appSession, analysis, history } from '../../../testutils/sampleDataForTest';
-
-declare var describe: any;
-declare var it: any;
-declare var expect: any;
+import {
+  appSession,
+  analysis,
+  history,
+  createAnalysisEventWithObject
+} from '../../../testutils/sampleDataForTest';
+import { initialState } from '../../../stores/predefined';
 
 const objectsData = [
-  {
-    museumNumber: '123',
-    subNumber: '12345678911',
-    term: 'Spyd',
-    uuid: '1cbf15cb-8348-4e66-99a4-bc314da57a42'
-  },
-  {
-    museumNumber: '124',
-    subNumber: '12345678912',
-    term: 'Beltering',
-    uuid: '2cbf15cb-8348-4e66-99a4-bc314da57a42'
-  },
-  {
-    museumNumber: '125',
-    subNumber: '12345678913',
-    term: 'Øsekar',
-    uuid: '3cbf15cb-8348-4e66-99a4-bc314da57a42'
-  }
+  createAnalysisEventWithObject(
+    1,
+    '1cbf15cb-8348-4e66-99a4-bc314da57a42',
+    '123',
+    '12345678911',
+    'Spyd'
+  ),
+  createAnalysisEventWithObject(
+    2,
+    '1cbf15cb-8348-4e66-99a4-bc314da57a42',
+    '124',
+    '12345678912',
+    'Beltering'
+  ),
+  createAnalysisEventWithObject(
+    3,
+    '1cbf15cb-8348-4e66-99a4-bc314da57a42',
+    '125',
+    '12345678913',
+    'Øsekar'
+  )
 ];
 
 const form: FormData = (fieldsArray.reduce(
@@ -74,10 +79,20 @@ const extraAttributes = [
   }
 ];
 
+const nullFn = () => null;
+const emptyMatch = { params: { analysisId: '23' } };
+
 describe('AnalysisViewComponent', () => {
   it('should render properly', () => {
     const wrapper = shallow(
       <AnalysisViewComponent
+        clearForm={nullFn}
+        loadForm={nullFn}
+        getAnalysis={nullFn}
+        updateAnalysis={nullFn}
+        clearStore={nullFn}
+        predefined={initialState}
+        match={emptyMatch}
         form={form}
         store={{ analysis, showCancelDialog: false }}
         extraDescriptionAttributes={extraAttributes}
@@ -92,10 +107,10 @@ describe('AnalysisViewComponent', () => {
         appSession={appSession}
         history={history}
         hasRestrictions={true}
-        updateRestriction={() => null}
+        updateRestriction={nullFn}
         loadingAnalysis={false}
-        cancelRestriction={() => null}
-        toggleCancelDialog={() => null}
+        cancelRestriction={nullFn}
+        toggleCancelDialog={nullFn}
         isRestrictionValidForCancellation={false}
       />
     );
@@ -129,6 +144,13 @@ describe('AnalysisViewComponent with extra attribute types', () => {
   it('should render Analysis view component', () => {
     const wrapper = shallow(
       <AnalysisViewComponent
+        clearForm={nullFn}
+        loadForm={nullFn}
+        getAnalysis={nullFn}
+        updateAnalysis={nullFn}
+        clearStore={nullFn}
+        predefined={initialState}
+        match={emptyMatch}
         form={form}
         store={{ analysis, showCancelDialog: false }}
         extraDescriptionAttributes={extraAttributeTypes}

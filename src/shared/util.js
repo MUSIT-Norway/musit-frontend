@@ -20,14 +20,19 @@ export const flatten = (arr: Array<*>) => {
 
 export const filter = (arr: Array<*>, fields: Array<string>, pattern: string) => {
   const contains = (s: any, p: string) => {
-    return (s || '').toString().toLowerCase().indexOf(p.toLowerCase()) !== -1;
+    return (
+      (s || '')
+        .toString()
+        .toLowerCase()
+        .indexOf(p.toLowerCase()) !== -1
+    );
   };
   return arr.filter(row => {
     return fields.find(field => contains(row[field], pattern));
   });
 };
 
-export const getDisplayName = (Component: React.Component<*, *, *>) => {
+export const getDisplayName = (Component: React.Component<*, *>) => {
   return Component.displayName || Component.name || 'Component';
 };
 

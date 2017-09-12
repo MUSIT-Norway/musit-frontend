@@ -5,12 +5,11 @@ import { I18n } from 'react-i18nify';
 import NorwegianTranslation from './AboutPage_no.html.jsx';
 import EnglishTranslation from './AboutPage_en.html.jsx';
 import Logos from '../../components/logos/Logos';
-import inject from 'react-rxjs/dist/RxInject';
+import { RxInjectLegacy as inject } from 'react-rxjs';
 
 export const AboutPage = props => {
-  const Translated = props.getLocale() === 'no'
-    ? NorwegianTranslation
-    : EnglishTranslation;
+  const Translated =
+    props.getLocale() === 'no' ? NorwegianTranslation : EnglishTranslation;
   return (
     <div>
       <main>

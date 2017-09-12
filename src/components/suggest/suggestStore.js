@@ -18,5 +18,6 @@ export default (name, urlFn) =>
             .catch(() => [])
         )
         .map(suggestions => state => ({ ...state, data: suggestions }))
-    )
+    ),
+    {}
   );

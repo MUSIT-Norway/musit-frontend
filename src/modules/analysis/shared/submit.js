@@ -1,5 +1,10 @@
 // @flow
-import type { ExtraResultAttributeValues, Size } from '../../../types/analysis';
+import type {
+  ExtraResultAttributeValues,
+  Size,
+  AnalysisCollection,
+  AnalysisEvent
+} from '../../../types/analysis';
 import type { AppSession } from '../../../types/appSession';
 import type { ObjectData } from '../../../types/object';
 import type { History } from '../../../types/Routes';
@@ -17,17 +22,10 @@ import { emitError, emitSuccess } from '../../../shared/errors';
 import { I18n } from 'react-i18nify';
 import type { Restriction } from '../../../types/analysis';
 
-type ObjectWithUuidAndType = { objectId: ?string, objectType: string };
+type ObjectWithUuidAndType = { objectId: ?string, objectType: ?string };
 
-type Analysis = {
-  id: number,
-  events: ?Array<
-    ObjectData & SampleData & { affectedThing: string, affectedType: string }
-  >
-};
-
-export type Location = {
-  state?: Array<ObjectData & SampleData>
+export type Location<T> = {
+  state?: T
 };
 
 const getArrayOfResultsToSave = function(
@@ -70,7 +68,7 @@ export function submitForm(
   const token = appSession.accessToken;
   const museumId = appSession.museumId;
   const upsertAnalysis$ = getAnalysisUpsert(id, ajaxPut, museumId, data, token, ajaxPost);
-  return upsertAnalysis$.toPromise().then((analysis?: Analysis) => {
+  return upsertAnalysis$.toPromise().then((analysis?: AnalysisCollection) => {
     if (!analysis) {
       return Observable.empty();
     }
@@ -145,9 +143,10 @@ export function getResult(
   form: FormData,
   extraResultAttributes: ?ExtraResultAttributeValues
 ) {
-  const extraAttributeType = extraResultAttributes && extraResultAttributes.type
-    ? extraResultAttributes.type.toString()
-    : 'GenericResult';
+  const extraAttributeType =
+    extraResultAttributes && extraResultAttributes.type
+      ? extraResultAttributes.type.toString()
+      : 'GenericResult';
   const extraAttributes = keys(extraResultAttributes).reduce((acc, att) => {
     let value = extraResultAttributes && extraResultAttributes[att];
     if (value && typeof value !== 'string' && value.type === 'Size') {
@@ -176,7 +175,7 @@ export function getResult(
 export function getAnalysisCollection(
   form: FormData,
   extraDescriptionAttributes: ?mixed,
-  location: Location
+  location: Location<Array<AnalysisEvent>>
 ) {
   const events = toArray(form.events.value);
   const persons = toArray(form.persons.value);
@@ -209,21 +208,26 @@ function findPerson(persons, role) {
 }
 
 export function getObjects(
-  formEvents: Array<ObjectData & SampleData>,
-  location: Location
-): Array<ObjectData & SampleData> {
+  formEvents: Array<AnalysisEvent>,
+  location: Location<Array<AnalysisEvent>>
+): Array<AnalysisEvent> {
   return formEvents.length > 0 ? formEvents : location.state || [];
 }
 
 export function getObjectsWithType(
-  objects: Array<ObjectData & SampleData>
+  objects: Array<AnalysisEvent>
 ): Array<ObjectWithUuidAndType> {
   if (!objects) {
     return [];
   }
-  return objects.map((obj: ObjectData & SampleData) => ({
-    objectId: obj.objectId || obj.uuid,
-    objectType: obj.sampleNum ? 'sample' : obj.objectType
+  return objects.map((obj: AnalysisEvent) => ({
+    objectId: obj.sampleData
+      ? obj.sampleData.objectId
+      : obj.objectData && obj.objectData.uuid,
+    objectType:
+      obj.sampleData && obj.sampleData.sampleNum
+        ? 'sample'
+        : obj.objectData ? obj.objectData.objectType : null
   }));
 }
 
@@ -232,7 +236,7 @@ function zipEventsWithId(formEvents, apiEvents) {
     const eventObjectId = evt.objectId || evt.uuid;
     const event =
       apiEvents &&
-      apiEvents.find(evtFromServer => evtFromServer.objectId === eventObjectId);
+      apiEvents.find(evtFromServer => evtFromServer.affectedThing === eventObjectId);
     return { ...evt, id: event ? event.id : evt.id };
   });
 }

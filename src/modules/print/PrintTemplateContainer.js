@@ -1,4 +1,4 @@
-import inject from 'react-rxjs/dist/RxInject';
+import { RxInjectLegacy as inject } from 'react-rxjs';
 import store$, {
   loadTemplates$,
   renderTemplate$,

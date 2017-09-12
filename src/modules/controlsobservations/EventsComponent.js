@@ -6,7 +6,7 @@ import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import Toolbar from '../../components/layout/Toolbar';
 import { I18n } from 'react-i18nify';
-import inject from 'react-rxjs/dist/RxInject';
+import { RxInjectLegacy as inject } from 'react-rxjs';
 import store$, { clearEvents$, loadRootNode$, loadEvents$ } from './eventsStore';
 import Loader from 'react-loader';
 import Config from '../../config';

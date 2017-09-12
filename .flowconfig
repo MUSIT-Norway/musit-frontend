@@ -7,6 +7,10 @@
 
 [include]
 
+[lints]
+all=warn
+untyped-type-import=error
+
 [libs]
 flow-typed
 

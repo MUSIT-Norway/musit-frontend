@@ -62,11 +62,13 @@ export const sampleProps = (props: Props) => {
  * @returns {boolean}
  */
 function showSampleSubType(sampleTypeStr: ?string, sampleTypes: ?any): boolean {
-  return !!(sampleTypeStr &&
+  return !!(
+    sampleTypeStr &&
     sampleTypeStr.trim().length > 0 &&
     sampleTypes &&
     sampleTypes[sampleTypeStr] &&
-    sampleTypes[sampleTypeStr].length > 1);
+    sampleTypes[sampleTypeStr].length > 1
+  );
 }
 
 function updateSampleType(
@@ -89,7 +91,11 @@ function updateSampleType(
   };
 }
 
-function getParentObject(isAdd, sampleData, objectData) {
+function getParentObject(
+  isAdd: boolean,
+  sampleData: ?SampleData,
+  objectData: ObjectData
+) {
   let parentObject;
   const isEdit = !isAdd;
   if (isAdd) {
@@ -111,7 +117,8 @@ function getParentObject(isAdd, sampleData, objectData) {
     sampleData.parentObject.sampleOrObjectData
   ) {
     parentObject = {
-      objectId: sampleData.parentObject.sampleOrObjectData.objectId ||
+      objectId:
+        sampleData.parentObject.sampleOrObjectData.objectId ||
         sampleData.parentObject.sampleOrObjectData.uuid,
       objectType: sampleData.parentObject.sampleOrObjectData.objectId
         ? 'sample'
@@ -140,9 +147,8 @@ export const callback = {
 export const onComplete = (history: History, appSession: AppSession) => (value: {
   response: { objectId?: string } | string
 }) => {
-  const objectId: ?string = typeof value.response === 'string'
-    ? value.response
-    : value.response.objectId;
+  const objectId: ?string =
+    typeof value.response === 'string' ? value.response : value.response.objectId;
   if (objectId) {
     history.push({
       pathname: Config.magasin.urls.client.analysis.gotoSample(appSession, objectId)
@@ -160,7 +166,10 @@ export const getSampleData = function(
   const parentObject = getParentObject(!form.sampleNum, sampleData, objectData);
   return Sample.prepareForSubmit({
     ...normalizeForm(form),
-    ...getActors(form.persons.rawValue),
+    ...getActors(form.persons.rawValue || []),
+    sizeUnit: form.sizeUnit.value,
+    externalId: form.externalId.value,
+    externalIdSource: form.externalIdSource.value,
     sampleTypeId: getSampleTypeId(
       sampleTypes,
       form.sampleType.value,
@@ -218,9 +227,10 @@ function sampleTypeDisplayName(v: SampleType, appSession: AppSession) {
     : v.noSampleSubType || v.noSampleType;
 }
 
-function normalizeForm(frm: FormDetails) {
-  return Object.keys(frm).reduce(
-    (akk: any, key: string) => ({
+function normalizeForm(frm: FormDetails): { [string]: * } {
+  const keys: Array<string> = Object.keys(frm);
+  return keys.reduce(
+    (akk: { [string]: * }, key: string) => ({
       ...akk,
       [key]: frm[key].value || frm[key].defaultValue
     }),
@@ -228,8 +238,13 @@ function normalizeForm(frm: FormDetails) {
   );
 }
 
-function getActors(form: FormDetails) {
-  return form.reduce((akk: FormDetails, v: Person) => {
+export type ExtraActorInfo = {
+  doneByStamp?: { user: ?string, date: string },
+  responsible?: string
+};
+
+function getActors(persons: Array<Person>): ExtraActorInfo {
+  return persons.reduce((akk: ExtraActorInfo, v: Person) => {
     switch (v.role) {
       case 'creator':
         return {

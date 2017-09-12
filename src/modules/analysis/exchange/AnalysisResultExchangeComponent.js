@@ -22,9 +22,7 @@ const hasImportedResults = (props: Props) =>
 const AnalysisResultExchangeComponent = (props: Props) => (
   <div className="container">
     <div className="page-header">
-      <h1>
-        {I18n.t('musit.analysis.exchange.pageHeader')}
-      </h1>
+      <h1>{I18n.t('musit.analysis.exchange.pageHeader')}</h1>
     </div>
 
     <Export
@@ -42,7 +40,6 @@ const AnalysisResultExchangeComponent = (props: Props) => (
           loadContent={props.importResult}
         />
       </div>
-
     </div>
 
     <ImportVerificationTable
@@ -75,11 +72,11 @@ const AnalysisResultExchangeComponent = (props: Props) => (
 
     <div className="row">
       {props.analysisExchangeStore.importErrors.map((error: string, index: number) => (
-        <div key={index} className="col-md-12">{error}</div>
+        <div key={index} className="col-md-12">
+          {error}
+        </div>
       ))}
-
     </div>
-
   </div>
 );
 

@@ -92,7 +92,8 @@ describe('PrintTemplateComponent', () => {
     expect(renderTemplate.getCall(0).args[0].nodes).toEqual([
       {
         uuid: 1,
-        name: 'Utviklingsmuseet / Utviklingsmuseet Org / Forskningens hus / Forskningsværelset / kkk / Test 1'
+        name:
+          'Utviklingsmuseet / Utviklingsmuseet Org / Forskningens hus / Forskningsværelset / kkk / Test 1'
       },
       { uuid: 2, name: 'Utviklingsmuseet / Utviklingsmuseet Org / Test 2' },
       { uuid: 25, name: 'Test 3' }

@@ -360,108 +360,119 @@ export default class ObservationPage extends React.Component {
             <Row>
               <Col xs={12} sm={5}>
                 <ControlLabel>{I18n.t('musit.observation.page.date')}</ControlLabel>
-                {this.props.mode !== 'ADD'
-                  ? <FormControl
-                      componentClass="input"
-                      value={parseISODate(this.state.doneDate).format(
-                        DATE_FORMAT_DISPLAY
-                      )}
-                      disabled
-                    />
-                  : <DatePicker
-                      dateFormat={DATE_FORMAT_DISPLAY}
-                      onClear={newValue =>
-                        this.setState({ ...this.state, doneDate: newValue })}
-                      value={this.state.doneDate}
-                      onChange={newValue => this.setDate(newValue)}
-                      disabled={this.props.mode === 'VIEW'}
-                    />}
+                {this.props.mode !== 'ADD' ? (
+                  <FormControl
+                    componentClass="input"
+                    value={parseISODate(this.state.doneDate).format(DATE_FORMAT_DISPLAY)}
+                    disabled
+                  />
+                ) : (
+                  <DatePicker
+                    dateFormat={DATE_FORMAT_DISPLAY}
+                    onClear={newValue =>
+                      this.setState({ ...this.state, doneDate: newValue })}
+                    value={this.state.doneDate}
+                    onChange={newValue => this.setDate(newValue)}
+                    disabled={this.props.mode === 'VIEW'}
+                  />
+                )}
               </Col>
               <Col xs={12} sm={5}>
                 <ControlLabel>{I18n.t('musit.observation.page.doneBy')}</ControlLabel>
-                {this.props.mode !== 'ADD'
-                  ? <FormControl
-                      componentClass="input"
-                      value={
-                        this.state.doneBy && this.state.doneBy.fn
-                          ? this.state.doneBy.fn
-                          : this.state.doneBy || ''
-                      }
-                      disabled
-                    />
-                  : <ActorSuggest
-                      appSession={this.props.appSession}
-                      id="doneByField"
-                      value={
-                        this.state.doneBy && this.state.doneBy.fn
-                          ? this.state.doneBy.fn
-                          : this.state.doneBy || ''
-                      }
-                      placeHolder="Find actor"
-                      onChange={newValue => {
-                        this.setState({
-                          ...this.state,
-                          doneBy: newValue
-                        });
-                      }}
-                    />}
+                {this.props.mode !== 'ADD' ? (
+                  <FormControl
+                    componentClass="input"
+                    value={
+                      this.state.doneBy && this.state.doneBy.fn ? (
+                        this.state.doneBy.fn
+                      ) : (
+                        this.state.doneBy || ''
+                      )
+                    }
+                    disabled
+                  />
+                ) : (
+                  <ActorSuggest
+                    appSession={this.props.appSession}
+                    id="doneByField"
+                    value={
+                      this.state.doneBy && this.state.doneBy.fn ? (
+                        this.state.doneBy.fn
+                      ) : (
+                        this.state.doneBy || ''
+                      )
+                    }
+                    placeHolder="Find actor"
+                    onChange={newValue => {
+                      this.setState({
+                        ...this.state,
+                        doneBy: newValue
+                      });
+                    }}
+                  />
+                )}
               </Col>
             </Row>
-            {this.props.mode === 'VIEW'
-              ? <Row>
-                  <Col sm={5}>
-                    <ControlLabel>{I18n.t('musit.texts.dateRegistered')}</ControlLabel>
+            {this.props.mode === 'VIEW' ? (
+              <Row>
+                <Col sm={5}>
+                  <ControlLabel>{I18n.t('musit.texts.dateRegistered')}</ControlLabel>
+                  <FormControl
+                    componentClass="input"
+                    value={parseISODate(this.props.registeredDate).format(
+                      DATE_FORMAT_DISPLAY
+                    )}
+                    disabled
+                  />
+                </Col>
+                <Col sm={5}>
+                  <ControlLabel>{I18n.t('musit.texts.registeredBy')}</ControlLabel>
+                  <FormControl
+                    componentClass="input"
+                    value={this.props.registeredBy || ''}
+                    disabled
+                  />
+                </Col>
+              </Row>
+            ) : (
+              ''
+            )}
+            {this.props.mode !== 'ADD' ? (
+              ''
+            ) : (
+              <Row>
+                <Col xs={2}>
+                  <FormGroup controlId="formControlsSelect">
                     <FormControl
-                      componentClass="input"
-                      value={parseISODate(this.props.registeredDate).format(
-                        DATE_FORMAT_DISPLAY
-                      )}
-                      disabled
-                    />
-                  </Col>
-                  <Col sm={5}>
-                    <ControlLabel>{I18n.t('musit.texts.registeredBy')}</ControlLabel>
-                    <FormControl
-                      componentClass="input"
-                      value={this.props.registeredBy || ''}
-                      disabled
-                    />
-                  </Col>
-                </Row>
-              : ''}
-            {this.props.mode !== 'ADD'
-              ? ''
-              : <Row>
-                  <Col xs={2}>
-                    <FormGroup controlId="formControlsSelect">
-                      <FormControl
-                        componentClass="select"
-                        placeholder="select"
-                        onChange={this.onChangeTypeSelect}
-                        value={this.state.selectedType ? this.state.selectedType : ''}
-                      >
-                        {Object.keys(this.typeDefinitions)
-                          .filter(this.isTypeSelectable)
-                          .map((type, index) => {
-                            return (
-                              <option key={index} value={type}>
-                                {I18n.t(
-                                  `musit.observation.page.${this.typeDefinitions[type].label}`
-                                )}
-                              </option>
-                            );
-                          })}
-                      </FormControl>
-                    </FormGroup>
-                  </Col>
-                  <Col xs={4}>
-                    <Button onClick={() => this.addObservationType()}>
-                      <FontAwesome name="plus-circle" />
-                      &nbsp;
-                      {I18n.t('musit.observation.page.newButtonLabel')}
-                    </Button>
-                  </Col>
-                </Row>}
+                      componentClass="select"
+                      placeholder="select"
+                      onChange={this.onChangeTypeSelect}
+                      value={this.state.selectedType ? this.state.selectedType : ''}
+                    >
+                      {Object.keys(this.typeDefinitions)
+                        .filter(this.isTypeSelectable)
+                        .map((type, index) => {
+                          return (
+                            <option key={index} value={type}>
+                              {I18n.t(
+                                `musit.observation.page.${this.typeDefinitions[type]
+                                  .label}`
+                              )}
+                            </option>
+                          );
+                        })}
+                    </FormControl>
+                  </FormGroup>
+                </Col>
+                <Col xs={4}>
+                  <Button onClick={() => this.addObservationType()}>
+                    <FontAwesome name="plus-circle" />
+                    &nbsp;
+                    {I18n.t('musit.observation.page.newButtonLabel')}
+                  </Button>
+                </Col>
+              </Row>
+            )}
             {this.state.observations.map((observation, index) => {
               const typeDefinition = this.typeDefinitions[observation.type];
               return (
@@ -469,17 +480,19 @@ export default class ObservationPage extends React.Component {
                   <h3>
                     {I18n.t(`musit.observation.page.${typeDefinition.label}`)}
                     &nbsp;
-                    {this.props.mode !== 'ADD'
-                      ? ''
-                      : <a
-                          href=""
-                          onClick={e => {
-                            this.removeObservation(index);
-                            e.preventDefault();
-                          }}
-                        >
-                          <FontAwesome name="times" />
-                        </a>}
+                    {this.props.mode !== 'ADD' ? (
+                      ''
+                    ) : (
+                      <a
+                        href=""
+                        onClick={e => {
+                          this.removeObservation(index);
+                          e.preventDefault();
+                        }}
+                      >
+                        <FontAwesome name="times" />
+                      </a>
+                    )}
                   </h3>
                   {this.renderObservation(observation, index)}
                   <hr />
@@ -491,28 +504,33 @@ export default class ObservationPage extends React.Component {
           <Row className="row-centered" style={{ textAlign: 'center' }}>
             {this.state.errors &&
               values(this.state.errors).map((error, index) => {
-                return <p style={{ color: 'red' }} key={index}>{I18n.t(error)}</p>;
+                return (
+                  <p style={{ color: 'red' }} key={index}>
+                    {I18n.t(error)}
+                  </p>
+                );
               })}
             <br />
-            {this.props.mode === 'VIEW'
-              ? <Col xs={10}>
-                  <Button
-                    onClick={() => {
-                      this.props.goBack();
-                    }}
-                  >
-                    {I18n.t('musit.texts.close')}
-                  </Button>
-                </Col>
-              : <SaveCancel
-                  onClickSave={this.handleSubmit}
-                  onClickCancel={() => this.props.goBack()}
-                  saveDisabled={
-                    this.props.saveDisabled === true ||
-                      this.state.observations.length === 0
-                  }
-                  cancelDisabled={this.props.cancelDisabled}
-                />}
+            {this.props.mode === 'VIEW' ? (
+              <Col xs={10}>
+                <Button
+                  onClick={() => {
+                    this.props.goBack();
+                  }}
+                >
+                  {I18n.t('musit.texts.close')}
+                </Button>
+              </Col>
+            ) : (
+              <SaveCancel
+                onClickSave={this.handleSubmit}
+                onClickCancel={() => this.props.goBack()}
+                saveDisabled={
+                  this.props.saveDisabled === true || this.state.observations.length === 0
+                }
+                cancelDisabled={this.props.cancelDisabled}
+              />
+            )}
           </Row>
         </Grid>
       </form>

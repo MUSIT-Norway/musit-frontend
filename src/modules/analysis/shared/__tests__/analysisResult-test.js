@@ -11,10 +11,6 @@ import {
   MeasurementResultSizeValues
 } from '../analysisResult';
 
-declare var describe: any;
-declare var it: any;
-declare var expect: any;
-
 describe('getAnalysisResultFieldAllowedValues', () => {
   it('should return proper allowed values for ExtractionResult and storageMedium', () => {
     const allowedValues = getAnalysisResultFieldAllowedValues(

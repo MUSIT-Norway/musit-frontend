@@ -31,22 +31,25 @@ export default function Result(props: Props) {
                 labelWidth={2}
                 elementWidth={5}
                 value={
-                  attribute.type === 'Size'
-                    ? attribute.value &&
-                        attribute.value.rawValue &&
-                        attribute.value.rawValue + ' ' + attribute.value.unit
-                    : attribute.value && attribute.value
+                  attribute.type === 'Size' ? (
+                    attribute.value &&
+                    attribute.value.rawValue &&
+                    attribute.value.rawValue + ' ' + attribute.value.unit
+                  ) : (
+                    attribute.value && attribute.value
+                  )
                 }
               />
             );
           })}
-      {props.parentObjectId &&
+      {props.parentObjectId && (
         <NavigateToObject
           className="pull-right"
           objectId={props.parentObjectId}
           appSession={props.appSession}
           history={props.history}
-        />}
+        />
+      )}
       <FormText
         id="externalSource"
         label={I18n.t('musit.analysis.externalSource')}

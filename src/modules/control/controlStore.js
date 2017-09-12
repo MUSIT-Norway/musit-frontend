@@ -17,6 +17,6 @@ export const reducer$ = actions =>
   );
 
 export const store$ = (actions$ = { clear$, loadRootNode$, getControl$ }) =>
-  createStore('controlStore$', reducer$(actions$), Observable.of(initialState));
+  createStore('controlStore$', reducer$(actions$), initialState);
 
 export default store$();

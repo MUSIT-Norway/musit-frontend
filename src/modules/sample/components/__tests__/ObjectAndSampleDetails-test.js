@@ -29,16 +29,24 @@ describe('ObjectAndSampleDetails', () => {
     );
     expect(
       wrapper.contains(
-        <span style={{ marginRight: 20 }}><strong>Museumsnr.</strong>{' '}MUSK123</span>
+        <span style={{ marginRight: 20 }}>
+          <strong>Museumsnr.</strong> MUSK123
+        </span>
       )
     ).toBe(true);
     expect(
       wrapper.contains(
-        <span style={{ marginRight: 20 }}><strong>Unr.</strong>{' '}23</span>
+        <span style={{ marginRight: 20 }}>
+          <strong>Unr.</strong> 23
+        </span>
       )
     ).toBe(true);
     expect(
-      wrapper.contains(<span><strong>Gjenstand/Takson</strong>{' '}Fishy fish</span>)
+      wrapper.contains(
+        <span>
+          <strong>Gjenstand/Takson</strong> Fishy fish
+        </span>
+      )
     ).toBe(true);
     expect(wrapper.find(NavigateToObject).props().objectId).toEqual('whatever');
     expect(wrapper.find(NavigateToObject).props().appSession).toEqual(appSession);
@@ -48,7 +56,3 @@ describe('ObjectAndSampleDetails', () => {
     expect(wrapper.contains(<strong>Prøveundertype</strong>)).toBe(true);
   });
 });
-
-declare var describe: any;
-declare var it: any;
-declare var expect: any;

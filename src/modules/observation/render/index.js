@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ObservationFromToNumberCommentComponent
-  from './ObservationFromToNumberCommentComponent';
+import ObservationFromToNumberCommentComponent from './ObservationFromToNumberCommentComponent';
 import ObservationDoubleTextAreaComponent from './ObservationDoubleTextAreaComponent';
 import ObservationStatusPercentageComment from './ObservationStatusPercentageComment';
 import ObservationPest from './ObservationPest';

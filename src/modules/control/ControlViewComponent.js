@@ -25,7 +25,7 @@ import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { parseISODate, DATE_FORMAT_DISPLAY } from '../../shared/util';
 import { I18n } from 'react-i18nify';
-import inject from 'react-rxjs/dist/RxInject';
+import { RxInjectLegacy as inject } from 'react-rxjs';
 import store$, { getControl$, loadRootNode$ } from './controlStore';
 import Loader from 'react-loader';
 

@@ -13,7 +13,7 @@ import LoginComponent from '../login/LoginComponent';
 import { emitError } from '../../shared/errors';
 import Loader from 'react-loader';
 import { loadAppSession$, setCollectionId$, setMuseumId$ } from '../../stores/appSession';
-import inject from 'react-rxjs/dist/RxInject';
+import { RxInjectLegacy as inject } from 'react-rxjs';
 import {
   clearNodes$ as clearNodePicklist$,
   clearObjects$ as clearObjectPicklist$
@@ -163,14 +163,15 @@ export class AppComponent extends Component {
               >
                 <NavItem>{I18n.t('musit.reports.reports')}</NavItem>
               </LinkContainer>
-              {this.props.featureToggles.administrationPage &&
+              {this.props.featureToggles.administrationPage && (
                 <LinkContainer
                   to={Config.magasin.urls.client.administration.goToAdministration(
                     this.props.appSession
                   )}
                 >
                   <NavItem>{I18n.t('musit.administration.administration')}</NavItem>
-                </LinkContainer>}
+                </LinkContainer>
+              )}
             </Nav>
             <Nav pullRight>
               <LinkContainer
@@ -179,8 +180,7 @@ export class AppComponent extends Component {
                 )}
               >
                 <NavItem>
-                  <span className="icon icon-musitpicklistnode" />
-                  {' '}
+                  <span className="icon icon-musitpicklistnode" />{' '}
                   {this.props.pickList.nodes.length}
                 </NavItem>
               </LinkContainer>
@@ -190,8 +190,7 @@ export class AppComponent extends Component {
                 )}
               >
                 <NavItem>
-                  <span className="icon icon-musitpicklistobject" />
-                  {' '}
+                  <span className="icon icon-musitpicklistobject" />{' '}
                   {this.props.pickList.objects.length}
                 </NavItem>
               </LinkContainer>
@@ -222,9 +221,7 @@ export class AppComponent extends Component {
           </Navbar.Collapse>
         </Navbar>
 
-        <div className="appContent">
-          {this.props.children}
-        </div>
+        <div className="appContent">{this.props.children}</div>
 
         <footer className={this.getFooterClass()}>
           {'Backend build: '}

@@ -1,6 +1,9 @@
+// @flow
 import inject from 'react-rxjs/dist/RxInject';
+import { Observable } from 'rxjs';
 import analysisForm, { fieldsArray } from './analysisForm';
 import AnalysisFormComponent from './AnalysisFormComponent';
+import type { Props } from './AnalysisFormComponent';
 import store$, {
   getAnalysis$,
   updateExtraDescriptionAttribute$,
@@ -8,30 +11,57 @@ import store$, {
   clearStore$,
   toggleCancelDialog$
 } from './analysisStore';
-import PropTypes from 'prop-types';
 import flowRight from 'lodash/flowRight';
 import lifeCycle from '../../shared/lifeCycle';
 import { onMount, onReceiveProps } from './AnalysisViewContainer';
-import { loadPredefinedTypes } from '../../stores/predefined';
+import { loadPredefinedTypes } from '../../stores/predefinedLoader';
 import props, { onUnmount } from './shared/formProps';
+import predefined$ from '../../stores/predefined';
+import appSession$ from '../../stores/appSession';
+import type { Location } from './shared/submit';
+import type { History } from '../../types/Routes';
 
-const { form$, ...formActions } = analysisForm;
+const { form$, updateForm$, clearForm$, loadForm$ } = analysisForm;
 
-const data = {
-  appSession$: { type: PropTypes.object.isRequired },
-  predefined$: { type: PropTypes.object.isRequired },
-  store$,
-  form$
-};
+function storeFactory() {
+  return Observable.combineLatest(
+    appSession$,
+    predefined$,
+    store$,
+    form$,
+    (appSession, predefined, store, form) => ({
+      appSession,
+      predefined,
+      store,
+      form
+    })
+  );
+}
 
-const commands = {
-  toggleCancelDialog$,
-  updateExtraDescriptionAttribute$,
-  updateExtraResultAttribute$,
-  getAnalysis$,
-  clearStore$,
-  ...formActions
-};
+function editProps(
+  storeProps: *,
+  upstream: { history: History, location: Location<*> }
+): Props {
+  return {
+    ...props({
+      ...storeProps,
+      ...upstream,
+      updateExtraDescriptionAttribute: updateExtraDescriptionAttribute$.next.bind(
+        updateExtraDescriptionAttribute$
+      ),
+      updateExtraResultAttribute: updateExtraResultAttribute$.next.bind(
+        updateExtraResultAttribute$
+      ),
+      updateForm: updateForm$.next.bind(updateForm$)
+    }),
+    getAnalysis: getAnalysis$.next.bind(getAnalysis$),
+    clearStore: clearStore$.next.bind(clearStore$),
+    clearForm: clearForm$.next.bind(clearForm$),
+    loadForm: loadForm$.next.bind(loadForm$),
+    loadingAnalysis: !storeProps.store.analysis,
+    toggleCancelDialog: toggleCancelDialog$.next.bind(toggleCancelDialog$)
+  };
+}
 
 const MountableAnalysisFormComponent = lifeCycle({
   onMount,
@@ -39,6 +69,6 @@ const MountableAnalysisFormComponent = lifeCycle({
   onUnmount
 })(AnalysisFormComponent);
 
-export default flowRight([inject(data, commands, props), loadPredefinedTypes])(
+export default flowRight([inject(storeFactory, editProps), loadPredefinedTypes])(
   MountableAnalysisFormComponent
 );

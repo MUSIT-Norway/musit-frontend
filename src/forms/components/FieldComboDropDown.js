@@ -7,8 +7,8 @@ import identity from 'lodash/identity';
 type FieldComboDropDownProps<T> = {
   field: Field<string>,
   defaultOption?: string,
-  extractValue: (v: T, a?: AppSession) => number,
-  displayValue: (v: T, a?: AppSession) => string,
+  extractValue: (v: T, a: ?AppSession) => number,
+  displayValue: (v: T, a: ?AppSession) => string,
   title: string,
   onChange: Function,
   selectItems: Array<T>,
@@ -29,14 +29,17 @@ type FieldComboDropDownStrProps = {
 export default function FieldComboDropDown<T>(props: FieldComboDropDownProps<T>) {
   return (
     <div>
-      {props.title !== '' &&
+      {props.title !== '' && (
         <label className="control-label col-md-2" htmlFor={props.field.name}>
           {props.title}
-        </label>}
+        </label>
+      )}
       <div className="col-md-3">
         <input
           {...props.inputProps}
-          className={`form-control ${props.inputProps ? props.inputProps.className || '' : ''}`}
+          className={`form-control ${props.inputProps
+            ? props.inputProps.className || ''
+            : ''}`}
           value={props.field.value || ''}
           id={props.field.name}
           onChange={e =>
@@ -50,7 +53,6 @@ export default function FieldComboDropDown<T>(props: FieldComboDropDownProps<T>)
             </option>
           ))}
         </datalist>
-
       </div>
     </div>
   );

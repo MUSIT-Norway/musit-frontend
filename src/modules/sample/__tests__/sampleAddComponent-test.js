@@ -3,12 +3,13 @@ import { mount } from 'enzyme';
 import React from 'react';
 import SampleAddComponent from '../SampleFormComponent';
 import sinon from 'sinon';
-import { appSession, history, sample } from '../../../testutils/sampleDataForTest';
+import {
+  appSession,
+  history,
+  sample,
+  createField
+} from '../../../testutils/sampleDataForTest';
 import { createEnLangAppSessionContext } from '../../../testutils/appSessionContext';
-
-declare var describe: any;
-declare var it: any;
-declare var expect: any;
 
 describe('AnalysisSampleFormPageAdd', () => {
   it('should render with no parent sample object', () => {
@@ -30,6 +31,8 @@ describe('AnalysisSampleFormPageAdd', () => {
             ]
           }
         }}
+        clearForm={() => {}}
+        clearSampleResponses={() => {}}
         canEditSampleType={true}
         showSampleSubType={false}
         form={formDefinition}
@@ -106,6 +109,8 @@ describe('AnalysisSampleFormPageAdd', () => {
             ]
           }
         }}
+        clearForm={() => {}}
+        clearSampleResponses={() => {}}
         form={formDefinition}
         updateSampleType={updateSampleType}
         canEditSampleType={true}
@@ -164,173 +169,37 @@ describe('AnalysisSampleFormPageAdd', () => {
   });
 
   const formDefinition = {
-    note: {
-      name: 'note',
-      rawValue: 'Heisann',
-      status: {
-        valid: true
-      }
-    },
-    size: {
-      name: 'size',
-      rawValue: '1,23',
-      status: {
-        valid: true
-      }
-    },
-    externalId: {
-      name: 'externalId',
-      rawValue: '123',
-      status: {
-        valid: true
-      }
-    },
-    externalIdSource: {
-      name: 'externalIdSource',
-      rawValue: 'Museum',
-      status: {
-        valid: true
-      }
-    },
-    description: {
-      name: 'description',
-      rawValue: 'Av lær',
-      status: {
-        valid: true
-      }
-    },
-    term_species: {
-      name: 'term_species',
-      rawValue: 'Carex saxatilis',
-      status: {
-        valid: true
-      }
-    },
-    sampleType: {
-      name: 'sampleType',
-      rawValue: 'Vev',
-      status: {
-        valid: true
-      }
-    },
-    sizeUnit: {
-      name: 'sizeUnit',
-      rawValue: 'gr',
-      status: {
-        valid: true
-      }
-    },
-    sampleSubType: {
-      name: 'sampleSubType',
-      rawValue: 'Muskel',
-      status: {
-        valid: true
-      }
-    },
-    status: {
-      name: 'status',
-      rawValue: 'Nyskilt',
-      status: {
-        valid: true
-      }
-    },
-    storageMedium: {
-      name: 'storageMedium',
-      rawValue: 'Etanol',
-      status: {
-        valid: true
-      }
-    },
-    createdBy: {
-      name: 'createdBy',
-      rawValue: '1111-2222-1111-1111',
-      status: {
-        valid: true
-      }
-    },
-    responsible: {
-      name: 'responsible',
-      rawValue: '1221-3222-3303-3333',
-      status: {
-        valid: true
-      }
-    },
-    museumId: {
-      name: 'museumId',
-      rawValue: '1233',
-      status: {
-        valid: true
-      }
-    },
-    subNo: {
-      name: 'subNo',
-      rawValue: '322222',
-      status: {
-        valid: true
-      }
-    },
-    registeredBy: {
-      name: 'registeredBy',
-      rawValue: '1233',
-      status: {
-        valid: true
-      }
-    },
-    container: {
-      name: 'container',
-      rawValue: 'Reagensrør',
-      status: {
-        valid: true
-      }
-    },
-    leftoverSample: {
-      name: 'leftoverSample',
-      rawValue: '2',
-      status: {
-        valid: true
-      }
-    },
-    registeredDate: {
-      name: 'registeredDate',
-      rawValue: '1988-12-31',
-      status: {
-        valid: true
-      }
-    },
-    updateBy: {
-      name: 'updateBy',
-      rawValue: 'Arne And',
-      status: {
-        valid: true
-      }
-    },
-    updateDate: {
-      name: 'updateDate',
-      rawValue: '1998-03-12',
-      status: {
-        valid: true
-      }
-    },
-    sampleId: {
-      name: 'sampleId',
-      rawValue: '1233',
-      status: {
-        valid: true
-      }
-    },
-    treatment: {
-      name: 'treatment',
-      rawValue: '1233',
-      status: {
-        valid: true
-      }
-    },
-    persons: {
-      name: 'persons',
-      rawValue: [{ name: 'Arne And', role: 'created', date: '1998-01-2001' }],
-      status: {
-        valid: true
-      }
-    }
+    note: createField('note', 'Heisann'),
+    size: createField('size', '1,23'),
+    externalId: createField('externalId', '123'),
+    externalIdSource: createField('externalIdSource', 'Museum'),
+    description: createField('description', 'Av lær'),
+    term_species: createField('term_species', 'Carex saxatilis'),
+    sampleType: createField('sampleType', 'Vev'),
+    sizeUnit: createField('sizeUnit', 'gr'),
+    sampleSubType: createField('sampleSubType', 'Muskel'),
+    status: createField('status', 'Nyskilt'),
+    storageMedium: createField('storageMedium', 'Etanol'),
+    createdBy: createField('createdBy', '1111-2222-1111-1111'),
+    responsible: createField('responsible', '1221-3222-3303-3333'),
+    museumId: createField('museumId', '1233'),
+    subNo: createField('subNo', '322222'),
+    registeredBy: createField('registeredBy', '1233'),
+    container: createField('container', 'Reagensrør'),
+    leftoverSample: createField('leftoverSample', '2'),
+    registeredDate: createField('registeredDate', '1988-12-31'),
+    updatedBy: createField('updatedBy', 'some uuid'),
+    updatedDate: createField('updatedDate', '1998-03-12'),
+    updatedByName: createField('updatedByName', 'Arne And'),
+    sampleId: createField('sampleId', '1233'),
+    treatment: createField('treatment', '1233'),
+    statusText: createField('statusText', 'In progress'),
+    sampleNum: createField('sampleNum', 4546),
+    doneDate: createField('doneDate', '1998-03-12'),
+    hasRestMaterial: createField('hasRestMaterial', 'false'),
+    registeredByName: createField('registeredByName', 'Jarl'),
+    persons: createField('persons', [
+      { name: 'Arne And', role: 'created', date: '1998-01-2001' }
+    ])
   };
 });

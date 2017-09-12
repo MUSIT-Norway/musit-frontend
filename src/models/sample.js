@@ -3,7 +3,8 @@ import { simplePost, simpleGet, simplePut } from '../shared/RxAjax';
 import Config from '../config';
 import { Observable } from 'rxjs';
 import { DATE_FORMAT_DISPLAY } from '../shared/util';
-import type { Callback, AjaxGet, AjaxPost, AjaxPut } from './types/ajax';
+import type { Callback, AjaxGet, AjaxPost, AjaxPut } from '../types/ajax';
+import type { SampleData } from '../types/samples';
 import { omit } from 'lodash';
 import uniq from 'lodash/uniq';
 import uniqBy from 'lodash/uniqBy';
@@ -25,7 +26,7 @@ class Sample {
     museumId: number,
     token: string,
     data: mixed,
-    callback?: Callback
+    callback?: ?Callback
   }) => Observable<*>;
   static editSample: (
     ajaxPut: AjaxPut
@@ -34,7 +35,7 @@ class Sample {
     museumId: number,
     token: string,
     data: mixed,
-    callback?: Callback
+    callback?: ?Callback
   }) => Observable<*>;
   static loadSample: (
     ajaxGet: AjaxGet
@@ -43,24 +44,23 @@ class Sample {
     museumId: number,
     collectionId: string,
     token: string,
-    callback?: Callback
-  }) => Observable<*>;
+    callback?: ?Callback
+  }) => Observable<SampleData>;
   static loadSampleDataForObject: (
     ajaxGet: AjaxGet
   ) => (props: {
     id: string,
     museumId: number,
     token: string,
-    callback?: Callback
+    callback?: ?Callback
   }) => Observable<*>;
   static prepareForSubmit: (tmpData: {
+    [string]: ?string | ?number | ?{ user: ?string, date: string },
     size?: { value: number, unit: string },
-    parentObject: { objectId: number, objectType: string, sampleOrObjectData: any },
-    sizeUnit: mixed,
-    subTypeValue: mixed,
-    sampleType: { value: string, subTypeValue: string },
-    externalId: { value: string, source: string },
-    externalIdSource: mixed
+    parentObject: { objectId: string, objectType: string, sampleOrObjectData?: any },
+    sizeUnit: ?string,
+    externalId: ?string,
+    externalIdSource: ?string
   }) => mixed;
   static loadSampleTypes: (
     ajaxGet: AjaxGet
@@ -104,7 +104,7 @@ class Sample {
     museumId: number,
     token: string,
     collectionId: string,
-    callback?: Callback
+    callback?: ?Callback
   }) => Observable<*>;
 }
 
@@ -326,7 +326,8 @@ Sample.loadSampleDataForObject = (ajaxGet = simpleGet) => ({
             ? moment(r.doneByStamp.date).format(DATE_FORMAT_DISPLAY)
             : null,
           registeredDate: moment(r.registeredStamp.date).format(DATE_FORMAT_DISPLAY)
-        }))) || []
+        }))) ||
+      []
   );
 };
 

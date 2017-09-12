@@ -2,14 +2,13 @@
 import keys from 'lodash/keys';
 import type {
   AnalysisType,
+  AnalysisEvent,
   AnalysisCollection,
   ExtraResultAttributeValues,
   ExtraAttribute
 } from '../../../types/analysis';
-import type { FormData } from '../shared/formType';
 import { I18n } from 'react-i18nify';
 import type { Language } from '../../../types/appSession';
-import toArray from 'lodash/toArray';
 import { getAnalysisResultFieldAllowedValues } from './analysisResult';
 
 export function getStatusText(status?: ?number): string {
@@ -33,10 +32,10 @@ export function getStatusText(status?: ?number): string {
 }
 
 export function getLabPlaceText(
-  analysisLabList: Array<{ id: number, fullName: string }>,
+  analysisLabList: ?Array<{ id: number, fullName: string }>,
   actorId: ?number
 ): string {
-  if (!actorId) {
+  if (!actorId || !analysisLabList) {
     return '';
   }
   const lab = analysisLabList.find(x => x.id === actorId);
@@ -76,9 +75,11 @@ export function getAnalysisTypeTerm(
 
 export function getAnalysisType(
   analysisTypeId: ?number,
-  analysisTypes: Array<AnalysisType>
+  analysisTypes: ?Array<AnalysisType>
 ): ?AnalysisType {
-  return analysisTypeId ? analysisTypes.find(at => at.id === analysisTypeId) : null;
+  return analysisTypeId && analysisTypes
+    ? analysisTypes.find(at => at.id === analysisTypeId)
+    : null;
 }
 
 export function getExtraDescriptionAttributes(
@@ -104,7 +105,7 @@ export function getExtraDescriptionAttributes(
   const existingAttributesFromBackend = analysis && analysis.extraAttributes;
 
   return extraDescriptionAttributesType &&
-    containsAttributes(extraDescriptionAttributes, existingAttributesFromBackend)
+  containsAttributes(extraDescriptionAttributes, existingAttributesFromBackend)
     ? {
         ...initialExtraDescriptionAttributes,
         ...existingAttributesFromBackend,
@@ -137,11 +138,12 @@ export function getExtraResultAttributes(
   extraResultAttributes: ?ExtraResultAttributeValues,
   language: Language
 ): ?ExtraResultAttributeValues {
-  const initial = analysisType && analysisType.extraResultType
-    ? {
-        type: analysisType.extraResultType
-      }
-    : {};
+  const initial =
+    analysisType && analysisType.extraResultType
+      ? {
+          type: analysisType.extraResultType
+        }
+      : {};
   const extraResultType = initial.type;
   return analysisType && analysisType.extraResultAttributes
     ? keys(analysisType.extraResultAttributes).reduce((acc, field) => {
@@ -149,9 +151,10 @@ export function getExtraResultAttributes(
           analysisType &&
           analysisType.extraResultAttributes &&
           analysisType.extraResultAttributes[field];
-        const value = extraResultAttributes && extraResultAttributes[field]
-          ? extraResultAttributes[field]
-          : analysis ? getApiResult(field, type, analysis.result) : null;
+        const value =
+          extraResultAttributes && extraResultAttributes[field]
+            ? extraResultAttributes[field]
+            : analysis ? getApiResult(field, type, analysis.result) : null;
         const allowedValues = getAnalysisResultFieldAllowedValues(
           extraResultType,
           field,
@@ -212,13 +215,8 @@ export const getExtraDescriptionAttributesWithValue = (
     return { ...attr, attributeValue };
   });
 
-export const getAnalysisObjects = (form: FormData) =>
-  form.type.value === 'AnalysisCollection'
-    ? toArray(form.events.value)
-    : [
-        {
-          term: form.term.value,
-          museumNo: form.museumNo.value,
-          subNo: form.subNo.value
-        }
-      ];
+export function getParentObjectId(analysisEvent: AnalysisEvent): ?string {
+  return analysisEvent.sampleData && analysisEvent.sampleData.originatedObjectUuid
+    ? analysisEvent.sampleData.originatedObjectUuid
+    : analysisEvent.objectData ? analysisEvent.objectData.uuid : null;
+}

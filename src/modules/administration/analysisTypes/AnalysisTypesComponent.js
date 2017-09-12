@@ -86,13 +86,13 @@ const AnalysisTypesComponent = (props: Props) => (
         <tr>
           <th>Name</th>
           {collections.map((c, i) => (
-            <th style={{ textAlign: 'center' }} key={i}>{getCollectionName(c)}</th>
+            <th style={{ textAlign: 'center' }} key={i}>
+              {getCollectionName(c)}
+            </th>
           ))}
         </tr>
       </thead>
-      <tbody>
-        {getObjectsValue(props.store)}
-      </tbody>
+      <tbody>{getObjectsValue(props.store)}</tbody>
     </table>
   </div>
 );

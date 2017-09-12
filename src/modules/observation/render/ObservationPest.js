@@ -107,9 +107,7 @@ export default class ObservationPest extends Component {
             <Row key={index}>
               <Col xs={6} sm={this.props.lifeCycleWidth} md={this.props.lifeCycleWidth}>
                 <span style={{ height: 50 }}>
-                  <ControlLabel>
-                    {this.props.lifeCycleLabel}
-                  </ControlLabel>
+                  <ControlLabel>{this.props.lifeCycleLabel}</ControlLabel>
                   <MusitDropDownField
                     items={this.props.lifeCycleItems}
                     translateKeyPrefix={this.props.lifeCycleItemsTranslateKeyPrefix}
@@ -127,9 +125,7 @@ export default class ObservationPest extends Component {
               </Col>
               <Col xs={6} sm={this.props.countWidth} md={this.props.countWidth}>
                 <span>
-                  <ControlLabel>
-                    {this.props.countLabel}
-                  </ControlLabel>
+                  <ControlLabel>{this.props.countLabel}</ControlLabel>
                   <MusitField
                     placeHolder={!this.props.disabled ? this.props.countPlaceHolder : ''}
                     tooltip={this.props.countTooltip}
@@ -143,29 +139,35 @@ export default class ObservationPest extends Component {
                 </span>
               </Col>
               <Col xs={1} sm={this.props.removeIconWidth} md={this.props.removeIconWidth}>
-                <ControlLabel>{'\u00A0'}</ControlLabel><br />
-                {!this.props.canEdit
-                  ? ''
-                  : <Button bsStyle="link">
-                      <FontAwesome
-                        onClick={e => {
-                          this.props.lifeCycleOnRemove(index);
-                          e.preventDefault();
-                        }}
-                        name="times"
-                      />
-                    </Button>}
+                <ControlLabel>{'\u00A0'}</ControlLabel>
+                <br />
+                {!this.props.canEdit ? (
+                  ''
+                ) : (
+                  <Button bsStyle="link">
+                    <FontAwesome
+                      onClick={e => {
+                        this.props.lifeCycleOnRemove(index);
+                        e.preventDefault();
+                      }}
+                      name="times"
+                    />
+                  </Button>
+                )}
               </Col>
               <Col xs={1} sm={this.props.addIconWidth} md={this.props.addIconWidth}>
                 <span style={{ height: 50 }}>
-                  <ControlLabel>{'\u00A0'}</ControlLabel><br />
-                  {!this.props.canEdit
-                    ? ''
-                    : <Button onClick={this.props.newButtonOnClick}>
-                        <FontAwesome name="plus-circle" />
-                        &nbsp;
-                        {this.props.newButtonLabel}
-                      </Button>}
+                  <ControlLabel>{'\u00A0'}</ControlLabel>
+                  <br />
+                  {!this.props.canEdit ? (
+                    ''
+                  ) : (
+                    <Button onClick={this.props.newButtonOnClick}>
+                      <FontAwesome name="plus-circle" />
+                      &nbsp;
+                      {this.props.newButtonLabel}
+                    </Button>
+                  )}
                 </span>
               </Col>
             </Row>

@@ -19,14 +19,22 @@ const CrumbItem = props => {
     (props.name && props.name.length > 20 + 2
       ? props.name.substring(0, 20) + '..'
       : props.name);
-  const icon =
-    props.icon &&
-    <FontAwesome name={props.icon} style={{ ...props.style, padding: '1px' }} />;
+  const icon = props.icon && (
+    <FontAwesome name={props.icon} style={{ ...props.style, padding: '1px' }} />
+  );
   const item = (
     <span>
-      {props.url
-        ? <a href={props.url} onClick={props.onClick}>{icon}{name}</a>
-        : <span>{icon}{name}</span>}
+      {props.url ? (
+        <a href={props.url} onClick={props.onClick}>
+          {icon}
+          {name}
+        </a>
+      ) : (
+        <span>
+          {icon}
+          {name}
+        </span>
+      )}
       {props.delimiter ? ' / ' : ''}
     </span>
   );

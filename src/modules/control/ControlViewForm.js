@@ -338,10 +338,6 @@ export default class ControlView extends Component {
   }
 
   render() {
-    return (
-      <FormGroup>
-        {this.getControls(this.props.controlsJson)}
-      </FormGroup>
-    );
+    return <FormGroup>{this.getControls(this.props.controlsJson)}</FormGroup>;
   }
 }

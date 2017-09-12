@@ -6,7 +6,7 @@ import type { History } from '../../types/Routes';
 import type { DomEvent } from '../../types/dom';
 import type { Predefined } from '../../types/predefined';
 import type { ObjectData } from '../../types/object';
-import type { SampleDataExtended } from './sampleStore';
+import type { SampleDataExtended } from '../../types/samples';
 import type { FormDetails } from './types/form';
 import type { ObjectOrSample } from './types';
 import type { ValueExtractor } from '../../forms/components/FieldDropDown';
@@ -49,7 +49,9 @@ export type Props = {
   showSampleSubType: boolean,
   canEditSampleType: boolean,
   store: { sampleResponses?: ?SampleResponses },
-  putSamplesInPicklist: () => void
+  putSamplesInPicklist: () => void,
+  clearForm: () => void,
+  clearSampleResponses: () => void
 };
 
 export default function SampleFormComponent(props: Props) {
@@ -77,12 +79,9 @@ export default function SampleFormComponent(props: Props) {
     <div className="container">
       <form className="form-horizontal">
         <div className="page-header">
-          <h1>
-            {I18n.t('musit.sample.registerSample')}
-          </h1>
+          <h1>{I18n.t('musit.sample.registerSample')}</h1>
         </div>
-        {form.registeredByName &&
-          form.registeredByName.value &&
+        {!!(form.registeredByName && form.registeredByName.value) && (
           <div>
             <MetaInformation
               updatedBy={form.updatedByName.value}
@@ -91,14 +90,17 @@ export default function SampleFormComponent(props: Props) {
               registeredDate={form.registeredDate.value}
             />
             <hr />
-          </div>}
+          </div>
+        )}
         <h4>
           {objectData &&
-            objectData.length === 1 &&
-            objectData[0].derivedFrom &&
-            objectData[0].derivedFrom.sampleNum
-            ? I18n.t('musit.sample.derivedFromObjectAndSample')
-            : I18n.t('musit.sample.derivedFromObject')}
+          objectData.length === 1 &&
+          objectData[0].derivedFrom &&
+          objectData[0].derivedFrom.sampleNum ? (
+            I18n.t('musit.sample.derivedFromObjectAndSample')
+          ) : (
+            I18n.t('musit.sample.derivedFromObject')
+          )}
         </h4>
         {objectData.map((od, i) => (
           <ObjectAndSampleDetails
@@ -112,7 +114,7 @@ export default function SampleFormComponent(props: Props) {
         <h4>{I18n.t('musit.sample.personsAssociatedWithSampleTaking')}</h4>
         <PersonRoleDate
           appSession={props.appSession}
-          personData={form.persons.rawValue}
+          personData={form.persons.rawValue || []}
           updateForm={props.updateForm}
           fieldName={form.persons.name}
           roles={['responsible', 'creator']}
@@ -122,7 +124,7 @@ export default function SampleFormComponent(props: Props) {
         />
         <br />
         <div className="well">
-          {form.sampleNum &&
+          {!!form.sampleNum && (
             <ValidatedFormGroup fields={[form.sampleNum]}>
               <FieldInput
                 field={form.sampleNum}
@@ -130,7 +132,8 @@ export default function SampleFormComponent(props: Props) {
                 onChange={props.updateForm}
                 readOnly={true}
               />
-            </ValidatedFormGroup>}
+            </ValidatedFormGroup>
+          )}
           <ValidatedFormGroup fields={[form.sampleId]}>
             <FieldInput
               field={form.sampleId}
@@ -150,37 +153,42 @@ export default function SampleFormComponent(props: Props) {
               onChange={props.updateForm}
             />
           </ValidatedFormGroup>
-          {props.canEditSampleType
-            ? <ValidatedFormGroup fields={[form.sampleType, form.sampleSubType]}>
+          {props.canEditSampleType ? (
+            <ValidatedFormGroup fields={[form.sampleType, form.sampleSubType]}>
+              <FieldDropDown
+                field={form.sampleType}
+                title={I18n.t('musit.sample.sampleType')}
+                defaultOption={I18n.t('musit.sample.chooseType')}
+                onChange={props.updateSampleType}
+                selectItems={
+                  predefined.sampleTypes ? Object.keys(predefined.sampleTypes) : []
+                }
+              />
+              {props.showSampleSubType && (
                 <FieldDropDown
-                  field={form.sampleType}
-                  title={I18n.t('musit.sample.sampleType')}
-                  defaultOption={I18n.t('musit.sample.chooseType')}
-                  onChange={props.updateSampleType}
+                  field={form.sampleSubType}
+                  title={I18n.t('musit.sample.sampleSubType')}
+                  defaultOption={I18n.t('musit.sample.chooseSubType')}
+                  valueFn={props.sampleTypeDisplayName}
+                  displayFn={props.sampleTypeDisplayName}
+                  appSession={props.appSession}
+                  onChange={props.updateForm}
                   selectItems={
-                    predefined.sampleTypes ? Object.keys(predefined.sampleTypes) : []
+                    predefined.sampleTypes ? (
+                      predefined.sampleTypes[form.sampleType.rawValue]
+                    ) : (
+                      []
+                    )
                   }
                 />
-                {props.showSampleSubType &&
-                  <FieldDropDown
-                    field={form.sampleSubType}
-                    title={I18n.t('musit.sample.sampleSubType')}
-                    defaultOption={I18n.t('musit.sample.chooseSubType')}
-                    valueFn={props.sampleTypeDisplayName}
-                    displayFn={props.sampleTypeDisplayName}
-                    appSession={props.appSession}
-                    onChange={props.updateForm}
-                    selectItems={
-                      predefined.sampleTypes
-                        ? predefined.sampleTypes[form.sampleType.rawValue]
-                        : []
-                    }
-                  />}
-              </ValidatedFormGroup>
-            : <ReadOnlySampleType
-                sampleType={form.sampleType.value}
-                subTypeValue={form.sampleSubType.value}
-              />}
+              )}
+            </ValidatedFormGroup>
+          ) : (
+            <ReadOnlySampleType
+              sampleType={form.sampleType.value}
+              subTypeValue={form.sampleSubType.value}
+            />
+          )}
           <ValidatedFormGroup fields={[form.description]}>
             <FieldTextArea
               field={form.description}
@@ -223,14 +231,16 @@ export default function SampleFormComponent(props: Props) {
               defaultOption={I18n.t('musit.sample.chooseStorageContainer')}
               onChange={props.updateForm}
               selectItems={
-                predefined.storageContainers
-                  ? predefined.storageContainers.map(
-                      c =>
-                        props.appSession.language.isEn
-                          ? c.enStorageContainer
-                          : c.noStorageContainer
-                    )
-                  : []
+                predefined.storageContainers ? (
+                  predefined.storageContainers.map(
+                    c =>
+                      props.appSession.language.isEn
+                        ? c.enStorageContainer
+                        : c.noStorageContainer
+                  )
+                ) : (
+                  []
+                )
               }
             />
           </ValidatedFormGroup>
@@ -241,14 +251,16 @@ export default function SampleFormComponent(props: Props) {
               defaultOption={I18n.t('musit.sample.chooseStorageMedium')}
               onChange={props.updateForm}
               selectItems={
-                predefined.storageMediums
-                  ? predefined.storageMediums.map(
-                      m =>
-                        props.appSession.language.isEn
-                          ? m.enStorageMedium
-                          : m.noStorageMedium
-                    )
-                  : []
+                predefined.storageMediums ? (
+                  predefined.storageMediums.map(
+                    m =>
+                      props.appSession.language.isEn
+                        ? m.enStorageMedium
+                        : m.noStorageMedium
+                  )
+                ) : (
+                  []
+                )
               }
             />
           </ValidatedFormGroup>
@@ -259,12 +271,13 @@ export default function SampleFormComponent(props: Props) {
               defaultOption={I18n.t('musit.sample.chooseTreatment')}
               onChange={props.updateForm}
               selectItems={
-                predefined.treatments
-                  ? predefined.treatments.map(
-                      t =>
-                        props.appSession.language.isEn ? t.enTreatment : t.noTreatment
-                    )
-                  : []
+                predefined.treatments ? (
+                  predefined.treatments.map(
+                    t => (props.appSession.language.isEn ? t.enTreatment : t.noTreatment)
+                  )
+                ) : (
+                  []
+                )
               }
             />
           </ValidatedFormGroup>
@@ -339,7 +352,7 @@ export function DisplayCreatedSamples(props: {
         text={I18n.t('musit.sample.addToPickList')}
         onClick={props.putSamplesInPicklist}
       />
-      {props.sampleResponses.failure.length > 0 &&
+      {props.sampleResponses.failure.length > 0 && (
         <div>
           <h3>{I18n.t('musit.sample.theseFailed')}</h3>
           <table className="table">
@@ -351,36 +364,37 @@ export function DisplayCreatedSamples(props: {
               return (
                 <tr>
                   <td>
-                    {f.objectData.sampleNum
-                      ? <a
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          href={Config.magasin.urls.client.analysis.gotoSample(
-                            props.appSession,
-                            f.objectData.objectId || ''
-                          )}
-                        >
-                          {I18n.t('musit.sample.sample')}{' '}{f.objectData.objectId}
-                        </a>
-                      : <a
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          href={Config.magasin.urls.client.object.gotoObject(
-                            props.appSession,
-                            f.objectData.uuid
-                          )}
-                        >
-                          {I18n.t('musit.objects.objectsView.object')}
-                          {' '}
-                          {f.objectData.uuid}
-                        </a>}
+                    {f.objectData.sampleNum ? (
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={Config.magasin.urls.client.analysis.gotoSample(
+                          props.appSession,
+                          f.objectData.objectId || ''
+                        )}
+                      >
+                        {I18n.t('musit.sample.sample')} {f.objectData.objectId}
+                      </a>
+                    ) : (
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={Config.magasin.urls.client.object.gotoObject(
+                          props.appSession,
+                          f.objectData.uuid
+                        )}
+                      >
+                        {I18n.t('musit.objects.objectsView.object')} {f.objectData.uuid}
+                      </a>
+                    )}
                   </td>
                   <td>{f.error.message}</td>
                 </tr>
               );
             })}
           </table>
-        </div>}
+        </div>
+      )}
     </div>
   );
 }

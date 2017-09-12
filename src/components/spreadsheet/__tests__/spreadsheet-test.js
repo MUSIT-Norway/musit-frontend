@@ -1,10 +1,5 @@
 // @flow
-
 import { binaryWorksheetToJson, jsonToWorksheetBinary } from '../spreadsheet';
-
-declare var describe: any;
-declare var it: any;
-declare var expect: any;
 
 describe('spreadsheet', () => {
   it('should create a binary worksheet and read it back again to json with default headers', () => {

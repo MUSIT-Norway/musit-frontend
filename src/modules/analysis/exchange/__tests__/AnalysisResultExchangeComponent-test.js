@@ -1,5 +1,4 @@
 // @flow
-
 import React from 'react';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
@@ -9,10 +8,6 @@ import Export from '../../../../components/spreadsheet/ExportSpreadsheetComponen
 import Import from '../../../../components/spreadsheet/ImportSpreadsheetComponent';
 
 import type { StoreState } from '../analysisExchangeStore';
-
-declare var describe: any;
-declare var it: any;
-declare var expect: any;
 
 describe('AnalysisResultExchangeComponent', () => {
   const emptyStore = (): StoreState => ({
@@ -92,7 +87,9 @@ describe('AnalysisResultExchangeComponent', () => {
       />
     );
 
-    Comp.find('#importResults').first().simulate('click');
+    Comp.find('#importResults')
+      .first()
+      .simulate('click');
 
     expect(Comp.find('#importResults').props()['disabled']).toEqual('');
     expect(uploadResultAction.calledOnce).toBe(true);
@@ -112,7 +109,9 @@ describe('AnalysisResultExchangeComponent', () => {
       />
     );
 
-    Comp.find('#cancelImportResults').first().simulate('click');
+    Comp.find('#cancelImportResults')
+      .first()
+      .simulate('click');
 
     expect(cancelAction.calledOnce).toBe(true);
   });

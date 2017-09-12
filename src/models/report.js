@@ -2,7 +2,7 @@
 import Config from '../config';
 import { apiUrl } from '../shared/util';
 import { simpleGet } from '../shared/RxAjax';
-import type { AjaxGet } from './types/ajax';
+import type { AjaxGet } from '../types/ajax';
 import { Observable } from 'rxjs';
 
 class Report {

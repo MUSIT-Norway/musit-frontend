@@ -1,3 +1,4 @@
+// @flow
 /**
  * This file includes all the id types that comes from the backend.
  */

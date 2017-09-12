@@ -1,5 +1,5 @@
-// flow-typed signature: 15188a7f96fdf199b663cfb4f91a6701
-// flow-typed version: b43dff3e0e/chai_v3.5.x/flow_>=v0.15.0
+// flow-typed signature: f4c38ee453c1a780b0ce642321a96131
+// flow-typed version: 147ab6243c/chai_v4.x.x/flow_>=v0.15.0
 
 declare module "chai" {
 
@@ -110,6 +110,7 @@ declare module "chai" {
         rejectedWith: (value: mixed) => Promise<mixed> & ExpectChain<T>,
         rejected: () => Promise<mixed> & ExpectChain<T>,
         notify: (callback: () => mixed) => ExpectChain<T>,
+        fulfilled: () => Promise<mixed> & ExpectChain<T>,
 
         // chai-subset
         containSubset: (obj: Object | Object[]) => ExpectChain<T>

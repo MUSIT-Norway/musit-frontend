@@ -24,7 +24,7 @@ import Modal from '../../components/modal/MusitModal';
 import CancelButton from '../../components/buttons/cancel';
 import { I18n } from 'react-i18nify';
 import moveHistoryStore$, { clear$, loadMoveHistory$ } from './moveHistoryStore';
-import inject from 'react-rxjs/dist/RxInject';
+import { RxInjectLegacy as inject } from 'react-rxjs';
 
 export class MoveHistoryComponent extends Component {
   static propTypes = {

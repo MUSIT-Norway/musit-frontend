@@ -29,22 +29,34 @@ describe('TableData', () => {
   });
 
   it('check pickObject', () => {
-    wrapper.find('.onPickObject').first().simulate('click', dummyArg);
+    wrapper
+      .find('.onPickObject')
+      .first()
+      .simulate('click', dummyArg);
     e(pickObject.calledOnce).to.equal(true);
   });
 
   it('check pickObjects', () => {
-    wrapper.find('.onPickObjects').first().simulate('click', dummyArg);
+    wrapper
+      .find('.onPickObjects')
+      .first()
+      .simulate('click', dummyArg);
     e(pickObject.calledOnce).to.equal(true);
   });
 
   it('check click onMove', () => {
-    wrapper.find('.onMoveClick').first().simulate('click', dummyArg);
+    wrapper
+      .find('.onMoveClick')
+      .first()
+      .simulate('click', dummyArg);
     e(onMove.calledOnce).to.equal(true);
   });
 
   it('check click onShowMoveHistory', () => {
-    wrapper.find('.onShowMoveHistory').first().simulate('click', dummyArg);
+    wrapper
+      .find('.onShowMoveHistory')
+      .first()
+      .simulate('click', dummyArg);
     e(showMoveHistory.calledOnce).to.equal(true);
   });
 });

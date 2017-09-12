@@ -1,5 +1,5 @@
 // @flow
-import inject from 'react-rxjs/dist/RxInject';
+import inject from 'react-rxjs/dist/RxInjectOld';
 import sampleForm from './sampleAddForm';
 import SampleFormComponent from './SampleFormComponent';
 import flowRight from 'lodash/flowRight';
@@ -9,7 +9,7 @@ import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/operator/first';
 import lifeCycle from '../../shared/lifeCycle';
 import { sampleProps } from './shared/submit';
-import { loadPredefinedTypes } from '../../stores/predefined';
+import { loadPredefinedTypes } from '../../stores/predefinedLoader';
 import { addObject$, clearObjects$ } from '../../stores/pickList';
 import type { DomEvent } from '../../types/dom';
 import sampleStore$, {

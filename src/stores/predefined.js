@@ -1,23 +1,48 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Observable } from 'rxjs';
+// @flow
+import { Observable, Subject } from 'rxjs';
 import Analysis from '../models/analysis';
 import Sample from '../models/sample';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
-import inject from 'react-rxjs/dist/RxInject';
+import type { Reducer } from 'react-rxjs/dist/RxStore';
 import { KEEP_ALIVE } from './constants';
+import type { Predefined } from 'types/predefined';
+import { simpleGet } from '../shared/RxAjax';
 
-export const setLoadingSampleTypes$ = createAction('setLoadingSampleTypes$');
-export const loadSampleTypes$ = createAction('loadSampleTypes$').switchMap(
-  Sample.loadPredefinedTypes()
+export const setLoadingSampleTypes$: Subject<*> = createAction('setLoadingSampleTypes$');
+export const loadSampleTypes$: Subject<*> = createAction('loadSampleTypes$');
+const loadSampleTypesAction$: Observable<*> = loadSampleTypes$.switchMap(
+  Sample.loadPredefinedTypes(simpleGet)
 );
-export const setLoadingAnalysisTypes$ = createAction('setLoadingAnalysisTypes$');
-export const loadAnalysisTypes$ = createAction('loadAnalysisTypes$').switchMap(
-  Analysis.loadPredefinedTypes()
+export const setLoadingAnalysisTypes$: Subject<*> = createAction(
+  'setLoadingAnalysisTypes$'
+);
+export const loadAnalysisTypes$: Subject<*> = createAction('loadAnalysisTypes$');
+const loadAnalysisTypesAction$: Observable<*> = loadAnalysisTypes$.switchMap(
+  Analysis.loadPredefinedTypes(simpleGet)
 );
 
-export const reducer$ = actions =>
-  Observable.empty().merge(
+type State = Predefined & {
+  loadingSampleTypes: boolean,
+  loadingAnalysisTypes: boolean
+};
+
+export const initialState: State = {
+  analysisLabList: null,
+  categories: null,
+  sampleTypes: null,
+  analysisTypes: null,
+  purposes: null,
+  storageContainers: null,
+  storageMediums: null,
+  treatments: null,
+  loadingSampleTypes: false,
+  loadingAnalysisTypes: false
+};
+
+export function reducer$(actions: {
+  [string]: Observable<*>
+}): Observable<Reducer<State>> {
+  return Observable.merge(
     actions.setLoadingSampleTypes$.map(() => state => ({
       ...state,
       loadingSampleTypes: true
@@ -37,88 +62,16 @@ export const reducer$ = actions =>
       loadingAnalysisTypes: false
     }))
   );
+}
 
-export const store$ = actions =>
-  createStore(
-    'predefined',
-    reducer$(actions),
-    Observable.of({ loadingSampleTypes: false, loadingAnalysisTypes: false }),
-    KEEP_ALIVE
-  );
+export const store$ = (actions: { [string]: Observable<*> }) =>
+  createStore('predefined', reducer$(actions), initialState, KEEP_ALIVE);
 
 const predefined$ = store$({
   setLoadingSampleTypes$,
-  loadSampleTypes$,
+  loadSampleTypes$: loadSampleTypesAction$,
   setLoadingAnalysisTypes$,
-  loadAnalysisTypes$
+  loadAnalysisTypes$: loadAnalysisTypesAction$
 });
 
 export default predefined$;
-
-class PredefinedLoader extends React.Component {
-  static propTypes = {
-    appSession: PropTypes.shape({
-      museumId: PropTypes.number,
-      collectionId: PropTypes.string,
-      accessToken: PropTypes.string
-    }).isRequired,
-    setLoadingAnalysisTypes: PropTypes.func.isRequired,
-    loadAnalysisTypes: PropTypes.func.isRequired,
-    setLoadingSampleTypes: PropTypes.func.isRequired,
-    loadSampleTypes: PropTypes.func.isRequired,
-    component: PropTypes.any.isRequired
-  };
-
-  componentWillMount() {
-    const inputParams = {
-      museumId: this.props.appSession.museumId,
-      collectionId: this.props.appSession.collectionId,
-      token: this.props.appSession.accessToken,
-      isEn: this.props.appSession.language.isEn
-    };
-    if (!this.isSampleTypesLoaded()) {
-      this.props.setLoadingSampleTypes();
-      this.props.loadSampleTypes(inputParams);
-    }
-    if (!this.isAnalysisTypesLoaded()) {
-      this.props.setLoadingAnalysisTypes();
-      this.props.loadAnalysisTypes(inputParams);
-    }
-  }
-
-  isSampleTypesLoaded() {
-    return (
-      !this.props.predefined.loadingSampleTypes && !!this.props.predefined.sampleTypes
-    );
-  }
-
-  isAnalysisTypesLoaded() {
-    return (
-      !this.props.predefined.loadingAnalysisTypes && !!this.props.predefined.analysisTypes
-    );
-  }
-
-  render() {
-    if (!this.isAnalysisTypesLoaded() || !this.isSampleTypesLoaded()) {
-      return <div className="loading" />;
-    }
-    const Component = this.props.component;
-    return <Component {...this.props} />;
-  }
-}
-
-export const loadPredefinedTypes = Component =>
-  inject({ predefined$ })(initialProps => {
-    return (
-      <PredefinedLoader
-        {...initialProps}
-        component={Component}
-        setLoadingAnalysisTypes={setLoadingAnalysisTypes$.next.bind(
-          setLoadingAnalysisTypes$
-        )}
-        loadAnalysisTypes={loadAnalysisTypes$.next.bind(loadAnalysisTypes$)}
-        setLoadingSampleTypes={setLoadingSampleTypes$.next.bind(setLoadingSampleTypes$)}
-        loadSampleTypes={loadSampleTypes$.next.bind(loadSampleTypes$)}
-      />
-    );
-  });

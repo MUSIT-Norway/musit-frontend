@@ -3,7 +3,7 @@ import find from 'lodash/find';
 import Config from '../config';
 import { simpleGet, simplePost } from '../shared/RxAjax';
 import { Observable } from 'rxjs';
-import type { Callback, AjaxGet, AjaxPost } from './types/ajax';
+import type { Callback, AjaxGet, AjaxPost } from '../types/ajax';
 import type { Actor } from 'types/actor';
 import type { Restriction } from 'types/analysis';
 

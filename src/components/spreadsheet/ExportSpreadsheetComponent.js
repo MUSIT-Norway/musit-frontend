@@ -23,13 +23,14 @@ const downloadExcelSheet = (jsonContent: Array<any>, name: string) => {
 
 const ExportSpreadsheetComponent = (props: Props) => (
   <div>
-    {props.content &&
+    {props.content && (
       <button
         className={(props.styles || []).join(' ')}
         onClick={() => downloadExcelSheet(props.content, props.fileName)}
       >
         {props.displayName}
-      </button>}
+      </button>
+    )}
   </div>
 );
 

@@ -21,19 +21,17 @@ export default class ToogleButtons extends Component {
         <Row>
           <Col xs={2} />
           <Col xs={10}>
-            <label>
-              {label}
-            </label>
+            <label>{label}</label>
           </Col>
         </Row>
         <Row>
           <Col xs={2}>
-            {value != null
-              ? <FontAwesome
-                  name={value ? 'check' : 'times'}
-                  style={{ padding: '2px', fontSize: 'x-large' }}
-                />
-              : null}
+            {value != null ? (
+              <FontAwesome
+                name={value ? 'check' : 'times'}
+                style={{ padding: '2px', fontSize: 'x-large' }}
+              />
+            ) : null}
           </Col>
           <Col xs={10}>
             <Button

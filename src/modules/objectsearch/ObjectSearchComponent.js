@@ -37,12 +37,8 @@ export class ObjectSearchComponent extends React.Component {
       <div className="container" style={{ paddingTop: 20 }}>
         <h1>{I18n.t('musit.objectsearch.title')}</h1>
         <form className="form-inline">
-          {this.renderParam('museumNo')}
-          {' '}
-          {this.renderParam('subNo')}
-          {' '}
-          {this.renderParam('term', { width: '440px' })}
-          {' '}
+          {this.renderParam('museumNo')} {this.renderParam('subNo')}{' '}
+          {this.renderParam('term', { width: '440px' })}{' '}
           <button
             className="btn btn-default"
             type="submit"
@@ -64,7 +60,7 @@ export class ObjectSearchComponent extends React.Component {
               : I18n.t('musit.objectsearch.results.noHit'))}
         </h4>
         <Loader loaded={!store.loading}>
-          {store.data.matches.length > 0 &&
+          {store.data.matches.length > 0 && (
             <div>
               <PagingToolbar
                 numItems={store.data.totalMatches}
@@ -125,7 +121,7 @@ export class ObjectSearchComponent extends React.Component {
                         <td className="subNo">{data.subNo}</td>
                         <td className="term">{data.term}</td>
                         <td className="path">
-                          {data.breadcrumb.length > 0 &&
+                          {data.breadcrumb.length > 0 && (
                             <Breadcrumb
                               node={data}
                               allActive
@@ -145,7 +141,8 @@ export class ObjectSearchComponent extends React.Component {
                                   );
                                 }
                               }}
-                            />}
+                            />
+                          )}
                         </td>
                         <td
                           style={{ textAlign: 'right' }}
@@ -160,18 +157,24 @@ export class ObjectSearchComponent extends React.Component {
                             e.stopPropagation();
                           }}
                         >
-                          {isMainObject &&
+                          {isMainObject && (
                             <a title={I18n.t('musit.objectsearch.addToPickList')}>
-                              {this.props.isItemAdded(data, this.props.pickList.objects)
-                                ? <FontAwesome
-                                    style={{ fontSize: '1.3em', color: 'Gray' }}
-                                    name="shopping-cart"
-                                  />
-                                : <FontAwesome
-                                    style={{ fontSize: '1.3em' }}
-                                    name="shopping-cart"
-                                  />}
-                            </a>}
+                              {this.props.isItemAdded(
+                                data,
+                                this.props.pickList.objects
+                              ) ? (
+                                <FontAwesome
+                                  style={{ fontSize: '1.3em', color: 'Gray' }}
+                                  name="shopping-cart"
+                                />
+                              ) : (
+                                <FontAwesome
+                                  style={{ fontSize: '1.3em' }}
+                                  name="shopping-cart"
+                                />
+                              )}
+                            </a>
+                          )}
                         </td>
                       </tr>
                     );
@@ -186,7 +189,8 @@ export class ObjectSearchComponent extends React.Component {
                   this.searchForObjects(page);
                 }}
               />
-            </div>}
+            </div>
+          )}
         </Loader>
       </div>
     );
@@ -197,8 +201,7 @@ export class ObjectSearchComponent extends React.Component {
       <div className="form-group">
         <label className="control-label" htmlFor={id}>
           {I18n.t(`musit.objectsearch.${id}.label`)}
-        </label>
-        {' '}
+        </label>{' '}
         <input
           className="form-control"
           style={{ ...style }}

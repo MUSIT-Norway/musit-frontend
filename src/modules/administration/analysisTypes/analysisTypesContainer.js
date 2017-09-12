@@ -1,5 +1,5 @@
 // @flow
-import inject from 'react-rxjs/dist/RxInject';
+import { RxInjectLegacy as inject } from 'react-rxjs';
 import PropTypes from 'prop-types';
 import analysisTypesForm from './analysisTypesForm';
 import AnalysisTypesComponent from './AnalysisTypesComponent';
@@ -9,6 +9,7 @@ import flowRight from 'lodash/flowRight';
 import lifeCycle from '../../../shared/lifeCycle';
 import { toPromise } from '../../../shared/util';
 import type { AppSession } from '../../../types/appSession';
+import { simplePost } from '../../../shared/RxAjax';
 
 const { form$, updateForm$, loadForm$ } = analysisTypesForm;
 
@@ -29,7 +30,7 @@ const commands = {
 };
 
 const props = {
-  saveAnalysisType: toPromise(Analysis.saveAnalysisEvent())
+  saveAnalysisType: toPromise(Analysis.saveAnalysisEvent(simplePost))
 };
 
 export const onMount = ({ appSession, getAnalysisTypes }: Props) => {

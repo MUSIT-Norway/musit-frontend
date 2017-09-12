@@ -1,6 +1,5 @@
-import inject from 'react-rxjs/dist/RxInject';
+import { RxInjectLegacy as inject } from 'react-rxjs';
 import SampleViewComponent from './SampleViewComponent';
-import type { SampleProps } from './SampleViewComponent';
 import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
 import lifeCycle from '../../shared/lifeCycle';
@@ -11,7 +10,7 @@ import moment from 'moment';
 import Config from '../../config';
 import type { SampleData } from '../../types/samples';
 import type { ObjectData } from '../../types/object';
-import { loadPredefinedTypes } from '../../stores/predefined';
+import { loadPredefinedTypes } from '../../stores/predefinedLoader';
 import values from 'lodash/values';
 import flatten from 'lodash/flatten';
 import Sample, { getSampleType } from '../../models/sample';
@@ -33,7 +32,7 @@ function getStatusText(sampleData, locale) {
   return locale.isEn ? status.enStatus : status.noStatus;
 }
 
-const props: SampleProps = props => {
+const props = props => {
   const sampleData = props.sampleStore.sample;
   const sampleType = flatten(values(props.predefined.sampleTypes)).find(
     st => sampleData && st.sampleTypeId === sampleData.sampleTypeId
@@ -48,7 +47,6 @@ const props: SampleProps = props => {
     clickEditSample: clickEditSample(
       props.appSession,
       props.match.params.sampleId,
-      props.objectStore.objectData,
       props.history.push
     ),
     clickCreateAnalysis: clickCreateAnalysis(
@@ -96,24 +94,30 @@ export default flowRight([inject(data, commands, props), loadPredefinedTypes])(
   ManagedSampleViewComponent
 );
 
-export function clickEditSample(appSession, sampleId, objectData, goTo) {
+export function clickEditSample(appSession, sampleId, goTo) {
   return e => {
     e.preventDefault();
     goTo({
-      pathname: Config.magasin.urls.client.analysis.editSample(appSession, sampleId),
-      state: [objectData]
+      pathname: Config.magasin.urls.client.analysis.editSample(appSession, sampleId)
     });
   };
 }
 
-export function clickCreateAnalysis(appSession, sample, sampleTypes, objectData, goTo) {
+export function clickCreateAnalysis(
+  appSession,
+  sampleData,
+  sampleTypes,
+  objectData,
+  goTo
+) {
   return e => {
     e.preventDefault();
     goTo({
       pathname: Config.magasin.urls.client.analysis.addAnalysis(appSession),
       state: [
         {
-          ...mergeSampleWithObject(sample, objectData, sampleTypes, appSession)
+          objectData,
+          sampleData: addSampleTypeInformation(sampleData, sampleTypes, appSession)
         }
       ]
     });
@@ -168,9 +172,8 @@ export function getSampleSubTypeWithLanguage(sampleType, appSession) {
   return null;
 }
 
-function mergeSampleWithObject(
+function addSampleTypeInformation(
   sample: SampleData,
-  objectData: ObjectData,
   sampleTypes: any,
   appSession: AppSession
 ) {
@@ -179,7 +182,6 @@ function mergeSampleWithObject(
   const sampleSubTypeStr = getSampleSubTypeWithLanguage(sampleType, appSession);
 
   return {
-    ...objectData,
     ...sample,
     sampleType: sampleTypeStr,
     sampleSubType: sampleSubTypeStr,

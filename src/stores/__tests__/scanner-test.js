@@ -62,7 +62,7 @@ describe('scanner', () => {
     const store = createStore(
       'test',
       Observable.merge(reducer$, debouncer$),
-      Observable.of(initialState)
+      initialState
     );
     const state$ = makeStream(store);
 

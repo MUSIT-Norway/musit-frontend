@@ -1,3 +1,4 @@
+// @flow
 import { Observable } from 'rxjs/Rx';
 import { store$ } from '../tableStore';
 import MusitNode from '../../../models/node';
@@ -130,8 +131,8 @@ describe('tableStore', () => {
     const setLoading$ = testScheduler.createHotObservable(setLoadingM);
     const loadNodes$ = testScheduler
       .createHotObservable(loadNodesM, {
-        1: { id: 1, museumId: 99, token: '1234' },
-        2: { id: 2, museumId: 99, token: '1234' }
+        '1': { id: 1, museumId: 99, token: '1234' },
+        '2': { id: 2, museumId: 99, token: '1234' }
       })
       .switchMap(
         MusitNode.getNodes(url => {
@@ -154,17 +155,18 @@ describe('tableStore', () => {
               }
             });
           }
+          return Observable.empty();
         })
       );
     const loadObjects$ = testScheduler
       .createHotObservable(loadObjectsM, {
-        1: {
+        '1': {
           id: 1,
           museumId: 99,
           collectionId: '1233',
           token: '1234'
         },
-        2: {
+        '2': {
           id: 2,
           museumId: 99,
           collectionId: '1233',
@@ -192,11 +194,12 @@ describe('tableStore', () => {
               }
             });
           }
+          return Observable.empty();
         })
       );
     const loadStats$ = testScheduler
       .createHotObservable(loadStatsM, {
-        1: { id: 1, museumId: 99, token: '1234' }
+        '1': { id: 1, museumId: 99, token: '1234' }
       })
       .switchMap(
         MusitNode.getStats(() =>
@@ -207,7 +210,7 @@ describe('tableStore', () => {
       );
     const loadRootNode$ = testScheduler
       .createHotObservable(loadRootNodeM, {
-        1: { id: 1, museumId: 99, token: '1234' }
+        '1': { id: 1, museumId: 99, token: '1234' }
       })
       .switchMap(
         MusitNode.getNode(() =>

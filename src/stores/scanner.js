@@ -29,7 +29,7 @@ const debouncer$ = charDebouncer$(reducer$.debounce(() => Observable.timer(50)))
 const scanner$ = createStore(
   'scanner',
   Observable.merge(reducer$, debouncer$, clearScanner$),
-  Observable.of(initialState)
+  initialState
 );
 
 export const makeStream = source$ =>

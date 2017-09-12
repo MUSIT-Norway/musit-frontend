@@ -7,10 +7,6 @@ import FormDescriptionAttribute from '../FormDescriptionAttribute';
 import DescriptionAttributeInput from '../DescriptionAttributeInput';
 import DescriptionAttributeSelect from '../DescriptionAttributeSelect';
 
-declare var describe: any;
-declare var it: any;
-declare var expect: any;
-
 describe('FormDescriptionAttribute', () => {
   it('should render DescriptionAttributeInput if no allowedValues', () => {
     const onChange = sinon.spy();

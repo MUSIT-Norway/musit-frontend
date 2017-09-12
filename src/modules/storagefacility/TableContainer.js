@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import inject from 'react-rxjs/dist/RxInject';
+import { RxInjectLegacy as inject } from 'react-rxjs';
 import { toggleNode$, toggleObject$ } from '../../stores/pickList';
 import { showConfirm, showModal } from '../../shared/modal';
 import {

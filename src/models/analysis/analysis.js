@@ -2,7 +2,7 @@
 import { Observable } from 'rxjs';
 import Config from '../../config';
 import { simplePost, simpleGet, simplePut } from '../../shared/RxAjax';
-import type { Callback, AjaxPost, AjaxGet, AjaxPut } from '../types/ajax';
+import type { Callback, AjaxPost, AjaxGet, AjaxPut } from '../../types/ajax';
 import type { AnalysisCollection } from 'types/analysis';
 import type { Result, Restriction } from '../../types/analysis';
 import type { CollectionId } from 'types/ids';

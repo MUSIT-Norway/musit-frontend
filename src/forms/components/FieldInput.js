@@ -26,20 +26,23 @@ export default function FieldInput({
 }: FieldInputProps) {
   return (
     <div>
-      {title !== '' &&
+      {title !== '' && (
         <label className={`control-label col-md-${labelWidth}`} htmlFor={field.name}>
           {title}
-        </label>}
+        </label>
+      )}
       <div className={`col-md-${controlWidth}`}>
-        {readOnly
-          ? <p className="form-control-static">{field.rawValue}</p>
-          : <input
-              {...inputProps}
-              className={`form-control ${inputProps ? inputProps.className || '' : ''}`}
-              id={field.name}
-              value={field.rawValue || ''}
-              onChange={e => onChange({ name: field.name, rawValue: e.target.value })}
-            />}
+        {readOnly ? (
+          <p className="form-control-static">{field.rawValue}</p>
+        ) : (
+          <input
+            {...inputProps}
+            className={`form-control ${inputProps ? inputProps.className || '' : ''}`}
+            id={field.name}
+            value={field.rawValue || ''}
+            onChange={e => onChange({ name: field.name, rawValue: e.target.value })}
+          />
+        )}
       </div>
     </div>
   );

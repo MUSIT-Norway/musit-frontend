@@ -37,7 +37,9 @@ describe('ObservationDoubleTextAreaComponent', () => {
     expect(wrapper.find('MusitTextArea[tooltip="Right tooltip"]').length).toEqual(1);
     expect(
       wrapper.contains(
-        <ControlLabel>Left label<span style={{ color: 'red' }}>*</span></ControlLabel>
+        <ControlLabel>
+          Left label<span style={{ color: 'red' }}>*</span>
+        </ControlLabel>
       )
     ).toEqual(true);
     expect(wrapper.contains(<ControlLabel>Right label</ControlLabel>)).toEqual(true);

@@ -24,16 +24,9 @@ const MusitModal = props => {
   const extraClassName = props.className ? ' ' + props.className : '';
   return (
     <div className={`musit-modal${extraClassName}`} style={{ ...props.style }}>
-      {props.header &&
-        <div className="musit-modal-header">
-          {props.header}
-        </div>}
-      <div className="musit-modal-body">
-        {props.body}
-      </div>
-      <div className="musit-modal-footer">
-        {props.footer}
-      </div>
+      {props.header && <div className="musit-modal-header">{props.header}</div>}
+      <div className="musit-modal-body">{props.body}</div>
+      <div className="musit-modal-footer">{props.footer}</div>
     </div>
   );
 };

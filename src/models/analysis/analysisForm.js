@@ -4,7 +4,8 @@ import type { AnalysisCollection } from '../../types/analysis';
 
 export type FormValue = {
   name: string,
-  defaultValue: ?any
+  defaultValue: ?any,
+  rawValue?: ?any
 };
 
 const toField = (name: string, defaultValue: ?any): FormValue => ({

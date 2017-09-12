@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
-import inject from 'react-rxjs/dist/RxInject';
+import { RxInjectLegacy as inject } from 'react-rxjs';
 import objectSearchStore$, {
   clearSearch$,
   searchForObjects$,

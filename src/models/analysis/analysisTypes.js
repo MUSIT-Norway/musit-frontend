@@ -2,7 +2,7 @@
 import { Observable } from 'rxjs';
 import Config from '../../config';
 import { simpleGet } from '../../shared/RxAjax';
-import type { Callback, AjaxGet } from '../types/ajax';
+import type { Callback, AjaxGet } from '../../types/ajax';
 import type { AnalysisType } from 'types/analysis';
 import type { Purposes, Categories, AnalysisLabList } from 'types/predefined';
 
@@ -58,9 +58,11 @@ export const getAnalysisLabList: (
   token: string
 }) => Observable<AnalysisLabList> = (ajaxGet = simpleGet) => ({ token }) => {
   const url = Config.magasin.urls.api.actor.getLabList;
-  return ajaxGet(url, token).map(({ response }) => response).do(function onError() {
-    return [];
-  });
+  return ajaxGet(url, token)
+    .map(({ response }) => response)
+    .do(function onError() {
+      return [];
+    });
 };
 
 export const getPurposes: (

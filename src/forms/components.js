@@ -17,9 +17,7 @@ export function FormElement(props: ElementProps) {
       <label className={`control-label col-md-${props.labelWidth}`} htmlFor={props.id}>
         {props.label}
       </label>
-      <div className={`col-md-${props.elementWidth}`}>
-        {props.children}
-      </div>
+      <div className={`col-md-${props.elementWidth}`}>{props.children}</div>
     </div>
   );
 }
@@ -60,7 +58,9 @@ export function FormText(props: TextProps) {
       labelWidth={props.labelWidth}
       elementWidth={props.elementWidth}
     >
-      <p className="form-control-static" id={props.id}>{props.value}</p>
+      <p className="form-control-static" id={props.id}>
+        {props.value}
+      </p>
     </FormElement>
   );
 }

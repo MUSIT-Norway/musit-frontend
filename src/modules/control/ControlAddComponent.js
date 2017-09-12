@@ -34,7 +34,7 @@ import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { I18n } from 'react-i18nify';
-import inject from 'react-rxjs/dist/RxInject';
+import { RxInjectLegacy as inject } from 'react-rxjs';
 import Control from '../../models/control';
 import store$, { loadRootNode$ } from './controlStore';
 import Loader from 'react-loader';
@@ -241,12 +241,8 @@ export class ControlAddContainer extends React.Component {
       if (hasProp(e, 'leftValue') && hasProp(e, 'rightValue')) {
         return (
           <div>
-            <Col xs={5}>
-              {make(e.leftValue)}
-            </Col>
-            <Col xs={4}>
-              {make(e.rightValue)}
-            </Col>
+            <Col xs={5}>{make(e.leftValue)}</Col>
+            <Col xs={4}>{make(e.rightValue)}</Col>
           </div>
         );
       }
@@ -274,9 +270,7 @@ export class ControlAddContainer extends React.Component {
                   <Col xs={10}>
                     <Row>
                       <Col xs={12}>
-                        <label>
-                          {translate('musit.newControl.date')}
-                        </label>
+                        <label>{translate('musit.newControl.date')}</label>
                       </Col>
                     </Row>
                     <Row>
@@ -297,9 +291,7 @@ export class ControlAddContainer extends React.Component {
                 <Col xs={9}>
                   <Row>
                     <Col xs={5}>
-                      <label>
-                        {translate('musit.newControl.doneBy')}
-                      </label>
+                      <label>{translate('musit.newControl.doneBy')}</label>
                     </Col>
                   </Row>
                   <Row>
@@ -336,16 +328,14 @@ export class ControlAddContainer extends React.Component {
                     <Col xs={9}>
                       <Row>
                         <Col xs={5}>
-                          {hasProp(e, 'leftValue')
-                            ? <label>
-                                {translate('musit.newControl.envdata')}
-                              </label>
-                            : ''}
+                          {hasProp(e, 'leftValue') ? (
+                            <label>{translate('musit.newControl.envdata')}</label>
+                          ) : (
+                            ''
+                          )}
                         </Col>
                       </Row>
-                      <Row>
-                        {renderReadOnly(e)}
-                      </Row>
+                      <Row>{renderReadOnly(e)}</Row>
                     </Col>
                   </Row>
                 );
@@ -354,7 +344,11 @@ export class ControlAddContainer extends React.Component {
               {this.state.errors &&
                 this.state.errors.map((e, i) => {
                   return (
-                    <center><span key={i} style={{ color: 'red' }}>{e}</span></center>
+                    <center>
+                      <span key={i} style={{ color: 'red' }}>
+                        {e}
+                      </span>
+                    </center>
                   );
                 })}
               <hr />

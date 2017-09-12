@@ -16,7 +16,7 @@ import {
   addNode$,
   addObject$
 } from '../../stores/pickList';
-import inject from 'react-rxjs/dist/RxInject';
+import { RxInjectLegacy as inject } from 'react-rxjs';
 import { showModal } from '../../shared/modal';
 import connectToScanner from '../../stores/scanner';
 import flowRight from 'lodash/flowRight';
@@ -167,12 +167,13 @@ export const moveItems = (
       itemToMove => (isNode ? itemToMove.nodeId : itemToMove.uuid)
     );
 
-    const objectTypeAndId = !isNode && items
-      ? items.map(itemToMove => ({
-          id: itemToMove.uuid,
-          objectType: itemToMove.objectType
-        }))
-      : null;
+    const objectTypeAndId =
+      !isNode && items
+        ? items.map(itemToMove => ({
+            id: itemToMove.uuid,
+            objectType: itemToMove.objectType
+          }))
+        : null;
 
     const toMoveLength = idsToMove.length;
     const first = items[0];

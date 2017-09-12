@@ -2,9 +2,10 @@
 import type { AnalysisType, AnalysisCollection } from '../../../types/analysis';
 
 export type Store = {
-  analysis?: AnalysisCollection,
+  analysis?: ?AnalysisCollection,
   analysisTypes?: Array<AnalysisType>,
-  analysisTypeCategories?: Array<String>,
+  analysisTypeCategories?: Array<string>,
   extraDescriptionAttributes: any,
-  extraResultAttributes: any
+  extraResultAttributes: any,
+  showRestrictionCancelDialog?: ?boolean
 };

@@ -38,13 +38,14 @@ export default function EditResult(props: Props) {
               allowedValues={props.extraAttributes[attrKey].allowedValues}
             />
           ))}
-      {props.parentObjectId &&
+      {props.parentObjectId && (
         <NavigateToObject
           objectId={props.parentObjectId}
           appSession={props.appSession}
           history={props.history}
           className="pull-right"
-        />}
+        />
+      )}
       <FormInput
         id="externalSource"
         label={I18n.t('musit.analysis.externalSource')}

@@ -1,5 +1,4 @@
 // @flow
-
 import type { AnalysisCollectionExtended } from '../analysisEventsStore';
 import {
   analysisEventsStore$,
@@ -9,9 +8,6 @@ import {
 } from '../analysisEventsStore';
 import MusitTestScheduler from '../../../../testutils/MusitTestScheduler';
 import type { AnalysisCollection } from 'types/analysis';
-declare var describe: any;
-declare var it: any;
-declare var expect: any;
 
 describe('analysisEventsStore', () => {
   it('should reduce the state from loading and from the api', () => {

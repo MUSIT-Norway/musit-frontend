@@ -19,6 +19,6 @@ const reducer$ = actions =>
   );
 
 export const eventsStore$ = (actions = { getCurrentLocation$, setObject$ }) =>
-  createStore('eventsStore', reducer$(actions), Observable.of(initialState));
+  createStore('eventsStore', reducer$(actions), initialState);
 
 export default eventsStore$();

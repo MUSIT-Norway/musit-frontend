@@ -1,5 +1,6 @@
+// @flow
 import type { Field } from 'forms/form';
-import type { Person } from '../../../components/person/PersonRoleDate';
+import type { Person } from '../../../types/person';
 
 export type FormDetails = {
   note: Field<string>,
@@ -12,7 +13,7 @@ export type FormDetails = {
   sampleType: Field<string>,
   sampleId: Field<string>,
   treatment: Field<string>,
-  subTypeValue: Field<string>,
+  sampleSubType: Field<string>,
   sizeUnit: Field<string>,
   museumId: Field<string>,
   subNo: Field<string>,
@@ -20,12 +21,15 @@ export type FormDetails = {
   term_species: Field<string>,
   registeredBy: Field<string>,
   registeredDate: Field<string>,
+  registeredByName: Field<string>,
   updatedBy: Field<string>,
+  updatedDate: Field<string>,
+  updatedByName: Field<string>,
   hasRestMaterial: Field<string>,
-  updateDate: Field<string>,
   sampleId: Field<string>,
   doneDate: Field<string>,
   description: Field<string>,
   persons: Field<Array<Person>>,
-  statusText: Field<string>
+  statusText: Field<string>,
+  sampleNum: Field<number>
 };

@@ -41,7 +41,13 @@ describe('NodeTable', () => {
     wrapper.find('tr').forEach((node, index) => {
       if (index) {
         const name = tableData[index - 1].name;
-        e(node.find('td').first().last().text()).to.contain(name);
+        e(
+          node
+            .find('td')
+            .first()
+            .last()
+            .text()
+        ).to.contain(name);
       }
     });
   });
@@ -51,22 +57,34 @@ describe('NodeTable', () => {
   });
 
   it('check clickNameClick', () => {
-    wrapper.find('.onClickName').first().simulate('click', dummyArg);
+    wrapper
+      .find('.onClickName')
+      .first()
+      .simulate('click', dummyArg);
     e(onClick.calledOnce).to.equal(true);
   });
 
   it('check click onMove', () => {
-    wrapper.find('.onMoveClick').first().simulate('click', dummyArg);
+    wrapper
+      .find('.onMoveClick')
+      .first()
+      .simulate('click', dummyArg);
     e(onMove.calledOnce).to.equal(true);
   });
 
   it('check click goToEventClick', () => {
-    wrapper.find('.goToEventClick').first().simulate('click', dummyArg);
+    wrapper
+      .find('.goToEventClick')
+      .first()
+      .simulate('click', dummyArg);
     e(goToEvents.calledOnce).to.equal(true);
   });
 
   it('check click onPickClick', () => {
-    wrapper.find('.onPickClick').first().simulate('click', dummyArg);
+    wrapper
+      .find('.onPickClick')
+      .first()
+      .simulate('click', dummyArg);
     e(pickNode.calledOnce).to.equal(true);
   });
 });

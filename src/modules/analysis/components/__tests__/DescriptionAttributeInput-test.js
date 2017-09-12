@@ -5,10 +5,6 @@ import { shallowToJson } from 'enzyme-to-json';
 import sinon from 'sinon';
 import DescriptionAttributeInput from '../DescriptionAttributeInput';
 
-declare var describe: any;
-declare var it: any;
-declare var expect: any;
-
 describe('DescriptionAttributeInput', () => {
   it('should pass through change event', () => {
     const onChange = sinon.spy();

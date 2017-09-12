@@ -88,9 +88,9 @@ const writeEtnoMaterials = (materials: Array<EtnoMaterial>) =>
   materials
     .filter((m: EtnoMaterial) => m.material !== '')
     .map(
-      (
-        m: EtnoMaterial
-      ) => `${m.material}${m.materialType && m.materialType !== '' ? m.materialType : ''}
+      (m: EtnoMaterial) => `${m.material}${m.materialType && m.materialType !== ''
+        ? m.materialType
+        : ''}
     ${m.materialElement && m.materialElement !== '' ? ` ${m.materialElement}` : ''}`
     )
     .join(', ');
@@ -98,9 +98,7 @@ const writeEtnoMaterials = (materials: Array<EtnoMaterial>) =>
 const writeArkLocations = (locations: Array<ArkLocation>) => {
   return locations.map((l: ArkLocation, i: number) => (
     <Row key={`${i}-ID`}>
-      <Col>
-        {getCommaSeparatedStringFromObj(l)}
-      </Col>
+      <Col>{getCommaSeparatedStringFromObj(l)}</Col>
     </Row>
   ));
 };
@@ -108,9 +106,7 @@ const writeArkLocations = (locations: Array<ArkLocation>) => {
 const writeEtnoLocations = (locations: Array<EtnoLocation>) => {
   return locations.map((l: EtnoLocation, i: number) => (
     <Row key={`${i}-ID`}>
-      <Col>
-        {getCommaSeparatedStringFromObj(l)}
-      </Col>
+      <Col>{getCommaSeparatedStringFromObj(l)}</Col>
     </Row>
   ));
 };
@@ -118,7 +114,7 @@ const writeEtnoLocations = (locations: Array<EtnoLocation>) => {
 const LabeledDataCol = (props: { md: number, label: string, value: ?string }) => (
   <Col md={props.md}>
     <span className="ViewObjectData_text-overflow">
-      <b>{I18n.t(props.label)}:</b>{' '}<span title={props.value}>{props.value}</span>
+      <b>{I18n.t(props.label)}:</b> <span title={props.value}>{props.value}</span>
     </span>
   </Col>
 );
@@ -239,22 +235,22 @@ const viewArcheologyObject = ({
       <Col md={1}>
         <b>{I18n.t('musit.objects.objectsView.findingPlace')}:</b>
       </Col>
-      <Col md={5}>
-        {locations && writeArkLocations(locations)}
+      <Col md={5}>{locations && writeArkLocations(locations)}</Col>
+      <Col md={1}>
+        <b>{I18n.t('musit.objects.objectsView.coordinate')}: </b>
       </Col>
-      <Col md={1}><b>{I18n.t('musit.objects.objectsView.coordinate')}:{' '}</b></Col>
       <Col md={5}>
         {coordinates &&
           coordinates.map((c: ArkCoordinate, i: number) => (
-            <Row
-              key={`${i}-ID`}
-            >{`${c.north ? c.north : ''} ${c.east ? c.east : ''}`}</Row>
+            <Row key={`${i}-ID`}>{`${c.north ? c.north : ''} ${c.east
+              ? c.east
+              : ''}`}</Row>
           ))}
       </Col>
     </Row>
     <Row>
       <Col md={12}>
-        <b>{I18n.t('musit.objects.objectsView.location')}:{' '}</b>
+        <b>{I18n.t('musit.objects.objectsView.location')}: </b>
         {currentMagasinLocation(pathNames)}
       </Col>
     </Row>
@@ -286,9 +282,7 @@ const viewEtnographyObject = ({
       <Col md={1}>
         <b>{I18n.t('musit.objects.objectsView.findingPlace')}:</b>
       </Col>
-      <Col md={11}>
-        {locations && writeEtnoLocations(locations)}
-      </Col>
+      <Col md={11}>{locations && writeEtnoLocations(locations)}</Col>
     </Row>
     <Row>
       <LabeledDataCol
@@ -302,6 +296,9 @@ const viewEtnographyObject = ({
 
 export const ViewObjectData = (props: ViewObjectDataProps) => {
   const objectData = props.objectData;
+  if (!objectData) {
+    return <div className="loading" />;
+  }
   if (isArcheologyCollection(objectData.collection)) {
     return viewArcheologyObject(objectData);
   } else if (isEtnographyHistCollection(objectData.collection)) {
@@ -315,7 +312,8 @@ export const ViewObjectData = (props: ViewObjectDataProps) => {
       props.objectData.currentLocation && props.objectData.currentLocation.pathNames;
     return (
       <div className="unknown">
-        Unknown objecttype {objectData.museumNo}<br />
+        Unknown objecttype {objectData.museumNo}
+        <br />
         <Row>
           <LabeledDataCol
             md={12}

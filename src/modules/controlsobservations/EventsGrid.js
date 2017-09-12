@@ -80,21 +80,11 @@ export default class ObservationControlGrid extends Component {
             <thead>
               <tr>
                 <th />
-                <th>
-                  {I18n.t('musit.grid.observation.date')}
-                </th>
-                <th>
-                  {I18n.t('musit.grid.observation.types')}
-                </th>
-                <th>
-                  {I18n.t('musit.grid.observation.doneBy')}
-                </th>
-                <th>
-                  {I18n.t('musit.grid.observation.registeredDate')}
-                </th>
-                <th>
-                  {I18n.t('musit.grid.observation.registeredBy')}
-                </th>
+                <th>{I18n.t('musit.grid.observation.date')}</th>
+                <th>{I18n.t('musit.grid.observation.types')}</th>
+                <th>{I18n.t('musit.grid.observation.doneBy')}</th>
+                <th>{I18n.t('musit.grid.observation.registeredDate')}</th>
+                <th>{I18n.t('musit.grid.observation.registeredBy')}</th>
               </tr>
             </thead>
             <tbody>
@@ -133,20 +123,22 @@ export default class ObservationControlGrid extends Component {
                     <td
                       id={`${controlOrObservation.id}_${controlOrObservation.doneDate}_type`}
                     >
-                      {controlOrObservation.eventType.toLowerCase() === 'control'
-                        ? <div
-                            className="icon icon-musitcontrolicon"
-                            title={I18n.t('musit.grid.observation.iconTooltip.control')}
-                          />
-                        : ''}
-                      {controlOrObservation.eventType.toLowerCase() === 'observation'
-                        ? <div
-                            className="icon icon-musitobservationicon"
-                            title={I18n.t(
-                              'musit.grid.observation.iconTooltip.observation'
-                            )}
-                          />
-                        : ''}
+                      {controlOrObservation.eventType.toLowerCase() === 'control' ? (
+                        <div
+                          className="icon icon-musitcontrolicon"
+                          title={I18n.t('musit.grid.observation.iconTooltip.control')}
+                        />
+                      ) : (
+                        ''
+                      )}
+                      {controlOrObservation.eventType.toLowerCase() === 'observation' ? (
+                        <div
+                          className="icon icon-musitobservationicon"
+                          title={I18n.t('musit.grid.observation.iconTooltip.observation')}
+                        />
+                      ) : (
+                        ''
+                      )}
                     </td>
                     <td
                       id={`${controlOrObservation.id}_${controlOrObservation.doneDate}_date`}

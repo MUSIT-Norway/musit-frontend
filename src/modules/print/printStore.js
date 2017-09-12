@@ -34,6 +34,6 @@ export const store$ = (
     setTemplateId$,
     setLevel$
   }
-) => createStore('print', reducer$(actions), Observable.of(initialState));
+) => createStore('print', reducer$(actions), initialState);
 
 export default store$();

@@ -14,21 +14,18 @@ export default function ReadOnlySampleType({ sampleType, subTypeValue }: Props) 
         {I18n.t('musit.sample.sampleType')}
       </label>
       <div className="col-md-3">
-        <p className="form-control-static">
-          {sampleType}
-        </p>
+        <p className="form-control-static">{sampleType}</p>
       </div>
-      {sampleType !== subTypeValue &&
+      {sampleType !== subTypeValue && (
         <div>
           <label className="control-label col-md-2">
             {I18n.t('musit.sample.sampleSubType')}
           </label>
           <div className="col-md-3">
-            <p className="form-control-static">
-              {subTypeValue}
-            </p>
+            <p className="form-control-static">{subTypeValue}</p>
           </div>
-        </div>}
+        </div>
+      )}
     </div>
   );
 }

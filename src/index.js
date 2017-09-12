@@ -37,9 +37,7 @@ notification$.subscribe(event => {
     position: 'tc',
     children: (
       <div style={{ margin: '30px' }}>
-        <p>
-          {event.body}
-        </p>
+        <p>{event.body}</p>
       </div>
     )
   });

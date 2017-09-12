@@ -23,14 +23,17 @@ export type FieldDropDownProps = {
 export default function FieldDropDown(props: FieldDropDownProps) {
   return (
     <div>
-      {props.title !== '' &&
+      {props.title !== '' && (
         <label className="control-label col-md-2" htmlFor={props.field.name}>
           {props.title}
-        </label>}
+        </label>
+      )}
       <div className="col-md-3">
         <select
           {...props.inputProps}
-          className={`form-control ${props.inputProps ? props.inputProps.className || '' : ''}`}
+          className={`form-control ${props.inputProps
+            ? props.inputProps.className || ''
+            : ''}`}
           value={props.field.value || ''}
           id={props.field.name}
           onChange={e =>
@@ -41,18 +44,22 @@ export default function FieldDropDown(props: FieldDropDownProps) {
             <option
               key={i}
               value={
-                props.valueFn
-                  ? props.appSession
-                      ? props.valueFn(v, props.appSession)
-                      : props.valueFn(v)
-                  : v
+                props.valueFn ? props.appSession ? (
+                  props.valueFn(v, props.appSession)
+                ) : (
+                  props.valueFn(v)
+                ) : (
+                  v
+                )
               }
             >
-              {props.displayFn
-                ? props.appSession
-                    ? props.displayFn(v, props.appSession)
-                    : props.displayFn(v)
-                : v}
+              {props.displayFn ? props.appSession ? (
+                props.displayFn(v, props.appSession)
+              ) : (
+                props.displayFn(v)
+              ) : (
+                v
+              )}
             </option>
           ))}
         </select>

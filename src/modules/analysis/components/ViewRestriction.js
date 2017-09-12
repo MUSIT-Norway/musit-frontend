@@ -19,21 +19,23 @@ type ViewRestrictionComponentProps = {
 };
 
 export default function ViewRestrictionComponent(props: ViewRestrictionComponentProps) {
-  return props.showCancelDialog
-    ? <CancelRestriction
-        appSession={props.appSession}
-        restriction={props.restriction}
-        updateRestriction={props.updateRestriction}
-        isRestrictionValidForCancellation={props.isRestrictionValidForCancellation}
-        clickCancel={() => {
-          props.cancelRestriction();
-          props.toggleCancelDialog();
-        }}
-      />
-    : <ViewRestriction
-        restriction={props.restriction}
-        clickCancel={props.toggleCancelDialog}
-      />;
+  return props.showCancelDialog ? (
+    <CancelRestriction
+      appSession={props.appSession}
+      restriction={props.restriction}
+      updateRestriction={props.updateRestriction}
+      isRestrictionValidForCancellation={props.isRestrictionValidForCancellation}
+      clickCancel={() => {
+        props.cancelRestriction();
+        props.toggleCancelDialog();
+      }}
+    />
+  ) : (
+    <ViewRestriction
+      restriction={props.restriction}
+      clickCancel={props.toggleCancelDialog}
+    />
+  );
 }
 
 type ViewRestrictionProps = {
@@ -78,9 +80,11 @@ export function ViewRestriction(props: ViewRestrictionProps) {
         </label>
         <div className="col-md-5">
           <p className="form-control-static">
-            {props.restriction.expirationDate
-              ? moment(props.restriction.expirationDate).format(DATE_FORMAT_DISPLAY)
-              : ''}
+            {props.restriction.expirationDate ? (
+              moment(props.restriction.expirationDate).format(DATE_FORMAT_DISPLAY)
+            ) : (
+              ''
+            )}
           </p>
           <button
             className="btn btn-default"

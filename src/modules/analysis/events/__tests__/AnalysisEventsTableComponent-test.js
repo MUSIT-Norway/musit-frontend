@@ -6,10 +6,6 @@ import AnalysisEventTableComponent from '../AnalysisEventsTableComponent';
 import type { AnalysisCollectionExtended } from '../analysisEventsStore';
 import { I18n } from 'react-i18nify';
 
-declare var describe: any;
-declare var it: any;
-declare var expect: any;
-
 describe('AnalysisEventTableComponent', () => {
   const language = { isEn: true, isNo: false };
 
@@ -82,7 +78,11 @@ describe('AnalysisEventTableComponent', () => {
       />
     );
 
-    expect(Comp.find('td').at(2).text()).toBe(I18n.t('musit.analysis.statusType.3'));
+    expect(
+      Comp.find('td')
+        .at(2)
+        .text()
+    ).toBe(I18n.t('musit.analysis.statusType.3'));
   });
 
   it('should render status as empty if absent', () => {
@@ -96,7 +96,11 @@ describe('AnalysisEventTableComponent', () => {
       />
     );
 
-    expect(Comp.find('td').at(2).text()).toBe('');
+    expect(
+      Comp.find('td')
+        .at(2)
+        .text()
+    ).toBe('');
   });
 
   it('should render formatted registered date', () => {
@@ -109,7 +113,11 @@ describe('AnalysisEventTableComponent', () => {
       />
     );
 
-    expect(Comp.find('td').first().text()).toBe('09.02.2017');
+    expect(
+      Comp.find('td')
+        .first()
+        .text()
+    ).toBe('09.02.2017');
   });
 
   it('should render analysis type based on language (en)', () => {
@@ -122,7 +130,11 @@ describe('AnalysisEventTableComponent', () => {
       />
     );
 
-    expect(Comp.find('td').at(1).text()).toBe('enName');
+    expect(
+      Comp.find('td')
+        .at(1)
+        .text()
+    ).toBe('enName');
   });
 
   it('should call onRowClicked with analysisId', () => {

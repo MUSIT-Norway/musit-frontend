@@ -5,10 +5,6 @@ import Sample from '../../models/sample';
 import Analysis from '../../models/analysis';
 import MusitTestScheduler from '../../testutils/MusitTestScheduler';
 
-declare var describe: any;
-declare var it: any;
-declare var expect: any;
-
 describe('predefined', () => {
   it('should load types', () => {
     const testScheduler = new MusitTestScheduler();
@@ -25,14 +21,34 @@ describe('predefined', () => {
 
     const expectedStateMap = {
       a: {
+        analysisLabList: null,
+        categories: null,
+        sampleTypes: null,
+        analysisTypes: null,
+        purposes: null,
+        storageContainers: null,
+        storageMediums: null,
+        treatments: null,
         loadingAnalysisTypes: false,
         loadingSampleTypes: false
       },
       b: {
+        analysisLabList: null,
+        categories: null,
+        sampleTypes: null,
+        analysisTypes: null,
+        purposes: null,
+        storageContainers: null,
+        storageMediums: null,
+        treatments: null,
         loadingAnalysisTypes: false,
         loadingSampleTypes: true
       },
       c: {
+        analysisLabList: null,
+        categories: null,
+        analysisTypes: null,
+        purposes: null,
         loadingAnalysisTypes: false,
         loadingSampleTypes: false,
         sampleTypes: { raw: [] },
@@ -41,6 +57,10 @@ describe('predefined', () => {
         treatments: []
       },
       d: {
+        analysisLabList: null,
+        categories: null,
+        analysisTypes: null,
+        purposes: null,
         loadingAnalysisTypes: true,
         loadingSampleTypes: false,
         sampleTypes: { raw: [] },

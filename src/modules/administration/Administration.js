@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { I18n } from 'react-i18nify';
 import Config from '../../config';
-import inject from 'react-rxjs/dist/RxInject';
+import { RxInjectLegacy as inject } from 'react-rxjs';
 import type { AppSession } from 'types/appSession';
 import type { History } from 'types/Routes';
 
@@ -59,9 +59,7 @@ export const Administration = (props: Props) => {
                     {I18n.t(a.title)}
                   </a>
                 </td>
-                <td>
-                  {I18n.t(a.description)}
-                </td>
+                <td>{I18n.t(a.description)}</td>
               </tr>
             );
           })}

@@ -21,29 +21,31 @@ class PagingToolbar extends React.Component {
             fontWeight: 'bold'
           }}
         >
-          {currentPage > 1
-            ? <a
-                href="/page/back"
-                onClick={e => {
-                  e.preventDefault();
-                  this.props.onClick(currentPage - 1);
-                }}
-              >
-                {'<'}
-              </a>
-            : '<'}
-        </span>
-        {min > 1
-          ? <a
-              href={`/page/${min}`}
+          {currentPage > 1 ? (
+            <a
+              href="/page/back"
               onClick={e => {
                 e.preventDefault();
-                this.props.onClick(min - maxPages > 1 ? min - maxPages : 1);
+                this.props.onClick(currentPage - 1);
               }}
             >
-              {' .. '}
+              {'<'}
             </a>
-          : null}
+          ) : (
+            '<'
+          )}
+        </span>
+        {min > 1 ? (
+          <a
+            href={`/page/${min}`}
+            onClick={e => {
+              e.preventDefault();
+              this.props.onClick(min - maxPages > 1 ? min - maxPages : 1);
+            }}
+          >
+            {' .. '}
+          </a>
+        ) : null}
         {range(min, max + 1).map((page, i) => {
           return (
             <span
@@ -52,17 +54,19 @@ class PagingToolbar extends React.Component {
                 padding: '5px'
               }}
             >
-              {currentPage === page
-                ? page
-                : <a
-                    href={`/page/${page}`}
-                    onClick={e => {
-                      e.preventDefault();
-                      this.props.onClick(page);
-                    }}
-                  >
-                    {page}
-                  </a>}
+              {currentPage === page ? (
+                page
+              ) : (
+                <a
+                  href={`/page/${page}`}
+                  onClick={e => {
+                    e.preventDefault();
+                    this.props.onClick(page);
+                  }}
+                >
+                  {page}
+                </a>
+              )}
             </span>
           );
         })}
@@ -71,28 +75,30 @@ class PagingToolbar extends React.Component {
             fontWeight: 'bold'
           }}
         >
-          {numPages > max
-            ? <a
-                href={`/page/${max + 1}`}
-                onClick={e => {
-                  e.preventDefault();
-                  this.props.onClick(max + 1);
-                }}
-              >
-                {' .. '}
-              </a>
-            : null}
-          {numPages > 1 && currentPage < numPages
-            ? <a
-                href="/page/next"
-                onClick={e => {
-                  e.preventDefault();
-                  this.props.onClick(currentPage + 1);
-                }}
-              >
-                {'>'}
-              </a>
-            : '>'}
+          {numPages > max ? (
+            <a
+              href={`/page/${max + 1}`}
+              onClick={e => {
+                e.preventDefault();
+                this.props.onClick(max + 1);
+              }}
+            >
+              {' .. '}
+            </a>
+          ) : null}
+          {numPages > 1 && currentPage < numPages ? (
+            <a
+              href="/page/next"
+              onClick={e => {
+                e.preventDefault();
+                this.props.onClick(currentPage + 1);
+              }}
+            >
+              {'>'}
+            </a>
+          ) : (
+            '>'
+          )}
         </span>
       </div>
     );

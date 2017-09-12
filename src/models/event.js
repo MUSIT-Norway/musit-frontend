@@ -11,7 +11,7 @@ import flatMap from 'lodash/flatMap';
 import { I18n } from 'react-i18nify';
 import concat from 'lodash/concat';
 import { Observable } from 'rxjs';
-import type { Callback, AjaxGet, AjaxPost } from './types/ajax';
+import type { Callback, AjaxGet, AjaxPost } from '../types/ajax';
 
 class Event {
   static getAnalysesAndMoves: (

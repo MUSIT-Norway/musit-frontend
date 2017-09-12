@@ -1,14 +1,9 @@
 // @flow
-
 import React from 'react';
 import { shallow } from 'enzyme';
 import ImportVerificationTableComponent from '../ImportVerificationTableComponent';
 
 import type { ResultExchangeTemplates } from '../exchangeTemplate';
-
-declare var describe: any;
-declare var it: any;
-declare var expect: any;
 
 describe('ImportVerificationTableComponent', () => {
   it('should not render table if "results" is empty', () => {

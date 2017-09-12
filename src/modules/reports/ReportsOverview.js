@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Table, PageHeader, Panel, Grid, Row } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
 import Config from '../../config';
-import inject from 'react-rxjs/dist/RxInject';
+import { RxInjectLegacy as inject } from 'react-rxjs';
 
 const reports = [
   {
@@ -20,9 +20,7 @@ export const ReportsOverview = props => {
         <Panel>
           <Grid>
             <Row className="row-centered">
-              <PageHeader>
-                {I18n.t('musit.reports.reports')}
-              </PageHeader>
+              <PageHeader>{I18n.t('musit.reports.reports')}</PageHeader>
               <Table>
                 <thead>
                   <tr>
@@ -46,9 +44,7 @@ export const ReportsOverview = props => {
                             {I18n.t(report.title)}
                           </a>
                         </td>
-                        <td>
-                          {I18n.t(report.description)}
-                        </td>
+                        <td>{I18n.t(report.description)}</td>
                       </tr>
                     );
                   })}

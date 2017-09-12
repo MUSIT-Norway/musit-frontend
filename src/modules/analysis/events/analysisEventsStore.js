@@ -1,18 +1,19 @@
 // @flow
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { createAction, createStore } from 'react-rxjs/dist/RxStore';
 import MusitAnalysis from '../../../models/analysis';
 import MusitActor from '../../../models/actor';
 import { uniq } from 'lodash';
 import { I18n } from 'react-i18nify';
+import { simpleGet, simplePost } from '../../../shared/RxAjax';
 
 import type { AnalysisCollection, AnalysisType } from 'types/analysis';
 import type { Actor } from 'types/actor';
 
 type Actions = {
-  setLoading$: Subject<*>,
-  getAnalysisEvents$: Subject<*>,
-  filterEvents$: Subject<*>
+  setLoading$: Observable<void>,
+  getAnalysisEvents$: Observable<*>,
+  filterEvents$: Observable<*>
 };
 
 export type Extension = {
@@ -22,13 +23,13 @@ export type Extension = {
 
 export type AnalysisCollectionExtended = AnalysisCollection & Extension;
 
-export const setLoading$: Subject<*> = createAction('setLoading$');
-export const filterEvents$: Subject<*> = createAction('filterEvents$');
-export const getAnalysisEvents$: Subject<*> = createAction(
+export const setLoading$: Observable<void> = createAction('setLoading$');
+export const filterEvents$: Observable<*> = createAction('filterEvents$');
+export const getAnalysisEvents$: Observable<*> = createAction(
   'getAnalysisEvent$'
 ).switchMap(props =>
-  MusitAnalysis.getAnalysisEvents()(props).flatMap(events =>
-    MusitActor.getActors()({
+  MusitAnalysis.getAnalysisEvents(simpleGet)(props).flatMap(events =>
+    MusitActor.getActors(simplePost)({
       token: props.token,
       actorIds: getUniqueRegisteredByActors(events)
     }).map(actors => combineDataSources(actors || [], events, props.analysisTypes || []))
@@ -106,15 +107,11 @@ export const analysisEventsStore$ = (
     getAnalysisEvents$
   }
 ) =>
-  createStore(
-    'analysisEventsStore',
-    reducer$(actions$),
-    Observable.of({
-      loading: false,
-      analysisEvents: [],
-      analysisEventsFiltered: [],
-      filterEventValue: ''
-    })
-  );
+  createStore('analysisEventsStore', reducer$(actions$), {
+    loading: false,
+    analysisEvents: [],
+    analysisEventsFiltered: [],
+    filterEventValue: ''
+  });
 
 export default analysisEventsStore$();

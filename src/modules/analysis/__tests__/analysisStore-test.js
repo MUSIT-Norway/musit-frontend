@@ -1,9 +1,6 @@
 import { Observable } from 'rxjs';
 import MusitTestScheduler from '../../../testutils/MusitTestScheduler';
 import { getAnalysisDetails } from '../analysisStore';
-declare var describe: any;
-declare var it: any;
-declare var expect: any;
 
 describe('AnalysisStore', () => {
   it('should work', () => {

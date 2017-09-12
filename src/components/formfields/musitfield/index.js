@@ -74,9 +74,9 @@ export default class MusitField extends Component {
   }
 
   render() {
-    const lcAddOnPrefix = this.props.addOnPrefix
-      ? <span className="input-group-addon">{this.props.addOnPrefix}</span>
-      : null;
+    const lcAddOnPrefix = this.props.addOnPrefix ? (
+      <span className="input-group-addon">{this.props.addOnPrefix}</span>
+    ) : null;
     const lcPlaceholder = (
       <input
         id={this.props.id}
@@ -95,14 +95,14 @@ export default class MusitField extends Component {
     );
     const lcHelp = this.props.help ? <span className="input-group-addon">?</span> : null;
 
-    return lcAddOnPrefix !== null || lcHelp !== null
-      ? <div className={this.classNameWithSpan()}>
-          {lcAddOnPrefix}
-          {lcPlaceholder}
-          {lcHelp}
-        </div>
-      : <div className={this.classNameOnlyWithInput()}>
-          {lcPlaceholder}
-        </div>;
+    return lcAddOnPrefix !== null || lcHelp !== null ? (
+      <div className={this.classNameWithSpan()}>
+        {lcAddOnPrefix}
+        {lcPlaceholder}
+        {lcHelp}
+      </div>
+    ) : (
+      <div className={this.classNameOnlyWithInput()}>{lcPlaceholder}</div>
+    );
   }
 }

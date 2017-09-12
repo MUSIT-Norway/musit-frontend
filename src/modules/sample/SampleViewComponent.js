@@ -66,10 +66,7 @@ export default function SampleViewComponent(props: Props & SampleProps) {
           >
             {I18n.t('musit.sample.updateSample')}
           </button>
-          <h1>
-            {I18n.t('musit.sample.sample')}
-          </h1>
-
+          <h1>{I18n.t('musit.sample.sample')}</h1>
         </div>
         <div className="pull-right">
           <button className="btn btn-default" onClick={customProps.clickCreateAnalysis}>
@@ -89,9 +86,11 @@ export default function SampleViewComponent(props: Props & SampleProps) {
           <hr />
         </div>
         <h4>
-          {derivedFrom.sampleNum
-            ? I18n.t('musit.sample.derivedFromObjectAndSample')
-            : I18n.t('musit.sample.derivedFromObject')}
+          {derivedFrom.sampleNum ? (
+            I18n.t('musit.sample.derivedFromObjectAndSample')
+          ) : (
+            I18n.t('musit.sample.derivedFromObject')
+          )}
         </h4>
         <ObjectAndSampleDetails
           appSession={props.appSession}
@@ -111,9 +110,7 @@ export default function SampleViewComponent(props: Props & SampleProps) {
             {I18n.t('musit.sample.sampleNumber')}
           </label>
           <div className="col-md-2">
-            <p className="form-control-static">
-              {sample.sampleNum}
-            </p>
+            <p className="form-control-static">{sample.sampleNum}</p>
           </div>
         </div>
         <div className="form-group">
@@ -121,9 +118,7 @@ export default function SampleViewComponent(props: Props & SampleProps) {
             {I18n.t('musit.sample.sampleId')}
           </label>
           <div className="col-md-2">
-            <p className="form-control-static">
-              {sample.sampleId}
-            </p>
+            <p className="form-control-static">{sample.sampleId}</p>
           </div>
         </div>
         <div className="form-group">
@@ -153,9 +148,7 @@ export default function SampleViewComponent(props: Props & SampleProps) {
             {I18n.t('musit.sample.description')}
           </label>
           <div className="col-md-8">
-            <p className="form-control-static">
-              {sample.description}
-            </p>
+            <p className="form-control-static">{sample.description}</p>
           </div>
         </div>
         <div className="form-group">
@@ -163,9 +156,7 @@ export default function SampleViewComponent(props: Props & SampleProps) {
             {I18n.t('musit.sample.status')}
           </label>
           <div className="col-md-2">
-            <p className="form-control-static">
-              {customProps.statusText}
-            </p>
+            <p className="form-control-static">{customProps.statusText}</p>
           </div>
         </div>
         <div className="form-group">
@@ -183,9 +174,7 @@ export default function SampleViewComponent(props: Props & SampleProps) {
             {I18n.t('musit.sample.storageContainer')}
           </label>
           <div className="col-md-2">
-            <p className="form-control-static">
-              {sample.container}
-            </p>
+            <p className="form-control-static">{sample.container}</p>
           </div>
         </div>
         <div className="form-group">
@@ -193,9 +182,7 @@ export default function SampleViewComponent(props: Props & SampleProps) {
             {I18n.t('musit.sample.storageMedium')}
           </label>
           <div className="col-md-2">
-            <p className="form-control-static">
-              {sample.storageMedium}
-            </p>
+            <p className="form-control-static">{sample.storageMedium}</p>
           </div>
         </div>
         <div className="form-group">
@@ -203,9 +190,7 @@ export default function SampleViewComponent(props: Props & SampleProps) {
             {I18n.t('musit.sample.treatment')}
           </label>
           <div className="col-md-2">
-            <p className="form-control-static">
-              {sample.treatment}
-            </p>
+            <p className="form-control-static">{sample.treatment}</p>
           </div>
         </div>
         <div className="form-group">
@@ -225,9 +210,7 @@ export default function SampleViewComponent(props: Props & SampleProps) {
             {I18n.t('musit.sample.comments')}
           </label>
           <div className="col-md-8">
-            <p className="form-control-static">
-              {sample.note}
-            </p>
+            <p className="form-control-static">{sample.note}</p>
           </div>
         </div>
         <hr />

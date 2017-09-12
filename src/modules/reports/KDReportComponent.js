@@ -5,7 +5,7 @@ import { I18n } from 'react-i18nify';
 import { formatFloatToString } from './../../shared/util';
 import { Observable } from 'rxjs';
 import store$, { loadKDReport$, clear$ } from './reportStore';
-import inject from 'react-rxjs/dist/RxInject';
+import { RxInjectLegacy as inject } from 'react-rxjs';
 
 export class KDReport extends Component {
   static propTypes = {
@@ -52,17 +52,13 @@ export class KDReport extends Component {
                     </tr>
                     <tr>
                       <td>{I18n.t('musit.reports.securingCollections.perimeter')}</td>
-                      <td>
-                        {data && formatFloatToString(data.perimeterSecurity)} m²
-                      </td>
+                      <td>{data && formatFloatToString(data.perimeterSecurity)} m²</td>
                     </tr>
                     <tr>
                       <td>
                         {I18n.t('musit.reports.securingCollections.theftProtection')}
                       </td>
-                      <td>
-                        {data && formatFloatToString(data.theftProtection)} m²
-                      </td>
+                      <td>{data && formatFloatToString(data.theftProtection)} m²</td>
                     </tr>
                     <tr>
                       <td>

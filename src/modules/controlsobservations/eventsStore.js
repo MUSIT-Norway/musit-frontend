@@ -49,6 +49,6 @@ export const reducer$ = actions =>
   );
 
 export const store$ = (actions$ = { clearEvents$, loadEvents$, loadRootNode$ }) =>
-  createStore('controlsAndObservations', reducer$(actions$), Observable.of({ data: [] }));
+  createStore('controlsAndObservations', reducer$(actions$), { data: [] });
 
 export default store$();

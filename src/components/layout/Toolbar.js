@@ -48,7 +48,7 @@ export default class Toolbar extends React.Component {
     } else {
       optionalSearch = (
         <div className="searchField">
-          <span style={{ width: '180px', display: 'inline-block' }}>{' '}</span>
+          <span style={{ width: '180px', display: 'inline-block' }}> </span>
         </div>
       );
     }
@@ -57,14 +57,10 @@ export default class Toolbar extends React.Component {
         {optionalSearch}
         <div className="toolBarButtons">
           <Button active={showLeft} onClick={clickShowLeft}>
-            <FontAwesome name={showLeft ? 'check-square-o' : 'square-o'} />
-            {' '}
-            {labelLeft}
+            <FontAwesome name={showLeft ? 'check-square-o' : 'square-o'} /> {labelLeft}
           </Button>
           <Button active={showRight} onClick={clickShowRight}>
-            <FontAwesome name={showRight ? 'check-square-o' : 'square-o'} />
-            {' '}
-            {labelRight}
+            <FontAwesome name={showRight ? 'check-square-o' : 'square-o'} /> {labelRight}
           </Button>
         </div>
       </div>

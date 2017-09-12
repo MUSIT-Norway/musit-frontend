@@ -18,12 +18,12 @@ describe('AnalysisSampleFormPageView', () => {
           unit: 'tonn',
           value: '1,23'
         },
-        sampleNum: '123',
+        sampleNum: '12',
         externalId: { value: '1234', source: 'Museum' },
         description: 'description',
         term_species: 'Carex saxatilis',
         sampleType: 'Vev',
-        subTypeValue: 'Muskel',
+        sampleSubType: 'Muskel',
         status: 1,
         statusText: 'Nyskilt',
         storageMedium: 'Etanol',
@@ -40,7 +40,6 @@ describe('AnalysisSampleFormPageView', () => {
           objectType: 'collection',
           sampleOrObjectData: {}
         },
-        sampleNum: '12',
         updatedStamp: { name: 'Ole Hansen', date: '1992-01-01' },
         registeredStamp: { name: 'Per Hansen', date: '1992-01-05' }
       }

@@ -2,10 +2,10 @@
 
 import PropTypes from 'prop-types';
 import lifeCycle from '../../../shared/lifeCycle';
-import inject from 'react-rxjs/dist/RxInject';
+import { RxInjectLegacy as inject } from 'react-rxjs';
 import flowRight from 'lodash/flowRight';
 
-import { loadPredefinedTypes } from '../../../stores/predefined';
+import { loadPredefinedTypes } from '../../../stores/predefinedLoader';
 import { getAnalysis$ } from '../analysisStore';
 import analysisExchangeStore$, {
   importResult$,
@@ -47,7 +47,7 @@ type MountProps = {
   clearStore: () => void,
   uploadResultFailed: (errors: Array<string>) => void,
   getAnalysis: GetAnalysis,
-  setAnalysisTypes: (types: Array<AnalysisType>) => void,
+  setAnalysisTypes: (types: ?Array<AnalysisType>) => void,
   appSession: AppSession,
   predefined: Predefined,
   match: Match<RouterParams>,

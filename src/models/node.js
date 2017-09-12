@@ -5,7 +5,7 @@ import { mapToBackend, mapToFrontend } from './mapper/node';
 import MusitActor from './actor';
 import MusitObject from './object';
 import { Observable, Subject } from 'rxjs';
-import type { Callback, AjaxGet, AjaxPost, AjaxPut, AjaxDel } from './types/ajax';
+import type { Callback, AjaxGet, AjaxPost, AjaxPut, AjaxDel } from '../types/ajax';
 import type { Breadcrumb } from './types/breadcrumb';
 
 export type Node = {
@@ -28,6 +28,8 @@ export type MoveResult = {
   moved: number,
   failed: number
 };
+
+export type SearchResult = { totalMatches?: number, matches?: Array<*>, error?: string };
 
 class MusitNode {
   static isRootNode: (node: Node) => boolean;
@@ -73,7 +75,7 @@ class MusitNode {
     museumId: number,
     token: string,
     callback?: Callback
-  }) => Observable<Array<Node>>;
+  }) => Observable<SearchResult>;
   static getStats: (
     ajaxGet: AjaxGet
   ) => (props: {

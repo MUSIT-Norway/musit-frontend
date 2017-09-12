@@ -17,10 +17,7 @@ export type State = {
   name: ?string
 };
 
-export default class StatefulActorSuggest extends React.Component {
-  props: Props;
-  state: State;
-
+export default class StatefulActorSuggest extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { name: null };

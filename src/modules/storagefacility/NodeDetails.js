@@ -175,8 +175,7 @@ export default class NodeDetails extends Component {
     const lastUpdateBy = unit.updatedByName;
     return (
       <span>
-        <b>{I18n.t('musit.storageUnits.lastUpdateBy')}</b>
-        {' '}
+        <b>{I18n.t('musit.storageUnits.lastUpdateBy')}</b>{' '}
         {this.props.isAdd ? '' : lastUpdateBy}
         <br />
         <b>{I18n.t('musit.storageUnits.lastUpdateDate')}</b>
@@ -205,9 +204,11 @@ export default class NodeDetails extends Component {
                   >
                     <div>
                       <h4 style={{ textAlign: 'center' }}>
-                        {this.props.isAdd
-                          ? `${I18n.t('musit.storageUnits.newNode')} - `
-                          : ''}
+                        {this.props.isAdd ? (
+                          `${I18n.t('musit.storageUnits.newNode')} - `
+                        ) : (
+                          ''
+                        )}
                         {I18n.t('musit.storageUnits.header')}
                       </h4>
                       <Grid>
@@ -283,7 +284,7 @@ export default class NodeDetails extends Component {
                           </Col>
                           <Col md={5}>
                             {(this.props.unit.type === 'Building' ||
-                              this.props.unit.type === 'Organisation') &&
+                              this.props.unit.type === 'Organisation') && (
                               <Form horizontal>
                                 <FormGroup>
                                   <label
@@ -307,7 +308,8 @@ export default class NodeDetails extends Component {
                                     />
                                   </div>
                                 </FormGroup>
-                              </Form>}
+                              </Form>
+                            )}
                           </Col>
                         </Row>
                         <Row className="row-centered">
@@ -477,7 +479,7 @@ export default class NodeDetails extends Component {
                           </Row>
                         </Grid>
                       </div>
-                      {this.props.unit.type === 'Room' &&
+                      {this.props.unit.type === 'Room' && (
                         <Grid>
                           <Row>
                             <Col lg={5} md={5} sm={5} xs={10} offset={1}>
@@ -508,27 +510,31 @@ export default class NodeDetails extends Component {
                               )}
                             </Col>
                           </Row>
-                        </Grid>}
+                        </Grid>
+                      )}
                       <Grid>
                         <Row>
                           <br />
                           {this.props.unit.errors &&
                             values(this.props.unit.errors).map((error, index) => {
-                              return <p style={{ color: 'red' }} key={index}>{error}</p>;
+                              return (
+                                <p style={{ color: 'red' }} key={index}>
+                                  {error}
+                                </p>
+                              );
                             })}
                           <br />
-                          {this.props.loaded &&
+                          {this.props.loaded && (
                             <SaveCancel
                               saveDisabled={this.props.loading || !this.props.rootNode}
                               onClickSave={this.handleSubmit}
                               onClickCancel={() => this.props.goBack()}
-                            />}
+                            />
+                          )}
                         </Row>
                         <Row>
                           <Col sm={8} />
-                          <Col sm={4}>
-                            {this.renderLastChangeData(this.props.unit)}
-                          </Col>
+                          <Col sm={4}>{this.renderLastChangeData(this.props.unit)}</Col>
                         </Row>
                       </Grid>
                     </div>

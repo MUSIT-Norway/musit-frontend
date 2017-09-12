@@ -35,7 +35,7 @@ import moveDialogStore$, {
   PER_PAGE
 } from './moveDialogStore';
 import Loader from 'react-loader';
-import inject from 'react-rxjs/dist/RxInject';
+import { RxInjectLegacy as inject } from 'react-rxjs';
 
 export class MoveDialogComponent extends Component {
   static propTypes = {
@@ -104,13 +104,15 @@ export class MoveDialogComponent extends Component {
       </div>
     );
 
-    let body = data.loading
-      ? <div style={{ textAlign: 'center', color: 'grey' }}>
-          <Loader loaded={false} />
-        </div>
-      : <div style={{ textAlign: 'center', color: 'grey' }}>
-          {I18n.t('musit.moveModal.noData')}
-        </div>;
+    let body = data.loading ? (
+      <div style={{ textAlign: 'center', color: 'grey' }}>
+        <Loader loaded={false} />
+      </div>
+    ) : (
+      <div style={{ textAlign: 'center', color: 'grey' }}>
+        {I18n.t('musit.moveModal.noData')}
+      </div>
+    );
 
     if (!data.loading && data.totalMatches > 0) {
       body = (
@@ -119,14 +121,15 @@ export class MoveDialogComponent extends Component {
             tableData={data.matches}
             onClick={n => this.loadNode(n.nodeId)}
           />
-          {data.totalMatches > PER_PAGE &&
+          {data.totalMatches > PER_PAGE && (
             <PagingToolbar
               numItems={data.totalMatches}
               currentPage={page}
               perPage={PER_PAGE}
               onClick={currentPage =>
                 this.loadNode(selectedNode && selectedNode.nodeId, currentPage)}
-            />}
+            />
+          )}
         </div>
       );
     }

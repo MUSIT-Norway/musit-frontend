@@ -10,8 +10,7 @@ type Props = {
 
 const AddButton = ({ label, ...props }: Props) => (
   <Button {...props}>
-    <FontAwesome name="plus-circle" />{' '}
-    {label}
+    <FontAwesome name="plus-circle" /> {label}
   </Button>
 );
 

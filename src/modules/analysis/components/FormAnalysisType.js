@@ -5,15 +5,17 @@ import type { DomEvent } from '../../../types/dom';
 import type { ElementProps } from '../../../forms/components';
 import { FormElement } from '../../../forms/components';
 import type { AnalysisType } from '../../../types/analysis';
+import type { Language } from '../../../types/appSession';
 
 export type Props = ElementProps & {
   id: string,
-  categories: { [string]: any },
+  categories: ?{ [string]: any },
   category: ?string,
   onChangeCategory: (e: DomEvent) => void,
-  types: Array<AnalysisType>,
+  types: ?Array<AnalysisType>,
   type: ?string,
-  onChangeType: (e: DomEvent) => void
+  onChangeType: (e: DomEvent) => void,
+  language: Language
 };
 
 export default function FormAnalysisType(props: Props) {
@@ -30,7 +32,7 @@ export default function FormAnalysisType(props: Props) {
   );
 }
 
-function AnalysisTypeSelect(props) {
+function AnalysisTypeSelect(props: Props) {
   return (
     <div className="row">
       <div className="col-md-6">
@@ -50,7 +52,7 @@ function AnalysisTypeSelect(props) {
         </select>
       </div>
       {props.category &&
-        props.category !== '0' &&
+      props.category !== '0' && (
         <div className="col-md-6">
           <select
             id={`sub${props.id}`}
@@ -59,13 +61,15 @@ function AnalysisTypeSelect(props) {
             onChange={props.onChangeType}
           >
             <option value="">{I18n.t('musit.analysis.chooseType')}</option>
-            {props.types.filter(b => b.category.toString() === props.category).map(a => (
-              <option key={a.id} value={a.id}>
-                {props.language.isEn ? a.enName : a.noName}
-              </option>
-            ))}
+            {props.types &&
+              props.types.filter(b => b.category.toString() === props.category).map(a => (
+                <option key={a.id} value={a.id}>
+                  {props.language.isEn ? a.enName : a.noName}
+                </option>
+              ))}
           </select>
-        </div>}
+        </div>
+      )}
     </div>
   );
 }

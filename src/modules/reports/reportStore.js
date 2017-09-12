@@ -24,6 +24,6 @@ export const reducer$ = actions =>
   );
 
 export const store$ = (actions$ = { clear$, loadKDReport$ }) =>
-  createStore('reportStore', reducer$(actions$), Observable.of(initialState));
+  createStore('reportStore', reducer$(actions$), initialState);
 
 export default store$();

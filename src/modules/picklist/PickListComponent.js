@@ -81,14 +81,13 @@ export class PickListComponent extends React.Component {
   labelRenderer(isNode, pick, historyPush) {
     return (
       <div>
-        {!isNode && pick.value.sampleNum
-          ? <span
-              style={{ paddingLeft: '1em' }}
-            >{`${pick.value.sampleNum} ${pick.value.sampleTypeAndSubType}`}</span>
-          : null}
-        {!isNode
-          ? <span style={{ paddingLeft: '1em' }}>{pick.value.museumNo}</span>
-          : null}
+        {!isNode && pick.value.sampleNum ? (
+          <span style={{ paddingLeft: '1em' }}>{`${pick.value.sampleNum} ${pick.value
+            .sampleTypeAndSubType}`}</span>
+        ) : null}
+        {!isNode ? (
+          <span style={{ paddingLeft: '1em' }}>{pick.value.museumNo}</span>
+        ) : null}
         {!isNode ? <span style={{ paddingLeft: '1em' }}>{pick.value.subNo}</span> : null}
         <span style={{ paddingLeft: '1em' }}>
           {pick.value.name ? pick.value.name : pick.value.term}
@@ -193,7 +192,7 @@ export class PickListComponent extends React.Component {
                     />
                   </th>
                   <th style={{ verticalAlign: 'bottom', textAlign: 'left' }}>
-                    {isNode &&
+                    {isNode && (
                       <FontAwesome
                         className="normalActionNoPadding"
                         style={{
@@ -207,9 +206,10 @@ export class PickListComponent extends React.Component {
                           }
                         }}
                         title={I18n.t('musit.pickList.tooltip.printSelectedNodes')}
-                      />}
+                      />
+                    )}
                     {isNode && this.selectedCount(isNode, marked.length)}
-                    {isObject &&
+                    {isObject && (
                       <span
                         className="icon icon-musit-testtube"
                         style={{
@@ -224,9 +224,10 @@ export class PickListComponent extends React.Component {
                           }
                         }}
                         title={I18n.t('musit.analysis.createSample')}
-                      />}
+                      />
+                    )}
                     {isObject && this.selectedCount(isNode, marked.length)}
-                    {isObject &&
+                    {isObject && (
                       <span>
                         <span
                           className="icon-musit-microscope"
@@ -245,7 +246,8 @@ export class PickListComponent extends React.Component {
                           title={I18n.t('musit.analysis.createAnalysis')}
                         />
                         {this.selectedCount(isNode, marked.length)}
-                      </span>}
+                      </span>
+                    )}
                     <FontAwesome
                       className="normalAction"
                       name="truck"
@@ -259,7 +261,9 @@ export class PickListComponent extends React.Component {
                         }
                       }}
                       title={I18n.t(
-                        `musit.pickList.tooltip.${isNode ? 'moveSelectedNodes' : 'moveSelectedObjects'}`
+                        `musit.pickList.tooltip.${isNode
+                          ? 'moveSelectedNodes'
+                          : 'moveSelectedObjects'}`
                       )}
                     />
                     {this.selectedCount(isNode, marked.length)}
@@ -276,7 +280,9 @@ export class PickListComponent extends React.Component {
                         }
                       }}
                       title={I18n.t(
-                        `musit.pickList.tooltip.${isNode ? 'removeSelectedNodesFromList' : 'removeSelectedObjectsFromList'}`
+                        `musit.pickList.tooltip.${isNode
+                          ? 'removeSelectedNodesFromList'
+                          : 'removeSelectedObjectsFromList'}`
                       )}
                     />
                     {this.selectedCount(isNode, marked.length)}
@@ -306,23 +312,24 @@ export class PickListComponent extends React.Component {
                         }}
                       >
                         <span>
-                          {!item.mainObjectId || isMainObject
-                            ? <input
-                                type="checkbox"
-                                checked={isItemMarked ? 'checked' : ''}
-                                onChange={() => this.toggle(item)}
-                              />
-                            : <input
-                                type="checkbox"
-                                checked={isItemMarked ? 'checked' : ''}
-                                disabled
-                              />}
+                          {!item.mainObjectId || isMainObject ? (
+                            <input
+                              type="checkbox"
+                              checked={isItemMarked ? 'checked' : ''}
+                              onChange={() => this.toggle(item)}
+                            />
+                          ) : (
+                            <input
+                              type="checkbox"
+                              checked={isItemMarked ? 'checked' : ''}
+                              disabled
+                            />
+                          )}
                         </span>
                       </td>
                       <td>
                         <span className="pickListIcon">
-                          {this.iconRenderer(pick)}
-                          {' '}
+                          {this.iconRenderer(pick)}{' '}
                           {this.labelRenderer(isNode, pick, this.props.history.push)}
                         </span>
                       </td>
@@ -333,9 +340,11 @@ export class PickListComponent extends React.Component {
             </Table>
             <div style={{ textAlign: 'left' }}>
               {marked.length}/{pickList.length} &nbsp;
-              {isNode
-                ? I18n.t('musit.pickList.footer.nodeSelected')
-                : I18n.t('musit.pickList.footer.objectSelected')}
+              {isNode ? (
+                I18n.t('musit.pickList.footer.nodeSelected')
+              ) : (
+                I18n.t('musit.pickList.footer.objectSelected')
+              )}
             </div>
           </Grid>
         </main>

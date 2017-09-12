@@ -10,7 +10,7 @@ type Props = {
 
 const ImportVerificationTableComponent = (props: Props) => (
   <div className="table-responsive">
-    {props.result.length > 0 &&
+    {props.result.length > 0 && (
       <table className="table table-condensed table-hover">
         <thead>
           <tr>
@@ -34,7 +34,8 @@ const ImportVerificationTableComponent = (props: Props) => (
             </tr>
           ))}
         </tbody>
-      </table>}
+      </table>
+    )}
   </div>
 );
 

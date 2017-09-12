@@ -1,33 +1,35 @@
 // @flow
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import MusitObject from '../../models/object';
 import MusitNode from '../../models/node';
+import type { SearchResult } from '../../models/node';
 import type { NodeStats, Node } from '../../models/node';
 import type { ObjectData } from 'types/object';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
+import { simpleGet } from '../../shared/RxAjax';
 
-export const clearRootNode$: Subject<*> = createAction('clearRootNode$');
-export const setLoading$: Subject<*> = createAction('setLoading$');
-export const loadNodes$: Subject<Array<Node>> = createAction('loadNodes$').switchMap(
-  MusitNode.getNodes()
+export const clearRootNode$: Observable<void> = createAction('clearRootNode$');
+export const setLoading$: Observable<void> = createAction('setLoading$');
+export const loadNodes$: Observable<SearchResult> = createAction('loadNodes$').switchMap(
+  MusitNode.getNodes(simpleGet)
 );
-export const loadObjects$: Subject<Array<ObjectData>> = createAction(
+export const loadObjects$: Observable<Array<ObjectData>> = createAction(
   'loadObjects$'
-).switchMap(MusitObject.getObjects());
-export const loadStats$: Subject<NodeStats> = createAction('loadStats$').switchMap(
-  MusitNode.getStats()
+).switchMap(MusitObject.getObjects(simpleGet));
+export const loadStats$: Observable<NodeStats> = createAction('loadStats$').switchMap(
+  MusitNode.getStats(simpleGet)
 );
-export const loadRootNode$: Subject<Node> = createAction('loadRootNode$').switchMap(
-  MusitNode.getNode()
+export const loadRootNode$: Observable<Node> = createAction('loadRootNode$').switchMap(
+  MusitNode.getNode(simpleGet)
 );
 
 type Actions = {
-  clearRootNode$: Subject<*>,
-  loadStats$: Subject<*>,
-  loadRootNode$: Subject<*>,
-  setLoading$: Subject<*>,
-  loadNodes$: Subject<*>,
-  loadObjects$: Subject<*>
+  clearRootNode$: Observable<void>,
+  loadStats$: Observable<NodeStats>,
+  loadRootNode$: Observable<Node>,
+  setLoading$: Observable<void>,
+  loadNodes$: Observable<SearchResult>,
+  loadObjects$: Observable<Array<ObjectData>>
 };
 
 export const reducer$ = (actions: Actions) =>
@@ -62,6 +64,6 @@ export const store$ = (
     loadObjects$,
     loadNodes$
   }
-) => createStore('storageFacility', reducer$(actions$), Observable.of({}));
+) => createStore('storageFacility', reducer$(actions$), {});
 
 export default store$();

@@ -34,33 +34,29 @@ export default function TableData(props: TableDataProps) {
       onClick={() => props.goToObject(rowData.uuid, rowData.objectType)}
     >
       <td style={{ width: '20px' }}>
-        {rowData.objectType && rowData.objectType === 'sample'
-          ? <span className="icon icon-musit-testtube" />
-          : <span className="icon icon-musitobject" />}
+        {rowData.objectType && rowData.objectType === 'sample' ? (
+          <span className="icon icon-musit-testtube" />
+        ) : (
+          <span className="icon icon-musitobject" />
+        )}
+      </td>
+      <td>{rowData.museumNo}</td>
+      <td>{rowData.subNo}</td>
+      <td>{rowData.term}</td>
+      <td>{rowData.sampleNum ? rowData.sampleNum : ''}</td>
+      <td>
+        {rowData.sampleTypeId && props.appSession && props.sampleTypes ? (
+          getSampleTypeAndSubType(
+            { sampleTypes: props.sampleTypes },
+            rowData.sampleTypeId,
+            props.appSession
+          )
+        ) : (
+          ''
+        )}
       </td>
       <td>
-        {rowData.museumNo}
-      </td>
-      <td>
-        {rowData.subNo}
-      </td>
-      <td>
-        {rowData.term}
-      </td>
-      <td>
-        {rowData.sampleNum ? rowData.sampleNum : ''}
-      </td>
-      <td>
-        {rowData.sampleTypeId && props.appSession && props.sampleTypes
-          ? getSampleTypeAndSubType(
-              { sampleTypes: props.sampleTypes },
-              rowData.sampleTypeId,
-              props.appSession
-            )
-          : ''}
-      </td>
-      <td>
-        {isMainObject &&
+        {isMainObject && (
           <a
             className="onShowMoveHistory"
             href=""
@@ -72,10 +68,11 @@ export default function TableData(props: TableDataProps) {
             title={I18n.t('musit.grid.object.iconTooltip.moveObjectHistory')}
           >
             <span className="icon icon-musitmovehistoryicon" />
-          </a>}
+          </a>
+        )}
       </td>
       <td>
-        {isMainObject &&
+        {isMainObject && (
           <a
             className="onMoveClick"
             href=""
@@ -87,10 +84,11 @@ export default function TableData(props: TableDataProps) {
             title={I18n.t('musit.grid.object.iconTooltip.moveObject')}
           >
             <FontAwesome style={{ fontSize: '1.5em' }} name="truck" />
-          </a>}
+          </a>
+        )}
       </td>
       <td>
-        {isMainObject &&
+        {isMainObject && (
           <a
             className="onPickObject"
             href=""
@@ -101,14 +99,16 @@ export default function TableData(props: TableDataProps) {
             }}
             title={I18n.t('musit.grid.object.iconTooltip.addToPickList')}
           >
-            {props.isObjectAdded(rowData)
-              ? <FontAwesome
-                  style={{ fontSize: '1.5em', color: 'Gray' }}
-                  name="shopping-cart"
-                />
-              : <FontAwesome style={{ fontSize: '1.5em' }} name="shopping-cart" />}
-
-          </a>}
+            {props.isObjectAdded(rowData) ? (
+              <FontAwesome
+                style={{ fontSize: '1.5em', color: 'Gray' }}
+                name="shopping-cart"
+              />
+            ) : (
+              <FontAwesome style={{ fontSize: '1.5em' }} name="shopping-cart" />
+            )}
+          </a>
+        )}
       </td>
     </tr>
   );

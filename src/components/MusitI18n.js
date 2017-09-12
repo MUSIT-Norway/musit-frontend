@@ -1,6 +1,6 @@
 import React from 'react';
 
-import inject from 'react-rxjs/dist/RxInject';
+import { RxInjectLegacy as inject } from 'react-rxjs';
 import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
 

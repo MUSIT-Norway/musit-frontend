@@ -4,7 +4,7 @@ import ObservationPage from './ObservationPage';
 import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { I18n } from 'react-i18nify';
-import inject from 'react-rxjs/dist/RxInject';
+import { RxInjectLegacy as inject } from 'react-rxjs';
 import { emitError, emitSuccess } from '../../shared/errors';
 import store$, { loadRootNode$ } from './observationStore';
 import Observation from '../../models/observation';

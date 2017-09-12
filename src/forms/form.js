@@ -11,6 +11,7 @@ import {
   isNumber,
   composeValidators
 } from './validators';
+import { KEEP_ALIVE } from '../stores/constants';
 
 export type RawValue = any;
 
@@ -41,9 +42,10 @@ export type Update<T> = {
 
 const updateField = (field: Field<*>, data: Update<*>): Field<*> => {
   const defaultValue = data.defaultValue || field.defaultValue;
-  const rawValue = typeof data.rawValue !== 'undefined'
-    ? data.rawValue
-    : field.mapper.toRaw(defaultValue);
+  const rawValue =
+    typeof data.rawValue !== 'undefined'
+      ? data.rawValue
+      : field.mapper.toRaw(defaultValue);
   const rawError =
     field.validator.rawValidator && field.validator.rawValidator(field.name)(rawValue);
   const value = field.mapper.fromRaw(rawValue);
@@ -134,24 +136,29 @@ const updateForm = (state: Field<*>[], data: Update<*>): Field<*>[] => {
     return state;
   }
   const updated = updateField(state[fieldIndex], data);
-  return state.slice(0, fieldIndex).concat([updated]).concat(state.slice(fieldIndex + 1));
+  return state
+    .slice(0, fieldIndex)
+    .concat([updated])
+    .concat(state.slice(fieldIndex + 1));
 };
 
 const reducer$ = (initialFields, { updateForm$, loadForm$, clearForm$ }) => {
   return Observable.merge(
     clearForm$.map(() => () => initialFields),
     loadForm$.map((load: Update<*>[]) => (state: Field<*>[]) =>
-      load.reduce(updateForm, state)),
+      load.reduce(updateForm, state)
+    ),
     updateForm$.map((update: Update<*>) => (state: Field<*>[]) =>
-      updateForm(state, update))
+      updateForm(state, update)
+    )
   );
 };
 
 export type FormDetails = {
   updateForm$: Subject<Update<*>>,
-  loadForm$: Subject<Update<*>[]>,
+  loadForm$: Subject<Array<Update<*>>>,
   clearForm$: Subject<void>,
-  form$: Observable<Field<*>[]>
+  form$: Observable<{ [string]: Field<*> }>
 };
 
 /**
@@ -184,7 +191,7 @@ const createForm$ = (
   updateForm$ = updateForm$ || createAction(name + ': updateForm$');
   loadForm$ = loadForm$ || createAction(name + ': loadForm$');
   const clearForm$ = createAction(name + ': clearForm$');
-  const initialFields = fields.reduce(
+  const initialFields: Array<Field<*>> = fields.reduce(
     (acc, field) => [
       ...acc,
       updateField(
@@ -206,7 +213,8 @@ const createForm$ = (
     form$: createStore(
       name,
       reducer$(initialFields, { updateForm$, loadForm$, clearForm$ }),
-      Observable.of(initialFields)
+      initialFields,
+      KEEP_ALIVE
     ).map(form => form.reduce((acc, f) => ({ ...acc, [f.name]: f }), {}))
   };
 };

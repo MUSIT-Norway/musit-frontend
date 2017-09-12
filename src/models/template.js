@@ -1,7 +1,7 @@
 // @flow
 import { simpleGet, ajax } from '../shared/RxAjax';
 import Config from '../config';
-import type { AjaxGet } from './types/ajax';
+import type { AjaxGet } from '../types/ajax';
 import { Observable } from 'rxjs';
 
 class Template {

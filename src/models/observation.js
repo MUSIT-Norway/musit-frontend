@@ -5,7 +5,7 @@ import mapToFrontEnd from './mapper/observation/to_frontend';
 import MusitActor from './actor';
 import uniq from 'lodash/uniq';
 import { simplePost, simpleGet } from '../shared/RxAjax';
-import type { Callback, AjaxGet, AjaxPost } from './types/ajax';
+import type { Callback, AjaxGet, AjaxPost } from '../types/ajax';
 import { Observable } from 'rxjs';
 
 class Observation {
@@ -62,7 +62,9 @@ Observation.addObservation = (ajaxPost = simplePost) => ({
   token,
   callback
 }) => {
-  const url = `${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/${nodeId}/observations`;
+  const url = `${Config.magasin.urls.api.storagefacility.baseUrl(
+    museumId
+  )}/${nodeId}/observations`;
   const dataToPost = mapToBackEnd(data, nodeId);
   return ajaxPost(url, dataToPost, token, callback);
 };
@@ -73,7 +75,9 @@ Observation.getObservation = (ajaxGet = simpleGet, ajaxPost = simplePost) => ({
   museumId,
   token
 }) => {
-  const url = `${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/${nodeId}/observations/${observationId}`;
+  const url = `${Config.magasin.urls.api.storagefacility.baseUrl(
+    museumId
+  )}/${nodeId}/observations/${observationId}`;
   return ajaxGet(url, token).flatMap(observation => {
     const actorIds = uniq([
       observation.response.doneBy,

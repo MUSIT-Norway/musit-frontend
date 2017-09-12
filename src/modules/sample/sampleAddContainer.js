@@ -1,4 +1,4 @@
-import inject from 'react-rxjs/dist/RxInject';
+import { RxInjectLegacy as inject } from 'react-rxjs';
 import sampleForm from './sampleAddForm';
 import SampleFormComponent from './SampleFormComponent';
 import flowRight from 'lodash/flowRight';
@@ -11,7 +11,7 @@ import Sample from '../../models/sample';
 import { simplePost } from '../../shared/RxAjax';
 import objectStore$, { loadObject$ } from '../objects/objectStore';
 import { retrieveSample } from './sampleViewContainer';
-import { loadPredefinedTypes } from '../../stores/predefined';
+import { loadPredefinedTypes } from '../../stores/predefinedLoader';
 import type { DomEvent } from '../../types/dom';
 
 const { form$, updateForm$, loadForm$, clearForm$ } = sampleForm;

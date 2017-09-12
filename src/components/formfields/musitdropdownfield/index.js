@@ -66,9 +66,9 @@ export default class MusitDropDownField extends Component {
   }
 
   render() {
-    const lcAddOnPrefix = this.props.addOnPrefix
-      ? <span className="input-group-addon">{this.props.addOnPrefix}</span>
-      : null;
+    const lcAddOnPrefix = this.props.addOnPrefix ? (
+      <span className="input-group-addon">{this.props.addOnPrefix}</span>
+    ) : null;
     const lcPlaceholder = (
       <Select
         placeholder={this.props.placeHolder}
@@ -85,14 +85,14 @@ export default class MusitDropDownField extends Component {
 
     const lcHelp = this.props.help ? <span className="input-group-addon">?</span> : null;
 
-    return lcAddOnPrefix !== null || lcHelp !== null
-      ? <div className={this.classNameWithSpan()}>
-          {lcAddOnPrefix}
-          {lcPlaceholder}
-          {lcHelp}
-        </div>
-      : <div className={this.classNameOnlyWithInput()}>
-          {lcPlaceholder}
-        </div>;
+    return lcAddOnPrefix !== null || lcHelp !== null ? (
+      <div className={this.classNameWithSpan()}>
+        {lcAddOnPrefix}
+        {lcPlaceholder}
+        {lcHelp}
+      </div>
+    ) : (
+      <div className={this.classNameOnlyWithInput()}>{lcPlaceholder}</div>
+    );
   }
 }

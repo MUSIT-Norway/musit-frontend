@@ -93,11 +93,12 @@ export class PrintTemplateComponent extends Component {
             .concat(this.props.store.templates)
             .filter(t => t)
             .map((template, i) => (
-              <option key={i} value={template.id}>{template.name}</option>
+              <option key={i} value={template.id}>
+                {template.name}
+              </option>
             ))}
-        </select>
-        {' '}
-        {this.canSelectPath(this.props.store.templateId) &&
+        </select>{' '}
+        {this.canSelectPath(this.props.store.templateId) && (
           <select
             className="printTool level"
             onChange={this.selectLevel}
@@ -106,9 +107,9 @@ export class PrintTemplateComponent extends Component {
             <option value={-2}>{I18n.t('musit.template.pathWithTwoClosest')}</option>
             <option value={2}>{I18n.t('musit.template.pathFromBuilding')}</option>
             <option value={0}>{I18n.t('musit.template.fullPath')}</option>
-          </select>}
-        {' '}
-        {this.props.store.rendered &&
+          </select>
+        )}{' '}
+        {this.props.store.rendered && (
           <input
             className="printTool"
             onClick={() => {
@@ -120,8 +121,9 @@ export class PrintTemplateComponent extends Component {
             }}
             type="button"
             value={I18n.t('musit.template.printTemplate')}
-          />}
-        {this.props.store.rendered &&
+          />
+        )}
+        {this.props.store.rendered && (
           <IFrame
             ref={child => (this.previewFrame = child)}
             frameProps={{
@@ -132,7 +134,8 @@ export class PrintTemplateComponent extends Component {
             }}
             content={this.props.store.rendered}
             writeToDocument={this.props.writeToDocument}
-          />}
+          />
+        )}
       </div>
     );
   }

@@ -1,9 +1,4 @@
 // @flow
-
-declare var describe: any;
-declare var it: any;
-declare var expect: any;
-
 import concat from 'lodash/concat';
 import MusitTestScheduler from '../../../../testutils/MusitTestScheduler';
 import {
@@ -13,7 +8,8 @@ import {
   initStoreState
 } from '../analysisExchangeStore';
 import { baseHeader } from '../exchangeTemplate';
-import type { AnalysisStoreState, Event } from '../analysisExchangeStore';
+import type { AnalysisEvent as Event } from 'types/analysis';
+import type { AnalysisStoreState } from '../../analysisStore';
 import type { ResultExchangeTemplates } from '../exchangeTemplate';
 
 describe('analysisExchangeStore', () => {
@@ -47,7 +43,12 @@ describe('analysisExchangeStore', () => {
     const clearStore$ = testScheduler.createHotObservable(streams.clearStore);
 
     const state$ = analysisExchangeStore$(
-      { importResult$, uploadResultFailed$, clearStore$, setAnalysisTypes$ },
+      {
+        importResult$,
+        uploadResultFailed$,
+        clearStoreAction$: clearStore$,
+        setAnalysisTypes$
+      },
       analysisStore$
     );
 
@@ -191,16 +192,18 @@ describe('analysisExchangeStore', () => {
         type: 'sample',
         analysisId: 51,
         // object
-        objectId: event.originatedObjectUuid || 'to_satisfy_flow',
-        museumNo: event.museumNo || null,
-        subNo: event.subNo || null,
-        arkFindingNo: event.arkFindingNo || null,
-        term: event.term || null,
+        objectId: event.sampleData
+          ? event.sampleData.originatedObjectUuid || 'to_satisfy_flow'
+          : 'to_satisfy_flow',
+        museumNo: event.objectData ? event.objectData.museumNo : null,
+        subNo: event.objectData ? event.objectData.subNo : null,
+        arkFindingNo: event.objectData ? event.objectData.arkFindingNo : null,
+        term: event.objectData ? event.objectData.term : null,
         // sample
-        sampleObjectId: event.objectId,
-        sampleNum: event.sampleNum || null,
-        sampleId: event.sampleId || null,
-        sampleType: event.sampleType || null,
+        sampleObjectId: event.sampleData ? event.sampleData.objectId : null,
+        sampleNum: event.sampleData ? event.sampleData.sampleNum : null,
+        sampleId: event.sampleData ? event.sampleData.sampleId : null,
+        sampleType: event.sampleData ? event.sampleData.sampleType : null,
         // results
         resultExternalRef: null,
         resultComment: null
@@ -241,21 +244,28 @@ const analysisStoreObjectDataFixture: AnalysisStoreState = {
       {
         id: 51,
         analysisTypeId: 9,
+        doneBy: '93025486-349f-4e48-9605-7e8d34d7ef51',
+        doneDate: '2017-06-22T12:22:06+00:00',
+        responsible: '93025486-349f-4e48-9605-7e8d34d7ef51',
         registeredBy: '93025486-349f-4e48-9605-7e8d34d7ef51',
         registeredDate: '2017-06-20T10:50:34+00:00',
         objectId: '12080e3e-2ca2-41b1-9d4a-4d72e292dcd8',
         affectedThing: '12080e3e-2ca2-41b1-9d4a-4d72e292dcd8',
-        objectType: 'collection',
+        affectedType: 'collection',
         partOf: 1,
         type: 'Analysis',
-        uuid: '12080e3e-2ca2-41b1-9d4a-4d72e292dcd8',
-        museumId: 99,
-        museumNo: 'MusN11',
-        term: 'Solsikke',
-        collection: 8,
-        materials: [],
-        locations: [],
-        coordinates: []
+        objectData: {
+          id: 56,
+          objectType: 'collection',
+          uuid: '12080e3e-2ca2-41b1-9d4a-4d72e292dcd8',
+          museumId: 99,
+          museumNo: 'MusN11',
+          term: 'Solsikke',
+          collection: 8,
+          materials: [],
+          locations: [],
+          coordinates: []
+        }
       }
     ],
     reason: '2',
@@ -287,43 +297,54 @@ const analysisStoreSampleDataFixture: AnalysisStoreState = {
       {
         id: 51,
         analysisTypeId: 15,
+        doneBy: '93025486-349f-4e48-9605-7e8d34d7ef51',
+        doneDate: '2017-06-22T12:22:06+00:00',
+        responsible: '93025486-349f-4e48-9605-7e8d34d7ef51',
         registeredBy: '93025486-349f-4e48-9605-7e8d34d7ef51',
         registeredDate: '2017-06-22T12:22:06+00:00',
-        objectId: 'c71a4198-0063-4bc2-9a48-8b1395f206b3',
         affectedThing: 'c71a4198-0063-4bc2-9a48-8b1395f206b3',
-        objectType: 'sample',
+        affectedType: 'sample',
         partOf: 22,
         type: 'Analysis',
-        originatedObjectUuid: '12080e3e-2ca2-41b1-9d4a-4d72e292dcd8',
-        parentObject: {
-          objectId: '12080e3e-2ca2-41b1-9d4a-4d72e292dcd8',
-          objectType: 'collection'
-        },
-        isExtracted: true,
-        museumId: 99,
-        status: 1,
-        sampleNum: 1,
-        sampleId: 'prøveId',
-        sampleTypeId: 12,
-        leftoverSample: 1,
-        registeredStamp: {
-          user: '93025486-349f-4e48-9605-7e8d34d7ef51',
-          date: '2017-06-22T12:20:49+00:00',
-          name: 'Ola Nordmann'
-        },
-        isDeleted: false,
-        doneByStamp: { name: null },
-        responsible: { name: null },
-        updatedStamp: { name: null },
-        uuid: '12080e3e-2ca2-41b1-9d4a-4d72e292dcd8',
-        museumNo: 'MusN11',
-        term: 'Solsikke',
-        collection: 8,
-        materials: [],
-        locations: [],
-        coordinates: [],
-        sampleType: 'Tissue',
-        sampleSubType: 'Bone'
+        sampleData: {
+          sampleSubType: '',
+          registeredDate: '2017-06-22T12:20:49+00:00',
+          hasAnalyse: false,
+          id: '',
+          doneBy: '93025486-349f-4e48-9605-7e8d34d7ef51',
+          date: '',
+          details: '',
+          breadcrumb: [],
+          objectId: 'c71a4198-0063-4bc2-9a48-8b1395f206b3',
+          originatedObjectUuid: '12080e3e-2ca2-41b1-9d4a-4d72e292dcd8',
+          parentObject: {
+            objectId: '12080e3e-2ca2-41b1-9d4a-4d72e292dcd8',
+            objectType: 'collection'
+          },
+          isExtracted: true,
+          museumId: 99,
+          status: 1,
+          sampleNum: 1,
+          sampleId: 'prøveId',
+          sampleTypeId: 12,
+          leftoverSample: 1,
+          registeredStamp: {
+            user: '93025486-349f-4e48-9605-7e8d34d7ef51',
+            date: '2017-06-22T12:20:49+00:00',
+            name: 'Ola Nordmann'
+          },
+          isDeleted: false,
+          doneByStamp: { user: '', date: '' },
+          responsible: '93025486-349f-4e48-9605-7e8d34d7ef51',
+          updatedStamp: { user: '', date: '' },
+          uuid: '12080e3e-2ca2-41b1-9d4a-4d72e292dcd8',
+          museumNo: 'MusN11',
+          term: 'Solsikke',
+          collection: 8,
+          materials: [],
+          locations: [],
+          coordinates: []
+        }
       }
     ],
     reason: '2',
@@ -341,10 +362,10 @@ const expectedTemplateRowForObject: ResultExchangeTemplates = {
   analysisId: event.id,
   // object
   objectId: event.affectedThing,
-  museumNo: event.museumNo || null,
-  subNo: event.subNo || null,
-  arkFindingNo: event.arkFindingNo || null,
-  term: event.term || null,
+  museumNo: event.objectData ? event.objectData.museumNo : null,
+  subNo: event.objectData ? event.objectData.subNo || null : null,
+  arkFindingNo: event.objectData ? event.objectData.arkFindingNo || null : null,
+  term: event.objectData ? event.objectData.term : null,
   // sample
   sampleObjectId: null,
   sampleNum: null,

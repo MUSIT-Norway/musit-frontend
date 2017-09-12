@@ -8,10 +8,6 @@ import { appSession } from '../../../../testutils/sampleDataForTest';
 import { FormElement } from '../../../../forms/components';
 import StatefulActorSuggest from '../../components/StatefulActorSuggest';
 
-declare var describe: any;
-declare var it: any;
-declare var expect: any;
-
 const restriction = {
   reason: 'Initial reason',
   expirationDate: '2017-08-21T08:17:03+00:00',

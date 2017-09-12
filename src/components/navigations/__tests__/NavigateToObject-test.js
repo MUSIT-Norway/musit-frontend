@@ -7,10 +7,6 @@ import { shallowToJson } from 'enzyme-to-json';
 import { appSession } from '../../../testutils/sampleDataForTest';
 import sinon from 'sinon';
 
-declare var describe: any;
-declare var it: any;
-declare var expect: any;
-
 describe('NavigateToObject', () => {
   it('should render component', () => {
     const history = sinon.spy();

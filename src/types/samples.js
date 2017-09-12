@@ -81,4 +81,4 @@ export type SampleStatusData = {
 
 export type SampleStatus = SampleStatusData[];
 
-export type SampleDateExtended = { sampleType?: SampleType } & SampleData;
+export type SampleDataExtended = { sampleType?: SampleType } & SampleData;

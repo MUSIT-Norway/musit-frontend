@@ -1,14 +1,15 @@
 // @flow
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import Analysis from '../../../models/analysis';
+import { simpleGet } from '../../../shared/RxAjax';
 
-export const getAnalysisTypes$: Subject<*> = createAction('getAnalysisTypes$').switchMap(
-  Analysis.getAnalysisTypes()
-);
+export const getAnalysisTypes$: Observable<*> = createAction(
+  'getAnalysisTypes$'
+).switchMap(Analysis.getAnalysisTypes(simpleGet));
 
 type Actions = {
-  getAnalysisTypes$: Subject<*>
+  getAnalysisTypes$: Observable<*>
 };
 
 export const reducer$ = (actions: Actions) =>
@@ -20,10 +21,6 @@ export const reducer$ = (actions: Actions) =>
   );
 
 export const store$ = (actions$: Actions = { getAnalysisTypes$ }) =>
-  createStore(
-    'analysisTypeStore',
-    reducer$(actions$),
-    Observable.of({ analysisTypes: [] })
-  );
+  createStore('analysisTypeStore', reducer$(actions$), { analysisTypes: [] });
 
 export default store$();

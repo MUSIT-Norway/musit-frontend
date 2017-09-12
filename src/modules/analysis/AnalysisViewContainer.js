@@ -1,9 +1,11 @@
 // @flow
+import { Observable } from 'rxjs';
 import inject from 'react-rxjs/dist/RxInject';
-import PropTypes from 'prop-types';
 import AnalysisViewComponent from './AnalysisViewComponent';
-import { loadPredefinedTypes } from '../../stores/predefined';
-import flowRight from 'lodash/flowRight';
+import type { Props as AnanlysisProps } from './AnalysisViewComponent';
+import predefined$ from '../../stores/predefined';
+import { loadCustomPredefinedTypes } from '../../stores/predefinedLoader';
+import appSession$ from '../../stores/appSession';
 import lifeCycle from '../../shared/lifeCycle';
 import store$, {
   getAnalysis$,
@@ -22,50 +24,38 @@ import {
   getAnalysisTypeTerm,
   getLabPlaceText,
   getStatusText,
-  getExtraDescriptionAttributesWithValue,
-  getAnalysisObjects
+  getExtraDescriptionAttributesWithValue
 } from './shared/getters';
 import { onUnmount } from './shared/formProps';
-import type { AppSession } from '../../types/appSession';
-import type { Predefined } from '../../types/predefined';
-import type { Store } from './shared/storeType';
-import type { FormData } from './shared/formType';
 import type { Field } from '../../forms/form';
-import type { FormValue } from '../../models/analysis/analysisForm';
 import type { History } from '../../types/Routes';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { I18n } from 'react-i18nify';
 import { isRestrictionValidForCancellation } from './shared/formProps';
 
-const { form$, ...formActions } = analysisForm;
+const { form$, loadForm$, clearForm$ } = analysisForm;
 
-const data = {
-  appSession$: { type: PropTypes.object.isRequired },
-  predefined$: { type: PropTypes.object.isRequired },
-  store$,
-  form$
-};
-
-const commands = {
-  toggleCancelDialog$,
-  getAnalysis$,
-  updateAnalysis$,
-  updateRestriction$,
-  clearStore$,
-  ...formActions
-};
+function storeFactory() {
+  return Observable.combineLatest(
+    appSession$,
+    predefined$,
+    store$,
+    form$,
+    (appSession, predefined, store, form) => ({
+      appSession,
+      predefined,
+      store,
+      form
+    })
+  );
+}
 
 type UpstreamProps = {
-  store: Store,
   match: { params: { analysisId: string } },
-  appSession: AppSession,
-  predefined: Predefined,
-  form: FormData,
-  history: History,
-  updateAnalysis: Function
+  history: History
 };
 
-export const props = (props: UpstreamProps) => {
+export function props(props: *, upstream: UpstreamProps): AnanlysisProps {
   const analysisType = getAnalysisType(
     parseInt(props.store.analysis ? props.store.analysis.analysisTypeId : null, 10),
     props.predefined.analysisTypes
@@ -78,19 +68,29 @@ export const props = (props: UpstreamProps) => {
     props.appSession.language
   );
 
-  const extraDescriptionAttributes = analysisType &&
-    analysisType.extraDescriptionAttributes
-    ? analysisType.extraDescriptionAttributes
-    : [];
+  const extraDescriptionAttributes =
+    analysisType && analysisType.extraDescriptionAttributes
+      ? analysisType.extraDescriptionAttributes
+      : [];
 
-  const hasRestrictions =
+  const hasRestrictions = !!(
     props.form.restrictions &&
     props.store.analysis &&
     props.store.analysis.restriction &&
-    !props.store.analysis.restriction.cancelledStamp;
+    !props.store.analysis.restriction.cancelledStamp
+  );
 
   return {
     ...props,
+    ...upstream,
+    loadingAnalysis: !props.store.analysis,
+    getAnalysis: getAnalysis$.next.bind(getAnalysis$),
+    loadForm: loadForm$.next.bind(loadForm$),
+    clearForm: clearForm$.next.bind(clearForm$),
+    clearStore: clearStore$.next.bind(clearStore$),
+    toggleCancelDialog: toggleCancelDialog$.next.bind(toggleCancelDialog$),
+    updateAnalysis: updateAnalysis$.next.bind(updateAnalysis$),
+    updateRestriction: updateRestriction$.next.bind(updateRestriction$),
     isRestrictionValidForCancellation: isRestrictionValidForCancellation(
       props.store.analysis && props.store.analysis.restriction
     ),
@@ -116,27 +116,28 @@ export const props = (props: UpstreamProps) => {
       props.predefined.analysisLabList,
       props.form.orgId.value
     ),
-    objects: getAnalysisObjects(props.form),
+    objects: props.form.events.value || [],
     clickEdit: () => {
-      props.history.push(
+      upstream.history.push(
         Config.magasin.urls.client.analysis.editAnalysis(
           props.appSession,
-          props.match.params.analysisId
+          upstream.match.params.analysisId
         )
       );
     },
     cancelRestriction: () => {
-      props.updateAnalysis({
+      updateAnalysis$.next({
         id: props.store.analysis ? props.store.analysis.id : null,
         museumId: props.appSession.museumId,
         data: {
           ...props.store.analysis,
-          objects: props.store.analysis && props.store.analysis.events
-            ? props.store.analysis.events.map(e => ({
-                objectId: e.affectedThing,
-                objectType: e.affectedType
-              }))
-            : []
+          objects:
+            props.store.analysis && props.store.analysis.events
+              ? props.store.analysis.events.map(e => ({
+                  objectId: e.affectedThing,
+                  objectType: e.affectedType
+                }))
+              : []
         },
         token: props.appSession.accessToken,
         callback: {
@@ -157,24 +158,9 @@ export const props = (props: UpstreamProps) => {
       });
     }
   };
-};
+}
 
-type OnMountProps = {
-  loadForm: (fields: Array<FormValue>) => void,
-  setLoading: () => void,
-  match: { params: { analysisId?: string } },
-  appSession: AppSession,
-  predefined: Predefined,
-  getAnalysis: (params: {
-    id: ?string,
-    sampleTypes: any,
-    museumId: number,
-    collectionId: string,
-    token: string
-  }) => void
-};
-
-export const onMount = (props: OnMountProps) => {
+export const onMount = (props: AnanlysisProps) => {
   props.getAnalysis({
     id: props.match.params.analysisId,
     sampleTypes: props.predefined.sampleTypes,
@@ -184,14 +170,8 @@ export const onMount = (props: OnMountProps) => {
   });
 };
 
-type OnPropsProps = {
-  loadForm: (fields: Array<FormValue>) => void,
-  store: Store,
-  form: FormData
-};
-
 export const onReceiveProps = (fieldsArray: Array<Field<any>>) => (
-  props: OnPropsProps
+  props: AnanlysisProps
 ) => {
   if (props.store.analysis && !props.form.analysisTypeId.value) {
     props.loadForm(Analysis.fromJsonToForm(props.store.analysis, fieldsArray));
@@ -204,6 +184,8 @@ const MountableAnalysisViewComponent = lifeCycle({
   onUnmount
 })(AnalysisViewComponent);
 
-export default flowRight([inject(data, commands, props), loadPredefinedTypes])(
-  MountableAnalysisViewComponent
+export default loadCustomPredefinedTypes(
+  predefined$,
+  appSession$,
+  inject(storeFactory, props)(MountableAnalysisViewComponent)
 );

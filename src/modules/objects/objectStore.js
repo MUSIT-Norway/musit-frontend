@@ -1,12 +1,24 @@
 // @flow
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
+import type { Reducer } from 'react-rxjs/dist/RxStore';
 import { Observable, Subject } from 'rxjs';
 import MusitObject from '../../models/object';
 import Sample from '../../models/sample';
 import Event from '../../models/event';
+import type { ObjectData } from '../../types/object';
+import { simpleGet, simplePost } from '../../shared/RxAjax';
 
-export const initialState = {
-  objectData: {},
+type State = {
+  objectData: ?ObjectData,
+  events: ?Array<*>,
+  samples: ?Array<*>,
+  loadingObjectData: boolean,
+  loadingSamples: boolean,
+  loadingEvents: boolean
+};
+
+export const initialState: State = {
+  objectData: null,
   events: [],
   samples: [],
   loadingObjectData: false,
@@ -14,24 +26,26 @@ export const initialState = {
   loadingSamples: false
 };
 
-const setLoading$: Subject<*> = createAction('setLoading');
+type Flag = { [string]: boolean };
+
+const setLoading$: Subject<Flag> = new Subject();
 
 const flagLoading = s => () => setLoading$.next(s);
 
-export const loadObject$: Subject<*> = createAction('loadObject$')
+export const loadObject$: Observable<ObjectData> = createAction('loadObject$')
   .do(flagLoading({ loadingObjectData: true }))
-  .switchMap(MusitObject.getObjectWithCurrentLocation());
+  .switchMap(MusitObject.getObjectWithCurrentLocation(simpleGet));
 
-export const loadSampleEvents$: Subject<*> = createAction('loadSampleEvents$')
+export const loadSampleEvents$: Observable<*> = createAction('loadSampleEvents$')
   .do(flagLoading({ loadingSamples: true }))
   .switchMap(params => {
-    return Sample.loadSampleDataForObject()(params).flatMap(samples => {
+    return Sample.loadSampleDataForObject(simpleGet)(params).flatMap(samples => {
       if (!samples || samples.length === 0) {
         return Observable.of([]);
       }
       return Observable.forkJoin(
         samples.map(sample => {
-          return MusitObject.getObjectLocation()({
+          return MusitObject.getObjectLocation(simpleGet)({
             ...params,
             objectType: 'sample',
             objectId: sample.objectId
@@ -41,23 +55,23 @@ export const loadSampleEvents$: Subject<*> = createAction('loadSampleEvents$')
     });
   });
 
-export const loadMoveAndAnalysisEvents$: Subject<*> = createAction(
+export const loadMoveAndAnalysisEvents$: Observable<*> = createAction(
   'loadMoveAndAnalysisEvents$'
 )
   .do(flagLoading({ loadingEvents: true }))
-  .switchMap(Event.getAnalysesAndMoves());
+  .switchMap(Event.getAnalysesAndMoves(simpleGet, simplePost));
 
-export const clearStore$: Subject<*> = createAction('clearStore$');
+export const clearStore$: Observable<void> = createAction('clearStore$');
 
 type Actions = {
-  loadSampleEvents$: Subject<*>,
-  loadMoveAndAnalysisEvents$: Subject<*>,
-  loadObject$: Subject<*>,
-  clearStore$: Subject<*>,
-  setLoading$: Subject<*>
+  loadSampleEvents$: Observable<*>,
+  loadMoveAndAnalysisEvents$: Observable<*>,
+  loadObject$: Observable<*>,
+  clearStore$: Observable<*>,
+  setLoading$: Subject<Flag>
 };
 
-const reducer$ = (actions: Actions) =>
+const reducer$ = (actions: Actions): Observable<Reducer<State>> =>
   Observable.merge(
     actions.clearStore$.map(() => () => initialState),
     actions.setLoading$.map(loading => state => ({ ...state, ...loading })),
@@ -86,6 +100,6 @@ export const store$ = (
     clearStore$,
     setLoading$
   }
-) => createStore('objectStore$', reducer$(actions), Observable.of(initialState));
+) => createStore('objectStore$', reducer$(actions), initialState);
 
 export default store$();

@@ -13,14 +13,13 @@ export default props => (
       <ul>
         <li>User name, full name and email address at your university.</li>
         <li>
-          Information about which access a user has, and the changes made in the system by the user.
+          Information about which access a user has, and the changes made in the system by
+          the user.
         </li>
       </ul>
     </Modal.Body>
     <Modal.Footer>
-      <Button onClick={props.hideModal}>
-        Close
-      </Button>
+      <Button onClick={props.hideModal}>Close</Button>
     </Modal.Footer>
   </Modal>
 );

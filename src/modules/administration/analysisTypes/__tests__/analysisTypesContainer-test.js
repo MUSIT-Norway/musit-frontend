@@ -3,10 +3,6 @@ import { onMount } from '../analysisTypesContainer';
 import sinon from 'sinon';
 import { appSession } from './../../../../testutils/sampleDataForTest';
 
-declare var describe: any;
-declare var it: any;
-declare var expect: any;
-
 describe('analysisTypesContainer', () => {
   it('should have working onMount', () => {
     const loadAnalysisTypes = sinon.spy();

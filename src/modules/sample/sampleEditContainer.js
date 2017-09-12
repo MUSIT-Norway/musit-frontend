@@ -1,4 +1,4 @@
-import inject from 'react-rxjs/dist/RxInject';
+import { RxInjectLegacy as inject } from 'react-rxjs';
 import sampleForm from './sampleEditForm';
 import SampleFormComponent from './SampleFormComponent';
 import PropTypes from 'prop-types';
@@ -15,7 +15,7 @@ import {
   getSampleTypeWithLanguage
 } from './sampleViewContainer';
 import { sampleProps, saveSample, callback, onComplete } from './shared/submit';
-import { loadPredefinedTypes } from '../../stores/predefined';
+import { loadPredefinedTypes } from '../../stores/predefinedLoader';
 import type { SampleData } from '../../types/samples';
 import type { DomEvent } from '../../types/dom';
 
@@ -46,8 +46,8 @@ const props = (props, ajaxPut = simplePut) => {
     objectData: [
       {
         ...props.objectStore.objectData,
-        derivedFrom: props.store.sample &&
-          props.store.sample.parentObject.sampleOrObjectData
+        derivedFrom:
+          props.store.sample && props.store.sample.parentObject.sampleOrObjectData
       }
     ],
     clickSave: (e: DomEvent) => {

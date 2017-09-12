@@ -4,10 +4,6 @@ import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import AnalysisAddComponent from '../AnalysisTypesComponent';
 
-declare var describe: any;
-declare var it: any;
-declare var expect: any;
-
 const analysisTypes = [
   {
     category: 8,

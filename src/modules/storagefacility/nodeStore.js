@@ -1,8 +1,9 @@
 // @flow
 import MusitNode from '../../models/node';
 import type { Node } from '../../models/node';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
+import { simpleGet } from '../../shared/RxAjax';
 
 const initialState = {
   unit: {
@@ -13,16 +14,16 @@ const initialState = {
   loaded: false
 };
 
-export const clearNode$: Subject<*> = createAction('clearNode$');
-export const loadNode$: Subject<Node> = createAction('loadRootNode$').switchMap(
-  MusitNode.getNodeWithUpdatedBy()
+export const clearNode$: Observable<void> = createAction('clearNode$');
+export const loadNode$: Observable<Node> = createAction('loadRootNode$').switchMap(
+  MusitNode.getNodeWithUpdatedBy(simpleGet)
 );
-export const updateState$: Subject<Node> = createAction('updateState$');
+export const updateState$: Observable<Node> = createAction('updateState$');
 
 type Actions = {
-  loadNode$: Subject<*>,
-  clearNode$: Subject<*>,
-  updateState$: Subject<*>
+  loadNode$: Observable<Node>,
+  clearNode$: Observable<void>,
+  updateState$: Observable<Node>
 };
 
 export const reducer$ = (actions: Actions) =>
@@ -36,6 +37,6 @@ export const reducer$ = (actions: Actions) =>
   );
 
 export const store$ = (actions$: Actions = { clearNode$, updateState$, loadNode$ }) =>
-  createStore('node', reducer$(actions$), Observable.of(initialState));
+  createStore('node', reducer$(actions$), initialState);
 
 export default store$();

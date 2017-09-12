@@ -8,10 +8,6 @@ import DatePicker from '../../../../components/DatePicker';
 import { formatISOString } from '../../../../shared/util';
 import StatefulActorSuggest from '../../components/StatefulActorSuggest';
 
-declare var describe: any;
-declare var it: any;
-declare var expect: any;
-
 describe('AddRestriction', () => {
   describe('reason', () => {
     const restriction = {
@@ -85,7 +81,9 @@ describe('AddRestriction', () => {
         />
       );
 
-      Comp.find(DatePicker).props().onClear();
+      Comp.find(DatePicker)
+        .props()
+        .onClear();
 
       expect(updateRestriction.calledOnce).toBe(true);
       expect(updateRestriction.getCall(0).args[0]).toEqual({
@@ -105,7 +103,9 @@ describe('AddRestriction', () => {
       );
 
       const date = formatISOString(new Date());
-      Comp.find(DatePicker).props().onChange(date);
+      Comp.find(DatePicker)
+        .props()
+        .onChange(date);
 
       expect(updateRestriction.calledOnce).toBe(true);
       expect(updateRestriction.getCall(0).args[0]).toEqual({
@@ -124,7 +124,9 @@ describe('AddRestriction', () => {
         />
       );
 
-      Comp.find(DatePicker).props().onChange('Invalid date');
+      Comp.find(DatePicker)
+        .props()
+        .onChange('Invalid date');
 
       expect(updateRestriction.notCalled).toBe(true);
     });
@@ -158,7 +160,9 @@ describe('AddRestriction', () => {
         />
       );
 
-      Comp.find('#restrictionCaseNumbers').props().onChange({ target: { value: '' } });
+      Comp.find('#restrictionCaseNumbers')
+        .props()
+        .onChange({ target: { value: '' } });
       expect(Comp.find('#restrictionCaseNumbers').props().value).toEqual('');
 
       expect(updateRestriction.calledOnce).toBe(true);
@@ -226,7 +230,9 @@ describe('AddRestriction', () => {
         applicationId: 'a50da1c5-9359-4b42-b94a-8faa04ff95cd'
       };
 
-      Comp.find(StatefulActorSuggest).props().onChange(actor.applicationId);
+      Comp.find(StatefulActorSuggest)
+        .props()
+        .onChange(actor.applicationId);
 
       expect(updateRestriction.calledOnce).toBe(true);
       expect(updateRestriction.getCall(0).args[0]).toEqual({

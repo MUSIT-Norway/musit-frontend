@@ -13,5 +13,9 @@ export default class ScrollToTop extends React.Component {
 }
 
 export function scrollToTop(Component) {
-  return props => <ScrollToTop><Component {...props} /></ScrollToTop>;
+  return props => (
+    <ScrollToTop>
+      <Component {...props} />
+    </ScrollToTop>
+  );
 }

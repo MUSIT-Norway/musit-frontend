@@ -2,13 +2,8 @@ import React from 'react';
 import { onMount, onReceiveProps, props } from '../AnalysisViewContainer';
 import { onUnmount } from '../shared/formProps';
 import { fieldsArray } from '../analysisForm';
-import type { Field } from 'forms/form';
 import sinon from 'sinon';
 import { appSession, analysis } from '../../../testutils/sampleDataForTest';
-
-declare var describe: any;
-declare var it: any;
-declare var expect: any;
 
 describe('AnalysisViewContainer', () => {
   describe('onMount', () => {
@@ -58,11 +53,13 @@ describe('AnalysisViewContainer', () => {
         form,
         store,
         appSession,
-        predefined,
+        predefined
+      };
+      const u = {
         history: { push },
         match: { params }
       };
-      const viewProps = props(p);
+      const viewProps = props(p, u);
       expect(viewProps.clickEdit).not.toBe(null);
       viewProps.clickEdit();
       expect(push.getCall(0).args[0]).toEqual(

@@ -23,15 +23,20 @@ type EventTypeProps = {
 
 //TODO move it to utils
 function toPathStr(pathArr, crumb = 0) {
-  return pathArr.slice(crumb).map(o => o.name).join('  /  ');
+  return pathArr
+    .slice(crumb)
+    .map(o => o.name)
+    .join('  /  ');
 }
 
 function getPathDotsAndToolTip(pathArr) {
-  return pathArr.length > 2
-    ? <div title={toPathStr(pathArr)} data-toggle="popover" data-trigger="hover">
-        {'.../' + toPathStr(pathArr, -3)}
-      </div>
-    : toPathStr(pathArr);
+  return pathArr.length > 2 ? (
+    <div title={toPathStr(pathArr)} data-toggle="popover" data-trigger="hover">
+      {'.../' + toPathStr(pathArr, -3)}
+    </div>
+  ) : (
+    toPathStr(pathArr)
+  );
 }
 
 function getKeyData(
@@ -105,19 +110,25 @@ export const EventTableComponent = ({
           events.map((event, i) => (
             <Tr key={i} onClick={() => onClick(event)}>
               <Td column="doneDate">
-                {event.type && event.type === 'MoveObject'
-                  ? event.doneDate
-                  : event.registeredDate}
+                {event.type && event.type === 'MoveObject' ? (
+                  event.doneDate
+                ) : (
+                  event.registeredDate
+                )}
               </Td>
               <Td column="type">
-                {event.type
-                  ? I18n.t(`musit.objects.objectsView.eventTypes.${event.type}`)
-                  : ''}
+                {event.type ? (
+                  I18n.t(`musit.objects.objectsView.eventTypes.${event.type}`)
+                ) : (
+                  ''
+                )}
               </Td>
               <Td column="doneBy">
-                {event.type && event.type === 'MoveObject'
-                  ? event.doneBy
-                  : event.registeredBy}
+                {event.type && event.type === 'MoveObject' ? (
+                  event.doneBy
+                ) : (
+                  event.registeredBy
+                )}
               </Td>
               <Td column="keyData">
                 {getKeyData(event, analysisTypes.analysisTypes, sampleTypes, appSession)}

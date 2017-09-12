@@ -24,10 +24,11 @@ export default function CheckBoxInput({
 }: FieldInputProps) {
   return (
     <div>
-      {title !== '' &&
+      {title !== '' && (
         <label className="control-label col-md-2" htmlFor={field.name}>
           {title}
-        </label>}
+        </label>
+      )}
       <div className="col-md-3">
         <div className="btn-group" data-toggle="buttons">
           <label className={`btn btn-default${field.rawValue === '3' ? ' active' : ''}`}>
@@ -36,8 +37,7 @@ export default function CheckBoxInput({
               value={yesValue}
               checked={field.rawValue === yesValue}
               onChange={e => onChange({ name: field.name, rawValue: e.target.value })}
-            />
-            {' '}
+            />{' '}
             {I18n.t('musit.texts.yes')}
           </label>
           <label className={`btn btn-default${field.rawValue === '2' ? ' active' : ''}`}>
@@ -46,8 +46,7 @@ export default function CheckBoxInput({
               value={noValue}
               checked={field.rawValue === noValue}
               onChange={e => onChange({ name: field.name, rawValue: e.target.value })}
-            />
-            {' '}
+            />{' '}
             {I18n.t('musit.texts.no')}
           </label>
         </div>

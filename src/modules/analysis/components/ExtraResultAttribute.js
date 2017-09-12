@@ -26,34 +26,41 @@ export default function ExtraResultAttribute(props: Props) {
       labelWidth={props.labelWidth}
       elementWidth={props.elementWidth}
     >
-      {props.type === 'Size'
-        ? <SizeInput
-            attrKey={props.id}
-            attribute={typeof props.value !== 'string' ? props.value || {} : {}}
-            allowedValues={props.allowedValues}
-            onChange={props.onChange}
-          />
-        : <NormalInput {...props} />}
+      {props.type === 'Size' ? (
+        <SizeInput
+          attrKey={props.id}
+          attribute={typeof props.value !== 'string' ? props.value || {} : {}}
+          allowedValues={props.allowedValues}
+          onChange={props.onChange}
+        />
+      ) : (
+        <NormalInput {...props} />
+      )}
     </FormElement>
   );
 }
 
 function NormalInput(props) {
-  return props.allowedValues
-    ? <select
-        className="form-control"
-        id={props.id}
-        onChange={e => props.onChange(e.target.value)}
-        defaultValue={props.value || ''}
-      >
-        <option value="">{I18n.t('musit.texts.chooseValue')}</option>
-        {(props.allowedValues || [])
-          .map((value, i) => <option key={i} value={value}>{value}</option>)}
-      </select>
-    : <input
-        className="form-control"
-        id={props.id}
-        value={props.value || ''}
-        onChange={e => props.onChange(e.target.value)}
-      />;
+  return props.allowedValues ? (
+    <select
+      className="form-control"
+      id={props.id}
+      onChange={e => props.onChange(e.target.value)}
+      defaultValue={props.value || ''}
+    >
+      <option value="">{I18n.t('musit.texts.chooseValue')}</option>
+      {(props.allowedValues || []).map((value, i) => (
+        <option key={i} value={value}>
+          {value}
+        </option>
+      ))}
+    </select>
+  ) : (
+    <input
+      className="form-control"
+      id={props.id}
+      value={props.value || ''}
+      onChange={e => props.onChange(e.target.value)}
+    />
+  );
 }

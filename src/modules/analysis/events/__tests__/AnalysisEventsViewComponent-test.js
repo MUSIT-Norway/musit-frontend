@@ -5,10 +5,6 @@ import sinon from 'sinon';
 import AnalysisEventTableComponent from '../AnalysisEventsTableComponent';
 import AnalysisEventsViewComponent from '../AnalysisEventsViewComponent';
 
-declare var describe: any;
-declare var it: any;
-declare var expect: any;
-
 describe('AnalysisEventsViewComponent', () => {
   it('should render AnalysisEventTableComponent when store is loaded', () => {
     const appSession = sinon.spy();

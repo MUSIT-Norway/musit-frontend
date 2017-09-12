@@ -8,7 +8,7 @@ import EnglishTranslation from './LoginComponent_en.html.jsx';
 import Logos from '../../components/logos/Logos';
 import LoginButton from './LoginButton';
 import TermsAndConditions from './TermsAndConditions';
-import inject from 'react-rxjs/dist/RxInject';
+import { RxInjectLegacy as inject } from 'react-rxjs';
 
 export class LoginComponent extends React.Component {
   static propTypes = {
@@ -33,9 +33,8 @@ export class LoginComponent extends React.Component {
   }
 
   render() {
-    const Translated = this.props.locale() === 'no'
-      ? NorwegianTranslation
-      : EnglishTranslation;
+    const Translated =
+      this.props.locale() === 'no' ? NorwegianTranslation : EnglishTranslation;
     return (
       <div>
         <main>
@@ -43,12 +42,11 @@ export class LoginComponent extends React.Component {
             <Row className="row-centered">
               <div className="welcomePanel">
                 <div>
-                  {!this.props.user &&
+                  {!this.props.user && (
                     <LoginButton>
-                      <span className="buttonText">
-                        {I18n.t('musit.login')}
-                      </span>
-                    </LoginButton>}
+                      <span className="buttonText">{I18n.t('musit.login')}</span>
+                    </LoginButton>
+                  )}
                   <div className="title">
                     <Translated {...this.props} showModal={this.showModal} />
                   </div>

@@ -24,12 +24,9 @@ type Props = {
 const AnalysisEventsViewComponent = (props: Props) => (
   <div className="container">
     <div className="page-header">
-      <h1>
-        {I18n.t('musit.analysis.analysis')}
-      </h1>
+      <h1>{I18n.t('musit.analysis.analysis')}</h1>
     </div>
     <Loader loaded={!props.analysisEventsStore.loading}>
-
       <div className="row">
         <div className="col-md-12" style={{ float: 'right', width: '400px' }}>
           <MusitField
@@ -52,7 +49,6 @@ const AnalysisEventsViewComponent = (props: Props) => (
         </div>
       </div>
     </Loader>
-
   </div>
 );
 

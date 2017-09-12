@@ -4,7 +4,7 @@ import { mapToBackend } from './mapper/control/to_backend';
 import { simplePost, simpleGet } from '../shared/RxAjax';
 import MusitActor from './actor';
 import uniq from 'lodash/uniq';
-import type { Callback, AjaxGet, AjaxPost } from './types/ajax';
+import type { Callback, AjaxGet, AjaxPost } from '../types/ajax';
 import { Observable } from 'rxjs';
 
 type ControlType = {
@@ -73,7 +73,9 @@ Control.addControl = (ajaxPost = simplePost) => ({
   callback
 }) => {
   const data = mapToBackend(controlData, observations, nodeId);
-  const url = `${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/${nodeId}/controls`;
+  const url = `${Config.magasin.urls.api.storagefacility.baseUrl(
+    museumId
+  )}/${nodeId}/controls`;
   return ajaxPost(url, data, token, callback);
 };
 
@@ -84,10 +86,12 @@ Control.getControl = (ajaxGet = simpleGet, ajaxPost = simplePost) => ({
   token,
   callback
 }) => {
-  const url = `${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/${nodeId}/controls/${controlId}`;
+  const url = `${Config.magasin.urls.api.storagefacility.baseUrl(
+    museumId
+  )}/${nodeId}/controls/${controlId}`;
   return ajaxGet(url, token, callback).flatMap(control => {
     if (!control.response) {
-      return { error: 'no response body' };
+      return Observable.empty();
     }
     const actorIds = uniq([
       control.response.doneBy,

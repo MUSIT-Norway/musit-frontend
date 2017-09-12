@@ -1,6 +1,6 @@
 // @flow
-import type { ObjectData } from '../types/object';
-import type { SampleData } from '../types/samples';
+import type { MusitObject } from '../types/object';
+import type { SampleDataExtended } from '../types/samples';
 import type { AnalysisResultTypes } from 'types/analysisResult';
 
 export const isMultipleSelectAttribute = (attributeType: string) =>
@@ -66,6 +66,33 @@ export type Result = {
   [string]: string | number | { value: number, unit: string }
 };
 
+export type AffectedThing = {
+  id: number,
+  affectedThing: string,
+  affectedType: 'collection' | 'sample',
+  analysisTypeId: number,
+  doneBy: string,
+  doneDate: string,
+  note?: ?string,
+  partOf: number,
+  registeredBy: string,
+  registeredDate: string,
+  responsible: string,
+  type: 'Analysis' | 'AnalysisCollection'
+};
+
+export type ObjectInfo = { objectData?: ?MusitObject, sampleData?: ?SampleDataExtended };
+export type AnalysisEvent = AffectedThing &
+  ObjectInfo & {
+    result?: {
+      [string]: string | { value?: string | Array<string> },
+      extRef?: Array<string>,
+      comment?: string
+    },
+    expanded?: boolean
+  };
+
+// Fixme this type is incorrect/incomplete
 export type AnalysisCollection = {
   id: number,
   analysisTypeId: number,
@@ -87,9 +114,7 @@ export type AnalysisCollection = {
   note?: ?string,
   extraAttributes?: { type: string },
   result?: ?Result,
-  events: ?Array<
-    ObjectData & SampleData & { affectedThing: string, affectedType: string }
-  >,
+  events: ?Array<AnalysisEvent>,
   restriction?: ?Restriction,
   reason?: ?string,
   status?: ?number,

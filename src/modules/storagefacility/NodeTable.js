@@ -23,12 +23,8 @@ export default class NodeGrid extends Component {
             <Table responsive hover condensed>
               <thead>
                 <tr>
-                  <th>
-                    {I18n.t('musit.grid.node.nodeName')}
-                  </th>
-                  <th>
-                    {I18n.t('musit.grid.node.nodeType')}
-                  </th>
+                  <th>{I18n.t('musit.grid.node.nodeName')}</th>
+                  <th>{I18n.t('musit.grid.node.nodeType')}</th>
                   <th />
                   <th />
                   <th />
@@ -52,11 +48,9 @@ export default class NodeGrid extends Component {
                           {` ${c.name}`}
                         </a>
                       </td>
+                      <td>{I18n.t(`musit.grid.node.nodeTypeItems.${c.type}`)}</td>
                       <td>
-                        {I18n.t(`musit.grid.node.nodeTypeItems.${c.type}`)}
-                      </td>
-                      <td>
-                        {!isRoot &&
+                        {!isRoot && (
                           <a
                             className="goToEventClick"
                             href=""
@@ -69,10 +63,11 @@ export default class NodeGrid extends Component {
                             )}
                           >
                             <span className="icon icon-musitcontrolobsicon" />
-                          </a>}
+                          </a>
+                        )}
                       </td>
                       <td>
-                        {!isRoot &&
+                        {!isRoot && (
                           <a
                             className="onMoveClick"
                             href=""
@@ -83,10 +78,11 @@ export default class NodeGrid extends Component {
                             title={I18n.t('musit.grid.node.iconTooltip.moveNode')}
                           >
                             <FontAwesome style={{ fontSize: '1.5em' }} name="truck" />
-                          </a>}
+                          </a>
+                        )}
                       </td>
                       <td>
-                        {!isRoot &&
+                        {!isRoot && (
                           <a
                             className="onPickClick"
                             href=""
@@ -96,17 +92,19 @@ export default class NodeGrid extends Component {
                             }}
                             title={I18n.t('musit.grid.node.iconTooltip.addToPickList')}
                           >
-                            {c && this.props.isNodeAdded(c)
-                              ? <FontAwesome
-                                  style={{ fontSize: '1.5em', color: 'Gray' }}
-                                  name="shopping-cart"
-                                />
-                              : <FontAwesome
-                                  style={{ fontSize: '1.5em' }}
-                                  name="shopping-cart"
-                                />}
-
-                          </a>}
+                            {c && this.props.isNodeAdded(c) ? (
+                              <FontAwesome
+                                style={{ fontSize: '1.5em', color: 'Gray' }}
+                                name="shopping-cart"
+                              />
+                            ) : (
+                              <FontAwesome
+                                style={{ fontSize: '1.5em' }}
+                                name="shopping-cart"
+                              />
+                            )}
+                          </a>
+                        )}
                       </td>
                     </tr>
                   );

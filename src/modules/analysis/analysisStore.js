@@ -2,18 +2,38 @@
 import { simpleGet, simplePost, simplePut } from '../../shared/RxAjax';
 import { Observable, Subject } from 'rxjs';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
+import type { Reducer } from 'react-rxjs/dist/RxStore';
 import MusitAnalysis from '../../models/analysis';
 import uniq from 'lodash/uniq';
 import MusitActor from '../../models/actor';
 import MusitObject from '../../models/object';
 import Sample from '../../models/sample';
 import flatten from 'lodash/flatten';
-import type { Callback, AjaxGet, AjaxPost } from '../../models/types/ajax';
-import type { AnalysisCollection } from '../../types/analysis';
+import type { Callback, AjaxGet, AjaxPost } from '../../types/ajax';
+import type {
+  AnalysisCollection,
+  AnalysisType,
+  ObjectInfo,
+  AffectedThing
+} from '../../types/analysis';
+import type { Purposes, Categories, AnalysisLabList } from '../../types/predefined';
 import type { Actor } from '../../types/actor';
 import type { SampleType } from 'types/sample';
 
-const initialState = {
+export type AnalysisStoreState = {
+  analysisTypes?: Array<AnalysisType>,
+  loading?: boolean,
+  purposes?: Purposes,
+  categories?: Categories,
+  analysisLabList?: AnalysisLabList,
+  analysisTypeCategories?: Array<string>,
+  extraDescriptionAttributes?: any,
+  extraResultAttributes?: any,
+  analysis?: ?AnalysisCollection,
+  showRestrictionCancelDialog?: ?boolean
+};
+
+export const initialState: AnalysisStoreState = {
   analysisTypes: [],
   purposes: [],
   categories: {},
@@ -21,20 +41,26 @@ const initialState = {
   loading: false,
   extraDescriptionAttributes: {},
   extraResultAttributes: {},
-  analysisTypeCategories: []
+  analysisTypeCategories: [],
+  analysis: null,
+  showRestrictionCancelDialog: false
 };
 
 export const toggleCancelDialog$: Subject<*> = createAction('toggleCancelDialog$');
 
-const setLoading$: Subject<*> = createAction('setLoading$');
+type Flag = { ['loadingAnalysis']: boolean };
+
+const setLoading$: Subject<Flag> = createAction('setLoading$');
 
 const flagLoading = s => () => setLoading$.next(s);
 
-export const getAnalysisTypes$: Subject<*> = createAction('getAnalysisTypes$').switchMap(
+export const getAnalysisTypes$: Subject<*> = createAction('getAnalysisTypes$');
+const getAnalysisTypesAction$: Observable<*> = getAnalysisTypes$.switchMap(
   MusitAnalysis.getAnalysisTypesForCollection(simpleGet)
 );
 
-export const getAnalysis$: Subject<*> = createAction('getAnalysis$')
+export const getAnalysis$: Subject<*> = createAction('getAnalysis$');
+const getAnalysisAction$: Observable<*> = getAnalysis$
   .do(flagLoading({ loadingAnalysis: true }))
   .switchMap(props =>
     MusitAnalysis.getAnalysisById(simpleGet)(props).flatMap(
@@ -43,34 +69,33 @@ export const getAnalysis$: Subject<*> = createAction('getAnalysis$')
   )
   .do(flagLoading({ loadingAnalysis: false }));
 
-export const updateAnalysis$: Subject<*> = createAction('updateAnalysis$')
+export const updateAnalysis$: Subject<*> = createAction('updateAnalysis$');
+const updateAnalysisAction$: Observable<*> = updateAnalysis$
   .do(flagLoading({ loadingAnalysis: true }))
   .switchMap(MusitAnalysis.editAnalysisEvent(simplePut))
   .do(flagLoading({ loadingAnalysis: false }));
 
 export const updateRestriction$: Subject<*> = createAction('updateRestriction$');
-
 export const updateExtraDescriptionAttribute$: Subject<*> = createAction(
   'updateExtraDescriptionAttribute$'
 );
-
 export const clearStore$: Subject<*> = createAction('clearStore$');
-
 export const updateExtraResultAttribute$: Subject<*> = createAction(
   'updateExtraResultAttribute$'
 );
 
-export const loadPredefinedTypes$: Subject<*> = createAction(
-  'loadPredefinedTypes$'
-).switchMap(props => MusitAnalysis.loadPredefinedTypes(simpleGet)(props));
+export const loadPredefinedTypes$ = createAction('loadPredefinedTypes$');
+const loadPredefinedTypesAction$: Observable<*> = loadPredefinedTypes$.switchMap(props =>
+  MusitAnalysis.loadPredefinedTypes(simpleGet)(props)
+);
 
 type Actions = {
-  setLoading$: Subject<*>,
-  getAnalysis$: Subject<*>,
-  updateAnalysis$: Subject<*>,
+  setLoading$: Subject<Flag>,
+  getAnalysisAction$: Observable<*>,
+  updateAnalysisAction$: Observable<*>,
   updateRestriction$: Subject<*>,
-  getAnalysisTypes$: Subject<*>,
-  loadPredefinedTypes$: Subject<*>,
+  getAnalysisTypesAction$: Observable<*>,
+  loadPredefinedTypesAction$: Observable<*>,
   updateExtraDescriptionAttribute$: Subject<*>,
   updateExtraResultAttribute$: Subject<*>,
   clearStore$: Subject<*>,
@@ -87,7 +112,7 @@ const updateResultAttribute = ({ name, value }) => state => ({
   }
 });
 
-export const reducer$ = (actions: Actions) => {
+export const reducer$ = (actions: Actions): Observable<Reducer<AnalysisStoreState>> => {
   return Observable.merge(
     actions.toggleCancelDialog$.map(() => state => ({
       ...state,
@@ -96,8 +121,8 @@ export const reducer$ = (actions: Actions) => {
     actions.setLoading$.map(loading => state => ({ ...state, ...loading })),
     actions.clearStore$.map(() => () => initialState),
     Observable.merge(
-      actions.getAnalysis$,
-      actions.updateAnalysis$
+      actions.getAnalysisAction$,
+      actions.updateAnalysisAction$
     ).map(analysis => state => ({
       ...state,
       analysis
@@ -109,12 +134,12 @@ export const reducer$ = (actions: Actions) => {
         restriction
       }
     })),
-    actions.getAnalysisTypes$.map(analysisTypes => state => ({
+    actions.getAnalysisTypesAction$.map(analysisTypes => state => ({
       ...state,
       analysisTypes,
       analysisTypeCategories: uniq(analysisTypes.map(a => a.category))
     })),
-    actions.loadPredefinedTypes$.map(predefinedTypes => state => ({
+    actions.loadPredefinedTypesAction$.map(predefinedTypes => state => ({
       ...state,
       categories: predefinedTypes.categories,
       purposes: predefinedTypes.purposes,
@@ -132,17 +157,17 @@ export const reducer$ = (actions: Actions) => {
 export const store$ = (
   actions$: Actions = {
     setLoading$,
-    getAnalysisTypes$,
-    getAnalysis$,
-    updateAnalysis$,
+    getAnalysisTypesAction$,
+    getAnalysisAction$,
+    updateAnalysisAction$,
     updateRestriction$,
-    loadPredefinedTypes$,
+    loadPredefinedTypesAction$,
     updateExtraDescriptionAttribute$,
     updateExtraResultAttribute$,
     clearStore$,
     toggleCancelDialog$
   }
-) => createStore('analysisStore', reducer$(actions$), Observable.of(initialState));
+) => createStore('analysisStore', reducer$(actions$), initialState);
 
 const storeSingleton = store$();
 export default storeSingleton;
@@ -235,8 +260,11 @@ type AjaxParams = {
   sampleTypes: SampleTypes
 };
 
-function getEventObjectDetails(props: AjaxParams, ajaxGet: AjaxGet) {
-  return (event: { affectedThing: string }) => {
+function getEventObjectDetails(
+  props: AjaxParams,
+  ajaxGet: AjaxGet
+): (t: AffectedThing) => Observable<ObjectInfo> {
+  return event => {
     const params = {
       id: event.affectedThing,
       museumId: props.museumId,
@@ -255,20 +283,19 @@ function getEventObjectDetails(props: AjaxParams, ajaxGet: AjaxGet) {
               st => st.sampleTypeId === sample.sampleTypeId
             );
             return {
-              ...sample,
-              ...sampleObjectRes.response,
-              sampleTypeObj: sampleType
+              sampleData: { ...sample, sampleType: sampleType },
+              objectData: sampleObjectRes.response
             };
           });
         });
       }
-      return Observable.of(objRes.response);
+      return Observable.of({ objectData: objRes.response });
     });
   };
 }
 
 export function zipObjectInfoWithEvents(analysis: AnalysisCollection) {
-  return (arrayOfObjectDetails: Array<{ objectId?: string, uuid?: string }>) => {
+  return (arrayOfObjectDetails: Array<ObjectInfo>): AnalysisCollection => {
     const actualValues = arrayOfObjectDetails.filter(a => a);
     if (actualValues.length === 0) {
       return analysis;
@@ -276,7 +303,10 @@ export function zipObjectInfoWithEvents(analysis: AnalysisCollection) {
     const events = analysis.events
       ? analysis.events.map(e => {
           const od = arrayOfObjectDetails.find(objD => {
-            return objD.objectId === e.affectedThing || objD.uuid === e.affectedThing;
+            return (
+              (objD.sampleData && objD.sampleData.objectId === e.affectedThing) ||
+              (objD.objectData && objD.objectData.uuid === e.affectedThing)
+            );
           });
           return od ? { ...od, ...e } : e;
         })
@@ -316,9 +346,10 @@ export function getActorNames(actors: Array<Actor>, analysis: AnalysisCollection
       fieldName: 'restriction_requesterName'
     },
     {
-      id: analysis.restriction && analysis.restriction.cancelledStamp
-        ? analysis.restriction.cancelledStamp.user || ''
-        : '',
+      id:
+        analysis.restriction && analysis.restriction.cancelledStamp
+          ? analysis.restriction.cancelledStamp.user || ''
+          : '',
       fieldName: 'restriction_cancelledByName'
     }
   ]);

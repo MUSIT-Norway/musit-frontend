@@ -54,12 +54,15 @@ export default function AddRestriction(props: Props) {
         value={
           (Array.isArray(props.restriction.caseNumbers) &&
             props.restriction.caseNumbers.join(', ')) ||
-            ''
+          ''
         }
         onChange={e =>
           props.updateRestriction({
             ...props.restriction,
-            caseNumbers: e.target.value.split(',').map(v => v.trim()).filter(v => v)
+            caseNumbers: e.target.value
+              .split(',')
+              .map(v => v.trim())
+              .filter(v => v)
           })}
       />
       <FormElement

@@ -118,14 +118,6 @@ describe('SampleViewContainer', () => {
         subNo: 'Dontcare',
         term: 'Whatsthis'
       };
-      const form = {
-        sampleType: {
-          value: 'Wierd'
-        },
-        sampleSubType: {
-          value: 'Stuff'
-        }
-      };
       const goTo = sinon.spy();
       const preventDefault = sinon.spy();
       const event = {
@@ -141,42 +133,42 @@ describe('SampleViewContainer', () => {
       );
       expect(goTo.getCall(0).args[0].state).toEqual([
         {
-          container: 'Eppendorfrør',
-          description: 'sfsfdsdfsdff',
-          externalId: { source: 'ddddd', value: 'ddff' },
-          isDeleted: false,
-          isExtracted: true,
-          leftoverSample: 2,
-          museumId: 99,
-          museumNo: 'Dontknow',
-          note: 'ddddd',
-          objectId: '1279433c-72cd-41b1-bd01-10f0392ed071',
-          originatedObjectUuid: '12080e3e-2ca2-41b1-9d4a-4d72e292dcd8',
-          parentObject: {
-            objectId: '12080e3e-2ca2-41b1-9d4a-4d72e292dcd8',
-            objectType: 'collection'
-          },
-          registeredStamp: {
-            date: 1496217151121,
-            name: 'Test user',
-            user: 'f7144d5d-732f-487c-b2ef-e895ab5cf163'
-          },
-          sampleId: 'ssdfsdfdfsdf',
-          sampleNum: 1,
-          sampleSubType: null,
-          sampleType: null,
-          sampleTypeId: 2,
-          size: { unit: 'mg', value: 1 },
-          status: 1,
-          statusText: 'test status text',
-          storageMedium: 'Destillert vann',
-          subNo: 'Dontcare',
-          term: 'Whatsthis',
-          treatment: 'DNAdvance Beckman Coulter',
-          updatedStamp: {
-            date: 1496233429479,
-            name: 'Test user',
-            user: 'f7144d5d-732f-487c-b2ef-e895ab5cf163'
+          objectData: { museumNo: 'Dontknow', subNo: 'Dontcare', term: 'Whatsthis' },
+          sampleData: {
+            objectId: '1279433c-72cd-41b1-bd01-10f0392ed071',
+            originatedObjectUuid: '12080e3e-2ca2-41b1-9d4a-4d72e292dcd8',
+            parentObject: {
+              objectId: '12080e3e-2ca2-41b1-9d4a-4d72e292dcd8',
+              objectType: 'collection'
+            },
+            isExtracted: true,
+            museumId: 99,
+            status: 1,
+            statusText: 'test status text',
+            sampleNum: 1,
+            sampleId: 'ssdfsdfdfsdf',
+            externalId: { value: 'ddff', source: 'ddddd' },
+            sampleTypeId: 2,
+            size: { unit: 'mg', value: 1 },
+            container: 'Eppendorfrør',
+            storageMedium: 'Destillert vann',
+            treatment: 'DNAdvance Beckman Coulter',
+            leftoverSample: 2,
+            description: 'sfsfdsdfsdff',
+            note: 'ddddd',
+            registeredStamp: {
+              user: 'f7144d5d-732f-487c-b2ef-e895ab5cf163',
+              name: 'Test user',
+              date: 1496217151121
+            },
+            updatedStamp: {
+              user: 'f7144d5d-732f-487c-b2ef-e895ab5cf163',
+              name: 'Test user',
+              date: 1496233429479
+            },
+            isDeleted: false,
+            sampleType: null,
+            sampleSubType: null
           }
         }
       ]);
@@ -186,19 +178,18 @@ describe('SampleViewContainer', () => {
   describe('clickEditSample', () => {
     it('should call goTo', () => {
       const sampleId = 3;
-      const objectData = {};
       const goTo = sinon.spy();
       const preventDefault = sinon.spy();
       const event = {
         preventDefault
       };
-      clickEditSample(appSession, sampleId, objectData, goTo)(event);
+      clickEditSample(appSession, sampleId, goTo)(event);
       expect(preventDefault.calledOnce).toBe(true);
       expect(goTo.calledOnce).toBe(true);
       expect(goTo.getCall(0).args[0].pathname).toEqual(
         '/museum/99/collections/1234/analysis/sample/3/edit'
       );
-      expect(goTo.getCall(0).args[0].state).toEqual([objectData]);
+      expect(goTo.getCall(0).args[0].state).toBeUndefined();
     });
   });
 

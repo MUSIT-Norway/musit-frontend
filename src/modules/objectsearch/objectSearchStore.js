@@ -46,6 +46,6 @@ export const reducer$ = actions =>
 
 export const store$ = (
   actions$ = { clearSearch$, clearStore$, searchForObjects$, onChangeField$ }
-) => createStore('objectSearchStore$', reducer$(actions$), Observable.of(initialState));
+) => createStore('objectSearchStore$', reducer$(actions$), initialState);
 
 export default store$();

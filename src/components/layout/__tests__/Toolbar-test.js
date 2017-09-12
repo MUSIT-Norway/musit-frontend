@@ -30,18 +30,14 @@ describe('Toolbar', () => {
     expect(
       wrapper.contains(
         <Button active={showLeft} onClick={clickShowLeft}>
-          <FontAwesome name={'check-square-o'} />
-          {' '}
-          {leftLabel}
+          <FontAwesome name={'check-square-o'} /> {leftLabel}
         </Button>
       )
     ).toBe(true);
     expect(
       wrapper.contains(
         <Button active={showRight} onClick={clickShowRight}>
-          <FontAwesome name={'square-o'} />
-          {' '}
-          {rightLabel}
+          <FontAwesome name={'square-o'} /> {rightLabel}
         </Button>
       )
     ).toBe(true);
@@ -68,18 +64,14 @@ describe('Toolbar', () => {
     expect(
       wrapper.contains(
         <Button active={showLeft} onClick={clickShowLeft}>
-          <FontAwesome name={'square-o'} />
-          {' '}
-          {leftLabel}
+          <FontAwesome name={'square-o'} /> {leftLabel}
         </Button>
       )
     ).toBe(true);
     expect(
       wrapper.contains(
         <Button active={showRight} onClick={clickShowRight}>
-          <FontAwesome name={'check-square-o'} />
-          {' '}
-          {rightLabel}
+          <FontAwesome name={'check-square-o'} /> {rightLabel}
         </Button>
       )
     ).toBe(true);
@@ -106,18 +98,14 @@ describe('Toolbar', () => {
     expect(
       wrapper.contains(
         <Button active={showLeft} onClick={clickShowLeft}>
-          <FontAwesome name={'square-o'} />
-          {' '}
-          {leftLabel}
+          <FontAwesome name={'square-o'} /> {leftLabel}
         </Button>
       )
     ).toBe(true);
     expect(
       wrapper.contains(
         <Button active={showRight} onClick={clickShowRight}>
-          <FontAwesome name={'check-square-o'} />
-          {' '}
-          {rightLabel}
+          <FontAwesome name={'check-square-o'} /> {rightLabel}
         </Button>
       )
     ).toBe(true);

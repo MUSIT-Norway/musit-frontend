@@ -15,7 +15,7 @@ import type { Store } from '../shared/storeType';
 import type { DomEvent } from '../../../types/dom';
 import toArray from 'lodash/toArray';
 import { isMultipleSelectAttribute } from '../../../types/analysis';
-import type { Restriction } from '../../../types/analysis';
+import type { Restriction, AnalysisEvent } from '../../../types/analysis';
 import {
   getAnalysisTypeTerm,
   getAnalysisType,
@@ -30,20 +30,20 @@ import type {
   ExtraResultAttributeValues
 } from 'types/analysis';
 
-type Props = {
+type FormProps = {|
   updateForm: Function,
   store: Store,
   appSession: AppSession,
   form: FormData,
   history: History,
   predefined: Predefined,
-  location: Location,
+  location: Location<Array<AnalysisEvent>>,
   updateExtraDescriptionAttribute: Function,
   updateExtraResultAttribute: Function
-};
+|};
 
 export default function formProps(
-  props: Props,
+  props: FormProps,
   ajaxPost: Function = simplePost,
   ajaxPut: Function = simplePut
 ) {
@@ -72,8 +72,8 @@ export default function formProps(
 
   return {
     ...props,
-    isFormValid: isFormValid(props.form) &&
-      isResultValid(analysisType, extraResultAttributes),
+    isFormValid:
+      isFormValid(props.form) && isResultValid(analysisType, extraResultAttributes),
     isRestrictionValidForCancellation: isRestrictionValidForCancellation(
       (props.form.restriction.value: any)
     ),
@@ -97,8 +97,8 @@ export default function formProps(
     },
     getExtraDescriptionAttributeValue: (name: string) =>
       extraDescriptionAttributes && extraDescriptionAttributes[name],
-    extraDescriptionAttributes: (analysisType &&
-      analysisType.extraDescriptionAttributes) || [],
+    extraDescriptionAttributes:
+      (analysisType && analysisType.extraDescriptionAttributes) || [],
     extraResultAttributes: extraResultAttributes,
     updateExtraResultAttribute: (name: string, value: string | number) => {
       props.updateExtraResultAttribute({
@@ -121,11 +121,13 @@ export default function formProps(
 }
 
 export function isRestrictionValidForCancellation(restriction: ?Restriction): boolean {
-  return !!(restriction &&
+  return !!(
+    restriction &&
     restriction.cancelledReason &&
     restriction.cancelledReason.trim().length > 0 &&
     restriction.cancelledBy &&
-    restriction.cancelledBy.trim().length > 0);
+    restriction.cancelledBy.trim().length > 0
+  );
 }
 
 function updateStringField(updateForm) {
@@ -255,9 +257,8 @@ function isResultValid(
   if (!extraResultAttributes) {
     return true;
   }
-  return Object.keys(
-    extraResultAttributes
-  ).reduce((resultValid: boolean, attributeKey: string) => {
+  const keys: Array<string> = Object.keys(extraResultAttributes);
+  return keys.reduce((resultValid: boolean, attributeKey: string) => {
     const attributeValid: boolean = isResultAttributeValid(
       extraResultAttributes && extraResultAttributes[attributeKey],
       resultAttributes && resultAttributes[attributeKey]

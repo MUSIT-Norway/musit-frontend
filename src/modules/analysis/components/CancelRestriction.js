@@ -52,7 +52,7 @@ export default function CancelRestriction(props: Props) {
               cancelledReason: e.target.value
             })}
         />
-        {!props.restriction.cancelledStamp &&
+        {!props.restriction.cancelledStamp && (
           <button
             className="btn btn-default"
             disabled={!props.isRestrictionValidForCancellation}
@@ -62,7 +62,8 @@ export default function CancelRestriction(props: Props) {
             }}
           >
             {I18n.t('musit.analysis.restrictions.cancelRestriction')}
-          </button>}
+          </button>
+        )}
       </FormElement>
     </div>
   );

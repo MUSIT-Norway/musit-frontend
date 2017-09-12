@@ -1,8 +1,5 @@
 // @flow
 import { getExtraAttributeValue } from '../formProps';
-declare var describe: any;
-declare var it: any;
-declare var expect: any;
 
 describe('getExtraAttributeValue', () => {
   it('should return the input value if its a string', () => {

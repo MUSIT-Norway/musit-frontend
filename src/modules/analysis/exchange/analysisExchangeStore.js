@@ -1,12 +1,11 @@
 // @flow
-
+import { Observable, Subject } from 'rxjs';
 import analysisStoreInstance$, {
   clearStore$ as clearAnalysisStore$
 } from '../analysisStore';
-
-import { Observable, Subject } from 'rxjs';
-
+import type { AnalysisStoreState } from '../analysisStore';
 import { createAction, createStore } from 'react-rxjs/dist/RxStore';
+import type { Reducer } from 'react-rxjs/dist/RxStore';
 import {
   getHeadersForType,
   getResultHeadersForType,
@@ -18,38 +17,10 @@ import type { AnalysisResultTypes } from 'types/analysisResult';
 import type { ResultExchangeTemplates } from './exchangeTemplate';
 
 type Actions = {
-  importResult$: Subject<*>,
-  uploadResultFailed$: Subject<*>,
-  clearStore$: Subject<*>,
-  setAnalysisTypes$: Subject<*>
-};
-
-//todo this should be declared in the analysis store
-export type Event = {
-  id: number,
-  objectType: 'collection' | 'sample',
-  objectId: string,
-  affectedThing?: ?string,
-  museumNo?: ?string,
-  subNo?: ?string,
-  arkFindingNo?: ?string,
-  term?: ?string,
-  originatedObjectUuid?: ?string,
-  sampleNum?: ?number,
-  sampleId?: ?string,
-  sampleType?: ?string
-};
-
-//todo this should be declared in the analysis store
-export type AnalysisCollectionFromStore = {
-  id: number,
-  analysisTypeId: number,
-  events?: ?Array<Event>
-};
-
-//todo this should be declared in the analysis store
-export type AnalysisStoreState = {
-  analysis?: ?AnalysisCollectionFromStore
+  importResult$: Observable<*>,
+  uploadResultFailed$: Observable<*>,
+  clearStoreAction$: Observable<*>,
+  setAnalysisTypes$: Observable<*>
 };
 
 export type StoreState = {
@@ -60,17 +31,19 @@ export type StoreState = {
     rows: Array<ResultExchangeTemplates>
   },
   importErrors: Array<string>,
-  analysisTypes: Array<AnalysisType>,
   analysisResultType: ?AnalysisResultTypes
 } & AnalysisStoreState;
 
 export const importResult$: Subject<*> = createAction('importResult');
 export const uploadResultFailed$: Subject<*> = createAction('uploadResultFailed');
-export const clearStore$: Subject<*> = createAction('clearStore').do(clearAnalysisStore$);
+export const clearStore$: Subject<*> = createAction('clearStore');
+export const clearStoreAction$: Observable<*> = clearStore$.do(() =>
+  clearAnalysisStore$.next()
+);
 export const setAnalysisTypes$: Subject<*> = createAction('setAnalysisTypes');
 
 const findAnalysisResultType = (
-  analysisStore: AnalysisStoreState,
+  analysisStore: AnalysisStoreState | StoreState,
   analysisTypes: Array<AnalysisType>
 ): ?AnalysisResultTypes => {
   if (analysisStore.analysis) {
@@ -101,7 +74,7 @@ export const mapAnalysisStoreToState = (
   state: StoreState
 ) => {
   const analysisResultType = findAnalysisResultType(
-    { analysis: analysisStore.analysis },
+    analysisStore,
     state.analysisTypes || []
   );
   return {
@@ -118,10 +91,7 @@ const mapAnalysisTypesToState = (
   state: StoreState,
   analysisTypes: Array<AnalysisType>
 ) => {
-  const analysisResultType = findAnalysisResultType(
-    { analysis: state.analysis },
-    analysisTypes || []
-  );
+  const analysisResultType = findAnalysisResultType(state, analysisTypes || []);
 
   return {
     ...state,
@@ -133,18 +103,23 @@ const mapAnalysisTypesToState = (
   };
 };
 
-export const reducer$ = (actions: Actions, analysisStore$: Observable<*>) =>
+export const reducer$ = (
+  actions: Actions,
+  analysisStore$: Observable<*>
+): Observable<Reducer<StoreState>> =>
   Observable.merge(
     analysisStore$.map(analysisStore => state =>
-      mapAnalysisStoreToState(analysisStore, state)),
+      mapAnalysisStoreToState(analysisStore, state)
+    ),
     actions.importResult$.map(mapImportResult),
-    actions.clearStore$.map(() => () => initStoreState()),
+    actions.clearStoreAction$.map(() => () => initStoreState()),
     actions.uploadResultFailed$.map(importErrors => state => ({
       ...state,
       importErrors
     })),
     actions.setAnalysisTypes$.map(analysisTypes => state =>
-      mapAnalysisTypesToState(state, analysisTypes))
+      mapAnalysisTypesToState(state, analysisTypes)
+    )
   );
 
 export const initStoreState = () => ({
@@ -161,7 +136,7 @@ export const analysisExchangeStore$ = (
   actions$: Actions = {
     importResult$,
     uploadResultFailed$,
-    clearStore$,
+    clearStoreAction$,
     setAnalysisTypes$
   },
   analysisStore$: Observable<*> = analysisStoreInstance$
@@ -169,7 +144,7 @@ export const analysisExchangeStore$ = (
   createStore(
     'analysisExchangeStore',
     reducer$(actions$, analysisStore$),
-    Observable.of(initStoreState())
+    initStoreState()
   );
 
 const analysisExchangeStoreSingleton = analysisExchangeStore$();

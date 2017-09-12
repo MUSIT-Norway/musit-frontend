@@ -39,12 +39,11 @@ export default class NodeLeftMenuComponent extends Component {
           style={{ color: 'black' }}
           disabled={disabled}
         >
-          {useMusitIcon
-            ? <span className={`icon icon-${icon}`} style={{ padding: '2px' }} />
-            : <FontAwesome
-                name={`${icon}`}
-                style={{ fontSize: '1.5em', padding: '2px' }}
-              />}
+          {useMusitIcon ? (
+            <span className={`icon icon-${icon}`} style={{ padding: '2px' }} />
+          ) : (
+            <FontAwesome name={`${icon}`} style={{ fontSize: '1.5em', padding: '2px' }} />
+          )}
           <br />
           {I18n.t(`musit.leftMenu.node.${type}`)}
         </Button>

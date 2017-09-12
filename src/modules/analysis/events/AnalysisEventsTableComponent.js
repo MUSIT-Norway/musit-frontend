@@ -39,7 +39,6 @@ const AnalysisEventsTableComponent = (props: TableProps) => (
       </thead>
 
       <tbody>
-
         {props.events.map(event => (
           <tr key={event.id} onClick={() => event.id && props.onRowClicked(event.id)}>
             <td>{formattedDate(event.registeredDate)}</td>
@@ -48,7 +47,6 @@ const AnalysisEventsTableComponent = (props: TableProps) => (
             <td>{event.registeredByName}</td>
           </tr>
         ))}
-
       </tbody>
     </table>
   </div>

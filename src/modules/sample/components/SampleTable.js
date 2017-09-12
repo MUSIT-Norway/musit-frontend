@@ -57,9 +57,10 @@ const pickObjectParams = (
       sampleType: getSampleType(sampleTypes, s.sampleTypeId, appSession),
       sampleSubType: getSampleSubType(sampleTypes, s.sampleTypeId, appSession)
     },
-    breadcrumb: s.currentLocation && s.currentLocation.breadcrumb
-      ? s.currentLocation.breadcrumb
-      : [],
+    breadcrumb:
+      s.currentLocation && s.currentLocation.breadcrumb
+        ? s.currentLocation.breadcrumb
+        : [],
     museumId: appSession.museumId,
     collectionId: appSession.collectionId,
     token: appSession.accessToken
@@ -169,12 +170,14 @@ const SampleTableComponent = ({
                   }}
                   title={I18n.t('musit.objectsearch.addToPickList')}
                 >
-                  {isItemAdded({ ...s, id: s.objectId }, pickList.objects)
-                    ? <FontAwesome
-                        style={{ fontSize: '1.3em', color: 'Gray' }}
-                        name="shopping-cart"
-                      />
-                    : <FontAwesome style={{ fontSize: '1.3em' }} name="shopping-cart" />}
+                  {isItemAdded({ ...s, id: s.objectId }, pickList.objects) ? (
+                    <FontAwesome
+                      style={{ fontSize: '1.3em', color: 'Gray' }}
+                      name="shopping-cart"
+                    />
+                  ) : (
+                    <FontAwesome style={{ fontSize: '1.3em' }} name="shopping-cart" />
+                  )}
                 </a>
               </Td>
             </Tr>

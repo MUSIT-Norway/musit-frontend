@@ -5,10 +5,6 @@ import { shallow } from 'enzyme';
 
 import { MusitI18n } from '../MusitI18n';
 
-declare var describe: any;
-declare var it: any;
-declare var expect: any;
-
 describe('MusitI18n', () => {
   it('should render english text', () => {
     const Comp = shallow(

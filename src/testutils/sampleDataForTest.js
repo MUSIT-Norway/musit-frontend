@@ -1,8 +1,11 @@
 // @flow
 import type { AppSession } from '../types/appSession';
 import type { History } from '../types/Routes';
-import type { AnalysisCollection } from '../types/analysis';
-import type { SampleDateExtended } from '../types/samples';
+import type { AnalysisCollection, AnalysisEvent } from '../types/analysis';
+import type { SampleDataExtended } from '../types/samples';
+import type { MusitObject } from '../types/object';
+import type { Field } from '../forms/form';
+import { noMapper } from '../forms/mappers';
 
 export const appSession: AppSession = {
   museumId: 99,
@@ -41,7 +44,7 @@ export const analysis: AnalysisCollection = {
   type: 'Analysis'
 };
 
-export const sample: SampleDateExtended = {
+export const sample: SampleDataExtended = {
   id: '123',
   uuid: '0000-0000-123',
   objectId: '0000-0000-123',
@@ -83,3 +86,78 @@ export const sample: SampleDateExtended = {
     enSampleSubType: null
   }
 };
+
+export function createAnalysisEventWithObject(
+  id: number,
+  uuid: string,
+  museumNo: string,
+  subNo: string,
+  term: string
+): AnalysisEvent {
+  return {
+    id: 2 * id,
+    affectedThing: uuid,
+    affectedType: 'collection',
+    analysisTypeId: 5,
+    doneBy: 'some uuid',
+    doneDate: 'some date',
+    partOf: 3 * id,
+    registeredBy: 'some uuid',
+    registeredDate: 'some date',
+    responsible: 'some uuid',
+    type: 'Analysis',
+    objectData: createObject(id, uuid, museumNo, subNo, term)
+  };
+}
+
+export function createObject(
+  id: number,
+  uuid: string,
+  museumNo: string,
+  subNo: string,
+  term: string
+): MusitObject {
+  return {
+    id: id,
+    uuid: uuid,
+    museumId: 99,
+    museumNo: museumNo,
+    subNo: subNo,
+    term: term,
+    collection: 8,
+    materials: [],
+    locations: [],
+    coordinates: [],
+    objectType: 'collection'
+  };
+}
+
+export const object: MusitObject = {
+  id: 56,
+  uuid: '12080e3e-2ca2-41b1-9d4a-4d72e292dcd8',
+  museumId: 99,
+  museumNo: 'MusN11',
+  term: 'Solsikke',
+  collection: 8,
+  materials: [],
+  locations: [],
+  coordinates: [],
+  objectType: 'collection'
+};
+
+export function createField<T>(
+  name: string,
+  value: T,
+  valid?: boolean = false
+): Field<T> {
+  return {
+    name: name,
+    rawValue: value,
+    defaultValue: value,
+    status: {
+      valid: valid
+    },
+    validator: {},
+    mapper: noMapper
+  };
+}

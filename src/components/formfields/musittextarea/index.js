@@ -58,10 +58,6 @@ export default class MusitTextArea extends Component {
       />
     );
 
-    return (
-      <div className={this.classNameOnlyWithInput()}>
-        {lcPlaceholder}
-      </div>
-    );
+    return <div className={this.classNameOnlyWithInput()}>{lcPlaceholder}</div>;
   }
 }

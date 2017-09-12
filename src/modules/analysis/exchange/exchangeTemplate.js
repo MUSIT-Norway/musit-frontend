@@ -3,7 +3,8 @@
 import concat from 'lodash/concat';
 
 import type { AnalysisResultTypes } from 'types/analysisResult';
-import type { AnalysisCollectionFromStore } from './analysisExchangeStore';
+import type { AnalysisCollection } from 'types/analysis';
+import type { SampleType } from 'types/sample';
 
 export type ExchangeElementType = 'sample' | 'collection' | 'analysis';
 
@@ -19,7 +20,7 @@ export type BaseExchangeTemplate = {
   sampleObjectId: ?string,
   sampleNum: ?number,
   sampleId: ?string,
-  sampleType: ?string
+  sampleType: ?SampleType
 };
 
 /**
@@ -146,7 +147,7 @@ export const getResultHeadersForType = (type: AnalysisResultTypes): Array<string
 };
 
 export const createExchangeTemplate = (
-  analysisCollection: ?AnalysisCollectionFromStore,
+  analysisCollection: ?AnalysisCollection,
   type: ?AnalysisResultTypes
 ): Array<ResultExchangeTemplates> => {
   if (
@@ -166,7 +167,7 @@ export const createExchangeTemplate = (
 };
 
 export const createAnalysisCollectionRow = (
-  analysisCollection: AnalysisCollectionFromStore,
+  analysisCollection: AnalysisCollection,
   type: AnalysisResultTypes
 ): ResultExchangeTemplates => {
   const analysisCollectionRow: BaseExchangeTemplate = {
@@ -189,25 +190,30 @@ export const createAnalysisCollectionRow = (
 };
 
 export const createEventRow = (
-  analysisCollection: AnalysisCollectionFromStore,
+  analysisCollection: AnalysisCollection,
   type: AnalysisResultTypes
 ): Array<ResultExchangeTemplates> => {
   if (analysisCollection.events && type) {
     return analysisCollection.events.map(event => {
       const row = {
-        type: event.objectType,
+        type: event.affectedType,
         analysisId: event.id,
         // object fields
-        objectId: event.originatedObjectUuid || event.affectedThing,
-        museumNo: event.museumNo || null,
-        subNo: event.subNo || null,
-        arkFindingNo: event.arkFindingNo || null,
-        term: event.term || null,
+        objectId: event.sampleData
+          ? event.sampleData.originatedObjectUuid || event.affectedThing
+          : event.affectedThing,
+        museumNo: event.objectData ? event.objectData.museumNo || null : null,
+        subNo: event.objectData ? event.objectData.subNo || null : null,
+        arkFindingNo: event.objectData ? event.objectData.arkFindingNo || null : null,
+        term: event.objectData ? event.objectData.term || null : null,
         // sample fields
-        sampleObjectId: event.originatedObjectUuid ? event.affectedThing : null,
-        sampleNum: event.sampleNum || null,
-        sampleId: event.sampleId || null,
-        sampleType: event.sampleType || null
+        sampleObjectId:
+          event.sampleData && event.sampleData.originatedObjectUuid
+            ? event.affectedThing
+            : null,
+        sampleNum: event.sampleData ? event.sampleData.sampleNum || null : null,
+        sampleId: event.sampleData ? event.sampleData.sampleId || null : null,
+        sampleType: event.sampleData ? event.sampleData.sampleType : null
       };
 
       return appendResultValuesToBase(row, type);

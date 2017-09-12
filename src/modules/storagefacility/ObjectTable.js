@@ -28,21 +28,11 @@ export default class ObjectGrid extends Component {
               <thead>
                 <tr>
                   <th style={{ width: '20px' }} />
-                  <th>
-                    {I18n.t('musit.grid.object.museumsNumber')}
-                  </th>
-                  <th>
-                    {I18n.t('musit.grid.object.uNumber')}
-                  </th>
-                  <th>
-                    {I18n.t('musit.grid.object.term')}
-                  </th>
-                  <th>
-                    {I18n.t('musit.analysis.sampleNumber')}
-                  </th>
-                  <th>
-                    {I18n.t('musit.analysis.sampleType')}
-                  </th>
+                  <th>{I18n.t('musit.grid.object.museumsNumber')}</th>
+                  <th>{I18n.t('musit.grid.object.uNumber')}</th>
+                  <th>{I18n.t('musit.grid.object.term')}</th>
+                  <th>{I18n.t('musit.analysis.sampleNumber')}</th>
+                  <th>{I18n.t('musit.analysis.sampleType')}</th>
                   <th />
                   <th />
                   <th>
@@ -80,14 +70,16 @@ export default class ObjectGrid extends Component {
                     <TableData
                       key={i}
                       rowData={
-                        data.sampleObject
-                          ? flattenSample(
-                              this.props.appSession,
-                              this.props.sampleStore.sampleTypes,
-                              omit(data, 'sampleObject'),
-                              data.sampleObject
-                            )
-                          : data
+                        data.sampleObject ? (
+                          flattenSample(
+                            this.props.appSession,
+                            this.props.sampleStore.sampleTypes,
+                            omit(data, 'sampleObject'),
+                            data.sampleObject
+                          )
+                        ) : (
+                          data
+                        )
                       }
                       appSession={this.props.appSession}
                       sampleTypes={this.props.sampleStore.sampleTypes}

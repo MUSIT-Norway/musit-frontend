@@ -6,10 +6,6 @@ import { Administration } from '../Administration';
 import { appSession } from './../../../testutils/sampleDataForTest';
 import type { History } from 'types/Routes';
 
-declare var describe: any;
-declare var it: any;
-declare var expect: any;
-
 const history: History = {
   push: (path, state) => {},
   replace: (path, state) => {},

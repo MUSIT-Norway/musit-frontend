@@ -1,6 +1,6 @@
 // @flow
 import ViewObjectComponent from './ViewObjectComponent';
-import inject from 'react-rxjs/dist/RxInject';
+import { RxInjectLegacy as inject } from 'react-rxjs';
 import objectStore$, {
   loadObject$,
   loadMoveAndAnalysisEvents$,
@@ -17,6 +17,7 @@ import { toggleObject$ } from '../../stores/pickList';
 import { isItemAdded } from '../../stores/pickList';
 import MusitObject from '../../models/object';
 import sample from '../../models/sample';
+import { simpleGet } from '../../shared/RxAjax';
 
 const data: {} = {
   appSession$: { type: PropTypes.instanceOf(Observable).isRequired },
@@ -28,11 +29,12 @@ const data: {} = {
 
 const props: {} = props => ({
   ...props,
-  loading: !(props.sampleTypes.sampleTypes && props.sampleTypes.sampleTypes.find) ||
+  loading:
+    !(props.sampleTypes.sampleTypes && props.sampleTypes.sampleTypes.find) ||
     props.objectStore.loadingObjectData ||
     props.objectStore.loadingSamples ||
     props.objectStore.loadingEvents,
-  pickObject: MusitObject.pickObject(toggleObject$),
+  pickObject: MusitObject.pickObject(toggleObject$, simpleGet),
   isItemAdded,
   goTo: props.history.push,
   sampleStatus: sample.sampleStatuses

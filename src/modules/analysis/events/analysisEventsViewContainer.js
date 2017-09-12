@@ -1,8 +1,6 @@
 // @flow
-
 import PropTypes from 'prop-types';
-import inject from 'react-rxjs/dist/RxInject';
-import flowRight from 'lodash/flowRight';
+import inject from 'react-rxjs/dist/RxInjectOld';
 import AnalysisEventsViewComponent from './AnalysisEventsViewComponent';
 import lifeCycle from '../../../shared/lifeCycle';
 import Config from '../../../config';
@@ -11,7 +9,7 @@ import analysisEventsStore$, {
   getAnalysisEvents$,
   filterEvents$
 } from './analysisEventsStore';
-import { loadPredefinedTypes } from '../../../stores/predefined';
+import { loadPredefinedTypes } from '../../../stores/predefinedLoader';
 
 const data = {
   analysisEventsStore$,
@@ -37,6 +35,6 @@ const LoadedAnalysisEventsViewComponent = lifeCycle({
   }
 })(AnalysisEventsViewComponent);
 
-export default flowRight([inject(data, commands, props), loadPredefinedTypes])(
-  LoadedAnalysisEventsViewComponent
+export default inject(data, commands, props)(
+  loadPredefinedTypes(LoadedAnalysisEventsViewComponent)
 );

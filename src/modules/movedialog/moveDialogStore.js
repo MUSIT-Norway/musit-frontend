@@ -55,6 +55,6 @@ export const reducer$ = actions =>
 
 export const store$ = (
   actions$ = { clear$, setPage$, loadNode$, loadChildren$, setLoading$ }
-) => createStore('moveDialog', reducer$(actions$), Observable.of(initialState));
+) => createStore('moveDialog', reducer$(actions$), initialState);
 
 export default store$();

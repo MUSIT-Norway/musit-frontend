@@ -34,7 +34,9 @@ describe('LoginPage', () => {
   it('should have a working login button', () => {
     const navigate = sinon.spy();
     const wrapper = shallow(
-      <LoginButton navigate={navigate}><span>Click Me</span></LoginButton>
+      <LoginButton navigate={navigate}>
+        <span>Click Me</span>
+      </LoginButton>
     );
     wrapper.find('.loginButton').simulate('click');
     expect(navigate.calledOnce).toBe(true);

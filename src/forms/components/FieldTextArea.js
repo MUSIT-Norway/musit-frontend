@@ -25,10 +25,11 @@ export default function FieldTextArea({
 }: FieldTextAreaProps) {
   return (
     <div>
-      {title !== '' &&
+      {title !== '' && (
         <label className={`control-label col-md-${labelWidth}`} htmlFor={field.name}>
           {title}
-        </label>}
+        </label>
+      )}
       <div className={`col-md-${controlWidth}`}>
         <textarea
           {...inputProps}

@@ -67,7 +67,10 @@ const removeItem = (item, items = []) => {
 export const getPathString = pathStr => {
   const pathStrArr = pathStr.substr(1, pathStr.length - 2).split(',');
   // EX: ,1,2,3,19, will be transformed to ,1,2,3,
-  return `,${pathStrArr.slice(0, -1).join(',').toString()},`;
+  return `,${pathStrArr
+    .slice(0, -1)
+    .join(',')
+    .toString()},`;
 };
 
 const findItem = (itemsToRefresh, n) => {
@@ -187,7 +190,7 @@ export const store$ = (
   createStore(
     'pickList',
     reducer$(actions$),
-    Observable.of({ nodes: [], objects: [] }),
+    { nodes: [], objects: [] },
     KEEP_ALIVE
   ).map(state => ({
     nodes: orderBy(state.nodes, [

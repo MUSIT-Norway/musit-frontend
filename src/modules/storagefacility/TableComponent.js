@@ -518,7 +518,7 @@ export default class TableComponent extends React.Component {
             sampleStore={this.props.sampleStore}
             appSession={this.props.appSession}
           />
-          {showPaging &&
+          {showPaging && (
             <PagingToolbar
               numItems={totalMatches}
               currentPage={currentPage}
@@ -532,7 +532,8 @@ export default class TableComponent extends React.Component {
                   )
                 });
               }}
-            />}
+            />
+          )}
         </Loader>
       );
     }
@@ -559,7 +560,7 @@ export default class TableComponent extends React.Component {
             )}
           isNodeAdded={node => this.props.isItemAdded(node, this.props.pickList.nodes)}
         />
-        {showPaging &&
+        {showPaging && (
           <PagingToolbar
             numItems={totalMatches}
             currentPage={currentPage}
@@ -573,7 +574,8 @@ export default class TableComponent extends React.Component {
                 )
               });
             }}
-          />}
+          />
+        )}
       </Loader>
     );
   }

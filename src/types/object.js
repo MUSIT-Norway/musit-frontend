@@ -43,7 +43,6 @@ export type EtnoMaterial = {
   materialElement: ?string
 };
 export type Material = EtnoMaterial | ArkMaterial;
-export type Location = EtnoLocation | ArkLocation | NatLocation;
 
 /**
  * This is the actual response object from the backend.

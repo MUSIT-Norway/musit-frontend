@@ -24,6 +24,6 @@ export const reducer$ = actions =>
 export const initialState = { data: {}, rootNode: null };
 
 export const store$ = (actions$ = { setLoading$, getObservation$, loadRootNode$ }) =>
-  createStore('observation', reducer$(actions$), Observable.of(initialState));
+  createStore('observation', reducer$(actions$), initialState);
 
 export default store$();

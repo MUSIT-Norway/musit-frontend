@@ -61,8 +61,12 @@ export default class MusitUserAccount extends Component {
     );
     const menuText = (t1, t2) => (
       <Row>
-        <Col md={1} sm={1} xs={1}>{t1}</Col>
-        <Col md={1} sm={1} xs={1}>{t2}</Col>
+        <Col md={1} sm={1} xs={1}>
+          {t1}
+        </Col>
+        <Col md={1} sm={1} xs={1}>
+          {t2}
+        </Col>
       </Row>
     );
     const groups = this.props.groups;
@@ -90,10 +94,11 @@ export default class MusitUserAccount extends Component {
           </Dropdown.Toggle>
           <Dropdown.Menu style={{ width: 200 }}>
             <MenuItem />
-            {museumDropDown &&
+            {museumDropDown && (
               <MenuItem eventKey={3} header>
                 {I18n.t('musit.userProfile.museum')}
-              </MenuItem>}
+              </MenuItem>
+            )}
             {museumDropDown &&
               uniq(groups.map(g => g.museumId)).map((museumId, i) => {
                 const defaultCollectionId = this.getCollections(museumId, groups)[0].uuid;
@@ -112,10 +117,11 @@ export default class MusitUserAccount extends Component {
                 );
               })}
             {museumDropDown && <MenuItem divider />}
-            {collectionDropdown &&
+            {collectionDropdown && (
               <MenuItem eventKey={3} header>
                 {I18n.t('musit.userProfile.collection')}
-              </MenuItem>}
+              </MenuItem>
+            )}
             {collectionDropdown &&
               collections.map((cc, i) => (
                 <MenuItem

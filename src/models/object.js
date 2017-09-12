@@ -4,7 +4,7 @@ import Config from '../config';
 import { getPath } from '../shared/util';
 import type { MovableObject } from './types/movableObject';
 import type { objectTypeAndId } from '../types/object';
-import type { Callback, AjaxGet, AjaxPost, AjaxPut } from './types/ajax';
+import type { Callback, AjaxGet, AjaxPost, AjaxPut } from '../types/ajax';
 import type { ObjectData } from '../types/object';
 import { Observable, Subject } from 'rxjs';
 import type { Breadcrumb } from './types/breadcrumb';
@@ -21,7 +21,7 @@ class MusitObject {
     museumId: number,
     collectionId: string,
     token: string,
-    callback?: Callback
+    callback?: ?Callback
   }) => Observable<*>;
   static moveObjects: (
     props: {
@@ -31,7 +31,7 @@ class MusitObject {
       museumId: number,
       collectionId: string,
       token: string,
-      callback: Callback
+      callback?: ?Callback
     },
     ajaxGet: AjaxGet,
     ajaxPut: AjaxPut
@@ -42,7 +42,7 @@ class MusitObject {
     movableObjects: Array<MovableObject>,
     museumId: MuseumId,
     token: string,
-    callback: ?any
+    callback?: ?Callback
   }) => Observable<*>;
   static getObjectLocation: (
     ajaxGet: AjaxGet
@@ -51,7 +51,7 @@ class MusitObject {
     objectType?: ?string,
     museumId: number,
     token: string,
-    callback?: Callback
+    callback?: ?Callback
   }) => Observable<*>;
   static getMainObject: (
     ajaxGet: AjaxGet
@@ -60,7 +60,7 @@ class MusitObject {
     museumId: number,
     collectionId: string,
     token: string,
-    callback?: Callback
+    callback?: ?Callback
   }) => Observable<*>;
   static getObjectWithCurrentLocation: (
     ajaxGet: AjaxGet
@@ -69,7 +69,7 @@ class MusitObject {
     museumId: number,
     collectionId: string,
     token: string,
-    callback?: Callback
+    callback?: ?Callback
   }) => Observable<ObjectData>;
 
   static pickObject: (
@@ -81,18 +81,18 @@ class MusitObject {
     museumId: number,
     collectionId: string,
     token: string,
-    callback?: Callback
+    callback?: ?Callback
   }) => void;
   static getObjects: (
     ajaxGet: AjaxGet
   ) => (props: {
-    id: number,
+    id: string,
     page: number,
     museumId: number,
     collectionId: string,
     token: string,
-    callback?: Callback
-  }) => Observable<ObjectData>;
+    callback?: ?Callback
+  }) => Observable<Array<ObjectData>>;
   static moveSingleObject: (
     ajaxPut: AjaxPut
   ) => (props: {
@@ -101,7 +101,7 @@ class MusitObject {
     objectTypeAndId?: objectTypeAndId,
     museumId: number,
     token: string,
-    callback?: Callback
+    callback?: ?Callback
   }) => Observable<*>;
   static getLocationHistory: (
     ajaxGet: AjaxGet
@@ -154,7 +154,7 @@ MusitObject.moveObjects = (
       museumId,
       collectionId,
       token,
-      callback: { onFailure: callback.onFailure }
+      callback: callback ? { onFailure: callback.onFailure } : null
     })
       .toPromise()
       .then(objects =>
@@ -260,22 +260,15 @@ MusitObject.getObjectDetails = (ajaxGet = simpleGet) => ({
   return ajaxGet(url, token, callback);
 };
 
-MusitObject.getObjects = (ajaxGet = simpleGet) => ({
-  id,
-  page,
-  museumId,
-  collectionId,
-  token,
-  callback
-}) => {
+MusitObject.getObjects = (ajaxGet = simpleGet) => props => {
   const url = Config.magasin.urls.api.thingaggregate.getObjectForCollection(
-    museumId,
-    id,
-    collectionId,
-    page || 1,
+    props.museumId,
+    props.id,
+    props.collectionId,
+    props.page || 1,
     Config.magasin.limit
   );
-  return ajaxGet(url, token, callback).map(({ response }) => {
+  return ajaxGet(url, props.token, props.callback).map(({ response }) => {
     if (!response || !response.matches) {
       return { ...response, matches: [], error: 'no response body' };
     }
@@ -376,15 +369,17 @@ MusitObject.searchForObjects = (ajaxGet = simpleGet) => ({
     collectionId,
     museumId
   );
-  return ajaxGet(url, token, callback).map(({ response }) => response).map(data => {
-    if (!data || !data.matches) {
-      return { ...data, matches: [], totalMatches: 0, error: 'no response body' };
-    }
-    return {
-      ...data,
-      matches: data.matches.map(m => ({ ...m, breadcrumb: getPath(m) }))
-    };
-  });
+  return ajaxGet(url, token, callback)
+    .map(({ response }) => response)
+    .map(data => {
+      if (!data || !data.matches) {
+        return { ...data, matches: [], totalMatches: 0, error: 'no response body' };
+      }
+      return {
+        ...data,
+        matches: data.matches.map(m => ({ ...m, breadcrumb: getPath(m) }))
+      };
+    });
 };
 
 export default MusitObject;

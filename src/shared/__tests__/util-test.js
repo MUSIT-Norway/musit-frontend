@@ -24,13 +24,13 @@ describe('parseUTCDate', () => {
 
 describe('customSortingStorageNodeType', () => {
   it('Order should be Organisation < Building < Room < StorageUnit', () => {
-    const unknown = customSortingStorageNodeType('errrr');
-    const building = customSortingStorageNodeType('Building');
-    const organisation = customSortingStorageNodeType('Organisation');
-    const storageUnit = customSortingStorageNodeType('StorageUnit');
-    const room = customSortingStorageNodeType('Room');
-    expectChai(organisation).to.be
-      .below(building)
+    const unknown = parseInt(customSortingStorageNodeType('errrr'), 10);
+    const building = parseInt(customSortingStorageNodeType('Building'), 10);
+    const organisation = parseInt(customSortingStorageNodeType('Organisation'), 10);
+    const storageUnit = parseInt(customSortingStorageNodeType('StorageUnit'), 10);
+    const room = parseInt(customSortingStorageNodeType('Room'), 10);
+    expectChai(organisation)
+      .to.be.below(building)
       .to.be.below(room)
       .to.be.below(storageUnit)
       .to.be.below(unknown);
@@ -154,8 +154,8 @@ describe('parseISOString and formatISOString are inverse functions', () => {
     const localDate = moment(date).format(dateStr);
     const dateAfterFormatISOString = moment(formatISOString(date)).format(dateStr);
     const dateAfterParsedISODate = parseISODate(isoStr).format('YYYY-MM-DD');
-    expectChai(localDate).to
-      .equal(dateAfterFormatISOString)
+    expectChai(localDate)
+      .to.equal(dateAfterFormatISOString)
       .and.equal(dateAfterParsedISODate);
   });
 
@@ -166,8 +166,8 @@ describe('parseISOString and formatISOString are inverse functions', () => {
     const localDate = moment(date).format(dateStr);
     const dateAfterFormatISOString = moment(formatISOString(date)).format(dateStr);
     const dateAfterParsedISODate = parseISODate(isoStr).format('YYYY-MM-DD');
-    expectChai(localDate).to
-      .equal(dateAfterFormatISOString)
+    expectChai(localDate)
+      .to.equal(dateAfterFormatISOString)
       .and.equal(dateAfterParsedISODate);
   });
 });

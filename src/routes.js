@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import flowRight from 'lodash/flowRight';
-import inject from 'react-rxjs/dist/RxInject';
+import { RxInjectLegacy as inject } from 'react-rxjs';
 import PropTypes from 'prop-types';
 import { makeUrlAware } from './stores/appSession';
 
@@ -33,13 +33,10 @@ import ViewObjectContainer from './modules/objects/viewObjectContainer';
 import HomeView from './modules/home/HomePage';
 import Administration from './modules/administration/Administration';
 import AnalysisTypes from './modules/administration/analysisTypes/analysisTypesContainer';
-import AnalysisPlaces
-  from './modules/administration/analysisPlaces/analysisPlacesContainer';
+import AnalysisPlaces from './modules/administration/analysisPlaces/analysisPlacesContainer';
 import SampleTypes from './modules/administration/sampleTypes/sampleTypesContainer';
-import AnalysisEventsViewContainer
-  from './modules/analysis/events/analysisEventsViewContainer';
-import AnalysisResultExchangeContainer
-  from './modules/analysis/exchange/analysisResultExchangeContainer';
+import AnalysisEventsViewContainer from './modules/analysis/events/analysisEventsViewContainer';
+import AnalysisResultExchangeContainer from './modules/analysis/exchange/analysisResultExchangeContainer';
 import { replace } from 'lodash';
 
 /**
@@ -254,6 +251,10 @@ const SearchPage = props => (
   </Switch>
 );
 
-const NotFoundPage = props => <ScrollToTop><NotFound {...props} /></ScrollToTop>;
+const NotFoundPage = props => (
+  <ScrollToTop>
+    <NotFound {...props} />
+  </ScrollToTop>
+);
 
 export default MusitRouter;

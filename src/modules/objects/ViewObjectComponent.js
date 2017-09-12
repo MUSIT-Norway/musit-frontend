@@ -39,79 +39,77 @@ export const ViewObjectComponent = ({
   history,
   loading
 }: ViewObjectComponentProps) =>
-  !loading
-    ? <div className="container">
-        <PageHeader>
-          {I18n.t('musit.objects.objectsView.objectView')}
-        </PageHeader>
-        <ViewObjectData objectData={objectData} />
-        <div style={{ paddingBottom: 10 }}>
-          <Button
-            className="primary"
-            onClick={() =>
-              history.push({
-                pathname: Config.magasin.urls.client.analysis.addAnalysis(appSession),
-                state: [objectData]
-              })}
-          >
-            {I18n.t('musit.objects.objectsView.newAnalysis')}
-          </Button>
-          <Button
-            className="primary"
-            onClick={() =>
-              history.push({
-                pathname: Config.magasin.urls.client.analysis.addSample(
-                  appSession,
-                  objectData.uuid
-                )
-              })}
-          >
-            {I18n.t('musit.objects.objectsView.newSample')}
-          </Button>
-        </div>
-        <Tabs defaultActiveKey={1} id="events">
-          <Tab title={I18n.t('musit.objects.objectsView.events.events')} eventKey={1}>
-            <EventTable
-              events={events}
-              analysisTypes={analysisTypes}
-              sampleTypes={sampleTypes}
-              appSession={appSession}
-              onClick={event => {
-                if (event.type === 'Analysis' || event.type === 'AnalysisCollection') {
-                  history.push({
-                    pathname: Config.magasin.urls.client.analysis.viewAnalysis(
-                      appSession,
-                      event.id
-                    ),
-                    state: [objectData]
-                  });
-                }
-              }}
-            />
-          </Tab>
-          <Tab title={I18n.t('musit.objects.objectsView.samples.samples')} eventKey={2}>
-            <SampleTable
-              samples={samples}
-              onClick={sample => {
-                history.push({
-                  pathname: Config.magasin.urls.client.analysis.gotoSample(
-                    appSession,
-                    sample.objectId
-                  ),
-                  state: [objectData]
-                });
-              }}
-              pickObject={pickObject}
-              isItemAdded={isItemAdded}
-              pickList={pickList}
-              appSession={appSession}
-              objectData={objectData}
-              sampleTypes={sampleTypes}
-              sampleStatus={sampleStatus}
-            />
-          </Tab>
-        </Tabs>
+  !loading ? (
+    <div className="container">
+      <PageHeader>{I18n.t('musit.objects.objectsView.objectView')}</PageHeader>
+      <ViewObjectData objectData={objectData} />
+      <div style={{ paddingBottom: 10 }}>
+        <Button
+          className="primary"
+          onClick={() =>
+            history.push({
+              pathname: Config.magasin.urls.client.analysis.addAnalysis(appSession),
+              state: [{ objectData }]
+            })}
+        >
+          {I18n.t('musit.objects.objectsView.newAnalysis')}
+        </Button>
+        <Button
+          className="primary"
+          onClick={() =>
+            history.push({
+              pathname: Config.magasin.urls.client.analysis.addSample(
+                appSession,
+                objectData.uuid
+              )
+            })}
+        >
+          {I18n.t('musit.objects.objectsView.newSample')}
+        </Button>
       </div>
-    : <div className="loading" />;
+      <Tabs defaultActiveKey={1} id="events">
+        <Tab title={I18n.t('musit.objects.objectsView.events.events')} eventKey={1}>
+          <EventTable
+            events={events}
+            analysisTypes={analysisTypes}
+            sampleTypes={sampleTypes}
+            appSession={appSession}
+            onClick={event => {
+              if (event.type === 'Analysis' || event.type === 'AnalysisCollection') {
+                history.push({
+                  pathname: Config.magasin.urls.client.analysis.viewAnalysis(
+                    appSession,
+                    event.id
+                  )
+                });
+              }
+            }}
+          />
+        </Tab>
+        <Tab title={I18n.t('musit.objects.objectsView.samples.samples')} eventKey={2}>
+          <SampleTable
+            samples={samples}
+            onClick={sample => {
+              history.push({
+                pathname: Config.magasin.urls.client.analysis.gotoSample(
+                  appSession,
+                  sample.objectId
+                )
+              });
+            }}
+            pickObject={pickObject}
+            isItemAdded={isItemAdded}
+            pickList={pickList}
+            appSession={appSession}
+            objectData={objectData}
+            sampleTypes={sampleTypes}
+            sampleStatus={sampleStatus}
+          />
+        </Tab>
+      </Tabs>
+    </div>
+  ) : (
+    <div className="loading" />
+  );
 
 export default ViewObjectComponent;

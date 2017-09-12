@@ -1,8 +1,5 @@
 // @flow
 import { containsAttributes } from '../getters';
-declare var describe: any;
-declare var it: any;
-declare var expect: any;
 
 describe('getters', () => {
   describe('containsAttributes', () => {

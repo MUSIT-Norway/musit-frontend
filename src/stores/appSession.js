@@ -178,7 +178,8 @@ export const reducer$ = (actions, onError = emitError) =>
 
 const session$ = (
   actions$ = { setMuseumId$, setCollectionId$, setAccessToken$, loadAppSession$ }
-) =>
-  createStore('appSession', reducer$(actions$), Observable.of(initialState), KEEP_ALIVE);
+) => createStore('appSession', reducer$(actions$), initialState, KEEP_ALIVE);
 
-export default session$();
+const store$ = session$();
+
+export default store$;

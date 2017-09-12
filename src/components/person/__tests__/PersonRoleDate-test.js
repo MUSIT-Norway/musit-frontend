@@ -3,10 +3,6 @@ import PersonRoleDate from '../PersonRoleDate';
 import { shallow } from 'enzyme';
 import React from 'react';
 
-declare var describe: any;
-declare var it: any;
-declare var expect: any;
-
 describe('PersonRoleDate', () => {
   it('should match snapshot', () => {
     const wrapperBefore = shallow(
