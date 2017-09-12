@@ -52,7 +52,7 @@ export default class ObjectGrid extends Component {
                                     omit(data, 'sampleObject'),
                                     data.sampleObject
                                   )
-                                : data
+                                : { ...data, objectData: data }
                             )
                           );
                       }}
@@ -78,7 +78,7 @@ export default class ObjectGrid extends Component {
                             data.sampleObject
                           )
                         ) : (
-                          data
+                          { ...data, objectData: data }
                         )
                       }
                       appSession={this.props.appSession}

@@ -89,8 +89,7 @@ export function flattenSample(
   objectData: ObjectData,
   sampleData: SampleData
 ): FlattenedSampleObject {
-  return {
-    ...objectData,
+  const sampleWithTypeInfo = {
     id: sampleData.objectId,
     uuid: sampleData.objectId,
     objectId: sampleData.objectId,
@@ -105,11 +104,12 @@ export function flattenSample(
       sampleData.sampleTypeId,
       appSession
     ),
-    sampleTypeObj: getSampleTypeObj(
-      { sampleTypes: sampleTypes },
-      sampleData.sampleTypeId
-    ),
-    sampleTypeId: sampleData.sampleTypeId,
+    sampleType: getSampleTypeObj({ sampleTypes: sampleTypes }, sampleData.sampleTypeId),
+    sampleTypeId: sampleData.sampleTypeId
+  };
+  return {
+    ...objectData,
+    ...sampleWithTypeInfo,
     sampleType: getSampleType(
       { sampleTypes: sampleTypes },
       sampleData.sampleTypeId,
@@ -119,6 +119,8 @@ export function flattenSample(
       { sampleTypes: sampleTypes },
       sampleData.sampleTypeId,
       appSession
-    )
+    ),
+    objectData: objectData,
+    sampleData: sampleWithTypeInfo
   };
 }

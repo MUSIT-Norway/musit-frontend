@@ -9,7 +9,6 @@ import objectStore$, { loadObject$, clearStore$ } from '../objects/objectStore';
 import moment from 'moment';
 import Config from '../../config';
 import type { SampleData } from '../../types/samples';
-import type { ObjectData } from '../../types/object';
 import { loadPredefinedTypes } from '../../stores/predefinedLoader';
 import values from 'lodash/values';
 import flatten from 'lodash/flatten';
