@@ -91,6 +91,7 @@ export default class TableComponent extends React.Component {
     this.props.getSampleTypes({ museumId, collectionId, token });
     if (this.props.showObjects) {
       this.loadObjects(nodeId, museumId, collectionId, token, currentPage);
+    } else if (this.props.showSamples) {
       this.getSamplesForNode(nodeId, museumId, collectionId, token);
     } else {
       this.loadNodes(nodeId, museumId, token, { page: currentPage });
@@ -125,6 +126,7 @@ export default class TableComponent extends React.Component {
       this.loadRootNode(nodeId, museumId, token);
       if (newProps.showObjects) {
         this.loadObjects(nodeId, museumId, collectionId, token, currentPage);
+      } else if (newProps.showSamples) {
         this.getSamplesForNode(nodeId, museumId, collectionId, token);
       } else {
         this.loadNodes(nodeId, museumId, token, { page: currentPage });
@@ -148,6 +150,17 @@ export default class TableComponent extends React.Component {
     if (node && node.nodeId) {
       this.props.goTo(
         Config.magasin.urls.client.storagefacility.goToObjects(node.nodeId, appSession)
+      );
+    } else {
+      this.props.goTo(Config.magasin.urls.client.storagefacility.goToRoot(appSession));
+    }
+  }
+
+  showSamples(node = this.props.tableStore.rootNode) {
+    const appSession = this.props.appSession;
+    if (node && node.nodeId) {
+      this.props.goTo(
+        Config.magasin.urls.client.storagefacility.goToSamples(node.nodeId, appSession)
       );
     } else {
       this.props.goTo(Config.magasin.urls.client.storagefacility.goToRoot(appSession));
@@ -195,7 +208,6 @@ export default class TableComponent extends React.Component {
     token = this.props.appSession.accessToken
   ) {
     if (nodeId) {
-      this.props.setLoading();
       this.props.getSamplesForNode({
         nodeId,
         museumId,
@@ -343,24 +355,31 @@ export default class TableComponent extends React.Component {
     collectionId = this.props.appSession.collectionId,
     token = this.props.appSession.accessToken,
     showObjects = this.props.showObjects,
+    showSamples = this.props.showSamples,
     searchPattern = this.state.searchPattern
   ) {
     return (
       <Toolbar
-        showRight={!!showObjects}
-        showLeft={!showObjects}
-        labelRight={I18n.t('musit.grid.button.objects')}
+        showCenter={showObjects}
+        showLeft={!showObjects && !showSamples}
+        showRight={showSamples}
+        labelCenter={I18n.t('musit.grid.button.objects')}
         labelLeft={I18n.t('musit.grid.button.nodes')}
+        labelRight={I18n.t('musit.grid.button.samples')}
         placeHolderSearch={I18n.t('musit.grid.search.placeHolder')}
         searchValue={searchPattern}
         onSearchChanged={newPattern =>
           this.setState({ ...this.state, searchPattern: newPattern })}
-        clickShowRight={() => {
+        clickShowCenter={() => {
           this.showObjects();
           blur();
         }}
         clickShowLeft={() => {
           this.showNodes();
+          blur();
+        }}
+        clickShowRight={() => {
+          this.showSamples();
           blur();
         }}
       />
@@ -475,6 +494,7 @@ export default class TableComponent extends React.Component {
     rootNode = this.props.tableStore.rootNode,
     children = this.props.tableStore.children,
     showObjects = this.props.showObjects,
+    showSamples = this.props.showSamples,
     moveNode = this.showMoveNodeModal,
     moveObject = this.showMoveObjectModal,
     showHistory = this.showObjectMoveHistory
@@ -484,7 +504,7 @@ export default class TableComponent extends React.Component {
     const totalMatches = children && children.data && children.data.totalMatches;
     const isLoading = children && children.loading;
     const showPaging = totalMatches > 0 && totalMatches > Config.magasin.limit;
-    if (showObjects) {
+    if (showObjects || showSamples) {
       return (
         <Loader loaded={!isLoading}>
           <ObjectGrid
@@ -515,7 +535,7 @@ export default class TableComponent extends React.Component {
             isObjectAdded={object =>
               this.props.isItemAdded(object, this.props.pickList.objects)}
             onMove={moveObject}
-            sampleStore={this.props.sampleStore}
+            sampleStore={showSamples ? this.props.sampleStore : {}}
             appSession={this.props.appSession}
           />
           {showPaging && (

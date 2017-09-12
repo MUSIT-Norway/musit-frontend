@@ -20,7 +20,8 @@ export type TableDataProps = {
   showMoveHistory: (data: Data) => void,
   onMove: (data: Data) => void,
   pickObject: (data: Data) => void,
-  isObjectAdded: (data: Data) => boolean
+  isObjectAdded: (data: Data) => boolean,
+  sampleView: boolean
 };
 
 export default function TableData(props: TableDataProps) {
@@ -43,18 +44,20 @@ export default function TableData(props: TableDataProps) {
       <td>{rowData.museumNo}</td>
       <td>{rowData.subNo}</td>
       <td>{rowData.term}</td>
-      <td>{rowData.sampleNum ? rowData.sampleNum : ''}</td>
-      <td>
-        {rowData.sampleTypeId && props.appSession && props.sampleTypes ? (
-          getSampleTypeAndSubType(
-            { sampleTypes: props.sampleTypes },
-            rowData.sampleTypeId,
-            props.appSession
-          )
-        ) : (
-          ''
-        )}
-      </td>
+      {props.sampleView && <td>{rowData.sampleNum ? rowData.sampleNum : ''}</td>}
+      {props.sampleView && (
+        <td>
+          {rowData.sampleTypeId && props.appSession && props.sampleTypes ? (
+            getSampleTypeAndSubType(
+              { sampleTypes: props.sampleTypes },
+              rowData.sampleTypeId,
+              props.appSession
+            )
+          ) : (
+            ''
+          )}
+        </td>
+      )}
       <td>
         {isMainObject && (
           <a

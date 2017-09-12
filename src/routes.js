@@ -173,6 +173,13 @@ const MagasinPage = props => (
         showObjects: true
       })}
     />
+    <Route
+      path={rt(props, '/:id/samples/:page?')}
+      exact
+      component={extraProps(StorageUnitsTable, {
+        showSamples: true
+      })}
+    />
     <Route path={rt(props, '/:id/:page?')} exact component={StorageUnitsTable} />
     <Route component={NotFoundPage} />
   </Switch>

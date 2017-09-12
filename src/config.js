@@ -92,6 +92,10 @@ export default {
             `${clientContextUrl(appSession)}/magasin/${nodeId}/objects${page
               ? `/${page}`
               : ''}`,
+          goToSamples: (nodeId: number, appSession: AppSession, page?: ?number) =>
+            `${clientContextUrl(appSession)}/magasin/${nodeId}/samples${page
+              ? `/${page}`
+              : ''}`,
           addObservation: (nodeId: number, appSession: AppSession) =>
             `${clientContextUrl(appSession)}/magasin/${nodeId}/observation/add`,
           editObservation: (nodeId: number, appSession: AppSession) =>

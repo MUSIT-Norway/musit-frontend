@@ -388,6 +388,7 @@
         "button": {
           "nodes": "Nodes",
           "objects": "Objects",
+          "samples": "Samples",
           "observations": "Observations",
           "controls": "Controls"
         },
@@ -1311,6 +1312,7 @@
         "button": {
           "nodes": "Noder",
           "objects": "Objekter",
+          "samples": "Prøver",
           "observations": "Observasjoner",
           "controls": "Kontroller"
         },

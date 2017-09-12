@@ -31,8 +31,12 @@ export default class ObjectGrid extends Component {
                   <th>{I18n.t('musit.grid.object.museumsNumber')}</th>
                   <th>{I18n.t('musit.grid.object.uNumber')}</th>
                   <th>{I18n.t('musit.grid.object.term')}</th>
-                  <th>{I18n.t('musit.analysis.sampleNumber')}</th>
-                  <th>{I18n.t('musit.analysis.sampleType')}</th>
+                  {this.props.sampleStore.nodeSamples && (
+                    <th>{I18n.t('musit.analysis.sampleNumber')}</th>
+                  )}
+                  {this.props.sampleStore.nodeSamples && (
+                    <th>{I18n.t('musit.analysis.sampleType')}</th>
+                  )}
                   <th />
                   <th />
                   <th>
@@ -89,6 +93,7 @@ export default class ObjectGrid extends Component {
                       onMove={this.props.onMove}
                       showMoveHistory={this.props.showMoveHistory}
                       goToObject={this.props.goToObject}
+                      sampleView={!!this.props.sampleStore.nodeSamples}
                     />
                   ))}
               </tbody>

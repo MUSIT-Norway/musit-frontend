@@ -54,12 +54,13 @@ export class EventsComponent extends React.Component {
   makeToolbar() {
     return (
       <Toolbar
-        showRight={this.state.showControls}
+        showCenter={this.state.showControls}
         showLeft={this.state.showObservations}
-        labelRight={I18n.t('musit.grid.button.controls')}
+        hideRight={true}
+        labelCenter={I18n.t('musit.grid.button.controls')}
         labelLeft={I18n.t('musit.grid.button.observations')}
         placeHolderSearch={I18n.t('musit.grid.search.placeHolder')}
-        clickShowRight={() =>
+        clickShowCenter={() =>
           this.setState({ ...this.state, showControls: !this.state.showControls })}
         clickShowLeft={() =>
           this.setState({

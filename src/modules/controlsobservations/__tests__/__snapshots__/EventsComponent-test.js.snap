@@ -33,13 +33,14 @@ exports[`EventsComponent Check it renders when not loaded 1`] = `
   title="Magasin"
   toolbar={
     <Toolbar
+      clickShowCenter={[Function]}
       clickShowLeft={[Function]}
-      clickShowRight={[Function]}
+      hideRight={true}
+      labelCenter="Kontroller"
       labelLeft="Observasjoner"
-      labelRight="Kontroller"
       placeHolderSearch="Filtrer i listen"
+      showCenter={true}
       showLeft={true}
-      showRight={true}
     />
   }
 />
@@ -85,13 +86,14 @@ exports[`EventsComponent Check it renders. 1`] = `
   title="Magasin"
   toolbar={
     <Toolbar
+      clickShowCenter={[Function]}
       clickShowLeft={[Function]}
-      clickShowRight={[Function]}
+      hideRight={true}
+      labelCenter="Kontroller"
       labelLeft="Observasjoner"
-      labelRight="Kontroller"
       placeHolderSearch="Filtrer i listen"
+      showCenter={true}
       showLeft={true}
-      showRight={true}
     />
   }
 />
