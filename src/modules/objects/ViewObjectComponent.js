@@ -66,6 +66,18 @@ export const ViewObjectComponent = ({
         >
           {I18n.t('musit.objects.objectsView.newSample')}
         </Button>
+        <Button
+          className="primary"
+          onClick={() =>
+            history.push({
+              pathname: Config.magasin.urls.client.conservation.addConservation(
+                appSession
+              ),
+              state: objectData
+            })}
+        >
+          {I18n.t('musit.conservation.newConservation')}
+        </Button>
       </div>
       <Tabs defaultActiveKey={1} id="events">
         <Tab title={I18n.t('musit.objects.objectsView.events.events')} eventKey={1}>

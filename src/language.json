@@ -1,6 +1,10 @@
 {
   "en": {
     "musit": {
+      "conservation": {
+        "conservation": "Conservation",
+        "newConservation": "New conservation"
+      },
       "objects": {
         "goToParentObject": "Go to object",
         "noData": "No objects to display",
@@ -924,6 +928,10 @@
   },
   "no": {
     "musit": {
+      "conservation": {
+        "conservation": "Konservering",
+        "newConservation": "Ny konservering"
+      },
       "objects": {
         "goToParentObject": "Gå til objektet",
         "noData": "Ingen objekter å vise",
