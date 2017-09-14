@@ -38,6 +38,9 @@ import SampleTypes from './modules/administration/sampleTypes/sampleTypesContain
 import AnalysisEventsViewContainer from './modules/analysis/events/analysisEventsViewContainer';
 import AnalysisResultExchangeContainer from './modules/analysis/exchange/analysisResultExchangeContainer';
 import { replace } from 'lodash';
+import ConservationAddContainer from './modules/conservation/conservationAddContainer';
+import ConservationEditContainer from './modules/conservation/conservationEditContainer';
+import ConservationViewContainer from './modules/conservation/conservationViewContainer';
 
 /**
  *
@@ -99,6 +102,7 @@ const MuseumAndCollectionPage = props => (
     <Route path={rt(props, '/administration')} component={AdministrationPage} />
     <Route path={rt(props, '/reports')} component={ReportsPage} />
     <Route path={rt(props, '/search')} component={SearchPage} />
+    <Route path={rt(props, '/conservation')} component={ConservationPage} />
 
     <Route component={NotFoundPage} />
   </Switch>
@@ -225,6 +229,24 @@ const AnalysisPage = props => (
       component={SampleEditContainer}
     />
     <Route path={rt(props, '/sample/:sampleId')} exact component={SampleViewContainer} />
+
+    <Route component={NotFoundPage} />
+  </Switch>
+);
+
+const ConservationPage = props => (
+  <Switch>
+    <Route path={rt(props, '/add')} exact component={ConservationAddContainer} />
+    <Route
+      path={rt(props, '/edit/:conservationId')}
+      exact
+      component={ConservationEditContainer}
+    />
+    <Route
+      path={rt(props, '/:conservationId')}
+      exact
+      component={ConservationViewContainer}
+    />
 
     <Route component={NotFoundPage} />
   </Switch>

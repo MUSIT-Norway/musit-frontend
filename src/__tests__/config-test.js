@@ -52,6 +52,18 @@ describe('Config urls', () => {
     {
       actual: urls.client.storagefacility.viewControlsObservations(1, appSession),
       expected: '/museum/99/collections/1234/magasin/1/controlsobservations'
+    },
+    {
+      actual: urls.client.conservation.addConservation(appSession),
+      expected: '/museum/99/collections/1234/conservation/add'
+    },
+    {
+      actual: urls.client.conservation.editConservation(appSession, 123),
+      expected: '/museum/99/collections/1234/conservation/edit/123'
+    },
+    {
+      actual: urls.client.conservation.viewConservation(appSession, 123),
+      expected: '/museum/99/collections/1234/conservation/123'
     }
   ];
 
@@ -199,6 +211,16 @@ describe('Config urls', () => {
     {
       service: 'managment',
       endpoints: [
+        {
+          name: 'addConservationEvent',
+          actual: urls.api.conservation.addConservationEvent(99),
+          expected: '/api/management/99/conservation'
+        },
+        {
+          name: 'getConservationById',
+          actual: urls.api.conservation.getConservationById(99, 123),
+          expected: '/api/management/99/conservation/123'
+        },
         {
           name: 'getAllAnalysisTypes',
           actual: urls.api.analysisType.getAllAnalysisTypes(99),

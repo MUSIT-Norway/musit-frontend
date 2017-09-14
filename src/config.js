@@ -37,6 +37,14 @@ export default {
         },
         homePage: '/home',
         aboutPage: '/about',
+        conservation: {
+          editConservation: (appSession: AppSession, conservationId: number) =>
+            `${clientContextUrl(appSession)}/conservation/edit/${conservationId}`,
+          addConservation: (appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/conservation/add`,
+          viewConservation: (appSession: AppSession, conservationId: number) =>
+            `${clientContextUrl(appSession)}/conservation/${conservationId}`
+        },
         analysis: {
           baseUrl: (appSession: AppSession) => `${clientContextUrl(appSession)}/analysis`,
           editAnalysis: (appSession: AppSession, analysisId: string) =>
@@ -117,6 +125,11 @@ export default {
         }
       },
       api: {
+        conservation: {
+          addConservationEvent: (mid: MuseumId) => `/api/management/${mid}/conservation`,
+          getConservationById: (mid: MuseumId, conservationId: number) =>
+            `/api/management/${mid}/conservation/${conservationId}`
+        },
         analysisType: {
           getAllAnalysisTypes: (mid: MuseumId) => `/api/management/${mid}/analyses/types`,
           getAnalysisCategories: (mid: MuseumId) =>
