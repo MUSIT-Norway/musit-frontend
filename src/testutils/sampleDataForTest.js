@@ -87,11 +87,10 @@ export const sample: SampleDataExtended = {
   sampleNum: 12,
   sampleType: {
     sampleTypeId: 1,
-    sampleType: null,
     enSampleType: 'en',
     noSampleType: 'no',
-    noSampleSubType: null,
-    enSampleSubType: null
+    noSampleSubType: 'no sub',
+    enSampleSubType: 'en sub'
   }
 };
 

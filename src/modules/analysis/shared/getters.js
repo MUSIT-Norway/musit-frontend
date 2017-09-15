@@ -9,6 +9,7 @@ import type {
 } from '../../../types/analysis';
 import { I18n } from 'react-i18nify';
 import type { Language } from '../../../types/appSession';
+import type { AnalysisLab, Purpose } from '../../../types/predefined';
 import { getAnalysisResultFieldAllowedValues } from './analysisResult';
 
 export function getStatusText(status?: ?number): string {
@@ -32,7 +33,7 @@ export function getStatusText(status?: ?number): string {
 }
 
 export function getLabPlaceText(
-  analysisLabList: ?Array<{ id: number, fullName: string }>,
+  analysisLabList: ?Array<AnalysisLab>,
   actorId: ?number
 ): string {
   if (!actorId || !analysisLabList) {
@@ -47,7 +48,7 @@ export function getLabPlaceText(
 
 export function getAnalysisPurpose(
   reason: ?string,
-  purposes: ?Array<{ id: string, enPurpose: string, noPurpose: string }>,
+  purposes: ?Array<Purpose>,
   language: Language
 ): string {
   if (reason && purposes) {

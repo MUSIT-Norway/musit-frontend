@@ -135,11 +135,11 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
       values={
         Array [
           Object {
-            "id": "d39305e8-56b2-4d8d-9351-66dab9c1d8e4",
+            "id": 1,
             "value": "Kokko",
           },
           Object {
-            "id": "d39305e8-56b2-4d8d-9351-66dab9c1d8e5",
+            "id": 2,
             "value": "Kokkosbolle",
           },
         ]

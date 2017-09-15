@@ -36,7 +36,9 @@ export type AnalysisStoreState = {
 export const initialState: AnalysisStoreState = {
   analysisTypes: [],
   purposes: [],
-  categories: {},
+  categories: {
+    raw: []
+  },
   analysisLabList: [],
   loading: false,
   extraDescriptionAttributes: {},

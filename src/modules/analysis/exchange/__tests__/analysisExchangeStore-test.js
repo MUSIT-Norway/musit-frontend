@@ -218,7 +218,9 @@ describe('analysisExchangeStore', () => {
 const analysisStoreInitFixture: AnalysisStoreState = {
   analysisTypes: [],
   purposes: [],
-  categories: {},
+  categories: {
+    raw: []
+  },
   analysisLabList: [],
   loading: true
 };
@@ -226,7 +228,9 @@ const analysisStoreInitFixture: AnalysisStoreState = {
 const analysisStoreObjectDataFixture: AnalysisStoreState = {
   analysisTypes: [],
   purposes: [],
-  categories: {},
+  categories: {
+    raw: []
+  },
   analysisLabList: [],
   loading: false,
   analysis: {
@@ -279,7 +283,9 @@ const analysisStoreObjectDataFixture: AnalysisStoreState = {
 const analysisStoreSampleDataFixture: AnalysisStoreState = {
   analysisTypes: [],
   purposes: [],
-  categories: {},
+  categories: {
+    raw: []
+  },
   analysisLabList: [],
   loading: false,
   analysis: {

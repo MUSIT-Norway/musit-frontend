@@ -174,7 +174,8 @@ export default function SampleFormComponent(props: Props) {
                   appSession={props.appSession}
                   onChange={props.updateForm}
                   selectItems={
-                    predefined.sampleTypes ? (
+                    predefined.sampleTypes &&
+                    typeof form.sampleType.rawValue === 'string' ? (
                       predefined.sampleTypes[form.sampleType.rawValue]
                     ) : (
                       []

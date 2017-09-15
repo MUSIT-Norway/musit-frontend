@@ -1,10 +1,10 @@
 // @flow
 export type SampleType = {
-  enSampleSubType?: ?string,
-  enSampleType: string,
-  noSampleSubType?: ?string,
+  sampleTypeId: number,
   noSampleType: string,
-  sampleTypeId: number
+  enSampleType: string,
+  noSampleSubType?: string,
+  enSampleSubType?: string
 };
 
 export type SampleTypes = Array<SampleType>;
