@@ -33,7 +33,7 @@ export default function lifeCycle<P>(methods: Methods<P>): Hoc<P> {
         onUnmount(this.props);
       }
 
-      componentWillReceiveProps(props: P, context: any) {
+      componentWillReceiveProps(props: P, context: *) {
         onReceiveProps(props);
       }
 

@@ -65,7 +65,8 @@ describe('form stream', () => {
           defaultValue: '1',
           value: 'Jar',
           status: {
-            valid: true
+            valid: true,
+            error: null
           }
         }
       },
@@ -78,7 +79,8 @@ describe('form stream', () => {
           value: 'Kalle',
           defaultValue: 'Kalle',
           status: {
-            valid: true
+            valid: true,
+            error: null
           }
         }
       },

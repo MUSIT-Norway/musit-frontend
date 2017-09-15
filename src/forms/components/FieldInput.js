@@ -33,7 +33,9 @@ export default function FieldInput({
       )}
       <div className={`col-md-${controlWidth}`}>
         {readOnly ? (
-          <p className="form-control-static">{field.rawValue}</p>
+          <p className="form-control-static">
+            {field.rawValue && field.rawValue.toString()}
+          </p>
         ) : (
           <input
             {...inputProps}

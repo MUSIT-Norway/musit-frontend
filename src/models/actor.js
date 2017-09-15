@@ -52,15 +52,15 @@ class MusitActor {
     fields: Array<ActorField>
   ) => ActorMetaData;
   static getActors: (
-    ajaxPost: AjaxPost
+    ajaxPost: AjaxPost<*>
   ) => (props: {
     actorIds: Array<string>,
     token: string,
-    callback?: Callback
+    callback?: Callback<*>
   }) => Observable<Array<Actor>>;
   static getActor: (
-    ajaxGet: AjaxGet
-  ) => (props: { actorId: string, token: string, callback?: Callback }) => Observable<
+    ajaxGet: AjaxGet<*>
+  ) => (props: { actorId: string, token: string, callback?: Callback<*> }) => Observable<
     Actor
   >;
 }

@@ -21,32 +21,32 @@ type ObservationType = {
 
 class Control {
   static loadControls: (
-    ajaxGet: AjaxGet
+    ajaxGet: AjaxGet<*>
   ) => (props: {
     nodeId: number,
     museumId: number,
     token: string,
-    callback?: Callback
+    callback?: Callback<*>
   }) => Observable<Array<ControlType>>;
   static addControl: (
-    ajaxPost: AjaxPost
+    ajaxPost: AjaxPost<*>
   ) => (props: {
     nodeId: number,
     controlData: ControlType,
     observations?: ?ObservationType,
     museumId: number,
     token: string,
-    callback?: Callback
+    callback?: Callback<*>
   }) => Observable<ControlType>;
   static getControl: (
-    ajaxGet: AjaxGet,
-    ajaxPost: AjaxPost
+    ajaxGet: AjaxGet<*>,
+    ajaxPost: AjaxPost<*>
   ) => (props: {
     nodeId: number,
     controlId: number,
     museumId: number,
     token: string,
-    callback?: Callback
+    callback?: Callback<*>
   }) => Observable<ControlType>;
 }
 

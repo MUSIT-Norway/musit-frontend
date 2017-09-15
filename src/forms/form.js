@@ -13,7 +13,8 @@ import {
 } from './validators';
 import { KEEP_ALIVE } from '../stores/constants';
 
-export type RawValue = any;
+export type ValueType = string | number | boolean | Array<*>;
+export type RawValue = ValueType | { [string]: ValueType };
 
 export type Field<T> = {
   name: string,
@@ -22,7 +23,7 @@ export type Field<T> = {
   value?: ?T,
   status?: {
     valid: boolean,
-    error?: any
+    error?: ?string
   },
   mapper: {
     fromRaw: (s: ?RawValue) => ?T,
@@ -53,7 +54,7 @@ const updateField = (field: Field<*>, data: Update<*>): Field<*> => {
     !rawError &&
     field.validator.valueValidator &&
     field.validator.valueValidator(field.name)(value);
-  const error = rawError || valueError;
+  const error = rawError || valueError || null;
   return {
     ...field,
     rawValue,
@@ -73,6 +74,8 @@ export const getStrField = (
 ): Field<string> => ({
   name: field,
   defaultValue: defaultValue,
+  value: defaultValue,
+  rawValue: stringMapper.toRaw(defaultValue),
   mapper: stringMapper,
   validator: {
     rawValidator: required ? isRequired : null
@@ -83,6 +86,8 @@ export function getCompositeField<T>(field: string, defaultValue?: ?T): Field<T>
   return {
     name: field,
     defaultValue: defaultValue,
+    value: defaultValue,
+    rawValue: noMapper.toRaw(defaultValue),
     mapper: noMapper,
     validator: {}
   };
@@ -94,6 +99,8 @@ export const getBoolField = (
 ): Field<boolean> => ({
   name: field,
   defaultValue: defaultValue,
+  value: defaultValue,
+  rawValue: booleanMapper.toRaw(defaultValue),
   mapper: booleanMapper,
   validator: {}
 });
@@ -105,6 +112,8 @@ export const getArrField = (
 ): Field<Array<*>> => ({
   name: field,
   defaultValue: defaultValue,
+  value: defaultValue,
+  rawValue: defaultValue,
   mapper: noMapper,
   validator: {
     rawValidator: required ? isNonEmptyArray : null
@@ -121,6 +130,8 @@ export const getNumberField = (
 ): Field<number> => ({
   name: field,
   defaultValue: defaultValue,
+  value: defaultValue,
+  rawValue: numberMapper.toRaw(defaultValue),
   mapper: numberMapper,
   validator: {
     rawValidator: required

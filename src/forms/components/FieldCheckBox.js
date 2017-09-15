@@ -6,8 +6,8 @@ import { I18n } from 'react-i18nify';
 type FieldInputProps = {
   field: Field<*>,
   title: string,
-  yesValue: any,
-  noValue: any,
+  yesValue: string | number,
+  noValue: string | number,
   onChange: Function,
   inputProps?: {
     className?: string,
@@ -17,8 +17,8 @@ type FieldInputProps = {
 
 export default function CheckBoxInput({
   field,
-  yesValue = true,
-  noValue = false,
+  yesValue,
+  noValue,
   title,
   onChange
 }: FieldInputProps) {

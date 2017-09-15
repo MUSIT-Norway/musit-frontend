@@ -88,7 +88,7 @@ export function ViewRestriction(props: ViewRestrictionProps) {
           </p>
           <button
             className="btn btn-default"
-            onClick={(e: any) => {
+            onClick={(e: *) => {
               e.preventDefault();
               props.clickCancel();
             }}

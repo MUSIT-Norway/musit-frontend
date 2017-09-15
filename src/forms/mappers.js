@@ -1,16 +1,16 @@
 export const booleanMapper = {
   fromRaw: (s: ?boolean) => s,
-  toRaw: (s: ?any) => !!s
+  toRaw: (s: ?*) => !!s
 };
 
 export const stringMapper = {
   fromRaw: (s: ?string) => s,
-  toRaw: (s: ?any) => (s ? '' + s : null)
+  toRaw: (s: ?*) => (s ? '' + s : null)
 };
 
 export const noMapper = {
-  fromRaw: (s: ?any) => s,
-  toRaw: (s: ?any) => s
+  fromRaw: (s: ?*) => s,
+  toRaw: (s: ?*) => s
 };
 
 export const numberMapper = {

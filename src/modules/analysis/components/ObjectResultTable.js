@@ -13,7 +13,7 @@ type Props = {
   data: Array<AnalysisEvent>,
   handleClickRow: (object: Object) => void,
   updateForm?: Function,
-  extraAttributes?: any,
+  extraAttributes?: *,
   history: History,
   appSession: AppSession,
   viewMode?: ?boolean

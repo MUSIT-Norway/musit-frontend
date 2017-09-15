@@ -15,15 +15,15 @@ import type { Callback, AjaxGet, AjaxPost } from '../types/ajax';
 
 class Event {
   static getAnalysesAndMoves: (
-    ajaxGet: AjaxGet,
-    ajaxPost: AjaxPost
+    ajaxGet: AjaxGet<*>,
+    ajaxPost: AjaxPost<*>
   ) => (props: {
     id: number, // FIXME the same as objectId
     objectId: number, // FIXME The same as id
     museumId: number,
     collectionId: string,
     token: string,
-    callback?: Callback
+    callback?: Callback<*>
   }) => Observable<*>;
 }
 

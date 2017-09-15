@@ -15,13 +15,13 @@ class MusitObject {
   static getObjectDescription: (object: ObjectData) => string;
   static isMainObject: (object: ObjectData) => boolean;
   static getObjectDetails: (
-    ajaxGet: AjaxGet
+    ajaxGet: AjaxGet<*>
   ) => (props: {
     id: string,
     museumId: number,
     collectionId: string,
     token: string,
-    callback?: ?Callback
+    callback?: ?Callback<*>
   }) => Observable<*>;
   static moveObjects: (
     props: {
@@ -31,88 +31,88 @@ class MusitObject {
       museumId: number,
       collectionId: string,
       token: string,
-      callback?: ?Callback
+      callback?: ?Callback<*>
     },
-    ajaxGet: AjaxGet,
-    ajaxPut: AjaxPut
+    ajaxGet: AjaxGet<*>,
+    ajaxPut: AjaxPut<*>
   ) => void;
   static getObjectLocations: (
-    ajaxPost: AjaxPost
+    ajaxPost: AjaxPost<*>
   ) => (props: {
     movableObjects: Array<MovableObject>,
     museumId: MuseumId,
     token: string,
-    callback?: ?Callback
+    callback?: ?Callback<*>
   }) => Observable<*>;
   static getObjectLocation: (
-    ajaxGet: AjaxGet
+    ajaxGet: AjaxGet<*>
   ) => (props: {
     objectId: string,
     objectType?: ?string,
     museumId: number,
     token: string,
-    callback?: ?Callback
+    callback?: ?Callback<*>
   }) => Observable<*>;
   static getMainObject: (
-    ajaxGet: AjaxGet
+    ajaxGet: AjaxGet<*>
   ) => (props: {
     id: string,
     museumId: number,
     collectionId: string,
     token: string,
-    callback?: ?Callback
+    callback?: ?Callback<*>
   }) => Observable<*>;
   static getObjectWithCurrentLocation: (
-    ajaxGet: AjaxGet
+    ajaxGet: AjaxGet<*>
   ) => (props: {
     objectId: string,
     museumId: number,
     collectionId: string,
     token: string,
-    callback?: ?Callback
+    callback?: ?Callback<*>
   }) => Observable<ObjectData>;
 
   static pickObject: (
     pickObject$: Subject<*>,
-    ajaxGet: AjaxGet
+    ajaxGet: AjaxGet<*>
   ) => (props: {
     object: ObjectData,
     breadcrumb: Array<Breadcrumb>,
     museumId: number,
     collectionId: string,
     token: string,
-    callback?: ?Callback
+    callback?: ?Callback<*>
   }) => void;
   static getObjects: (
-    ajaxGet: AjaxGet
+    ajaxGet: AjaxGet<*>
   ) => (props: {
     id: string,
     page: number,
     museumId: number,
     collectionId: string,
     token: string,
-    callback?: ?Callback
+    callback?: ?Callback<*>
   }) => Observable<Array<ObjectData>>;
   static moveSingleObject: (
-    ajaxPut: AjaxPut
+    ajaxPut: AjaxPut<*>
   ) => (props: {
     destination: number,
     doneBy: string,
     objectTypeAndId?: objectTypeAndId,
     museumId: number,
     token: string,
-    callback?: ?Callback
+    callback?: ?Callback<*>
   }) => Observable<*>;
   static getLocationHistory: (
-    ajaxGet: AjaxGet
+    ajaxGet: AjaxGet<*>
   ) => (props: {
     objectId: number,
     museumId: number,
     token: string,
-    callback?: Callback
+    callback?: Callback<*>
   }) => Observable<*>;
   static findByBarcode: (
-    ajaxGet: AjaxGet
+    ajaxGet: AjaxGet<*>
   ) => (props: {
     barcode: number,
     museumId: number,
@@ -120,7 +120,7 @@ class MusitObject {
     token: string
   }) => Observable<*>;
   static searchForObjects: (
-    ajaxGet: AjaxGet
+    ajaxGet: AjaxGet<*>
   ) => (props: {
     museumNo: string,
     subNo: string,
@@ -130,7 +130,7 @@ class MusitObject {
     museumId: number,
     collectionId: string,
     token: string,
-    callback?: Callback
+    callback?: Callback<*>
   }) => Observable<*>;
 }
 

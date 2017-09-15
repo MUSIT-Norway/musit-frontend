@@ -114,7 +114,7 @@ export default function SampleFormComponent(props: Props) {
         <h4>{I18n.t('musit.sample.personsAssociatedWithSampleTaking')}</h4>
         <PersonRoleDate
           appSession={props.appSession}
-          personData={form.persons.rawValue || []}
+          personData={Array.isArray(form.persons.rawValue) ? form.persons.rawValue : []}
           updateForm={props.updateForm}
           fieldName={form.persons.name}
           roles={['responsible', 'creator']}

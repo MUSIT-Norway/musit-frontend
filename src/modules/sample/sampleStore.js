@@ -41,8 +41,8 @@ export const createSamplesForObjects$: Observable<
     objectData: Array<ObjectData>,
     form: FormDetails,
     appSession: AppSession,
-    sampleTypes: any,
-    callback: Callback
+    sampleTypes: *,
+    callback: Callback<*>
   }) => {
     const tasks$ = props.objectData.map(od => {
       return Sample.addSample(simplePost)({

@@ -6,6 +6,14 @@ import type { SampleDataExtended } from '../types/samples';
 import type { MusitObject } from '../types/object';
 import type { Field } from '../forms/form';
 import { noMapper } from '../forms/mappers';
+import {
+  getStrField,
+  getNumberField,
+  getBoolField,
+  getArrField,
+  getCompositeField
+} from '../forms/form';
+import type { FormData as AnalysisFormData } from '../modules/analysis/shared/formType';
 
 export const appSession: AppSession = {
   museumId: 99,
@@ -152,7 +160,7 @@ export function createField<T>(
 ): Field<T> {
   return {
     name: name,
-    rawValue: value,
+    rawValue: noMapper.toRaw(value),
     defaultValue: value,
     status: {
       valid: valid
@@ -161,3 +169,61 @@ export function createField<T>(
     mapper: noMapper
   };
 }
+
+export const analysisForm: AnalysisFormData = {
+  id: getNumberField('', 1),
+  analysisTypeId: getNumberField('', 1),
+  analysisTypeCategory: getStrField('', '1'),
+  doneBy: getStrField('', '1'),
+  doneDate: getStrField('', '1'),
+  registeredBy: getStrField('', '1'),
+  registeredByName: getStrField('', '1'),
+  registeredDate: getStrField('', '1'),
+  responsible: getStrField('', '1'),
+  administrator: getStrField('', '1'),
+  persons: getArrField('', [
+    {
+      name: 'jarl',
+      role: 'responsible'
+    },
+    {
+      name: 'line',
+      role: 'creator',
+      date: '2017-06-29T07:54:22+00:00'
+    }
+  ]),
+  completedBy: getStrField('', '1'),
+  completedDate: getStrField('', '1'),
+  objectId: getStrField('', '1'),
+  note: getStrField('', '1'),
+  type: getStrField('', '1'),
+  partOf: getStrField('', '1'),
+  result: getStrField('', '1'),
+  orgId: getNumberField('orgId', 1),
+  externalSource: getStrField('', '1'),
+  comments: getStrField('', '1'),
+  reason: getStrField('', '1'),
+  caseNumbers: getArrField('', []),
+  completeAnalysis: getStrField('', '1'),
+  // restriction
+  restrictions: getBoolField('', true),
+  restriction: getCompositeField('', {
+    requester: '3cbf15cb-8348-4e66-99a4-bc314da57444',
+    requesterName: 'Jarl',
+    reason: 'fin årsak',
+    caseNumbers: ['dddd', '44555', '55555'],
+    expirationDate: '2017-03-29T07:54:22+00:00',
+    cancelledReason: 'meh'
+  }),
+  // object details
+  museumNo: getStrField('', '1'),
+  subNo: getStrField('', '1'),
+  term: getStrField('', '1'),
+  eventDate: getStrField('', '1'),
+  actor: getStrField('', '1'),
+  events: getArrField('', []),
+  updatedBy: getStrField('', '1'),
+  updatedByName: getStrField('', '1'),
+  updatedDate: getStrField('', '1'),
+  status: getNumberField('status', 1)
+};

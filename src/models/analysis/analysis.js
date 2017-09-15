@@ -20,12 +20,12 @@ export type AnalysisSavePayload = {
 };
 
 export const saveAnalysisEvent: (
-  ajaxPost: AjaxPost
+  ajaxPost: AjaxPost<*>
 ) => (props: {
   museumId: number,
   data: AnalysisSavePayload,
   token: string,
-  callback?: Callback
+  callback?: Callback<*>
 }) => Observable<AnalysisCollection> = (ajaxPost = simplePost) => ({
   museumId,
   data,
@@ -37,13 +37,13 @@ export const saveAnalysisEvent: (
 };
 
 export const editAnalysisEvent: (
-  ajaxPut: AjaxPut
+  ajaxPut: AjaxPut<*>
 ) => (props: {
   id: number,
   museumId: number,
   data: AnalysisSavePayload,
   token: string,
-  callback?: Callback
+  callback?: Callback<*>
 }) => Observable<AnalysisCollection> = (ajaxPut = simplePut) => ({
   id,
   museumId,
@@ -56,12 +56,12 @@ export const editAnalysisEvent: (
 };
 
 export const getAnalysesForObject: (
-  ajaxGet: AjaxGet
+  ajaxGet: AjaxGet<*>
 ) => (props: {
   id: number,
   museumId: number,
   token: string,
-  callback?: Callback
+  callback?: Callback<*>
 }) => Observable<Array<AnalysisCollection>> = (ajaxGet = simpleGet) => ({
   museumId,
   token,
@@ -78,12 +78,12 @@ export const getAnalysesForObject: (
 };
 
 export const getAnalysisById: (
-  ajaxGet: AjaxGet
+  ajaxGet: AjaxGet<*>
 ) => (props: {
   id: number,
   museumId: number,
   token: string,
-  callback?: Callback
+  callback?: Callback<*>
 }) => Observable<AnalysisCollection> = (ajaxGet = simpleGet) => ({
   museumId,
   id,
@@ -95,7 +95,7 @@ export const getAnalysisById: (
 };
 
 export const getAnalysisEvents: (
-  ajaxGet: AjaxGet
+  ajaxGet: AjaxGet<*>
 ) => (props: {
   museumId: number,
   token: string,

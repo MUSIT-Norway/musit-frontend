@@ -20,7 +20,12 @@ exports[`AnalysisViewComponent should render properly 1`] = `
   <form
     className="form-horizontal"
   >
-    <MetaInformation />
+    <MetaInformation
+      registeredBy="1"
+      registeredDate="1"
+      updatedBy="1"
+      updatedDate="1"
+    />
     <hr />
     <div
       className="form-group"
@@ -157,7 +162,9 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         <p
           className="form-control-static"
           id="note"
-        />
+        >
+          1
+        </p>
       </div>
     </div>
     <hr />
@@ -332,7 +339,8 @@ exports[`AnalysisViewComponent should render properly 1`] = `
             "museumId": 99,
           }
         }
-        externalSource=""
+        comments="1"
+        externalSource="1"
         extraAttributes={Object {}}
         history={
           Object {

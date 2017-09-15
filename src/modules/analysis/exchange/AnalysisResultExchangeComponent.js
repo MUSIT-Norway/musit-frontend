@@ -7,7 +7,7 @@ import Import from '../../../components/spreadsheet/ImportSpreadsheetComponent';
 import ImportVerificationTable from './ImportVerificationTableComponent';
 
 import type { StoreState } from './analysisExchangeStore';
-type ImportResult = (resultRows: Array<any>) => void;
+type ImportResult = (resultRows: Array<*>) => void;
 
 type Props = {
   analysisExchangeStore: StoreState,

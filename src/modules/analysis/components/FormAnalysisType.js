@@ -9,7 +9,7 @@ import type { Language } from '../../../types/appSession';
 
 export type Props = ElementProps & {
   id: string,
-  categories: ?{ [string]: any },
+  categories: ?{ [string]: * },
   category: ?string,
   onChangeCategory: (e: DomEvent) => void,
   types: ?Array<AnalysisType>,

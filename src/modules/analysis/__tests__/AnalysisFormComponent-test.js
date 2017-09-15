@@ -1,47 +1,42 @@
+// @flow
 import React from 'react';
 import AnalysisFormComponent from '../AnalysisFormComponent';
 import { getAnalysisTypeTerm } from '../shared/getters';
-import { fieldsArray } from '../analysisForm';
-import type { Field } from 'forms/form';
-import type { FormData } from '../shared/formType';
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
-import { appSession } from './../../../testutils/sampleDataForTest';
+import {
+  appSession,
+  analysisForm,
+  history
+} from './../../../testutils/sampleDataForTest';
 
 const identity = (i: any): any => i;
 const promise = (i: any): any => new Promise(res => res(i));
 
-const form: FormData = (fieldsArray.reduce(
-  (acc, field: Field<any>) => ({
-    ...acc,
-    [field.name]: {
-      ...field,
-      rawValue: field.mapper.toRaw(field.defaultValue)
-    }
-  }),
-  {}
-): any);
-
-form.analysisTypeCategory.value = '5';
-
 describe('AnalysisFormComponent', () => {
   describe('getAnalysisTypeTerm', () => {
     it('should return empty string if not found', () => {
-      const analysis = { id: 1, analysisTypeId: '11134', events: [] };
+      const analysis = { id: 1, analysisTypeId: 11134, events: [] };
       const analysisTypes = [
         {
-          id: '19934',
+          id: 19934,
           name: 'Tjokkimokki 2',
+          enName: 'Tjokkimokki 2',
+          noName: 'Tjokkimokki 2',
           category: '5'
         },
         {
-          id: '18834',
+          id: 18834,
           name: 'Tjokkimokki 3',
+          enName: 'Tjokkimokki 3',
+          noName: 'Tjokkimokki 3',
           category: '5'
         },
         {
-          id: '12234',
+          id: 12234,
           name: 'Tjokkimokki 1',
+          enName: 'Tjokkimokki 1',
+          noName: 'Tjokkimokki 1',
           category: '5'
         }
       ];
@@ -63,16 +58,22 @@ describe('AnalysisFormComponent', () => {
       const analysisTypes = [
         {
           id: 19934,
+          name: 'Tjokkimokki 2',
+          enName: 'Tjokkimokki 2',
           noName: 'Tjokkimokki 2',
           category: '5'
         },
         {
           id: 18834,
+          name: 'Tjokkimokki 3',
+          enName: 'Tjokkimokki 3',
           noName: 'Tjokkimokki 3',
           category: '5'
         },
         {
           id: 12234,
+          name: 'Tjokkimokki 1',
+          enName: 'Tjokkimokki 1',
           noName: 'Tjokkimokki 1',
           category: '5'
         }
@@ -92,31 +93,55 @@ describe('AnalysisFormComponent', () => {
       showCancelDialog: false,
       analysis: {
         id: 1234,
-        analysisTypeId: '1234',
+        analysisTypeId: 1234,
         events: [
           {
             id: 1,
-            mainObjectId: 1,
-            nodeId: '1234',
-            objectId: 1,
-            objectType: 'collection',
-            objectUUID: 'sdffsdsfsf',
-            uuid: 'ddlkjlkjfsdf',
-            term: 'saks 1',
-            museumNo: 'museumNO',
-            subNo: 'subNO'
+            type: 'Analysis',
+            analysisTypeId: 1,
+            doneBy: '1',
+            doneDate: '1',
+            partOf: 23,
+            registeredBy: '1',
+            registeredDate: '1',
+            responsible: '1',
+            affectedType: 'collection',
+            affectedThing: 'sdffsdsfsf',
+            objectData: {
+              id: 234,
+              museumId: 99,
+              objectType: 'collection',
+              uuid: 'sdffsdsfsf',
+              term: 'saks 1',
+              museumNo: 'museumNO',
+              subNo: 'subNO',
+              mainObjectId: 1,
+              nodeId: '1234'
+            }
           },
           {
             id: 2,
-            mainObjectId: 1,
-            nodeId: '1234',
-            objectId: 2,
-            objectType: 'collection',
-            objectUUID: 'sdffsdsfsf',
-            uuid: 'ddlkjlkjfsdf',
-            term: 'saks 2',
-            museumNo: 'museumNO',
-            subNo: 'subNO'
+            type: 'Analysis',
+            analysisTypeId: 1,
+            doneBy: '1',
+            doneDate: '1',
+            partOf: 23,
+            registeredBy: '1',
+            registeredDate: '1',
+            responsible: '1',
+            affectedType: 'collection',
+            affectedThing: 'sdffsdsfsf',
+            objectData: {
+              id: 234,
+              museumId: 99,
+              objectType: 'collection',
+              uuid: 'sdffsdsfsf',
+              term: 'saks 1',
+              museumNo: 'museumNO',
+              subNo: 'subNO',
+              mainObjectId: 1,
+              nodeId: '1234'
+            }
           }
         ]
       }
@@ -126,14 +151,24 @@ describe('AnalysisFormComponent', () => {
       <AnalysisFormComponent
         extraDescriptionAttributes={[
           {
+            attributeType: 'lala',
             attributeKey: 'method'
           }
         ]}
+        analysisTypeTerm={''}
         getExtraDescriptionAttributeValue={() => 'test'}
         appSession={appSession}
-        form={form}
+        form={analysisForm}
+        history={history}
+        isFormValid={true}
+        isRestrictionValidForCancellation={false}
+        loadingAnalysis={false}
+        objects={[]}
+        extraResultAttributes={null}
+        updateAnalysisCategory={identity}
+        updateAnalysisTypeId={identity}
+        updateExtraResultAttribute={identity}
         updateForm={identity}
-        submitForm={identity}
         clickCancel={identity}
         toggleCancelDialog={identity}
         updateStringField={identity}
@@ -141,11 +176,12 @@ describe('AnalysisFormComponent', () => {
         updateBooleanField={identity}
         updateExtraDescriptionAttribute={identity}
         clickSave={identity}
-        saveAnalysis={promise}
-        saveResult={promise}
         store={store}
-        location={location}
         predefined={{
+          storageMediums: [],
+          storageContainers: [],
+          treatments: [],
+          sampleTypes: null,
           analysisLabList: [
             {
               id: 'd39305e8-56b2-4d8d-9351-66dab9c1d8e4',
@@ -166,12 +202,14 @@ describe('AnalysisFormComponent', () => {
           analysisTypes: [
             {
               id: 4,
+              name: 'Tull',
               enName: 'Tull',
               noName: 'Tullball',
               category: '5'
             },
             {
               id: 3,
+              name: 'Tull2',
               enName: 'Tull2',
               noName: 'Tullball2',
               category: '5'

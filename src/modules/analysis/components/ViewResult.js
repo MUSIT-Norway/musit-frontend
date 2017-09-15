@@ -9,7 +9,7 @@ import { FormText } from '../../../forms/components';
 type Props = {
   externalSource: ?string,
   comments: ?string,
-  extraAttributes: any,
+  extraAttributes: *,
   history: History,
   appSession: AppSession,
   parentObjectId?: ?string

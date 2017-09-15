@@ -22,7 +22,7 @@ export type ExtraResultAttributeValues = {
 export type ExtraAttribute = {
   attributeKey: string,
   attributeType: string,
-  allowedValues?: ?Array<any>
+  allowedValues?: ?Array<*>
 };
 
 export type AnalysisType = {

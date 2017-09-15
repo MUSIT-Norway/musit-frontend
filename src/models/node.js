@@ -34,73 +34,73 @@ export type SearchResult = { totalMatches?: number, matches?: Array<*>, error?: 
 class MusitNode {
   static isRootNode: (node: Node) => boolean;
   static getNode: (
-    ajaxGet: AjaxGet
+    ajaxGet: AjaxGet<*>
   ) => (props: {
     id: string,
     museumId: number,
     token: string,
-    callback?: Callback
+    callback?: Callback<*>
   }) => Observable<Node>;
   static getNodeWithUpdatedBy: (
-    ajaxGet: AjaxGet
+    ajaxGet: AjaxGet<*>
   ) => (props: {
     id: string,
     museumId: number,
     token: string,
-    callback?: Callback
+    callback?: Callback<*>
   }) => Observable<Node & { updatedByName: ?string }>;
   static addNode: (
-    ajaxPost: AjaxPost
+    ajaxPost: AjaxPost<*>
   ) => (props: {
     id: string,
     museumId: number,
     token: string,
     data: mixed,
-    callback?: Callback
+    callback?: Callback<*>
   }) => Observable<Node>;
   static editNode: (
-    ajaxPut: AjaxPut
+    ajaxPut: AjaxPut<*>
   ) => (props: {
     id: string,
     museumId: number,
     token: string,
     data: mixed,
-    callback?: Callback
+    callback?: Callback<*>
   }) => Observable<Node>;
   static getNodes: (
-    ajaxGet: AjaxGet
+    ajaxGet: AjaxGet<*>
   ) => (props: {
     id: string,
     page?: Paging,
     museumId: number,
     token: string,
-    callback?: Callback
+    callback?: Callback<*>
   }) => Observable<SearchResult>;
   static getStats: (
-    ajaxGet: AjaxGet
+    ajaxGet: AjaxGet<*>
   ) => (props: {
     id: string,
     museumId: number,
     token: string,
-    callback?: Callback
+    callback?: Callback<*>
   }) => Observable<NodeStats>;
   static deleteNode: (
-    ajaxDel: AjaxDel
+    ajaxDel: AjaxDel<*>
   ) => (props: {
     id: string,
     museumId: number,
     token: string,
-    callback?: Callback
+    callback?: Callback<*>
   }) => Observable<string>;
   static moveNode: (
-    ajaxPut: AjaxPut
+    ajaxPut: AjaxPut<*>
   ) => (props: {
     id: string,
     destination: string,
     doneBy: string,
     museumId: number,
     token: string,
-    callback?: Callback
+    callback?: Callback<*>
   }) => Observable<MoveResult>;
   static pickNode: (
     pickNode$: Subject<*>
@@ -109,14 +109,14 @@ class MusitNode {
     breadcrumb: Breadcrumb
   }) => void;
   static findByBarcode: (
-    ajaxGet: AjaxGet
+    ajaxGet: AjaxGet<*>
   ) => (props: {
     barcode: number,
     museumId: number,
     token: string
   }) => Observable<*>;
   static findNodeOrObjectByBarcode: (
-    ajaxGet: AjaxGet
+    ajaxGet: AjaxGet<*>
   ) => (props: {
     barcode: number,
     museumId: number,
@@ -124,7 +124,7 @@ class MusitNode {
     token: string
   }) => Observable<*>;
   static findByUUID: (
-    ajaxGet: AjaxGet
+    ajaxGet: AjaxGet<*>
   ) => (props: {
     uuid: string,
     museumId: number,

@@ -14,47 +14,27 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
   <form
     className="form-horizontal"
   >
-    <FormAnalysisType
-      categories={
-        Object {
-          "lalala": "lalala",
-          "lolol": "lolol",
-        }
-      }
-      category={null}
+    <div>
+      <MetaInformation
+        registeredBy="1"
+        registeredDate="1"
+        updatedBy="1"
+        updatedDate="1"
+      />
+      <hr />
+    </div>
+    <FormText
       elementWidth={6}
-      hasError={false}
       id="type"
       label="Type analyse"
       labelWidth={2}
-      language={
-        Object {
-          "isEn": false,
-          "isNo": true,
-        }
-      }
-      type={null}
-      types={
-        Array [
-          Object {
-            "category": "5",
-            "enName": "Tull",
-            "id": 4,
-            "noName": "Tullball",
-          },
-          Object {
-            "category": "5",
-            "enName": "Tull2",
-            "id": 3,
-            "noName": "Tullball2",
-          },
-        ]
-      }
+      value=""
     />
     <FormDescriptionAttribute
       attr={
         Object {
           "attributeKey": "method",
+          "attributeType": "lala",
         }
       }
       elementWidth={3}
@@ -70,8 +50,8 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
       id="reason"
       label="Formål med analysen"
       labelWidth={2}
-      onChange="reason"
-      value=""
+      onChange=""
+      value="1"
       values={
         Array [
           Object {
@@ -93,9 +73,10 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
             "name": "status",
             "rawValue": "1",
             "validator": Object {
-              "rawValidator": [Function],
+              "rawValidator": null,
               "valueValidator": [Function],
             },
+            "value": 1,
           },
         ]
       }
@@ -150,7 +131,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
       label="Analysested"
       labelWidth={2}
       onChange="orgId"
-      value={null}
+      value="1"
       values={
         Array [
           Object {
@@ -169,7 +150,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
       id="casenumber"
       label="Saksnummer"
       labelWidth={2}
-      onChange="caseNumbers"
+      onChange=""
       value=""
     />
     <hr />
@@ -178,9 +159,9 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
       id="note"
       label="Kommentar"
       labelWidth={2}
-      onChange="note"
+      onChange=""
       rows={5}
-      value=""
+      value="1"
     />
     <div
       className="form-group"
@@ -206,9 +187,21 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
           "museumId": 99,
         }
       }
-      fieldName="persons"
+      fieldName=""
       getDisplayNameForRole={[Function]}
-      personData={Array []}
+      personData={
+        Array [
+          Object {
+            "name": "jarl",
+            "role": "responsible",
+          },
+          Object {
+            "date": "2017-06-29T07:54:22+00:00",
+            "name": "line",
+            "role": "creator",
+          },
+        ]
+      }
       roles={
         Array [
           "responsible",
@@ -255,6 +248,16 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
                 "museumId": 99,
               }
             }
+            data={Array []}
+            extraAttributes={null}
+            history={
+              Object {
+                "goBack": [Function],
+                "goForward": [Function],
+                "push": [Function],
+                "replace": [Function],
+              }
+            }
             updateForm={[Function]}
           />
         </div>
@@ -275,11 +278,21 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
             "museumId": 99,
           }
         }
-        comments=""
-        externalSource=""
+        comments="1"
+        externalSource="1"
+        extraAttributes={null}
+        history={
+          Object {
+            "goBack": [Function],
+            "goForward": [Function],
+            "push": [Function],
+            "replace": [Function],
+          }
+        }
         parentObjectId={null}
         updateComments={[Function]}
         updateExternalSource={[Function]}
+        updateExtraResultAttribute={[Function]}
       />
       <div
         className="form-group"
@@ -298,22 +311,22 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
             data-toggle="buttons"
           >
             <label
-              className="btn btn-default "
+              className="btn btn-default active"
             >
               <input
                 name="options"
-                onClick="restrictions"
+                onClick=""
                 type="radio"
               />
                
               Ja
             </label>
             <label
-              className="btn btn-default active"
+              className="btn btn-default "
             >
               <input
                 name="options"
-                onClick="restrictions"
+                onClick=""
                 type="radio"
               />
                
@@ -340,43 +353,58 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
         clickSave={[Function]}
         form={
           Object {
-            "administrator": Object {
-              "defaultValue": null,
+            "actor": Object {
+              "defaultValue": "1",
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "administrator",
-              "rawValue": null,
+              "name": "",
+              "rawValue": "1",
               "validator": Object {
                 "rawValidator": null,
               },
+              "value": "1",
+            },
+            "administrator": Object {
+              "defaultValue": "1",
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "",
+              "rawValue": "1",
+              "validator": Object {
+                "rawValidator": null,
+              },
+              "value": "1",
             },
             "analysisTypeCategory": Object {
-              "defaultValue": null,
+              "defaultValue": "1",
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "analysisTypeCategory",
-              "rawValue": null,
+              "name": "",
+              "rawValue": "1",
               "validator": Object {
                 "rawValidator": null,
               },
-              "value": "5",
+              "value": "1",
             },
             "analysisTypeId": Object {
-              "defaultValue": null,
+              "defaultValue": 1,
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "analysisTypeId",
-              "rawValue": null,
+              "name": "",
+              "rawValue": "1",
               "validator": Object {
-                "rawValidator": [Function],
+                "rawValidator": null,
                 "valueValidator": [Function],
               },
+              "value": 1,
             },
             "caseNumbers": Object {
               "defaultValue": Array [],
@@ -384,81 +412,103 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "caseNumbers",
+              "name": "",
               "rawValue": Array [],
               "validator": Object {
                 "rawValidator": null,
               },
+              "value": Array [],
             },
             "comments": Object {
-              "defaultValue": null,
+              "defaultValue": "1",
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "comments",
-              "rawValue": null,
+              "name": "",
+              "rawValue": "1",
               "validator": Object {
                 "rawValidator": null,
               },
+              "value": "1",
             },
             "completeAnalysis": Object {
-              "defaultValue": null,
+              "defaultValue": "1",
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "completeAnalysis",
-              "rawValue": false,
-              "validator": Object {},
+              "name": "",
+              "rawValue": "1",
+              "validator": Object {
+                "rawValidator": null,
+              },
+              "value": "1",
             },
             "completedBy": Object {
-              "defaultValue": null,
+              "defaultValue": "1",
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "completedBy",
-              "rawValue": null,
+              "name": "",
+              "rawValue": "1",
               "validator": Object {
                 "rawValidator": null,
               },
+              "value": "1",
             },
             "completedDate": Object {
-              "defaultValue": null,
+              "defaultValue": "1",
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "completedDate",
-              "rawValue": null,
+              "name": "",
+              "rawValue": "1",
               "validator": Object {
                 "rawValidator": null,
               },
+              "value": "1",
             },
             "doneBy": Object {
-              "defaultValue": null,
+              "defaultValue": "1",
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "doneBy",
-              "rawValue": null,
+              "name": "",
+              "rawValue": "1",
               "validator": Object {
                 "rawValidator": null,
               },
+              "value": "1",
             },
             "doneDate": Object {
-              "defaultValue": null,
+              "defaultValue": "1",
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "doneDate",
-              "rawValue": null,
+              "name": "",
+              "rawValue": "1",
               "validator": Object {
                 "rawValidator": null,
               },
+              "value": "1",
+            },
+            "eventDate": Object {
+              "defaultValue": "1",
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "",
+              "rawValue": "1",
+              "validator": Object {
+                "rawValidator": null,
+              },
+              "value": "1",
             },
             "events": Object {
               "defaultValue": Array [],
@@ -466,200 +516,281 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "events",
+              "name": "",
               "rawValue": Array [],
               "validator": Object {
                 "rawValidator": null,
               },
+              "value": Array [],
             },
             "externalSource": Object {
-              "defaultValue": Array [],
+              "defaultValue": "1",
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "externalSource",
-              "rawValue": Array [],
+              "name": "",
+              "rawValue": "1",
               "validator": Object {
                 "rawValidator": null,
               },
+              "value": "1",
             },
             "id": Object {
-              "defaultValue": null,
+              "defaultValue": 1,
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "id",
-              "rawValue": null,
+              "name": "",
+              "rawValue": "1",
               "validator": Object {
                 "rawValidator": null,
+                "valueValidator": [Function],
               },
+              "value": 1,
             },
             "museumNo": Object {
-              "defaultValue": null,
+              "defaultValue": "1",
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "museumNo",
-              "rawValue": null,
+              "name": "",
+              "rawValue": "1",
               "validator": Object {
                 "rawValidator": null,
               },
+              "value": "1",
             },
             "note": Object {
-              "defaultValue": null,
+              "defaultValue": "1",
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "note",
-              "rawValue": null,
+              "name": "",
+              "rawValue": "1",
               "validator": Object {
                 "rawValidator": null,
               },
+              "value": "1",
             },
             "objectId": Object {
-              "defaultValue": null,
+              "defaultValue": "1",
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "objectId",
-              "rawValue": null,
+              "name": "",
+              "rawValue": "1",
               "validator": Object {
                 "rawValidator": null,
               },
+              "value": "1",
             },
             "orgId": Object {
-              "defaultValue": null,
+              "defaultValue": 1,
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
               "name": "orgId",
-              "rawValue": null,
+              "rawValue": "1",
               "validator": Object {
                 "rawValidator": null,
                 "valueValidator": [Function],
               },
+              "value": 1,
             },
             "partOf": Object {
-              "defaultValue": null,
+              "defaultValue": "1",
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "partOf",
-              "rawValue": null,
+              "name": "",
+              "rawValue": "1",
               "validator": Object {
                 "rawValidator": null,
               },
+              "value": "1",
             },
             "persons": Object {
-              "defaultValue": Array [],
+              "defaultValue": Array [
+                Object {
+                  "name": "jarl",
+                  "role": "responsible",
+                },
+                Object {
+                  "date": "2017-06-29T07:54:22+00:00",
+                  "name": "line",
+                  "role": "creator",
+                },
+              ],
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "persons",
-              "rawValue": Array [],
+              "name": "",
+              "rawValue": Array [
+                Object {
+                  "name": "jarl",
+                  "role": "responsible",
+                },
+                Object {
+                  "date": "2017-06-29T07:54:22+00:00",
+                  "name": "line",
+                  "role": "creator",
+                },
+              ],
               "validator": Object {
                 "rawValidator": null,
               },
+              "value": Array [
+                Object {
+                  "name": "jarl",
+                  "role": "responsible",
+                },
+                Object {
+                  "date": "2017-06-29T07:54:22+00:00",
+                  "name": "line",
+                  "role": "creator",
+                },
+              ],
             },
             "reason": Object {
-              "defaultValue": null,
+              "defaultValue": "1",
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "reason",
-              "rawValue": null,
+              "name": "",
+              "rawValue": "1",
               "validator": Object {
                 "rawValidator": null,
               },
+              "value": "1",
             },
             "registeredBy": Object {
-              "defaultValue": null,
+              "defaultValue": "1",
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "registeredBy",
-              "rawValue": null,
+              "name": "",
+              "rawValue": "1",
               "validator": Object {
                 "rawValidator": null,
               },
+              "value": "1",
             },
             "registeredByName": Object {
-              "defaultValue": null,
+              "defaultValue": "1",
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "registeredByName",
-              "rawValue": null,
+              "name": "",
+              "rawValue": "1",
               "validator": Object {
                 "rawValidator": null,
               },
+              "value": "1",
             },
             "registeredDate": Object {
-              "defaultValue": null,
+              "defaultValue": "1",
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "registeredDate",
-              "rawValue": null,
+              "name": "",
+              "rawValue": "1",
               "validator": Object {
                 "rawValidator": null,
               },
+              "value": "1",
             },
             "responsible": Object {
-              "defaultValue": null,
+              "defaultValue": "1",
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "responsible",
-              "rawValue": null,
+              "name": "",
+              "rawValue": "1",
               "validator": Object {
                 "rawValidator": null,
               },
+              "value": "1",
             },
             "restriction": Object {
-              "defaultValue": Object {},
+              "defaultValue": Object {
+                "cancelledReason": "meh",
+                "caseNumbers": Array [
+                  "dddd",
+                  "44555",
+                  "55555",
+                ],
+                "expirationDate": "2017-03-29T07:54:22+00:00",
+                "reason": "fin årsak",
+                "requester": "3cbf15cb-8348-4e66-99a4-bc314da57444",
+                "requesterName": "Jarl",
+              },
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "restriction",
-              "rawValue": Object {},
+              "name": "",
+              "rawValue": Object {
+                "cancelledReason": "meh",
+                "caseNumbers": Array [
+                  "dddd",
+                  "44555",
+                  "55555",
+                ],
+                "expirationDate": "2017-03-29T07:54:22+00:00",
+                "reason": "fin årsak",
+                "requester": "3cbf15cb-8348-4e66-99a4-bc314da57444",
+                "requesterName": "Jarl",
+              },
               "validator": Object {},
+              "value": Object {
+                "cancelledReason": "meh",
+                "caseNumbers": Array [
+                  "dddd",
+                  "44555",
+                  "55555",
+                ],
+                "expirationDate": "2017-03-29T07:54:22+00:00",
+                "reason": "fin årsak",
+                "requester": "3cbf15cb-8348-4e66-99a4-bc314da57444",
+                "requesterName": "Jarl",
+              },
             },
             "restrictions": Object {
-              "defaultValue": false,
+              "defaultValue": true,
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "restrictions",
-              "rawValue": false,
+              "name": "",
+              "rawValue": true,
               "validator": Object {},
+              "value": true,
             },
             "result": Object {
-              "defaultValue": null,
+              "defaultValue": "1",
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "result",
-              "rawValue": null,
+              "name": "",
+              "rawValue": "1",
               "validator": Object {
                 "rawValidator": null,
               },
+              "value": "1",
             },
             "status": Object {
               "defaultValue": 1,
@@ -670,84 +801,92 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
               "name": "status",
               "rawValue": "1",
               "validator": Object {
-                "rawValidator": [Function],
+                "rawValidator": null,
                 "valueValidator": [Function],
               },
+              "value": 1,
             },
             "subNo": Object {
-              "defaultValue": null,
+              "defaultValue": "1",
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "subNo",
-              "rawValue": null,
+              "name": "",
+              "rawValue": "1",
               "validator": Object {
                 "rawValidator": null,
               },
+              "value": "1",
             },
             "term": Object {
-              "defaultValue": null,
+              "defaultValue": "1",
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "term",
-              "rawValue": null,
+              "name": "",
+              "rawValue": "1",
               "validator": Object {
                 "rawValidator": null,
               },
+              "value": "1",
             },
             "type": Object {
-              "defaultValue": null,
+              "defaultValue": "1",
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "type",
-              "rawValue": null,
+              "name": "",
+              "rawValue": "1",
               "validator": Object {
                 "rawValidator": null,
               },
+              "value": "1",
             },
             "updatedBy": Object {
-              "defaultValue": null,
+              "defaultValue": "1",
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "updatedBy",
-              "rawValue": null,
+              "name": "",
+              "rawValue": "1",
               "validator": Object {
                 "rawValidator": null,
               },
+              "value": "1",
             },
             "updatedByName": Object {
-              "defaultValue": null,
+              "defaultValue": "1",
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "updatedByName",
-              "rawValue": null,
+              "name": "",
+              "rawValue": "1",
               "validator": Object {
                 "rawValidator": null,
               },
+              "value": "1",
             },
             "updatedDate": Object {
-              "defaultValue": null,
+              "defaultValue": "1",
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
-              "name": "updatedDate",
-              "rawValue": null,
+              "name": "",
+              "rawValue": "1",
               "validator": Object {
                 "rawValidator": null,
               },
+              "value": "1",
             },
           }
         }
+        isRestrictionValidForCancellation={false}
         toggleCancelDialog={[Function]}
         updateForm={[Function]}
       />
@@ -755,7 +894,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
     <hr />
     <button
       className="btn btn-primary"
-      disabled={true}
+      disabled={false}
       onClick={[Function]}
     >
       Lagre
