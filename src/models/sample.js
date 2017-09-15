@@ -21,38 +21,38 @@ export type SampleStatus = {
 
 class Sample {
   static addSample: (
-    ajaxPost: AjaxPost
+    ajaxPost: AjaxPost<*>
   ) => (props: {
     museumId: number,
     token: string,
     data: mixed,
-    callback?: ?Callback
+    callback?: ?Callback<*>
   }) => Observable<*>;
   static editSample: (
-    ajaxPut: AjaxPut
+    ajaxPut: AjaxPut<*>
   ) => (props: {
     id: string,
     museumId: number,
     token: string,
     data: mixed,
-    callback?: ?Callback
+    callback?: ?Callback<*>
   }) => Observable<*>;
   static loadSample: (
-    ajaxGet: AjaxGet
+    ajaxGet: AjaxGet<*>
   ) => (props: {
     id: string,
     museumId: number,
     collectionId: string,
     token: string,
-    callback?: ?Callback
+    callback?: ?Callback<*>
   }) => Observable<SampleData>;
   static loadSampleDataForObject: (
-    ajaxGet: AjaxGet
+    ajaxGet: AjaxGet<*>
   ) => (props: {
     id: string,
     museumId: number,
     token: string,
-    callback?: ?Callback
+    callback?: ?Callback<*>
   }) => Observable<*>;
   static prepareForSubmit: (tmpData: {
     [string]: ?string | ?number | ?{ user: ?string, date: string },
@@ -63,33 +63,33 @@ class Sample {
     externalIdSource: ?string
   }) => mixed;
   static loadSampleTypes: (
-    ajaxGet: AjaxGet
+    ajaxGet: AjaxGet<*>
   ) => (props: {
     token: string,
     isEn: string
   }) => Observable<*>;
   static loadAllSampleTypes: (
-    ajaxGet: AjaxGet
+    ajaxGet: AjaxGet<*>
   ) => (props: {
     token: string
   }) => Observable<*>;
   static loadTreatments: (
-    ajaxGet: AjaxGet
+    ajaxGet: AjaxGet<*>
   ) => (props: {
     token: string
   }) => Observable<*>;
   static loadStorageContainer: (
-    ajaxGet: AjaxGet
+    ajaxGet: AjaxGet<*>
   ) => (props: {
     token: string
   }) => Observable<*>;
   static loadStorageMediums: (
-    ajaxGet: AjaxGet
+    ajaxGet: AjaxGet<*>
   ) => (props: {
     token: string
   }) => Observable<*>;
   static loadPredefinedTypes: (
-    ajaxGet: AjaxGet
+    ajaxGet: AjaxGet<*>
   ) => (props: {
     token: string,
     isEn: string,
@@ -98,13 +98,13 @@ class Sample {
   static sampleStatuses: Array<SampleStatus>;
   static sampleSizeUnits: Array<string>;
   static loadSamplesForNode: (
-    ajaxGet: AjaxGet
+    ajaxGet: AjaxGet<*>
   ) => (props: {
     nodeId: string,
     museumId: number,
     token: string,
     collectionId: string,
-    callback?: ?Callback
+    callback?: ?Callback<*>
   }) => Observable<*>;
 }
 

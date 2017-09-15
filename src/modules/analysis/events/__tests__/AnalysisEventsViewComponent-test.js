@@ -75,8 +75,7 @@ describe('AnalysisEventsViewComponent', () => {
     expect(filterEvents.calledWith(filterValue)).toBe(true);
   });
 
-  const onInputChange = (comp: any, value: string) => {
-    comp.node.value = value;
-    comp.simulate('change', comp);
+  const onInputChange = (comp: *, value: string) => {
+    comp.simulate('change', { target: { value } });
   };
 });

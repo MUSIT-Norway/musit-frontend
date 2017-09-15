@@ -3,14 +3,12 @@ import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import AnalysisViewComponent from '../AnalysisViewComponent';
-import { fieldsArray } from '../analysisForm';
-import type { Field } from 'forms/form';
-import type { FormData } from '../shared/formType';
 import {
   appSession,
   analysis,
   history,
-  createAnalysisEventWithObject
+  createAnalysisEventWithObject,
+  analysisForm
 } from '../../../testutils/sampleDataForTest';
 import { initialState } from '../../../stores/predefined';
 
@@ -38,39 +36,6 @@ const objectsData = [
   )
 ];
 
-const form: FormData = (fieldsArray.reduce(
-  (acc, field: Field<any>) => ({
-    ...acc,
-    [field.name]: {
-      ...field,
-      rawValue: field.mapper.toRaw(field.defaultValue)
-    }
-  }),
-  {}
-): any);
-
-form.persons.value = [
-  {
-    name: 'jarl',
-    role: 'responsible'
-  },
-  {
-    name: 'line',
-    role: 'creator',
-    date: '2017-06-29T07:54:22+00:00'
-  }
-];
-
-form.restrictions.value = true;
-form.restriction.value = {
-  requester: '3cbf15cb-8348-4e66-99a4-bc314da57444',
-  requesterName: 'Jarl',
-  reason: 'fin årsak',
-  caseNumbers: ['dddd', '44555', '55555'],
-  expirationDate: '2017-03-29T07:54:22+00:00',
-  cancelledReason: 'meh'
-};
-
 const extraAttributes = [
   {
     attributeKey: 'method',
@@ -93,7 +58,7 @@ describe('AnalysisViewComponent', () => {
         clearStore={nullFn}
         predefined={initialState}
         match={emptyMatch}
-        form={form}
+        form={analysisForm}
         store={{ analysis, showCancelDialog: false }}
         extraDescriptionAttributes={extraAttributes}
         extraResultAttributes={{}}
@@ -151,7 +116,7 @@ describe('AnalysisViewComponent with extra attribute types', () => {
         clearStore={nullFn}
         predefined={initialState}
         match={emptyMatch}
-        form={form}
+        form={analysisForm}
         store={{ analysis, showCancelDialog: false }}
         extraDescriptionAttributes={extraAttributeTypes}
         extraResultAttributes={{}}

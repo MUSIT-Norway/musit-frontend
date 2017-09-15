@@ -11,13 +11,13 @@ type AnalysisResultSavePayload = {
 };
 
 export const addResult: (
-  ajaxPost: AjaxPost
+  ajaxPost: AjaxPost<*>
 ) => (props: {
   analysisId: number,
   museumId: number,
   token: string,
   result: ?AnalysisResultSavePayload,
-  callback?: Callback
+  callback?: Callback<*>
 }) => Observable<number> = (ajaxPost = simplePost) => ({
   analysisId,
   museumId,
@@ -33,7 +33,7 @@ export const addResult: (
   );
 
 export const importResult: (
-  ajaxPost: AjaxPut
+  ajaxPut: AjaxPut<*>
 ) => (props: {
   analysisId: number,
   museumId: number,

@@ -7,12 +7,12 @@ import type { AnalysisType } from 'types/analysis';
 import type { Purposes, Categories, AnalysisLabList } from 'types/predefined';
 
 export const getAnalysisTypesForCollection: (
-  ajaxGet: AjaxGet
+  ajaxGet: AjaxGet<*>
 ) => (props: {
   museumId: number,
   collectionId: string,
   token: string,
-  callback?: Callback
+  callback?: Callback<*>
 }) => Observable<Array<AnalysisType>> = (ajaxGet = simpleGet) => ({
   museumId,
   collectionId,
@@ -27,11 +27,11 @@ export const getAnalysisTypesForCollection: (
 };
 
 export const getAnalysisTypes: (
-  ajaxGet: AjaxGet
+  ajaxGet: AjaxGet<*>
 ) => (props: {
   museumId: number,
   token: string,
-  callback?: Callback
+  callback?: Callback<*>
 }) => Observable<Array<AnalysisType>> = (ajaxGet = simpleGet) => ({
   museumId,
   token,
@@ -42,18 +42,18 @@ export const getAnalysisTypes: (
 };
 
 export const getAnalysisCategories: (
-  ajaxGet: AjaxGet
+  ajaxGet: AjaxGet<*>
 ) => (props: {
   museumId: number,
   token: string,
-  callback?: Callback
+  callback?: Callback<*>
 }) => Observable<Categories> = (ajaxGet = simpleGet) => ({ museumId, token }) => {
   const url = Config.magasin.urls.api.analysisType.getAnalysisCategories(museumId);
   return ajaxGet(url, token).map(({ response }) => response);
 };
 
 export const getAnalysisLabList: (
-  ajaxGet: AjaxGet
+  ajaxGet: AjaxGet<*>
 ) => (props: {
   token: string
 }) => Observable<AnalysisLabList> = (ajaxGet = simpleGet) => ({ token }) => {
@@ -66,17 +66,17 @@ export const getAnalysisLabList: (
 };
 
 export const getPurposes: (
-  ajaxGet: AjaxGet
+  ajaxGet: AjaxGet<*>
 ) => (props: {
   token: string,
-  callback?: Callback
+  callback?: Callback<*>
 }) => Observable<Purposes> = (ajaxGet = simpleGet) => ({ token, callback }) => {
   const url = Config.magasin.urls.api.analysis.getPurposes;
   return ajaxGet(url, token, callback).map(({ response }) => response);
 };
 
 export const loadPredefinedTypes: (
-  ajaxGet: AjaxGet
+  ajaxGet: AjaxGet<*>
 ) => (props: {
   museumId: number,
   token: string,

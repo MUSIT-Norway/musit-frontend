@@ -84,10 +84,18 @@ export default function AnalysisFormComponent(props: Props) {
             labelWidth={2}
             elementWidth={6}
             hasError={!isValid({ fields: [props.form.analysisTypeId] })}
-            category={props.form.analysisTypeCategory.rawValue}
+            category={
+              props.form.analysisTypeCategory.rawValue ? (
+                props.form.analysisTypeCategory.rawValue.toString()
+              ) : null
+            }
             categories={props.predefined.categories}
             onChangeCategory={props.updateAnalysisCategory}
-            type={props.form.analysisTypeId.rawValue}
+            type={
+              props.form.analysisTypeId.rawValue ? (
+                props.form.analysisTypeId.rawValue.toString()
+              ) : null
+            }
             types={props.predefined.analysisTypes}
             onChangeType={props.updateAnalysisTypeId}
             language={props.appSession.language}
@@ -121,7 +129,7 @@ export default function AnalysisFormComponent(props: Props) {
           label={I18n.t('musit.analysis.reason')}
           labelWidth={2}
           elementWidth={3}
-          value={props.form.reason.rawValue || ''}
+          value={props.form.reason.rawValue ? props.form.reason.rawValue.toString() : ''}
           onChange={props.updateStringField(props.form.reason.name)}
           chooseLabel={I18n.t('musit.analysis.chooseReason')}
           values={
@@ -159,7 +167,7 @@ export default function AnalysisFormComponent(props: Props) {
           label={I18n.t('musit.analysis.place')}
           labelWidth={2}
           elementWidth={3}
-          value={props.form.orgId.rawValue}
+          value={props.form.orgId.rawValue ? props.form.orgId.rawValue.toString() : ''}
           onChange={props.updateStringField(props.form.orgId.name)}
           chooseLabel={I18n.t('musit.analysis.choosePlace')}
           values={
@@ -191,7 +199,7 @@ export default function AnalysisFormComponent(props: Props) {
           label={I18n.t('musit.analysis.note')}
           labelWidth={2}
           elementWidth={6}
-          value={props.form.note.rawValue || ''}
+          value={props.form.note.rawValue ? props.form.note.rawValue.toString() : ''}
           onChange={props.updateStringField(props.form.note.name)}
           rows={5}
         />

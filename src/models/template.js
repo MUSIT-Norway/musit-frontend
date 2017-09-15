@@ -1,11 +1,13 @@
 // @flow
-import { simpleGet, ajax } from '../shared/RxAjax';
+import { simpleGet, ajaxHelper } from '../shared/RxAjax';
 import Config from '../config';
 import type { AjaxGet } from '../types/ajax';
 import { Observable } from 'rxjs';
 
 class Template {
-  static loadTemplates: (ajaxGet: AjaxGet) => (props: { token: string }) => Observable<*>;
+  static loadTemplates: (
+    ajaxGet: AjaxGet<*>
+  ) => (props: { token: string }) => Observable<*>;
   static renderTemplate: (
     ajaxFn: Function
   ) => (props: {
@@ -21,7 +23,7 @@ Template.loadTemplates = (ajaxGet = simpleGet) => ({ token }) =>
     ({ response }) => response
   );
 
-Template.renderTemplate = (ajaxFn = ajax) => ({
+Template.renderTemplate = (ajaxFn = ajaxHelper) => ({
   templateId,
   codeFormat,
   nodes,

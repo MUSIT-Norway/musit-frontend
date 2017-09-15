@@ -35,7 +35,7 @@ export const sampleProps = (props: Props) => {
   return {
     isFormValid: isFormValid(props.form),
     showSampleSubType: showSampleSubType(
-      props.form.sampleType.rawValue,
+      props.form.sampleType.rawValue ? props.form.sampleType.rawValue.toString() : null,
       props.predefined.sampleTypes
     ),
     canEditSampleType: !props.form.sampleNum,
@@ -166,7 +166,7 @@ export const getSampleData = function(
   const parentObject = getParentObject(!form.sampleNum, sampleData, objectData);
   return Sample.prepareForSubmit({
     ...normalizeForm(form),
-    ...getActors(form.persons.rawValue || []),
+    ...getActors(Array.isArray(form.persons.rawValue) ? form.persons.rawValue : []),
     sizeUnit: form.sizeUnit.value,
     externalId: form.externalId.value,
     externalIdSource: form.externalIdSource.value,

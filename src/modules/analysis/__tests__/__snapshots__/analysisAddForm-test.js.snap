@@ -8,7 +8,9 @@ Object {
     "toRaw": [Function],
   },
   "name": "someBool",
+  "rawValue": false,
   "validator": Object {},
+  "value": null,
 }
 `;
 
@@ -20,8 +22,10 @@ Object {
     "toRaw": [Function],
   },
   "name": "someStr",
+  "rawValue": null,
   "validator": Object {
     "rawValidator": null,
   },
+  "value": null,
 }
 `;

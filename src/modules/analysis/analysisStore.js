@@ -177,14 +177,14 @@ type SampleTypes = {
 };
 
 export function getAnalysisDetails(
-  ajaxGet: AjaxGet,
-  ajaxPost: AjaxPost,
+  ajaxGet: AjaxGet<*>,
+  ajaxPost: AjaxPost<*>,
   props: {
     id: number,
     museumId: number,
     collectionId: string,
     token: string,
-    callback?: Callback,
+    callback?: Callback<*>,
     sampleTypes: SampleTypes
   }
 ): (analysis: AnalysisCollection) => Observable<*> {
@@ -262,7 +262,7 @@ type AjaxParams = {
 
 function getEventObjectDetails(
   props: AjaxParams,
-  ajaxGet: AjaxGet
+  ajaxGet: AjaxGet<*>
 ): (t: AffectedThing) => Observable<ObjectInfo> {
   return event => {
     const params = {

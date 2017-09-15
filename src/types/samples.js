@@ -4,7 +4,7 @@ import type { ActorStamp } from './actor';
 import type { ObjectId, MuseumId, ActorId, SampleId, SampleTypeId } from './ids';
 
 export type ActorStampWithName = ActorStamp & { name?: ?string };
-export type ParentObjectWithData = ParentObject & { sampleOrObjectData?: ?any };
+export type ParentObjectWithData = ParentObject & { sampleOrObjectData?: ?* };
 
 /**
  * This is the actual response object from the backend.
@@ -68,7 +68,7 @@ export type SampleData = Sample & {
   breadcrumb: [],
   updatedDate?: ?string,
   registeredDate: string,
-  currentLocation?: ?{ breadcrumb: ?Array<any>, pathNames: ?Array<any> }
+  currentLocation?: ?{ breadcrumb: ?Array<*>, pathNames: ?Array<*> }
 };
 
 export type Samples = SampleData[];

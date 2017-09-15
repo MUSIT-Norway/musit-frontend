@@ -10,25 +10,25 @@ import { Observable } from 'rxjs';
 
 class Observation {
   static loadObservations: (
-    ajaxGet: AjaxGet
+    ajaxGet: AjaxGet<*>
   ) => (props: {
     nodeId: number,
     museumId: number,
     token: string,
-    callback?: Callback
+    callback?: Callback<*>
   }) => Observable<*>;
   static addObservation: (
-    ajaxPost: AjaxPost
+    ajaxPost: AjaxPost<*>
   ) => (props: {
     nodeId: number,
     museumId: number,
     data: mixed,
     token: string,
-    callback?: Callback
+    callback?: Callback<*>
   }) => Observable<*>;
   static getObservation: (
-    ajaxGet: AjaxGet,
-    ajaxPost: AjaxPost
+    ajaxGet: AjaxGet<*>,
+    ajaxPost: AjaxPost<*>
   ) => (props: {
     nodeId: number,
     observationId: number,

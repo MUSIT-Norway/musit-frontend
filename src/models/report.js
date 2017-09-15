@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 
 class Report {
   static getKDReport: (
-    ajaxGet: AjaxGet
+    ajaxGet: AjaxGet<*>
   ) => (props: {
     token: string,
     museumId: number
