@@ -10,8 +10,9 @@ import {
   history
 } from './../../../testutils/sampleDataForTest';
 
-const identity = (i: any): any => i;
-const promise = (i: any): any => new Promise(res => res(i));
+const identity = function<T>(i: T): T {
+  return i;
+};
 
 describe('AnalysisFormComponent', () => {
   describe('getAnalysisTypeTerm', () => {

@@ -110,7 +110,7 @@ function getData(observations, field) {
   return (observations.find(f => f.type === field) || {}).data;
 }
 
-export default (state: any, nodeId: string | number) => {
+export default (state: *, nodeId: string | number) => {
   const r = {};
   r.eventType = 'Observation';
   r.doneBy = Actor.getActorId(state.doneBy);

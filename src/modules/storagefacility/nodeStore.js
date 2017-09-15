@@ -1,6 +1,6 @@
 // @flow
 import MusitNode from '../../models/node';
-import type { Node } from '../../models/node';
+import type { Node } from 'types/node';
 import { Observable } from 'rxjs';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import { simpleGet } from '../../shared/RxAjax';

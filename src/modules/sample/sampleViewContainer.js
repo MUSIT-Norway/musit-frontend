@@ -9,6 +9,7 @@ import objectStore$, { loadObject$, clearStore$ } from '../objects/objectStore';
 import moment from 'moment';
 import Config from '../../config';
 import type { SampleData } from '../../types/samples';
+import type { SampleTypes } from 'types/predefined';
 import { loadPredefinedTypes } from '../../stores/predefinedLoader';
 import values from 'lodash/values';
 import flatten from 'lodash/flatten';
@@ -169,7 +170,7 @@ export function getSampleSubTypeWithLanguage(sampleType, appSession) {
   return null;
 }
 
-function addSampleTypeInformation(sample: SampleData, sampleTypes: any) {
+function addSampleTypeInformation(sample: SampleData, sampleTypes: SampleTypes) {
   const sampleType = getSampleType(sample.sampleTypeId, sampleTypes);
 
   return {

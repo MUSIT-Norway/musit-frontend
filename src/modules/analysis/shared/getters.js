@@ -5,7 +5,8 @@ import type {
   AnalysisEvent,
   AnalysisCollection,
   ExtraResultAttributeValues,
-  ExtraAttribute
+  ExtraAttribute,
+  Result
 } from '../../../types/analysis';
 import { I18n } from 'react-i18nify';
 import type { Language } from '../../../types/appSession';
@@ -86,7 +87,7 @@ export function getAnalysisType(
 export function getExtraDescriptionAttributes(
   analysisType: ?AnalysisType,
   analysis: ?AnalysisCollection,
-  extraDescriptionAttributes: any
+  extraDescriptionAttributes: *
 ) {
   const extraDescriptionAttributesType = analysisType
     ? analysisType.extraDescriptionType
@@ -116,7 +117,7 @@ export function getExtraDescriptionAttributes(
     : null;
 }
 
-type ExtraDescriptionAttributes = { [string]: any };
+type ExtraDescriptionAttributes = { type: string, [string]: string | number };
 
 type ExtraDescriptionAttributesWithType = ExtraDescriptionAttributes & { type: string };
 
@@ -176,7 +177,7 @@ export function getExtraResultAttributes(
 export function getApiResult(
   name: string,
   type: ?string,
-  result: any
+  result: ?Result
 ): ?string | ?number | ?{ value: number, unit: string, rawValue: ?string } {
   const value = result && result[name];
   if (
@@ -191,7 +192,6 @@ export function getApiResult(
         rawValue: value.value.toString().replace('.', ',')
       };
     }
-    return value;
   }
   return value && value.toString();
 }

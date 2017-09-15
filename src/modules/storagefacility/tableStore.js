@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import MusitObject from '../../models/object';
 import MusitNode from '../../models/node';
 import type { SearchResult } from '../../models/node';
-import type { NodeStats, Node } from '../../models/node';
+import type { NodeStats, Node } from 'types/node';
 import type { ObjectData } from 'types/object';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import { simpleGet } from '../../shared/RxAjax';

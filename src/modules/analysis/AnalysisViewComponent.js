@@ -10,7 +10,7 @@ import type { FormData } from './shared/formType';
 import { getParentObjectId } from './shared/getters';
 import type { AnalysisStoreState } from './analysisStore';
 import type { AppSession } from '../../types/appSession';
-import type { AnalysisEvent } from '../../types/analysis';
+import type { AnalysisEvent, ExtraResultAttributeValues } from '../../types/analysis';
 import type { History } from '../../types/Routes';
 import ViewRestriction from './components/ViewRestriction';
 import MusitI18n from '../../components/MusitI18n';
@@ -27,7 +27,7 @@ export type Props = {
   objects: Array<AnalysisEvent>,
   clickEdit: Function,
   extraDescriptionAttributes: any,
-  extraResultAttributes: any,
+  extraResultAttributes: ?ExtraResultAttributeValues,
   history: History,
   appSession: AppSession,
   cancelRestriction: Function,

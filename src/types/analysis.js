@@ -112,7 +112,7 @@ export type AnalysisCollection = {
   completedByName?: ?string,
   completedDate?: ?string,
   note?: ?string,
-  extraAttributes?: { type: string },
+  extraAttributes?: { type: string, [string]: string | number },
   result?: ?Result,
   events: ?Array<AnalysisEvent>,
   restriction?: ?Restriction,

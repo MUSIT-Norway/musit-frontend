@@ -3,13 +3,13 @@ import React from 'react';
 import ObjectResultTable from './ObjectResultTable';
 import type { AppSession } from '../../../types/appSession';
 import type { History } from '../../../types/Routes';
-import type { AnalysisEvent } from '../../../types/analysis';
+import type { AnalysisEvent, ExtraResultAttributeValues } from '../../../types/analysis';
 
 type Props = {
   data: Array<AnalysisEvent>,
   renderExpanded?: (props: { index: number, data: Object }) => React$Element<*>,
   updateForm?: Function,
-  extraAttributes?: any,
+  extraAttributes?: ?ExtraResultAttributeValues,
   history: History,
   appSession: AppSession,
   viewMode?: ?boolean

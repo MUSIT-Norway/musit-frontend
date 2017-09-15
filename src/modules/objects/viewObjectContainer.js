@@ -57,7 +57,7 @@ export const onMount = ({
   appSession,
   getAnalysisTypes,
   getSampleTypes
-}: any) => {
+}: *) => {
   const uuid: string = match.params.id;
   const museumId: number = appSession.museumId;
   const accessToken: string = appSession.accessToken;

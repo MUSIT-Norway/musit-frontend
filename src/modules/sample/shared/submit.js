@@ -135,7 +135,7 @@ export const callback = {
       message: I18n.t('musit.sample.saveSampleSuccess')
     });
   },
-  onFailure: (e: any) => {
+  onFailure: (e: *) => {
     emitError({
       type: 'errorOnSave',
       error: e,

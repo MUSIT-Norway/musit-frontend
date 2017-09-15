@@ -2,8 +2,9 @@
 import React from 'react';
 import moment from 'moment';
 import { Observable } from 'rxjs';
+import type { PathName } from 'types/node';
 
-export const toPromise = (fn: (val: any) => Observable<*>) => (val: any) =>
+export const toPromise = (fn: (val: *) => Observable<*>) => (val: *) =>
   fn(val).toPromise();
 
 export const flatten = (arr: Array<*>) => {
@@ -19,7 +20,7 @@ export const flatten = (arr: Array<*>) => {
 };
 
 export const filter = (arr: Array<*>, fields: Array<string>, pattern: string) => {
-  const contains = (s: any, p: string) => {
+  const contains = (s: *, p: string) => {
     return (
       (s || '')
         .toString()
@@ -73,7 +74,7 @@ export const formatFloatToString = (number: number): string => {
   return typeof number === 'number' ? number.toString().replace('.', ',') : number;
 };
 
-export const hasProp = (obj: any, prop: string): boolean => {
+export const hasProp = (obj: *, prop: string): boolean => {
   return {}.hasOwnProperty.call(obj, prop);
 };
 
@@ -92,7 +93,7 @@ export const customSortingStorageNodeType = (type: string): string => {
   }
 };
 
-export const isDateBiggerThanToday = (newDate: any): boolean => {
+export const isDateBiggerThanToday = (newDate: string | number): boolean => {
   const today = moment();
   const isAfterYear = moment(newDate).isAfter(today, 'year');
   const isAfterMonth = moment(newDate).isAfter(today, 'month');
@@ -103,11 +104,11 @@ export const isDateBiggerThanToday = (newDate: any): boolean => {
 export class Option {
   value = null;
 
-  constructor(value: any) {
+  constructor(value: *) {
     this.value = value;
   }
 
-  map<U>(func: (a: any) => U): ?U {
+  map<U>(func: (a: *) => U): ?U {
     if (this.value == null) {
       return; // return undefined/void
     }
@@ -121,7 +122,15 @@ export const apiUrl = (url: string): string => {
   return `${testing ? 'http://localhost' : ''}${url}`;
 };
 
-export const getPath = (node: any) => {
+export type SomethingLikeNode = {
+  id: number,
+  nodeId: string,
+  name: string,
+  path: string,
+  pathNames: Array<PathName>
+};
+
+export const getPath = (node: SomethingLikeNode) => {
   if (!node) {
     return [];
   }

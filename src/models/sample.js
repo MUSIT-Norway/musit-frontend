@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { DATE_FORMAT_DISPLAY } from '../shared/util';
 import type { Callback, AjaxGet, AjaxPost, AjaxPut } from '../types/ajax';
 import type { SampleData } from '../types/samples';
+import type { SampleTypes } from '../types/predefined';
 import { omit } from 'lodash';
 import uniq from 'lodash/uniq';
 import uniqBy from 'lodash/uniqBy';
@@ -296,7 +297,7 @@ Sample.loadSample = (ajaxGet = simpleGet, ajaxPost = simplePost) => ({
     });
 };
 
-export function getSampleType(sampleTypeId: number, sampleTypesMap: mixed) {
+export function getSampleType(sampleTypeId: number, sampleTypesMap: SampleTypes) {
   return flatten(Object.values(sampleTypesMap)).find(
     subType => sampleTypeId === subType.sampleTypeId
   );
