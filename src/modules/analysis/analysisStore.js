@@ -36,7 +36,9 @@ export type AnalysisStoreState = {
 export const initialState: AnalysisStoreState = {
   analysisTypes: [],
   purposes: [],
-  categories: {},
+  categories: {
+    raw: []
+  },
   analysisLabList: [],
   loading: false,
   extraDescriptionAttributes: {},
@@ -231,11 +233,12 @@ export function getAnalysisDetails(
             ).map(zipObjectInfoWithEvents(analysis));
           }
         }
-        if (!analysis.objectId) {
+        const objectId = analysis.objectId;
+        if (!objectId) {
           return Observable.of(analysis);
         }
         return MusitObject.getObjectDetails(ajaxGet)({
-          id: (analysis.objectId: any),
+          id: objectId,
           museumId: props.museumId,
           collectionId: props.collectionId,
           token: props.token

@@ -64,8 +64,12 @@ describe('AnalysisSampleFormPageAdd', () => {
           analysisTypes: [],
           purposes: [],
           analysisLabList: [],
-          categories: {},
-          sampleTypes: {},
+          categories: {
+            raw: []
+          },
+          sampleTypes: {
+            raw: []
+          },
           storageContainers: [],
           storageMediums: [],
           treatments: []
@@ -142,8 +146,12 @@ describe('AnalysisSampleFormPageAdd', () => {
           analysisTypes: [],
           purposes: [],
           analysisLabList: [],
-          categories: {},
-          sampleTypes: {},
+          categories: {
+            raw: []
+          },
+          sampleTypes: {
+            raw: []
+          },
           storageContainers: [],
           storageMediums: [],
           treatments: []

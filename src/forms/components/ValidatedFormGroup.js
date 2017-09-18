@@ -22,7 +22,7 @@ export function isValid({ fields, field }: VFGProps) {
 /**
  * @deprecated use FormElement component in ../components.js and pass in the hasError boolean property
  */
-export default function ValidatedFormGroup(props: VFGProps & { children?: any }) {
+export default function ValidatedFormGroup(props: VFGProps & { children?: React$Node }) {
   return (
     <div className={`form-group${!isValid(props) ? ' has-error' : ''}`}>
       {props.children}

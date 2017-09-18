@@ -136,7 +136,7 @@ function getAnalysisUpsert(id, ajaxPut, museumId, data, token, ajaxPost) {
 }
 
 function getRestrictions(form: FormData): ?Restriction {
-  return form.restrictions.value ? (form.restriction.value: any) : null;
+  return form.restrictions.value ? form.restriction.value : null;
 }
 
 export function getResult(

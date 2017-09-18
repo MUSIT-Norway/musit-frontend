@@ -76,7 +76,9 @@ describe('predefined', () => {
         storageMediums: [],
         treatments: [],
         analysisTypes: [],
-        categories: {},
+        categories: {
+          raw: []
+        },
         purposes: [],
         analysisLabList: []
       }

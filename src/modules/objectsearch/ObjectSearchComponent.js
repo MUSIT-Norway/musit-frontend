@@ -82,7 +82,10 @@ export class ObjectSearchComponent extends React.Component {
                         e.preventDefault();
                         store.data.matches.forEach(obj =>
                           this.props.pickObject({
-                            object: obj,
+                            object: {
+                              ...obj,
+                              objectData: obj
+                            },
                             breadcrumb: obj.breadcrumb,
                             museumId: this.props.appSession.museumId,
                             collectionId: this.props.appSession.collectionId,
@@ -148,7 +151,10 @@ export class ObjectSearchComponent extends React.Component {
                           style={{ textAlign: 'right' }}
                           onClick={e => {
                             this.props.pickObject({
-                              object: data,
+                              object: {
+                                ...data,
+                                objectData: data
+                              },
                               breadcrumb: data.breadcrumb,
                               museumId: this.props.appSession.museumId,
                               collectionId: this.props.appSession.collectionId,

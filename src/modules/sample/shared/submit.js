@@ -3,7 +3,7 @@ import moment from 'moment';
 import flatten from 'lodash/flatten';
 import Config from '../../../config';
 import type { FormDetails } from '../types/form';
-import type { Predefined } from '../../../types/predefined';
+import type { Predefined, SampleTypes } from '../../../types/predefined';
 import type { DomEvent } from '../../../types/dom';
 import type { ObjectData } from '../../../types/object';
 import type { SampleData } from '../../../types/samples';
@@ -135,7 +135,7 @@ export const callback = {
       message: I18n.t('musit.sample.saveSampleSuccess')
     });
   },
-  onFailure: (e: any) => {
+  onFailure: (e: *) => {
     emitError({
       type: 'errorOnSave',
       error: e,
@@ -160,7 +160,7 @@ export const getSampleData = function(
   form: FormDetails,
   sampleData: ?SampleData,
   objectData: ObjectData,
-  sampleTypes: any,
+  sampleTypes: SampleTypes,
   appSession: AppSession
 ) {
   const parentObject = getParentObject(!form.sampleNum, sampleData, objectData);
@@ -185,7 +185,7 @@ export const getSampleData = function(
 export const saveSample = (doSaveSample: Function) => (
   form: FormDetails,
   sampleData: ?SampleData,
-  sampleTypes: any,
+  sampleTypes: SampleTypes,
   objectData: ?ObjectData,
   params: { sampleId: ?string },
   appSession: AppSession,
@@ -207,7 +207,7 @@ export const saveSample = (doSaveSample: Function) => (
   }
 };
 
-function getSampleTypeId(sampleTypes, sampleType, sampleSubType, appSession) {
+function getSampleTypeId(sampleTypes, sampleType, sampleSubType, appSession): ?number {
   if (!sampleTypes) {
     return null;
   }
@@ -217,7 +217,7 @@ function getSampleTypeId(sampleTypes, sampleType, sampleSubType, appSession) {
       return subTypeName === sampleSubType;
     }).sampleTypeId;
   } else {
-    return sampleTypes[sampleType][0].sampleTypeId;
+    return sampleType ? sampleTypes[sampleType][0].sampleTypeId : null;
   }
 }
 

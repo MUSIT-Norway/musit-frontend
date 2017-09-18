@@ -48,10 +48,8 @@ export type SampleProps = {
 };
 
 export default function SampleViewComponent(props: Props & SampleProps) {
-  const mainProps: Props = (props: any);
-  const customProps: SampleProps = (props: any);
-  const sample = mainProps.sampleStore.sample;
-  const objectData = mainProps.objectStore.objectData;
+  const sample = props.sampleStore ? props.sampleStore.sample : null;
+  const objectData = props.objectStore ? props.objectStore.objectData : null;
   if (!sample || !objectData) {
     return <div className="loading" />;
   }
@@ -60,19 +58,16 @@ export default function SampleViewComponent(props: Props & SampleProps) {
     <div className="container">
       <form className="form-horizontal">
         <div className="page-header">
-          <button
-            className="btn btn-default pull-right"
-            onClick={customProps.clickEditSample}
-          >
+          <button className="btn btn-default pull-right" onClick={props.clickEditSample}>
             {I18n.t('musit.sample.updateSample')}
           </button>
           <h1>{I18n.t('musit.sample.sample')}</h1>
         </div>
         <div className="pull-right">
-          <button className="btn btn-default" onClick={customProps.clickCreateAnalysis}>
+          <button className="btn btn-default" onClick={props.clickCreateAnalysis}>
             {I18n.t('musit.analysis.createAnalysis')}
           </button>
-          <button className="btn btn-default" onClick={customProps.clickCreateSample}>
+          <button className="btn btn-default" onClick={props.clickCreateSample}>
             {` ${I18n.t('musit.analysis.createSample')}`}
           </button>
         </div>
@@ -100,7 +95,7 @@ export default function SampleViewComponent(props: Props & SampleProps) {
         <hr />
         <h4>{I18n.t('musit.sample.personsAssociatedWithSampleTaking')}</h4>
         <ViewPersonRoleDate
-          personData={customProps.persons}
+          personData={props.persons}
           getDisplayNameForRole={(roleName: string) =>
             I18n.t(`musit.sample.roles.${roleName}`)}
         />
@@ -140,8 +135,8 @@ export default function SampleViewComponent(props: Props & SampleProps) {
           </div>
         </div>
         <ReadOnlySampleType
-          sampleType={customProps.sampleType}
-          subTypeValue={customProps.sampleSubType}
+          sampleType={props.sampleType}
+          subTypeValue={props.sampleSubType}
         />
         <div className="form-group">
           <label className="control-label col-md-2">
@@ -156,7 +151,7 @@ export default function SampleViewComponent(props: Props & SampleProps) {
             {I18n.t('musit.sample.status')}
           </label>
           <div className="col-md-2">
-            <p className="form-control-static">{customProps.statusText}</p>
+            <p className="form-control-static">{props.statusText}</p>
           </div>
         </div>
         <div className="form-group">
@@ -214,11 +209,7 @@ export default function SampleViewComponent(props: Props & SampleProps) {
           </div>
         </div>
         <hr />
-        <button
-          className="btn-link"
-          style={{ marginLeft: 20 }}
-          onClick={customProps.goBack}
-        >
+        <button className="btn-link" style={{ marginLeft: 20 }} onClick={props.goBack}>
           {I18n.t('musit.texts.cancel')}
         </button>
       </form>

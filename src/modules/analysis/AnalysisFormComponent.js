@@ -323,9 +323,12 @@ export default function AnalysisFormComponent(props: Props) {
 
 function FormRestriction(props) {
   const hasRestriction = props.form.restrictions.value;
-  const restrictionObj: Restriction = (props.form.restriction.value: any);
-  const isRegistered = restrictionObj && restrictionObj.registeredStamp;
-  const isEmptyOrInProgress = !restrictionObj || !restrictionObj.registeredStamp;
+  const restrictionObj: ?Restriction = props.form.restriction.value;
+  if (!restrictionObj) {
+    return null;
+  }
+  const isRegistered = restrictionObj.registeredStamp;
+  const isEmptyOrInProgress = !restrictionObj.registeredStamp;
   const restrictionProps = {
     appSession: props.appSession,
     restriction: restrictionObj,

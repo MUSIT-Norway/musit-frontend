@@ -7,7 +7,7 @@ export type ElementProps = {
   label: string,
   labelWidth: number,
   elementWidth: number,
-  children?: any,
+  children?: React$Node,
   hasError?: boolean
 };
 

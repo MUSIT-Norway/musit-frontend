@@ -10,8 +10,9 @@ import {
   history
 } from './../../../testutils/sampleDataForTest';
 
-const identity = (i: any): any => i;
-const promise = (i: any): any => new Promise(res => res(i));
+const identity = function<T>(i: T): T {
+  return i;
+};
 
 describe('AnalysisFormComponent', () => {
   describe('getAnalysisTypeTerm', () => {
@@ -184,11 +185,11 @@ describe('AnalysisFormComponent', () => {
           sampleTypes: null,
           analysisLabList: [
             {
-              id: 'd39305e8-56b2-4d8d-9351-66dab9c1d8e4',
+              id: 1,
               fullName: 'Kokko'
             },
             {
-              id: 'd39305e8-56b2-4d8d-9351-66dab9c1d8e5',
+              id: 2,
               fullName: 'Kokkosbolle'
             }
           ],
@@ -215,7 +216,11 @@ describe('AnalysisFormComponent', () => {
               category: '5'
             }
           ],
-          categories: { lolol: 'lolol', lalala: 'lalala' }
+          categories: {
+            lolol: 'lolol',
+            lalala: 'lalala',
+            raw: [{ id: 1, name: 'lolol' }, { id: 2, name: 'lalala' }]
+          }
         }}
       />
     );

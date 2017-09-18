@@ -4,7 +4,7 @@ import Config from '../../config';
 import { simpleGet } from '../../shared/RxAjax';
 import type { Callback, AjaxGet } from '../../types/ajax';
 import type { AnalysisType } from 'types/analysis';
-import type { Purposes, Categories, AnalysisLabList } from 'types/predefined';
+import type { Purposes, Category, AnalysisLabList } from 'types/predefined';
 
 export const getAnalysisTypesForCollection: (
   ajaxGet: AjaxGet<*>
@@ -47,7 +47,7 @@ export const getAnalysisCategories: (
   museumId: number,
   token: string,
   callback?: Callback<*>
-}) => Observable<Categories> = (ajaxGet = simpleGet) => ({ museumId, token }) => {
+}) => Observable<Array<Category>> = (ajaxGet = simpleGet) => ({ museumId, token }) => {
   const url = Config.magasin.urls.api.analysisType.getAnalysisCategories(museumId);
   return ajaxGet(url, token).map(({ response }) => response);
 };
@@ -89,7 +89,10 @@ export const loadPredefinedTypes: (
     getAnalysisLabList(ajaxGet)({ token })
   )
     .map(([categories, purposes, analysisTypes, analysisLabList]) => ({
-      categories: categories.reduce((a, c) => Object.assign(a, { [c.id]: c.name }), {}),
+      categories: {
+        ...categories.reduce((a, c) => Object.assign(a, { [c.id]: c.name }), {}),
+        raw: categories
+      },
       purposes,
       analysisTypes,
       analysisLabList

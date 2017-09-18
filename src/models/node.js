@@ -7,21 +7,11 @@ import MusitObject from './object';
 import { Observable, Subject } from 'rxjs';
 import type { Callback, AjaxGet, AjaxPost, AjaxPut, AjaxDel } from '../types/ajax';
 import type { Breadcrumb } from './types/breadcrumb';
+import type { Node, NodeStats } from 'types/node';
 
-export type Node = {
-  type: string,
-  updatedBy?: ?string
-};
-
-type Paging = {
+export type Paging = {
   page: number,
   limit: number
-};
-
-export type NodeStats = {
-  numNodes: number,
-  numObjects: number,
-  totalObjects: number
 };
 
 export type MoveResult = {

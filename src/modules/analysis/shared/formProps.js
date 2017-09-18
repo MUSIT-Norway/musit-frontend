@@ -75,7 +75,7 @@ export default function formProps(
     isFormValid:
       isFormValid(props.form) && isResultValid(analysisType, extraResultAttributes),
     isRestrictionValidForCancellation: isRestrictionValidForCancellation(
-      (props.form.restriction.value: any)
+      props.form.restriction.value
     ),
     objects: getObjects(toArray(props.form.events.value), props.location),
     analysisType,

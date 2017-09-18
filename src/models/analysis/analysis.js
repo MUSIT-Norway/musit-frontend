@@ -111,7 +111,7 @@ export const getAnalysisEvents: (
   return ajaxGet(url, token).map(extractResponseArray);
 };
 
-export const extractResponseArray = (httpResponse: any) => {
+export const extractResponseArray = (httpResponse: *) => {
   if (httpResponse.status === 204) {
     return [];
   } else {
