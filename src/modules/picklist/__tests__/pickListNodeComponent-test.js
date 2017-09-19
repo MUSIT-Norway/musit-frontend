@@ -105,6 +105,7 @@ describe('PickListComponent for nodes', () => {
 
     const wrapper = mount(
       <PickListComponent
+        createConservation={() => {}}
         createAnalysis={() => {}}
         createSample={() => {}}
         type="nodes"
@@ -175,7 +176,7 @@ describe('PickListComponent for nodes', () => {
       .children()
       .find('tr')
       .childAt(1)
-      .childAt(4);
+      .childAt(6);
     removeButton.simulate('click');
     e(onRemoveNode.calledOnce).to.equal(true);
   });

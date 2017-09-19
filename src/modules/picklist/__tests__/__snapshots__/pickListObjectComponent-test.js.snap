@@ -5,6 +5,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
   appSession={Object {}}
   classExistsOnDom={[Function]}
   createAnalysis={[Function]}
+  createConservation={[Function]}
   createSample={[Function]}
   emitError={[Function]}
   emitSuccess={[Function]}
@@ -238,7 +239,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                       </span>
                       <span>
                         <span
-                          className="icon-musit-microscope"
+                          className="icon-musit-microscope normalAction"
                           onClick={[Function]}
                           style={
                             Object {
@@ -284,6 +285,43 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                             }
                           }
                           title="Flytt valgte objekter"
+                        />
+                      </FontAwesome>
+                      <span
+                        className="normalActionNoPadding"
+                        style={
+                          Object {
+                            "color": "#337ab7",
+                            "fontSize": "0.8em",
+                          }
+                        }
+                        title="Valgt objekte(r)"
+                      >
+                        (2)
+                      </span>
+                      <FontAwesome
+                        className="normalAction"
+                        name="bank"
+                        onClick={[Function]}
+                        style={
+                          Object {
+                            "color": null,
+                            "fontSize": "1.5em",
+                          }
+                        }
+                        title="Opprett konservering"
+                      >
+                        <span
+                          aria-hidden={true}
+                          className="fa fa-bank normalAction"
+                          onClick={[Function]}
+                          style={
+                            Object {
+                              "color": null,
+                              "fontSize": "1.5em",
+                            }
+                          }
+                          title="Opprett konservering"
                         />
                       </FontAwesome>
                       <span
@@ -1077,7 +1115,7 @@ exports[`PickListComponent for objects should display component (objects) correc
               </span>
               <span>
                 <span
-                  className="icon-musit-microscope"
+                  className="icon-musit-microscope normalAction"
                   onClick={[Function]}
                   style={
                     Object {
@@ -1111,6 +1149,30 @@ exports[`PickListComponent for objects should display component (objects) correc
                   }
                 }
                 title="Flytt valgte objekter"
+              />
+              <span
+                className="normalActionNoPadding"
+                style={
+                  Object {
+                    "color": "#337ab7",
+                    "fontSize": "0.8em",
+                  }
+                }
+                title="Valgt objekte(r)"
+              >
+                (2)
+              </span>
+              <FontAwesome
+                className="normalAction"
+                name="bank"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "color": null,
+                    "fontSize": "1.5em",
+                  }
+                }
+                title="Opprett konservering"
               />
               <span
                 className="normalActionNoPadding"

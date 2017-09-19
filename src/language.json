@@ -3,7 +3,8 @@
     "musit": {
       "conservation": {
         "conservation": "Conservation",
-        "newConservation": "New conservation"
+        "newConservation": "New conservation",
+        "createConservation": "Create conservation"
       },
       "objects": {
         "goToParentObject": "Go to object",
@@ -930,7 +931,8 @@
     "musit": {
       "conservation": {
         "conservation": "Konservering",
-        "newConservation": "Ny konservering"
+        "newConservation": "Ny konservering",
+        "createConservation": "Opprett konservering"
       },
       "objects": {
         "goToParentObject": "Gå til objektet",

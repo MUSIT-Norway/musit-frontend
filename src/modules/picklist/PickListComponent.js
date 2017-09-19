@@ -28,7 +28,8 @@ export class PickListComponent extends React.Component {
     scannerEnabled: PropTypes.bool.isRequired,
     moveItems: PropTypes.func.isRequired,
     createSample: PropTypes.func.isRequired,
-    createAnalysis: PropTypes.func.isRequired
+    createAnalysis: PropTypes.func.isRequired,
+    createConservation: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -230,7 +231,7 @@ export class PickListComponent extends React.Component {
                     {isObject && (
                       <span>
                         <span
-                          className="icon-musit-microscope"
+                          className="icon-musit-microscope normalAction"
                           style={{
                             fontSize: '1.5em',
                             color: marked.length < 1 ? 'grey' : '#337ab7'
@@ -265,6 +266,24 @@ export class PickListComponent extends React.Component {
                           ? 'moveSelectedNodes'
                           : 'moveSelectedObjects'}`
                       )}
+                    />
+                    {this.selectedCount(isNode, marked.length)}
+                    <FontAwesome
+                      className="normalAction"
+                      style={{
+                        fontSize: '1.5em',
+                        color: marked.length < 1 ? 'grey' : null
+                      }}
+                      name="bank"
+                      onClick={() => {
+                        if (marked.length > 0) {
+                          this.props.createConservation(
+                            markedValues,
+                            this.props.appSession
+                          );
+                        }
+                      }}
+                      title={I18n.t(`musit.conservation.createConservation`)}
                     />
                     {this.selectedCount(isNode, marked.length)}
                     <FontAwesome

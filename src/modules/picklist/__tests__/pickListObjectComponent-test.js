@@ -71,6 +71,7 @@ describe('PickListComponent for objects', () => {
 
     const wrapper = mount(
       <PickListComponent
+        createConservation={() => {}}
         createAnalysis={() => {}}
         createSample={() => {}}
         type="objects"
@@ -101,6 +102,7 @@ describe('PickListComponent for objects', () => {
   it('should display component (objects) correctly', () => {
     const wrapper = shallow(
       <PickListComponent
+        createConservation={() => {}}
         createAnalysis={() => {}}
         createSample={() => {}}
         type="objects"
@@ -135,6 +137,7 @@ describe('PickListComponent for objects', () => {
 
     const wrapper = mount(
       <PickListComponent
+        createConservation={() => {}}
         createAnalysis={() => {}}
         createSample={() => {}}
         type="objects"
@@ -168,7 +171,7 @@ describe('PickListComponent for objects', () => {
       .children()
       .find('tr')
       .childAt(1)
-      .childAt(5);
+      .childAt(7);
     removeButton.simulate('click');
     e(onRemoveObject.calledOnce).to.equal(true);
   });

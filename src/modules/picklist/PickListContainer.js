@@ -296,6 +296,12 @@ const customProps = props => ({
       pathname: Config.magasin.urls.client.analysis.addAnalysis(appSession),
       state: items
     });
+  },
+  createConservation: (items, appSession) => {
+    props.history.push({
+      pathname: Config.magasin.urls.client.conservation.addConservation(appSession),
+      state: items
+    });
   }
 });
 
