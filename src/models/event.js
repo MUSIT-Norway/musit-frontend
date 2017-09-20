@@ -12,6 +12,7 @@ import { I18n } from 'react-i18nify';
 import concat from 'lodash/concat';
 import { Observable } from 'rxjs';
 import type { Callback, AjaxGet, AjaxPost } from '../types/ajax';
+import Conservation from './conservation';
 
 class Event {
   static getAnalysesAndMoves: (
@@ -30,10 +31,15 @@ class Event {
 Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) => props =>
   Observable.forkJoin(
     Analysis.getAnalysesForObject(ajaxGet)(props),
-    MusitObject.getLocationHistory(ajaxGet)(props)
+    MusitObject.getLocationHistory(ajaxGet)(props),
+    Conservation.getConservationForObject(ajaxGet)(props)
   )
-    .map(([analyses, moves]) =>
-      concat(analyses, moves.map(m => ({ ...m, type: 'MoveObject' }))).map(m => ({
+    .map(([analyses, moves, conservation]) =>
+      concat(
+        conservation,
+        analyses,
+        moves.map(m => ({ ...m, type: 'MoveObject' }))
+      ).map(m => ({
         ...m,
         eventDate: parseISODate(m.eventDate || m.registeredDate).format(
           DATE_FORMAT_DISPLAY

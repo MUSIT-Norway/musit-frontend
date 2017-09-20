@@ -222,6 +222,11 @@ describe('Config urls', () => {
           expected: '/api/management/99/conservation/123'
         },
         {
+          name: 'getConservationForObject',
+          actual: urls.api.conservation.getConservationForObject(99, 123),
+          expected: '/api/management/99/conservation/objects/123'
+        },
+        {
           name: 'getAllAnalysisTypes',
           actual: urls.api.analysisType.getAllAnalysisTypes(99),
           expected: '/api/management/99/analyses/types'

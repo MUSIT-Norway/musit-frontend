@@ -2,9 +2,9 @@
   "en": {
     "musit": {
       "conservation": {
-        "conservation": "Conservation",
-        "newConservation": "New conservation",
-        "createConservation": "Create conservation"
+        "conservation": "Use & conservation",
+        "newConservation": "New use & conservation",
+        "createConservation": "Create use & conservation"
       },
       "objects": {
         "goToParentObject": "Go to object",
@@ -62,7 +62,8 @@
             "AnalysisCollection": "Analysis",
             "Analysis": "Analysis",
             "MoveObject": "Relocating",
-            "SampleCreated": "Sample"
+            "SampleCreated": "Sample",
+            "Conservation": "Use & conservation"
           }
         }
       },
@@ -930,9 +931,9 @@
   "no": {
     "musit": {
       "conservation": {
-        "conservation": "Konservering",
-        "newConservation": "Ny konservering",
-        "createConservation": "Opprett konservering"
+        "conservation": "Bruk og bevaring",
+        "newConservation": "Ny bruk og bevaring",
+        "createConservation": "Opprett bruk og bevaring"
       },
       "objects": {
         "goToParentObject": "Gå til objektet",
@@ -990,7 +991,8 @@
             "AnalysisCollection": "Analyse",
             "Analysis": "Analyse",
             "MoveObject": "Flytting",
-            "SampleCreated": "Prøveuttak"
+            "SampleCreated": "Prøveuttak",
+            "Conservation": "Bruk og bevaring"
           }
         }
       },

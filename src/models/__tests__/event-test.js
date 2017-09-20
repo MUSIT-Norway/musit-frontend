@@ -82,62 +82,93 @@ describe('Event model', () => {
     const loadM = '-1----------';
     const expected = '-a----------';
 
+    const mockDataState = [
+      {
+        id: 1000,
+        ConservationTypeId: 20,
+        registeredBy: 'Rituvesh Kumar',
+        registeredDate: '12.09.2015',
+        events: [],
+        status: 1,
+        caseNumbers: [123],
+        type: 'Conservation',
+        eventDate: '12.09.2015',
+        doneBy: 'Ukjent',
+        doneDate: 'Ukjent'
+      },
+      {
+        id: 1001,
+        ConservationTypeId: 20,
+        registeredBy: 'Rituvesh Kumar',
+        registeredDate: '18.09.2016',
+        note: 'gfgdgdf',
+        events: [],
+        status: 1,
+        caseNumbers: [345, 'sn-123'],
+        type: 'Conservation',
+        eventDate: '18.09.2016',
+        doneBy: 'Ukjent',
+        doneDate: 'Ukjent'
+      }
+    ];
+
+    const expectedStateData = [
+      {
+        id: 1,
+        type: 'Analysis',
+        eventDate: '23.03.2017',
+        registeredBy: 'Some name',
+        note: 'note',
+        doneBy: 'Ukjent',
+        doneDate: 'Ukjent',
+        registeredDate: 'Ukjent'
+      },
+      {
+        id: 2,
+        type: 'Analysis',
+        eventDate: '23.03.2017',
+        registeredBy: 'Some name',
+        note: 'note',
+        doneBy: 'Ukjent',
+        doneDate: 'Ukjent',
+        registeredDate: 'Ukjent'
+      },
+      {
+        id: 3,
+        type: 'Analysis',
+        eventDate: '23.03.2017',
+        registeredBy: 'Some name',
+        note: 'note',
+        doneBy: 'Rituvesh Kumar',
+        doneDate: 'Ukjent',
+        registeredDate: 'Ukjent'
+      },
+      {
+        doneBy: 'Rituvesh Kumar',
+        doneDate: '30.05.2017',
+        eventDate: '30.05.2017',
+        id: 'aba6a67c-f742-4a44-b13e-0415ec1abb2a',
+        objectType: 'collection',
+        registeredBy: 'Rituvesh Kumar',
+        registeredDate: '30.05.2017'
+      },
+      {
+        registeredDate: '23.03.2017',
+        from: {
+          breadcrumb: []
+        },
+        to: {
+          breadcrumb: []
+        },
+        type: 'MoveObject',
+        eventDate: '23.03.2017',
+        registeredBy: 'Some name',
+        doneBy: 'Rituvesh Kumar',
+        doneDate: 'Ukjent'
+      }
+    ];
     const expectedStateMap = {
-      a: [
-        {
-          id: 1,
-          type: 'Analysis',
-          eventDate: '23.03.2017',
-          registeredBy: 'Some name',
-          note: 'note',
-          doneBy: 'Ukjent',
-          doneDate: 'Ukjent',
-          registeredDate: 'Ukjent'
-        },
-        {
-          id: 2,
-          type: 'Analysis',
-          eventDate: '23.03.2017',
-          registeredBy: 'Some name',
-          note: 'note',
-          doneBy: 'Ukjent',
-          doneDate: 'Ukjent',
-          registeredDate: 'Ukjent'
-        },
-        {
-          id: 3,
-          type: 'Analysis',
-          eventDate: '23.03.2017',
-          registeredBy: 'Some name',
-          note: 'note',
-          doneBy: 'Rituvesh Kumar',
-          doneDate: 'Ukjent',
-          registeredDate: 'Ukjent'
-        },
-        {
-          doneBy: 'Rituvesh Kumar',
-          doneDate: '30.05.2017',
-          eventDate: '30.05.2017',
-          id: 'aba6a67c-f742-4a44-b13e-0415ec1abb2a',
-          objectType: 'collection',
-          registeredBy: 'Rituvesh Kumar',
-          registeredDate: '30.05.2017'
-        },
-        {
-          registeredDate: '23.03.2017',
-          from: {
-            breadcrumb: []
-          },
-          to: {
-            breadcrumb: []
-          },
-          type: 'MoveObject',
-          eventDate: '23.03.2017',
-          registeredBy: 'Some name',
-          doneBy: 'Rituvesh Kumar',
-          doneDate: 'Ukjent'
-        }
-      ]
+      a: mockDataState.concat(expectedStateData)
     };
 
     const load = testScheduler.createHotObservable(loadM);

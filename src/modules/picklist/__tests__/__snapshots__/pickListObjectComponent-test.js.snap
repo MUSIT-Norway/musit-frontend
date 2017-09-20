@@ -309,7 +309,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                             "fontSize": "1.5em",
                           }
                         }
-                        title="Opprett konservering"
+                        title="Opprett bruk og bevaring"
                       >
                         <span
                           aria-hidden={true}
@@ -321,7 +321,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                               "fontSize": "1.5em",
                             }
                           }
-                          title="Opprett konservering"
+                          title="Opprett bruk og bevaring"
                         />
                       </FontAwesome>
                       <span
@@ -1172,7 +1172,7 @@ exports[`PickListComponent for objects should display component (objects) correc
                     "fontSize": "1.5em",
                   }
                 }
-                title="Opprett konservering"
+                title="Opprett bruk og bevaring"
               />
               <span
                 className="normalActionNoPadding"

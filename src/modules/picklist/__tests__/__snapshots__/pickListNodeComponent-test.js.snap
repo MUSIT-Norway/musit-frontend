@@ -122,7 +122,7 @@ exports[`PickListComponent for nodes should display component (nodes) correctly 
                     "fontSize": "1.5em",
                   }
                 }
-                title="Opprett konservering"
+                title="Opprett bruk og bevaring"
               />
               <span
                 className="normalActionNoPadding"
