@@ -94,6 +94,13 @@ export const ViewObjectComponent = ({
                     event.id
                   )
                 });
+              } else if (event.type === 'Conservation') {
+                history.push({
+                  pathname: Config.magasin.urls.client.conservation.viewConservation(
+                    appSession,
+                    event.id
+                  )
+                });
               }
             }}
           />
