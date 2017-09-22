@@ -184,7 +184,8 @@ function extraAttributesWithResult(extraAttributes, result) {
         [eat]: {
           ...eatAttr,
           value:
-            eatAttr.type === 'String' && typeof value === 'string'
+            eatAttr.type === 'String' &&
+            (typeof value === 'string' || typeof value === 'undefined' || value === null)
               ? value
               : typeof value !== 'string' &&
                 Object.assign({}, value, {
