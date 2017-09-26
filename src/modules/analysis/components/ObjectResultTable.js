@@ -173,6 +173,11 @@ export default function ObjectResultTable({
   );
 }
 
+const getRawValue = value =>
+  value && value.rawValue && value.rawValue.length > 0
+    ? value.rawValue
+    : value && value.value && value.value.toString().replace('.', ',');
+
 function extraAttributesWithResult(extraAttributes, result) {
   return (
     !!extraAttributes &&
@@ -187,11 +192,7 @@ function extraAttributesWithResult(extraAttributes, result) {
             eatAttr.type === 'String' &&
             (typeof value === 'string' || typeof value === 'undefined' || value === null)
               ? value
-              : typeof value !== 'string' &&
-                Object.assign({}, value, {
-                  rawValue:
-                    value && value.value && value.value.toString().replace('.', ',')
-                })
+              : typeof value !== 'string' && { ...value, rawValue: getRawValue(value) }
         }
       };
     }, {})
