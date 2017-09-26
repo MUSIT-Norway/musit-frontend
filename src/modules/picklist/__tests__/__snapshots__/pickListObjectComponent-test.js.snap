@@ -218,7 +218,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                         onClick={[Function]}
                         style={
                           Object {
-                            "color": "grey",
+                            "color": "#337ab7",
                             "fontSize": "1.5em",
                           }
                         }
@@ -1057,7 +1057,7 @@ exports[`PickListComponent for objects should display component (objects) correc
                 onClick={[Function]}
                 style={
                   Object {
-                    "color": "grey",
+                    "color": "#337ab7",
                     "fontSize": "1.5em",
                   }
                 }
