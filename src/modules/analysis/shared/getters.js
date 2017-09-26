@@ -33,6 +33,17 @@ export function getStatusText(status?: ?number): string {
   }
 }
 
+export type Value = { rawValue?: ?string, value?: ?number };
+
+export function parseValue(value: Value): Value {
+  return typeof value.rawValue !== 'undefined'
+    ? {
+        ...value,
+        value: value.rawValue ? parseFloat(value.rawValue.replace(',', '.')) : null
+      }
+    : value;
+}
+
 export function getLabPlaceText(
   analysisLabList: ?Array<AnalysisLab>,
   actorId: ?number
