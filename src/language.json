@@ -4,7 +4,16 @@
       "conservation": {
         "conservation": "Use & conservation",
         "newConservation": "New use & conservation",
-        "createConservation": "Create use & conservation"
+        "createConservation": "Create use & conservation",
+        "roles": {"administrator": "Administrator",
+          "responsible": "Responsible",
+          "doneBy": "Done by",
+          "completedBy": "Completed by"
+        },
+        "comments":"Comments",
+        "caseNumber":"Case number",
+        "personsConnected":"Persons associated with the conservation",
+        "objectsOrSamples":"Objects/samples"
       },
       "objects": {
         "goToParentObject": "Go to object",
@@ -933,7 +942,17 @@
       "conservation": {
         "conservation": "Bruk og bevaring",
         "newConservation": "Ny bruk og bevaring",
-        "createConservation": "Opprett bruk og bevaring"
+        "createConservation": "Opprett bruk og bevaring",
+        "roles": {
+          "administrator": "Administrert av",
+          "responsible": "Ansvarlig",
+          "doneBy": "Utført av",
+          "completedBy": "Avsluttet av"
+        },
+        "comments":"Kommentar",
+        "caseNumber":"Saksnummer",
+        "personsConnected":"Personer tilknyttet burk og bevaring",
+        "objectsOrSamples":"Objekter/prøver"
       },
       "objects": {
         "goToParentObject": "Gå til objektet",

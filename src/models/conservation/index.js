@@ -1,8 +1,16 @@
 // @flow
 
-import { getConservationForObject, getConservationById } from './conservation';
+import {
+  getConservationForObject,
+  getConservationById,
+  editConservationEvent
+} from './conservation';
+
+import { fromJsonToForm } from './conservationForm';
 
 export default {
   getConservationForObject,
-  getConservationById
+  getConservationById,
+  editConservationEvent,
+  fromJsonToForm
 };
