@@ -47,7 +47,7 @@ export default class ExpandableObjectTable extends React.Component<Props, State>
   }
 
   static toRowId(row: Object) {
-    return row.objectId || row.uuid;
+    return row.affectedThing || row.objectId || row.uuid;
   }
 
   static mergeWithExpanded(data, expandedRowIds) {
