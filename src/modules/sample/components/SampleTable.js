@@ -14,12 +14,7 @@ import type { AppSession } from '../../../types/appSession';
 import type { ObjectData } from '../../../types/object';
 import { flattenSample } from '../shared/types';
 import omit from 'lodash/omit';
-import {
-  getSampleType,
-  getSampleSubType,
-  getSampleTypeAndSubType,
-  getSampleTypeObj
-} from '../shared/types';
+import { getSampleType, getSampleSubType } from '../shared/types';
 
 type Props = {
   samples: Samples,
