@@ -215,7 +215,7 @@ export class PickListComponent extends React.Component {
                         className="icon icon-musit-testtube"
                         style={{
                           fontSize: '1.5em',
-                          color: marked.length !== 1 ? 'grey' : '#337ab7'
+                          color: marked.length < 1 ? 'grey' : '#337ab7'
                         }}
                         onClick={() => {
                           if (marked.length === 1) {

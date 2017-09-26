@@ -217,6 +217,7 @@ export default (props: Props) =>
               toggleCancelDialog={props.toggleCancelDialog}
               isRestrictionValidForCancellation={props.isRestrictionValidForCancellation}
               cancelRestriction={props.cancelRestriction}
+              viewMode={true}
             />
           )}
         </div>
