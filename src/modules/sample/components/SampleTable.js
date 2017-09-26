@@ -12,6 +12,8 @@ import type { SampleTypesObject } from '../../../types/sample';
 import FontAwesome from 'react-fontawesome';
 import type { AppSession } from '../../../types/appSession';
 import type { ObjectData } from '../../../types/object';
+import { flattenSample } from '../shared/types';
+import omit from 'lodash/omit';
 import {
   getSampleType,
   getSampleSubType,
@@ -38,30 +40,12 @@ const pickObjectParams = (
   sampleTypes: SampleTypesObject
 ) => {
   return {
-    object: {
-      ...s,
-      uuid: s.objectId,
-      collection: appSession.collectionId,
-      id: s.objectId,
-      museumNo: objectData.museumNo,
-      objectType: 'sample',
-      subNo: objectData.subNo,
-      term: objectData.term,
-      sampleTypeAndSubType: getSampleTypeAndSubType(
-        sampleTypes,
-        s.sampleTypeId,
-        appSession
-      ),
-      sampleType: getSampleTypeObj(sampleTypes, s.sampleTypeId),
-      sampleTypeId: s.sampleTypeId
-    },
-    breadcrumb:
-      s.currentLocation && s.currentLocation.breadcrumb
-        ? s.currentLocation.breadcrumb
-        : [],
-    museumId: appSession.museumId,
-    collectionId: appSession.collectionId,
-    token: appSession.accessToken
+    object: flattenSample(
+      appSession,
+      sampleTypes.sampleTypes,
+      omit(objectData, 'sampleData'),
+      s
+    )
   };
 };
 const getSampleStatus = (
