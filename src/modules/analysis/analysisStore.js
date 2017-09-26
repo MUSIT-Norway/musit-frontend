@@ -19,6 +19,7 @@ import type {
 import type { Purposes, Categories, AnalysisLabList } from '../../types/predefined';
 import type { Actor } from '../../types/actor';
 import type { SampleType } from 'types/sample';
+import { parseValue } from './shared/getters';
 
 export type AnalysisStoreState = {
   analysisTypes?: Array<AnalysisType>,
@@ -104,15 +105,15 @@ type Actions = {
   toggleCancelDialog$: Subject<*>
 };
 
-const updateResultAttribute = ({ name, value }) => state => ({
-  ...state,
-  extraResultAttributes: {
-    ...state.extraResultAttributes,
-    [name]: value.rawValue
-      ? { ...value, value: parseFloat(value.rawValue.replace(',', '.')) }
-      : value
-  }
-});
+const updateResultAttribute = ({ name, value }) => state => {
+  return {
+    ...state,
+    extraResultAttributes: {
+      ...state.extraResultAttributes,
+      [name]: parseValue(value)
+    }
+  };
+};
 
 export const reducer$ = (actions: Actions): Observable<Reducer<AnalysisStoreState>> => {
   return Observable.merge(

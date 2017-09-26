@@ -10,7 +10,7 @@ type Props = ElementProps & {
   value:
     | string
     | {
-        value?: ?string,
+        value?: ?number,
         rawValue?: ?string,
         unit?: ?string
       },

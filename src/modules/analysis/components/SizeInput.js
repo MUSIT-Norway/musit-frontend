@@ -1,11 +1,12 @@
 // @flow
 import React from 'react';
 import { I18n } from 'react-i18nify';
+import { parseValue } from '../shared/getters';
 
 type Props = {
   attrKey: string,
   attribute: {
-    value?: ?string,
+    value?: ?number,
     rawValue?: ?string,
     unit?: ?string
   },
@@ -28,11 +29,14 @@ const Size = (props: Props) => {
             borderColor: borderColorValue
           }}
           value={props.attribute.rawValue || ''}
-          onChange={e =>
-            props.onChange({
+          onChange={e => {
+            const value = {
               ...props.attribute,
               rawValue: e.target.value
-            })}
+            };
+            const parsed = parseValue(value);
+            return props.onChange(parsed);
+          }}
         />
       </div>
       <div className="col-md-4">
