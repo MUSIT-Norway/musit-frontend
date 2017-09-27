@@ -38,7 +38,7 @@ export const conservationEventViewMockData = {
     '12080e3e-2ca2-41b1-9d4a-4d72e292dcd8',
     'aba6a67c-f742-4a44-b13e-0415ec1abb2a',
     '788136fe-8038-47fc-9c59-9ddb010e0f74',
-    '788136fe-8038-47fc-9c59-9ddb010e0f74'
+    'fa32417b-89ec-4d27-8f4b-27f3a2b03583'
   ],
   caseNumber: 'test case number. 123',
   events: [

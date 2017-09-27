@@ -131,26 +131,14 @@ export function getConservationDetails(
         return conservation;
       })
       .flatMap(conservation => {
-        const objectId = conservation.objectId;
-        if (!objectId) {
-          return Observable.of(conservation);
+        const affectedThings = conservation.affectedThings;
+        if (affectedThings && affectedThings.length > 0) {
+          // $FlowFixMe | We are passing an array to forkJoin which is not supported by flow-typed definition for rxjs.
+          return Observable.forkJoin(
+            affectedThings.map(getEventObjectDetails(props, ajaxGet))
+          ).map(zipObjectInfoWithEvents(conservation));
         }
-        return MusitObject.getObjectDetails(ajaxGet)({
-          id: objectId,
-          museumId: props.museumId,
-          collectionId: props.collectionId,
-          token: props.token
-        }).map(({ response }) => {
-          if (!response) {
-            return conservation;
-          }
-          return {
-            ...conservation,
-            museumNo: response.museumNo,
-            subNo: response.subNo,
-            term: response.term
-          };
-        });
+        return Observable.of(conservation);
       });
 }
 
@@ -164,10 +152,10 @@ type AjaxParams = {
 function getEventObjectDetails(
   props: AjaxParams,
   ajaxGet: AjaxGet<*>
-): (t: AffectedThing) => Observable<ObjectInfo> {
-  return event => {
+): (t: any) => Observable<ObjectInfo> {
+  return uuid => {
     const params = {
-      id: event.affectedThing,
+      id: uuid,
       museumId: props.museumId,
       collectionId: props.collectionId,
       token: props.token
@@ -205,14 +193,14 @@ export function zipObjectInfoWithEvents(conservation: ConservationCollection) {
       ? conservation.events.map(e => {
           const od = arrayOfObjectDetails.find(objD => {
             return (
-              (objD.sampleData && objD.sampleData.objectId === e.affectedThing) ||
-              (objD.objectData && objD.objectData.uuid === e.affectedThing)
+              (objD.sampleData && objD.sampleData.objectId === e) ||
+              (objD.objectData && objD.objectData.uuid === e)
             );
           });
           return od ? { ...od, ...e } : e;
         })
       : [];
-    return { ...conservation, events: events };
+    return { ...conservation, events: events, affectedThings: arrayOfObjectDetails };
   };
 }
 

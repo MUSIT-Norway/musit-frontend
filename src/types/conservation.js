@@ -14,21 +14,10 @@ export type AffectedThing = {
   partOf: number,
   registeredBy: string,
   registeredDate: string,
-  responsible: string,
-  type: 'Conservation' | 'ConservationCollection'
+  responsible: string
 };
 
 export type ObjectInfo = { objectData?: ?MusitObject, sampleData?: ?SampleDataExtended };
-
-export type ConservationEvent = AffectedThing &
-  ObjectInfo & {
-    result?: {
-      [string]: string | { value?: string | Array<string> },
-      extRef?: Array<string>,
-      comment?: string
-    },
-    expanded?: boolean
-  };
 
 // Fixme this type is incorrect/incomplete
 export type ConservationCollection = {
@@ -51,9 +40,10 @@ export type ConservationCollection = {
   completedDate?: ?string,
   note?: ?string,
   extraAttributes?: { type: string, [string]: string | number },
-  events: ?Array<ConservationEvent>,
+  affectedThings?: ?Array<ObjectInfo>,
   reason?: ?string,
   status?: ?number,
   caseNumbers?: ?Array<string>,
-  orgId?: ?number
+  orgId?: ?number,
+  events?: ?Array<any>
 };

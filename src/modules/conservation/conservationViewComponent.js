@@ -87,8 +87,10 @@ export default (props: Props) =>
           <div className="form-group">
             <div className="col-md-12 col-md-offset-0">
               <ObjectTable
-                extraAttributes={{}}
-                data={props.objects}
+                data={
+                  (props.store.conservation && props.store.conservation.affectedThings) ||
+                  []
+                }
                 appSession={props.appSession}
                 history={props.history}
                 viewMode={true}
