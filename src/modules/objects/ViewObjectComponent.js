@@ -73,7 +73,7 @@ export const ViewObjectComponent = ({
               pathname: Config.magasin.urls.client.conservation.addConservation(
                 appSession
               ),
-              state: objectData
+              state: [objectData]
             })}
         >
           {I18n.t('musit.conservation.newConservation')}

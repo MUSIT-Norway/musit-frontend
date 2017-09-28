@@ -11,7 +11,7 @@ import store$, { getConservation$, clearStore$ } from './conservationStore';
 import Conservation from '../../models/conservation';
 import conservationForm, { fieldsArray } from './conservationForm';
 import Config from '../../config';
-import { onUnmount } from './shared/formProps';
+import { onUnMount } from './shared/conservationFormProps';
 import type { Field } from '../../forms/form';
 import type { History } from '../../types/Routes';
 import { I18n } from 'react-i18nify';
@@ -80,7 +80,7 @@ export const onReceiveProps = (fieldsArray: Array<Field<any>>) => (
 const MountableConservationViewComponent = lifeCycle({
   onMount,
   onReceiveProps: onReceiveProps(fieldsArray),
-  onUnmount
+  onUnMount
 })(ConservationViewComponent);
 
 export default loadCustomPredefinedTypes(

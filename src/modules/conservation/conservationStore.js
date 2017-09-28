@@ -19,7 +19,8 @@ import type { SampleType } from 'types/sample';
 
 export type ConservationStoreState = {
   loading?: boolean,
-  conservation?: ?ConservationCollection
+  conservation?: ?ConservationCollection,
+  conservationTypes: Array<string>
 };
 
 export const initialState: ConservationStoreState = {
@@ -86,6 +87,7 @@ export const store$ = (
 
 const storeSingleton = store$();
 export default storeSingleton;
+
 type SampleTypes = {
   [string]: Array<SampleType>
 };

@@ -23,6 +23,7 @@ export const fieldsArray = [
   getStrField('note'),
   getArrField('caseNumber'),
   getArrField('affectedThings', []),
+  getArrField('objects', [], false),
   getStrField('updatedBy', null, false),
   getStrField('updatedByName', null, false),
   getStrField('updatedDate', null, false)

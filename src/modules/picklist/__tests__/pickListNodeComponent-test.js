@@ -71,6 +71,7 @@ describe('PickListComponent for nodes', () => {
       <PickListComponent
         createAnalysis={() => {}}
         createSample={() => {}}
+        createConservation={() => {}}
         type="nodes"
         pickList={pickList}
         markNode={x => x}

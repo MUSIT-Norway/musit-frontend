@@ -185,6 +185,7 @@ describe('PickListComponent for objects', () => {
 
     const wrapper = mount(
       <PickListComponent
+        createConservation={() => {}}
         createAnalysis={() => {}}
         createSample={() => {}}
         type="objects"
@@ -232,6 +233,7 @@ describe('PickListComponent for objects', () => {
 
     const wrapper = mount(
       <PickListComponent
+        createConservation={() => {}}
         createAnalysis={() => {}}
         createSample={() => {}}
         type="objects"
