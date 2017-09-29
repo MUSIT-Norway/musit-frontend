@@ -144,6 +144,14 @@ export default {
         analysis: {
           resultsUrl: (mid: MuseumId, analysisId: number) =>
             `/api/management/${mid}/analyses/${analysisId}/results`,
+          addFileUrl: (mid: MuseumId, collectionId: CollectionId, analysisId: number) =>
+            `/api/document/museum/${mid}/analyses/attachments?analysisId=${analysisId}&collectionId=${collectionId}`,
+          getFilesUrl: (files: Array<string>, mid: MuseumId, analysisId: number) =>
+            `/api/document/museum/${mid}/analyses/attachments?analysisId=${analysisId}&fileIds=${files.join(
+              ','
+            )}`,
+          getFileUrl: (file: string, mid: MuseumId) =>
+            `/api/document/museum/${mid}/analyses/attachments/${file}`,
           saveAnalysisEvent: (mid: MuseumId) => `/api/management/${mid}/analyses`,
           getAnalysisById: (mid: MuseumId, analysisId: number) =>
             `/api/management/${mid}/analyses/${analysisId}`,

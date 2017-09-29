@@ -31,6 +31,7 @@ import {
 } from '../../forms/components';
 import type { AnalysisCollection } from '../../types/analysis';
 import type { History } from '../../types/Routes';
+import Loader from 'react-loader';
 
 export type Props = {
   form: FormData,
@@ -60,7 +61,7 @@ export type Props = {
 };
 
 export default function AnalysisFormComponent(props: Props) {
-  return !props.loadingAnalysis ? (
+  return !props.store.loadingAnalysis ? (
     <div className="container">
       <div className="page-header">
         <h1>{I18n.t('musit.analysis.analysis')}</h1>
@@ -249,6 +250,9 @@ export default function AnalysisFormComponent(props: Props) {
             comments={toString(props.form.comments.rawValue)}
             updateComments={rawValue =>
               props.updateForm({ name: props.form.comments.name, rawValue })}
+            resultFiles={props.form.resultFiles.value}
+            updateResultFiles={files =>
+              props.updateForm({ name: props.form.resultFiles.name, rawValue: files })}
             appSession={props.appSession}
             history={props.history}
             parentObjectId={
@@ -317,7 +321,7 @@ export default function AnalysisFormComponent(props: Props) {
       </form>
     </div>
   ) : (
-    <div className="loading" />
+    <Loader loaded={false} />
   );
 }
 

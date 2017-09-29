@@ -32,6 +32,7 @@ export const fieldsArray = [
   getBoolField('restrictions', false),
   getCompositeField('restriction', {}),
   getArrField('caseNumbers'),
+  getArrField('resultFiles'),
   getBoolField('completeAnalysis'),
   getStrField('museumNo'),
   getStrField('subNo'),

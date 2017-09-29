@@ -179,6 +179,7 @@ export default (props: Props) =>
           </div>
           <hr />
           <ViewResult
+            files={props.store.analysis ? props.store.analysis.files : []}
             extraAttributes={props.extraResultAttributes}
             externalSource={toArray(props.form.externalSource.value).join(',')}
             comments={props.form.comments.value}

@@ -1,10 +1,6 @@
 // @flow
-import {
-  getObjects,
-  getAnalysisCollection,
-  submitForm,
-  getResult
-} from '../shared/submit';
+import { getObjects, getAnalysisCollection, getResult } from '../shared/submit';
+import { saveAnalysis$ } from '../analysisStore';
 import type { Location } from '../shared/submit';
 import { simplePost, simplePut } from '../../../shared/RxAjax';
 import type { History } from '../../../types/Routes';
@@ -29,6 +25,8 @@ import type {
   ExtraResultAttribute,
   ExtraResultAttributeValues
 } from 'types/analysis';
+import { emitError } from '../../../shared/errors';
+import Config from '../../../config';
 
 type FormProps = {|
   updateForm: Function,
@@ -210,16 +208,38 @@ function clickSave(
 ) {
   return (evt: DomEvent) => {
     evt.preventDefault();
-    submitForm(
-      form.id.value,
-      getResult(form, extraResultAttributes),
+    saveAnalysis$.next({
+      id: form.id.value,
+      result: getResult(form, extraResultAttributes),
       appSession,
-      history,
-      getAnalysisCollection(form, extraDescriptionAttributes, location),
-      toArray(form.events.value),
+      data: getAnalysisCollection(form, extraDescriptionAttributes, location),
+      events: toArray(form.events.value),
       ajaxPost,
-      ajaxPut
-    );
+      ajaxPut,
+      callback: {
+        onComplete: props => {
+          if (!props) {
+            return;
+          }
+          const maybeErrorMessage = props.results
+            .filter(res => res.error)
+            .concat(props.badFiles)
+            .map(res => res.error.xhr.response.message)
+            .join('\n')
+            .trim();
+          if (maybeErrorMessage.length > 0) {
+            emitError({
+              type: 'errorOnSave',
+              message: maybeErrorMessage.replace('in None', '')
+            });
+          }
+          const id = props.id;
+          history.replace(
+            Config.magasin.urls.client.analysis.viewAnalysis(appSession, parseInt(id, 10))
+          );
+        }
+      }
+    });
   };
 }
 

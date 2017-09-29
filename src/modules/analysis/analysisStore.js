@@ -9,21 +9,44 @@ import MusitActor from '../../models/actor';
 import MusitObject from '../../models/object';
 import Sample from '../../models/sample';
 import flatten from 'lodash/flatten';
-import type { Callback, AjaxGet, AjaxPost } from '../../types/ajax';
+import type { Callback, AjaxGet, AjaxPost, AjaxPut } from '../../types/ajax';
 import type {
   AnalysisCollection,
   AnalysisType,
   ObjectInfo,
-  AffectedThing
+  AffectedThing,
+  Result
 } from '../../types/analysis';
-import type { Purposes, Categories, AnalysisLabList } from '../../types/predefined';
+import type {
+  Purposes,
+  Categories,
+  AnalysisLabList,
+  SampleTypes
+} from '../../types/predefined';
 import type { Actor } from '../../types/actor';
-import type { SampleType } from 'types/sample';
+import type { SampleData } from '../../types/samples';
+import type { ObjectData } from '../../types/object';
+import type { AnalysisSavePayload } from '../../models/analysis/analysis';
+import type { AppSession } from '../../types/appSession';
+import { emitError, emitSuccess } from '../../shared/errors';
+import { I18n } from 'react-i18nify';
+import { addResultFile, getFiles } from '../../models/analysis/analysisResult';
+import type { ErrorLoading, SavedFile } from '../../models/analysis/analysisResult';
+import { KEEP_ALIVE } from '../../stores/constants';
 import { parseValue } from './shared/getters';
+
+export type CommonParams = {
+  id: number,
+  museumId: number,
+  collectionId: string,
+  token: string,
+  callback?: Callback<*>
+};
 
 export type AnalysisStoreState = {
   analysisTypes?: Array<AnalysisType>,
   loading?: boolean,
+  savingAnalysis?: boolean,
   purposes?: Purposes,
   categories?: Categories,
   analysisLabList?: AnalysisLabList,
@@ -58,25 +81,55 @@ const setLoading$: Subject<Flag> = createAction('setLoading$');
 const flagLoading = s => () => setLoading$.next(s);
 
 export const getAnalysisTypes$: Subject<*> = createAction('getAnalysisTypes$');
-const getAnalysisTypesAction$: Observable<*> = getAnalysisTypes$.switchMap(
-  MusitAnalysis.getAnalysisTypesForCollection(simpleGet)
-);
+const getAnalysisTypesAction = get => props => {
+  return Observable.of(props).flatMap(MusitAnalysis.getAnalysisTypesForCollection(get));
+};
 
-export const getAnalysis$: Subject<*> = createAction('getAnalysis$');
-const getAnalysisAction$: Observable<*> = getAnalysis$
-  .do(flagLoading({ loadingAnalysis: true }))
-  .switchMap(props =>
-    MusitAnalysis.getAnalysisById(simpleGet)(props).flatMap(
-      getAnalysisDetails(simpleGet, simplePost, props)
+export type GetAnalysisProps = CommonParams & { sampleTypes: SampleTypes };
+export const getAnalysis$: Subject<GetAnalysisProps> = createAction('getAnalysis$');
+const getAnalysisAction = (get, post) => props =>
+  Observable.of(props)
+    .do(flagLoading({ loadingAnalysis: true }))
+    .flatMap(props =>
+      MusitAnalysis.getAnalysisById(get)({
+        id: props.id,
+        museumId: props.museumId,
+        token: props.token
+      }).flatMap(getAnalysisDetails(get, post, props))
     )
-  )
-  .do(flagLoading({ loadingAnalysis: false }));
+    .do(flagLoading({ loadingAnalysis: false }));
+
+export type SaveProps = {
+  id: ?number,
+  result: ?Result,
+  appSession: AppSession,
+  data: AnalysisSavePayload,
+  events: Array<
+    ObjectData &
+      SampleData & {
+        result?: ?{
+          [string]: any,
+          files?: ?Array<File> | ?Array<SavedFile | ErrorLoading>
+        }
+      }
+  >,
+  callback: Callback<*>
+};
+export const saveAnalysis$: Subject<SaveProps> = createAction('saveAnalysis$');
+const saveAnalysisAction = (post, put) => props => {
+  return Observable.of(props)
+    .do(flagLoading({ loadingAnalysis: true }))
+    .flatMap(saveAnalysis(post, put))
+    .do(flagLoading({ loadingAnalysis: false }));
+};
 
 export const updateAnalysis$: Subject<*> = createAction('updateAnalysis$');
-const updateAnalysisAction$: Observable<*> = updateAnalysis$
-  .do(flagLoading({ loadingAnalysis: true }))
-  .switchMap(MusitAnalysis.editAnalysisEvent(simplePut))
-  .do(flagLoading({ loadingAnalysis: false }));
+const updateAnalysisAction = put => props => {
+  return Observable.of(props)
+    .do(flagLoading({ loadingAnalysis: true }))
+    .flatMap(MusitAnalysis.editAnalysisEvent(put))
+    .do(flagLoading({ loadingAnalysis: false }));
+};
 
 export const updateRestriction$: Subject<*> = createAction('updateRestriction$');
 export const updateExtraDescriptionAttribute$: Subject<*> = createAction(
@@ -88,17 +141,20 @@ export const updateExtraResultAttribute$: Subject<*> = createAction(
 );
 
 export const loadPredefinedTypes$ = createAction('loadPredefinedTypes$');
-const loadPredefinedTypesAction$: Observable<*> = loadPredefinedTypes$.switchMap(props =>
-  MusitAnalysis.loadPredefinedTypes(simpleGet)(props)
-);
+const loadPredefinedTypesAction = get => props => {
+  return Observable.of(props).flatMap(props =>
+    MusitAnalysis.loadPredefinedTypes(get)(props)
+  );
+};
 
 type Actions = {
+  saveAnalysis$: Subject<*>,
   setLoading$: Subject<Flag>,
-  getAnalysisAction$: Observable<*>,
-  updateAnalysisAction$: Observable<*>,
+  getAnalysis$: Subject<*>,
+  updateAnalysis$: Subject<*>,
   updateRestriction$: Subject<*>,
-  getAnalysisTypesAction$: Observable<*>,
-  loadPredefinedTypesAction$: Observable<*>,
+  getAnalysisTypes$: Subject<*>,
+  loadPredefinedTypes$: Subject<*>,
   updateExtraDescriptionAttribute$: Subject<*>,
   updateExtraResultAttribute$: Subject<*>,
   clearStore$: Subject<*>,
@@ -115,21 +171,34 @@ const updateResultAttribute = ({ name, value }) => state => {
   };
 };
 
-export const reducer$ = (actions: Actions): Observable<Reducer<AnalysisStoreState>> => {
+export const reducer$ = (
+  actions: Actions,
+  ajaxGet: AjaxGet<*>,
+  ajaxPost: AjaxPost<*>,
+  ajaxPut: AjaxPut<*>
+): Observable<Reducer<AnalysisStoreState>> => {
   return Observable.merge(
+    actions.saveAnalysis$
+      .switchMap(saveAnalysisAction(ajaxPost, ajaxPut))
+      .map(saveResult => state => ({ ...state, saveResult })),
     actions.toggleCancelDialog$.map(() => state => ({
       ...state,
       showRestrictionCancelDialog: !state.showRestrictionCancelDialog
     })),
     actions.setLoading$.map(loading => state => ({ ...state, ...loading })),
     actions.clearStore$.map(() => () => initialState),
-    Observable.merge(
-      actions.getAnalysisAction$,
-      actions.updateAnalysisAction$
-    ).map(analysis => state => ({
-      ...state,
-      analysis
-    })),
+    actions.getAnalysis$
+      .switchMap(getAnalysisAction(ajaxGet, ajaxPost))
+      .map(analysis => state => ({
+        ...state,
+        analysis
+      })),
+    actions.updateAnalysis$
+      .switchMap(updateAnalysisAction(ajaxPut))
+      .map(analysis => state => ({
+        ...state,
+        analysis
+      })),
     actions.updateRestriction$.map(restriction => state => ({
       ...state,
       analysis: {
@@ -137,18 +206,22 @@ export const reducer$ = (actions: Actions): Observable<Reducer<AnalysisStoreStat
         restriction
       }
     })),
-    actions.getAnalysisTypesAction$.map(analysisTypes => state => ({
-      ...state,
-      analysisTypes,
-      analysisTypeCategories: uniq(analysisTypes.map(a => a.category))
-    })),
-    actions.loadPredefinedTypesAction$.map(predefinedTypes => state => ({
-      ...state,
-      categories: predefinedTypes.categories,
-      purposes: predefinedTypes.purposes,
-      analysisTypes: predefinedTypes.analysisTypes,
-      analysisLabList: predefinedTypes.analysisLabList
-    })),
+    actions.getAnalysisTypes$
+      .switchMap(getAnalysisTypesAction(ajaxGet))
+      .map(analysisTypes => state => ({
+        ...state,
+        analysisTypes,
+        analysisTypeCategories: uniq(analysisTypes.map(a => a.category))
+      })),
+    actions.loadPredefinedTypes$
+      .switchMap(loadPredefinedTypesAction(ajaxGet))
+      .map(predefinedTypes => state => ({
+        ...state,
+        categories: predefinedTypes.categories,
+        purposes: predefinedTypes.purposes,
+        analysisTypes: predefinedTypes.analysisTypes,
+        analysisLabList: predefinedTypes.analysisLabList
+      })),
     actions.updateExtraDescriptionAttribute$.map(({ name, value }) => state => ({
       ...state,
       extraDescriptionAttributes: { ...state.extraDescriptionAttributes, [name]: value }
@@ -160,23 +233,149 @@ export const reducer$ = (actions: Actions): Observable<Reducer<AnalysisStoreStat
 export const store$ = (
   actions$: Actions = {
     setLoading$,
-    getAnalysisTypesAction$,
-    getAnalysisAction$,
-    updateAnalysisAction$,
+    saveAnalysis$,
+    getAnalysisTypes$,
+    getAnalysis$,
+    updateAnalysis$,
     updateRestriction$,
-    loadPredefinedTypesAction$,
+    loadPredefinedTypes$,
     updateExtraDescriptionAttribute$,
     updateExtraResultAttribute$,
     clearStore$,
     toggleCancelDialog$
-  }
-) => createStore('analysisStore', reducer$(actions$), initialState);
+  },
+  ajaxGet?: AjaxGet<*> = simpleGet,
+  ajaxPost?: AjaxPost<*> = simplePost,
+  ajaxPut?: AjaxPost<*> = simplePut
+) => {
+  return createStore(
+    'analysisStore',
+    reducer$(actions$, ajaxGet, ajaxPost, ajaxPut),
+    initialState,
+    KEEP_ALIVE
+  );
+};
 
 const storeSingleton = store$();
 export default storeSingleton;
 
-type SampleTypes = {
-  [string]: Array<SampleType>
+const saveAnalysis = (ajaxPost, ajaxPut) => ({
+  id,
+  result,
+  appSession,
+  data,
+  events,
+  callback
+}) => {
+  const token = appSession.accessToken;
+  const museumId = appSession.museumId;
+  const collectionId = appSession.collectionId;
+  return getAnalysisUpsert(
+    id,
+    ajaxPut,
+    museumId,
+    data,
+    token,
+    ajaxPost
+  ).flatMap((analysis?: AnalysisCollection) => {
+    if (!analysis) {
+      return Observable.empty();
+    }
+
+    const analysisId = analysis.id;
+    const analysisEvents = analysis.events;
+
+    const eventsResultUploads$ =
+      events && events.length > 0
+        ? Observable.forkJoin(
+            // $FlowFixMe | We are passing an array to forkJoin which is not supported by flow-typed definition for rxjs.
+            events.map(ae => {
+              const files = (ae.result && ae.result.files) || [];
+              if (files.length === 0) {
+                return Observable.of(ae);
+              }
+              return Observable.forkJoin(
+                // $FlowFixMe | We are passing an array to forkJoin which is not supported by flow-typed definition for rxjs.
+                files.map(file =>
+                  addResultFile({
+                    analysisId: ae.id,
+                    museumId: museumId,
+                    collectionId: collectionId,
+                    token: token,
+                    file: file
+                  })
+                )
+              ).map(files => {
+                return {
+                  ...ae,
+                  result: {
+                    ...ae.result,
+                    files,
+                    attachments: files
+                      ? files
+                          .map(e => e.fid)
+                          .concat((ae.result && ae.result.attachments) || [])
+                      : []
+                  }
+                };
+              });
+            })
+          )
+        : Observable.of([]);
+
+    const files = result ? result.files || [] : [];
+    const files$ =
+      files.length > 0
+        ? Observable.forkJoin(
+            // $FlowFixMe | We are passing an array to forkJoin which is not supported by flow-typed definition for rxjs.
+            files.map(file =>
+              addResultFile({
+                analysisId: analysisId,
+                museumId: museumId,
+                collectionId: collectionId,
+                token: token,
+                file: file
+              })
+            )
+          )
+        : Observable.of([]);
+
+    return files$.flatMap(files => {
+      const newFids = files.reduce((acc, f) => {
+        if (f.fid) {
+          return [...acc, f.fid];
+        }
+        return acc;
+      }, []);
+      const badFiles = files.filter(f => !f.fid);
+      const existingFids = result && result.attachments ? result.attachments : [];
+      return eventsResultUploads$.flatMap(updatedEvents => {
+        return Observable.forkJoin(
+          // $FlowFixMe | We are passing an array to forkJoin which is not supported by flow-typed definition for rxjs.
+          getArrayOfResultsToSave(
+            updatedEvents,
+            analysisId,
+            analysisEvents,
+            ajaxPost,
+            token,
+            museumId,
+            { ...result, files: null, attachments: [...newFids, ...existingFids] }
+          )
+        )
+          .map(results => ({
+            analysis,
+            files,
+            events: updatedEvents,
+            results
+          }))
+          .do(results => {
+            if (callback && callback.onComplete) {
+              callback.onComplete({ id: analysisId, results: results.results, badFiles });
+            }
+          });
+      });
+    });
+  });
 };
 
 export function getAnalysisDetails(
@@ -191,8 +390,12 @@ export function getAnalysisDetails(
     sampleTypes: SampleTypes
   }
 ): (analysis: AnalysisCollection) => Observable<*> {
-  return (analysis: AnalysisCollection) =>
-    MusitActor.getActors(ajaxPost)({
+  return (_analysis: ?AnalysisCollection) => {
+    if (!_analysis) {
+      return Observable.of(_analysis);
+    }
+    const analysis = _analysis;
+    return MusitActor.getActors(ajaxPost)({
       actorIds: [
         analysis.registeredBy || '',
         analysis.updatedBy || '',
@@ -225,36 +428,60 @@ export function getAnalysisDetails(
         return analysis;
       })
       .flatMap(analysis => {
+        const attachments = (analysis.result && analysis.result.attachments) || [];
+        if (attachments.length > 0) {
+          return getFiles({
+            files: attachments,
+            museumId: props.museumId,
+            token: props.token,
+            analysisId: analysis.id
+          }).map(files => {
+            return {
+              ...analysis,
+              files
+            };
+          });
+        }
+        return Observable.of(analysis);
+      })
+      .flatMap(analysis => {
         if (analysis.type === 'AnalysisCollection') {
           const events = analysis.events;
           if (events && events.length > 0) {
             // $FlowFixMe | We are passing an array to forkJoin which is not supported by flow-typed definition for rxjs.
-            return Observable.forkJoin(
-              events.map(getEventObjectDetails(props, ajaxGet))
-            ).map(zipObjectInfoWithEvents(analysis));
+            return Observable.forkJoin(events.map(getEventObjectDetails(props, ajaxGet)))
+              .map(zipObjectInfoWithEvents(analysis))
+              .flatMap(analysis => {
+                const fetchFileOperations = analysis.events.map(event => {
+                  return event.result &&
+                  event.result.attachments &&
+                  event.result.attachments.length > 0
+                    ? getFiles({
+                        files: event.result.attachments,
+                        museumId: props.museumId,
+                        token: props.token,
+                        analysisId: event.id
+                      }).map(files => {
+                        return {
+                          ...event,
+                          files
+                        };
+                      })
+                    : Observable.of(event);
+                });
+
+                return fetchFileOperations.length > 0
+                  ? Observable.forkJoin(fetchFileOperations).map(events => ({
+                      ...analysis,
+                      events: events
+                    }))
+                  : Observable.of(analysis);
+              });
           }
         }
-        const objectId = analysis.objectId;
-        if (!objectId) {
-          return Observable.of(analysis);
-        }
-        return MusitObject.getObjectDetails(ajaxGet)({
-          id: objectId,
-          museumId: props.museumId,
-          collectionId: props.collectionId,
-          token: props.token
-        }).map(({ response }) => {
-          if (!response) {
-            return analysis;
-          }
-          return {
-            ...analysis,
-            museumNo: response.museumNo,
-            subNo: response.subNo,
-            term: response.term
-          };
-        });
+        return Observable.of(analysis);
       });
+  };
 }
 
 type AjaxParams = {
@@ -357,4 +584,95 @@ export function getActorNames(actors: Array<Actor>, analysis: AnalysisCollection
       fieldName: 'restriction_cancelledByName'
     }
   ]);
+}
+
+function getAnalysisUpsert(id, ajaxPut, museumId, data, token, ajaxPost) {
+  return id
+    ? MusitAnalysis.editAnalysisEvent(ajaxPut)({
+        id,
+        museumId,
+        data,
+        token,
+        callback: {
+          onComplete: () => {
+            emitSuccess({
+              type: 'saveSuccess',
+              message: I18n.t('musit.analysis.saveAnalysisSuccess')
+            });
+          },
+          onFailure: e => {
+            emitError({
+              type: 'errorOnSave',
+              error: e,
+              message: I18n.t('musit.analysis.saveAnalysisError')
+            });
+          }
+        }
+      })
+    : MusitAnalysis.saveAnalysisEvent(ajaxPost)({
+        museumId,
+        data,
+        token,
+        callback: {
+          onComplete: () => {
+            emitSuccess({
+              type: 'saveSuccess',
+              message: I18n.t('musit.analysis.saveAnalysisSuccess')
+            });
+          },
+          onFailure: e => {
+            emitError({
+              type: 'errorOnSave',
+              error: e,
+              message: I18n.t('musit.analysis.saveAnalysisError')
+            });
+          }
+        }
+      });
+}
+
+function zipEventsWithId(formEvents, apiEvents) {
+  return formEvents.map(evt => {
+    const eventObjectId = evt.objectId || evt.uuid;
+    const event =
+      apiEvents &&
+      apiEvents.find(evtFromServer => evtFromServer.affectedThing === eventObjectId);
+    return { ...evt, id: event ? event.id : evt.id };
+  });
+}
+
+function getArrayOfResultsToSave(
+  events,
+  analysisId,
+  analysisEvents,
+  ajaxPost,
+  token,
+  museumId,
+  result
+): Array<Observable<{ analysisId: number } | { error: any }>> {
+  return zipEventsWithId(events, analysisEvents)
+    .map(evt =>
+      MusitAnalysis.addResult(ajaxPost)({
+        token,
+        museumId,
+        result: {
+          ...evt.result,
+          attachments: evt.result ? evt.result.attachments : [],
+          type: result && result.type
+        },
+        analysisId: parseInt(evt.id, 10)
+      })
+        .map(res => ({ analysisId: res.response, error: (res: any).error }))
+        .catch(error => Observable.of({ error }))
+    )
+    .concat(
+      MusitAnalysis.addResult(ajaxPost)({
+        token,
+        museumId,
+        result,
+        analysisId: parseInt(analysisId, 10)
+      })
+        .map(res => ({ analysisId: res.response, error: (res: any).error }))
+        .catch(error => Observable.of({ error }))
+    );
 }

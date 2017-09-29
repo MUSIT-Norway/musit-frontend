@@ -2,7 +2,8 @@
 import React from 'react';
 import { I18n } from 'react-i18nify';
 import './ObjectResultTable.css';
-import Result from './EditResult';
+import ViewResult from './ViewResult';
+import EditResult from './EditResult';
 import type { AppSession } from '../../../types/appSession';
 import type { History } from '../../../types/Routes';
 import type { AnalysisEvent } from '../../../types/analysis';
@@ -11,7 +12,7 @@ import MusitI18n from '../../../components/MusitI18n';
 
 type Props = {
   data: Array<AnalysisEvent>,
-  handleClickRow: (object: Object) => void,
+  handleClickRow: (object: AnalysisEvent) => void,
   updateForm?: Function,
   extraAttributes?: *,
   history: History,
@@ -112,53 +113,100 @@ export default function ObjectResultTable({
                 ...rows,
                 <tr key={['objectResult', i].join('_')} className="expanded-row-dropdown">
                   <td colSpan={7}>
-                    <Result
-                      extraAttributes={extraAttributesWithResult(
-                        extraAttributes,
-                        row.result
-                      )}
-                      updateExtraResultAttribute={(name, value) => {
-                        const newData = [...data];
-                        newData.splice(i, 1, {
-                          ...row,
-                          result: { ...row.result, [name]: value }
-                        });
-                        updateForm && updateForm({ name: 'events', rawValue: newData });
-                      }}
-                      externalSource={
-                        row.result && row.result.extRef ? row.result.extRef.join(',') : ''
-                      }
-                      updateExternalSource={extRef => {
-                        const newData = [...data];
-                        newData.splice(i, 1, {
-                          ...row,
-                          result: {
-                            ...row.result,
-                            extRef: extRef.split(',').map(v => v.trim())
-                          }
-                        });
-                        updateForm && updateForm({ name: 'events', rawValue: newData });
-                      }}
-                      comments={row.result ? row.result.comment : ''}
-                      updateComments={comment => {
-                        const newData = [...data];
-                        newData.splice(i, 1, {
-                          ...row,
-                          result: { ...row.result, comment }
-                        });
-                        updateForm && updateForm({ name: 'events', rawValue: newData });
-                      }}
-                      appSession={appSession}
-                      history={history}
-                      parentObjectId={
-                        sampleData && sampleData.originatedObjectUuid ? (
-                          sampleData.originatedObjectUuid
-                        ) : row.objectData ? (
-                          row.objectData.uuid
-                        ) : null
-                      }
-                      viewMode={viewMode}
-                    />
+                    {viewMode ? (
+                      <ViewResult
+                        extraAttributes={extraAttributesWithResult(
+                          extraAttributes,
+                          row.result
+                        )}
+                        externalSource={
+                          row.result && row.result.extRef ? (
+                            row.result.extRef.join(',')
+                          ) : (
+                            ''
+                          )
+                        }
+                        comments={row.result ? row.result.comment : ''}
+                        files={
+                          row.files && Array.isArray(row.files) ? (
+                            (row.files: Array<any>)
+                          ) : (
+                            []
+                          )
+                        }
+                        appSession={appSession}
+                        history={history}
+                        parentObjectId={
+                          sampleData && sampleData.originatedObjectUuid ? (
+                            sampleData.originatedObjectUuid
+                          ) : row.objectData ? (
+                            row.objectData.uuid
+                          ) : null
+                        }
+                      />
+                    ) : (
+                      <EditResult
+                        extraAttributes={extraAttributesWithResult(
+                          extraAttributes,
+                          row.result
+                        )}
+                        updateExtraResultAttribute={(name, value) => {
+                          const newData = [...data];
+                          newData.splice(i, 1, {
+                            ...row,
+                            result: { ...row.result, [name]: value }
+                          });
+                          updateForm && updateForm({ name: 'events', rawValue: newData });
+                        }}
+                        externalSource={
+                          row.result && row.result.extRef ? (
+                            row.result.extRef.join(',')
+                          ) : (
+                            ''
+                          )
+                        }
+                        updateExternalSource={extRef => {
+                          const newData = [...data];
+                          newData.splice(i, 1, {
+                            ...row,
+                            result: {
+                              ...row.result,
+                              extRef: extRef.split(',').map(v => v.trim())
+                            }
+                          });
+                          updateForm && updateForm({ name: 'events', rawValue: newData });
+                        }}
+                        comments={row.result ? row.result.comment : ''}
+                        updateComments={comment => {
+                          const newData = [...data];
+                          newData.splice(i, 1, {
+                            ...row,
+                            result: { ...row.result, comment }
+                          });
+                          updateForm && updateForm({ name: 'events', rawValue: newData });
+                        }}
+                        resultFiles={
+                          row.result && row.result.files ? (row.result.files: any) : []
+                        }
+                        updateResultFiles={files => {
+                          const newData = [...data];
+                          newData.splice(i, 1, {
+                            ...row,
+                            result: { ...row.result, files }
+                          });
+                          updateForm && updateForm({ name: 'events', rawValue: newData });
+                        }}
+                        appSession={appSession}
+                        history={history}
+                        parentObjectId={
+                          sampleData && sampleData.originatedObjectUuid ? (
+                            sampleData.originatedObjectUuid
+                          ) : row.objectData ? (
+                            row.objectData.uuid
+                          ) : null
+                        }
+                      />
+                    )}
                   </td>
                 </tr>
               ];
