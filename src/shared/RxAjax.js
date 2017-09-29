@@ -55,7 +55,7 @@ export function ajaxHelper<R, B>(
   body: B,
   token: string,
   headers: ?{ [string]: string },
-  responseType?: string = 'json'
+  responseType?: ?string = 'json'
 ): Observable<R> {
   return ajax({
     url,

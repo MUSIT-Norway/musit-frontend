@@ -179,6 +179,7 @@ export const analysisForm: AnalysisFormData = {
   registeredByName: getStrField('', '1'),
   registeredDate: getStrField('', '1'),
   responsible: getStrField('', '1'),
+  resultFiles: getArrField('', []),
   administrator: getStrField('', '1'),
   persons: getArrField('', [
     {
@@ -197,7 +198,7 @@ export const analysisForm: AnalysisFormData = {
   note: getStrField('', '1'),
   type: getStrField('', '1'),
   partOf: getStrField('', '1'),
-  result: getStrField('', '1'),
+  result: getCompositeField('', null),
   orgId: getNumberField('orgId', 1),
   externalSource: getStrField('', '1'),
   comments: getStrField('', '1'),

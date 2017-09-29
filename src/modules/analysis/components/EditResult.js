@@ -5,7 +5,7 @@ import type { AppSession } from '../../../types/appSession';
 import type { History } from '../../../types/Routes';
 import NavigateToObject from '../../../components/navigations/NavigateToObject';
 import ExtraResultAttribute from './ExtraResultAttribute';
-import { FormInput, FormTextArea } from '../../../forms/components';
+import { FormInput, FormTextArea, FormFileSelect } from '../../../forms/components';
 
 type Props = {
   externalSource: ?string,
@@ -14,6 +14,8 @@ type Props = {
   updateComments: (value: string) => void,
   extraAttributes: any,
   updateExtraResultAttribute: Function,
+  resultFiles: ?Array<File>,
+  updateResultFiles: (files: Array<File>) => void,
   history: History,
   appSession: AppSession,
   parentObjectId?: ?string
@@ -25,19 +27,22 @@ export default function EditResult(props: Props) {
       {props.extraAttributes &&
         Object.keys(props.extraAttributes)
           .filter(eat => eat !== 'type')
-          .map((attrKey: string, i: number) => (
-            <ExtraResultAttribute
-              key={i}
-              id={attrKey}
-              label={I18n.t('musit.analysis.analysisExtraResultAttributes.' + attrKey)}
-              labelWidth={2}
-              elementWidth={5}
-              onChange={value => props.updateExtraResultAttribute(attrKey, value)}
-              value={props.extraAttributes[attrKey].value}
-              type={props.extraAttributes[attrKey].type}
-              allowedValues={props.extraAttributes[attrKey].allowedValues}
-            />
-          ))}
+          .map((attrKey: string, i: number) => {
+            let attribute = props.extraAttributes[attrKey];
+            return (
+              <ExtraResultAttribute
+                key={i}
+                id={attrKey}
+                label={I18n.t('musit.analysis.analysisExtraResultAttributes.' + attrKey)}
+                labelWidth={2}
+                elementWidth={5}
+                onChange={value => props.updateExtraResultAttribute(attrKey, value)}
+                value={attribute.value}
+                type={attribute.type}
+                allowedValues={attribute.allowedValues}
+              />
+            );
+          })}
       {props.parentObjectId && (
         <NavigateToObject
           objectId={props.parentObjectId}
@@ -53,6 +58,15 @@ export default function EditResult(props: Props) {
         elementWidth={5}
         value={props.externalSource || ''}
         onChange={e => props.updateExternalSource(e.target.value)}
+      />
+      <FormFileSelect
+        id="resultFiles"
+        label={I18n.t('musit.analysis.resultFiles')}
+        labelWidth={2}
+        elementWidth={5}
+        value={props.resultFiles}
+        multiple={true}
+        onChange={files => props.updateResultFiles(files)}
       />
       <FormTextArea
         id="resultNote"

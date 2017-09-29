@@ -2,6 +2,7 @@
 import type { MusitObject } from '../types/object';
 import type { SampleDataExtended } from '../types/samples';
 import type { AnalysisResultTypes } from 'types/analysisResult';
+import type { ErrorLoading, SavedFile } from '../models/analysis/analysisResult';
 
 export const isMultipleSelectAttribute = (attributeType: string) =>
   /^Array\[.*]$/.test(attributeType);
@@ -63,6 +64,8 @@ export type Result = {
   type: ?string,
   extRef?: ?Array<string>,
   comment?: ?string,
+  files?: ?Array<File>,
+  attachments?: Array<string>,
   [string]: string | number | { value: number, unit: string }
 };
 
@@ -89,7 +92,8 @@ export type AnalysisEvent = AffectedThing &
       extRef?: Array<string>,
       comment?: string
     },
-    expanded?: boolean
+    expanded?: boolean,
+    files?: ?Array<SavedFile | File>
   };
 
 // Fixme this type is incorrect/incomplete
@@ -114,6 +118,7 @@ export type AnalysisCollection = {
   note?: ?string,
   extraAttributes?: { type: string, [string]: string | number },
   result?: ?Result,
+  files?: ?Array<SavedFile | ErrorLoading>,
   events: ?Array<AnalysisEvent>,
   restriction?: ?Restriction,
   reason?: ?string,

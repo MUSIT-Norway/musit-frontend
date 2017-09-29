@@ -46,6 +46,34 @@ export function FormInput(props: InputProps) {
   );
 }
 
+export type FileSelect = {
+  value: ?Array<File>,
+  onChange: (files: Array<File>) => void,
+  multiple?: boolean
+} & ElementProps;
+
+export function FormFileSelect(props: FileSelect) {
+  return (
+    <FormElement
+      id={props.id}
+      label={props.label}
+      labelWidth={props.labelWidth}
+      elementWidth={props.elementWidth}
+    >
+      <input
+        type="file"
+        multiple={props.multiple}
+        className="form-control"
+        id={props.id}
+        onChange={e => {
+          const files = [...e.target.files];
+          return props.onChange(files);
+        }}
+      />
+    </FormElement>
+  );
+}
+
 export type TextProps = {
   value: ?string | ?Array<string | number>
 } & ElementProps;

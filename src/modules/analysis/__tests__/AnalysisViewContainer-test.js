@@ -121,6 +121,7 @@ describe('AnalysisViewContainer', () => {
         },
         { name: 'restriction', defaultValue: null },
         { name: 'caseNumbers', defaultValue: undefined },
+        { name: 'resultFiles', defaultValue: undefined },
         { name: 'completeAnalysis', defaultValue: undefined },
         {
           name: 'museumNo',

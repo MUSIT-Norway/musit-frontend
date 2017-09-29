@@ -1,6 +1,7 @@
 // @flow
 import { Observable } from 'rxjs';
 import inject from 'react-rxjs/dist/RxInject';
+import createStore from 'react-rxjs/dist/RxStore';
 import AnalysisViewComponent from './AnalysisViewComponent';
 import type { Props as AnanlysisProps } from './AnalysisViewComponent';
 import predefined$ from '../../stores/predefined';
@@ -35,20 +36,21 @@ import { isRestrictionValidForCancellation } from './shared/formProps';
 
 const { form$, loadForm$, clearForm$ } = analysisForm;
 
-function storeFactory() {
-  return Observable.combineLatest(
+const combinedStore$ = createStore(
+  'combinedStore',
+  Observable.combineLatest(
     appSession$,
     predefined$,
     store$,
     form$,
-    (appSession, predefined, store, form) => ({
+    (appSession, predefined, store, form) => () => ({
       appSession,
       predefined,
       store,
       form
     })
-  );
-}
+  )
+);
 
 type UpstreamProps = {
   match: { params: { analysisId: string } },
@@ -187,5 +189,5 @@ const MountableAnalysisViewComponent = lifeCycle({
 export default loadCustomPredefinedTypes(
   predefined$,
   appSession$,
-  inject(storeFactory, props)(MountableAnalysisViewComponent)
+  inject(combinedStore$, props)(MountableAnalysisViewComponent)
 );
