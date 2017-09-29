@@ -1,5 +1,6 @@
 // @flow
 import inject from 'react-rxjs/dist/RxInject';
+import createStore from 'react-rxjs/dist/RxStore';
 import { Observable } from 'rxjs';
 import analysisForm, { fieldsArray } from './analysisForm';
 import AnalysisFormComponent from './AnalysisFormComponent';
@@ -20,26 +21,36 @@ import predefined$ from '../../stores/predefined';
 import appSession$ from '../../stores/appSession';
 import type { Location } from './shared/submit';
 import type { History } from '../../types/Routes';
+import type { AppSession } from '../../types/appSession';
+import type { Predefined } from '../../types/predefined';
+import type { AnalysisStoreState } from './analysisStore';
+import type { FormData } from './shared/formType';
 
 const { form$, updateForm$, clearForm$, loadForm$ } = analysisForm;
 
-function storeFactory() {
-  return Observable.combineLatest(
+const combinedStore$ = createStore(
+  'combinedStore',
+  Observable.combineLatest(
     appSession$,
     predefined$,
     store$,
     form$,
-    (appSession, predefined, store, form) => ({
+    (appSession, predefined, store, form) => () => ({
       appSession,
       predefined,
       store,
       form
     })
-  );
-}
+  )
+);
 
 function editProps(
-  storeProps: *,
+  storeProps: {
+    appSession: AppSession,
+    predefined: Predefined,
+    store: AnalysisStoreState,
+    form: FormData
+  },
   upstream: { history: History, location: Location<*> }
 ): Props {
   return {
@@ -69,6 +80,6 @@ const MountableAnalysisFormComponent = lifeCycle({
   onUnmount
 })(AnalysisFormComponent);
 
-export default flowRight([inject(storeFactory, editProps), loadPredefinedTypes])(
+export default flowRight([inject(combinedStore$, editProps), loadPredefinedTypes])(
   MountableAnalysisFormComponent
 );

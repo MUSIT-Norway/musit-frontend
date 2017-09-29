@@ -1,7 +1,7 @@
 // @flow
 import type { Field } from '../../../forms/form';
 import type { Person } from '../../../types/person';
-import type { AnalysisEvent } from '../../../types/analysis';
+import type { AnalysisEvent, Result } from '../../../types/analysis';
 import type { Restriction } from '../../../types/analysis';
 
 export type FormData = {
@@ -22,12 +22,13 @@ export type FormData = {
   note: Field<string>,
   type: Field<string>,
   partOf: Field<string>,
-  result: Field<string>,
+  result: Field<Result>,
   orgId: Field<number>, //place for analysis
   externalSource: Field<string>,
   comments: Field<string>,
   reason: Field<string>,
   caseNumbers: Field<Array<string>>,
+  resultFiles: Field<Array<File>>,
   completeAnalysis: Field<string>,
   // restriction
   restrictions: Field<boolean>,

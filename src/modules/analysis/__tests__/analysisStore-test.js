@@ -1,97 +1,121 @@
-import { Observable } from 'rxjs';
+// @flow
 import MusitTestScheduler from '../../../testutils/MusitTestScheduler';
-import { getAnalysisDetails } from '../analysisStore';
+import { store$, initialState } from '../analysisStore';
+import { Observable } from 'rxjs';
+import { appSession } from '../../../testutils/sampleDataForTest';
+import Config from '../../../config';
 
-describe('AnalysisStore', () => {
-  it('should work', () => {
+const getAnalysisByIdUrl = Config.magasin.urls.api.analysis.getAnalysisById;
+
+describe('analysisStore', () => {
+  it('should merge store results', () => {
     const testScheduler = new MusitTestScheduler();
+    //prettier-ignore
+    const streams = {
+      clearStore:                      "-x-----",
+      getAnalysis:                     "--ab---",
+      getAnalysisTypes:                "-------",
+      loadPredefinedTypes:             "-------",
+      saveAnalysis:                    "-------",
+      setLoading:                      "-------",
+      toggleCancelDialog:              "-------",
+      updateAnalysis:                  "-------",
+      updateExtraDescriptionAttribute: "-------",
+      updateExtraResultAttribute:      "-------",
+      updateRestriction:               "-------",
+      expected:                        "aaab---"
+    };
 
-    const post = () =>
-      Observable.of({
-        response: []
-      });
+    const clearStore$ = testScheduler.createHotObservable(streams.clearStore);
+    const getAnalysis$ = testScheduler.createHotObservable(streams.getAnalysis, {
+      a: {
+        id: -1,
+        museumId: appSession.museumId,
+        collectionId: appSession.collectionId,
+        token: appSession.accessToken
+      },
+      b: {
+        id: 1,
+        museumId: appSession.museumId,
+        collectionId: appSession.collectionId,
+        token: appSession.accessToken
+      }
+    });
+    const getAnalysisTypes$ = testScheduler.createHotObservable(streams.getAnalysisTypes);
+    const loadPredefinedTypes$ = testScheduler.createHotObservable(
+      streams.loadPredefinedTypes
+    );
+    const saveAnalysis$ = testScheduler.createHotObservable(streams.saveAnalysis);
+    const setLoading$ = testScheduler.createHotObservable(streams.setLoading);
+    const toggleCancelDialog$ = testScheduler.createHotObservable(
+      streams.toggleCancelDialog
+    );
+    const updateAnalysis$ = testScheduler.createHotObservable(streams.updateAnalysis);
+    const updateExtraDescriptionAttribute$ = testScheduler.createHotObservable(
+      streams.updateExtraDescriptionAttribute
+    );
+    const updateExtraResultAttribute$ = testScheduler.createHotObservable(
+      streams.updateExtraResultAttribute
+    );
+    const updateRestriction$ = testScheduler.createHotObservable(
+      streams.updateRestriction
+    );
 
-    const get = url => {
-      if (url.indexOf('analyses') > -1) {
+    const getFn = url => {
+      if (url === getAnalysisByIdUrl(appSession.museumId, -1)) {
+        return Observable.of({
+          response: null
+        });
+      }
+      if (url === getAnalysisByIdUrl(appSession.museumId, 1)) {
         return Observable.of({
           response: {
-            analysis: {
-              analysisTypeId: '8453873d-227c-4205-a231-bf7e04164fab',
-              eventDate: '2017-03-16T14:37:45+00:00',
-              id: 2,
-              museumNo: 'MusK58',
-              note: 'fdsfsd sdsa 2',
-              objectId: 'adea8141-8099-4f67-bff9-ea5090e18335',
-              partOf: 1,
-              registeredBy: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
-              registeredByName: 'Rituvesh Kumar',
-              registeredDate: '2017-04-03T10:36:34+00:00',
-              subNo: '2',
-              term: 'Mansjettknapp',
-              type: 'Analysis'
-            }
+            mimbo: 'jimbo'
           }
         });
       }
+      return Observable.of({});
+    };
+
+    const postFn = () => {
       return Observable.of({
-        response: []
+        response: null
       });
     };
 
-    const loadM = '-1----------';
-    const expected = '-a----------';
+    const putFn = () => {
+      return Observable.of({
+        response: null
+      });
+    };
+
+    const actions = {
+      clearStore$,
+      getAnalysis$,
+      getAnalysisTypes$,
+      loadPredefinedTypes$,
+      saveAnalysis$,
+      setLoading$,
+      toggleCancelDialog$,
+      updateAnalysis$,
+      updateExtraDescriptionAttribute$,
+      updateExtraResultAttribute$,
+      updateRestriction$
+    };
+
+    const state$ = store$(actions, getFn, postFn, putFn);
 
     const expectedStateMap = {
-      a: {
+      a: initialState,
+      b: {
+        ...initialState,
         analysis: {
-          analysisTypeId: '8453873d-227c-4205-a231-bf7e04164fab',
-          eventDate: '2017-03-16T14:37:45+00:00',
-          id: 2,
-          museumNo: 'MusK58',
-          note: 'fdsfsd sdsa 2',
-          objectId: 'adea8141-8099-4f67-bff9-ea5090e18335',
-          partOf: 1,
-          registeredBy: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
-          registeredByName: 'Rituvesh Kumar',
-          registeredDate: '2017-04-03T10:36:34+00:00',
-          subNo: '2',
-          term: 'Mansjettknapp',
-          type: 'Analysis'
+          mimbo: 'jimbo'
         }
       }
     };
 
-    const load = testScheduler
-      .createHotObservable(loadM, {
-        1: {
-          token: '1234',
-          id: 12345,
-          collectionId: '00000000-0000-0000-0000-000000000000',
-          museumId: 99,
-          sampleTypes: {}
-        }
-      })
-      .flatMap(props =>
-        getAnalysisDetails(get, post, props)({
-          analysis: {
-            analysisTypeId: '8453873d-227c-4205-a231-bf7e04164fab',
-            eventDate: '2017-03-16T14:37:45+00:00',
-            id: 2,
-            museumNo: 'MusK58',
-            note: 'fdsfsd sdsa 2',
-            objectId: 'adea8141-8099-4f67-bff9-ea5090e18335',
-            partOf: 1,
-            registeredBy: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
-            registeredByName: 'Rituvesh Kumar',
-            registeredDate: '2017-04-03T10:36:34+00:00',
-            subNo: '2',
-            term: 'Mansjettknapp',
-            type: 'Analysis'
-          }
-        })
-      );
-
-    testScheduler.expectObservable(load).toBe(expected, expectedStateMap);
+    testScheduler.expectObservable(state$).toBe(streams.expected, expectedStateMap);
     testScheduler.flush();
   });
 });

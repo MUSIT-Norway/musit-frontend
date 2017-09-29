@@ -290,9 +290,11 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
           }
         }
         parentObjectId={null}
+        resultFiles={Array []}
         updateComments={[Function]}
         updateExternalSource={[Function]}
         updateExtraResultAttribute={[Function]}
+        updateResultFiles={[Function]}
       />
       <div
         className="form-group"
@@ -780,17 +782,28 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
               "value": true,
             },
             "result": Object {
-              "defaultValue": "1",
+              "defaultValue": null,
               "mapper": Object {
                 "fromRaw": [Function],
                 "toRaw": [Function],
               },
               "name": "",
-              "rawValue": "1",
+              "rawValue": null,
+              "validator": Object {},
+              "value": null,
+            },
+            "resultFiles": Object {
+              "defaultValue": Array [],
+              "mapper": Object {
+                "fromRaw": [Function],
+                "toRaw": [Function],
+              },
+              "name": "",
+              "rawValue": Array [],
               "validator": Object {
                 "rawValidator": null,
               },
-              "value": "1",
+              "value": Array [],
             },
             "status": Object {
               "defaultValue": 1,
