@@ -331,7 +331,15 @@ MusitObject.pickObject = (pickObject$, ajaxGet = simpleGet) => props => {
     MusitObject.getMainObject(ajaxGet)({ ...props, id: props.object.uuid })
       .toPromise()
       .then(objects =>
-        objects.forEach(obj => pickObject$.next({ value: obj, path: props.breadcrumb }))
+        objects.forEach(obj =>
+          pickObject$.next({
+            value: {
+              ...obj,
+              objectData: obj
+            },
+            path: props.breadcrumb
+          })
+        )
       );
   } else {
     pickObject$.next({ value: props.object, path: props.breadcrumb });
