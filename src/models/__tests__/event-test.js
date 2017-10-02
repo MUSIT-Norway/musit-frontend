@@ -85,30 +85,30 @@ describe('Event model', () => {
     const mockDataState = [
       {
         id: 1000,
-        ConservationTypeId: 20,
+        eventTypeId: 1,
         registeredBy: 'Rituvesh Kumar',
         registeredDate: '12.09.2015',
         events: [],
         status: 1,
         caseNumbers: [123],
-        type: 'Conservation',
         eventDate: '12.09.2015',
         doneBy: 'Ukjent',
-        doneDate: 'Ukjent'
+        doneDate: 'Ukjent',
+        type: 'Conservation'
       },
       {
         id: 1001,
-        ConservationTypeId: 20,
+        eventTypeId: 1,
         registeredBy: 'Rituvesh Kumar',
         registeredDate: '18.09.2016',
         note: 'gfgdgdf',
         events: [],
         status: 1,
         caseNumbers: [345, 'sn-123'],
-        type: 'Conservation',
         eventDate: '18.09.2016',
         doneBy: 'Ukjent',
-        doneDate: 'Ukjent'
+        doneDate: 'Ukjent',
+        type: 'Conservation'
       }
     ];
 

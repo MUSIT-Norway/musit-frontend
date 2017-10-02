@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Rx';
 import { store$ } from '../predefined';
 import Sample from '../../models/sample';
 import Analysis from '../../models/analysis';
+import Conservation from '../../models/conservation';
 import MusitTestScheduler from '../../testutils/MusitTestScheduler';
 
 describe('predefined', () => {
@@ -12,11 +13,13 @@ describe('predefined', () => {
     // mock streams
     // prettier-ignore
     const stream = {
-      setLoadingSampleTypesM:   '-1-------',
-      loadSampleTypesM:         '--1------',
-      setLoadingAnalysisTypesM: '---1-----',
-      loadAnalysisTypesM:       '----1----',
-      expected:                 'abcde----'
+      setLoadingSampleTypesM:       '-1-------',
+      loadSampleTypesM:             '--1------',
+      setLoadingAnalysisTypesM:     '---1-----',
+      loadAnalysisTypesM:           '----1----',
+      setLoadingConservationTypesM: '-----1---',
+      loadConservationTypesM:       '------1--',
+      expected:                     'abcdefg--'
     };
 
     const expectedStateMap = {
@@ -25,32 +28,38 @@ describe('predefined', () => {
         categories: null,
         sampleTypes: null,
         analysisTypes: null,
+        conservationTypes: null,
         purposes: null,
         storageContainers: null,
         storageMediums: null,
         treatments: null,
         loadingAnalysisTypes: false,
-        loadingSampleTypes: false
+        loadingSampleTypes: false,
+        loadingConservationTypes: false
       },
       b: {
         analysisLabList: null,
         categories: null,
         sampleTypes: null,
         analysisTypes: null,
+        conservationTypes: null,
         purposes: null,
         storageContainers: null,
         storageMediums: null,
         treatments: null,
         loadingAnalysisTypes: false,
-        loadingSampleTypes: true
+        loadingSampleTypes: true,
+        loadingConservationTypes: false
       },
       c: {
         analysisLabList: null,
         categories: null,
         analysisTypes: null,
+        conservationTypes: null,
         purposes: null,
         loadingAnalysisTypes: false,
         loadingSampleTypes: false,
+        loadingConservationTypes: false,
         sampleTypes: { raw: [] },
         storageContainers: [],
         storageMediums: [],
@@ -60,17 +69,21 @@ describe('predefined', () => {
         analysisLabList: null,
         categories: null,
         analysisTypes: null,
+        conservationTypes: null,
         purposes: null,
         loadingAnalysisTypes: true,
         loadingSampleTypes: false,
+        loadingConservationTypes: false,
         sampleTypes: { raw: [] },
         storageContainers: [],
         storageMediums: [],
         treatments: []
       },
       e: {
+        conservationTypes: null,
         loadingAnalysisTypes: false,
         loadingSampleTypes: false,
+        loadingConservationTypes: false,
         sampleTypes: { raw: [] },
         storageContainers: [],
         storageMediums: [],
@@ -81,6 +94,49 @@ describe('predefined', () => {
         },
         purposes: [],
         analysisLabList: []
+      },
+      f: {
+        conservationTypes: null,
+        loadingAnalysisTypes: false,
+        loadingSampleTypes: false,
+        loadingConservationTypes: true,
+        sampleTypes: { raw: [] },
+        storageContainers: [],
+        storageMediums: [],
+        treatments: [],
+        analysisTypes: [],
+        categories: {
+          raw: []
+        },
+        purposes: [],
+        analysisLabList: []
+      },
+      g: {
+        loadingAnalysisTypes: false,
+        loadingSampleTypes: false,
+        loadingConservationTypes: false,
+        sampleTypes: { raw: [] },
+        storageContainers: [],
+        storageMediums: [],
+        treatments: [],
+        analysisTypes: [],
+        categories: {
+          raw: []
+        },
+        purposes: [],
+        analysisLabList: [],
+        conservationTypes: [
+          {
+            id: 1,
+            noName: 'Konservering',
+            enName: 'Conservation'
+          },
+          {
+            id: 2,
+            noName: 'Behandling',
+            enName: 'Treatment'
+          }
+        ]
       }
     };
 
@@ -116,11 +172,27 @@ describe('predefined', () => {
         })
       );
 
+    const setLoadingConservationTypes$ = testScheduler.createHotObservable(
+      stream.setLoadingConservationTypesM
+    );
+    const loadConservationTypes$ = testScheduler
+      .createHotObservable(stream.loadConservationTypesM, {
+        [1]: { token: '12134', museumId: 99 }
+      })
+      .flatMap(
+        Conservation.getConservationTypes(() => {
+          return Observable.of({
+            response: []
+          });
+        })
+      );
     const state$ = store$({
       setLoadingSampleTypes$,
       setLoadingAnalysisTypes$,
       loadAnalysisTypes$,
-      loadSampleTypes$
+      loadSampleTypes$,
+      setLoadingConservationTypes$,
+      loadConservationTypes$
     });
 
     // assertion

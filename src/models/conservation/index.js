@@ -2,7 +2,8 @@
 import {
   getConservationForObject,
   getConservationById,
-  editConservationEvent
+  editConservationEvent,
+  getConservationTypes
 } from './conservation';
 
 import { fromJsonToForm } from './conservationForm';
@@ -11,5 +12,6 @@ export default {
   getConservationForObject,
   getConservationById,
   editConservationEvent,
-  fromJsonToForm
+  fromJsonToForm,
+  getConservationTypes
 };

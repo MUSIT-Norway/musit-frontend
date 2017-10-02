@@ -18,6 +18,10 @@ const appSession = {
 describe('Config urls', () => {
   const client = [
     {
+      actual: urls.client.administration.goToConservationTypes(appSession),
+      expected: '/museum/99/collections/1234/administration/conservationtypes'
+    },
+    {
       actual: urls.client.storagefacility.goToRoot(appSession),
       expected: '/museum/99/collections/1234/magasin'
     },
@@ -209,8 +213,13 @@ describe('Config urls', () => {
       ]
     },
     {
-      service: 'managment',
+      service: 'management',
       endpoints: [
+        {
+          name: 'getAllConservationTypes',
+          actual: urls.api.conservation.getAllConservationTypes(99),
+          expected: '/api/management/99/conservation/types'
+        },
         {
           name: 'addConservationEvent',
           actual: urls.api.conservation.addConservationEvent(99),

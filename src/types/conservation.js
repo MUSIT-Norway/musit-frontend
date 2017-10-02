@@ -47,3 +47,11 @@ export type ConservationCollection = {
   orgId?: ?number,
   events?: ?Array<any>
 };
+
+export type ConservationType = {
+  id: number,
+  noName?: string,
+  enName?: string
+};
+
+export type ConservationTypes = Array<ConservationType>;

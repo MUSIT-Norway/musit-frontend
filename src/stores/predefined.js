@@ -2,6 +2,7 @@
 import { Observable, Subject } from 'rxjs';
 import Analysis from '../models/analysis';
 import Sample from '../models/sample';
+import Conservation from '../models/conservation';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import type { Reducer } from 'react-rxjs/dist/RxStore';
 import { KEEP_ALIVE } from './constants';
@@ -21,9 +22,18 @@ const loadAnalysisTypesAction$: Observable<*> = loadAnalysisTypes$.switchMap(
   Analysis.loadPredefinedTypes(simpleGet)
 );
 
+export const setLoadingConservationTypes$: Subject<*> = createAction(
+  'setLoadingConservationTypes$'
+);
+export const loadConservationTypes$: Subject<*> = createAction('loadConservationTypes$');
+const loadConservationTypesAction$: Observable<*> = loadConservationTypes$.switchMap(
+  Conservation.getConservationTypes(simpleGet)
+);
+
 type State = Predefined & {
   loadingSampleTypes: boolean,
-  loadingAnalysisTypes: boolean
+  loadingAnalysisTypes: boolean,
+  loadingConservationTypes: boolean
 };
 
 export const initialState: State = {
@@ -31,17 +41,17 @@ export const initialState: State = {
   categories: null,
   sampleTypes: null,
   analysisTypes: null,
+  conservationTypes: null,
   purposes: null,
   storageContainers: null,
   storageMediums: null,
   treatments: null,
   loadingSampleTypes: false,
-  loadingAnalysisTypes: false
+  loadingAnalysisTypes: false,
+  loadingConservationTypes: false
 };
 
-export function reducer$(actions: {
-  [string]: Observable<*>
-}): Observable<Reducer<State>> {
+export function reducer$(actions: { [string]: Observable<*> }): Observable<Reducer<any>> {
   return Observable.merge(
     actions.setLoadingSampleTypes$.map(() => state => ({
       ...state,
@@ -60,6 +70,15 @@ export function reducer$(actions: {
       ...state,
       ...analysisTypes,
       loadingAnalysisTypes: false
+    })),
+    actions.setLoadingConservationTypes$.map(() => state => ({
+      ...state,
+      loadingConservationTypes: true
+    })),
+    actions.loadConservationTypes$.map(conservationTypes => state => ({
+      ...state,
+      ...conservationTypes,
+      loadingConservationTypes: false
     }))
   );
 }
@@ -71,7 +90,9 @@ const predefined$ = store$({
   setLoadingSampleTypes$,
   loadSampleTypes$: loadSampleTypesAction$,
   setLoadingAnalysisTypes$,
-  loadAnalysisTypes$: loadAnalysisTypesAction$
+  loadAnalysisTypes$: loadAnalysisTypesAction$,
+  setLoadingConservationTypes$,
+  loadConservationTypes$: loadConservationTypesAction$
 });
 
 export default predefined$;

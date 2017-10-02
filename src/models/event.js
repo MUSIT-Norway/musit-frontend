@@ -99,6 +99,29 @@ Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) => prop
           return Observable.of(e);
         })
       );
+    })
+    .flatMap(events => {
+      if (events.length === 0) {
+        return Observable.of(events);
+      }
+      // $FlowFixMe | We are passing an array to forkJoin which is not supported by flow-typed definition for rxjs.
+      return Observable.forkJoin(
+        events.map(e => {
+          if (!e.type && e.eventTypeId === 1) {
+            const conservationTypes: any = Conservation.getConservationTypes(ajaxGet)({
+              museumId: props.museumId,
+              token: props.token
+            });
+            if (conservationTypes && conservationTypes.value.conservationTypes) {
+              const enName = conservationTypes.value.conservationTypes.filter(
+                f => f.id === e.eventTypeId
+              )[0].enName;
+              return Observable.of({ ...e, type: enName });
+            }
+          }
+          return Observable.of(e);
+        })
+      );
     });
 
 export default Event;

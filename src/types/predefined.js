@@ -1,6 +1,7 @@
 // @flow
 import type { AnalysisType } from './analysis';
 import type { SampleType } from './sample';
+import type { ConservationTypes } from './conservation';
 
 export type AnalysisTypes = Array<AnalysisType>;
 
@@ -59,6 +60,7 @@ export type StorageContainer = {
 export type StorageContainers = Array<StorageContainer>;
 
 export type Predefined = {
+  conservationTypes?: ?ConservationTypes,
   analysisTypes: ?AnalysisTypes,
   purposes: ?Purposes,
   analysisLabList: ?AnalysisLabList,

@@ -3,8 +3,12 @@ import { Observable } from 'rxjs';
 import Config from '../../config';
 import { simpleGet, simplePut } from '../../shared/RxAjax';
 import type { Callback, AjaxGet, AjaxPut } from '../../types/ajax';
-import type { ConservationCollection } from 'types/conservation';
-import { conservationEventMockData, conservationEventViewMockData } from './mockData';
+import type { ConservationCollection, ConservationType } from 'types/conservation';
+import {
+  conservationEventMockData,
+  conservationEventViewMockData,
+  conservationEventTypeMockData
+} from './mockData';
 
 export type ConservationSavePayload = {
   doneBy?: ?string,
@@ -82,4 +86,23 @@ export const editConservationEvent: (
 }) => {
   const url = Config.magasin.urls.api.conservation.getConservationById(museumId, id);
   return ajaxPut(url, data, token, callback).map(({ response }) => response);
+};
+
+export const getConservationTypes: (
+  ajaxGet: AjaxGet<*>
+) => (props: {
+  museumId: number,
+  token: string,
+  callback?: ?Callback<*>
+}) => Observable<Array<ConservationType>> = (ajaxGet = simpleGet) => ({
+  museumId,
+  token,
+  callback
+}) => {
+  const url = Config.magasin.urls.api.conservation.getAllConservationTypes(museumId);
+  try {
+    return ajaxGet(url, token, callback).map(r => r.response);
+  } finally {
+    return Observable.of(conservationEventTypeMockData);
+  }
 };

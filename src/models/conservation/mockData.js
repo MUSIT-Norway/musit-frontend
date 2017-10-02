@@ -1,30 +1,28 @@
 export const conservationEventMockData = [
   {
     id: 1000,
-    ConservationTypeId: 20,
+    eventTypeId: 1,
     registeredBy: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
     registeredDate: '2015-09-12T10:47:41+00:00',
     events: [],
     status: 1,
-    caseNumbers: [123],
-    type: 'Conservation'
+    caseNumbers: [123]
   },
   {
     id: 1001,
-    ConservationTypeId: 20,
+    eventTypeId: 1,
     registeredBy: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
     registeredDate: '2016-09-18T09:32:20+00:00',
     note: 'gfgdgdf',
     events: [],
     status: 1,
-    caseNumbers: [345, 'sn-123'],
-    type: 'Conservation'
+    caseNumbers: [345, 'sn-123']
   }
 ];
 
 export const conservationEventViewMockData = {
   id: 166,
-  eventTypeId: 9,
+  eventTypeId: 1,
   doneBy: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
   doneDate: '2017-09-11T22:00:00+00:00',
   registeredBy: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
@@ -77,6 +75,21 @@ export const conservationEventViewMockData = {
       affectedThing: 'fa32417b-89ec-4d27-8f4b-27f3a2b03583',
       partOf: 166,
       note: 'fdfds'
+    }
+  ]
+};
+
+export const conservationEventTypeMockData = {
+  conservationTypes: [
+    {
+      id: 1,
+      noName: 'Konservering',
+      enName: 'Conservation'
+    },
+    {
+      id: 2,
+      noName: 'Behandling',
+      enName: 'Treatment'
     }
   ]
 };

@@ -33,7 +33,9 @@ export default {
           goToAnalysisPlaces: (appSession: AppSession) =>
             `${clientContextUrl(appSession)}/administration/analysisplaces`,
           goToSampleTypes: (appSession: AppSession) =>
-            `${clientContextUrl(appSession)}/administration/sampletypes`
+            `${clientContextUrl(appSession)}/administration/sampletypes`,
+          goToConservationTypes: (appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/administration/conservationtypes`
         },
         homePage: '/home',
         aboutPage: '/about',
@@ -126,6 +128,8 @@ export default {
       },
       api: {
         conservation: {
+          getAllConservationTypes: (mid: MuseumId) =>
+            `/api/management/${mid}/conservation/types`,
           addConservationEvent: (mid: MuseumId) => `/api/management/${mid}/conservation`,
           getConservationById: (mid: MuseumId, conservationId: number) =>
             `/api/management/${mid}/conservation/${conservationId}`,

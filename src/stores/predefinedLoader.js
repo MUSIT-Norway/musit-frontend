@@ -4,7 +4,9 @@ import predefined$, {
   loadSampleTypes$,
   loadAnalysisTypes$,
   setLoadingAnalysisTypes$,
-  setLoadingSampleTypes$
+  setLoadingSampleTypes$,
+  setLoadingConservationTypes$,
+  loadConservationTypes$
 } from './predefined';
 import appSession$ from './appSession';
 import inject from 'react-rxjs/dist/RxInject';
@@ -19,7 +21,9 @@ type Props = {
   setLoadingSampleTypes: Function,
   loadSampleTypes: Function,
   component: Function,
-  predefined: Predefined
+  predefined: Predefined,
+  setLoadingConservationTypes: Function,
+  loadConservationTypes: Function
 };
 
 class PredefinedLoader extends React.Component<Props, void> {
@@ -40,6 +44,10 @@ class PredefinedLoader extends React.Component<Props, void> {
       this.props.setLoadingAnalysisTypes();
       this.props.loadAnalysisTypes(inputParams);
     }
+    if (!this.isConservationTypesLoaded()) {
+      this.props.setLoadingConservationTypes();
+      this.props.loadConservationTypes(inputParams);
+    }
   }
 
   isSampleTypesLoaded() {
@@ -54,8 +62,18 @@ class PredefinedLoader extends React.Component<Props, void> {
     );
   }
 
+  isConservationTypesLoaded() {
+    return (
+      !this.props.predefined.loadingConservationTypes &&
+      !!this.props.predefined.conservationTypes
+    );
+  }
   render() {
-    if (!this.isAnalysisTypesLoaded() || !this.isSampleTypesLoaded()) {
+    if (
+      !this.isAnalysisTypesLoaded() ||
+      !this.isSampleTypesLoaded() ||
+      !this.isConservationTypesLoaded()
+    ) {
       return <div className="loading" />;
     }
     const Component = this.props.component;
@@ -93,6 +111,10 @@ export function loadCustomPredefinedTypes<P>(
         loadAnalysisTypes={loadAnalysisTypes$.next.bind(loadAnalysisTypes$)}
         setLoadingSampleTypes={setLoadingSampleTypes$.next.bind(setLoadingSampleTypes$)}
         loadSampleTypes={loadSampleTypes$.next.bind(loadSampleTypes$)}
+        setLoadingConservationTypes={setLoadingConservationTypes$.next.bind(
+          setLoadingConservationTypes$
+        )}
+        loadConservationTypes={loadConservationTypes$.next.bind(loadConservationTypes$)}
       />
     );
   });
