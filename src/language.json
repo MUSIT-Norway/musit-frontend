@@ -122,6 +122,7 @@
       "analysis": {
         "analysis": "Analysis",
         "saveAnalysisError": "Unable to save analysis",
+        "notAllowed" : "You do not have the appropriate access rights to see analysis or samples.",
         "saveAnalysisSuccess": "Analysis saved",
         "filterTheList": "Filter the list",
         "analysisType": "Type of analysis",
@@ -1046,6 +1047,7 @@
         "analysis": "Analyse",
         "saveAnalysisError": "Kunne ikke lagre analyse",
         "saveAnalysisSuccess": "Analyse ble lagret",
+        "notAllowed" : "Du har ikke tilgang til analyser.",
         "filterTheList": "Filtrer listen",
         "analysisType": "Type analyse",
         "chooseCategory": "Velg kategori",

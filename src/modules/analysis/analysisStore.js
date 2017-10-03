@@ -211,7 +211,7 @@ export const reducer$ = (
       .map(analysisTypes => state => ({
         ...state,
         analysisTypes,
-        analysisTypeCategories: uniq(analysisTypes.map(a => a.category))
+        analysisTypeCategories: analysisTypes && uniq(analysisTypes.map(a => a.category))
       })),
     actions.loadPredefinedTypes$
       .switchMap(loadPredefinedTypesAction(ajaxGet))
