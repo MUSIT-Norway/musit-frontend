@@ -1,26 +1,18 @@
 // @flow
 import { Observable } from 'rxjs';
 import Config from '../../config';
-import { simpleGet, simplePut } from '../../shared/RxAjax';
-import type { Callback, AjaxGet, AjaxPut } from '../../types/ajax';
-import type { ConservationCollection, ConservationType } from 'types/conservation';
+import { simpleGet, simplePut, simplePost } from '../../shared/RxAjax';
+import type { Callback, AjaxGet, AjaxPut, AjaxPost } from '../../types/ajax';
+import type {
+  ConservationCollection,
+  ConservationType,
+  ConservationSave
+} from 'types/conservation';
 import {
   conservationEventMockData,
   conservationEventViewMockData,
   conservationEventTypeMockData
 } from './mockData';
-
-export type ConservationSavePayload = {
-  doneBy?: ?string,
-  doneDate?: ?string,
-  responsible?: ?string,
-  administrator?: ?string,
-  completedBy?: ?string,
-  completedDate?: ?string,
-  caseNumbers?: ?string,
-  affectedThings?: ?Array<string>,
-  note?: ?string
-};
 
 export const getConservationForObject: (
   ajaxGet: AjaxGet<*>
@@ -69,12 +61,29 @@ export const getConservationById: (
   }
 };
 
+export const saveConservationEvent: (
+  ajaxPost: AjaxPost<*>
+) => (props: {
+  museumId: number,
+  data: ConservationSave,
+  token: string,
+  callback?: Callback<*>
+}) => Observable<ConservationCollection> = (ajaxPost = simplePost) => ({
+  museumId,
+  data,
+  token,
+  callback
+}) => {
+  const url = Config.magasin.urls.api.conservation.addConservationEvent(museumId);
+  return ajaxPost(url, data, token, callback).map(({ response }) => response);
+};
+
 export const editConservationEvent: (
   ajaxPut: AjaxPut<*>
 ) => (props: {
   id: number,
   museumId: number,
-  data: ConservationSavePayload,
+  data: ConservationSave,
   token: string,
   callback?: Callback<*>
 }) => Observable<ConservationCollection> = (ajaxPut = simplePut) => ({

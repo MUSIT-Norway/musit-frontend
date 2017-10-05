@@ -18,6 +18,7 @@ export type AffectedThing = {
 };
 
 export type ObjectInfo = { objectData?: ?MusitObject, sampleData?: ?SampleDataExtended };
+export type ObjectInfoAffectedThing = ?ObjectInfo & ?AffectedThing;
 
 // Fixme this type is incorrect/incomplete
 export type ConservationCollection = {
@@ -55,3 +56,21 @@ export type ConservationType = {
 };
 
 export type ConservationTypes = Array<ConservationType>;
+
+export type ConservationStoreState = {
+  loading?: boolean,
+  conservation?: ?ConservationCollection,
+  conservationTypes: Array<string>
+};
+
+export type ConservationSave = {
+  doneBy?: ?string,
+  doneDate?: ?string,
+  responsible?: ?string,
+  administrator?: ?string,
+  completedBy?: ?string,
+  completedDate?: ?string,
+  caseNumbers?: ?string,
+  affectedThings?: ?Array<string>,
+  note?: ?string
+};

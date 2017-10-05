@@ -6,9 +6,8 @@ import ObjectTable from './../analysis/components/ExpandableObjectResultTable';
 import toArray from 'lodash/toArray';
 import ViewPersonRoleDate from '../../components/person/ViewPersonRoleDate';
 import type { FormData } from './shared/formType';
-import type { ConservationStoreState } from './conservationStore';
 import type { AppSession } from '../../types/appSession';
-//import type { ConservationEvent } from '../../types/conservation';
+import type { ConservationStoreState } from '../../types/conservation';
 import type { History } from '../../types/Routes';
 import type { Predefined } from '../../types/predefined';
 
@@ -25,7 +24,8 @@ export type Props = {
   clearForm: Function,
   clearStore: Function,
   getConservation: Function,
-  loadForm: Function
+  loadForm: Function,
+  goBack: () => void
 };
 
 export default (props: Props) =>
@@ -99,6 +99,10 @@ export default (props: Props) =>
           </div>
           <hr />
         </div>
+        <hr />
+        <button className="btn-link" style={{ marginLeft: 20 }} onClick={props.goBack}>
+          {I18n.t('musit.texts.cancel')}
+        </button>
       </form>
     </div>
   ) : (

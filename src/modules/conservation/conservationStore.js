@@ -7,21 +7,18 @@ import MusitConservation from '../../models/conservation';
 import MusitActor from '../../models/actor';
 import MusitObject from '../../models/object';
 import flatten from 'lodash/flatten';
-import type { Callback, AjaxGet, AjaxPost } from '../../types/ajax';
+import type { Callback, AjaxGet, AjaxPost, AjaxPut } from '../../types/ajax';
+import type { AppSession } from '../../types/appSession';
 import type {
+  ConservationStoreState,
   ConservationCollection,
   ObjectInfo,
-  AffectedThing
+  ConservationSave
 } from '../../types/conservation';
 import type { Actor } from '../../types/actor';
 import Sample from '../../models/sample';
 import type { SampleType } from 'types/sample';
-
-export type ConservationStoreState = {
-  loading?: boolean,
-  conservation?: ?ConservationCollection,
-  conservationTypes: Array<string>
-};
+import { KEEP_ALIVE } from '../../stores/constants';
 
 export const initialState: ConservationStoreState = {
   conservationTypes: [],
@@ -45,6 +42,20 @@ const getConservationAction$: Observable<*> = getConservation$
   )
   .do(flagLoading({ loadingConservation: false }));
 
+export type SaveProps = {
+  id: ?number,
+  appSession: AppSession,
+  data: ConservationSave,
+  callback: Callback<*>
+};
+export const saveConservation$: Subject<SaveProps> = createAction('saveConservation$');
+const saveConservationAction = (post, put) => props => {
+  return Observable.of(props)
+    .do(flagLoading({ loadingConservation: true }))
+    .flatMap(saveConservation(post, put))
+    .do(flagLoading({ loadingConservation: false }));
+};
+
 export const updateConservation$: Subject<*> = createAction('updateConservation$');
 const updateConservationAction$: Observable<*> = updateConservation$
   .do(flagLoading({ loadingConservation: true }))
@@ -54,6 +65,7 @@ const updateConservationAction$: Observable<*> = updateConservation$
 export const clearStore$: Subject<*> = createAction('clearStore$');
 
 type Actions = {
+  saveConservation$: Subject<*>,
   setLoading$: Subject<Flag>,
   getConservationAction$: Observable<*>,
   updateConservationAction$: Observable<*>,
@@ -61,9 +73,15 @@ type Actions = {
 };
 
 export const reducer$ = (
-  actions: Actions
+  actions: Actions,
+  ajaxGet: AjaxGet<*>,
+  ajaxPost: AjaxPost<*>,
+  ajaxPut: AjaxPut<*>
 ): Observable<Reducer<ConservationStoreState>> => {
   return Observable.merge(
+    actions.saveConservation$
+      .switchMap(saveConservationAction(ajaxPost, ajaxPut))
+      .map(saveResult => state => ({ ...state, saveResult })),
     actions.setLoading$.map(loading => state => ({ ...state, ...loading })),
     actions.clearStore$.map(() => () => initialState),
     Observable.merge(
@@ -78,12 +96,22 @@ export const reducer$ = (
 
 export const store$ = (
   actions$: Actions = {
+    saveConservation$,
     setLoading$,
     getConservationAction$,
     updateConservationAction$,
     clearStore$
-  }
-) => createStore('conservationStore', reducer$(actions$), initialState);
+  },
+  ajaxGet?: AjaxGet<*> = simpleGet,
+  ajaxPost?: AjaxPost<*> = simplePost,
+  ajaxPut?: AjaxPost<*> = simplePut
+) =>
+  createStore(
+    'conservationStore',
+    reducer$(actions$, ajaxGet, ajaxPost, ajaxPut),
+    initialState,
+    KEEP_ALIVE
+  );
 
 const storeSingleton = store$();
 export default storeSingleton;
@@ -175,12 +203,13 @@ function getEventObjectDetails(
             );
             return {
               sampleData: { ...sample, sampleType: sampleType },
-              objectData: sampleObjectRes.response
+              objectData: sampleObjectRes.response,
+              ...sampleObjectRes.response
             };
           });
         });
       }
-      return Observable.of({ objectData: objRes.response });
+      return Observable.of({ objectData: objRes.response, ...objRes.response });
     });
   };
 }
@@ -236,4 +265,45 @@ export function getActorNames(
       fieldName: 'completedByName'
     }
   ]);
+}
+
+const saveConservation = (ajaxPost, ajaxPut) => ({
+  id,
+  result,
+  appSession,
+  data,
+  events,
+  callback
+}) => {
+  const token = appSession.accessToken;
+  const museumId = appSession.museumId;
+  const collectionId = appSession.collectionId;
+  return getConservationUpsert(
+    id,
+    ajaxPut,
+    museumId,
+    data,
+    token,
+    ajaxPost
+  ).map((conservation?: ConservationCollection) => {
+    if (!conservation) {
+      return Observable.empty();
+    }
+    Observable.of(conservation);
+  });
+};
+
+function getConservationUpsert(id, ajaxPut, museumId, data, token, ajaxPost) {
+  return id
+    ? MusitConservation.editConservationEvent(ajaxPut)({
+        id,
+        museumId,
+        data,
+        token
+      })
+    : MusitConservation.saveConservationEvent(ajaxPost)({
+        museumId,
+        data,
+        token
+      });
 }

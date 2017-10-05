@@ -20,15 +20,18 @@ type ConservationProcessProps = {
   note?: string,
   form: FormData,
   loadingConservation?: boolean,
-  history: History
+  history: History,
+  clickSave: Function,
+  clickCancel: Function,
+  isFormValid: boolean
 };
 
 export type Props = ConservationProcessProps & {
-  objects: Array<ObjectData>,
+  objects: Array<any>,
   appSession: AppSession
 };
 
-function ConservationProcessForm(props: ConservationProcessProps) {
+function ConservationProcessForm(props: any) {
   return (
     <div className="container">
       <form className="form-horizontal">
@@ -89,6 +92,17 @@ export default function ConservationAddComponent(props: Props) {
         history={props.history}
         appSession={props.appSession}
       />
+      <hr />
+      <button
+        className="btn btn-primary"
+        disabled={!props.isFormValid}
+        onClick={props.clickSave}
+      >
+        {I18n.t('musit.texts.save')}
+      </button>{' '}
+      <button className="btn btn-default" onClick={props.clickCancel}>
+        {I18n.t('musit.texts.cancel')}
+      </button>
     </div>
   );
 }

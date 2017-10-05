@@ -11,7 +11,7 @@ import store$, { getConservation$, clearStore$ } from './conservationStore';
 import Conservation from '../../models/conservation';
 import conservationForm, { fieldsArray } from './conservationForm';
 import Config from '../../config';
-import { onUnMount } from './shared/conservationFormProps';
+import { onUnMount } from './shared/formProps';
 import type { Field } from '../../forms/form';
 import type { History } from '../../types/Routes';
 import { I18n } from 'react-i18nify';
@@ -49,12 +49,17 @@ export function props(props: *, upstream: UpstreamProps): ConservationProps {
     clearStore: clearStore$.next.bind(clearStore$),
     objects: props.form.objects || [],
     clickEdit: () => {
-      upstream.history.push(
-        Config.magasin.urls.client.conservation.editConservation(
+      upstream.history.push({
+        pathname: Config.magasin.urls.client.conservation.editConservation(
           props.appSession,
           upstream.match.params.conservationId
-        )
-      );
+        ),
+        state: (props.store.conservation && props.store.conservation.affectedThings) || []
+      });
+    },
+    goBack: (e): any => {
+      e && e.preventDefault();
+      upstream.history.goBack();
     }
   };
 }
