@@ -2,8 +2,8 @@
 import React from 'react';
 import { I18n } from 'react-i18nify';
 import MetaInformation from '../../components/metainfo';
-import ObjectTable from './../analysis/components/ExpandableObjectResultTable';
 import toArray from 'lodash/toArray';
+import ObjectTable from './components/expandableObjects';
 import ViewPersonRoleDate from '../../components/person/ViewPersonRoleDate';
 import type { FormData } from './shared/formType';
 import type { AppSession } from '../../types/appSession';

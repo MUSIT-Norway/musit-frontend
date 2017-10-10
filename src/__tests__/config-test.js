@@ -223,12 +223,12 @@ describe('Config urls', () => {
         {
           name: 'addConservationEvent',
           actual: urls.api.conservation.addConservationEvent(99),
-          expected: '/api/management/99/conservation'
+          expected: '/api/management/99/conservations/conservationProcess'
         },
         {
           name: 'getConservationById',
           actual: urls.api.conservation.getConservationById(99, 123),
-          expected: '/api/management/99/conservation/123'
+          expected: '/api/management/99/conservations/conservationProcess/123'
         },
         {
           name: 'getConservationForObject',

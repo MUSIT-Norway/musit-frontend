@@ -56,7 +56,6 @@
     "sinon": "^3.2.1"
   },
   "scripts": {
-    "postinstall": "./node_modules/.bin/flow-typed install",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

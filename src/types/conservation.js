@@ -6,7 +6,7 @@ import type { SampleDataExtended } from '../types/samples';
 export type AffectedThing = {
   id: number,
   affectedThing: string,
-  affectedType: 'collection' | 'sample',
+  affectedType: 'collection',
   analysisTypeId: number,
   doneBy: string,
   doneDate: string,
@@ -45,6 +45,7 @@ export type ConservationCollection = {
   reason?: ?string,
   status?: ?number,
   caseNumbers?: ?Array<string>,
+  caseNumber?: ?string,
   orgId?: ?number,
   events?: ?Array<any>
 };
@@ -70,7 +71,7 @@ export type ConservationSave = {
   administrator?: ?string,
   completedBy?: ?string,
   completedDate?: ?string,
-  caseNumbers?: ?string,
+  caseNumber?: ?string,
   affectedThings?: ?Array<string>,
   note?: ?string
 };

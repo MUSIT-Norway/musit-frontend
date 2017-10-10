@@ -1,4 +1,4 @@
-// flow-typed signature: 66d80cfc30187568bc33b18e05d7a610
+// flow-typed signature: ccfeb8f7c28da41998b76f199a9dad7f
 // flow-typed version: <<STUB>>/revalidate_v^1.1.0/flow_v0.54.1
 
 /**
@@ -43,10 +43,6 @@ declare module 'revalidate/lib/composeValidators' {
 }
 
 declare module 'revalidate/lib/createValidator' {
-  declare module.exports: any;
-}
-
-declare module 'revalidate/lib/createValidatorFactory' {
   declare module.exports: any;
 }
 
@@ -171,10 +167,6 @@ declare module 'revalidate/src/composeValidators' {
 }
 
 declare module 'revalidate/src/createValidator' {
-  declare module.exports: any;
-}
-
-declare module 'revalidate/src/createValidatorFactory' {
   declare module.exports: any;
 }
 
@@ -305,9 +297,6 @@ declare module 'revalidate/lib/composeValidators.js' {
 declare module 'revalidate/lib/createValidator.js' {
   declare module.exports: $Exports<'revalidate/lib/createValidator'>;
 }
-declare module 'revalidate/lib/createValidatorFactory.js' {
-  declare module.exports: $Exports<'revalidate/lib/createValidatorFactory'>;
-}
 declare module 'revalidate/lib/immutable.js' {
   declare module.exports: $Exports<'revalidate/lib/immutable'>;
 }
@@ -400,9 +389,6 @@ declare module 'revalidate/src/composeValidators.js' {
 }
 declare module 'revalidate/src/createValidator.js' {
   declare module.exports: $Exports<'revalidate/src/createValidator'>;
-}
-declare module 'revalidate/src/createValidatorFactory.js' {
-  declare module.exports: $Exports<'revalidate/src/createValidatorFactory'>;
 }
 declare module 'revalidate/src/immutable.js' {
   declare module.exports: $Exports<'revalidate/src/immutable'>;

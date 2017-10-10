@@ -7,6 +7,7 @@ import type { History } from '../../../types/Routes';
 import FontAwesome from 'react-fontawesome';
 import MusitI18n from '../../../components/MusitI18n';
 import type { ObjectData } from '../../../types/object';
+import ViewOjectData from '../../objects/components/ViewObjectData';
 
 type Props = {
   data: Array<ObjectData & { expanded: boolean }>,
@@ -46,7 +47,7 @@ export default function ObjectResultTable({
       </thead>
       <tbody>
         {data ? (
-          data.map((row, i) => {
+          data.map((row: ObjectData & { expanded: boolean }, i: number) => {
             const rows = [
               <tr
                 key={['objectRow', i].join('_')}
@@ -74,7 +75,7 @@ export default function ObjectResultTable({
                 ...rows,
                 <tr key={['objectResult', i].join('_')} className="expanded-row-dropdown">
                   <td colSpan={7}>
-                    <div>Her kommer objektvisning</div>
+                    <ViewOjectData objectData={row} />
                   </td>
                 </tr>
               ];

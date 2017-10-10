@@ -54,11 +54,7 @@ export const getConservationById: (
   callback
 }) => {
   const url = Config.magasin.urls.api.conservation.getConservationById(museumId, id);
-  try {
-    return ajaxGet(url, token, callback).map(({ response }) => response);
-  } finally {
-    return Observable.of(conservationEventViewMockData);
-  }
+  return ajaxGet(url, token, callback).map(({ response }) => response);
 };
 
 export const saveConservationEvent: (

@@ -33,7 +33,7 @@ export default function formProps(
   return {
     ...props,
     isFormValid: isFormValid(props.form),
-    objects: getObjects(toArray(props.form.affectedThings.value), props.location),
+    objects: getObjects(toArray(props.form.objects.value), props.location),
     updateStringField: updateStringField(props.updateForm),
     updateBooleanField: updateBooleanField(props.updateForm),
     updateArrayField: updateArrayField(props.updateForm),
@@ -88,6 +88,7 @@ function parseOption(type) {
 function clickSave(form, appSession, history, location, ajaxPost, ajaxPut) {
   return (evt: DomEvent) => {
     evt.preventDefault();
+    console.log('Form', form);
     saveConservation$.next({
       id: form.id.value,
       appSession,
@@ -96,28 +97,20 @@ function clickSave(form, appSession, history, location, ajaxPost, ajaxPut) {
       ajaxPut,
       callback: {
         onComplete: props => {
+          console.log('P', props);
           if (!props) {
             return;
           }
-          const maybeErrorMessage = props.results
-            .filter(res => res.error)
-            .concat(props.badFiles)
-            .map(res => res.error.xhr.response.message)
-            .join('\n')
-            .trim();
-          if (maybeErrorMessage.length > 0) {
-            emitError({
-              type: 'errorOnSave',
-              message: maybeErrorMessage.replace('in None', '')
-            });
-          }
-          const id = props.id;
+          const id = props.response.id;
           history.replace(
             Config.magasin.urls.client.conservation.viewConservation(
               appSession,
               parseInt(id, 10)
             )
           );
+        },
+        onFailure: err => {
+          emitError(err);
         }
       }
     });

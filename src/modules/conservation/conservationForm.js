@@ -9,7 +9,7 @@ import createForm, {
 
 export const fieldsArray = [
   getStrField('id'),
-  getNumberField('eventTypeId', null, true),
+  getNumberField('eventTypeId', null, false),
   getStrField('doneBy'),
   getStrField('doneDate'),
   getArrField('persons', [], false),
@@ -22,7 +22,7 @@ export const fieldsArray = [
   getStrField('completedDate'),
   getStrField('note'),
   getArrField('caseNumber'),
-  getArrField('affectedThings', []),
+  getArrField('affectedThings', [], false),
   getArrField('objects', [], false),
   getStrField('updatedBy', null, false),
   getStrField('updatedByName', null, false),

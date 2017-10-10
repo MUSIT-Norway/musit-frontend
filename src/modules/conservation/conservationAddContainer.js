@@ -45,6 +45,18 @@ function storeFactory() {
   );
 }
 
-const ManagedAnalysisFormComponent = lifeCycle({ onUnMount })(ConservationAddComponent);
+type MountProps = {
+  clearForm: Function,
+  clearStore: Function
+};
+
+function onMount(props: MountProps) {
+  props.clearForm();
+  props.clearStore();
+}
+
+const ManagedAnalysisFormComponent = lifeCycle({ onMount, onUnMount })(
+  ConservationAddComponent
+);
 
 export default flowRight([inject(storeFactory, addProps)])(ManagedAnalysisFormComponent);

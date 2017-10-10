@@ -25,7 +25,7 @@ type ViewNatHistComponentProps = {
   natGender?: ?string,
   natStage?: ?string,
   natLegDate?: ?string,
-  currentLocation: { pathNames: ?Array<NamedPathElement> },
+  currentLocation?: { pathNames: ?Array<NamedPathElement> },
   locations?: ?Array<NatLocation>
 };
 
@@ -33,7 +33,7 @@ type ViewNatNumisComponentProps = {
   museumNo: string,
   subNo?: ?string,
   term: string,
-  currentLocation: { pathNames: ?Array<NamedPathElement> }
+  currentLocation?: { pathNames: ?Array<NamedPathElement> }
 };
 
 type ViewArcheologyComponentProps = {
@@ -41,10 +41,10 @@ type ViewArcheologyComponentProps = {
   subNo?: ?string,
   term: string,
   arkForm?: ?string,
-  arkFindingNo: ?string,
+  arkFindingNo?: ?string,
   locations?: ?Array<ArkLocation>,
   materials?: ?Array<ArkMaterial>,
-  currentLocation: { pathNames: ?Array<NamedPathElement> },
+  currentLocation?: { pathNames: ?Array<NamedPathElement> },
   coordinates?: ?Array<ArkCoordinate>
 };
 
@@ -52,7 +52,7 @@ type ViewEntographyComponentProps = {
   museumNo: string,
   subNo?: ?string,
   term: string,
-  currentLocation: { pathNames: ?Array<NamedPathElement> },
+  currentLocation?: { pathNames: ?Array<NamedPathElement> },
   locations?: ?Array<EtnoLocation>,
   materials?: ?Array<EtnoMaterial>
 };
@@ -130,7 +130,7 @@ const viewNatHistObject = ({
   natStage,
   natLegDate,
   locations,
-  currentLocation: { pathNames }
+  currentLocation
 }: ViewNatHistComponentProps) => {
   const country = locations && locations[0] && locations[0].natCountry;
   const stateProvince = locations && locations[0] && locations[0].natStateProv;
@@ -174,7 +174,13 @@ const viewNatHistObject = ({
         <LabeledDataCol
           md={12}
           label="musit.objects.objectsView.location"
-          value={currentMagasinLocation(pathNames)}
+          value={
+            currentLocation && currentLocation.pathNames ? (
+              currentMagasinLocation(currentLocation.pathNames)
+            ) : (
+              ''
+            )
+          }
         />
       </Row>
     </div>
@@ -204,7 +210,7 @@ const viewArcheologyObject = ({
   locations,
   materials,
   coordinates,
-  currentLocation: { pathNames }
+  currentLocation
 }: ViewArcheologyComponentProps) => (
   <div className="Ark" style={{ marginTop: '30px', marginBottom: '40px' }}>
     <Row>
@@ -251,7 +257,11 @@ const viewArcheologyObject = ({
     <Row>
       <Col md={12}>
         <b>{I18n.t('musit.objects.objectsView.location')}: </b>
-        {currentMagasinLocation(pathNames)}
+        {currentLocation && currentLocation.pathNames ? (
+          currentMagasinLocation(currentLocation.pathNames)
+        ) : (
+          ''
+        )}
       </Col>
     </Row>
   </div>
@@ -263,7 +273,7 @@ const viewEtnographyObject = ({
   term,
   locations,
   materials,
-  currentLocation: { pathNames }
+  currentLocation
 }: ViewEntographyComponentProps) => (
   <div className="Ento" style={{ marginTop: '30px', marginBottom: '40px' }}>
     <Row>
@@ -288,7 +298,13 @@ const viewEtnographyObject = ({
       <LabeledDataCol
         md={12}
         label="musit.objects.objectsView.location"
-        value={currentMagasinLocation(pathNames)}
+        value={
+          currentLocation && currentLocation.pathNames ? (
+            currentMagasinLocation(currentLocation.pathNames)
+          ) : (
+            ''
+          )
+        }
       />
     </Row>
   </div>

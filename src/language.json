@@ -137,6 +137,7 @@
       "analysis": {
         "analysis": "Analysis",
         "saveAnalysisError": "Unable to save analysis",
+        "notAllowed" : "You do not have the appropriate access rights to see analysis or samples.",
         "saveAnalysisSuccess": "Analysis saved",
         "filterTheList": "Filter the list",
         "analysisType": "Type of analysis",
@@ -951,7 +952,7 @@
         },
         "comments":"Kommentar",
         "caseNumber":"Saksnummer",
-        "personsConnected":"Personer tilknyttet burk og bevaring",
+        "personsConnected":"Personer tilknyttet bruk og bevaring",
         "objectsOrSamples":"Objekter/prøver"
       },
       "objects": {
@@ -1077,6 +1078,7 @@
         "analysis": "Analyse",
         "saveAnalysisError": "Kunne ikke lagre analyse",
         "saveAnalysisSuccess": "Analyse ble lagret",
+        "notAllowed" : "Du har ikke tilgang til analyser.",
         "filterTheList": "Filtrer listen",
         "analysisType": "Type analyse",
         "chooseCategory": "Velg kategori",

@@ -22,30 +22,21 @@ export function getObjects(
   }
 }
 
-function submitForm(
-  id: ?number,
-  appSession: AppSession,
-  history: History,
-  data: ConservationSave,
-  objectData: Array<ObjectData>,
-  ajaxPost: (url: string) => Observable<*>,
-  ajaxPut: (url: string) => Observable<*>
-) {
-  return {};
-}
-
 export function getConservationCollection(
   form: FormData,
   location: Location<Array<ObjectData>>
 ) {
-  const affectedThings = toArray(form.affectedThings.value);
+  let affectedThings = toArray(form.affectedThings.value);
   const persons = toArray(form.persons.value);
   const doneBy = findPerson(persons, 'doneBy');
   const responsible = findPerson(persons, 'responsible');
   const administrator = findPerson(persons, 'administrator');
   const completedBy = findPerson(persons, 'completedBy');
+  if (affectedThings.length === 0) {
+    affectedThings = location.state;
+  }
   return {
-    eventTypeId: form.eventTypeId.value,
+    eventTypeId: form.eventTypeId.value || 1,
     doneBy: doneBy && doneBy.uuid,
     doneDate: doneBy && doneBy.date,
     note: form.note.value,
@@ -54,7 +45,8 @@ export function getConservationCollection(
     completedBy: completedBy && completedBy.uuid,
     completedDate: completedBy && completedBy.date,
     objects: getObjectsWithType(getObjects(affectedThings, location)),
-    caseNumbers: form.caseNumber.value
+    affectedThings: affectedThings ? affectedThings.map(o => o.uuid) : [],
+    caseNumber: form.caseNumber.value
   };
 }
 
@@ -64,17 +56,14 @@ function findPerson(persons, role) {
 
 type ObjectWithUuidAndType = { objectId: ?string, objectType: ?string };
 
-export function getObjectsWithType(objects: Array<any>): Array<ObjectWithUuidAndType> {
+export function getObjectsWithType(
+  objects: Array<ObjectData>
+): Array<ObjectWithUuidAndType> {
   if (!objects) {
     return [];
   }
-  return objects.map((obj: ObjectInfo) => ({
-    objectId: obj.sampleData
-      ? obj.sampleData.objectId
-      : obj.objectData && obj.objectData.uuid,
-    objectType:
-      obj.sampleData && obj.sampleData.sampleNum
-        ? 'sample'
-        : obj.objectData ? obj.objectData.objectType : null
+  return objects.map((obj: ObjectData) => ({
+    objectId: obj.uuid,
+    objectType: obj.objectType || null
   }));
 }

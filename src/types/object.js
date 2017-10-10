@@ -18,9 +18,9 @@ export type ArkCoordinate = {
 };
 
 export type ArkLocation = {
-  farmName: ?string,
-  farmNo: ?number,
-  propertyUnitNo: ?string
+  farmName?: ?string,
+  farmNo?: ?number,
+  propertyUnitNo?: ?string
 };
 
 export type EtnoLocation = {
@@ -83,7 +83,7 @@ export type ObjectData = {
   // not provided from the backend
   objectId?: ?string,
   objectUUID?: ?string,
-  currentLocation: { pathNames: ?Array<NamedPathElement> },
+  currentLocation?: { pathNames: ?Array<NamedPathElement> },
   nodeId: string
 } & MusitObject;
 

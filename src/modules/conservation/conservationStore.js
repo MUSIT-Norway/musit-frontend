@@ -284,7 +284,8 @@ const saveConservation = (ajaxPost, ajaxPut) => ({
     museumId,
     data,
     token,
-    ajaxPost
+    ajaxPost,
+    callback
   ).map((conservation?: ConservationCollection) => {
     if (!conservation) {
       return Observable.empty();
@@ -293,17 +294,19 @@ const saveConservation = (ajaxPost, ajaxPut) => ({
   });
 };
 
-function getConservationUpsert(id, ajaxPut, museumId, data, token, ajaxPost) {
+function getConservationUpsert(id, ajaxPut, museumId, data, token, ajaxPost, callback) {
   return id
     ? MusitConservation.editConservationEvent(ajaxPut)({
         id,
         museumId,
         data,
-        token
+        token,
+        callback
       })
     : MusitConservation.saveConservationEvent(ajaxPost)({
         museumId,
         data,
-        token
+        token,
+        callback
       });
 }

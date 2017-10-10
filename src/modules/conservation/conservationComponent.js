@@ -12,6 +12,7 @@ import type { AppSession } from '../../types/appSession';
 type ConservationProcessProps = {
   id?: number,
   caseNumber?: string,
+  objects?: Array<any>,
   updateForm?: Function,
   updateArrayField: Function,
   updateStringField: Function,
@@ -21,17 +22,24 @@ type ConservationProcessProps = {
   form: FormData,
   loadingConservation?: boolean,
   history: History,
-  clickSave: Function,
-  clickCancel: Function,
-  isFormValid: boolean
+  clickSave?: Function,
+  clickCancel?: Function,
+  clearForm?: Function,
+  clearStore?: Function,
+  isFormValid?: boolean
 };
 
 export type Props = ConservationProcessProps & {
-  objects: Array<any>,
+  affectedThings?: Array<string>,
   appSession: AppSession
 };
 
-function ConservationProcessForm(props: any) {
+type ProcessFormProps = {
+  form: FormData,
+  updateStringField: Function
+};
+
+function ConservationProcessForm(props: ProcessFormProps) {
   return (
     <div className="container">
       <form className="form-horizontal">
@@ -60,7 +68,6 @@ function ConservationProcessForm(props: any) {
 }
 
 export default function ConservationAddComponent(props: Props) {
-  console.log('Props', props);
   return (
     <div className="container">
       <div className="page-header">
@@ -68,10 +75,10 @@ export default function ConservationAddComponent(props: Props) {
       </div>
       <form className="form-horizontal">
         <MetaInformation
-          updatedBy={'Bjarne Bajas'}
-          updatedDate={'2017-09-20'}
-          registeredBy={'Stein Olsen'}
-          registeredDate={'2017-01-25'}
+          registeredBy={props.form.doneBy.value}
+          registeredDate={props.form.doneDate.value}
+          updatedBy={props.form.updatedBy.value}
+          updatedDate={props.form.updatedDate.value}
         />
       </form>
       <hr />
@@ -87,7 +94,7 @@ export default function ConservationAddComponent(props: Props) {
       />
       <br />
       <ObjectTable
-        data={props.objects}
+        data={props.objects || []}
         viewMode={true}
         history={props.history}
         appSession={props.appSession}
