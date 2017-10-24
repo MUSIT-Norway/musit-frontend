@@ -6,6 +6,7 @@ import MusitObject from '../../models/object';
 import type { AppSession } from '../../types/appSession';
 import type { ObjectData } from '../../types/object';
 import { getSampleTypeAndSubType } from '../sample/shared/types';
+import type { SampleType } from '../../types/sample';
 
 export type Data = ObjectData & {
   sampleNum: ?string,
@@ -15,7 +16,7 @@ export type Data = ObjectData & {
 export type TableDataProps = {
   rowData: Data,
   appSession: AppSession,
-  sampleTypes: Array<any>,
+  sampleTypes: Array<SampleType>,
   goToObject: (id: string, type: string) => void,
   showMoveHistory: (data: Data) => void,
   onMove: (data: Data) => void,
@@ -49,7 +50,7 @@ export default function TableData(props: TableDataProps) {
         <td>
           {rowData.sampleTypeId && props.appSession && props.sampleTypes ? (
             getSampleTypeAndSubType(
-              { sampleTypes: props.sampleTypes },
+              props.sampleTypes,
               rowData.sampleTypeId,
               props.appSession
             )

@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { refreshSession, makeUrlAware } from '../appSession';
 import sinon from 'sinon';

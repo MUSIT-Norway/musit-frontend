@@ -69,12 +69,13 @@ export const getSampleSubTypeWithSlash = (
 };
 
 export const getSampleTypeAndSubType = (
-  sampleTypes: SampleTypesObject,
+  sampleTypes: Array<SampleType>,
   sampleTypesId: number,
   appSession: AppSession
 ) => {
-  const sampleType = getSampleType(sampleTypes, sampleTypesId, appSession);
-  const sampleSubType = getSampleSubType(sampleTypes, sampleTypesId, appSession);
+  const sampleTypesObj = { sampleTypes };
+  const sampleType = getSampleType(sampleTypesObj, sampleTypesId, appSession);
+  const sampleSubType = getSampleSubType(sampleTypesObj, sampleTypesId, appSession);
   if (sampleSubType) {
     return sampleType + ' / ' + sampleSubType;
   }
@@ -85,7 +86,7 @@ export type FlattenedSampleObject = any;
 
 export function flattenSample(
   appSession: AppSession,
-  sampleTypes: Array<any>,
+  sampleTypes: Array<SampleType>,
   objectData: ObjectData,
   sampleData: SampleData
 ): FlattenedSampleObject {
@@ -100,7 +101,7 @@ export function flattenSample(
     term: objectData.term,
     sampleNum: sampleData.sampleNum,
     sampleTypeAndSubType: getSampleTypeAndSubType(
-      { sampleTypes: sampleTypes },
+      sampleTypes,
       sampleData.sampleTypeId,
       appSession
     ),

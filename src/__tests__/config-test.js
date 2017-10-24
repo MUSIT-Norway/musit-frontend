@@ -193,6 +193,21 @@ describe('Config urls', () => {
           ),
           expected:
             '/api/thingaggregate/museum/99/storagenodes/ac08361b-3f13-4cde-9428-4ba2776316bd/stats'
+        },
+        {
+          name: 'searchObjectUrl',
+          actual: urls.api.thingaggregate.searchObjectUrl(
+            null,
+            null,
+            'foo',
+            null,
+            10,
+            0,
+            'ac08361b-3f13-4cde-9428-4ba2776316bd',
+            99
+          ),
+          expected:
+            '/api/thingaggregate/museum/99/objects/search?term=foo&from=0&limit=10&collectionIds=ac08361b-3f13-4cde-9428-4ba2776316bd'
         }
       ]
     },
@@ -263,6 +278,12 @@ describe('Config urls', () => {
           name: 'getPurposes',
           actual: urls.api.analysis.getPurposes,
           expected: '/api/management/purposes'
+        },
+        {
+          name: 'search',
+          actual: urls.api.analysis.search(99, '1234', 0, 10, 'foo'),
+          expected:
+            '/api/management/99/analyses/search?from=0&limit=10&collectionIds=1234&q=foo&types=analysis,analysisCollection'
         },
         {
           name: 'getAnalysisEvents',

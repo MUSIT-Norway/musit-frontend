@@ -1,3 +1,4 @@
+// @flow
 import DiffPatcher from 'jsondiffpatch';
 import { log } from 'jsondiffpatch/src/formatters/console';
 import assert from 'assert';

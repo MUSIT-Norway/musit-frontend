@@ -366,14 +366,14 @@ describe('getSampleSubTypeWithSlash', () => {
 
 describe('getSampleTypeAndSubType', () => {
   it('should have working getSampleTypeAndSubType method', () => {
-    const sampleType = getSampleTypeAndSubType(sampleTypes, 1, appSession);
+    const sampleType = getSampleTypeAndSubType(sampleTypes.sampleTypes, 1, appSession);
     expect(sampleType).toBe('DNA extract / aDNA');
   });
 });
 
 describe('getSampleTypeAndSubType', () => {
   it('should have working getSampleTypeAndSubType method with no subType', () => {
-    const sampleType = getSampleTypeAndSubType(sampleTypes, 6, appSession);
+    const sampleType = getSampleTypeAndSubType(sampleTypes.sampleTypes, 6, appSession);
     expect(sampleType).toBe('Living individual');
   });
 });

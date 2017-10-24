@@ -1,11 +1,9 @@
-/* eslint-disable */
+// @flow
 import { Subject, Observable } from 'rxjs/Rx';
 import { store$, isItemAdded } from '../pickList';
 import MusitObject from '../../models/object';
 import isEqual from 'lodash/isEqual';
 import MusitTestScheduler from '../../testutils/MusitTestScheduler';
-
-const diff = require('deep-diff').diff;
 
 describe('pickList', () => {
   it('testing and clear', () => {
@@ -145,13 +143,13 @@ describe('pickList', () => {
 
     // mock up$ and down$ events
     const markNode$ = testScheduler.createHotObservable(toggleNode, {
-      1: { item: { id: 1 } }
+      '1': { item: { id: 1 } }
     });
     const removeNode$ = testScheduler.createHotObservable(removeNode, {
-      1: { id: 2, name: 'Tull' }
+      '1': { id: 2, name: 'Tull' }
     });
     const refreshNode$ = testScheduler.createHotObservable(refreshNode, {
-      1: {
+      '1': {
         id: 2,
         path: ',1,2,',
         pathNames: [
@@ -161,32 +159,32 @@ describe('pickList', () => {
     });
     const clearNodes$ = testScheduler.createHotObservable(clearNodes);
     const addNode$ = testScheduler.createHotObservable(addNode, {
-      1: { value: { id: 1 }, path: [] },
-      2: { value: { id: 2 }, path: [] }
+      '1': { value: { id: 1 }, path: [] },
+      '2': { value: { id: 2 }, path: [] }
     });
     const toggleNode$ = new Subject();
     const markObject$ = new Subject();
     const markMainObject$ = new Subject();
     const refreshMainObject$ = new Subject();
     const removeObject$ = testScheduler.createHotObservable(removeObject, {
-      1: { id: 1, museumNo: 'H1' }
+      '1': { id: 1, museumNo: 'H1' }
     });
     const clearObjects$ = testScheduler.createHotObservable(clearObjects);
     const addObject$ = testScheduler.createHotObservable(addObject, {
-      1: { value: { id: 1 }, path: [] },
-      2: { value: { id: 2, uuid: 2 }, path: [] },
-      3: { value: { id: 3, uuid: 3 }, path: [] }
+      '1': { value: { id: 1 }, path: [] },
+      '2': { value: { id: 2, uuid: 2 }, path: [] },
+      '3': { value: { id: 3, uuid: 3 }, path: [] }
     });
     const toggleObject$ = new Subject();
 
     const refreshObjects$ = testScheduler
       .createHotObservable(refreshObjects, {
-        1: { movableObjects: [{ id: 3 }], museumId: 99, token: '1224' },
-        2: { movableObjects: [{ id: 3 }, { id: 2 }], museumId: 99, token: '1224' }
+        '1': { movableObjects: [{ id: 3 }], museumId: 99, token: '1224' },
+        '2': { movableObjects: [{ id: 3 }, { id: 2 }], museumId: 99, token: '1224' }
       })
       .switchMap(
         MusitObject.getObjectLocations((url, data) => {
-          if (isEqual(data, [{ id: 3 }]))
+          if (isEqual(data, [{ id: 3 }])) {
             return Observable.of({
               response: [
                 {
@@ -205,7 +203,8 @@ describe('pickList', () => {
                 }
               ]
             });
-          if (isEqual(data, [{ id: 3 }, { id: 2 }]))
+          }
+          if (isEqual(data, [{ id: 3 }, { id: 2 }])) {
             return Observable.of({
               response: [
                 {
@@ -223,6 +222,8 @@ describe('pickList', () => {
                 }
               ]
             });
+          }
+          return Observable.empty();
         })
       );
 

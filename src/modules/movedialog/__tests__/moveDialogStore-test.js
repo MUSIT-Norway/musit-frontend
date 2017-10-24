@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { initialState, store$ } from '../moveDialogStore';
 import MusitNode from '../../../models/node';
 
