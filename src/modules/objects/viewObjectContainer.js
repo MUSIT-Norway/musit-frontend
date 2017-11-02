@@ -1,6 +1,7 @@
 // @flow
 import ViewObjectComponent from './ViewObjectComponent';
 import { RxInjectLegacy as inject } from 'react-rxjs';
+import { emitError } from '../../shared/errors';
 import objectStore$, {
   loadObject$,
   loadMoveAndAnalysisEvents$,
@@ -18,6 +19,7 @@ import { isItemAdded } from '../../stores/pickList';
 import MusitObject from '../../models/object';
 import sample from '../../models/sample';
 import { simpleGet } from '../../shared/RxAjax';
+import { I18n } from 'react-i18nify';
 
 const data: {} = {
   appSession$: { type: PropTypes.instanceOf(Observable).isRequired },
@@ -71,7 +73,17 @@ export const onMount = ({
   };
   loadObject(ajaxProps);
   loadSampleEvents(ajaxProps);
-  loadMoveAndAnalysisEvents(ajaxProps);
+  loadMoveAndAnalysisEvents({
+    ...ajaxProps,
+    callback: {
+      onFailure: e =>
+        e.status === 403
+          ? emitError({
+              message: I18n.t('musit.analysis.notAllowed')
+            })
+          : e
+    }
+  });
   getAnalysisTypes(ajaxProps);
   getSampleTypes(ajaxProps);
 };

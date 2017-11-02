@@ -20,6 +20,7 @@ import {
 } from './analysis';
 
 import { fromJsonToForm } from './analysisForm';
+import { analysisSearch } from './analysisSearch';
 
 export default {
   getAnalysisTypes,
@@ -35,5 +36,6 @@ export default {
   editAnalysisEvent,
   getAnalysisById,
   saveAnalysisEvent,
-  fromJsonToForm
+  fromJsonToForm,
+  analysisSearch
 };

@@ -33,6 +33,11 @@ export function onFailure<R>(callback: ?Callback<R>): (error: *) => Observable<*
         }
         closeModal();
         return Observable.empty();
+      case 403:
+        if (shouldLog()) {
+          console.error('Not access to collection', error); // eslint-disable-line no-console
+        }
+        break;
       default:
         break;
     }

@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { store$, initialState } from '../observationStore';
 import MusitNode from '../../../models/node';
 import Observation from '../../../models/observation';

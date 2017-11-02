@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import inject from 'react-rxjs/dist/RxInject';
 import createStore from 'react-rxjs/dist/RxStore';
 import AnalysisViewComponent from './AnalysisViewComponent';
-import type { Props as AnanlysisProps } from './AnalysisViewComponent';
+import type { Props as AnalysisProps } from './AnalysisViewComponent';
 import predefined$ from '../../stores/predefined';
 import { loadCustomPredefinedTypes } from '../../stores/predefinedLoader';
 import appSession$ from '../../stores/appSession';
@@ -57,7 +57,7 @@ type UpstreamProps = {
   history: History
 };
 
-export function props(props: *, upstream: UpstreamProps): AnanlysisProps {
+export function props(props: *, upstream: UpstreamProps): AnalysisProps {
   const analysisType = getAnalysisType(
     parseInt(props.store.analysis ? props.store.analysis.analysisTypeId : null, 10),
     props.predefined.analysisTypes
@@ -162,7 +162,7 @@ export function props(props: *, upstream: UpstreamProps): AnanlysisProps {
   };
 }
 
-export const onMount = (props: AnanlysisProps) => {
+export const onMount = (props: AnalysisProps) => {
   props.getAnalysis({
     id: props.match.params.analysisId,
     sampleTypes: props.predefined.sampleTypes,
@@ -173,7 +173,7 @@ export const onMount = (props: AnanlysisProps) => {
 };
 
 export const onReceiveProps = (fieldsArray: Array<Field<any>>) => (
-  props: AnanlysisProps
+  props: AnalysisProps
 ) => {
   if (props.store.analysis && !props.form.analysisTypeId.value) {
     props.loadForm(Analysis.fromJsonToForm(props.store.analysis, fieldsArray));

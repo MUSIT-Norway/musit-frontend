@@ -1,5 +1,5 @@
 // @flow
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { store$ } from '../tableStore';
 import MusitNode from '../../../models/node';
 import MusitObject from '../../../models/object';
