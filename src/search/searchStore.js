@@ -58,7 +58,7 @@ type Actions = {
 };
 
 const setLoading$: Subject<void> = createAction('search');
-const clear$: Subject<void> = createAction('clear');
+export const clear$: Subject<void> = createAction('clear');
 const changeQuery$: Subject<ChangeQuery> = createAction('changeQuery');
 const selectPage$: Subject<SelectPage> = createAction('selectPage');
 const search$: Subject<SearchParam> = createAction('searchResult');
