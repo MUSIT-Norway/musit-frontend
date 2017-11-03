@@ -90,7 +90,9 @@ export const editConservationEvent: (
   callback
 }) => {
   const url = Config.magasin.urls.api.conservation.getConservationById(museumId, id);
-  return ajaxPut(url, data, token, callback).map(({ response }) => response);
+  return ajaxPut(url, { ...data, id: Number(id) }, token, callback).map(
+    ({ response }) => response
+  );
 };
 
 export const getConservationTypes: (

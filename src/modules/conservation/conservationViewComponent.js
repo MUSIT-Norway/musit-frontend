@@ -10,6 +10,7 @@ import type { AppSession } from '../../types/appSession';
 import type { ConservationStoreState } from '../../types/conservation';
 import type { History } from '../../types/Routes';
 import type { Predefined } from '../../types/predefined';
+import Treatment from './events/treatment';
 
 export type Props = {
   match: { params: { conservationId: number } },
@@ -104,6 +105,7 @@ export default (props: Props) =>
           {I18n.t('musit.texts.cancel')}
         </button>
       </form>
+      <Treatment />
     </div>
   ) : (
     <div className="loading" />

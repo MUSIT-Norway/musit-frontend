@@ -131,9 +131,9 @@ export default {
           getAllConservationTypes: (mid: MuseumId) =>
             `/api/management/${mid}/conservation/types`,
           addConservationEvent: (mid: MuseumId) =>
-            `/api/management/${mid}/conservations/conservationProcess`,
+            `/api/management/${mid}/conservation/events`,
           getConservationById: (mid: MuseumId, conservationId: number) =>
-            `/api/management/${mid}/conservations/conservationProcess/${conservationId}`,
+            `/api/management/${mid}/conservation/events/${conservationId}`,
           getConservationForObject: (mid: MuseumId, id: number) =>
             `/api/management/${mid}/conservation/objects/${id}`
         },

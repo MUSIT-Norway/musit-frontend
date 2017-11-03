@@ -7,13 +7,13 @@ import conservationForm from './conservationForm';
 import props, { onUnMount } from './shared/formProps';
 import lifeCycle from '../../shared/lifeCycle';
 import appSession$ from '../../stores/appSession';
-import store$, { clearStore$ } from './conservationStore';
+import store$, { clearStore$, getConservation$ } from './conservationStore';
 import type { Props } from './conservationComponent';
 import type { Location } from './shared/submit';
 import type { History } from '../../types/Routes';
 import type { ObjectData } from '../../types/object';
 
-const { form$, updateForm$, clearForm$ } = conservationForm;
+const { form$, updateForm$, clearForm$, loadForm$ } = conservationForm;
 
 function addProps(
   storeProps: *,
@@ -26,9 +26,12 @@ function addProps(
   });
   return {
     ...sharedProps,
+    getConservation: getConservation$.next.bind(getConservation$),
     clearStore: clearStore$.next.bind(clearStore$),
     clearForm: clearForm$.next.bind(clearForm$),
-    loadingAnalysis: false
+    loadingConservation: false,
+    loadForm: loadForm$.next.bind(loadForm$),
+    loadingConservation: !storeProps.store.conservation
   };
 }
 

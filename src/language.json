@@ -13,7 +13,23 @@
         "comments":"Comments",
         "caseNumber":"Case number",
         "personsConnected":"Persons associated with the conservation",
-        "objectsOrSamples":"Objects/samples"
+        "objectsOrSamples":"Objects/samples",
+        "events":{
+          "treatment":{
+            "treatment":"Treatment",
+            "keyword":"Keyword",
+            "treatmentType":"Treatment Type",
+            "keywordTreatmentType)":"Keyword (Treatment Type)",
+            "materialUsage":"Material Usage",
+            "productName":"Product Name",
+            "synonyms":"Synonyms",
+            "materialUsageDetails":"Material Usage (Product Name, Synonyms, Description)",
+            "description":"Description",
+            "note":"Note",
+            "result":"Result",
+            "noteDescriptionResult":"Note/Description/Result"
+          }
+        }
       },
       "objects": {
         "goToParentObject": "Go to object",
@@ -955,7 +971,23 @@
         "comments":"Kommentar",
         "caseNumber":"Saksnummer",
         "personsConnected":"Personer tilknyttet bruk og bevaring",
-        "objectsOrSamples":"Objekter/prøver"
+        "objectsOrSamples":"Objekter/prøver",
+        "events":{
+          "treatment":{
+            "treatment":"Behandling",
+            "keyword":"Stikkord",
+            "treatmentType":"Behandlingstype",
+            "keywordTreatmentType)":"Stikkord (Behandlingstype)",
+            "materialUsage":"Materialbruk",
+            "productName":"Produktnavn",
+            "synonyms":"Synonymer",
+            "materialUsageDetails":"Materialbruk (Produktnavn, Synonymer, Beskrivelse)",
+            "description":"Beskrivelse",
+            "note":"Merknad",
+            "result":"Resultat",
+            "noteDescriptionResult":"Merknad/Beskrivelse/Resultat"
+          }
+        }
       },
       "objects": {
         "goToParentObject": "Gå til objektet",
