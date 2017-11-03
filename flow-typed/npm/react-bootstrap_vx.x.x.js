@@ -1,4 +1,4 @@
-// flow-typed signature: de61d8c0216df62d6e26a48f1c62930c
+// flow-typed signature: 8a517e434527ca393777bd6b739c0694
 // flow-typed version: <<STUB>>/react-bootstrap_v^0.31.0/flow_v0.54.1
 
 /**
@@ -371,6 +371,14 @@ declare module 'react-bootstrap/es/Tabs' {
 }
 
 declare module 'react-bootstrap/es/Thumbnail' {
+  declare module.exports: any;
+}
+
+declare module 'react-bootstrap/es/ToggleButton' {
+  declare module.exports: any;
+}
+
+declare module 'react-bootstrap/es/ToggleButtonGroup' {
   declare module.exports: any;
 }
 
@@ -766,6 +774,14 @@ declare module 'react-bootstrap/lib/Thumbnail' {
   declare module.exports: any;
 }
 
+declare module 'react-bootstrap/lib/ToggleButton' {
+  declare module.exports: any;
+}
+
+declare module 'react-bootstrap/lib/ToggleButtonGroup' {
+  declare module.exports: any;
+}
+
 declare module 'react-bootstrap/lib/Tooltip' {
   declare module.exports: any;
 }
@@ -1079,6 +1095,12 @@ declare module 'react-bootstrap/es/Tabs.js' {
 declare module 'react-bootstrap/es/Thumbnail.js' {
   declare module.exports: $Exports<'react-bootstrap/es/Thumbnail'>;
 }
+declare module 'react-bootstrap/es/ToggleButton.js' {
+  declare module.exports: $Exports<'react-bootstrap/es/ToggleButton'>;
+}
+declare module 'react-bootstrap/es/ToggleButtonGroup.js' {
+  declare module.exports: $Exports<'react-bootstrap/es/ToggleButtonGroup'>;
+}
 declare module 'react-bootstrap/es/Tooltip.js' {
   declare module.exports: $Exports<'react-bootstrap/es/Tooltip'>;
 }
@@ -1372,6 +1394,12 @@ declare module 'react-bootstrap/lib/Tabs.js' {
 }
 declare module 'react-bootstrap/lib/Thumbnail.js' {
   declare module.exports: $Exports<'react-bootstrap/lib/Thumbnail'>;
+}
+declare module 'react-bootstrap/lib/ToggleButton.js' {
+  declare module.exports: $Exports<'react-bootstrap/lib/ToggleButton'>;
+}
+declare module 'react-bootstrap/lib/ToggleButtonGroup.js' {
+  declare module.exports: $Exports<'react-bootstrap/lib/ToggleButtonGroup'>;
 }
 declare module 'react-bootstrap/lib/Tooltip.js' {
   declare module.exports: $Exports<'react-bootstrap/lib/Tooltip'>;

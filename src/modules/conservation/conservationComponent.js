@@ -6,7 +6,6 @@ import type { FormData } from './shared/formType';
 import ObjectTable from './components/expandableObjects';
 import { FormInput, FormTextArea } from '../../forms/components';
 import type { History } from '../../types/Routes';
-import type { ObjectData } from '../../types/object';
 import type { AppSession } from '../../types/appSession';
 
 type ConservationProcessProps = {

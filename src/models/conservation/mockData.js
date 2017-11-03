@@ -126,7 +126,7 @@ export const getJson = {
   events: [
     {
       id: 167, // sub event id
-      eventTypeId: 10, // technical description
+      eventTypeId: 3, // technical description
       partOf: 166, // pointer to main event
 
       registeredBy: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
@@ -144,7 +144,7 @@ export const getJson = {
     },
     {
       id: 168,
-      eventTypeId: 10, // technical description number 2
+      eventTypeId: 3, // technical description number 2
       partOf: 166,
 
       registeredBy: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
@@ -164,7 +164,7 @@ export const getJson = {
     },
     {
       id: 169,
-      eventTypeId: 12,
+      eventTypeId: 2,
       partOf: 166,
       registeredBy: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
       registeredDate: '2017-09-20T13:39:51+00:00',
@@ -179,7 +179,7 @@ export const getJson = {
     },
     {
       id: 170,
-      eventTypeId: 13,
+      eventTypeId: 2,
       partOf: 166,
       registeredBy: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
       registeredDate: '2017-09-20T13:39:51+00:00',
@@ -222,7 +222,7 @@ export const postJson = {
   // sub events
   events: [
     {
-      eventTypeId: 10, // technical description
+      eventTypeId: 3, // technical description
 
       // can have sub set of main event affectedThings
       affectedThings: ['12080e3e-2ca2-41b1-9d4a-4d72e292dcd8'],
@@ -232,7 +232,7 @@ export const postJson = {
       doneDate: '2017-09-11T22:00:00+00:00'
     },
     {
-      eventTypeId: 10, // technical description number 2
+      eventTypeId: 3, // technical description number 2
       affectedThings: [
         '12080e3e-2ca2-41b1-9d4a-4d72e292dcd8',
         'aba6a67c-f742-4a44-b13e-0415ec1abb2a'
@@ -243,14 +243,14 @@ export const postJson = {
       doneDate: '2017-09-11T22:00:00+00:00'
     },
     {
-      eventTypeId: 12,
+      eventTypeId: 2,
       affectedThings: ['788136fe-8038-47fc-9c59-9ddb010e0f74'],
       note: 'fdfds',
       doneBy: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
       doneDate: '2017-09-11T22:00:00+00:00'
     },
     {
-      eventTypeId: 13,
+      eventTypeId: 2,
       affectedThings: [
         '12080e3e-2ca2-41b1-9d4a-4d72e292dcd8',
         'aba6a67c-f742-4a44-b13e-0415ec1abb2a',
@@ -288,7 +288,7 @@ export const putJson = {
   events: [
     {
       id: 167, // sub event id
-      eventTypeId: 10, // technical description
+      eventTypeId: 3, // technical description
       partOf: 166, // pointer to main event
 
       // can have sub set of main event affectedThings
@@ -300,7 +300,7 @@ export const putJson = {
     },
     {
       id: 168,
-      eventTypeId: 10, // technical description number 2
+      eventTypeId: 3, // technical description number 2
       partOf: 166,
 
       affectedThings: [
@@ -314,7 +314,7 @@ export const putJson = {
     },
     {
       id: 169,
-      eventTypeId: 12,
+      eventTypeId: 2,
       partOf: 166,
 
       affectedThings: ['788136fe-8038-47fc-9c59-9ddb010e0f74'],
@@ -324,7 +324,7 @@ export const putJson = {
     },
     {
       id: 170,
-      eventTypeId: 13,
+      eventTypeId: 2,
       partOf: 166,
 
       affectedThings: [

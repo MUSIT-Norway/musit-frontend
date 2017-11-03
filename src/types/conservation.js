@@ -17,7 +17,10 @@ export type AffectedThing = {
   responsible: string
 };
 
-export type ObjectInfo = { objectData?: ?MusitObject, sampleData?: ?SampleDataExtended };
+export type ObjectInfo = {
+  objectData?: ?MusitObject,
+  sampleData?: ?SampleDataExtended
+} & MusitObject;
 export type ObjectInfoAffectedThing = ?ObjectInfo & ?AffectedThing;
 
 // Fixme this type is incorrect/incomplete
