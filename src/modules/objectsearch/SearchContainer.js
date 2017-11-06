@@ -50,7 +50,7 @@ function props(p, upstream: { history: History }) {
       actions.setLoading$.next();
       actions.search$.next({
         from: 0,
-        limit: p.searchStore.limit,
+        limit: 10,
         queryParam: p.searchStore.queryParam,
         museumId: p.appSession.museumId,
         collectionIds: p.appSession.collectionId,

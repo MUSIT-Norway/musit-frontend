@@ -93,7 +93,9 @@ function reducer$<E>(
     actions.setLoading$.map(() => state => ({
       ...state,
       loading: true,
-      pagination: null
+      pagination: null,
+      from: 0,
+      limit: 10
     })),
     actions.search$
       .map(toEndpointParam)
