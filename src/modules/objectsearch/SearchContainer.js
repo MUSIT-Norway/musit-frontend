@@ -3,7 +3,8 @@
 import inject from 'react-rxjs/dist/RxInject';
 import ObjectSearchComponent from './SearchComponent';
 import store$, { actions } from './searchStore';
-import { toggleObject$ } from '../../stores/pickList';
+import { toggleObject$, isItemAdded } from '../../stores/pickList';
+import pickList$ from '../../stores/pickList';
 import type { ChangePage } from '../../search/searchStore';
 import type { Hit, InnerHits, SearchHit } from '../../types/search';
 import type { History } from '../../types/Routes';
@@ -51,10 +52,10 @@ function props(p, upstream: { history: History }) {
       actions.search$.next({
         from: 0,
         limit: 10,
-        queryParam: p.searchStore.queryParam,
-        museumId: p.appSession.museumId,
-        collectionIds: p.appSession.collectionId,
-        token: p.appSession.accessToken
+        queryParam: p.store.searchStore.queryParam,
+        museumId: p.store.appSession.museumId,
+        collectionIds: p.store.appSession.collectionId,
+        token: p.store.appSession.accessToken
       });
     },
     onChangeQueryParam: (name: string, value: string) => {
@@ -63,7 +64,7 @@ function props(p, upstream: { history: History }) {
     },
     onChangePage: (page: ChangePage) => {
       actions.clear$;
-      actions.selectPage$.next({ page, appSession: p.appSession });
+      actions.selectPage$.next({ page, appSession: p.store.appSession });
     },
     onClickHeader: (hit: SearchHit) => {
       const object = getSource(hit);
@@ -72,12 +73,15 @@ function props(p, upstream: { history: History }) {
         if (hit._type === 'collection') {
           const o: ObjectData = (object: any);
           url = Config.magasin.urls.client.object.gotoObject(
-            p.appSession,
+            p.store.appSession,
             o.id.toString()
           );
         } else if (hit._type === 'sample') {
           const s: SampleData = (object: any);
-          url = Config.magasin.urls.client.analysis.gotoSample(p.appSession, s.objectId);
+          url = Config.magasin.urls.client.analysis.gotoSample(
+            p.store.appSession,
+            s.objectId
+          );
         }
         if (url) {
           upstream.history.push(url);
@@ -105,8 +109,8 @@ function props(p, upstream: { history: History }) {
           const sample: SampleData = (source: any);
           toAddToPickList = {
             value: flattenSample(
-              p.appSession,
-              p.predefined.sampleTypes ? p.predefined.sampleTypes.raw : [],
+              p.store.appSession,
+              p.store.predefined.sampleTypes ? p.store.predefined.sampleTypes.raw : [],
               object,
               sample
             ),
@@ -118,17 +122,25 @@ function props(p, upstream: { history: History }) {
     },
     getObject,
     getSampleTypeStr: (sample: SampleData): string => {
-      if (p.predefined.sampleTypes) {
+      if (p.store.predefined.sampleTypes) {
         return getSampleTypeAndSubType(
-          p.predefined.sampleTypes.raw,
+          p.store.predefined.sampleTypes.raw,
           sample.sampleTypeId,
-          p.appSession
+          p.store.appSession
         );
       }
       return `Unknown: ${sample.sampleTypeId.toString()}`;
     },
-    searchStore: p.searchStore
+    searchStore: p.store.searchStore,
+    isObjectAdded: (hit: SearchHit): boolean => {
+      return isItemAdded(hit._source, p.pickList && p.pickList.objects);
+    }
   };
 }
 
-export default loadPredefinedTypes(inject(store$, props)(ObjectSearchComponent));
+const data = {
+  store$,
+  pickList$
+};
+
+export default loadPredefinedTypes(inject(data, props)(ObjectSearchComponent));
