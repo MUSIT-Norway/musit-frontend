@@ -46,10 +46,11 @@ function getSource(hit: SearchHit): ?ObjectData | ?SampleData {
 function props(p, upstream: { history: History }) {
   return {
     onSearch: () => {
+      actions.clear$;
       actions.setLoading$.next();
       actions.search$.next({
-        from: p.searchStore.from,
-        limit: p.searchStore.limit,
+        from: 0,
+        limit: 10,
         queryParam: p.searchStore.queryParam,
         museumId: p.appSession.museumId,
         collectionIds: p.appSession.collectionId,
@@ -57,9 +58,11 @@ function props(p, upstream: { history: History }) {
       });
     },
     onChangeQueryParam: (name: string, value: string) => {
+      actions.clear$;
       actions.changeQuery$.next({ name, value });
     },
     onChangePage: (page: ChangePage) => {
+      actions.clear$;
       actions.selectPage$.next({ page, appSession: p.appSession });
     },
     onClickHeader: (hit: SearchHit) => {

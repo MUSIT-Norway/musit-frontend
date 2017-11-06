@@ -65,7 +65,9 @@ describe('searchStore', () => {
           queryParam: { q: 'foo' },
           loading: true,
           pagination: null,
-          result: null
+          result: null,
+          from: 0,
+          limit: 10
         },
         d: {
           ...initStoreState(),

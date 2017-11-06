@@ -39,9 +39,10 @@ const stores = () =>
 const props = (storeProps, upstream: { history: History }) => {
   return {
     onSearch: () => {
+      actions.clear$;
       actions.setLoading$.next();
       actions.search$.next({
-        from: storeProps.searchStore.from,
+        from: 0,
         limit: storeProps.searchStore.limit,
         queryParam: storeProps.searchStore.queryParam,
         museumId: storeProps.appSession.museumId,
@@ -50,9 +51,11 @@ const props = (storeProps, upstream: { history: History }) => {
       });
     },
     onChangePage: (page: ChangePage) => {
+      actions.clear$;
       actions.selectPage$.next({ page, appSession: storeProps.appSession });
     },
     onChangeQueryParam: (name: string, value: string) => {
+      actions.clear$;
       actions.changeQuery$.next({ name, value });
     },
     goToAnalysis: (id: number) => {

@@ -23,6 +23,7 @@ import { backendVersion, frontendVersion, VersionInfo } from '../../build';
 import featureToggles from '../../featureToggles';
 import classnames from 'classnames';
 import env from '../../shared/environment';
+import { clear$ as clearSearchStore$ } from '../../search/searchStore';
 
 export class AppComponent extends Component {
   static propTypes = {
@@ -35,7 +36,8 @@ export class AppComponent extends Component {
     goTo: PropTypes.func.isRequired,
     clearObjectPicklist: PropTypes.func.isRequired,
     clearNodePicklist: PropTypes.func.isRequired,
-    featureToggles: PropTypes.object.isRequired
+    featureToggles: PropTypes.object.isRequired,
+    clearSearchStore: PropTypes.func.isRequired
   };
 
   constructor(props, context) {
@@ -76,6 +78,7 @@ export class AppComponent extends Component {
     this.props.setCollectionId(collectionId);
     this.props.clearObjectPicklist();
     this.props.clearNodePicklist();
+    this.props.clearSearchStore();
     this.props.goTo(
       Config.magasin.urls.client.storagefacility.goToRoot({
         ...this.props.appSession,
@@ -88,6 +91,7 @@ export class AppComponent extends Component {
   handleCollectionId(collectionId) {
     this.props.setCollectionId(collectionId);
     this.props.clearObjectPicklist();
+    this.props.clearSearchStore();
     const nodeId = this.props.match.params ? this.props.match.params.id : null;
     const localAppSession = { ...this.props.appSession, collectionId };
     if (nodeId) {
@@ -246,7 +250,8 @@ const commands = {
   setMuseumId$,
   setCollectionId$,
   clearObjectPicklist$,
-  clearNodePicklist$
+  clearNodePicklist$,
+  clearSearchStore$
 };
 
 export default inject(data, commands, props)(AppComponent);
