@@ -6,6 +6,10 @@ import type { History } from '../../../types/Routes';
 import NavigateToObject from '../../../components/navigations/NavigateToObject';
 import ExtraResultAttribute from './ExtraResultAttribute';
 import { FormInput, FormTextArea, FormFileSelect } from '../../../forms/components';
+import { FormText, FormElement } from '../../../forms/components';
+import { saveBlob } from '../../../shared/download';
+import { getFileAsBlob } from '../../../models/analysis/analysisResult';
+import type { ErrorLoading, SavedFile } from '../../../models/analysis/analysisResult';
 
 type Props = {
   externalSource: ?string,
@@ -18,7 +22,8 @@ type Props = {
   updateResultFiles: (files: Array<File>) => void,
   history: History,
   appSession: AppSession,
-  parentObjectId?: ?string
+  parentObjectId?: ?string,
+  files?: ?Array<SavedFile | ErrorLoading>
 };
 
 export default function EditResult(props: Props) {
@@ -68,6 +73,43 @@ export default function EditResult(props: Props) {
         multiple={true}
         onChange={files => props.updateResultFiles(files)}
       />
+      {props.files && (
+        <FormElement id="Files" label={''} labelWidth={2} elementWidth={5}>
+          <p className="form-control-static">
+            {Array.isArray(props.files) &&
+              props.files.map(file => {
+                if (file.error) {
+                  return null;
+                }
+                const fid = file.fid;
+                const title = file.title;
+                return (
+                  <p key={fid}>
+                    <button
+                      className="btn-link"
+                      onClick={e => {
+                        e.preventDefault();
+                        getFileAsBlob(
+                          fid,
+                          props.appSession.museumId,
+                          props.appSession.accessToken
+                        )
+                          .do(res => {
+                            if (res instanceof Blob) {
+                              saveBlob(res, title);
+                            }
+                          })
+                          .toPromise();
+                      }}
+                    >
+                      {file.title}
+                    </button>
+                  </p>
+                );
+              })}
+          </p>
+        </FormElement>
+      )}
       <FormTextArea
         id="resultNote"
         label={I18n.t('musit.analysis.commentsToResult')}
