@@ -15,6 +15,7 @@ export type pathNames = {
 
 export type Event = {
   id: number,
+  eventTypeId: number,
   eventDate: string,
   doneBy: string,
   doneDate: string,

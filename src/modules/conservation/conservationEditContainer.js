@@ -29,7 +29,6 @@ function addProps(
     getConservation: getConservation$.next.bind(getConservation$),
     clearStore: clearStore$.next.bind(clearStore$),
     clearForm: clearForm$.next.bind(clearForm$),
-    loadingConservation: false,
     loadForm: loadForm$.next.bind(loadForm$),
     loadingConservation: !storeProps.store.conservation
   };

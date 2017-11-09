@@ -3,8 +3,8 @@ import { Observable } from 'rxjs';
 import inject from 'react-rxjs/dist/RxInject';
 import ConservationViewComponent from './conservationViewComponent';
 import type { Props as ConservationProps } from './conservationViewComponent';
-import predefined$ from '../../stores/predefined';
-import { loadCustomPredefinedTypes } from '../../stores/predefinedLoader';
+import predefinedConservation$ from '../../stores/predefinedConservation';
+import { loadCustomPredefinedConservationTypes } from '../../stores/predefinedConservationLoader';
 import appSession$ from '../../stores/appSession';
 import lifeCycle from '../../shared/lifeCycle';
 import store$, { getConservation$, clearStore$ } from './conservationStore';
@@ -14,19 +14,18 @@ import Config from '../../config';
 import { onUnMount } from './shared/formProps';
 import type { Field } from '../../forms/form';
 import type { History } from '../../types/Routes';
-import { I18n } from 'react-i18nify';
 
 const { form$, loadForm$, clearForm$ } = conservationForm;
 
 function storeFactory() {
   return Observable.combineLatest(
     appSession$,
-    predefined$,
+    predefinedConservation$,
     store$,
     form$,
-    (appSession, predefined, store, form) => ({
+    (appSession, predefinedConservation, store, form) => ({
       appSession,
-      predefined,
+      predefinedConservation,
       store,
       form
     })
@@ -67,7 +66,7 @@ export function props(props: *, upstream: UpstreamProps): ConservationProps {
 export const onMount = (props: ConservationProps) => {
   props.getConservation({
     id: props.match.params.conservationId,
-    sampleTypes: props.predefined.sampleTypes,
+    sampleTypes: props.predefinedConservation.conservationTypes,
     museumId: props.appSession.museumId,
     collectionId: props.appSession.collectionId,
     token: props.appSession.accessToken
@@ -88,8 +87,8 @@ const MountableConservationViewComponent = lifeCycle({
   onUnMount
 })(ConservationViewComponent);
 
-export default loadCustomPredefinedTypes(
-  predefined$,
+export default loadCustomPredefinedConservationTypes(
+  predefinedConservation$,
   appSession$,
   inject(storeFactory, props)(MountableConservationViewComponent)
 );

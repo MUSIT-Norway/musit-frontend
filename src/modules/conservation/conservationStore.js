@@ -277,7 +277,6 @@ const saveConservation = (ajaxPost, ajaxPut) => ({
 }) => {
   const token = appSession.accessToken;
   const museumId = appSession.museumId;
-  const collectionId = appSession.collectionId;
   return getConservationUpsert(
     id,
     ajaxPut,

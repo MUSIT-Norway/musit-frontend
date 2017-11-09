@@ -7,7 +7,6 @@ import { parseISODate, DATE_FORMAT_DISPLAY } from '../shared/util';
 import MusitActor from './actor';
 import uniq from 'lodash/uniq';
 import flatMap from 'lodash/flatMap';
-
 import { I18n } from 'react-i18nify';
 import concat from 'lodash/concat';
 import { Observable } from 'rxjs';
@@ -36,7 +35,7 @@ Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) => prop
   )
     .map(([analyses, moves, conservation]) =>
       concat(
-        conservation,
+        conservation.map(c => ({ ...c, type: 'Conservation' })),
         analyses,
         moves.map(m => ({ ...m, type: 'MoveObject' }))
       ).map(m => ({
@@ -95,29 +94,6 @@ Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) => prop
               collectionId: props.collectionId,
               token: props.token
             }).map(r => ({ ...e, sampleTypeId: r.sampleTypeId }));
-          }
-          return Observable.of(e);
-        })
-      );
-    })
-    .flatMap(events => {
-      if (events.length === 0) {
-        return Observable.of(events);
-      }
-      // $FlowFixMe | We are passing an array to forkJoin which is not supported by flow-typed definition for rxjs.
-      return Observable.forkJoin(
-        events.map(e => {
-          if (!e.type && e.eventTypeId === 1) {
-            const conservationTypes: any = Conservation.getConservationTypes(ajaxGet)({
-              museumId: props.museumId,
-              token: props.token
-            });
-            if (conservationTypes && conservationTypes.value.conservationTypes) {
-              const enName = conservationTypes.value.conservationTypes.filter(
-                f => f.id === e.eventTypeId
-              )[0].enName;
-              return Observable.of({ ...e, type: enName });
-            }
           }
           return Observable.of(e);
         })

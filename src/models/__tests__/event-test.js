@@ -38,6 +38,33 @@ describe('Event model', () => {
               objectType: 'collection',
               registeredBy: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
               registeredDate: '2017-05-30T12:09:34+00:00'
+            },
+            {
+              id: 1000,
+              eventTypeId: 1,
+              registeredBy: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
+              registeredDate: '2017-05-30T12:09:34+00:00',
+              events: [],
+              status: 1,
+              caseNumbers: [123],
+              eventDate: '2017-05-30T12:09:34+00:00',
+              doneBy: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
+              doneDate: '2017-05-30T12:09:34+00:00',
+              type: 'Conservation'
+            },
+            {
+              id: 1001,
+              eventTypeId: 1,
+              registeredBy: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
+              registeredDate: '2017-05-30T12:09:34+00:00',
+              note: 'gfgdgdf',
+              events: [],
+              status: 1,
+              caseNumbers: [345, 'sn-123'],
+              eventDate: '2017-05-30T12:09:34+00:00',
+              doneBy: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
+              doneDate: '2017-05-30T12:09:34+00:00',
+              type: 'Conservation'
             }
           ]
         });
@@ -45,7 +72,7 @@ describe('Event model', () => {
       return Observable.of({
         response: [
           {
-            registeredBy: '1234',
+            registeredBy: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
             registeredDate: '2017-03-23T11:47:03+00:00',
             doneBy: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
             from: {},
@@ -82,37 +109,17 @@ describe('Event model', () => {
     const loadM = '-1----------';
     const expected = '-a----------';
 
-    const mockDataState = [
-      {
-        id: 1000,
-        eventTypeId: 1,
-        registeredBy: 'Rituvesh Kumar',
-        registeredDate: '12.09.2015',
-        events: [],
-        status: 1,
-        caseNumbers: [123],
-        eventDate: '12.09.2015',
-        doneBy: 'Ukjent',
-        doneDate: 'Ukjent',
-        type: 'Conservation'
-      },
-      {
-        id: 1001,
-        eventTypeId: 1,
-        registeredBy: 'Rituvesh Kumar',
-        registeredDate: '18.09.2016',
-        note: 'gfgdgdf',
-        events: [],
-        status: 1,
-        caseNumbers: [345, 'sn-123'],
-        eventDate: '18.09.2016',
-        doneBy: 'Ukjent',
-        doneDate: 'Ukjent',
-        type: 'Conservation'
-      }
-    ];
-
     const expectedStateData = [
+      {
+        registeredBy: 'Rituvesh Kumar',
+        registeredDate: '23.03.2017',
+        doneBy: 'Rituvesh Kumar',
+        from: {},
+        to: {},
+        type: 'Conservation',
+        eventDate: '23.03.2017',
+        doneDate: 'Ukjent'
+      },
       {
         id: 1,
         type: 'Analysis',
@@ -146,14 +153,43 @@ describe('Event model', () => {
       {
         doneBy: 'Rituvesh Kumar',
         doneDate: '30.05.2017',
-        eventDate: '30.05.2017',
         id: 'aba6a67c-f742-4a44-b13e-0415ec1abb2a',
         objectType: 'collection',
         registeredBy: 'Rituvesh Kumar',
-        registeredDate: '30.05.2017'
+        registeredDate: '30.05.2017',
+        eventDate: '30.05.2017'
       },
       {
+        id: 1000,
+        eventTypeId: 1,
+        registeredBy: 'Rituvesh Kumar',
+        registeredDate: '30.05.2017',
+        events: [],
+        status: 1,
+        caseNumbers: [123],
+        eventDate: '30.05.2017',
+        doneBy: 'Rituvesh Kumar',
+        doneDate: '30.05.2017',
+        type: 'Conservation'
+      },
+      {
+        id: 1001,
+        eventTypeId: 1,
+        registeredBy: 'Rituvesh Kumar',
+        registeredDate: '30.05.2017',
+        note: 'gfgdgdf',
+        events: [],
+        status: 1,
+        caseNumbers: [345, 'sn-123'],
+        eventDate: '30.05.2017',
+        doneBy: 'Rituvesh Kumar',
+        doneDate: '30.05.2017',
+        type: 'Conservation'
+      },
+      {
+        registeredBy: 'Rituvesh Kumar',
         registeredDate: '23.03.2017',
+        doneBy: 'Rituvesh Kumar',
         from: {
           breadcrumb: []
         },
@@ -162,13 +198,11 @@ describe('Event model', () => {
         },
         type: 'MoveObject',
         eventDate: '23.03.2017',
-        registeredBy: 'Some name',
-        doneBy: 'Rituvesh Kumar',
         doneDate: 'Ukjent'
       }
     ];
     const expectedStateMap = {
-      a: mockDataState.concat(expectedStateData)
+      a: expectedStateData
     };
 
     const load = testScheduler.createHotObservable(loadM);

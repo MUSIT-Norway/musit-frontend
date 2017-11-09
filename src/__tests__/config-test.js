@@ -233,7 +233,7 @@ describe('Config urls', () => {
         {
           name: 'getConservationForObject',
           actual: urls.api.conservation.getConservationForObject(99, 123),
-          expected: '/api/management/99/conservation/objects/123'
+          expected: '/api/management/99/conservation/events/object/123'
         },
         {
           name: 'getAllAnalysisTypes',

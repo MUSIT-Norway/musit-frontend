@@ -73,18 +73,6 @@ function updateArrayField(updateForm) {
     });
 }
 
-function parseOption(type) {
-  return option => {
-    switch (type) {
-      case 'Array[Int]':
-      case 'Int':
-        return parseInt(option.value, 10);
-      default:
-        return option.value;
-    }
-  };
-}
-
 function clickSave(form, appSession, history, location, ajaxPost, ajaxPut) {
   return (evt: DomEvent) => {
     evt.preventDefault();

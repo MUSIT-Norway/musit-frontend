@@ -128,13 +128,21 @@ describe('predefined', () => {
         conservationTypes: [
           {
             id: 1,
-            noName: 'Konservering',
-            enName: 'Conservation'
+            noName: 'konserveringsprosess',
+            enName: 'conservation process',
+            collections: []
           },
           {
             id: 2,
-            noName: 'Behandling',
-            enName: 'Treatment'
+            noName: 'behandling',
+            enName: 'treatment',
+            collections: ['ba3d4d30-810b-4c07-81b3-37751f2196f0']
+          },
+          {
+            id: 3,
+            noName: 'teknisk beskrivelse',
+            enName: 'technical description',
+            collections: []
           }
         ]
       }
@@ -182,7 +190,26 @@ describe('predefined', () => {
       .flatMap(
         Conservation.getConservationTypes(() => {
           return Observable.of({
-            response: []
+            response: [
+              {
+                id: 1,
+                noName: 'konserveringsprosess',
+                enName: 'conservation process',
+                collections: []
+              },
+              {
+                id: 2,
+                noName: 'behandling',
+                enName: 'treatment',
+                collections: ['ba3d4d30-810b-4c07-81b3-37751f2196f0']
+              },
+              {
+                id: 3,
+                noName: 'teknisk beskrivelse',
+                enName: 'technical description',
+                collections: []
+              }
+            ]
           });
         })
       );

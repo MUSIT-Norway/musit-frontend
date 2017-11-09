@@ -9,7 +9,7 @@ import type { FormData } from './shared/formType';
 import type { AppSession } from '../../types/appSession';
 import type { ConservationStoreState } from '../../types/conservation';
 import type { History } from '../../types/Routes';
-import type { Predefined } from '../../types/predefined';
+import type { PredefinedConservation } from '../../types/predefinedConservation';
 import Treatment from './events/treatment';
 
 export type Props = {
@@ -21,7 +21,7 @@ export type Props = {
   history: History,
   appSession: AppSession,
   loadingConservation: boolean,
-  predefined: Predefined,
+  predefinedConservation: PredefinedConservation,
   clearForm: Function,
   clearStore: Function,
   getConservation: Function,

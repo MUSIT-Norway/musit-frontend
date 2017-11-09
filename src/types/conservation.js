@@ -61,6 +61,10 @@ export type ConservationType = {
 
 export type ConservationTypes = Array<ConservationType>;
 
+export type ConservationTypesObject = {
+  conservationTypes: ConservationTypes
+};
+
 export type ConservationStoreState = {
   loading?: boolean,
   conservation?: ?ConservationCollection,

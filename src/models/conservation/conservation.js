@@ -8,11 +8,6 @@ import type {
   ConservationType,
   ConservationSave
 } from 'types/conservation';
-import {
-  conservationEventMockData,
-  conservationEventViewMockData,
-  conservationEventTypeMockData
-} from './mockData';
 
 export const getConservationForObject: (
   ajaxGet: AjaxGet<*>
@@ -28,16 +23,12 @@ export const getConservationForObject: (
   callback
 }) => {
   const url = Config.magasin.urls.api.conservation.getConservationForObject(museumId, id);
-  try {
-    return ajaxGet(url, token, callback).map(({ response }) => {
-      if (!Array.isArray(response)) {
-        return [];
-      }
-      return response;
-    });
-  } finally {
-    return Observable.of(conservationEventMockData);
-  }
+  return ajaxGet(url, token, callback).map(({ response }) => {
+    if (!Array.isArray(response)) {
+      return [];
+    }
+    return response;
+  });
 };
 
 export const getConservationById: (
@@ -107,9 +98,5 @@ export const getConservationTypes: (
   callback
 }) => {
   const url = Config.magasin.urls.api.conservation.getAllConservationTypes(museumId);
-  try {
-    return ajaxGet(url, token, callback).map(r => r.response);
-  } finally {
-    return Observable.of(conservationEventTypeMockData);
-  }
+  return ajaxGet(url, token, callback).map(r => r.response);
 };

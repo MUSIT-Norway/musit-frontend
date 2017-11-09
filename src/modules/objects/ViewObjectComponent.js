@@ -7,6 +7,7 @@ import type { Events } from '../../types/events';
 import type { AnalysisTypesObject } from '../../types/analysis';
 import type { SampleTypesObject } from '../../types/sample';
 import EventTable from '../events/components/EventTable';
+import type { PredefinedConservation } from '../../types/predefinedConservation';
 import SampleTable from '../sample/components/SampleTable';
 import ViewObjectData from './components/ViewObjectData';
 import Config from '../../config';
@@ -19,6 +20,7 @@ type ViewObjectComponentProps = {
   appSession: AppSession,
   analysisTypes: AnalysisTypesObject,
   sampleTypes: SampleTypesObject,
+  conservationTypes: PredefinedConservation,
   pickObject: Function,
   isItemAdded: Function,
   pickList: Object,
@@ -32,6 +34,7 @@ export const ViewObjectComponent = ({
   appSession,
   analysisTypes,
   sampleTypes,
+  conservationTypes,
   pickObject,
   isItemAdded,
   pickList,
@@ -85,6 +88,13 @@ export const ViewObjectComponent = ({
             events={events}
             analysisTypes={analysisTypes}
             sampleTypes={sampleTypes}
+            conservationTypes={
+              conservationTypes && conservationTypes.conservationTypes ? (
+                conservationTypes.conservationTypes
+              ) : (
+                []
+              )
+            }
             appSession={appSession}
             onClick={event => {
               if (event.type === 'Analysis' || event.type === 'AnalysisCollection') {

@@ -10,6 +10,9 @@ import objectStore$, {
 } from './objectStore';
 import store$, { getAnalysisTypes$ } from '../analysis/analysisStore';
 import sampleStore$, { getSampleTypes$ } from '../sample/sampleStore';
+import predefinedConservation$, {
+  loadConservationTypes$
+} from '../../stores/predefinedConservation';
 import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
 import flowRight from 'lodash/flowRight';
@@ -26,6 +29,7 @@ const data: {} = {
   objectStore$,
   analysisTypes: store$,
   sampleTypes: sampleStore$,
+  conservationTypes: predefinedConservation$,
   pickList$: { type: PropTypes.object.isRequired }
 };
 
@@ -48,7 +52,8 @@ const commands: {} = {
   loadSampleEvents$,
   getAnalysisTypes$,
   getSampleTypes$,
-  clearStore$
+  clearStore$,
+  loadConservationTypes$
 };
 
 export const onMount = ({
@@ -58,7 +63,8 @@ export const onMount = ({
   match,
   appSession,
   getAnalysisTypes,
-  getSampleTypes
+  getSampleTypes,
+  loadConservationTypes
 }: *) => {
   const uuid: string = match.params.id;
   const museumId: number = appSession.museumId;
@@ -86,6 +92,7 @@ export const onMount = ({
   });
   getAnalysisTypes(ajaxProps);
   getSampleTypes(ajaxProps);
+  loadConservationTypes(ajaxProps);
 };
 
 const onUnmount = props => {

@@ -12,12 +12,14 @@ import type {
 import type { SampleTypesObject } from '../../../types/sample';
 import type { AppSession } from '../../../types/appSession';
 import { getSampleType, getSampleSubType } from '../../sample/shared/types';
+import type { ConservationTypes, ConservationType } from '../../../types/conservation';
 
 type EventTypeProps = {
   events: Events,
   onClick: Function,
   analysisTypes: AnalysisTypesObject,
   sampleTypes: SampleTypesObject,
+  conservationTypes?: ConservationTypes,
   appSession: AppSession
 };
 
@@ -43,9 +45,20 @@ function getKeyData(
   event: Event,
   analysisTypes: AnalysisTypes,
   sampleTypes: SampleTypesObject,
+  conservationTypes?: ConservationTypes,
   appSession: AppSession
 ) {
   if (event.type) {
+    if (event.type === 'Conservation' && conservationTypes) {
+      const conservationTypeFound: ?ConservationType = conservationTypes.find(
+        f => f.id && f.id === event.eventTypeId
+      );
+      if (conservationTypeFound) {
+        return appSession.language.isEn
+          ? conservationTypeFound.enName
+          : conservationTypeFound.noName;
+      }
+    }
     if (
       (event.type === 'AnalysisCollection' || event.type === 'Analysis') &&
       analysisTypes
@@ -84,6 +97,7 @@ export const EventTableComponent = ({
   onClick,
   analysisTypes,
   sampleTypes,
+  conservationTypes,
   appSession
 }: EventTypeProps) => {
   return (
@@ -131,10 +145,22 @@ export const EventTableComponent = ({
                 )}
               </Td>
               <Td column="keyData">
-                {getKeyData(event, analysisTypes.analysisTypes, sampleTypes, appSession)}
+                {getKeyData(
+                  event,
+                  analysisTypes.analysisTypes,
+                  sampleTypes,
+                  conservationTypes,
+                  appSession
+                )}
               </Td>
               <Td column="caseNumber">
-                {event.caseNumbers ? event.caseNumbers.join('; ') : ''}
+                {event.caseNumbers ? (
+                  event.caseNumbers.join('; ')
+                ) : event.caseNumber ? (
+                  event.caseNumber
+                ) : (
+                  ''
+                )}
               </Td>
             </Tr>
           ))}
