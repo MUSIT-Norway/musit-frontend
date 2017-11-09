@@ -20,7 +20,7 @@ type ViewObjectComponentProps = {
   appSession: AppSession,
   analysisTypes: AnalysisTypesObject,
   sampleTypes: SampleTypesObject,
-  conservationTypes: PredefinedConservation,
+  predefinedConservation: PredefinedConservation,
   pickObject: Function,
   isItemAdded: Function,
   pickList: Object,
@@ -34,7 +34,7 @@ export const ViewObjectComponent = ({
   appSession,
   analysisTypes,
   sampleTypes,
-  conservationTypes,
+  predefinedConservation,
   pickObject,
   isItemAdded,
   pickList,
@@ -89,8 +89,8 @@ export const ViewObjectComponent = ({
             analysisTypes={analysisTypes}
             sampleTypes={sampleTypes}
             conservationTypes={
-              conservationTypes && conservationTypes.conservationTypes ? (
-                conservationTypes.conservationTypes
+              predefinedConservation && predefinedConservation.conservationTypes ? (
+                predefinedConservation.conservationTypes
               ) : (
                 []
               )

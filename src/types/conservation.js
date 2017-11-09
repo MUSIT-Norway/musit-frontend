@@ -82,3 +82,11 @@ export type ConservationSave = {
   affectedThings?: ?Array<string>,
   note?: ?string
 };
+
+export type ConservatonSubType = {
+  id: number,
+  noTerm: string,
+  enTerm: string
+};
+
+export type ConservatonSubTypes = Array<ConservationType>;

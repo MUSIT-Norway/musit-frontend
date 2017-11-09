@@ -128,6 +128,8 @@ export default {
       },
       api: {
         conservation: {
+          getMaterialList: `/api/management/conservation/treatmentMaterials`,
+          getKeywordList: `/api/management/conservation/treatmentKeywords`,
           getAllConservationTypes: (mid: MuseumId) =>
             `/api/management/${mid}/conservation/types`,
           addConservationEvent: (mid: MuseumId) =>

@@ -216,6 +216,16 @@ describe('Config urls', () => {
       service: 'management',
       endpoints: [
         {
+          name: 'getMaterialList',
+          actual: urls.api.conservation.getMaterialList,
+          expected: '/api/management/conservation/treatmentMaterials'
+        },
+        {
+          name: 'getKeywordList',
+          actual: urls.api.conservation.getKeywordList,
+          expected: '/api/management/conservation/treatmentKeywords'
+        },
+        {
           name: 'getAllConservationTypes',
           actual: urls.api.conservation.getAllConservationTypes(99),
           expected: '/api/management/99/conservation/types'

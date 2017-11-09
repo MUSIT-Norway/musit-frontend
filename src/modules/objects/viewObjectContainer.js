@@ -29,7 +29,7 @@ const data: {} = {
   objectStore$,
   analysisTypes: store$,
   sampleTypes: sampleStore$,
-  conservationTypes: predefinedConservation$,
+  predefinedConservation: predefinedConservation$,
   pickList$: { type: PropTypes.object.isRequired }
 };
 

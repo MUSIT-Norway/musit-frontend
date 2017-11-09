@@ -1,5 +1,5 @@
 // @flow
-import type { ConservationTypes } from './conservation';
+import type { ConservationTypes, ConservatonSubTypes } from './conservation';
 import type { SampleType } from './sample';
 
 export type SampleTypes = {
@@ -9,5 +9,7 @@ export type SampleTypes = {
 
 export type PredefinedConservation = {
   sampleTypes: ?SampleTypes,
-  conservationTypes?: ?ConservationTypes
+  conservationTypes?: ?ConservationTypes,
+  materialList?: ?ConservatonSubTypes,
+  keyeordList?: ?ConservatonSubTypes
 };

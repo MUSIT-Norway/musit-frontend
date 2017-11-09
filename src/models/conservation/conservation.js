@@ -6,7 +6,8 @@ import type { Callback, AjaxGet, AjaxPut, AjaxPost } from '../../types/ajax';
 import type {
   ConservationCollection,
   ConservationType,
-  ConservationSave
+  ConservationSave,
+  ConservatonSubType
 } from 'types/conservation';
 
 export const getConservationForObject: (
@@ -99,4 +100,50 @@ export const getConservationTypes: (
 }) => {
   const url = Config.magasin.urls.api.conservation.getAllConservationTypes(museumId);
   return ajaxGet(url, token, callback).map(r => r.response);
+};
+
+export const getMaterialList: (
+  ajaxGet: AjaxGet<*>
+) => (props: {
+  token: string,
+  callback?: ?Callback<*>
+}) => Observable<Array<ConservatonSubType>> = (ajaxGet = simpleGet) => ({
+  token,
+  callback
+}) => {
+  const url = Config.magasin.urls.api.conservation.getMaterialList;
+  return ajaxGet(url, token, callback).map(r => r.response);
+};
+
+export const getKeywordList: (
+  ajaxGet: AjaxGet<*>
+) => (props: {
+  token: string,
+  callback?: ?Callback<*>
+}) => Observable<Array<ConservatonSubType>> = (ajaxGet = simpleGet) => ({
+  token,
+  callback
+}) => {
+  const url = Config.magasin.urls.api.conservation.getKeywordList;
+  return ajaxGet(url, token, callback).map(r => r.response);
+};
+
+export const loadPredefinedConservationTypes: (
+  ajaxGet: AjaxGet<*>
+) => (props: {
+  museumId: number,
+  token: string,
+  onComplete: (predefinedTypes: mixed) => void
+}) => Observable<*> = (ajaxGet = simpleGet) => ({ museumId, token, onComplete }) => {
+  return Observable.forkJoin(
+    getConservationTypes(ajaxGet)({ museumId, token }),
+    getMaterialList(ajaxGet)({ token }),
+    getKeywordList(ajaxGet)({ token })
+  )
+    .map(([conservationTypes, materialList, keywordList]) => ({
+      conservationTypes,
+      materialList,
+      keywordList
+    }))
+    .do(onComplete);
 };

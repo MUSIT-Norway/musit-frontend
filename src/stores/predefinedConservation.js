@@ -11,7 +11,7 @@ import { simpleGet } from '../shared/RxAjax';
 export const setLoadingSampleTypes$: Subject<*> = createAction('setLoadingSampleTypes$');
 export const loadSampleTypes$: Subject<*> = createAction('loadSampleTypes$');
 const loadSampleTypesAction$: Observable<*> = loadSampleTypes$.switchMap(
-  Sample.loadPredefinedTypes(simpleGet)
+  Sample.loadSampleTypes(simpleGet)
 );
 
 export const setLoadingConservationTypes$: Subject<*> = createAction(
@@ -19,7 +19,7 @@ export const setLoadingConservationTypes$: Subject<*> = createAction(
 );
 export const loadConservationTypes$: Subject<*> = createAction('loadConservationTypes$');
 const loadConservationTypesAction$: Observable<*> = loadConservationTypes$.switchMap(
-  Conservation.getConservationTypes(simpleGet)
+  Conservation.loadPredefinedConservationTypes(simpleGet)
 );
 
 type State = PredefinedConservation & {
@@ -42,7 +42,7 @@ export function reducer$(actions: { [string]: Observable<*> }): Observable<Reduc
     })),
     actions.loadSampleTypes$.map(sampleTypes => state => ({
       ...state,
-      ...sampleTypes,
+      sampleTypes: sampleTypes,
       loadingSampleTypes: false
     })),
     actions.setLoadingConservationTypes$.map(() => state => ({
@@ -51,7 +51,7 @@ export function reducer$(actions: { [string]: Observable<*> }): Observable<Reduc
     })),
     actions.loadConservationTypes$.map(conservationTypes => state => ({
       ...state,
-      conservationTypes: conservationTypes,
+      ...conservationTypes,
       loadingConservationTypes: false
     }))
   );
