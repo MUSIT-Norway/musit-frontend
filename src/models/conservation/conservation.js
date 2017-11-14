@@ -141,9 +141,9 @@ export const loadPredefinedConservationTypes: (
     getKeywordList(ajaxGet)({ token })
   )
     .map(([conservationTypes, materialList, keywordList]) => ({
-      conservationTypes,
-      materialList,
-      keywordList
+      conservationTypes: conservationTypes || [],
+      materialList: materialList || [],
+      keywordList: keywordList || []
     }))
     .do(onComplete);
 };

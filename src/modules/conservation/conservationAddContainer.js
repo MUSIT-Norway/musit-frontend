@@ -1,13 +1,16 @@
 // @flow
 import ConservationAddComponent from './conservationComponent';
 import inject from 'react-rxjs/dist/RxInject';
+import createStore from 'react-rxjs/dist/RxStore';
 import { Observable } from 'rxjs';
 import flowRight from 'lodash/flowRight';
 import conservationForm from './conservationForm';
-import props, { onUnMount } from './shared/formProps';
+import props, { onUnmount } from './shared/formProps';
 import lifeCycle from '../../shared/lifeCycle';
 import appSession$ from '../../stores/appSession';
 import store$, { clearStore$ } from './conservationStore';
+import { loadPredefinedConservationTypes } from '../../stores/predefinedConservationLoader';
+import predefinedConservation$ from '../../stores/predefinedConservation';
 import type { Props } from './conservationComponent';
 import type { Location } from './shared/submit';
 import type { History } from '../../types/Routes';
@@ -32,31 +35,25 @@ function addProps(
   };
 }
 
-function storeFactory() {
-  return Observable.combineLatest(
+const combinedStore$ = createStore(
+  'combinedStore',
+  Observable.combineLatest(
     appSession$,
+    predefinedConservation$,
     store$,
     form$,
-    (appSession, store, form) => ({
+    (appSession, predefinedConservation, store, form) => () => ({
       appSession,
+      predefinedConservation,
       store,
       form
     })
-  );
-}
-
-type MountProps = {
-  clearForm: Function,
-  clearStore: Function
-};
-
-function onMount(props: MountProps) {
-  props.clearForm();
-  props.clearStore();
-}
-
-const ManagedAnalysisFormComponent = lifeCycle({ onMount, onUnMount })(
-  ConservationAddComponent
+  )
 );
 
-export default flowRight([inject(storeFactory, addProps)])(ManagedAnalysisFormComponent);
+const ManagedAnalysisFormComponent = lifeCycle({ onUnmount })(ConservationAddComponent);
+
+export default flowRight([
+  inject(combinedStore$, addProps),
+  loadPredefinedConservationTypes
+])(ManagedAnalysisFormComponent);

@@ -4,7 +4,7 @@ import inject from 'react-rxjs/dist/RxInject';
 import { Observable } from 'rxjs';
 import flowRight from 'lodash/flowRight';
 import conservationForm from './conservationForm';
-import props, { onUnMount } from './shared/formProps';
+import props, { onUnmount } from './shared/formProps';
 import lifeCycle from '../../shared/lifeCycle';
 import appSession$ from '../../stores/appSession';
 import store$, { clearStore$, getConservation$ } from './conservationStore';
@@ -47,7 +47,7 @@ function storeFactory() {
   );
 }
 
-const ManagedConservationFormComponent = lifeCycle({ onUnMount })(
+const ManagedConservationFormComponent = lifeCycle({ onUnmount })(
   ConservationEditComponent
 );
 

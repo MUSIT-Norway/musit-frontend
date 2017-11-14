@@ -6,8 +6,11 @@ import { simplePost, simplePut } from '../../../shared/RxAjax';
 import type { History } from '../../../types/Routes';
 import type { AppSession } from '../../../types/appSession';
 import type { FormData } from '../shared/formType';
-import type { Predefined } from '../../../types/predefined';
-import type { ConservationStoreState as Store } from '../../../types/conservation';
+import type { PredefinedConservation } from '../../../types/predefinedConservation';
+import type {
+  ConservationStoreState as Store,
+  ConservationSubTypes
+} from '../../../types/conservation';
 import type { DomEvent } from '../../../types/dom';
 import toArray from 'lodash/toArray';
 import type { ObjectData } from '../../../types/object';
@@ -21,7 +24,7 @@ type FormProps = {|
   appSession: AppSession,
   form: FormData,
   history: History,
-  predefined?: Predefined,
+  predefinedConservation?: PredefinedConservation,
   location: Location<Array<ObjectData>>
 |};
 
@@ -37,6 +40,8 @@ export default function formProps(
     updateStringField: updateStringField(props.updateForm),
     updateBooleanField: updateBooleanField(props.updateForm),
     updateArrayField: updateArrayField(props.updateForm),
+    updateMultiSelectField: updateMultiSelectField(props.updateForm),
+    updateConservationSubEvent: updateConservationSubEvent(props.updateForm),
     clickSave: clickSave(
       props.form,
       props.appSession,
@@ -73,10 +78,32 @@ function updateArrayField(updateForm) {
     });
 }
 
+function updateMultiSelectField(updateForm) {
+  return (name: string) => (value: string) =>
+    updateForm({
+      name,
+      rawValue: value
+    });
+}
+
+function updateConservationSubEvent(updateForm) {
+  return (name: string, events: Array<ConservationSubTypes>, arrayIndex: number) => (
+    fieldName: string
+  ) => (value: string) => {
+    updateForm({
+      name,
+      rawValue: [
+        ...events.slice(0, arrayIndex),
+        { ...events[arrayIndex], [fieldName]: value },
+        ...events.slice(arrayIndex + 1)
+      ]
+    });
+  };
+}
+
 function clickSave(form, appSession, history, location, ajaxPost, ajaxPut) {
   return (evt: DomEvent) => {
     evt.preventDefault();
-    console.log('Form', form);
     saveConservation$.next({
       id: form.id.value,
       appSession,
@@ -85,7 +112,6 @@ function clickSave(form, appSession, history, location, ajaxPost, ajaxPut) {
       ajaxPut,
       callback: {
         onComplete: props => {
-          console.log('P', props);
           if (!props) {
             return;
           }
@@ -112,12 +138,12 @@ function clickCancel(props) {
   };
 }
 
-type OnUnMountProps = {
+type OnUnmountProps = {
   clearForm: Function,
   clearStore: Function
 };
 
-export const onUnMount = (props: OnUnMountProps) => {
-  props.clearForm();
+export const onUnmount = (props: OnUnmountProps) => {
   props.clearStore();
+  props.clearForm();
 };

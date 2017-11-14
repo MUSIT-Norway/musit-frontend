@@ -5,6 +5,7 @@
         "conservation": "Use & conservation",
         "newConservation": "New use & conservation",
         "createConservation": "Create use & conservation",
+        "choseNewSubEvents": "Select new sub events to be created",
         "roles": {"administrator": "Administrator",
           "responsible": "Responsible",
           "doneBy": "Done by",
@@ -962,6 +963,7 @@
         "conservation": "Bruk og bevaring",
         "newConservation": "Ny bruk og bevaring",
         "createConservation": "Opprett bruk og bevaring",
+        "choseNewSubEvents": "Velg delhendelser som skal lages",
         "roles": {
           "administrator": "Administrert av",
           "responsible": "Ansvarlig",

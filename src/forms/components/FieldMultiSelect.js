@@ -1,36 +1,26 @@
+//@flow
 import React from 'react';
-import type { Field } from 'forms/form';
 import type { AppSession } from '../../types/appSession';
 import Select from 'react-select';
 
-type option = { id: number, noLabel: string, enLabel?: string };
-
-export type FieldMultiSelectProps = {
-  fields: Array<Field<string>>,
-  options?: Array<option>,
+export type FieldMultiSelectProps<T> = {
+  stringValue?: string,
+  name: string,
+  options: Array<T>,
   title: string,
   onChange: Function,
   inputProps?: { className?: string, style?: {} },
   appSession?: AppSession,
-  viewMode?: boolean
+  viewMode?: boolean,
+  getLabel: T => string,
+  filter: T => T => boolean
 };
 
-export default function FieldMultiSelect(props: FieldMultiSelectProps) {
-  const name = props.fields[0] ? props.fields[0].name : '_1';
-  const values = props.fields ? props.fields.map(field => field.value) : [];
-  const label = (opt: option) =>
-    props.appSession && props.appSession.language.isEn && opt ? opt.enLabel : opt.noLabel;
-  const options = props.options
-    ? props.options.map(option => ({ value: option.id, label: label(option) }))
-    : [];
-
-  const filterOptions = v => props.options.filter(f => f.id == v);
-  const viewOptions =
-    values && options
-      ? values.map(v => (
-          <div> {filterOptions(v).length > 0 ? label(filterOptions(v)[0]) : ''}</div>
-        ))
-      : '';
+export default function FieldMultiSelect(props: *) {
+  const name = props.name;
+  const values = props.fields ? props.fields.value : props.stringValue;
+  const options = props.options;
+  const viewOptions = <div>Hei</div>;
 
   return (
     <div className="row form-group">
@@ -46,13 +36,13 @@ export default function FieldMultiSelect(props: FieldMultiSelectProps) {
             {...props.inputProps}
             clearable={false}
             multi
-            closeOnSelect={false}
-            removeSelected={true}
+            closeOnSelect={true}
+            removeSelected={false}
             simpleValue
             id={name}
             value={values}
             options={options}
-            onChange={e => props.onChange(e ? e.split(',') : '')}
+            onChange={v => props.onChange(v)}
           />
         )}
       </div>

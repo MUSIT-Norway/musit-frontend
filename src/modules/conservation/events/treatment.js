@@ -2,58 +2,43 @@ import React from 'react';
 import { I18n } from 'react-i18nify';
 import Select from 'react-select';
 import FieldMultiSelect from '../../../forms/components/FieldMultiSelect';
-import type { Field } from 'forms/form';
-
-type types = { id: number, noLabel: string, enLabel?: string };
+import type { TreatmentType } from '../../../types/conservation';
 
 export type TreatmentProps = {
-  keywords?: Array<Field<string>>,
-  keywordTypes?: Array<types>,
-  keywordTypesOnChange?: Function,
-  materialUsage?: Array<Field<string>>,
-  materialUsageTypes?: Array<types>,
-  materialUsageOnChange?: Function,
-  note?: Field,
-  noteOnChange?: Function,
+  materials: Array<any>,
+  keywords: Array<any>,
+  treatment: TreatmentType,
   appSession?: AppSession,
-  viewMode?: boolean
+  viewMode?: boolean,
+  onChange: Function
 };
 export default function Treatment(props: TreatmentProps) {
-  let options = [
-    { id: 'one', noLabel: 'fsdfsd' },
-    { id: '2', noLabel: 'Limit' },
-    { id: '3', noLabel: 'PEG-impregnert' },
-    { id: '4', noLabel: '4' },
-    { id: '4', noLabel: '4' },
-    { id: 'two', noLabel: 'Two' }
-  ];
-  let selectedValue = [{ value: '2', name: 'test' }, { value: '3', name: 'test' }];
+  const optionsKeywords = props.keywords.map(k => ({
+    value: k.id.toString(),
+    label: k.noTerm || k.enTerm
+  }));
 
-  let options2 = [
-    { value: 'one', label: 'One' },
-    { value: '2', label: 'Two' },
-    { value: '3', label: 'Three' },
-    { value: '4', label: '4' },
-    { value: '4', label: '4' },
-    { value: 'two', label: 'Two label' }
-  ];
-
-  function logChange(val) {
-    console.log('Selected: ', val);
-  }
+  const optionsMaterials = props.materials.map(m => ({
+    value: m.id.toString(),
+    label: m.noTerm || m.enTerm
+  }));
   return (
     <div className="container">
       <FieldMultiSelect
-        fields={selectedValue}
-        options={options}
-        onChange={el => logChange(el)}
+        name={'keywords'}
+        stringValue={props.treatment.keywords.join(',')}
+        options={optionsKeywords}
+        onChange={v =>
+          props.onChange('keywords')(v.split(',').map(i => Number.parseFloat(i)))}
         title={I18n.t('musit.conservation.events.treatment.keyword')}
         viewMode={props.viewMode}
       />
       <FieldMultiSelect
-        fields={selectedValue}
-        options={options}
-        onChange={el => logChange(el)}
+        name={'material'}
+        stringValue={props.treatment.materials.join(',')}
+        options={optionsMaterials}
+        onChange={v =>
+          props.onChange('materials')(v.split(',').map(i => Number.parseFloat(i)))}
         title={I18n.t('musit.conservation.events.treatment.materialUsage')}
         viewMode={props.viewMode}
       />
@@ -66,8 +51,8 @@ export default function Treatment(props: TreatmentProps) {
           <textarea
             className="form-control"
             id="note"
-            value="test note"
-            onChange={e => e}
+            value={props.treatment.note}
+            onChange={t => props.onChange('note')(t.target.value)}
             rows="5"
             disabled={props.viewMode}
           />

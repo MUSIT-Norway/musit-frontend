@@ -21,8 +21,7 @@ import type { SampleType } from 'types/sample';
 import { KEEP_ALIVE } from '../../stores/constants';
 
 export const initialState: ConservationStoreState = {
-  conservationTypes: [],
-  loading: false,
+  loadingConservation: false,
   conservation: null
 };
 

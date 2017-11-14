@@ -66,9 +66,9 @@ export type ConservationTypesObject = {
 };
 
 export type ConservationStoreState = {
-  loading?: boolean,
+  loadingConservation?: boolean,
   conservation?: ?ConservationCollection,
-  conservationTypes: Array<string>
+  conservationTypes?: Array<string>
 };
 
 export type ConservationSave = {
@@ -88,5 +88,18 @@ export type ConservatonSubType = {
   noTerm: string,
   enTerm: string
 };
+export type TreatmentType = {
+  eventTypeId: number,
+  keywords?: Array<string>,
+  keywordTypes?: Array<ConservatonSubType>,
+  keywordTypesOnChange?: Function,
+  materials?: Array<string>,
+  materialUsageTypes?: Array<ConservatonSubType>,
+  materialUsageOnChange?: Function,
+  note?: string
+};
+export type TechnicalDescription = {
+  td: string
+};
 
-export type ConservatonSubTypes = Array<ConservationType>;
+export type ConservationSubTypes = TreatmentType | TechnicalDescription;

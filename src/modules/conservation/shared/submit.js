@@ -40,6 +40,7 @@ export function getConservationCollection(
     doneBy: doneBy && doneBy.uuid,
     doneDate: doneBy && doneBy.date,
     note: form.note.value,
+    events: form.events.value,
     responsible: responsible && responsible.uuid,
     administrator: administrator && administrator.uuid,
     completedBy: completedBy && completedBy.uuid,

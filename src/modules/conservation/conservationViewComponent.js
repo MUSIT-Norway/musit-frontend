@@ -105,7 +105,6 @@ export default (props: Props) =>
           {I18n.t('musit.texts.cancel')}
         </button>
       </form>
-      <Treatment />
     </div>
   ) : (
     <div className="loading" />
