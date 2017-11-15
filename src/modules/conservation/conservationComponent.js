@@ -180,11 +180,17 @@ export default function ConservationComponent(props: Props & { form: FormData })
       <FieldMultiSelect
         title={I18n.t('musit.conservation.choseNewSubEvents')}
         appSession={props.appSession}
-        fields={props.form.subEventTypes}
-        values={props.form.subEventTypes.rawValue}
-        options={props.predefinedConservation.conservationTypes
-          .slice(1) //Taking away the supertype assumed to be the first element
-          .map(v => ({ value: v.id.toString(), label: v.enName || v.noName }))}
+        stringValue={props.form.subEventTypes.rawValue}
+        options={
+          props.predefinedConservation &&
+          props.predefinedConservation.conservationTypes &&
+          props.predefinedConservation.conservationTypes
+            .slice(1) //Taking away the supertype assumed to be the first element
+            .map(v => ({
+              value: v.id.toString(),
+              label: props.appSession.language.isEn ? v.enName : v.noName
+            }))
+        }
         onChange={props.updateMultiSelectField(props.form.subEventTypes.name)}
       />
       <button

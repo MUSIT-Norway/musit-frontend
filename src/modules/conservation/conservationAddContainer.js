@@ -51,9 +51,11 @@ const combinedStore$ = createStore(
   )
 );
 
-const ManagedAnalysisFormComponent = lifeCycle({ onUnmount })(ConservationAddComponent);
+const ManagedConservationFormComponent = lifeCycle({ onUnmount })(
+  ConservationAddComponent
+);
 
 export default flowRight([
   inject(combinedStore$, addProps),
   loadPredefinedConservationTypes
-])(ManagedAnalysisFormComponent);
+])(ManagedConservationFormComponent);

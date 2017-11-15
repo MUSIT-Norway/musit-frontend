@@ -36,7 +36,7 @@ export default function formProps(
   return {
     ...props,
     isFormValid: isFormValid(props.form),
-    objects: getObjects(toArray(props.form.objects.value), props.location),
+    objects: getObjects(toArray(props.form.affectedThings.value), props.location),
     updateStringField: updateStringField(props.updateForm),
     updateBooleanField: updateBooleanField(props.updateForm),
     updateArrayField: updateArrayField(props.updateForm),

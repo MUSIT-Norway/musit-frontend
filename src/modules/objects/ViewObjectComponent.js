@@ -108,7 +108,7 @@ export const ViewObjectComponent = ({
                 history.push({
                   pathname: Config.magasin.urls.client.conservation.viewConservation(
                     appSession,
-                    event.id
+                    event.partOf
                   )
                 });
               }

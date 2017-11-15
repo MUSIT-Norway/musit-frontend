@@ -6,7 +6,7 @@ import type { ObjectInfo } from '../../../types/conservation';
 type Props = {
   affectedThingsWithDetailsMainEvent?: ?Array<ObjectInfo>,
   affectedThingsSubEvent?: Array<string>,
-  updateForm?: Function,
+  affectedThingsSubEventOnChange?: Function,
   viewMode?: ?boolean
 };
 
@@ -47,24 +47,28 @@ const selectAll = (
 export default function ObjectSelection({
   affectedThingsWithDetailsMainEvent,
   affectedThingsSubEvent,
-  updateForm,
+  affectedThingsSubEventOnChange,
   viewMode
 }: Props) {
   return (
-    <div className="form-group">
-      <div className="col-md-12 col-md-offset-0">
-        <div>
-          <label>{I18n.t('musit.objects.objectsView.messageToSelectObjects')}</label>
-        </div>
-        <table
-          style={{
-            backgroundColor: 'white'
-          }}
-          className="table table-striped table-responsive table-hover"
-        >
-          <thead>
-            <tr>
-              <th>
+    <div className="col-md-11">
+      <table
+        style={{
+          backgroundColor: 'white'
+        }}
+        className="table table-striped table-responsive table-hover"
+      >
+        <caption>
+          {viewMode ? (
+            I18n.t('musit.objects.objectsView.messageToViewObjects')
+          ) : (
+            I18n.t('musit.objects.objectsView.messageToSelectObjects')
+          )}
+        </caption>
+        <thead>
+          <tr>
+            <th>
+              {!viewMode && (
                 <input
                   className="normalAction"
                   type="checkbox"
@@ -74,50 +78,61 @@ export default function ObjectSelection({
                   )}
                   disabled={viewMode}
                   onChange={() =>
-                    updateForm &&
-                    updateForm(selectAll(affectedThingsWithDetailsMainEvent || []))}
+                    affectedThingsSubEventOnChange &&
+                    affectedThingsSubEventOnChange(
+                      selectAll(affectedThingsWithDetailsMainEvent || [])
+                    )}
                 />
-              </th>
-              <th>{I18n.t('musit.objects.objectsView.musNo')}</th>
-              <th>{I18n.t('musit.objects.objectsView.subNo')}</th>
-              <th>{I18n.t('musit.objects.objectsView.term')}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {affectedThingsWithDetailsMainEvent ? (
-              affectedThingsWithDetailsMainEvent.map((row: any, i: number) => {
-                const rows = [
+              )}
+            </th>
+            <th>{I18n.t('musit.objects.objectsView.musNo')}</th>
+            <th>{I18n.t('musit.objects.objectsView.subNo')}</th>
+            <th>{I18n.t('musit.objects.objectsView.term')}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {affectedThingsWithDetailsMainEvent ? (
+            affectedThingsWithDetailsMainEvent.map((row: any, i: number) => {
+              const rows = [
+                !isChecked(row.uuid && row.uuid, affectedThingsSubEvent) && viewMode ? (
+                  ''
+                ) : (
                   <tr
                     key={['objectRow', i].join('_')}
                     onClick={() =>
                       !viewMode &&
                       toggleSelection &&
-                      updateForm &&
-                      updateForm(
+                      affectedThingsSubEventOnChange &&
+                      affectedThingsSubEventOnChange(
                         toggleSelection(row.uuid || null, affectedThingsSubEvent || [])
                       )}
                   >
                     <td name="type" width={10}>
-                      <input
-                        type="checkbox"
-                        value=""
-                        checked={isChecked(row.uuid && row.uuid, affectedThingsSubEvent)}
-                        disabled={viewMode}
-                      />
+                      {!viewMode && (
+                        <input
+                          type="checkbox"
+                          value=""
+                          checked={isChecked(
+                            row.uuid && row.uuid,
+                            affectedThingsSubEvent
+                          )}
+                          disabled={viewMode}
+                        />
+                      )}
                     </td>
                     <td name="museumNo">{row.museumNo}</td>
                     <td name="subNo">{row.subNo}</td>
                     <td name="term">{row.term}</td>
                   </tr>
-                ];
-                return rows;
-              })
-            ) : (
-              <span className="no-data">{I18n.t('musit.objects.noData')}</span>
-            )}
-          </tbody>
-        </table>
-      </div>
+                )
+              ];
+              return rows;
+            })
+          ) : (
+            <span className="no-data">{I18n.t('musit.objects.noData')}</span>
+          )}
+        </tbody>
+      </table>
     </div>
   );
 }

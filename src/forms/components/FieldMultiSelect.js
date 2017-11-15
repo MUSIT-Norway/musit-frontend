@@ -18,9 +18,20 @@ export type FieldMultiSelectProps<T> = {
 
 export default function FieldMultiSelect(props: *) {
   const name = props.name;
-  const values = props.fields ? props.fields.value : props.stringValue;
+  const values = props.stringValue;
   const options = props.options;
-  const viewOptions = <div>Hei</div>;
+
+  const label = opt => (opt ? opt.label : '');
+
+  const filterOptions = v => options.filter(f => f.value == v);
+  const viewOptions =
+    values && options
+      ? values
+          .split(',')
+          .map(v => (
+            <div> {filterOptions(v).length > 0 ? label(filterOptions(v)[0]) : ''}</div>
+          ))
+      : '';
 
   return (
     <div className="row form-group">

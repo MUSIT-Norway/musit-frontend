@@ -2,266 +2,204 @@
 
 exports[`ObjectSelection should render ObjectSelection as read only 1`] = `
 <div
-  className="form-group"
+  className="col-md-11"
 >
-  <div
-    className="col-md-12 col-md-offset-0"
-  >
-    <div>
-      <label>
-        Hvilke objekter gjelder denne del hendelsen for?
-      </label>
-    </div>
-    <table
-      className="table table-striped table-responsive table-hover"
-      style={
-        Object {
-          "backgroundColor": "white",
-        }
+  <table
+    className="table table-striped table-responsive table-hover"
+    style={
+      Object {
+        "backgroundColor": "white",
       }
-    >
-      <thead>
-        <tr>
-          <th>
-            <input
-              checked={false}
-              className="normalAction"
-              disabled={true}
-              onChange={[Function]}
-              type="checkbox"
-            />
-          </th>
-          <th>
-            Museumsnr.
-          </th>
-          <th>
-            Undernr.
-          </th>
-          <th>
-            Gjenstand/Takson
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          onClick={[Function]}
+    }
+  >
+    <caption>
+      Objekter i denne delhendelsen
+    </caption>
+    <thead>
+      <tr>
+        <th />
+        <th>
+          Museumsnr.
+        </th>
+        <th>
+          Undernr.
+        </th>
+        <th>
+          Gjenstand/Takson
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        onClick={[Function]}
+      >
+        <td
+          name="type"
+          width={10}
+        />
+        <td
+          name="museumNo"
         >
-          <td
-            name="type"
-            width={10}
-          >
-            <input
-              checked={true}
-              disabled={true}
-              type="checkbox"
-              value=""
-            />
-          </td>
-          <td
-            name="museumNo"
-          >
-            MusN11
-          </td>
-          <td
-            name="subNo"
-          />
-          <td
-            name="term"
-          >
-            Solsikke
-          </td>
-        </tr>
-        <tr
-          onClick={[Function]}
+          MusN11
+        </td>
+        <td
+          name="subNo"
+        />
+        <td
+          name="term"
         >
-          <td
-            name="type"
-            width={10}
-          >
-            <input
-              checked={true}
-              disabled={true}
-              type="checkbox"
-              value=""
-            />
-          </td>
-          <td
-            name="museumNo"
-          >
-            MusN13
-          </td>
-          <td
-            name="subNo"
-          />
-          <td
-            name="term"
-          >
-            Makrellsopp
-          </td>
-        </tr>
-        <tr
-          onClick={[Function]}
+          Solsikke
+        </td>
+      </tr>
+      <tr
+        onClick={[Function]}
+      >
+        <td
+          name="type"
+          width={10}
+        />
+        <td
+          name="museumNo"
         >
-          <td
-            name="type"
-            width={10}
-          >
-            <input
-              checked={false}
-              disabled={true}
-              type="checkbox"
-              value=""
-            />
-          </td>
-          <td
-            name="museumNo"
-          >
-            MusN20
-          </td>
-          <td
-            name="subNo"
-          />
-          <td
-            name="term"
-          >
-            Ukjent mygg
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+          MusN13
+        </td>
+        <td
+          name="subNo"
+        />
+        <td
+          name="term"
+        >
+          Makrellsopp
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 `;
 
 exports[`ObjectSelection should render ObjectSelection for add and edit 1`] = `
 <div
-  className="form-group"
+  className="col-md-11"
 >
-  <div
-    className="col-md-12 col-md-offset-0"
-  >
-    <div>
-      <label>
-        Hvilke objekter gjelder denne del hendelsen for?
-      </label>
-    </div>
-    <table
-      className="table table-striped table-responsive table-hover"
-      style={
-        Object {
-          "backgroundColor": "white",
-        }
+  <table
+    className="table table-striped table-responsive table-hover"
+    style={
+      Object {
+        "backgroundColor": "white",
       }
-    >
-      <thead>
-        <tr>
-          <th>
-            <input
-              checked={false}
-              className="normalAction"
-              disabled={false}
-              onChange={[Function]}
-              type="checkbox"
-            />
-          </th>
-          <th>
-            Museumsnr.
-          </th>
-          <th>
-            Undernr.
-          </th>
-          <th>
-            Gjenstand/Takson
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          onClick={[Function]}
-        >
-          <td
-            name="type"
-            width={10}
-          >
-            <input
-              checked={true}
-              disabled={false}
-              type="checkbox"
-              value=""
-            />
-          </td>
-          <td
-            name="museumNo"
-          >
-            MusN11
-          </td>
-          <td
-            name="subNo"
+    }
+  >
+    <caption>
+      Hvilke objekter gjelder denne del hendelsen for?
+    </caption>
+    <thead>
+      <tr>
+        <th>
+          <input
+            checked={false}
+            className="normalAction"
+            disabled={false}
+            onChange={[Function]}
+            type="checkbox"
           />
-          <td
-            name="term"
-          >
-            Solsikke
-          </td>
-        </tr>
-        <tr
-          onClick={[Function]}
+        </th>
+        <th>
+          Museumsnr.
+        </th>
+        <th>
+          Undernr.
+        </th>
+        <th>
+          Gjenstand/Takson
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        onClick={[Function]}
+      >
+        <td
+          name="type"
+          width={10}
         >
-          <td
-            name="type"
-            width={10}
-          >
-            <input
-              checked={true}
-              disabled={false}
-              type="checkbox"
-              value=""
-            />
-          </td>
-          <td
-            name="museumNo"
-          >
-            MusN13
-          </td>
-          <td
-            name="subNo"
+          <input
+            checked={true}
+            disabled={false}
+            type="checkbox"
+            value=""
           />
-          <td
-            name="term"
-          >
-            Makrellsopp
-          </td>
-        </tr>
-        <tr
-          onClick={[Function]}
+        </td>
+        <td
+          name="museumNo"
         >
-          <td
-            name="type"
-            width={10}
-          >
-            <input
-              checked={false}
-              disabled={false}
-              type="checkbox"
-              value=""
-            />
-          </td>
-          <td
-            name="museumNo"
-          >
-            MusN20
-          </td>
-          <td
-            name="subNo"
+          MusN11
+        </td>
+        <td
+          name="subNo"
+        />
+        <td
+          name="term"
+        >
+          Solsikke
+        </td>
+      </tr>
+      <tr
+        onClick={[Function]}
+      >
+        <td
+          name="type"
+          width={10}
+        >
+          <input
+            checked={true}
+            disabled={false}
+            type="checkbox"
+            value=""
           />
-          <td
-            name="term"
-          >
-            Ukjent mygg
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+        </td>
+        <td
+          name="museumNo"
+        >
+          MusN13
+        </td>
+        <td
+          name="subNo"
+        />
+        <td
+          name="term"
+        >
+          Makrellsopp
+        </td>
+      </tr>
+      <tr
+        onClick={[Function]}
+      >
+        <td
+          name="type"
+          width={10}
+        >
+          <input
+            checked={false}
+            disabled={false}
+            type="checkbox"
+            value=""
+          />
+        </td>
+        <td
+          name="museumNo"
+        >
+          MusN20
+        </td>
+        <td
+          name="subNo"
+        />
+        <td
+          name="term"
+        >
+          Ukjent mygg
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 `;

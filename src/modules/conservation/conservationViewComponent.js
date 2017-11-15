@@ -29,6 +29,30 @@ export type Props = {
   goBack: () => void
 };
 
+const addEventComponents = (
+  event: any,
+  conservationTypes: any,
+  appSession: AppSession,
+  objects: any
+) => {
+  if (event.eventTypeId == 2)
+    return (
+      <Treatment
+        affectedThingsWithDetailsMainEvent={objects}
+        materials={conservationTypes.materialList}
+        keywords={conservationTypes.keywordList}
+        treatment={{
+          keywords: event.keywords,
+          materials: event.materials,
+          note: event.note,
+          affectedThings: event.affectedThings
+        }}
+        appSession={appSession}
+        viewMode={true}
+      />
+    );
+  else return '';
+};
 export default (props: Props) =>
   !props.loadingConservation ? (
     <div className="container">
@@ -100,6 +124,17 @@ export default (props: Props) =>
           </div>
           <hr />
         </div>
+        {props.store &&
+          props.store.conservation &&
+          props.store.conservation.events &&
+          props.store.conservation.events.map(e =>
+            addEventComponents(
+              e,
+              props.predefinedConservation,
+              props.appSession,
+              props.store.conservation && props.store.conservation.affectedThings
+            )
+          )}
         <hr />
         <button className="btn-link" style={{ marginLeft: 20 }} onClick={props.goBack}>
           {I18n.t('musit.texts.cancel')}

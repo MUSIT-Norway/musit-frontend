@@ -30,10 +30,10 @@ type State = PredefinedConservation & {
 export const initialState: State = {
   sampleTypes: null,
   loadingSampleTypes: false,
-  conservationTypes: [],
+  conservationTypes: null,
   loadingConservationTypes: false,
-  keywordList: [],
-  materialList: []
+  keywordList: null,
+  materialList: null
 };
 
 export function reducer$(actions: { [string]: Observable<*> }): Observable<Reducer<any>> {
