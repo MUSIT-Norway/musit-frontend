@@ -137,9 +137,7 @@ export function getConservationDetails(
         conservation.registeredBy || '',
         conservation.updatedBy || '',
         conservation.doneBy || '',
-        conservation.responsible || '',
-        conservation.administrator || '',
-        conservation.completedBy || ''
+        conservation.participating || ''
       ].filter(p => p),
       token: props.token
     })
@@ -252,16 +250,8 @@ export function getActorNames(
       fieldName: 'doneByName'
     },
     {
-      id: conservation.responsible || '',
-      fieldName: 'responsibleName'
-    },
-    {
-      id: conservation.administrator || '',
-      fieldName: 'administratorName'
-    },
-    {
-      id: conservation.completedBy || '',
-      fieldName: 'completedByName'
+      id: conservation.participating || '',
+      fieldName: 'participatingName'
     }
   ]);
 }

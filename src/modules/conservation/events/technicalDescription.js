@@ -13,6 +13,7 @@ export type TechnicalDescriptionProps = {
 };
 
 export default function TechnicalDescription(props: TechnicalDescriptionProps) {
+  const suffix = ':';
   const technicalDescComponent = (
     <div className="container">
       <div className="page-header">
@@ -22,7 +23,7 @@ export default function TechnicalDescription(props: TechnicalDescriptionProps) {
       </div>
       <div className="form-group">
         <label className="control-label col-md-2" htmlFor={`note_${props.index}`}>
-          {I18n.t('musit.conservation.events.techincalDescription.note')}
+          {I18n.t('musit.conservation.events.techincalDescription.note') + suffix}
         </label>
         <div className="col-md-9">
           <textarea

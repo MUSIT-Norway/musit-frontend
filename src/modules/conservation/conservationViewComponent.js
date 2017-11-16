@@ -70,6 +70,9 @@ const addEventComponents = (
     );
   else return '';
 };
+
+const suffix = ':';
+
 export default (props: Props) =>
   !props.loadingConservation ? (
     <div className="container">
@@ -90,7 +93,7 @@ export default (props: Props) =>
 
         <div className="form-group">
           <label className="control-label col-md-2" htmlFor="caseNumber">
-            {I18n.t('musit.conservation.caseNumber')}
+            {I18n.t('musit.conservation.caseNumber') + suffix}
           </label>
           <div className="col-md-10">
             <p className="form-control-static" id="caseNumber">
@@ -101,7 +104,7 @@ export default (props: Props) =>
         <hr />
         <div className="form-group">
           <label className="control-label col-md-2" htmlFor="note">
-            {I18n.t('musit.conservation.comments')}
+            {I18n.t('musit.conservation.comments') + suffix}
           </label>
           <div className="col-md-10">
             <p className="form-control-static" id="note">

@@ -26,10 +26,9 @@ export default function Treatment(props: TreatmentProps) {
       value: o.id.toString(),
       label: props.appSession.language.isEn ? o.enTerm : o.noTerm
     }));
-
   const optionsKeywords = getMultiSelectOptionObject(props.keywords);
-
   const optionsMaterials = getMultiSelectOptionObject(props.materials);
+  const suffix = ':';
 
   const treatmentComponents = (
     <div className="container">
@@ -45,7 +44,7 @@ export default function Treatment(props: TreatmentProps) {
           props.onChange('keywords')(
             v ? v.split(',').map(i => Number.parseFloat(i)) : []
           )}
-        title={I18n.t('musit.conservation.events.treatment.keyword')}
+        title={I18n.t('musit.conservation.events.treatment.keyword') + suffix}
         viewMode={props.viewMode}
       />
       <FieldMultiSelect
@@ -56,12 +55,12 @@ export default function Treatment(props: TreatmentProps) {
           props.onChange('materials')(
             v ? v.split(',').map(i => Number.parseFloat(i)) : []
           )}
-        title={I18n.t('musit.conservation.events.treatment.materialUsage')}
+        title={I18n.t('musit.conservation.events.treatment.materialUsage') + suffix}
         viewMode={props.viewMode}
       />
-      <div className="form-group">
+      <div className="row form-group">
         <label className="control-label col-md-2" htmlFor={`note_${props.index}`}>
-          {I18n.t('musit.conservation.events.treatment.note')}
+          {I18n.t('musit.conservation.events.treatment.note') + suffix}
         </label>
         <div className="col-md-9">
           <textarea

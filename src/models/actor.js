@@ -28,6 +28,8 @@ type ActorFieldName =
   | 'responsibleName'
   | 'administrator'
   | 'administratorName'
+  | 'participating'
+  | 'participatingName'
   | 'completedBy'
   | 'completedByName'
   | 'doneBy'

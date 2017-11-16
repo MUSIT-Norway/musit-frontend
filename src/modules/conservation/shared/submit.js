@@ -29,9 +29,7 @@ export function getConservationCollection(
   let affectedThings = toArray(form.affectedThings.value);
   const persons = toArray(form.persons.value);
   const doneBy = findPerson(persons, 'doneBy');
-  const responsible = findPerson(persons, 'responsible');
-  const administrator = findPerson(persons, 'administrator');
-  const completedBy = findPerson(persons, 'completedBy');
+  const participating = findPerson(persons, 'participating');
   if (affectedThings.length === 0) {
     affectedThings = location.state;
   }
@@ -41,10 +39,7 @@ export function getConservationCollection(
     doneDate: doneBy && doneBy.date,
     note: form.note.value,
     events: form.events.value,
-    responsible: responsible && responsible.uuid,
-    administrator: administrator && administrator.uuid,
-    completedBy: completedBy && completedBy.uuid,
-    completedDate: completedBy && completedBy.date,
+    participating: participating && participating.uuid,
     objects: getObjectsWithType(getObjects(affectedThings, location)),
     affectedThings: affectedThings ? affectedThings.map(o => o.uuid) : [],
     caseNumber: form.caseNumber.value

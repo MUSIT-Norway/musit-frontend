@@ -32,6 +32,8 @@ export type ConservationCollection = {
   doneDate?: ?string,
   doneByName?: ?string,
   registeredBy?: ?string,
+  participating?: ?string,
+  participatingName?: ?string,
   registeredDate?: ?string,
   responsible?: ?string,
   responsibleName?: string,

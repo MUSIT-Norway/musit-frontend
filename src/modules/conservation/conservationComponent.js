@@ -13,6 +13,8 @@ import type { PredefinedConservation } from '../../types/predefinedConservation'
 import type { ConservationSubTypes } from '../../types/conservation';
 import Treatment from './events/treatment';
 import TechnicalDescription from './events/technicalDescription';
+import PersonRoleDate from '../../components/person/PersonRoleDate';
+import toArray from 'lodash/toArray';
 
 type ConservationProcessProps = {
   id?: number,
@@ -82,10 +84,12 @@ function createSubEvents(props: Props & { form: FormData }) {
     }, []);
     props.updateForm({
       name: props.form.events.name,
-      rawValue: akk
+      rawValue: props.form.events.rawValue.concat(akk)
     });
   };
 }
+
+const suffix = ':';
 
 function renderSubEvent(
   appSession: AppSession,
@@ -139,7 +143,7 @@ function ConservationProcessForm(props: ProcessFormProps) {
       <form className="form-horizontal">
         <FormInput
           field={props.form.caseNumber}
-          label={I18n.t('musit.conservation.caseNumber')}
+          label={I18n.t('musit.conservation.caseNumber') + suffix}
           labelWidth={1}
           elementWidth={5}
           value={props.form.caseNumber.value}
@@ -148,7 +152,7 @@ function ConservationProcessForm(props: ProcessFormProps) {
         />
         <FormTextArea
           field={props.form.note}
-          label={I18n.t('musit.conservation.note')}
+          label={I18n.t('musit.conservation.note') + suffix}
           labelWidth={1}
           elementWidth={5}
           rows={5}
@@ -170,9 +174,9 @@ export default function ConservationComponent(props: Props & { form: FormData })
       <form className="form-horizontal">
         {props.form.id.value && (
           <MetaInformation
-            registeredBy={props.form.registeredBy.value}
+            registeredBy={props.form.registeredByName.value}
             registeredDate={props.form.registeredDate.value}
-            updatedBy={props.form.updatedBy.value}
+            updatedBy={props.form.updatedByName.value}
             updatedDate={props.form.updatedDate.value}
           />
         )}
@@ -188,6 +192,18 @@ export default function ConservationComponent(props: Props & { form: FormData })
         updateArrayField={props.updateArrayField}
         updateStringField={props.updateStringField}
       />
+      <hr />
+      <form className="form-horizontal">
+        <PersonRoleDate
+          appSession={props.appSession}
+          personData={toArray(props.form.persons.value)}
+          updateForm={props.updateForm}
+          fieldName={props.form.persons.name}
+          getDisplayNameForRole={(r: string) => I18n.t(`musit.conservation.roles.${r}`)}
+          roles={['doneBy', 'participating']}
+          showDateForRole={(roleName: string) => ['doneBy'].some(e => e === roleName)}
+        />
+      </form>
       <br />
       <ObjectTable
         data={props.objects || []}
@@ -197,7 +213,7 @@ export default function ConservationComponent(props: Props & { form: FormData })
       />
       <hr />
       <FieldMultiSelect
-        title={I18n.t('musit.conservation.choseNewSubEvents')}
+        title={I18n.t('musit.conservation.choseNewSubEvents') + suffix}
         appSession={props.appSession}
         stringValue={props.form.subEventTypes.rawValue}
         options={

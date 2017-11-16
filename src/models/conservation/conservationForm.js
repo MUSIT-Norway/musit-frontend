@@ -37,38 +37,17 @@ export const fromJsonToForm: (
     ]);
   }
 
-  if (formValues.responsible && formValues.responsible.defaultValue) {
+  if (formValues.participating && formValues.participating.defaultValue) {
     persons = persons.concat([
       {
-        name: json.responsibleName,
-        uuid: json.responsible,
-        role: 'responsible',
+        name: json.participatingName,
+        uuid: json.participating,
+        role: 'participating',
         date: null
       }
     ]);
   }
 
-  if (formValues.administrator && formValues.administrator.defaultValue) {
-    persons = persons.concat([
-      {
-        name: json.administratorName,
-        uuid: json.administrator,
-        role: 'administrator',
-        date: null
-      }
-    ]);
-  }
-
-  if (formValues.completedBy && formValues.completedBy.defaultValue) {
-    persons = persons.concat([
-      {
-        name: json.completedByName,
-        uuid: json.completedBy,
-        role: 'completedBy',
-        date: json.completedDate
-      }
-    ]);
-  }
   formValues.persons = toField('persons', persons);
 
   return Object.keys(formValues).map(key => formValues[key]);

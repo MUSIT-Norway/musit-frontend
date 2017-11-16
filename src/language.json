@@ -7,9 +7,8 @@
         "createConservation": "Create use & conservation",
         "choseNewSubEvents": "Select new sub events to be created",
         "roles": {"administrator": "Administrator",
-          "responsible": "Responsible",
           "doneBy": "Done by",
-          "completedBy": "Completed by"
+          "participating": "Participating"          
         },
         "comments":"Comments",
         "caseNumber":"Case number",
@@ -970,10 +969,8 @@
         "createConservation": "Opprett bruk og bevaring",
         "choseNewSubEvents": "Velg delhendelser som skal lages",
         "roles": {
-          "administrator": "Administrert av",
-          "responsible": "Ansvarlig",
           "doneBy": "Utført av",
-          "completedBy": "Avsluttet av"
+          "participating": "Deltagende"
         },
         "comments":"Kommentar",
         "caseNumber":"Saksnummer",
