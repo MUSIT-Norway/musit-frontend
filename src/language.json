@@ -29,6 +29,10 @@
             "note":"Note",
             "result":"Result",
             "noteDescriptionResult":"Note/Description/Result"
+          },
+          "techincalDescription":{
+            "technicalDescription": "Technical description",
+            "note":"Note"
           }
         }
       },
@@ -989,6 +993,10 @@
             "note":"Merknad",
             "result":"Resultat",
             "noteDescriptionResult":"Merknad/Beskrivelse/Resultat"
+          },
+          "techincalDescription":{
+            "technicalDescription": "Teknisk beskrivelse",
+            "note":"Merknad"
           }
         }
       },

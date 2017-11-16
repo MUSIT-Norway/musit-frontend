@@ -4,7 +4,7 @@ import Select from 'react-select';
 import FieldMultiSelect from '../../../forms/components/FieldMultiSelect';
 import type { Field } from 'forms/form';
 import ObjectSelection from '../components/objectSelection';
-import CollapsableEvent from '../components/collapsableEvent';
+import CollapsibleEvent from '../components/collapsibleEvent';
 import type { TreatmentType } from '../../../types/conservation';
 
 type types = { id: number, noLabel: string, enLabel?: string };
@@ -15,6 +15,7 @@ export type TreatmentProps = {
   materials: Array<any>,
   keywords: Array<any>,
   treatment: TreatmentType,
+  index?: number,
   appSession?: AppSession,
   viewMode?: boolean,
   onChange?: Function
@@ -32,6 +33,10 @@ export default function Treatment(props: TreatmentProps) {
 
   const treatmentComponents = (
     <div className="container">
+      {' '}
+      <div className="page-header">
+        <h3>{I18n.t('musit.conservation.events.treatment.treatment')}</h3>
+      </div>
       <FieldMultiSelect
         name={props.name + 'keywords'}
         stringValue={props.treatment.keywords.join(',')}
@@ -54,15 +59,14 @@ export default function Treatment(props: TreatmentProps) {
         title={I18n.t('musit.conservation.events.treatment.materialUsage')}
         viewMode={props.viewMode}
       />
-
-      <div className=" row form-group">
-        <label className="control-label col-md-2" htmlFor="note">
+      <div className="form-group">
+        <label className="control-label col-md-2" htmlFor={`note_${props.index}`}>
           {I18n.t('musit.conservation.events.treatment.note')}
         </label>
         <div className="col-md-9">
           <textarea
             className="form-control"
-            id={props.name + 'note'}
+            id={`note_${props.index}`}
             value={props.treatment.note}
             onChange={t => props.onChange('note')(t.target.value)}
             rows="5"
@@ -80,7 +84,7 @@ export default function Treatment(props: TreatmentProps) {
     </div>
   );
   return (
-    <CollapsableEvent
+    <CollapsibleEvent
       eventName={I18n.t('musit.conservation.events.treatment.treatment')}
       eventComponent={treatmentComponents}
     />

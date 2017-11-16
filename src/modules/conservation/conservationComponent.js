@@ -12,6 +12,7 @@ import type { FieldMultiSelectProps } from '../../forms/components/FieldMultiSel
 import type { PredefinedConservation } from '../../types/predefinedConservation';
 import type { ConservationSubTypes } from '../../types/conservation';
 import Treatment from './events/treatment';
+import TechnicalDescription from './events/technicalDescription';
 
 type ConservationProcessProps = {
   id?: number,
@@ -52,39 +53,36 @@ function createSubEvents(props: Props & { form: FormData }) {
       props.form.subEventTypes && props.form.subEventTypes.rawValue
         ? props.form.subEventTypes.rawValue.split(',').map(t => Number.parseFloat(t))
         : [];
-    eventTypes.map(v => {
+    const akk = eventTypes.reduce((acc, v) => {
       switch (v) {
         case 2: {
-          props.updateForm({
-            name: props.form.events.name,
-            rawValue: props.form.events.rawValue.concat([
-              {
-                caseNumber: '',
-                eventTypeId: v,
-                keywords: [],
-                materials: [],
-                note: '',
-                affectedThings: []
-              }
-            ])
-          });
-          break;
+          return acc.concat([
+            {
+              eventTypeId: v,
+              keywords: [],
+              materials: [],
+              note: '',
+              affectedThings: []
+            }
+          ]);
         }
         case 3: {
-          props.updateForm({
-            name: props.form.events.name,
-            rawValue: props.form.events.rawValue.concat([
-              {
-                eventTypeId: v,
-                caseNumber: '',
-                note: '',
-                affectedThings: []
-              }
-            ])
-          });
-          break;
+          return acc.concat([
+            {
+              eventTypeId: v,
+              note: '',
+              affectedThings: []
+            }
+          ]);
+        }
+        default: {
+          return [];
         }
       }
+    }, []);
+    props.updateForm({
+      name: props.form.events.name,
+      rawValue: akk
     });
   };
 }
@@ -103,6 +101,7 @@ function renderSubEvent(
         materials={props.predefinedConservation.materialList}
         appSession={appSession}
         treatment={props.form.events.rawValue[ind]}
+        index={ind}
         onChange={props.updateConservationSubEvent(
           props.form.events.name,
           props.form.events.rawValue,
@@ -114,7 +113,21 @@ function renderSubEvent(
       />
     );
   } else if (eventType === 3) {
-    return <div key={`td_${ind}`}> Technical description</div>;
+    return (
+      <TechnicalDescription
+        key={`techincalDescription_${ind}`}
+        viewMode={false}
+        appSession={appSession}
+        affectedThingsWithDetailsMainEvent={props.objects || []}
+        technicalDescription={props.form.events.rawValue[ind]}
+        index={ind}
+        onChange={props.updateConservationSubEvent(
+          props.form.events.name,
+          props.form.events.rawValue,
+          ind
+        )}
+      />
+    );
   } else {
     return <div key={`U_${ind}`}> {`Unknown event type: ${eventType}`}</div>;
   }
@@ -209,28 +222,7 @@ export default function ConservationComponent(props: Props & { form: FormData })
       <hr />
       {props.form.events &&
         props.form.events.rawValue.map((v, i) => {
-          if (v.eventTypeId === 2) {
-            return (
-              <Treatment
-                key={`treatment_${i}`}
-                keywords={props.predefinedConservation.keywordList}
-                materials={props.predefinedConservation.materialList}
-                appSession={props.appSession}
-                treatment={props.form.events.rawValue[i]}
-                onChange={props.updateConservationSubEvent(
-                  props.form.events.name,
-                  props.form.events.rawValue,
-                  i
-                )}
-                affectedThingsWithDetailsMainEvent={props.objects || []}
-                name={`treatment_${i}`}
-              />
-            );
-          } else if (v.eventTypeId === 3) {
-            return <div key={`TD_${i}`}> TD </div>;
-          } else {
-            return <div key={`UK_${i}`}> Ukjent </div>;
-          }
+          return renderSubEvent(props.appSession, i, v.eventTypeId, props);
         })}
       <button
         className="btn btn-primary"

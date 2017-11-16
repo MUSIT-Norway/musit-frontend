@@ -13,7 +13,7 @@ type State = {
   expanded: boolean
 };
 
-export default class CollapsableEvent extends React.Component<Props, State> {
+export default class CollapsibleEvent extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {

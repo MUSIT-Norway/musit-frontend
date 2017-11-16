@@ -96,10 +96,13 @@ export type TreatmentType = {
   materials?: Array<string>,
   materialUsageTypes?: Array<ConservatonSubType>,
   materialUsageOnChange?: Function,
-  note?: string
+  note?: string,
+  affectedThings?: Array<string>
 };
-export type TechnicalDescription = {
-  td: string
+export type TechnicalDescriptionType = {
+  eventTypeId: number,
+  note: string,
+  affectedThings?: Array<string>
 };
 
-export type ConservationSubTypes = TreatmentType | TechnicalDescription;
+export type ConservationSubTypes = TreatmentType | TechnicalDescriptionType;

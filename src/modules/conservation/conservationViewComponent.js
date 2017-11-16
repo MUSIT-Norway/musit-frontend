@@ -11,6 +11,7 @@ import type { ConservationStoreState } from '../../types/conservation';
 import type { History } from '../../types/Routes';
 import type { PredefinedConservation } from '../../types/predefinedConservation';
 import Treatment from './events/treatment';
+import TechnicalDescription from './events/technicalDescription';
 
 export type Props = {
   match: { params: { conservationId: number } },
@@ -36,7 +37,7 @@ const addEventComponents = (
   appSession: AppSession,
   objects: any
 ) => {
-  if (event.eventTypeId == 2)
+  if (event.eventTypeId === 2)
     return (
       <Treatment
         name={`treatment_${index}`}
@@ -49,6 +50,20 @@ const addEventComponents = (
           note: event.note,
           affectedThings: event.affectedThings
         }}
+        index={index}
+        appSession={appSession}
+        viewMode={true}
+      />
+    );
+  else if (event.eventTypeId === 3)
+    return (
+      <TechnicalDescription
+        affectedThingsWithDetailsMainEvent={objects}
+        technicalDescription={{
+          note: event.note,
+          affectedThings: event.affectedThings
+        }}
+        index={index}
         appSession={appSession}
         viewMode={true}
       />
@@ -129,9 +144,9 @@ export default (props: Props) =>
         {props.store &&
           props.store.conservation &&
           props.store.conservation.events &&
-          props.store.conservation.events.map((e, i) =>
+          props.store.conservation.events.map((e, index) =>
             addEventComponents(
-              i,
+              index,
               e,
               props.predefinedConservation,
               props.appSession,
