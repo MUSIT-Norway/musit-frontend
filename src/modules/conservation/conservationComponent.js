@@ -63,7 +63,8 @@ function createSubEvents(props: Props & { form: FormData }) {
                 eventTypeId: v,
                 keywords: [],
                 materials: [],
-                note: ''
+                note: '',
+                affectedThings: []
               }
             ])
           });
@@ -76,7 +77,8 @@ function createSubEvents(props: Props & { form: FormData }) {
               {
                 eventTypeId: v,
                 caseNumber: '',
-                note: ''
+                note: '',
+                affectedThings: []
               }
             ])
           });
@@ -107,6 +109,8 @@ function renderSubEvent(
           ind
         )}
         viewMode={false}
+        affectedThingsWithDetailsMainEvent={props.objects || []}
+        name={`treatment_${ind}`}
       />
     );
   } else if (eventType === 3) {
@@ -151,12 +155,14 @@ export default function ConservationComponent(props: Props & { form: FormData })
         <h1>{I18n.t('musit.conservation.conservation')}</h1>
       </div>
       <form className="form-horizontal">
-        <MetaInformation
-          registeredBy={props.form.doneBy.value}
-          registeredDate={props.form.doneDate.value}
-          updatedBy={props.form.updatedBy.value}
-          updatedDate={props.form.updatedDate.value}
-        />
+        {props.form.id.value && (
+          <MetaInformation
+            registeredBy={props.form.registeredBy.value}
+            registeredDate={props.form.registeredDate.value}
+            updatedBy={props.form.updatedBy.value}
+            updatedDate={props.form.updatedDate.value}
+          />
+        )}
       </form>
       <hr />
       <ConservationProcessForm
@@ -216,7 +222,8 @@ export default function ConservationComponent(props: Props & { form: FormData })
                   props.form.events.rawValue,
                   i
                 )}
-                viewMode={false}
+                affectedThingsWithDetailsMainEvent={props.objects || []}
+                name={`treatment_${i}`}
               />
             );
           } else if (v.eventTypeId === 3) {

@@ -22,16 +22,13 @@ export default function FieldMultiSelect(props: *) {
   const options = props.options;
 
   const label = opt => (opt ? opt.label : '');
-
   const filterOptions = v => options.filter(f => f.value == v);
-  const viewOptions =
+  const viewOptions: ?Array<string> =
     values && options
       ? values
           .split(',')
-          .map(v => (
-            <div> {filterOptions(v).length > 0 ? label(filterOptions(v)[0]) : ''}</div>
-          ))
-      : '';
+          .map(v => (filterOptions(v).length > 0 ? label(filterOptions(v)[0]) : ''))
+      : [];
 
   return (
     <div className="row form-group">
@@ -41,7 +38,9 @@ export default function FieldMultiSelect(props: *) {
         </label>
       )}
       <div className="col-md-3">
-        {props.viewMode && viewOptions}
+        {props.viewMode && (
+          <div style={{ padding: '8px' }}> {viewOptions && viewOptions.join(', ')} </div>
+        )}
         {!props.viewMode && (
           <Select
             {...props.inputProps}

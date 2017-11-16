@@ -30,6 +30,7 @@ export type Props = {
 };
 
 const addEventComponents = (
+  index: number,
   event: any,
   conservationTypes: any,
   appSession: AppSession,
@@ -38,6 +39,7 @@ const addEventComponents = (
   if (event.eventTypeId == 2)
     return (
       <Treatment
+        name={`treatment_${index}`}
         affectedThingsWithDetailsMainEvent={objects}
         materials={conservationTypes.materialList}
         keywords={conservationTypes.keywordList}
@@ -127,8 +129,9 @@ export default (props: Props) =>
         {props.store &&
           props.store.conservation &&
           props.store.conservation.events &&
-          props.store.conservation.events.map(e =>
+          props.store.conservation.events.map((e, i) =>
             addEventComponents(
+              i,
               e,
               props.predefinedConservation,
               props.appSession,

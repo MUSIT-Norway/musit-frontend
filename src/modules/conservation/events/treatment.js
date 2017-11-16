@@ -10,13 +10,14 @@ import type { TreatmentType } from '../../../types/conservation';
 type types = { id: number, noLabel: string, enLabel?: string };
 
 export type TreatmentProps = {
+  name: string,
   affectedThingsWithDetailsMainEvent?: ?Array<ObjectInfo>,
   materials: Array<any>,
   keywords: Array<any>,
   treatment: TreatmentType,
   appSession?: AppSession,
   viewMode?: boolean,
-  onChange?: Functionn
+  onChange?: Function
 };
 export default function Treatment(props: TreatmentProps) {
   const getMultiSelectOptionObject = objects =>
@@ -32,32 +33,36 @@ export default function Treatment(props: TreatmentProps) {
   const treatmentComponents = (
     <div className="container">
       <FieldMultiSelect
-        name={'keywords'}
+        name={props.name + 'keywords'}
         stringValue={props.treatment.keywords.join(',')}
         options={optionsKeywords}
         onChange={v =>
-          props.onChange('keywords')(v.split(',').map(i => Number.parseFloat(i)))}
+          props.onChange('keywords')(
+            v ? v.split(',').map(i => Number.parseFloat(i)) : []
+          )}
         title={I18n.t('musit.conservation.events.treatment.keyword')}
         viewMode={props.viewMode}
       />
       <FieldMultiSelect
-        name={'material'}
+        name={props.name + 'material'}
         stringValue={props.treatment.materials.join(',')}
         options={optionsMaterials}
         onChange={v =>
-          props.onChange('materials')(v.split(',').map(i => Number.parseFloat(i)))}
+          props.onChange('materials')(
+            v ? v.split(',').map(i => Number.parseFloat(i)) : []
+          )}
         title={I18n.t('musit.conservation.events.treatment.materialUsage')}
         viewMode={props.viewMode}
       />
 
-      <div className="form-group">
+      <div className=" row form-group">
         <label className="control-label col-md-2" htmlFor="note">
           {I18n.t('musit.conservation.events.treatment.note')}
         </label>
         <div className="col-md-9">
           <textarea
             className="form-control"
-            id="note"
+            id={props.name + 'note'}
             value={props.treatment.note}
             onChange={t => props.onChange('note')(t.target.value)}
             rows="5"
@@ -65,12 +70,11 @@ export default function Treatment(props: TreatmentProps) {
           />
         </div>
       </div>
-
       <ObjectSelection
         affectedThingsWithDetailsMainEvent={props.affectedThingsWithDetailsMainEvent}
         affectedThingsSubEvent={props.treatment.affectedThings}
         affectedThingsSubEventOnChange={t =>
-          props.onChange('affectedThings')(t.target.value)}
+          props.onChange('affectedThings')(t.map(s => s) || [])}
         viewMode={props.viewMode}
       />
     </div>
