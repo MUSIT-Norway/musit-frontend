@@ -159,6 +159,8 @@
       },
       "analysis": {
         "analysis": "Analysis",
+        "search": "Analysis search",
+        "queryPlaceholder": "Search for analysis event",
         "saveAnalysisError": "Unable to save analysis",
         "notAllowed" : "You do not have the appropriate access rights to see analysis or samples.",
         "saveAnalysisSuccess": "Analysis saved",
@@ -478,6 +480,11 @@
           }
         }
       },
+      "search" : {
+        "stats": "Showing %{limit} out of %{total} matches. Used %{timeUsed} ms searching.",
+        "ready": "Fill in the form and push the search button.",
+        "noResults": "No results."
+      },
       "objectsearch": {
         "title": "Object search",
         "addToPickList": "Add to picklist",
@@ -492,6 +499,10 @@
         },
         "term": {
           "label": "Artefact/Taxon",
+          "placeHolder": " "
+        },
+        "q": {
+          "label": "Generic",
           "placeHolder": " "
         },
         "location": {
@@ -1121,6 +1132,8 @@
       },
       "analysis": {
         "analysis": "Analyse",
+        "search": "Analysis søk",
+        "queryPlaceholder": "Søk etter analyse hendelser",
         "saveAnalysisError": "Kunne ikke lagre analyse",
         "saveAnalysisSuccess": "Analyse ble lagret",
         "notAllowed" : "Du har ikke tilgang til analyser.",
@@ -1441,6 +1454,11 @@
           }
         }
       },
+      "search" : {
+        "stats": "Viser %{limit} av %{total} treff. Brukte %{timeUsed} ms på søket.",
+        "ready": "Fyll inn og trykk på søk knappen",
+        "noResults": "Søket ga ingen treff."
+      },
       "objectsearch": {
         "title": "Objektsøk",
         "addToPickList": "Legg til plukklisten",
@@ -1455,6 +1473,10 @@
         },
         "term": {
           "label": "Gjenstand/Takson",
+          "placeHolder": " "
+        },
+        "q": {
+          "label": "Generelt",
           "placeHolder": " "
         },
         "location": {

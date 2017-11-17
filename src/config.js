@@ -1,6 +1,7 @@
 // @flow
 
 import type { MuseumId, CollectionId, NodeId, ObjectId } from 'types/ids';
+import queryParams from './shared/queryParams';
 
 type AppSession = {
   museumId: number,
@@ -173,6 +174,21 @@ export default {
           analysesForObject: (mid: MuseumId, objectId: number): string =>
             `/api/management/${mid}/analyses/objects/${objectId}`,
           getPurposes: '/api/management/purposes',
+          search: (
+            mid: MuseumId,
+            collectionIds: string,
+            from: number,
+            limit: number,
+            q: ?string
+          ) =>
+            `/api/management/${mid}/analyses/search` +
+            queryParams({
+              from,
+              limit,
+              collectionIds,
+              q,
+              types: ['analysis', 'analysisCollection']
+            }),
           getAnalysisEvents: (mid: MuseumId, collectionIds: Array<CollectionId>) =>
             `/api/management/${mid}/analyses?collectionIds=${collectionIds.join(',')}`
         },
@@ -244,18 +260,23 @@ export default {
             museumNo: ?string,
             subNo: ?string,
             term: ?string,
-            perPage: ?number,
-            page: ?number,
+            q: ?string,
+            limit: number,
+            from: number,
             collectionId: CollectionId,
             museumId: MuseumId
           ): string => {
             const baseUrl = `/api/thingaggregate/museum/${museumId}/objects/search`;
-            const museumNoQuery = `museumNo=${museumNo || ''}`;
-            const subNoQuery = `subNo=${subNo || ''}`;
-            const termQuery = `term=${term || ''}`;
-            const pageQuery = `page=${page || ''}`;
-            const limitQuery = `limit=${perPage || ''}`;
-            return `${baseUrl}?${museumNoQuery}&${subNoQuery}&${termQuery}&${pageQuery}&${limitQuery}&collectionIds=${collectionId}`;
+            const qs = queryParams({
+              museumNo,
+              subNo,
+              term,
+              from,
+              limit,
+              q,
+              collectionIds: collectionId
+            });
+            return baseUrl + qs;
           },
           objectDetailsUrl: (
             mid: MuseumId,

@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { store$ } from '../printStore';
 import Template from '../../../models/template';
 import MusitTestScheduler from '../../../testutils/MusitTestScheduler';

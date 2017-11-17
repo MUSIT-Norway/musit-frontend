@@ -1,5 +1,5 @@
 // @flow
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { store$ } from '../predefined';
 import Sample from '../../models/sample';
 import Analysis from '../../models/analysis';

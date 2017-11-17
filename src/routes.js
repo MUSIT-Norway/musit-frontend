@@ -20,7 +20,7 @@ import Reports from './modules/reports/ReportsOverview';
 import ControlViewContainer from './modules/control/ControlViewComponent';
 import ControlAddContainer from './modules/control/ControlAddComponent';
 import EventsContainer from './modules/controlsobservations/EventsComponent';
-import ObjectSearchContainer from './modules/objectsearch/ObjectSearchContainer';
+import ObjectSearchContainer from './modules/objectsearch/SearchContainer';
 import AppComponent from './modules/app/AppComponent';
 import AnalysisAddContainer from './modules/analysis/AnalysisAddContainer';
 import AnalysisViewContainer from './modules/analysis/AnalysisViewContainer';
@@ -35,8 +35,8 @@ import Administration from './modules/administration/Administration';
 import AnalysisTypes from './modules/administration/analysisTypes/analysisTypesContainer';
 import AnalysisPlaces from './modules/administration/analysisPlaces/analysisPlacesContainer';
 import SampleTypes from './modules/administration/sampleTypes/sampleTypesContainer';
-import AnalysisEventsViewContainer from './modules/analysis/events/analysisEventsViewContainer';
 import AnalysisResultExchangeContainer from './modules/analysis/exchange/analysisResultExchangeContainer';
+import AnalysisSearchContainer from './modules/analysis/search/analysisSearchContainer';
 import { replace } from 'lodash';
 import ConservationAddContainer from './modules/conservation/conservationAddContainer';
 import ConservationEditContainer from './modules/conservation/conservationEditContainer';
@@ -199,7 +199,7 @@ const ObjectPage = props => (
 
 const AnalysisPage = props => (
   <Switch>
-    <Route path={rt(props, '/')} exact component={AnalysisEventsViewContainer} />
+    <Route path={rt(props, '/')} exact component={AnalysisSearchContainer} />
     <Route path={rt(props, '/add')} exact component={AnalysisAddContainer} />
     <Route
       path={rt(props, '/edit/:analysisId')}

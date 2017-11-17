@@ -73,8 +73,8 @@ export type MusitObject = {
   natStage?: ?string,
   natGender?: ?string,
   natLegDate?: ?string,
-  materials?: ?Array<any>,
-  locations?: ?Array<any>,
+  materials?: ?Array<*>,
+  locations?: ?Array<*>,
   coordinates?: ?Array<ArkCoordinate>,
   objectType: 'sample' | 'collection'
 };

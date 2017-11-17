@@ -29,7 +29,7 @@ type Props = {
 };
 
 const pickObjectParams = (
-  s: SampleData,
+  sampleData: SampleData,
   appSession: AppSession,
   objectData: ObjectData,
   sampleTypes: SampleTypesObject
@@ -39,7 +39,7 @@ const pickObjectParams = (
       appSession,
       sampleTypes.sampleTypes,
       omit(objectData, 'sampleData'),
-      s
+      sampleData
     )
   };
 };

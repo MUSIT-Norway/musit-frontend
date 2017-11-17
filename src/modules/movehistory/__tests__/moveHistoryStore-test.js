@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { store$, initialState, getLocationHistory } from '../moveHistoryStore';
 import MusitTestScheduler from '../../../testutils/MusitTestScheduler';
 

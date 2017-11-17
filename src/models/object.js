@@ -119,19 +119,6 @@ class MusitObject {
     collectionId: string,
     token: string
   }) => Observable<*>;
-  static searchForObjects: (
-    ajaxGet: AjaxGet<*>
-  ) => (props: {
-    museumNo: string,
-    subNo: string,
-    term: string,
-    perPage: number,
-    page: number,
-    museumId: number,
-    collectionId: string,
-    token: string,
-    callback?: Callback<*>
-  }) => Observable<*>;
 }
 
 MusitObject.getObjectDescription = obj => {
@@ -356,38 +343,5 @@ MusitObject.findByBarcode = (ajaxGet = simpleGet) => ({
     Config.magasin.urls.api.thingaggregate.scanOldUrl(barcode, museumId, collectionId),
     token
   ).map(({ response }) => response);
-
-MusitObject.searchForObjects = (ajaxGet = simpleGet) => ({
-  museumNo,
-  subNo,
-  term,
-  perPage,
-  page,
-  museumId,
-  collectionId,
-  token,
-  callback
-}) => {
-  const url = Config.magasin.urls.api.thingaggregate.searchObjectUrl(
-    museumNo,
-    subNo,
-    term,
-    perPage,
-    page,
-    collectionId,
-    museumId
-  );
-  return ajaxGet(url, token, callback)
-    .map(({ response }) => response)
-    .map(data => {
-      if (!data || !data.matches) {
-        return { ...data, matches: [], totalMatches: 0, error: 'no response body' };
-      }
-      return {
-        ...data,
-        matches: data.matches.map(m => ({ ...m, breadcrumb: getPath(m) }))
-      };
-    });
-};
 
 export default MusitObject;

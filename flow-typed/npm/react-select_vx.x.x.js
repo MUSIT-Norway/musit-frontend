@@ -1,4 +1,4 @@
-// flow-typed signature: a4c76d71913fed93cbfa2d4461680d4c
+// flow-typed signature: e053a6541432b42231cbb7a62cfe27ec
 // flow-typed version: <<STUB>>/react-select_v^1.0.0-rc.4/flow_v0.54.1
 
 /**
@@ -22,10 +22,6 @@ declare module 'react-select' {
  * require those files directly. Feel free to delete any files that aren't
  * needed.
  */
-declare module 'react-select/dist/react-select.es' {
-  declare module.exports: any;
-}
-
 declare module 'react-select/dist/react-select' {
   declare module.exports: any;
 }
@@ -94,6 +90,10 @@ declare module 'react-select/examples/src/data/users' {
   declare module.exports: any;
 }
 
+declare module 'react-select/gulpfile' {
+  declare module.exports: any;
+}
+
 declare module 'react-select/lib/Async' {
   declare module.exports: any;
 }
@@ -103,10 +103,6 @@ declare module 'react-select/lib/AsyncCreatable' {
 }
 
 declare module 'react-select/lib/Creatable' {
-  declare module.exports: any;
-}
-
-declare module 'react-select/lib/index' {
   declare module.exports: any;
 }
 
@@ -142,14 +138,6 @@ declare module 'react-select/lib/Value' {
   declare module.exports: any;
 }
 
-declare module 'react-select/package-scripts' {
-  declare module.exports: any;
-}
-
-declare module 'react-select/rollup.config' {
-  declare module.exports: any;
-}
-
 declare module 'react-select/src/Async' {
   declare module.exports: any;
 }
@@ -159,14 +147,6 @@ declare module 'react-select/src/AsyncCreatable' {
 }
 
 declare module 'react-select/src/Creatable' {
-  declare module.exports: any;
-}
-
-declare module 'react-select/src/index' {
-  declare module.exports: any;
-}
-
-declare module 'react-select/src/index.umd' {
   declare module.exports: any;
 }
 
@@ -234,14 +214,7 @@ declare module 'react-select/wallaby' {
   declare module.exports: any;
 }
 
-declare module 'react-select/webpack.config' {
-  declare module.exports: any;
-}
-
 // Filename aliases
-declare module 'react-select/dist/react-select.es.js' {
-  declare module.exports: $Exports<'react-select/dist/react-select.es'>;
-}
 declare module 'react-select/dist/react-select.js' {
   declare module.exports: $Exports<'react-select/dist/react-select'>;
 }
@@ -293,6 +266,9 @@ declare module 'react-select/examples/src/data/states.js' {
 declare module 'react-select/examples/src/data/users.js' {
   declare module.exports: $Exports<'react-select/examples/src/data/users'>;
 }
+declare module 'react-select/gulpfile.js' {
+  declare module.exports: $Exports<'react-select/gulpfile'>;
+}
 declare module 'react-select/lib/Async.js' {
   declare module.exports: $Exports<'react-select/lib/Async'>;
 }
@@ -301,9 +277,6 @@ declare module 'react-select/lib/AsyncCreatable.js' {
 }
 declare module 'react-select/lib/Creatable.js' {
   declare module.exports: $Exports<'react-select/lib/Creatable'>;
-}
-declare module 'react-select/lib/index.js' {
-  declare module.exports: $Exports<'react-select/lib/index'>;
 }
 declare module 'react-select/lib/Option.js' {
   declare module.exports: $Exports<'react-select/lib/Option'>;
@@ -329,12 +302,6 @@ declare module 'react-select/lib/utils/stripDiacritics.js' {
 declare module 'react-select/lib/Value.js' {
   declare module.exports: $Exports<'react-select/lib/Value'>;
 }
-declare module 'react-select/package-scripts.js' {
-  declare module.exports: $Exports<'react-select/package-scripts'>;
-}
-declare module 'react-select/rollup.config.js' {
-  declare module.exports: $Exports<'react-select/rollup.config'>;
-}
 declare module 'react-select/src/Async.js' {
   declare module.exports: $Exports<'react-select/src/Async'>;
 }
@@ -343,12 +310,6 @@ declare module 'react-select/src/AsyncCreatable.js' {
 }
 declare module 'react-select/src/Creatable.js' {
   declare module.exports: $Exports<'react-select/src/Creatable'>;
-}
-declare module 'react-select/src/index.js' {
-  declare module.exports: $Exports<'react-select/src/index'>;
-}
-declare module 'react-select/src/index.umd.js' {
-  declare module.exports: $Exports<'react-select/src/index.umd'>;
 }
 declare module 'react-select/src/Option.js' {
   declare module.exports: $Exports<'react-select/src/Option'>;
@@ -397,7 +358,4 @@ declare module 'react-select/testHelpers/nodeListType.js' {
 }
 declare module 'react-select/wallaby.js' {
   declare module.exports: $Exports<'react-select/wallaby'>;
-}
-declare module 'react-select/webpack.config.js' {
-  declare module.exports: $Exports<'react-select/webpack.config'>;
 }

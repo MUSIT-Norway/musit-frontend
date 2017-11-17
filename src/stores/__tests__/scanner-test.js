@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import wrapWithScanner, {
   charDebouncer$,
@@ -51,11 +52,7 @@ describe('scanner', () => {
       a: { code: '444', uuid: false, number: true }
     };
 
-    const char$ = testScheduler.createHotObservable(reducerM, { 1: 52 }).map(c => {
-      const event = new Event('keypress');
-      event.which = c;
-      return event;
-    });
+    const char$ = testScheduler.createHotObservable(reducerM, { '1': { which: 52 } });
     const reducer$ = charReducer$(char$);
     const debounceTrigger$ = testScheduler.createHotObservable(debounceM);
     const debouncer$ = charDebouncer$(debounceTrigger$);
