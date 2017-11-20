@@ -16,7 +16,8 @@ import type { SampleData } from '../../types/samples';
 
 export type Events = {
   onClickHeader: (hit: SearchHit) => void,
-  onClickShoppingCart: (hit: SearchHit) => void
+  onClickShoppingCart: (hit: SearchHit) => void,
+  isObjectAdded: (hit: SearchHit) => boolean
 };
 
 export type Getters = {
@@ -59,13 +60,23 @@ const CollectionResultHit = (props: ResultHitProps) => {
         <div className="row">
           <div className="col-md-3">MuseumNo: {object.museumNo}</div>
           <div className="col-md-3">SubNo: {object.subNo}</div>
-          <div className="col-md-2 pull-right">
-            <FontAwesome
-              onClick={() => props.onClickShoppingCart(props.hit)}
-              className="pull-right link"
-              style={{ fontSize: '1.3em' }}
-              name="shopping-cart"
-            />
+          <div
+            className="col-md-2 pull-right"
+            onClick={() => props.onClickShoppingCart(props.hit)}
+          >
+            {props.isObjectAdded(props.hit) ? (
+              <FontAwesome
+                style={{ fontSize: '1.5em', color: 'Gray' }}
+                name="shopping-cart"
+                className="pull-right link"
+              />
+            ) : (
+              <FontAwesome
+                style={{ fontSize: '1.5em', color: '#337ab7' }}
+                name="shopping-cart"
+                className="pull-right link"
+              />
+            )}
           </div>
         </div>
       </div>
@@ -93,13 +104,23 @@ const SampleResultHit = (props: ResultHitProps) => {
           <div className="col-md-3">MuseumNo: {object ? object.museumNo : ''}</div>
           <div className="col-md-3">SubNo: {object ? object.subNo : ''}</div>
           <div className="col-md-3">Gjenstand/Takson: {object ? object.term : ''}</div>
-          <div className="col-md-2 pull-right">
-            <FontAwesome
-              onClick={() => props.onClickShoppingCart(props.hit)}
-              className="pull-right link"
-              style={{ fontSize: '1.3em' }}
-              name="shopping-cart"
-            />
+          <div
+            className="col-md-2 pull-right"
+            onClick={() => props.onClickShoppingCart(props.hit)}
+          >
+            {props.isObjectAdded(props.hit) ? (
+              <FontAwesome
+                style={{ fontSize: '1.5em', color: 'Gray' }}
+                name="shopping-cart"
+                className="pull-right link"
+              />
+            ) : (
+              <FontAwesome
+                style={{ fontSize: '1.5em', color: '#337ab7' }}
+                name="shopping-cart"
+                className="pull-right link"
+              />
+            )}
           </div>
         </div>
       </div>
@@ -138,6 +159,7 @@ const RenderResultHits = (props: RenderResultHitsProps) => {
             onClickShoppingCart={props.onClickShoppingCart}
             getObject={props.getObject}
             getSampleTypeStr={props.getSampleTypeStr}
+            isObjectAdded={props.isObjectAdded}
           />
         );
       })}
@@ -153,7 +175,8 @@ const SearchResultItem = (props: {
   onClickHeader: (hit: SearchHit) => void,
   onClickShoppingCart: (hit: SearchHit) => void,
   getObject: (hit: SearchHit) => ?ObjectData,
-  getSampleTypeStr: (sample: SampleData) => string
+  getSampleTypeStr: (sample: SampleData) => string,
+  isObjectAdded: (hit: SearchHit) => boolean
 }) => {
   const result = props.searchStore.result;
   if (result && result.hits.total > 0) {
@@ -172,6 +195,7 @@ const SearchResultItem = (props: {
           onClickShoppingCart={props.onClickShoppingCart}
           getObject={props.getObject}
           getSampleTypeStr={props.getSampleTypeStr}
+          isObjectAdded={props.isObjectAdded}
         />
 
         {pagination && (
@@ -193,8 +217,8 @@ const SearchComponent = (props: SearchComponentProps) => (
       search={props.onSearch}
     />
 
-    {props.searchStore.loading && <div>Searching...</div>}
-    {!props.searchStore.loading && props.searchStore.result ? (
+    {props.searchStore && props.searchStore.loading && <div>Searching...</div>}
+    {props.searchStore && !props.searchStore.loading && props.searchStore.result ? (
       <SearchResultItem
         searchStore={props.searchStore}
         onChangePage={props.onChangePage}
@@ -202,6 +226,7 @@ const SearchComponent = (props: SearchComponentProps) => (
         onClickShoppingCart={props.onClickShoppingCart}
         getObject={props.getObject}
         getSampleTypeStr={props.getSampleTypeStr}
+        isObjectAdded={props.isObjectAdded}
       />
     ) : (
       <div>{I18n.t('musit.search.ready')}</div>

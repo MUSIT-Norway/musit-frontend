@@ -481,7 +481,7 @@
         }
       },
       "search" : {
-        "stats": "Showing %{limit} out of %{total} matches. Used %{timeUsed} ms searching.",
+        "stats": "Showing %{from} - %{to} out of %{total} matches. Used %{timeUsed} ms searching.",
         "ready": "Fill in the form and push the search button.",
         "noResults": "No results."
       },
@@ -1455,7 +1455,7 @@
         }
       },
       "search" : {
-        "stats": "Viser %{limit} av %{total} treff. Brukte %{timeUsed} ms på søket.",
+        "stats": "Viser %{from} - %{to} av %{total} treff. Brukte %{timeUsed} ms på søket.",
         "ready": "Fyll inn og trykk på søk knappen",
         "noResults": "Søket ga ingen treff."
       },

@@ -260,6 +260,7 @@ export default function AnalysisFormComponent(props: Props) {
                 getParentObjectId(props.objects[0])
               ) : null
             }
+            files={props.store.analysis ? props.store.analysis.files : []}
           />
           <div className="form-group">
             <label className="control-label col-md-2" htmlFor="isRestricted">
