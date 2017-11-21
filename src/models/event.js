@@ -40,14 +40,14 @@ Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) => prop
         moves.map(m => ({ ...m, type: 'MoveObject' }))
       ).map(m => ({
         ...m,
-        eventDate: parseISODate(m.eventDate || m.registeredDate).format(
+        eventDate: parseISODate(m.eventDate || m.registeredDate || '').format(
           DATE_FORMAT_DISPLAY
         )
       }))
     )
     .flatMap(events => {
       //TODO extract it to utils
-      const getActors = n => {
+      const getActors = (n: any): Array<string> => {
         if (!n.doneBy && !n.registeredBy) return [];
         if (!n.doneBy) return [n.registeredBy];
         if (!n.registeredBy) return [n.doneBy];

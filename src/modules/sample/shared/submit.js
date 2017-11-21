@@ -207,17 +207,27 @@ export const saveSample = (doSaveSample: Function) => (
   }
 };
 
-function getSampleTypeId(sampleTypes, sampleType, sampleSubType, appSession): ?number {
+function getSampleTypeId(
+  sampleTypes: SampleTypes,
+  sampleType: ?string,
+  sampleSubType?: ?string,
+  appSession: AppSession
+): ?number {
   if (!sampleTypes) {
     return null;
   }
   if (sampleSubType) {
-    return flatten(Object.values(sampleTypes)).find(subType => {
+    const sampleTypeFound: ?any = flatten(
+      Object.values(sampleTypes)
+    ).find((subType: any) => {
       const subTypeName = sampleTypeDisplayName(subType, appSession);
       return subTypeName === sampleSubType;
-    }).sampleTypeId;
+    });
+    return sampleTypeFound ? sampleTypeFound.sampleTypeId : null;
   } else {
-    return sampleType ? sampleTypes[sampleType][0].sampleTypeId : null;
+    return sampleType && sampleTypes && sampleTypes
+      ? sampleTypes[sampleType][0].sampleTypeId
+      : null;
   }
 }
 

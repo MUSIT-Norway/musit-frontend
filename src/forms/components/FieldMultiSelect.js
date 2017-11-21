@@ -3,26 +3,23 @@ import React from 'react';
 import type { AppSession } from '../../types/appSession';
 import Select from 'react-select';
 
-export type FieldMultiSelectProps<T> = {
-  stringValue?: string,
-  name: string,
-  options: Array<T>,
-  title: string,
+export type FieldMultiSelectProps = {
+  stringValue?: any,
+  options: ?Array<any>,
+  title: ?string,
   onChange: Function,
   inputProps?: { className?: string, style?: {} },
-  appSession?: AppSession,
-  viewMode?: boolean,
-  getLabel: T => string,
-  filter: T => T => boolean
+  appSession?: ?AppSession,
+  viewMode?: ?boolean
 };
 
-export default function FieldMultiSelect(props: *) {
-  const name = props.name;
-  const values = props.stringValue;
-  const options = props.options;
+export default function FieldMultiSelect(props: FieldMultiSelectProps) {
+  const name = props.name ? props.name : '';
+  const values: ?string = props.stringValue ? props.stringValue : '';
+  const options = props.options ? props.options : [];
 
   const label = opt => (opt ? opt.label : '');
-  const filterOptions = v => options.filter(f => f.value == v);
+  const filterOptions = v => options && options.filter(f => f.value == v);
   const viewOptions: ?Array<string> =
     values && options
       ? values

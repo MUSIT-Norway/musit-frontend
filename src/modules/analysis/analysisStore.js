@@ -511,7 +511,7 @@ function getEventObjectDetails(
           }).map(sampleObjectRes => {
             const flattened = flatten(Object.values(props.sampleTypes));
             const sampleType = flattened.find(
-              st => st.sampleTypeId === sample.sampleTypeId
+              (st: any) => st.sampleTypeId === sample.sampleTypeId
             );
             return {
               sampleData: { ...sample, sampleType: sampleType },

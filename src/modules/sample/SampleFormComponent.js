@@ -204,8 +204,9 @@ export default function SampleFormComponent(props: Props) {
               field={form.status}
               title={I18n.t('musit.sample.status')}
               defaultOption={I18n.t('musit.sample.chooseStatus')}
-              valueFn={v => (v.id ? v.id.toString() : '')}
-              displayFn={v => (props.appSession.language.isEn ? v.enStatus : v.noStatus)}
+              valueFn={(v: any) => (v.id ? v.id.toString() : '')}
+              displayFn={(v: any) =>
+                props.appSession.language.isEn ? v.enStatus : v.noStatus}
               onChange={props.updateForm}
               selectItems={Sample.sampleStatuses}
             />

@@ -40,7 +40,7 @@ export default function FieldDropDown(props: FieldDropDownProps) {
             props.onChange({ name: props.field.name, rawValue: e.target.value })}
         >
           {props.defaultOption && <option>{props.defaultOption}</option>}
-          {props.selectItems.map((v, i) => (
+          {props.selectItems.map((v: any, i) => (
             <option
               key={i}
               value={

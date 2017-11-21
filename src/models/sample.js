@@ -299,7 +299,7 @@ Sample.loadSample = (ajaxGet = simpleGet, ajaxPost = simplePost) => ({
 
 export function getSampleType(sampleTypeId: number, sampleTypesMap: SampleTypes) {
   return flatten(Object.values(sampleTypesMap)).find(
-    subType => sampleTypeId === subType.sampleTypeId
+    (subType: any) => sampleTypeId === subType.sampleTypeId
   );
 }
 

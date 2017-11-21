@@ -8,6 +8,7 @@ import { FormText, FormElement } from '../../../forms/components';
 import type { ErrorLoading, SavedFile } from '../../../models/analysis/analysisResult';
 import { saveBlob } from '../../../shared/download';
 import { getFileAsBlob } from '../../../models/analysis/analysisResult';
+import type { Field } from '../../../forms/form';
 
 type Props = {
   files: ?Array<SavedFile | ErrorLoading>,
@@ -26,7 +27,7 @@ export default function Result(props: Props) {
         Object.keys(props.extraAttributes)
           .filter(eat => eat !== 'type')
           .map((attrKey: string, i: number) => {
-            const attribute = props.extraAttributes[attrKey];
+            const attribute: any = props.extraAttributes[attrKey];
             return (
               <FormText
                 key={i}
@@ -35,7 +36,7 @@ export default function Result(props: Props) {
                 labelWidth={2}
                 elementWidth={5}
                 value={
-                  attribute.type === 'Size' ? (
+                  attribute && attribute.type && attribute.type === 'Size' ? (
                     attribute.value &&
                     attribute.value.rawValue &&
                     attribute.value.rawValue + ' ' + attribute.value.unit

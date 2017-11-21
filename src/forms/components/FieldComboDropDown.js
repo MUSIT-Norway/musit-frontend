@@ -7,7 +7,7 @@ import identity from 'lodash/identity';
 type FieldComboDropDownProps<T> = {
   field: Field<string>,
   defaultOption?: string,
-  extractValue: (v: T, a: ?AppSession) => number,
+  extractValue: (v: T, a: ?AppSession) => number | string,
   displayValue: (v: T, a: ?AppSession) => string,
   title: string,
   onChange: Function,
