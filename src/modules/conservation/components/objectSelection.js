@@ -37,11 +37,14 @@ const toggleSelection = (uuid, affectedThingsSubEvent): Array<string> => {
 };
 
 const selectAll = (
-  affectedThingsWithDetailsMainEvent: Array<ObjectInfo>
+  affectedThingsWithDetailsMainEvent: Array<ObjectInfo>,
+  affectedThingsSubEvent: Array<string>
 ): Array<string> => {
-  if (affectedThingsWithDetailsMainEvent)
-    return affectedThingsWithDetailsMainEvent.map(o => o.uuid);
-  else return [];
+  if (
+    isCheckedAll(affectedThingsWithDetailsMainEvent || [], affectedThingsSubEvent || [])
+  )
+    return [];
+  else return affectedThingsWithDetailsMainEvent.map(o => o.uuid);
 };
 
 export default function ObjectSelection({
@@ -80,7 +83,10 @@ export default function ObjectSelection({
                   onChange={() =>
                     affectedThingsSubEventOnChange &&
                     affectedThingsSubEventOnChange(
-                      selectAll(affectedThingsWithDetailsMainEvent || [])
+                      selectAll(
+                        affectedThingsWithDetailsMainEvent || [],
+                        affectedThingsSubEvent || []
+                      )
                     )}
                 />
               )}
