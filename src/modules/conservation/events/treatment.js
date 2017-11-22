@@ -4,8 +4,8 @@ import Select from 'react-select';
 import FieldMultiSelect from '../../../forms/components/FieldMultiSelect';
 import type { Field } from 'forms/form';
 import ObjectSelection from '../components/objectSelection';
-import CollapsibleEvent from '../components/collapsibleEvent';
 import type { TreatmentType } from '../../../types/conservation';
+import CollapsibleEvent from '../components/CollapsibleEvent';
 
 type types = { id: number, noLabel: string, enLabel?: string };
 
@@ -18,7 +18,9 @@ export type TreatmentProps = {
   index?: number,
   appSession?: AppSession,
   viewMode?: boolean,
-  onChange?: Function
+  onChange?: Function,
+  expanded?: boolean,
+  toggleExpanded: Function
 };
 export default function Treatment(props: TreatmentProps) {
   const getMultiSelectOptionObject = objects =>
@@ -33,9 +35,6 @@ export default function Treatment(props: TreatmentProps) {
   const treatmentComponents = (
     <div className="container">
       {' '}
-      <div className="page-header">
-        <h3>{I18n.t('musit.conservation.events.treatment.treatment')}</h3>
-      </div>
       <FieldMultiSelect
         name={props.name + 'keywords'}
         stringValue={props.treatment.keywords.join(',')}
@@ -86,6 +85,8 @@ export default function Treatment(props: TreatmentProps) {
     <CollapsibleEvent
       eventName={I18n.t('musit.conservation.events.treatment.treatment')}
       eventComponent={treatmentComponents}
+      expanded={props.treatment.expanded}
+      toggleExpanded={props.toggleExpanded}
     />
   );
 }

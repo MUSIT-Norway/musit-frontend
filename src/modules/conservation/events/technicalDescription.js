@@ -2,25 +2,22 @@ import React from 'react';
 import { I18n } from 'react-i18nify';
 import type { TechnicalDescriptionType } from '../../../types/conservation';
 import ObjectSelection from '../components/objectSelection';
-import CollapsibleEvent from '../components/collapsibleEvent';
+import CollapsibleEvent from '../components/CollapsibleEvent';
 
 export type TechnicalDescriptionProps = {
   technicalDescription: TechnicalDescriptionType,
   index?: number,
   appSession?: AppSession,
   viewMode?: boolean,
-  onChange: Function
+  onChange: Function,
+  expanded?: boolean,
+  toggleExpanded: Function
 };
 
 export default function TechnicalDescription(props: TechnicalDescriptionProps) {
   const suffix = ':';
   const technicalDescComponent = (
     <div className="container">
-      <div className="page-header">
-        <h3>
-          {I18n.t('musit.conservation.events.technicalDescription.technicalDescription')}
-        </h3>
-      </div>
       <div className="form-group">
         <label className="control-label col-md-2" htmlFor={`note_${props.index}`}>
           {I18n.t('musit.conservation.events.techincalDescription.note') + suffix}
@@ -51,6 +48,8 @@ export default function TechnicalDescription(props: TechnicalDescriptionProps) {
         'musit.conservation.events.technicalDescription.technicalDescription'
       )}
       eventComponent={technicalDescComponent}
+      expanded={props.technicalDescription.expanded}
+      toggleExpanded={props.toggleExpanded}
     />
   );
 }

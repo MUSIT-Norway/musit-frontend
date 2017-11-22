@@ -2283,6 +2283,8 @@ describe('ConservationComponent edit page', () => {
         {...editPageProps}
         updateConservationSubEvent={e => e}
         updateMultiSelectField={e => e}
+        toggleExpanded={e => e}
+        toggleSingleExpanded={e => e}
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
@@ -3812,7 +3814,12 @@ const addPageProps: any = {
 describe('ConservationComponent add page', () => {
   it('should render add page properly', () => {
     const wrapper = shallow(
-      <ConservationComponent {...addPageProps} updateMultiSelectField={e => e} />
+      <ConservationComponent
+        {...addPageProps}
+        updateMultiSelectField={e => e}
+        toggleExpanded={e => e}
+        toggleSingleExpanded={e => e}
+      />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });

@@ -42,6 +42,8 @@ export default function formProps(
     updateArrayField: updateArrayField(props.updateForm),
     updateMultiSelectField: updateMultiSelectField(props.updateForm),
     updateConservationSubEvent: updateConservationSubEvent(props.updateForm),
+    toggleExpanded: toggleExpanded(props.updateForm),
+    toggleSingleExpanded: toggleSingleExpanded(props.updateForm),
     clickSave: clickSave(
       props.form,
       props.appSession,
@@ -52,6 +54,25 @@ export default function formProps(
     ),
     clickCancel: clickCancel(props)
   };
+}
+
+function toggleExpanded(updateForm) {
+  return (b: boolean, events: Array<ConservationSubTypes>) => () =>
+    updateForm({
+      name: 'events',
+      rawValue: events.map(e => ({ ...e, expanded: b }))
+    });
+}
+
+function toggleSingleExpanded(updateForm) {
+  return (b: boolean, events: Array<ConservationSubTypes>, index: number) => () =>
+    updateForm({
+      name: 'events',
+      rawValue: events
+        .slice(0, index)
+        .concat([{ ...events[index], expanded: b }])
+        .concat(events.slice(index + 1))
+    });
 }
 
 function updateStringField(updateForm) {

@@ -1105,6 +1105,35 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
     viewMode={true}
   />
   <hr />
+  <div
+    className="container"
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="col-md-11"
+      />
+      <div
+        className="col-md-1"
+      >
+        <div
+          className="btn btn-default btn-md"
+          onClick={true}
+          type="button"
+        >
+          Ekspander delhendelser
+        </div>
+      </div>
+      <div
+        className="row"
+      >
+        <div
+          className="col-md-12"
+        />
+      </div>
+    </div>
+  </div>
   <FieldMultiSelect
     appSession={
       Object {
@@ -1256,11 +1285,11 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
     title="Velg delhendelser som skal lages:"
   />
   <button
-    className="btn btn"
+    className="btn btn-default"
     disabled={false}
     onClick={[Function]}
   >
-    Velg delhendelser som skal lages
+    Opprett valgte delhendelser
   </button>
   <hr />
   <button
@@ -2849,6 +2878,1098 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
     viewMode={true}
   />
   <hr />
+  <div
+    className="container"
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="col-md-11"
+      />
+      <div
+        className="col-md-1"
+      >
+        <div
+          className="btn btn-default btn-md"
+          onClick={true}
+          type="button"
+        >
+          Ekspander delhendelser
+        </div>
+      </div>
+      <div
+        className="row"
+      >
+        <div
+          className="col-md-12"
+        >
+          <Treatment
+            affectedThingsWithDetailsMainEvent={
+              Array [
+                Object {
+                  "collection": 1,
+                  "coordinates": Array [],
+                  "id": 28,
+                  "isDeleted": false,
+                  "locations": Array [],
+                  "materials": Array [],
+                  "museumId": 99,
+                  "museumNo": "MusK314",
+                  "objectData": Object {
+                    "collection": 1,
+                    "coordinates": Array [],
+                    "id": 28,
+                    "isDeleted": false,
+                    "locations": Array [],
+                    "materials": Array [],
+                    "museumId": 99,
+                    "museumNo": "MusK314",
+                    "objectType": "collection",
+                    "subNo": "b",
+                    "term": "Runeskrift",
+                    "uuid": "ba56a4f6-b907-4158-9a67-bca6080320bb",
+                  },
+                  "objectType": "collection",
+                  "subNo": "b",
+                  "term": "Runeskrift",
+                  "uuid": "ba56a4f6-b907-4158-9a67-bca6080320bb",
+                },
+                Object {
+                  "collection": 1,
+                  "coordinates": Array [],
+                  "id": 1,
+                  "isDeleted": false,
+                  "locations": Array [],
+                  "mainObjectId": 1,
+                  "materials": Array [],
+                  "museumId": 99,
+                  "museumNo": "MusK58",
+                  "objectData": Object {
+                    "collection": 1,
+                    "coordinates": Array [],
+                    "id": 1,
+                    "isDeleted": false,
+                    "locations": Array [],
+                    "mainObjectId": 1,
+                    "materials": Array [],
+                    "museumId": 99,
+                    "museumNo": "MusK58",
+                    "objectType": "collection",
+                    "subNo": "1",
+                    "term": "Rar dings",
+                    "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
+                  },
+                  "objectType": "collection",
+                  "subNo": "1",
+                  "term": "Rar dings",
+                  "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
+                },
+                Object {
+                  "collection": 1,
+                  "coordinates": Array [],
+                  "id": 2,
+                  "isDeleted": false,
+                  "locations": Array [],
+                  "mainObjectId": 1,
+                  "materials": Array [],
+                  "museumId": 99,
+                  "museumNo": "MusK58",
+                  "objectData": Object {
+                    "collection": 1,
+                    "coordinates": Array [],
+                    "id": 2,
+                    "isDeleted": false,
+                    "locations": Array [],
+                    "mainObjectId": 1,
+                    "materials": Array [],
+                    "museumId": 99,
+                    "museumNo": "MusK58",
+                    "objectType": "collection",
+                    "subNo": "2",
+                    "term": "Mansjettknapp",
+                    "uuid": "adea8141-8099-4f67-bff9-ea5090e18335",
+                  },
+                  "objectType": "collection",
+                  "subNo": "2",
+                  "term": "Mansjettknapp",
+                  "uuid": "adea8141-8099-4f67-bff9-ea5090e18335",
+                },
+                Object {
+                  "collection": 2,
+                  "coordinates": Array [],
+                  "id": 9,
+                  "isDeleted": false,
+                  "locations": Array [],
+                  "materials": Array [],
+                  "museumId": 99,
+                  "museumNo": "MusN28",
+                  "objectData": Object {
+                    "collection": 2,
+                    "coordinates": Array [],
+                    "id": 9,
+                    "isDeleted": false,
+                    "locations": Array [],
+                    "materials": Array [],
+                    "museumId": 99,
+                    "museumNo": "MusN28",
+                    "objectType": "collection",
+                    "term": "Tusenben",
+                    "uuid": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
+                  },
+                  "objectType": "collection",
+                  "term": "Tusenben",
+                  "uuid": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
+                },
+                Object {
+                  "collection": 2,
+                  "coordinates": Array [],
+                  "id": 8,
+                  "isDeleted": false,
+                  "locations": Array [],
+                  "materials": Array [],
+                  "museumId": 99,
+                  "museumNo": "MusN37",
+                  "objectData": Object {
+                    "collection": 2,
+                    "coordinates": Array [],
+                    "id": 8,
+                    "isDeleted": false,
+                    "locations": Array [],
+                    "materials": Array [],
+                    "museumId": 99,
+                    "museumNo": "MusN37",
+                    "objectType": "collection",
+                    "term": "Bendelorm",
+                    "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
+                  },
+                  "objectType": "collection",
+                  "term": "Bendelorm",
+                  "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
+                },
+              ]
+            }
+            appSession={
+              Object {
+                "accessToken": "7dbce915-c87a-47c1-8666-c858f3624d0d",
+                "actor": Object {
+                  "dataportenId": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+                  "dataportenUser": "rituvesk@uio.no",
+                  "email": "rituvesh.kumar@usit.uio.no",
+                  "fn": "Rituvesh Kumar",
+                },
+                "buildInfo": Object {
+                  "buildInfoBuildNumber": "31",
+                  "builtAtMillis": "1511169267488",
+                  "builtAtString": "2017-11-20 09:14:27.488",
+                  "commitSha": "not built on CI",
+                  "name": "service_auth",
+                  "sbtVersion": "0.13.16",
+                  "scalaVersion": "2.11.8",
+                  "version": "0.1-SNAPSHOT",
+                },
+                "collectionId": "00000000-0000-0000-0000-000000000000",
+                "groups": Array [
+                  Object {
+                    "collections": Array [
+                      Object {
+                        "name": "All",
+                        "uuid": "00000000-0000-0000-0000-000000000000",
+                      },
+                    ],
+                    "id": 99,
+                    "museumId": 99,
+                    "museumName": "Test",
+                    "permission": 10000,
+                    "shortName": "Test",
+                  },
+                  Object {
+                    "collections": Array [
+                      Object {
+                        "name": "All",
+                        "uuid": "00000000-0000-0000-0000-000000000000",
+                      },
+                    ],
+                    "id": 7,
+                    "museumId": 7,
+                    "museumName": "Kmn",
+                    "permission": 10000,
+                    "shortName": "Kmn",
+                  },
+                  Object {
+                    "collections": Array [
+                      Object {
+                        "name": "All",
+                        "uuid": "00000000-0000-0000-0000-000000000000",
+                      },
+                    ],
+                    "id": 6,
+                    "museumId": 6,
+                    "museumName": "Tmu",
+                    "permission": 10000,
+                    "shortName": "Tmu",
+                  },
+                  Object {
+                    "collections": Array [
+                      Object {
+                        "name": "All",
+                        "uuid": "00000000-0000-0000-0000-000000000000",
+                      },
+                    ],
+                    "id": 5,
+                    "museumId": 5,
+                    "museumName": "Vm",
+                    "permission": 10000,
+                    "shortName": "Vm",
+                  },
+                  Object {
+                    "collections": Array [
+                      Object {
+                        "name": "All",
+                        "uuid": "00000000-0000-0000-0000-000000000000",
+                      },
+                    ],
+                    "id": 4,
+                    "museumId": 4,
+                    "museumName": "Nhm",
+                    "permission": 10000,
+                    "shortName": "Nhm",
+                  },
+                  Object {
+                    "collections": Array [
+                      Object {
+                        "name": "All",
+                        "uuid": "00000000-0000-0000-0000-000000000000",
+                      },
+                    ],
+                    "id": 3,
+                    "museumId": 3,
+                    "museumName": "Khm",
+                    "permission": 10000,
+                    "shortName": "Khm",
+                  },
+                  Object {
+                    "collections": Array [
+                      Object {
+                        "name": "All",
+                        "uuid": "00000000-0000-0000-0000-000000000000",
+                      },
+                    ],
+                    "id": 2,
+                    "museumId": 2,
+                    "museumName": "Um",
+                    "permission": 10000,
+                    "shortName": "Um",
+                  },
+                  Object {
+                    "collections": Array [
+                      Object {
+                        "name": "All",
+                        "uuid": "00000000-0000-0000-0000-000000000000",
+                      },
+                    ],
+                    "id": 1,
+                    "museumId": 1,
+                    "museumName": "Am",
+                    "permission": 10000,
+                    "shortName": "Am",
+                  },
+                ],
+                "language": Object {
+                  "isEn": true,
+                  "isNo": false,
+                },
+                "museumId": 99,
+              }
+            }
+            index={0}
+            keywords={
+              Array [
+                Object {
+                  "enTerm": "Støvsuget",
+                  "id": 1,
+                  "noTerm": "Støvsuget",
+                },
+                Object {
+                  "enTerm": "Børstet",
+                  "id": 2,
+                  "noTerm": "Børstet",
+                },
+                Object {
+                  "enTerm": "Kjemisk rensing",
+                  "id": 3,
+                  "noTerm": "Kjemisk rensing",
+                },
+                Object {
+                  "enTerm": "Mekanisk rensing",
+                  "id": 4,
+                  "noTerm": "Mekanisk rensing",
+                },
+                Object {
+                  "enTerm": "Utvasking",
+                  "id": 5,
+                  "noTerm": "Utvasking",
+                },
+                Object {
+                  "enTerm": "Sandblåst",
+                  "id": 6,
+                  "noTerm": "Sandblåst",
+                },
+                Object {
+                  "enTerm": "Limt",
+                  "id": 7,
+                  "noTerm": "Limt",
+                },
+                Object {
+                  "enTerm": "Impregnert",
+                  "id": 8,
+                  "noTerm": "Impregnert",
+                },
+                Object {
+                  "enTerm": "Konsolidert",
+                  "id": 9,
+                  "noTerm": "Konsolidert",
+                },
+                Object {
+                  "enTerm": "Frysetørket",
+                  "id": 10,
+                  "noTerm": "Frysetørket",
+                },
+                Object {
+                  "enTerm": "Retusjert",
+                  "id": 11,
+                  "noTerm": "Retusjert",
+                },
+                Object {
+                  "enTerm": "Pakket",
+                  "id": 12,
+                  "noTerm": "Pakket",
+                },
+                Object {
+                  "enTerm": "Lufttørket",
+                  "id": 13,
+                  "noTerm": "Lufttørket",
+                },
+                Object {
+                  "enTerm": "Slipt (maskinelt)",
+                  "id": 14,
+                  "noTerm": "Slipt (maskinelt)",
+                },
+                Object {
+                  "enTerm": "Avstøpning",
+                  "id": 15,
+                  "noTerm": "Avstøpning",
+                },
+                Object {
+                  "enTerm": "Lakkert",
+                  "id": 16,
+                  "noTerm": "Lakkert",
+                },
+              ]
+            }
+            materials={
+              Array [
+                Object {
+                  "enTerm": "Sitronsyre",
+                  "id": 1,
+                  "noTerm": "Sitronsyre",
+                },
+                Object {
+                  "enTerm": "Klucel EF",
+                  "id": 2,
+                  "noTerm": "Klucel EF",
+                },
+                Object {
+                  "enTerm": "Klucel G",
+                  "id": 3,
+                  "noTerm": "Klucel G",
+                },
+                Object {
+                  "enTerm": "Lascaux Medium for konsolidering",
+                  "id": 4,
+                  "noTerm": "Lascaux Medium for konsolidering",
+                },
+                Object {
+                  "enTerm": "Aceton",
+                  "id": 5,
+                  "noTerm": "Aceton",
+                },
+                Object {
+                  "enTerm": "Rochelle salt",
+                  "id": 6,
+                  "noTerm": "Rochelle salt",
+                },
+                Object {
+                  "enTerm": "Aluminiumsoksid",
+                  "id": 7,
+                  "noTerm": "Aluminiumsoksid",
+                },
+                Object {
+                  "enTerm": "Ammoniakk",
+                  "id": 8,
+                  "noTerm": "Ammoniakk",
+                },
+                Object {
+                  "enTerm": "Ammoniumhydroksid",
+                  "id": 9,
+                  "noTerm": "Ammoniumhydroksid",
+                },
+                Object {
+                  "enTerm": "Benzen",
+                  "id": 10,
+                  "noTerm": "Benzen",
+                },
+                Object {
+                  "enTerm": "Benzotriasol (BTA)",
+                  "id": 11,
+                  "noTerm": "Benzotriasol (BTA)",
+                },
+                Object {
+                  "enTerm": "Cellulosenitrat",
+                  "id": 12,
+                  "noTerm": "Cellulosenitrat",
+                },
+                Object {
+                  "enTerm": "Kolofonium",
+                  "id": 13,
+                  "noTerm": "Kolofonium",
+                },
+                Object {
+                  "enTerm": "Cyanoakrylat (superlim)",
+                  "id": 14,
+                  "noTerm": "Cyanoakrylat (superlim)",
+                },
+                Object {
+                  "enTerm": "Eddiksyre",
+                  "id": 15,
+                  "noTerm": "Eddiksyre",
+                },
+                Object {
+                  "enTerm": "EDTA-Na2",
+                  "id": 16,
+                  "noTerm": "EDTA-Na2",
+                },
+                Object {
+                  "enTerm": "EDTA",
+                  "id": 17,
+                  "noTerm": "EDTA",
+                },
+                Object {
+                  "enTerm": "Epoxylim",
+                  "id": 18,
+                  "noTerm": "Epoxylim",
+                },
+                Object {
+                  "enTerm": "Etanol",
+                  "id": 19,
+                  "noTerm": "Etanol",
+                },
+                Object {
+                  "enTerm": "Smeltelim (EVA)",
+                  "id": 20,
+                  "noTerm": "Smeltelim (EVA)",
+                },
+                Object {
+                  "enTerm": "Fosforsyre",
+                  "id": 21,
+                  "noTerm": "Fosforsyre",
+                },
+                Object {
+                  "enTerm": "Gasil 23",
+                  "id": 22,
+                  "noTerm": "Gasil 23",
+                },
+                Object {
+                  "enTerm": "Gips",
+                  "id": 23,
+                  "noTerm": "Gips",
+                },
+                Object {
+                  "enTerm": "Glassfibervev",
+                  "id": 24,
+                  "noTerm": "Glassfibervev",
+                },
+                Object {
+                  "enTerm": "Glasspulver",
+                  "id": 25,
+                  "noTerm": "Glasspulver",
+                },
+                Object {
+                  "enTerm": "Glycerin",
+                  "id": 26,
+                  "noTerm": "Glycerin",
+                },
+                Object {
+                  "enTerm": "Hydrogenperoksid",
+                  "id": 27,
+                  "noTerm": "Hydrogenperoksid",
+                },
+                Object {
+                  "enTerm": "Incralac",
+                  "id": 28,
+                  "noTerm": "Incralac",
+                },
+                Object {
+                  "enTerm": "Isopropanol",
+                  "id": 29,
+                  "noTerm": "Isopropanol",
+                },
+                Object {
+                  "enTerm": "Japanpapir",
+                  "id": 30,
+                  "noTerm": "Japanpapir",
+                },
+                Object {
+                  "enTerm": "Lissapol N",
+                  "id": 31,
+                  "noTerm": "Lissapol N",
+                },
+                Object {
+                  "enTerm": "Maursyre",
+                  "id": 32,
+                  "noTerm": "Maursyre",
+                },
+                Object {
+                  "enTerm": "Mannitol",
+                  "id": 33,
+                  "noTerm": "Mannitol",
+                },
+                Object {
+                  "enTerm": "Mikrokrystallinsk voks",
+                  "id": 34,
+                  "noTerm": "Mikrokrystallinsk voks",
+                },
+                Object {
+                  "enTerm": "Natriumkarbonat",
+                  "id": 35,
+                  "noTerm": "Natriumkarbonat",
+                },
+                Object {
+                  "enTerm": "Natriumsitrat",
+                  "id": 36,
+                  "noTerm": "Natriumsitrat",
+                },
+                Object {
+                  "enTerm": "Natriumhydrogenkarbonat",
+                  "id": 37,
+                  "noTerm": "Natriumhydrogenkarbonat",
+                },
+                Object {
+                  "enTerm": "Natriumhydroksyd",
+                  "id": 38,
+                  "noTerm": "Natriumhydroksyd",
+                },
+                Object {
+                  "enTerm": "Paraloid B72",
+                  "id": 39,
+                  "noTerm": "Paraloid B72",
+                },
+                Object {
+                  "enTerm": "PEG høymolekylær (fast)",
+                  "id": 40,
+                  "noTerm": "PEG høymolekylær (fast)",
+                },
+                Object {
+                  "enTerm": "Petroleumsether kpkt 60-80 grader",
+                  "id": 41,
+                  "noTerm": "Petroleumsether kpkt 60-80 grader",
+                },
+                Object {
+                  "enTerm": "Plextol B500",
+                  "id": 42,
+                  "noTerm": "Plextol B500",
+                },
+                Object {
+                  "enTerm": "Polyolefin",
+                  "id": 43,
+                  "noTerm": "Polyolefin",
+                },
+                Object {
+                  "enTerm": "Polyvinylacetat",
+                  "id": 44,
+                  "noTerm": "Polyvinylacetat",
+                },
+                Object {
+                  "enTerm": "Primal WS24",
+                  "id": 45,
+                  "noTerm": "Primal WS24",
+                },
+                Object {
+                  "enTerm": "Salpetersyre",
+                  "id": 46,
+                  "noTerm": "Salpetersyre",
+                },
+                Object {
+                  "enTerm": "Saltsyre",
+                  "id": 47,
+                  "noTerm": "Saltsyre",
+                },
+                Object {
+                  "enTerm": "Skjellakk",
+                  "id": 48,
+                  "noTerm": "Skjellakk",
+                },
+                Object {
+                  "enTerm": "Silikagel",
+                  "id": 49,
+                  "noTerm": "Silikagel",
+                },
+                Object {
+                  "enTerm": "Silikonfett",
+                  "id": 50,
+                  "noTerm": "Silikonfett",
+                },
+                Object {
+                  "enTerm": "Silikongummi",
+                  "id": 51,
+                  "noTerm": "Silikongummi",
+                },
+                Object {
+                  "enTerm": "Silver Polish Wadding",
+                  "id": 52,
+                  "noTerm": "Silver Polish Wadding",
+                },
+                Object {
+                  "enTerm": "Sølvnitrat",
+                  "id": 53,
+                  "noTerm": "Sølvnitrat",
+                },
+                Object {
+                  "enTerm": "Sorbitol",
+                  "id": 54,
+                  "noTerm": "Sorbitol",
+                },
+                Object {
+                  "enTerm": "Størlim",
+                  "id": 55,
+                  "noTerm": "Størlim",
+                },
+                Object {
+                  "enTerm": "Svovelsyre",
+                  "id": 56,
+                  "noTerm": "Svovelsyre",
+                },
+                Object {
+                  "enTerm": "Synocryl 9122x",
+                  "id": 57,
+                  "noTerm": "Synocryl 9122x",
+                },
+                Object {
+                  "enTerm": "Tannin syre",
+                  "id": 58,
+                  "noTerm": "Tannin syre",
+                },
+                Object {
+                  "enTerm": "Terpentin",
+                  "id": 59,
+                  "noTerm": "Terpentin",
+                },
+                Object {
+                  "enTerm": "Tiourea",
+                  "id": 60,
+                  "noTerm": "Tiourea",
+                },
+                Object {
+                  "enTerm": "Toluen",
+                  "id": 61,
+                  "noTerm": "Toluen",
+                },
+                Object {
+                  "enTerm": "White spirit",
+                  "id": 62,
+                  "noTerm": "White spirit",
+                },
+                Object {
+                  "enTerm": "White spirit, lavaromatisk",
+                  "id": 63,
+                  "noTerm": "White spirit, lavaromatisk",
+                },
+                Object {
+                  "enTerm": "Vann",
+                  "id": 64,
+                  "noTerm": "Vann",
+                },
+                Object {
+                  "enTerm": "Vann (destillert)",
+                  "id": 65,
+                  "noTerm": "Vann (destillert)",
+                },
+                Object {
+                  "enTerm": "Vann (avionisert)",
+                  "id": 66,
+                  "noTerm": "Vann (avionisert)",
+                },
+                Object {
+                  "enTerm": "Xylen",
+                  "id": 67,
+                  "noTerm": "Xylen",
+                },
+                Object {
+                  "enTerm": "PEG lavmoelkylær (flytende)",
+                  "id": 68,
+                  "noTerm": "PEG lavmoelkylær (flytende)",
+                },
+                Object {
+                  "enTerm": "Paraloid B44",
+                  "id": 69,
+                  "noTerm": "Paraloid B44",
+                },
+                Object {
+                  "enTerm": "Paraloid B 67",
+                  "id": 70,
+                  "noTerm": "Paraloid B 67",
+                },
+                Object {
+                  "enTerm": "Technovit 5071",
+                  "id": 71,
+                  "noTerm": "Technovit 5071",
+                },
+                Object {
+                  "enTerm": "Natriumsulfitt",
+                  "id": 72,
+                  "noTerm": "Natriumsulfitt",
+                },
+                Object {
+                  "enTerm": "Valnøttskall",
+                  "id": 73,
+                  "noTerm": "Valnøttskall",
+                },
+              ]
+            }
+            name="treatment_0"
+            onChange="events"
+            toggleExpanded={true}
+            treatment={
+              Object {
+                "affectedThings": Array [
+                  "ad1b5287-0168-4343-b3df-a477de113bee",
+                  "adea8141-8099-4f67-bff9-ea5090e18335",
+                  "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
+                  "41be3c71-a71b-486d-a265-c3a92672f4cf",
+                ],
+                "eventTypeId": 2,
+                "id": 113,
+                "keywords": Array [
+                  2,
+                ],
+                "materials": Array [
+                  2,
+                ],
+                "note": "dfdfsdfsdf",
+                "partOf": 112,
+                "registeredBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+                "registeredDate": "2017-11-21T13:54:28+00:00",
+                "updatedBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+                "updatedDate": "2017-11-21T15:14:29+00:00",
+              }
+            }
+            viewMode={false}
+          />
+          <TechnicalDescription
+            affectedThingsWithDetailsMainEvent={
+              Array [
+                Object {
+                  "collection": 1,
+                  "coordinates": Array [],
+                  "id": 28,
+                  "isDeleted": false,
+                  "locations": Array [],
+                  "materials": Array [],
+                  "museumId": 99,
+                  "museumNo": "MusK314",
+                  "objectData": Object {
+                    "collection": 1,
+                    "coordinates": Array [],
+                    "id": 28,
+                    "isDeleted": false,
+                    "locations": Array [],
+                    "materials": Array [],
+                    "museumId": 99,
+                    "museumNo": "MusK314",
+                    "objectType": "collection",
+                    "subNo": "b",
+                    "term": "Runeskrift",
+                    "uuid": "ba56a4f6-b907-4158-9a67-bca6080320bb",
+                  },
+                  "objectType": "collection",
+                  "subNo": "b",
+                  "term": "Runeskrift",
+                  "uuid": "ba56a4f6-b907-4158-9a67-bca6080320bb",
+                },
+                Object {
+                  "collection": 1,
+                  "coordinates": Array [],
+                  "id": 1,
+                  "isDeleted": false,
+                  "locations": Array [],
+                  "mainObjectId": 1,
+                  "materials": Array [],
+                  "museumId": 99,
+                  "museumNo": "MusK58",
+                  "objectData": Object {
+                    "collection": 1,
+                    "coordinates": Array [],
+                    "id": 1,
+                    "isDeleted": false,
+                    "locations": Array [],
+                    "mainObjectId": 1,
+                    "materials": Array [],
+                    "museumId": 99,
+                    "museumNo": "MusK58",
+                    "objectType": "collection",
+                    "subNo": "1",
+                    "term": "Rar dings",
+                    "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
+                  },
+                  "objectType": "collection",
+                  "subNo": "1",
+                  "term": "Rar dings",
+                  "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
+                },
+                Object {
+                  "collection": 1,
+                  "coordinates": Array [],
+                  "id": 2,
+                  "isDeleted": false,
+                  "locations": Array [],
+                  "mainObjectId": 1,
+                  "materials": Array [],
+                  "museumId": 99,
+                  "museumNo": "MusK58",
+                  "objectData": Object {
+                    "collection": 1,
+                    "coordinates": Array [],
+                    "id": 2,
+                    "isDeleted": false,
+                    "locations": Array [],
+                    "mainObjectId": 1,
+                    "materials": Array [],
+                    "museumId": 99,
+                    "museumNo": "MusK58",
+                    "objectType": "collection",
+                    "subNo": "2",
+                    "term": "Mansjettknapp",
+                    "uuid": "adea8141-8099-4f67-bff9-ea5090e18335",
+                  },
+                  "objectType": "collection",
+                  "subNo": "2",
+                  "term": "Mansjettknapp",
+                  "uuid": "adea8141-8099-4f67-bff9-ea5090e18335",
+                },
+                Object {
+                  "collection": 2,
+                  "coordinates": Array [],
+                  "id": 9,
+                  "isDeleted": false,
+                  "locations": Array [],
+                  "materials": Array [],
+                  "museumId": 99,
+                  "museumNo": "MusN28",
+                  "objectData": Object {
+                    "collection": 2,
+                    "coordinates": Array [],
+                    "id": 9,
+                    "isDeleted": false,
+                    "locations": Array [],
+                    "materials": Array [],
+                    "museumId": 99,
+                    "museumNo": "MusN28",
+                    "objectType": "collection",
+                    "term": "Tusenben",
+                    "uuid": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
+                  },
+                  "objectType": "collection",
+                  "term": "Tusenben",
+                  "uuid": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
+                },
+                Object {
+                  "collection": 2,
+                  "coordinates": Array [],
+                  "id": 8,
+                  "isDeleted": false,
+                  "locations": Array [],
+                  "materials": Array [],
+                  "museumId": 99,
+                  "museumNo": "MusN37",
+                  "objectData": Object {
+                    "collection": 2,
+                    "coordinates": Array [],
+                    "id": 8,
+                    "isDeleted": false,
+                    "locations": Array [],
+                    "materials": Array [],
+                    "museumId": 99,
+                    "museumNo": "MusN37",
+                    "objectType": "collection",
+                    "term": "Bendelorm",
+                    "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
+                  },
+                  "objectType": "collection",
+                  "term": "Bendelorm",
+                  "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
+                },
+              ]
+            }
+            appSession={
+              Object {
+                "accessToken": "7dbce915-c87a-47c1-8666-c858f3624d0d",
+                "actor": Object {
+                  "dataportenId": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+                  "dataportenUser": "rituvesk@uio.no",
+                  "email": "rituvesh.kumar@usit.uio.no",
+                  "fn": "Rituvesh Kumar",
+                },
+                "buildInfo": Object {
+                  "buildInfoBuildNumber": "31",
+                  "builtAtMillis": "1511169267488",
+                  "builtAtString": "2017-11-20 09:14:27.488",
+                  "commitSha": "not built on CI",
+                  "name": "service_auth",
+                  "sbtVersion": "0.13.16",
+                  "scalaVersion": "2.11.8",
+                  "version": "0.1-SNAPSHOT",
+                },
+                "collectionId": "00000000-0000-0000-0000-000000000000",
+                "groups": Array [
+                  Object {
+                    "collections": Array [
+                      Object {
+                        "name": "All",
+                        "uuid": "00000000-0000-0000-0000-000000000000",
+                      },
+                    ],
+                    "id": 99,
+                    "museumId": 99,
+                    "museumName": "Test",
+                    "permission": 10000,
+                    "shortName": "Test",
+                  },
+                  Object {
+                    "collections": Array [
+                      Object {
+                        "name": "All",
+                        "uuid": "00000000-0000-0000-0000-000000000000",
+                      },
+                    ],
+                    "id": 7,
+                    "museumId": 7,
+                    "museumName": "Kmn",
+                    "permission": 10000,
+                    "shortName": "Kmn",
+                  },
+                  Object {
+                    "collections": Array [
+                      Object {
+                        "name": "All",
+                        "uuid": "00000000-0000-0000-0000-000000000000",
+                      },
+                    ],
+                    "id": 6,
+                    "museumId": 6,
+                    "museumName": "Tmu",
+                    "permission": 10000,
+                    "shortName": "Tmu",
+                  },
+                  Object {
+                    "collections": Array [
+                      Object {
+                        "name": "All",
+                        "uuid": "00000000-0000-0000-0000-000000000000",
+                      },
+                    ],
+                    "id": 5,
+                    "museumId": 5,
+                    "museumName": "Vm",
+                    "permission": 10000,
+                    "shortName": "Vm",
+                  },
+                  Object {
+                    "collections": Array [
+                      Object {
+                        "name": "All",
+                        "uuid": "00000000-0000-0000-0000-000000000000",
+                      },
+                    ],
+                    "id": 4,
+                    "museumId": 4,
+                    "museumName": "Nhm",
+                    "permission": 10000,
+                    "shortName": "Nhm",
+                  },
+                  Object {
+                    "collections": Array [
+                      Object {
+                        "name": "All",
+                        "uuid": "00000000-0000-0000-0000-000000000000",
+                      },
+                    ],
+                    "id": 3,
+                    "museumId": 3,
+                    "museumName": "Khm",
+                    "permission": 10000,
+                    "shortName": "Khm",
+                  },
+                  Object {
+                    "collections": Array [
+                      Object {
+                        "name": "All",
+                        "uuid": "00000000-0000-0000-0000-000000000000",
+                      },
+                    ],
+                    "id": 2,
+                    "museumId": 2,
+                    "museumName": "Um",
+                    "permission": 10000,
+                    "shortName": "Um",
+                  },
+                  Object {
+                    "collections": Array [
+                      Object {
+                        "name": "All",
+                        "uuid": "00000000-0000-0000-0000-000000000000",
+                      },
+                    ],
+                    "id": 1,
+                    "museumId": 1,
+                    "museumName": "Am",
+                    "permission": 10000,
+                    "shortName": "Am",
+                  },
+                ],
+                "language": Object {
+                  "isEn": true,
+                  "isNo": false,
+                },
+                "museumId": 99,
+              }
+            }
+            index={1}
+            name="techincalDescription_1"
+            onChange="events"
+            technicalDescription={
+              Object {
+                "affectedThings": Array [
+                  "adea8141-8099-4f67-bff9-ea5090e18335",
+                  "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
+                  "41be3c71-a71b-486d-a265-c3a92672f4cf",
+                ],
+                "eventTypeId": 3,
+                "id": 114,
+                "note": "dfsdfsdfsd",
+                "partOf": 112,
+                "registeredBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+                "registeredDate": "2017-11-21T15:09:41+00:00",
+                "updatedBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+                "updatedDate": "2017-11-21T15:14:29+00:00",
+              }
+            }
+            toggleExpanded={true}
+            viewMode={false}
+          />
+        </div>
+      </div>
+    </div>
+  </div>
   <FieldMultiSelect
     appSession={
       Object {
@@ -3000,1072 +4121,13 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
     title="Velg delhendelser som skal lages:"
   />
   <button
-    className="btn btn"
+    className="btn btn-default"
     disabled={false}
     onClick={[Function]}
   >
-    Velg delhendelser som skal lages
+    Opprett valgte delhendelser
   </button>
   <hr />
-  <Treatment
-    affectedThingsWithDetailsMainEvent={
-      Array [
-        Object {
-          "collection": 1,
-          "coordinates": Array [],
-          "id": 28,
-          "isDeleted": false,
-          "locations": Array [],
-          "materials": Array [],
-          "museumId": 99,
-          "museumNo": "MusK314",
-          "objectData": Object {
-            "collection": 1,
-            "coordinates": Array [],
-            "id": 28,
-            "isDeleted": false,
-            "locations": Array [],
-            "materials": Array [],
-            "museumId": 99,
-            "museumNo": "MusK314",
-            "objectType": "collection",
-            "subNo": "b",
-            "term": "Runeskrift",
-            "uuid": "ba56a4f6-b907-4158-9a67-bca6080320bb",
-          },
-          "objectType": "collection",
-          "subNo": "b",
-          "term": "Runeskrift",
-          "uuid": "ba56a4f6-b907-4158-9a67-bca6080320bb",
-        },
-        Object {
-          "collection": 1,
-          "coordinates": Array [],
-          "id": 1,
-          "isDeleted": false,
-          "locations": Array [],
-          "mainObjectId": 1,
-          "materials": Array [],
-          "museumId": 99,
-          "museumNo": "MusK58",
-          "objectData": Object {
-            "collection": 1,
-            "coordinates": Array [],
-            "id": 1,
-            "isDeleted": false,
-            "locations": Array [],
-            "mainObjectId": 1,
-            "materials": Array [],
-            "museumId": 99,
-            "museumNo": "MusK58",
-            "objectType": "collection",
-            "subNo": "1",
-            "term": "Rar dings",
-            "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
-          },
-          "objectType": "collection",
-          "subNo": "1",
-          "term": "Rar dings",
-          "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
-        },
-        Object {
-          "collection": 1,
-          "coordinates": Array [],
-          "id": 2,
-          "isDeleted": false,
-          "locations": Array [],
-          "mainObjectId": 1,
-          "materials": Array [],
-          "museumId": 99,
-          "museumNo": "MusK58",
-          "objectData": Object {
-            "collection": 1,
-            "coordinates": Array [],
-            "id": 2,
-            "isDeleted": false,
-            "locations": Array [],
-            "mainObjectId": 1,
-            "materials": Array [],
-            "museumId": 99,
-            "museumNo": "MusK58",
-            "objectType": "collection",
-            "subNo": "2",
-            "term": "Mansjettknapp",
-            "uuid": "adea8141-8099-4f67-bff9-ea5090e18335",
-          },
-          "objectType": "collection",
-          "subNo": "2",
-          "term": "Mansjettknapp",
-          "uuid": "adea8141-8099-4f67-bff9-ea5090e18335",
-        },
-        Object {
-          "collection": 2,
-          "coordinates": Array [],
-          "id": 9,
-          "isDeleted": false,
-          "locations": Array [],
-          "materials": Array [],
-          "museumId": 99,
-          "museumNo": "MusN28",
-          "objectData": Object {
-            "collection": 2,
-            "coordinates": Array [],
-            "id": 9,
-            "isDeleted": false,
-            "locations": Array [],
-            "materials": Array [],
-            "museumId": 99,
-            "museumNo": "MusN28",
-            "objectType": "collection",
-            "term": "Tusenben",
-            "uuid": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
-          },
-          "objectType": "collection",
-          "term": "Tusenben",
-          "uuid": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
-        },
-        Object {
-          "collection": 2,
-          "coordinates": Array [],
-          "id": 8,
-          "isDeleted": false,
-          "locations": Array [],
-          "materials": Array [],
-          "museumId": 99,
-          "museumNo": "MusN37",
-          "objectData": Object {
-            "collection": 2,
-            "coordinates": Array [],
-            "id": 8,
-            "isDeleted": false,
-            "locations": Array [],
-            "materials": Array [],
-            "museumId": 99,
-            "museumNo": "MusN37",
-            "objectType": "collection",
-            "term": "Bendelorm",
-            "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
-          },
-          "objectType": "collection",
-          "term": "Bendelorm",
-          "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
-        },
-      ]
-    }
-    appSession={
-      Object {
-        "accessToken": "7dbce915-c87a-47c1-8666-c858f3624d0d",
-        "actor": Object {
-          "dataportenId": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-          "dataportenUser": "rituvesk@uio.no",
-          "email": "rituvesh.kumar@usit.uio.no",
-          "fn": "Rituvesh Kumar",
-        },
-        "buildInfo": Object {
-          "buildInfoBuildNumber": "31",
-          "builtAtMillis": "1511169267488",
-          "builtAtString": "2017-11-20 09:14:27.488",
-          "commitSha": "not built on CI",
-          "name": "service_auth",
-          "sbtVersion": "0.13.16",
-          "scalaVersion": "2.11.8",
-          "version": "0.1-SNAPSHOT",
-        },
-        "collectionId": "00000000-0000-0000-0000-000000000000",
-        "groups": Array [
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 99,
-            "museumId": 99,
-            "museumName": "Test",
-            "permission": 10000,
-            "shortName": "Test",
-          },
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 7,
-            "museumId": 7,
-            "museumName": "Kmn",
-            "permission": 10000,
-            "shortName": "Kmn",
-          },
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 6,
-            "museumId": 6,
-            "museumName": "Tmu",
-            "permission": 10000,
-            "shortName": "Tmu",
-          },
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 5,
-            "museumId": 5,
-            "museumName": "Vm",
-            "permission": 10000,
-            "shortName": "Vm",
-          },
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 4,
-            "museumId": 4,
-            "museumName": "Nhm",
-            "permission": 10000,
-            "shortName": "Nhm",
-          },
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 3,
-            "museumId": 3,
-            "museumName": "Khm",
-            "permission": 10000,
-            "shortName": "Khm",
-          },
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 2,
-            "museumId": 2,
-            "museumName": "Um",
-            "permission": 10000,
-            "shortName": "Um",
-          },
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 1,
-            "museumId": 1,
-            "museumName": "Am",
-            "permission": 10000,
-            "shortName": "Am",
-          },
-        ],
-        "language": Object {
-          "isEn": true,
-          "isNo": false,
-        },
-        "museumId": 99,
-      }
-    }
-    index={0}
-    keywords={
-      Array [
-        Object {
-          "enTerm": "Støvsuget",
-          "id": 1,
-          "noTerm": "Støvsuget",
-        },
-        Object {
-          "enTerm": "Børstet",
-          "id": 2,
-          "noTerm": "Børstet",
-        },
-        Object {
-          "enTerm": "Kjemisk rensing",
-          "id": 3,
-          "noTerm": "Kjemisk rensing",
-        },
-        Object {
-          "enTerm": "Mekanisk rensing",
-          "id": 4,
-          "noTerm": "Mekanisk rensing",
-        },
-        Object {
-          "enTerm": "Utvasking",
-          "id": 5,
-          "noTerm": "Utvasking",
-        },
-        Object {
-          "enTerm": "Sandblåst",
-          "id": 6,
-          "noTerm": "Sandblåst",
-        },
-        Object {
-          "enTerm": "Limt",
-          "id": 7,
-          "noTerm": "Limt",
-        },
-        Object {
-          "enTerm": "Impregnert",
-          "id": 8,
-          "noTerm": "Impregnert",
-        },
-        Object {
-          "enTerm": "Konsolidert",
-          "id": 9,
-          "noTerm": "Konsolidert",
-        },
-        Object {
-          "enTerm": "Frysetørket",
-          "id": 10,
-          "noTerm": "Frysetørket",
-        },
-        Object {
-          "enTerm": "Retusjert",
-          "id": 11,
-          "noTerm": "Retusjert",
-        },
-        Object {
-          "enTerm": "Pakket",
-          "id": 12,
-          "noTerm": "Pakket",
-        },
-        Object {
-          "enTerm": "Lufttørket",
-          "id": 13,
-          "noTerm": "Lufttørket",
-        },
-        Object {
-          "enTerm": "Slipt (maskinelt)",
-          "id": 14,
-          "noTerm": "Slipt (maskinelt)",
-        },
-        Object {
-          "enTerm": "Avstøpning",
-          "id": 15,
-          "noTerm": "Avstøpning",
-        },
-        Object {
-          "enTerm": "Lakkert",
-          "id": 16,
-          "noTerm": "Lakkert",
-        },
-      ]
-    }
-    materials={
-      Array [
-        Object {
-          "enTerm": "Sitronsyre",
-          "id": 1,
-          "noTerm": "Sitronsyre",
-        },
-        Object {
-          "enTerm": "Klucel EF",
-          "id": 2,
-          "noTerm": "Klucel EF",
-        },
-        Object {
-          "enTerm": "Klucel G",
-          "id": 3,
-          "noTerm": "Klucel G",
-        },
-        Object {
-          "enTerm": "Lascaux Medium for konsolidering",
-          "id": 4,
-          "noTerm": "Lascaux Medium for konsolidering",
-        },
-        Object {
-          "enTerm": "Aceton",
-          "id": 5,
-          "noTerm": "Aceton",
-        },
-        Object {
-          "enTerm": "Rochelle salt",
-          "id": 6,
-          "noTerm": "Rochelle salt",
-        },
-        Object {
-          "enTerm": "Aluminiumsoksid",
-          "id": 7,
-          "noTerm": "Aluminiumsoksid",
-        },
-        Object {
-          "enTerm": "Ammoniakk",
-          "id": 8,
-          "noTerm": "Ammoniakk",
-        },
-        Object {
-          "enTerm": "Ammoniumhydroksid",
-          "id": 9,
-          "noTerm": "Ammoniumhydroksid",
-        },
-        Object {
-          "enTerm": "Benzen",
-          "id": 10,
-          "noTerm": "Benzen",
-        },
-        Object {
-          "enTerm": "Benzotriasol (BTA)",
-          "id": 11,
-          "noTerm": "Benzotriasol (BTA)",
-        },
-        Object {
-          "enTerm": "Cellulosenitrat",
-          "id": 12,
-          "noTerm": "Cellulosenitrat",
-        },
-        Object {
-          "enTerm": "Kolofonium",
-          "id": 13,
-          "noTerm": "Kolofonium",
-        },
-        Object {
-          "enTerm": "Cyanoakrylat (superlim)",
-          "id": 14,
-          "noTerm": "Cyanoakrylat (superlim)",
-        },
-        Object {
-          "enTerm": "Eddiksyre",
-          "id": 15,
-          "noTerm": "Eddiksyre",
-        },
-        Object {
-          "enTerm": "EDTA-Na2",
-          "id": 16,
-          "noTerm": "EDTA-Na2",
-        },
-        Object {
-          "enTerm": "EDTA",
-          "id": 17,
-          "noTerm": "EDTA",
-        },
-        Object {
-          "enTerm": "Epoxylim",
-          "id": 18,
-          "noTerm": "Epoxylim",
-        },
-        Object {
-          "enTerm": "Etanol",
-          "id": 19,
-          "noTerm": "Etanol",
-        },
-        Object {
-          "enTerm": "Smeltelim (EVA)",
-          "id": 20,
-          "noTerm": "Smeltelim (EVA)",
-        },
-        Object {
-          "enTerm": "Fosforsyre",
-          "id": 21,
-          "noTerm": "Fosforsyre",
-        },
-        Object {
-          "enTerm": "Gasil 23",
-          "id": 22,
-          "noTerm": "Gasil 23",
-        },
-        Object {
-          "enTerm": "Gips",
-          "id": 23,
-          "noTerm": "Gips",
-        },
-        Object {
-          "enTerm": "Glassfibervev",
-          "id": 24,
-          "noTerm": "Glassfibervev",
-        },
-        Object {
-          "enTerm": "Glasspulver",
-          "id": 25,
-          "noTerm": "Glasspulver",
-        },
-        Object {
-          "enTerm": "Glycerin",
-          "id": 26,
-          "noTerm": "Glycerin",
-        },
-        Object {
-          "enTerm": "Hydrogenperoksid",
-          "id": 27,
-          "noTerm": "Hydrogenperoksid",
-        },
-        Object {
-          "enTerm": "Incralac",
-          "id": 28,
-          "noTerm": "Incralac",
-        },
-        Object {
-          "enTerm": "Isopropanol",
-          "id": 29,
-          "noTerm": "Isopropanol",
-        },
-        Object {
-          "enTerm": "Japanpapir",
-          "id": 30,
-          "noTerm": "Japanpapir",
-        },
-        Object {
-          "enTerm": "Lissapol N",
-          "id": 31,
-          "noTerm": "Lissapol N",
-        },
-        Object {
-          "enTerm": "Maursyre",
-          "id": 32,
-          "noTerm": "Maursyre",
-        },
-        Object {
-          "enTerm": "Mannitol",
-          "id": 33,
-          "noTerm": "Mannitol",
-        },
-        Object {
-          "enTerm": "Mikrokrystallinsk voks",
-          "id": 34,
-          "noTerm": "Mikrokrystallinsk voks",
-        },
-        Object {
-          "enTerm": "Natriumkarbonat",
-          "id": 35,
-          "noTerm": "Natriumkarbonat",
-        },
-        Object {
-          "enTerm": "Natriumsitrat",
-          "id": 36,
-          "noTerm": "Natriumsitrat",
-        },
-        Object {
-          "enTerm": "Natriumhydrogenkarbonat",
-          "id": 37,
-          "noTerm": "Natriumhydrogenkarbonat",
-        },
-        Object {
-          "enTerm": "Natriumhydroksyd",
-          "id": 38,
-          "noTerm": "Natriumhydroksyd",
-        },
-        Object {
-          "enTerm": "Paraloid B72",
-          "id": 39,
-          "noTerm": "Paraloid B72",
-        },
-        Object {
-          "enTerm": "PEG høymolekylær (fast)",
-          "id": 40,
-          "noTerm": "PEG høymolekylær (fast)",
-        },
-        Object {
-          "enTerm": "Petroleumsether kpkt 60-80 grader",
-          "id": 41,
-          "noTerm": "Petroleumsether kpkt 60-80 grader",
-        },
-        Object {
-          "enTerm": "Plextol B500",
-          "id": 42,
-          "noTerm": "Plextol B500",
-        },
-        Object {
-          "enTerm": "Polyolefin",
-          "id": 43,
-          "noTerm": "Polyolefin",
-        },
-        Object {
-          "enTerm": "Polyvinylacetat",
-          "id": 44,
-          "noTerm": "Polyvinylacetat",
-        },
-        Object {
-          "enTerm": "Primal WS24",
-          "id": 45,
-          "noTerm": "Primal WS24",
-        },
-        Object {
-          "enTerm": "Salpetersyre",
-          "id": 46,
-          "noTerm": "Salpetersyre",
-        },
-        Object {
-          "enTerm": "Saltsyre",
-          "id": 47,
-          "noTerm": "Saltsyre",
-        },
-        Object {
-          "enTerm": "Skjellakk",
-          "id": 48,
-          "noTerm": "Skjellakk",
-        },
-        Object {
-          "enTerm": "Silikagel",
-          "id": 49,
-          "noTerm": "Silikagel",
-        },
-        Object {
-          "enTerm": "Silikonfett",
-          "id": 50,
-          "noTerm": "Silikonfett",
-        },
-        Object {
-          "enTerm": "Silikongummi",
-          "id": 51,
-          "noTerm": "Silikongummi",
-        },
-        Object {
-          "enTerm": "Silver Polish Wadding",
-          "id": 52,
-          "noTerm": "Silver Polish Wadding",
-        },
-        Object {
-          "enTerm": "Sølvnitrat",
-          "id": 53,
-          "noTerm": "Sølvnitrat",
-        },
-        Object {
-          "enTerm": "Sorbitol",
-          "id": 54,
-          "noTerm": "Sorbitol",
-        },
-        Object {
-          "enTerm": "Størlim",
-          "id": 55,
-          "noTerm": "Størlim",
-        },
-        Object {
-          "enTerm": "Svovelsyre",
-          "id": 56,
-          "noTerm": "Svovelsyre",
-        },
-        Object {
-          "enTerm": "Synocryl 9122x",
-          "id": 57,
-          "noTerm": "Synocryl 9122x",
-        },
-        Object {
-          "enTerm": "Tannin syre",
-          "id": 58,
-          "noTerm": "Tannin syre",
-        },
-        Object {
-          "enTerm": "Terpentin",
-          "id": 59,
-          "noTerm": "Terpentin",
-        },
-        Object {
-          "enTerm": "Tiourea",
-          "id": 60,
-          "noTerm": "Tiourea",
-        },
-        Object {
-          "enTerm": "Toluen",
-          "id": 61,
-          "noTerm": "Toluen",
-        },
-        Object {
-          "enTerm": "White spirit",
-          "id": 62,
-          "noTerm": "White spirit",
-        },
-        Object {
-          "enTerm": "White spirit, lavaromatisk",
-          "id": 63,
-          "noTerm": "White spirit, lavaromatisk",
-        },
-        Object {
-          "enTerm": "Vann",
-          "id": 64,
-          "noTerm": "Vann",
-        },
-        Object {
-          "enTerm": "Vann (destillert)",
-          "id": 65,
-          "noTerm": "Vann (destillert)",
-        },
-        Object {
-          "enTerm": "Vann (avionisert)",
-          "id": 66,
-          "noTerm": "Vann (avionisert)",
-        },
-        Object {
-          "enTerm": "Xylen",
-          "id": 67,
-          "noTerm": "Xylen",
-        },
-        Object {
-          "enTerm": "PEG lavmoelkylær (flytende)",
-          "id": 68,
-          "noTerm": "PEG lavmoelkylær (flytende)",
-        },
-        Object {
-          "enTerm": "Paraloid B44",
-          "id": 69,
-          "noTerm": "Paraloid B44",
-        },
-        Object {
-          "enTerm": "Paraloid B 67",
-          "id": 70,
-          "noTerm": "Paraloid B 67",
-        },
-        Object {
-          "enTerm": "Technovit 5071",
-          "id": 71,
-          "noTerm": "Technovit 5071",
-        },
-        Object {
-          "enTerm": "Natriumsulfitt",
-          "id": 72,
-          "noTerm": "Natriumsulfitt",
-        },
-        Object {
-          "enTerm": "Valnøttskall",
-          "id": 73,
-          "noTerm": "Valnøttskall",
-        },
-      ]
-    }
-    name="treatment_0"
-    onChange="events"
-    treatment={
-      Object {
-        "affectedThings": Array [
-          "ad1b5287-0168-4343-b3df-a477de113bee",
-          "adea8141-8099-4f67-bff9-ea5090e18335",
-          "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
-          "41be3c71-a71b-486d-a265-c3a92672f4cf",
-        ],
-        "eventTypeId": 2,
-        "id": 113,
-        "keywords": Array [
-          2,
-        ],
-        "materials": Array [
-          2,
-        ],
-        "note": "dfdfsdfsdf",
-        "partOf": 112,
-        "registeredBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-        "registeredDate": "2017-11-21T13:54:28+00:00",
-        "updatedBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-        "updatedDate": "2017-11-21T15:14:29+00:00",
-      }
-    }
-    viewMode={false}
-  />
-  <TechnicalDescription
-    affectedThingsWithDetailsMainEvent={
-      Array [
-        Object {
-          "collection": 1,
-          "coordinates": Array [],
-          "id": 28,
-          "isDeleted": false,
-          "locations": Array [],
-          "materials": Array [],
-          "museumId": 99,
-          "museumNo": "MusK314",
-          "objectData": Object {
-            "collection": 1,
-            "coordinates": Array [],
-            "id": 28,
-            "isDeleted": false,
-            "locations": Array [],
-            "materials": Array [],
-            "museumId": 99,
-            "museumNo": "MusK314",
-            "objectType": "collection",
-            "subNo": "b",
-            "term": "Runeskrift",
-            "uuid": "ba56a4f6-b907-4158-9a67-bca6080320bb",
-          },
-          "objectType": "collection",
-          "subNo": "b",
-          "term": "Runeskrift",
-          "uuid": "ba56a4f6-b907-4158-9a67-bca6080320bb",
-        },
-        Object {
-          "collection": 1,
-          "coordinates": Array [],
-          "id": 1,
-          "isDeleted": false,
-          "locations": Array [],
-          "mainObjectId": 1,
-          "materials": Array [],
-          "museumId": 99,
-          "museumNo": "MusK58",
-          "objectData": Object {
-            "collection": 1,
-            "coordinates": Array [],
-            "id": 1,
-            "isDeleted": false,
-            "locations": Array [],
-            "mainObjectId": 1,
-            "materials": Array [],
-            "museumId": 99,
-            "museumNo": "MusK58",
-            "objectType": "collection",
-            "subNo": "1",
-            "term": "Rar dings",
-            "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
-          },
-          "objectType": "collection",
-          "subNo": "1",
-          "term": "Rar dings",
-          "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
-        },
-        Object {
-          "collection": 1,
-          "coordinates": Array [],
-          "id": 2,
-          "isDeleted": false,
-          "locations": Array [],
-          "mainObjectId": 1,
-          "materials": Array [],
-          "museumId": 99,
-          "museumNo": "MusK58",
-          "objectData": Object {
-            "collection": 1,
-            "coordinates": Array [],
-            "id": 2,
-            "isDeleted": false,
-            "locations": Array [],
-            "mainObjectId": 1,
-            "materials": Array [],
-            "museumId": 99,
-            "museumNo": "MusK58",
-            "objectType": "collection",
-            "subNo": "2",
-            "term": "Mansjettknapp",
-            "uuid": "adea8141-8099-4f67-bff9-ea5090e18335",
-          },
-          "objectType": "collection",
-          "subNo": "2",
-          "term": "Mansjettknapp",
-          "uuid": "adea8141-8099-4f67-bff9-ea5090e18335",
-        },
-        Object {
-          "collection": 2,
-          "coordinates": Array [],
-          "id": 9,
-          "isDeleted": false,
-          "locations": Array [],
-          "materials": Array [],
-          "museumId": 99,
-          "museumNo": "MusN28",
-          "objectData": Object {
-            "collection": 2,
-            "coordinates": Array [],
-            "id": 9,
-            "isDeleted": false,
-            "locations": Array [],
-            "materials": Array [],
-            "museumId": 99,
-            "museumNo": "MusN28",
-            "objectType": "collection",
-            "term": "Tusenben",
-            "uuid": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
-          },
-          "objectType": "collection",
-          "term": "Tusenben",
-          "uuid": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
-        },
-        Object {
-          "collection": 2,
-          "coordinates": Array [],
-          "id": 8,
-          "isDeleted": false,
-          "locations": Array [],
-          "materials": Array [],
-          "museumId": 99,
-          "museumNo": "MusN37",
-          "objectData": Object {
-            "collection": 2,
-            "coordinates": Array [],
-            "id": 8,
-            "isDeleted": false,
-            "locations": Array [],
-            "materials": Array [],
-            "museumId": 99,
-            "museumNo": "MusN37",
-            "objectType": "collection",
-            "term": "Bendelorm",
-            "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
-          },
-          "objectType": "collection",
-          "term": "Bendelorm",
-          "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
-        },
-      ]
-    }
-    appSession={
-      Object {
-        "accessToken": "7dbce915-c87a-47c1-8666-c858f3624d0d",
-        "actor": Object {
-          "dataportenId": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-          "dataportenUser": "rituvesk@uio.no",
-          "email": "rituvesh.kumar@usit.uio.no",
-          "fn": "Rituvesh Kumar",
-        },
-        "buildInfo": Object {
-          "buildInfoBuildNumber": "31",
-          "builtAtMillis": "1511169267488",
-          "builtAtString": "2017-11-20 09:14:27.488",
-          "commitSha": "not built on CI",
-          "name": "service_auth",
-          "sbtVersion": "0.13.16",
-          "scalaVersion": "2.11.8",
-          "version": "0.1-SNAPSHOT",
-        },
-        "collectionId": "00000000-0000-0000-0000-000000000000",
-        "groups": Array [
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 99,
-            "museumId": 99,
-            "museumName": "Test",
-            "permission": 10000,
-            "shortName": "Test",
-          },
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 7,
-            "museumId": 7,
-            "museumName": "Kmn",
-            "permission": 10000,
-            "shortName": "Kmn",
-          },
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 6,
-            "museumId": 6,
-            "museumName": "Tmu",
-            "permission": 10000,
-            "shortName": "Tmu",
-          },
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 5,
-            "museumId": 5,
-            "museumName": "Vm",
-            "permission": 10000,
-            "shortName": "Vm",
-          },
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 4,
-            "museumId": 4,
-            "museumName": "Nhm",
-            "permission": 10000,
-            "shortName": "Nhm",
-          },
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 3,
-            "museumId": 3,
-            "museumName": "Khm",
-            "permission": 10000,
-            "shortName": "Khm",
-          },
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 2,
-            "museumId": 2,
-            "museumName": "Um",
-            "permission": 10000,
-            "shortName": "Um",
-          },
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 1,
-            "museumId": 1,
-            "museumName": "Am",
-            "permission": 10000,
-            "shortName": "Am",
-          },
-        ],
-        "language": Object {
-          "isEn": true,
-          "isNo": false,
-        },
-        "museumId": 99,
-      }
-    }
-    index={1}
-    onChange="events"
-    technicalDescription={
-      Object {
-        "affectedThings": Array [
-          "adea8141-8099-4f67-bff9-ea5090e18335",
-          "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
-          "41be3c71-a71b-486d-a265-c3a92672f4cf",
-        ],
-        "eventTypeId": 3,
-        "id": 114,
-        "note": "dfsdfsdfsd",
-        "partOf": 112,
-        "registeredBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-        "registeredDate": "2017-11-21T15:09:41+00:00",
-        "updatedBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-        "updatedDate": "2017-11-21T15:14:29+00:00",
-      }
-    }
-    viewMode={false}
-  />
   <button
     className="btn btn-primary"
     disabled={false}

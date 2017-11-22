@@ -99,12 +99,18 @@ export type TreatmentType = {
   materialUsageTypes?: Array<ConservatonSubType>,
   materialUsageOnChange?: Function,
   note?: string,
-  affectedThings?: Array<string>
+  affectedThings?: Array<string>,
+  expanded: boolean,
+  toggleExpanded: Function,
+  toggleSingleExpanded: Function
 };
 export type TechnicalDescriptionType = {
   eventTypeId: number,
   note: string,
-  affectedThings?: Array<string>
+  affectedThings?: Array<string>,
+  expanded: boolean,
+  toggleExpanded: Function,
+  toggleSingleExpanded: Function
 };
 
 export type ConservationSubTypes = TreatmentType | TechnicalDescriptionType;

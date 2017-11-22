@@ -6,6 +6,7 @@
         "newConservation": "New use & conservation",
         "createConservation": "Create use & conservation",
         "choseNewSubEvents": "Select new sub events to be created",
+        "createNewSubEvents": "Create selected sub events",
         "roles": {"administrator": "Administrator",
           "doneBy": "Done by",
           "participating": "Participating"          
@@ -33,7 +34,9 @@
             "technicalDescription": "Technical description",
             "note":"Note"
           }
-        }
+        },
+        "doCollapse": "Collapse sub evebts",
+        "doExpand": "Expand sub evebts"
       },
       "objects": {
         "goToParentObject": "Go to object",
@@ -979,6 +982,7 @@
         "newConservation": "Ny bruk og bevaring",
         "createConservation": "Opprett bruk og bevaring",
         "choseNewSubEvents": "Velg delhendelser som skal lages",
+        "createNewSubEvents": "Opprett valgte delhendelser",
         "roles": {
           "doneBy": "Utført av",
           "participating": "Deltagende"
@@ -1006,7 +1010,9 @@
             "technicalDescription": "Teknisk beskrivelse",
             "note":"Merknad"
           }
-        }
+        },
+        "doCollapse": "Kollaps delhender",
+        "doExpand": "Ekspander delhendelser"
       },
       "objects": {
         "goToParentObject": "Gå til objektet",

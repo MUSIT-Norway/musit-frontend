@@ -23,8 +23,11 @@ type ConservationProcessProps = {
   updateForm: Function,
   updateArrayField: Function,
   updateStringField: Function,
+  updateBooleanField: Function,
   updateMultiSelectField: Function,
   updateConservationSubEvent: Function,
+  toggleExpanded: Function,
+  toggleSingleExpanded: Function,
   doneBy?: string,
   doneDate?: string,
   note?: string,
@@ -64,7 +67,8 @@ function createSubEvents(props: Props & { form: FormData }) {
               keywords: [],
               materials: [],
               note: '',
-              affectedThings: []
+              affectedThings: [],
+              expanded: false
             }
           ]);
         }
@@ -73,7 +77,8 @@ function createSubEvents(props: Props & { form: FormData }) {
             {
               eventTypeId: v,
               note: '',
-              affectedThings: []
+              affectedThings: [],
+              expanded: false
             }
           ]);
         }
@@ -87,6 +92,16 @@ function createSubEvents(props: Props & { form: FormData }) {
       rawValue: props.form.events.rawValue.concat(akk)
     });
   };
+}
+
+function expanded(form: FormData) {
+  return (
+    form.events.value &&
+    form.events.value.reduce(
+      (a: boolean, e: ConservationSubTypes) => a || e.expanded,
+      false
+    )
+  );
 }
 
 const suffix = ':';
@@ -114,6 +129,12 @@ function renderSubEvent(
         viewMode={false}
         affectedThingsWithDetailsMainEvent={props.objects || []}
         name={`treatment_${ind}`}
+        expanded={props.form.events.value[ind].expanded}
+        toggleExpanded={props.toggleSingleExpanded(
+          !props.form.events.value[ind].expanded,
+          props.form.events.value,
+          ind
+        )}
       />
     );
   } else if (eventType === 3) {
@@ -125,9 +146,16 @@ function renderSubEvent(
         affectedThingsWithDetailsMainEvent={props.objects || []}
         technicalDescription={props.form.events.rawValue[ind]}
         index={ind}
+        name={`techincalDescription_${ind}`}
         onChange={props.updateConservationSubEvent(
           props.form.events.name,
           props.form.events.rawValue,
+          ind
+        )}
+        expanded={props.form.events.value[ind].expanded}
+        toggleExpanded={props.toggleSingleExpanded(
+          !props.form.events.value[ind].expanded,
+          props.form.events.value,
           ind
         )}
       />
@@ -212,6 +240,36 @@ export default function ConservationComponent(props: Props & { form: FormData })
         appSession={props.appSession}
       />
       <hr />
+      {props.form.events && (
+        <div className="container">
+          <div className="row">
+            <div className="col-md-11" />
+            <div className="col-md-1">
+              <div
+                type="button"
+                className="btn btn-default btn-md"
+                onClick={props.toggleExpanded(
+                  !expanded(props.form),
+                  props.form.events.value
+                )}
+              >
+                {expanded(props.form) ? (
+                  I18n.t('musit.conservation.doCollapse')
+                ) : (
+                  I18n.t('musit.conservation.doExpand')
+                )}
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                {props.form.events.rawValue.map((v, i) => {
+                  return renderSubEvent(props.appSession, i, v.eventTypeId, props);
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <FieldMultiSelect
         title={I18n.t('musit.conservation.choseNewSubEvents') + suffix}
         appSession={props.appSession}
@@ -229,17 +287,13 @@ export default function ConservationComponent(props: Props & { form: FormData })
         onChange={props.updateMultiSelectField(props.form.subEventTypes.name)}
       />
       <button
-        className="btn btn"
+        className="btn btn-default"
         disabled={!props.isFormValid}
         onClick={createSubEvents(props)}
       >
-        {I18n.t('musit.conservation.choseNewSubEvents')}
+        {I18n.t('musit.conservation.createNewSubEvents')}
       </button>
       <hr />
-      {props.form.events &&
-        props.form.events.rawValue.map((v, i) => {
-          return renderSubEvent(props.appSession, i, v.eventTypeId, props);
-        })}
       <button
         className="btn btn-primary"
         disabled={!props.isFormValid}
