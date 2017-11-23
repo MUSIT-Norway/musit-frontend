@@ -1,0 +1,457 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Treatment should render properly 1`] = `
+<CollapsibleEvent
+  eventComponent={
+    <div
+      className="container"
+    >
+       
+      <FieldMultiSelect
+        name="treatment_0keywords"
+        onChange={[Function]}
+        options={
+          Array [
+            Object {
+              "label": "Støvsuget",
+              "value": "1",
+            },
+            Object {
+              "label": "Børstet",
+              "value": "2",
+            },
+            Object {
+              "label": "Kjemisk rensing",
+              "value": "3",
+            },
+            Object {
+              "label": "Mekanisk rensing",
+              "value": "4",
+            },
+            Object {
+              "label": "Utvasking",
+              "value": "5",
+            },
+            Object {
+              "label": "Sandblåst",
+              "value": "6",
+            },
+            Object {
+              "label": "Limt",
+              "value": "7",
+            },
+            Object {
+              "label": "Impregnert",
+              "value": "8",
+            },
+            Object {
+              "label": "Konsolidert",
+              "value": "9",
+            },
+            Object {
+              "label": "Frysetørket",
+              "value": "10",
+            },
+            Object {
+              "label": "Retusjert",
+              "value": "11",
+            },
+            Object {
+              "label": "Pakket",
+              "value": "12",
+            },
+            Object {
+              "label": "Lufttørket",
+              "value": "13",
+            },
+            Object {
+              "label": "Slipt (maskinelt)",
+              "value": "14",
+            },
+            Object {
+              "label": "Avstøpning",
+              "value": "15",
+            },
+            Object {
+              "label": "Lakkert",
+              "value": "16",
+            },
+          ]
+        }
+        stringValue="1"
+        title="Stikkord:"
+        viewMode={true}
+      />
+      <FieldMultiSelect
+        name="treatment_0material"
+        onChange={[Function]}
+        options={
+          Array [
+            Object {
+              "label": "Sitronsyre",
+              "value": "1",
+            },
+            Object {
+              "label": "Klucel EF",
+              "value": "2",
+            },
+            Object {
+              "label": "Klucel G",
+              "value": "3",
+            },
+            Object {
+              "label": "Lascaux Medium for konsolidering",
+              "value": "4",
+            },
+            Object {
+              "label": "Aceton",
+              "value": "5",
+            },
+            Object {
+              "label": "Rochelle salt",
+              "value": "6",
+            },
+            Object {
+              "label": "Aluminiumsoksid",
+              "value": "7",
+            },
+            Object {
+              "label": "Ammoniakk",
+              "value": "8",
+            },
+            Object {
+              "label": "Ammoniumhydroksid",
+              "value": "9",
+            },
+            Object {
+              "label": "Benzen",
+              "value": "10",
+            },
+            Object {
+              "label": "Benzotriasol (BTA)",
+              "value": "11",
+            },
+            Object {
+              "label": "Cellulosenitrat",
+              "value": "12",
+            },
+            Object {
+              "label": "Kolofonium",
+              "value": "13",
+            },
+            Object {
+              "label": "Cyanoakrylat (superlim)",
+              "value": "14",
+            },
+            Object {
+              "label": "Eddiksyre",
+              "value": "15",
+            },
+            Object {
+              "label": "EDTA-Na2",
+              "value": "16",
+            },
+            Object {
+              "label": "EDTA",
+              "value": "17",
+            },
+            Object {
+              "label": "Epoxylim",
+              "value": "18",
+            },
+            Object {
+              "label": "Etanol",
+              "value": "19",
+            },
+            Object {
+              "label": "Smeltelim (EVA)",
+              "value": "20",
+            },
+            Object {
+              "label": "Fosforsyre",
+              "value": "21",
+            },
+            Object {
+              "label": "Gasil 23",
+              "value": "22",
+            },
+            Object {
+              "label": "Gips",
+              "value": "23",
+            },
+            Object {
+              "label": "Glassfibervev",
+              "value": "24",
+            },
+            Object {
+              "label": "Glasspulver",
+              "value": "25",
+            },
+            Object {
+              "label": "Glycerin",
+              "value": "26",
+            },
+            Object {
+              "label": "Hydrogenperoksid",
+              "value": "27",
+            },
+            Object {
+              "label": "Incralac",
+              "value": "28",
+            },
+            Object {
+              "label": "Isopropanol",
+              "value": "29",
+            },
+            Object {
+              "label": "Japanpapir",
+              "value": "30",
+            },
+            Object {
+              "label": "Lissapol N",
+              "value": "31",
+            },
+            Object {
+              "label": "Maursyre",
+              "value": "32",
+            },
+            Object {
+              "label": "Mannitol",
+              "value": "33",
+            },
+            Object {
+              "label": "Mikrokrystallinsk voks",
+              "value": "34",
+            },
+            Object {
+              "label": "Natriumkarbonat",
+              "value": "35",
+            },
+            Object {
+              "label": "Natriumsitrat",
+              "value": "36",
+            },
+            Object {
+              "label": "Natriumhydrogenkarbonat",
+              "value": "37",
+            },
+            Object {
+              "label": "Natriumhydroksyd",
+              "value": "38",
+            },
+            Object {
+              "label": "Paraloid B72",
+              "value": "39",
+            },
+            Object {
+              "label": "PEG høymolekylær (fast)",
+              "value": "40",
+            },
+            Object {
+              "label": "Petroleumsether kpkt 60-80 grader",
+              "value": "41",
+            },
+            Object {
+              "label": "Plextol B500",
+              "value": "42",
+            },
+            Object {
+              "label": "Polyolefin",
+              "value": "43",
+            },
+            Object {
+              "label": "Polyvinylacetat",
+              "value": "44",
+            },
+            Object {
+              "label": "Primal WS24",
+              "value": "45",
+            },
+            Object {
+              "label": "Salpetersyre",
+              "value": "46",
+            },
+            Object {
+              "label": "Saltsyre",
+              "value": "47",
+            },
+            Object {
+              "label": "Skjellakk",
+              "value": "48",
+            },
+            Object {
+              "label": "Silikagel",
+              "value": "49",
+            },
+            Object {
+              "label": "Silikonfett",
+              "value": "50",
+            },
+            Object {
+              "label": "Silikongummi",
+              "value": "51",
+            },
+            Object {
+              "label": "Silver Polish Wadding",
+              "value": "52",
+            },
+            Object {
+              "label": "Sølvnitrat",
+              "value": "53",
+            },
+            Object {
+              "label": "Sorbitol",
+              "value": "54",
+            },
+            Object {
+              "label": "Størlim",
+              "value": "55",
+            },
+            Object {
+              "label": "Svovelsyre",
+              "value": "56",
+            },
+            Object {
+              "label": "Synocryl 9122x",
+              "value": "57",
+            },
+            Object {
+              "label": "Tannin syre",
+              "value": "58",
+            },
+            Object {
+              "label": "Terpentin",
+              "value": "59",
+            },
+            Object {
+              "label": "Tiourea",
+              "value": "60",
+            },
+            Object {
+              "label": "Toluen",
+              "value": "61",
+            },
+            Object {
+              "label": "White spirit",
+              "value": "62",
+            },
+            Object {
+              "label": "White spirit, lavaromatisk",
+              "value": "63",
+            },
+            Object {
+              "label": "Vann",
+              "value": "64",
+            },
+            Object {
+              "label": "Vann (destillert)",
+              "value": "65",
+            },
+            Object {
+              "label": "Vann (avionisert)",
+              "value": "66",
+            },
+            Object {
+              "label": "Xylen",
+              "value": "67",
+            },
+            Object {
+              "label": "PEG lavmoelkylær (flytende)",
+              "value": "68",
+            },
+            Object {
+              "label": "Paraloid B44",
+              "value": "69",
+            },
+            Object {
+              "label": "Paraloid B 67",
+              "value": "70",
+            },
+            Object {
+              "label": "Technovit 5071",
+              "value": "71",
+            },
+            Object {
+              "label": "Natriumsulfitt",
+              "value": "72",
+            },
+            Object {
+              "label": "Valnøttskall",
+              "value": "73",
+            },
+          ]
+        }
+        stringValue="2"
+        title="Materialbruk:"
+        viewMode={true}
+      />
+      <div
+        className="row form-group"
+      >
+        <label
+          className="control-label col-md-2"
+          htmlFor="note_0"
+        >
+          Merknad:
+        </label>
+        <div
+          className="col-md-9"
+        >
+          <textarea
+            className="form-control"
+            disabled={true}
+            id="note_0"
+            onChange={[Function]}
+            rows="5"
+            value="test"
+          />
+        </div>
+      </div>
+      <ObjectSelection
+        affectedThingsSubEvent={
+          Array [
+            "ad1b5287-0168-4343-b3df-a477de113bee",
+          ]
+        }
+        affectedThingsSubEventOnChange={[Function]}
+        affectedThingsWithDetailsMainEvent={
+          Array [
+            Object {
+              "collection": 1,
+              "coordinates": Array [],
+              "id": 1,
+              "isDeleted": false,
+              "locations": Array [],
+              "mainObjectId": 1,
+              "materials": Array [],
+              "museumId": 99,
+              "museumNo": "MusK58",
+              "objectData": Object {
+                "collection": 1,
+                "coordinates": Array [],
+                "id": 1,
+                "isDeleted": false,
+                "locations": Array [],
+                "mainObjectId": 1,
+                "materials": Array [],
+                "museumId": 99,
+                "museumNo": "MusK58",
+                "objectType": "collection",
+                "subNo": "1",
+                "term": "Rar dings",
+                "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
+              },
+              "objectType": "collection",
+              "subNo": "1",
+              "term": "Rar dings",
+              "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
+            },
+          ]
+        }
+        viewMode={true}
+      />
+    </div>
+  }
+  eventName="Behandling"
+/>
+`;

@@ -68,7 +68,7 @@ function createSubEvents(props: Props & { form: FormData }) {
               materials: [],
               note: '',
               affectedThings: [],
-              expanded: false
+              expanded: true
             }
           ]);
         }
@@ -78,7 +78,7 @@ function createSubEvents(props: Props & { form: FormData }) {
               eventTypeId: v,
               note: '',
               affectedThings: [],
-              expanded: false
+              expanded: true
             }
           ]);
         }
@@ -106,6 +106,16 @@ function expanded(form: FormData) {
 
 const suffix = ':';
 
+function deleteSubEvents(props: Props & { form: FormData }, i: number) {
+  props.updateForm({
+    name: props.form.events.name,
+    rawValue: [
+      ...props.form.events.rawValue.slice(0, i),
+      ...props.form.events.rawValue.slice(i + 1)
+    ]
+  });
+}
+
 function renderSubEvent(
   appSession: AppSession,
   ind: number,
@@ -129,6 +139,7 @@ function renderSubEvent(
         viewMode={false}
         affectedThingsWithDetailsMainEvent={props.objects || []}
         name={`treatment_${ind}`}
+        onDelete={() => deleteSubEvents(props, ind)}
         expanded={props.form.events.value[ind].expanded}
         toggleExpanded={props.toggleSingleExpanded(
           !props.form.events.value[ind].expanded,
@@ -152,6 +163,7 @@ function renderSubEvent(
           props.form.events.rawValue,
           ind
         )}
+        onDelete={() => deleteSubEvents(props, ind)}
         expanded={props.form.events.value[ind].expanded}
         toggleExpanded={props.toggleSingleExpanded(
           !props.form.events.value[ind].expanded,
@@ -221,6 +233,13 @@ export default function ConservationComponent(props: Props & { form: FormData })
         updateStringField={props.updateStringField}
       />
       <hr />
+      <div className="form-group">
+        <div className="col-md-12 col-md-offset-0">
+          <label className="control-label">
+            {I18n.t('musit.conservation.personsConnected')}
+          </label>
+        </div>
+      </div>
       <form className="form-horizontal">
         <PersonRoleDate
           appSession={props.appSession}
@@ -241,10 +260,9 @@ export default function ConservationComponent(props: Props & { form: FormData })
       />
       <hr />
       {props.form.events && (
-        <div className="container">
+        <div className="form-group">
           <div className="row">
-            <div className="col-md-11" />
-            <div className="col-md-1">
+            <div className="col-md-2">
               <div
                 type="button"
                 className="btn btn-default btn-md"
@@ -260,12 +278,12 @@ export default function ConservationComponent(props: Props & { form: FormData })
                 )}
               </div>
             </div>
-            <div className="row">
-              <div className="col-md-12">
-                {props.form.events.rawValue.map((v, i) => {
-                  return renderSubEvent(props.appSession, i, v.eventTypeId, props);
-                })}
-              </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              {props.form.events.rawValue.map((v, i) => {
+                return renderSubEvent(props.appSession, i, v.eventTypeId, props);
+              })}
             </div>
           </div>
         </div>

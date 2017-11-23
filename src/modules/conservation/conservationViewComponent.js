@@ -12,6 +12,7 @@ import type { History } from '../../types/Routes';
 import type { PredefinedConservation } from '../../types/predefinedConservation';
 import Treatment from './events/treatment';
 import TechnicalDescription from './events/technicalDescription';
+import type { ConservationSubTypes } from '../../types/conservation';
 
 export type Props = {
   match: { params: { conservationId: number } },
@@ -27,7 +28,9 @@ export type Props = {
   clearStore: Function,
   getConservation: Function,
   loadForm: Function,
-  goBack: () => void
+  goBack: () => void,
+  toggleExpanded: Function,
+  toggleSingleExpanded: Function
 };
 
 const addEventComponents = (
@@ -35,8 +38,12 @@ const addEventComponents = (
   event: any,
   conservationTypes: any,
   appSession: AppSession,
-  objects: any
+  objects: any,
+  props: any
 ) => {
+  const expandEvent: boolean = props.form.events.value[index]
+    ? props.form.events.value[index].expanded
+    : true;
   if (event.eventTypeId === 2)
     return (
       <Treatment
@@ -53,6 +60,12 @@ const addEventComponents = (
         index={index}
         appSession={appSession}
         viewMode={true}
+        expanded={expandEvent}
+        toggleExpanded={props.toggleSingleExpanded(
+          !expandEvent,
+          props.form.events.value,
+          index
+        )}
       />
     );
   else if (event.eventTypeId === 3)
@@ -66,10 +79,25 @@ const addEventComponents = (
         index={index}
         appSession={appSession}
         viewMode={true}
+        expanded={expandEvent}
+        toggleExpanded={props.toggleSingleExpanded(
+          !expandEvent,
+          props.form.events.value,
+          index
+        )}
       />
     );
   else return '';
 };
+function expanded(form: FormData) {
+  return (
+    form.events.value &&
+    form.events.value.reduce(
+      (a: boolean, e: ConservationSubTypes) => a || e.expanded,
+      false
+    )
+  );
+}
 
 const suffix = ':';
 
@@ -114,9 +142,11 @@ export default (props: Props) =>
         </div>
         <hr />
         <div className="form-group">
-          <label className="control-label">
-            {I18n.t('musit.conservation.personsConnected')}
-          </label>
+          <div className="col-md-12 col-md-offset-0">
+            <label className="control-label">
+              {I18n.t('musit.conservation.personsConnected')}
+            </label>
+          </div>
         </div>
         <ViewPersonRoleDate
           personData={toArray(props.form.persons.value)}
@@ -144,6 +174,24 @@ export default (props: Props) =>
           </div>
           <hr />
         </div>
+        <div className="form-group">
+          <div className="col-md-12 col-md-offset-0">
+            <div
+              type="button"
+              className="btn btn-default btn-md"
+              onClick={props.toggleExpanded(
+                !expanded(props.form),
+                props.form.events.value
+              )}
+            >
+              {expanded(props.form) ? (
+                I18n.t('musit.conservation.doCollapse')
+              ) : (
+                I18n.t('musit.conservation.doExpand')
+              )}
+            </div>
+          </div>
+        </div>
         {props.store &&
           props.store.conservation &&
           props.store.conservation.events &&
@@ -153,7 +201,8 @@ export default (props: Props) =>
               e,
               props.predefinedConservation,
               props.appSession,
-              props.store.conservation && props.store.conservation.affectedThings
+              props.store.conservation && props.store.conservation.affectedThings,
+              props
             )
           )}
         <hr />

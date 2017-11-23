@@ -36,7 +36,7 @@
           }
         },
         "doCollapse": "Collapse sub evebts",
-        "doExpand": "Expand sub evebts"
+        "doExpand": "Expand sub events"
       },
       "objects": {
         "goToParentObject": "Go to object",

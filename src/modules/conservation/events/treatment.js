@@ -5,6 +5,7 @@ import FieldMultiSelect from '../../../forms/components/FieldMultiSelect';
 import type { Field } from 'forms/form';
 import ObjectSelection from '../components/objectSelection';
 import type { TreatmentType } from '../../../types/conservation';
+import FontAwesome from 'react-fontawesome';
 import CollapsibleEvent from '../components/CollapsibleEvent';
 
 type types = { id: number, noLabel: string, enLabel?: string };
@@ -19,6 +20,7 @@ export type TreatmentProps = {
   appSession?: AppSession,
   viewMode?: boolean,
   onChange?: Function,
+  onDelete?: Function,
   expanded?: boolean,
   toggleExpanded: Function
 };
@@ -34,7 +36,23 @@ export default function Treatment(props: TreatmentProps) {
 
   const treatmentComponents = (
     <div className="container">
-      {' '}
+      {!props.viewMode &&
+      !props.treatment.id && (
+        <div className="row form-group">
+          <div div className="col-md-10">
+            <button
+              className="btn btn-default"
+              onClick={e => {
+                e.preventDefault();
+                props.onDelete();
+              }}
+            >
+              <FontAwesome name={'times'} />
+            </button>
+            <hr />
+          </div>
+        </div>
+      )}{' '}
       <FieldMultiSelect
         name={props.name + 'keywords'}
         stringValue={props.treatment.keywords.join(',')}
@@ -85,7 +103,7 @@ export default function Treatment(props: TreatmentProps) {
     <CollapsibleEvent
       eventName={I18n.t('musit.conservation.events.treatment.treatment')}
       eventComponent={treatmentComponents}
-      expanded={props.treatment.expanded}
+      expanded={props.expanded}
       toggleExpanded={props.toggleExpanded}
     />
   );

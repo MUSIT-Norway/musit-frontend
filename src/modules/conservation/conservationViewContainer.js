@@ -11,11 +11,11 @@ import store$, { getConservation$, clearStore$ } from './conservationStore';
 import Conservation from '../../models/conservation';
 import conservationForm, { fieldsArray } from './conservationForm';
 import Config from '../../config';
-import { onUnmount } from './shared/formProps';
+import { onUnmount, toggleExpanded, toggleSingleExpanded } from './shared/formProps';
 import type { Field } from '../../forms/form';
 import type { History } from '../../types/Routes';
 
-const { form$, loadForm$, clearForm$ } = conservationForm;
+const { form$, loadForm$, clearForm$, updateForm$ } = conservationForm;
 
 function storeFactory() {
   return Observable.combineLatest(
@@ -59,7 +59,9 @@ export function props(props: *, upstream: UpstreamProps): ConservationProps {
     goBack: (e): any => {
       e && e.preventDefault();
       upstream.history.goBack();
-    }
+    },
+    toggleExpanded: toggleExpanded(updateForm$.next.bind(updateForm$)),
+    toggleSingleExpanded: toggleSingleExpanded(updateForm$.next.bind(updateForm$))
   };
 }
 

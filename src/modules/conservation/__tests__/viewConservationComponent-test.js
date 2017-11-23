@@ -3,14 +3,6 @@ import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import ConservationViewComponent from '../conservationViewComponent';
-import {
-  appSession,
-  analysis,
-  history,
-  createAnalysisEventWithObject,
-  analysisForm
-} from '../../../testutils/sampleDataForTest';
-import { initialState } from '../../../stores/predefined';
 
 const props: any = {
   appSession: {
@@ -1323,12 +1315,15 @@ const props: any = {
   }
 };
 
-const nullFn = () => null;
-const emptyMatch = { params: { analysisId: '23' } };
-
 describe('ConservationViewComponent', () => {
   it('should render properly', () => {
-    const wrapper = shallow(<ConservationViewComponent {...props} />);
+    const wrapper = shallow(
+      <ConservationViewComponent
+        {...props}
+        toggleExpanded={e => e}
+        toggleSingleExpanded={e => e}
+      />
+    );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 });

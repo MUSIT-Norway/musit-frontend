@@ -56,7 +56,7 @@ export default function formProps(
   };
 }
 
-function toggleExpanded(updateForm) {
+export function toggleExpanded(updateForm: any) {
   return (b: boolean, events: Array<ConservationSubTypes>) => () =>
     updateForm({
       name: 'events',
@@ -64,7 +64,7 @@ function toggleExpanded(updateForm) {
     });
 }
 
-function toggleSingleExpanded(updateForm) {
+export function toggleSingleExpanded(updateForm: any) {
   return (b: boolean, events: Array<ConservationSubTypes>, index: number) => () =>
     updateForm({
       name: 'events',

@@ -2,6 +2,7 @@ import React from 'react';
 import { I18n } from 'react-i18nify';
 import type { TechnicalDescriptionType } from '../../../types/conservation';
 import ObjectSelection from '../components/objectSelection';
+import FontAwesome from 'react-fontawesome';
 import CollapsibleEvent from '../components/CollapsibleEvent';
 
 export type TechnicalDescriptionProps = {
@@ -10,6 +11,7 @@ export type TechnicalDescriptionProps = {
   appSession?: AppSession,
   viewMode?: boolean,
   onChange: Function,
+  onDelete?: Function,
   expanded?: boolean,
   toggleExpanded: Function
 };
@@ -18,6 +20,23 @@ export default function TechnicalDescription(props: TechnicalDescriptionProps) {
   const suffix = ':';
   const technicalDescComponent = (
     <div className="container">
+      {!props.viewMode &&
+      !props.technicalDescription.id && (
+        <div className="row form-group">
+          <div div className="col-md-10">
+            <button
+              className="btn btn-default"
+              onClick={e => {
+                e.preventDefault();
+                props.onDelete();
+              }}
+            >
+              <FontAwesome name={'times'} />
+            </button>
+            <hr />
+          </div>
+        </div>
+      )}
       <div className="form-group">
         <label className="control-label col-md-2" htmlFor={`note_${props.index}`}>
           {I18n.t('musit.conservation.events.techincalDescription.note') + suffix}
@@ -48,7 +67,7 @@ export default function TechnicalDescription(props: TechnicalDescriptionProps) {
         'musit.conservation.events.technicalDescription.technicalDescription'
       )}
       eventComponent={technicalDescComponent}
-      expanded={props.technicalDescription.expanded}
+      expanded={props.expanded}
       toggleExpanded={props.toggleExpanded}
     />
   );
