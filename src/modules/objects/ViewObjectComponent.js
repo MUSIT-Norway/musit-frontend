@@ -1,6 +1,16 @@
 // @flow
 import React from 'react';
-import { Tabs, Tab, PageHeader, Button } from 'react-bootstrap';
+import {
+  Tabs,
+  Tab,
+  PageHeader,
+  Button,
+  DropdownButton,
+  MenuItem,
+  Row,
+  Col,
+  ControlLabel
+} from 'react-bootstrap';
 import type { ObjectData } from '../../types/object';
 import type { Samples, SampleStatus } from '../../types/samples';
 import type { Events } from '../../types/events';
@@ -46,42 +56,56 @@ export const ViewObjectComponent = ({
     <div className="container">
       <PageHeader>{I18n.t('musit.objects.objectsView.objectView')}</PageHeader>
       <ViewObjectData objectData={objectData} />
-      <div style={{ paddingBottom: 10 }}>
-        <Button
-          className="primary"
-          onClick={() =>
-            history.push({
-              pathname: Config.magasin.urls.client.analysis.addAnalysis(appSession),
-              state: [{ objectData }]
-            })}
-        >
-          {I18n.t('musit.objects.objectsView.newAnalysis')}
-        </Button>
-        <Button
-          className="primary"
-          onClick={() =>
-            history.push({
-              pathname: Config.magasin.urls.client.analysis.addSample(
-                appSession,
-                objectData.uuid
-              )
-            })}
-        >
-          {I18n.t('musit.objects.objectsView.newSample')}
-        </Button>
-        <Button
-          className="primary"
-          onClick={() =>
-            history.push({
-              pathname: Config.magasin.urls.client.conservation.addConservation(
-                appSession
-              ),
-              state: [objectData]
-            })}
-        >
-          {I18n.t('musit.conservation.newConservation')}
-        </Button>
-      </div>
+
+      <Row>
+        <Col md={2} style={{ paddingTop: '5px' }}>
+          <ControlLabel>
+            {I18n.t('musit.objects.objectsView.createNewEvent')}
+          </ControlLabel>
+        </Col>
+        <Col md={3}>
+          <DropdownButton
+            title={I18n.t('musit.objects.objectsView.selectEvent')}
+            id="bg-nested-dropdown"
+          >
+            <MenuItem
+              eventKey="newAnalysis"
+              onClick={() =>
+                history.push({
+                  pathname: Config.magasin.urls.client.analysis.addAnalysis(appSession),
+                  state: [{ objectData }]
+                })}
+            >
+              {I18n.t('musit.objects.objectsView.newAnalysis')}
+            </MenuItem>
+            <MenuItem
+              eventKey="newSample"
+              onClick={() =>
+                history.push({
+                  pathname: Config.magasin.urls.client.analysis.addSample(
+                    appSession,
+                    objectData.uuid
+                  )
+                })}
+            >
+              {I18n.t('musit.objects.objectsView.newSample')}
+            </MenuItem>
+            <MenuItem
+              eventKey="newConservation"
+              onClick={() =>
+                history.push({
+                  pathname: Config.magasin.urls.client.conservation.addConservation(
+                    appSession
+                  ),
+                  state: [objectData]
+                })}
+            >
+              {I18n.t('musit.conservation.newConservation')}
+            </MenuItem>
+          </DropdownButton>
+        </Col>
+      </Row>
+      <hr />
       <Tabs defaultActiveKey={1} id="events">
         <Tab title={I18n.t('musit.objects.objectsView.events.events')} eventKey={1}>
           <EventTable

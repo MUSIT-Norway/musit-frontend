@@ -43,6 +43,8 @@
         "noData": "No objects to display",
         "objectsView": {
           "object": "Object",
+          "createNewEvent" : "Create new event",          
+          "selectEvent" : "Select event", 
           "location": "Location",
           "musNo": "Museum No.",
           "subNo": "U. No.",
@@ -1015,10 +1017,12 @@
         "doExpand": "Ekspander delhendelser"
       },
       "objects": {
-        "goToParentObject": "Gå til objektet",
+        "goToParentObject": "Gå til objektet",        
         "noData": "Ingen objekter å vise",
         "objectsView": {
           "object": "Objekt",
+          "createNewEvent" : "Opprett ny hendelse",
+          "selectEvent" : "Velg hendelse",          
           "location": "Plassering",
           "musNo": "Museumsnr.",
           "subNo": "Undernr.",
