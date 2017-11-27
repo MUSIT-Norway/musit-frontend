@@ -33,6 +33,13 @@
           "techincalDescription":{
             "technicalDescription": "Technical description",
             "note":"Note"
+          },
+          "storageAndHandling":{
+            "storageAndHandling": "Storage and handling",
+            "note":"Note",
+            "lightAndUvLevel":"Light and UV level",
+            "relativeHumidity":"RelativeH humidity",
+            "temperature":"Temperature"
           }
         },
         "doCollapse": "Collapse sub evebts",
@@ -100,7 +107,7 @@
             "Analysis": "Analysis",
             "MoveObject": "Relocating",
             "SampleCreated": "Sample",
-            "Conservation": "Use & conservation"
+            "Conservation": "Use & conservation"            
           }
         }
       },
@@ -1011,6 +1018,13 @@
           "techincalDescription":{
             "technicalDescription": "Teknisk beskrivelse",
             "note":"Merknad"
+          },
+          "storageAndHandling":{
+            "storageAndHandling": "Oppvevaring og håndtering",
+            "note":"Merknad",
+            "lightAndUvLevel":"Lux",
+            "relativeHumidity":"Relativ fuktighet",
+            "temperature":"Temperatur"
           }
         },
         "doCollapse": "Kollaps delhender",

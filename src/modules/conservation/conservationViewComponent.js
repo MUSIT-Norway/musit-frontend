@@ -13,6 +13,7 @@ import type { PredefinedConservation } from '../../types/predefinedConservation'
 import Treatment from './events/treatment';
 import TechnicalDescription from './events/technicalDescription';
 import type { ConservationSubTypes } from '../../types/conservation';
+import StorageAndHandling from './events/storageAndHandling';
 
 export type Props = {
   match: { params: { conservationId: number } },
@@ -75,6 +76,29 @@ const addEventComponents = (
         technicalDescription={{
           note: event.note,
           affectedThings: event.affectedThings
+        }}
+        index={index}
+        appSession={appSession}
+        viewMode={true}
+        expanded={expandEvent}
+        toggleExpanded={props.toggleSingleExpanded(
+          !expandEvent,
+          props.form.events.value,
+          index
+        )}
+      />
+    );
+  else if (event.eventTypeId === 4)
+    return (
+      <StorageAndHandling
+        affectedThingsWithDetailsMainEvent={objects}
+        storageAndHandling={{
+          note: event.note,
+          affectedThings: event.affectedThings,
+          lightAndUvLevel: event.lightAndUvLevel,
+          relativeHumidity: event.relativeHumidity,
+          temperature: event.temperature,
+          actorsAndRoles: event.actorsAndRoles
         }}
         index={index}
         appSession={appSession}

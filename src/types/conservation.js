@@ -90,6 +90,13 @@ export type ConservatonSubType = {
   noTerm: string,
   enTerm: string
 };
+
+export type actorsRolesDatesType = {
+  roleId: number,
+  actorId: string,
+  actorDate: string
+};
+
 export type TreatmentType = {
   eventTypeId: number,
   keywords?: Array<string>,
@@ -113,4 +120,20 @@ export type TechnicalDescriptionType = {
   toggleSingleExpanded: Function
 };
 
-export type ConservationSubTypes = TreatmentType | TechnicalDescriptionType;
+export type StorageAndHandlingType = {
+  eventTypeId: number,
+  note: string,
+  lightAndUvLevel: string,
+  relativeHumidity: string,
+  temperature: string,
+  actorsAndRoles: Array<actorsRolesDatesType>,
+  affectedThings?: Array<string>,
+  expanded: boolean,
+  toggleExpanded: Function,
+  toggleSingleExpanded: Function
+};
+
+export type ConservationSubTypes =
+  | TreatmentType
+  | TechnicalDescriptionType
+  | StorageAndHandlingType;

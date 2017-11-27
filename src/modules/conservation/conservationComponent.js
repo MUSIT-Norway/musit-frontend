@@ -13,6 +13,7 @@ import type { PredefinedConservation } from '../../types/predefinedConservation'
 import type { ConservationSubTypes } from '../../types/conservation';
 import Treatment from './events/treatment';
 import TechnicalDescription from './events/technicalDescription';
+import StorageAndHandling from './events/storageAndHandling';
 import PersonRoleDate from '../../components/person/PersonRoleDate';
 import toArray from 'lodash/toArray';
 
@@ -77,6 +78,20 @@ function createSubEvents(props: Props & { form: FormData }) {
             {
               eventTypeId: v,
               note: '',
+              affectedThings: [],
+              expanded: true
+            }
+          ]);
+        }
+        case 4: {
+          return acc.concat([
+            {
+              eventTypeId: v,
+              note: '',
+              lightAndUvLevel: '',
+              relativeHumidity: '',
+              temperature: '',
+              actorsAndRoles: [],
               affectedThings: [],
               expanded: true
             }
@@ -158,6 +173,30 @@ function renderSubEvent(
         technicalDescription={props.form.events.rawValue[ind]}
         index={ind}
         name={`techincalDescription_${ind}`}
+        onChange={props.updateConservationSubEvent(
+          props.form.events.name,
+          props.form.events.rawValue,
+          ind
+        )}
+        onDelete={() => deleteSubEvents(props, ind)}
+        expanded={props.form.events.value[ind].expanded}
+        toggleExpanded={props.toggleSingleExpanded(
+          !props.form.events.value[ind].expanded,
+          props.form.events.value,
+          ind
+        )}
+      />
+    );
+  } else if (eventType === 4) {
+    return (
+      <StorageAndHandling
+        key={`techincalDescription_${ind}`}
+        viewMode={false}
+        appSession={appSession}
+        affectedThingsWithDetailsMainEvent={props.objects || []}
+        storageAndHandling={props.form.events.rawValue[ind]}
+        index={ind}
+        name={`storageAndHandling_${ind}`}
         onChange={props.updateConservationSubEvent(
           props.form.events.name,
           props.form.events.rawValue,
