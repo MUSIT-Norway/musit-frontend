@@ -1157,8 +1157,8 @@ const props: any = {
       validator: { rawValidator: null },
       status: { valid: true, error: null }
     },
-    persons: {
-      name: 'persons',
+    actorsAndRoles: {
+      name: 'actorsAndRoles',
       defaultValue: [],
       value: [],
       rawValue: [],

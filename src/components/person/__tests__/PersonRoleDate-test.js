@@ -37,9 +37,24 @@ describe('PersonRoleDate', () => {
     const wrapperAfter = shallow(
       <PersonRoleDate
         personData={[
-          { fn: 'Stein Olsen', role: 'doneBy', date: '12.01.2001' },
-          { fn: 'Thor Heyerdahl', role: 'responsible', date: '12.01.2001' },
-          { fn: 'Christian Radich', role: 'responsible', date: '12.01.2001' }
+          {
+            uuid: '0000-0000-0000-0000',
+            fn: 'Stein Olsen',
+            role: 'doneBy',
+            date: '12.01.2001'
+          },
+          {
+            uuid: '0000-0000-0000-0001',
+            fn: 'Thor Heyerdahl',
+            role: 'responsible',
+            date: '12.01.2001'
+          },
+          {
+            uuid: '0000-0000-0000-0002',
+            fn: 'Christian Radich',
+            role: 'responsible',
+            date: '12.01.2001'
+          }
         ]}
         appSession={{
           museumId: 99,

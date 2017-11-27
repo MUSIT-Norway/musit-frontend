@@ -23,5 +23,6 @@ export type FormData = {
   affectedThings: Field<Array<string>>,
   objects: Field<Array<ObjectInfo>>,
   subEventTypes: Field<string>,
+  actorsAndRoles: Field<Array<Person>>,
   events: Field<Array<ConservationSubTypes>>
 };

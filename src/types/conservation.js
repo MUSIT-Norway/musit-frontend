@@ -3,6 +3,14 @@
 import type { MusitObject } from '../types/object';
 import type { SampleDataExtended } from '../types/samples';
 
+export type ActorsAndRoles = {
+  roleId?: number | string,
+  roleName?: string,
+  actorName?: string,
+  actorId: string,
+  date?: string
+};
+
 export type AffectedThing = {
   id: number,
   affectedThing: string,
@@ -52,7 +60,8 @@ export type ConservationCollection = {
   caseNumbers?: ?Array<string>,
   caseNumber?: ?string,
   orgId?: ?number,
-  events?: ?Array<any>
+  events?: ?Array<any>,
+  actorsAndRoles?: Array<ActorsAndRoles>
 };
 
 export type ConservationType = {
@@ -82,6 +91,7 @@ export type ConservationSave = {
   completedDate?: ?string,
   caseNumber?: ?string,
   affectedThings?: ?Array<string>,
+  actorsAndRoles?: Array<ActorsAndRoles>,
   note?: ?string
 };
 
@@ -106,6 +116,7 @@ export type TreatmentType = {
   materialUsageTypes?: Array<ConservatonSubType>,
   materialUsageOnChange?: Function,
   note?: string,
+  actorsAndRoles?: Array<ActorsAndRoles>,
   affectedThings?: Array<string>,
   expanded: boolean,
   toggleExpanded: Function,
@@ -114,6 +125,7 @@ export type TreatmentType = {
 export type TechnicalDescriptionType = {
   eventTypeId: number,
   note: string,
+  actorsAndRoles?: Array<ActorsAndRoles>,
   affectedThings?: Array<string>,
   expanded: boolean,
   toggleExpanded: Function,

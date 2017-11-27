@@ -98,7 +98,8 @@ export const PersonRoleDate = ({
                       })}
                     title={
                       v.role ? (
-                        (getDisplayNameForRole && getDisplayNameForRole(v.role)) || v.role
+                        (getDisplayNameForRole && getDisplayNameForRole(v.role)) ||
+                        v.role.toString()
                       ) : (
                         I18n.t('musit.texts.chooseRole')
                       )
@@ -158,14 +159,14 @@ export const PersonRoleDate = ({
 };
 
 function addPerson(persons: Array<Person>): Array<Person> {
-  return [...persons, { date: moment().format() }];
+  return [...persons, { uuid: '', date: moment().format() }];
 }
 
 function deletePerson(i: number, persons: Array<Person>): Array<Person> {
   return [...persons.slice(0, i), ...persons.slice(i + 1)];
 }
 
-function updateRole(i, role: string, persons: Array<Person>) {
+function updateRole(i, role: string | number, persons: Array<Person>) {
   return updatePerson(i, { ...persons[i], role }, persons);
 }
 

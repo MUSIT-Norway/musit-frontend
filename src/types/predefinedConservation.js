@@ -11,5 +11,6 @@ export type PredefinedConservation = {
   sampleTypes: ?SampleTypes,
   conservationTypes: ?ConservationTypes,
   materialList: ?Array<ConservatonSubType>,
-  keywordList: ?Array<ConservatonSubType>
+  keywordList: ?Array<ConservatonSubType>,
+  roleList: ?Array<ConservatonSubType>
 };

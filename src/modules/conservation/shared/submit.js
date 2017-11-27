@@ -4,6 +4,7 @@ import type { AppSession } from '../../../types/appSession';
 import type { FormData } from '../shared/formType';
 import type { ConservationSave, ObjectInfo } from '../../../types/conservation';
 import type { ObjectData } from '../../../types/object';
+import type { Person } from '../../../types/person';
 import type { Observable } from 'rxjs';
 import toArray from 'lodash/toArray';
 
@@ -35,11 +36,16 @@ export function getConservationCollection(
   }
   return {
     eventTypeId: form.eventTypeId.value || 1,
-    doneBy: doneBy && doneBy.uuid,
-    doneDate: doneBy && doneBy.date,
     note: form.note.value,
     events: form.events.value,
-    participating: participating && participating.uuid,
+    actorsAndRoles:
+      form.actorsAndRoles && form.actorsAndRoles.value
+        ? form.actorsAndRoles.value.map((v: Person) => ({
+            actorId: v.uuid,
+            roleId: v.role,
+            date: v.date
+          }))
+        : [],
     objects: getObjectsWithType(getObjects(affectedThings, location)),
     affectedThings: affectedThings ? affectedThings.map(o => o.uuid) : [],
     caseNumber: form.caseNumber.value

@@ -131,6 +131,7 @@ export default {
         conservation: {
           getMaterialList: `/api/management/conservation/treatmentMaterials`,
           getKeywordList: `/api/management/conservation/treatmentKeywords`,
+          getRoleList: `/api/management/conservation/roles`,
           getAllConservationTypes: (mid: MuseumId) =>
             `/api/management/${mid}/conservation/types`,
           addConservationEvent: (mid: MuseumId) =>

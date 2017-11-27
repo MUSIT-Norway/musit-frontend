@@ -3,6 +3,7 @@ import React from 'react';
 import { I18n } from 'react-i18nify';
 import MetaInformation from '../../components/metainfo';
 import toArray from 'lodash/toArray';
+import find from 'lodash/find';
 import ObjectTable from './components/expandableObjects';
 import ViewPersonRoleDate from '../../components/person/ViewPersonRoleDate';
 import type { FormData } from './shared/formType';
@@ -173,8 +174,14 @@ export default (props: Props) =>
           </div>
         </div>
         <ViewPersonRoleDate
-          personData={toArray(props.form.persons.value)}
-          getDisplayNameForRole={(r: string) => I18n.t(`musit.conservation.roles.${r}`)}
+          personData={props.form.actorsAndRoles.value || []}
+          getDisplayNameForRole={(r: number) => {
+            const role = find(
+              props.predefinedConservation.roleList,
+              rl => rl.roleId === r
+            );
+            return role.noRole;
+          }}
         />
         <hr />
         <div className="well">

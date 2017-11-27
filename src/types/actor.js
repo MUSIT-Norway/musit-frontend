@@ -8,6 +8,12 @@ export type Actor = {
   fn: string
 };
 
+export type ActorRoleDate = {
+  actorId: string,
+  roleId: string,
+  date: string
+};
+
 /**
  * This is the actual response object from the backend.
  */

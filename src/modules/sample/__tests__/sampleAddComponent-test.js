@@ -207,7 +207,7 @@ describe('AnalysisSampleFormPageAdd', () => {
     hasRestMaterial: createField('hasRestMaterial', 'false'),
     registeredByName: createField('registeredByName', 'Jarl'),
     persons: createField('persons', [
-      { name: 'Arne And', role: 'created', date: '1998-01-2001' }
+      { uuid: '0000-0000-1234', name: 'Arne And', role: 'created', date: '1998-01-2001' }
     ])
   };
 });

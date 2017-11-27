@@ -33,7 +33,8 @@ export const initialState: State = {
   conservationTypes: null,
   loadingConservationTypes: false,
   keywordList: null,
-  materialList: null
+  materialList: null,
+  roleList: null
 };
 
 export function reducer$(actions: { [string]: Observable<*> }): Observable<Reducer<any>> {

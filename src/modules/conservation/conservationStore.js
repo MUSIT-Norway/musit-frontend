@@ -19,6 +19,7 @@ import type { Actor } from '../../types/actor';
 import Sample from '../../models/sample';
 import type { SampleType } from 'types/sample';
 import { KEEP_ALIVE } from '../../stores/constants';
+import find from 'lodash/find';
 
 export const initialState: ConservationStoreState = {
   loadingConservation: false,
@@ -133,32 +134,30 @@ export function getConservationDetails(
 ): (conservation: ConservationCollection) => Observable<*> {
   return (conservation: ConservationCollection) =>
     MusitActor.getActors(ajaxPost)({
-      actorIds: [
-        conservation.registeredBy || '',
-        conservation.updatedBy || '',
-        conservation.doneBy || '',
-        conservation.participating || ''
-      ].filter(p => p),
+      actorIds: [conservation.registeredBy || '', conservation.updatedBy || '']
+        .concat(
+          (conservation.actorsAndRoles ? conservation.actorsAndRoles : []).map(
+            a => a.actorId
+          )
+        )
+        .filter(p => p),
       token: props.token
     })
       .map(actors => {
         if (actors) {
           const actorNames = getActorNames(actors, conservation);
-          if (conservation.restriction) {
-            return {
-              ...conservation,
-              ...actorNames
-            };
-          }
+          const actorsAndRoles = getActorNamesAndRoles(actors, conservation);
           return {
             ...conservation,
-            ...actorNames
+            ...actorNames,
+            actorsAndRoles
           };
         }
         return conservation;
       })
       .flatMap(conservation => {
         const affectedThings = conservation.affectedThings;
+        console.log('Kons: ', conservation);
         if (affectedThings && affectedThings.length > 0) {
           // $FlowFixMe | We are passing an array to forkJoin which is not supported by flow-typed definition for rxjs.
           return Observable.forkJoin(
@@ -244,16 +243,26 @@ export function getActorNames(
     {
       id: conservation.registeredBy || '',
       fieldName: 'registeredByName'
-    },
-    {
-      id: conservation.doneBy || '',
-      fieldName: 'doneByName'
-    },
-    {
-      id: conservation.participating || '',
-      fieldName: 'participatingName'
     }
   ]);
+}
+
+export function getActorNamesAndRoles(
+  actors: Array<Actor>,
+  conservation: ConservationCollection
+) {
+  if (conservation.actorsAndRoles) {
+    return conservation.actorsAndRoles.map(ard => {
+      const a = find(actors, a => MusitActor.hasActorId(a, ard.actorId));
+      return {
+        actorId: ard.actorId,
+        roleId: ard.roleId,
+        date: ard.date,
+        actorName: a.fn
+      };
+    });
+  }
+  return [];
 }
 
 const saveConservation = (ajaxPost, ajaxPut) => ({

@@ -25,30 +25,16 @@ export const fromJsonToForm: (
     {}
   );
 
-  let persons = [];
-  if (formValues.doneBy && formValues.doneBy.defaultValue) {
-    persons = persons.concat([
-      {
-        name: json.doneByName,
-        uuid: json.doneBy,
-        role: 'doneBy',
-        date: json.doneDate
-      }
-    ]);
-  }
+  const persons =
+    json.actorsAndRoles &&
+    json.actorsAndRoles.map(a => ({
+      uuid: a.actorId,
+      name: a.actorName,
+      role: a.roleId,
+      date: a.date
+    }));
 
-  if (formValues.participating && formValues.participating.defaultValue) {
-    persons = persons.concat([
-      {
-        name: json.participatingName,
-        uuid: json.participating,
-        role: 'participating',
-        date: null
-      }
-    ]);
-  }
-
-  formValues.persons = toField('persons', persons);
+  formValues.actorsAndRoles = toField('actorsAndRoles', persons);
 
   return Object.keys(formValues).map(key => formValues[key]);
 };

@@ -12,6 +12,7 @@ export const fieldsArray = [
   getNumberField('eventTypeId', null, false),
   getStrField('doneBy'),
   getStrField('doneDate'),
+  getArrField('actorsAndRoles', []),
   getStrField('participating'),
   getStrField('participatingName', null, false),
   getArrField('persons', [], false),

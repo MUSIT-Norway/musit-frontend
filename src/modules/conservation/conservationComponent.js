@@ -16,6 +16,7 @@ import TechnicalDescription from './events/technicalDescription';
 import StorageAndHandling from './events/storageAndHandling';
 import PersonRoleDate from '../../components/person/PersonRoleDate';
 import toArray from 'lodash/toArray';
+import find from 'lodash/find';
 
 type ConservationProcessProps = {
   id?: number,
@@ -53,7 +54,9 @@ type ProcessFormProps = {
   updateStringField: Function
 };
 
-function createSubEvents(props: Props & { form: FormData }) {
+function createSubEvents(
+  props: Props & { form: FormData, predefinedConservation: PredefinedConservation }
+) {
   return () => {
     const eventTypes =
       props.form.subEventTypes && props.form.subEventTypes.rawValue
@@ -69,6 +72,7 @@ function createSubEvents(props: Props & { form: FormData }) {
               materials: [],
               note: '',
               affectedThings: [],
+              actorsAndRoles: [],
               expanded: true
             }
           ]);
@@ -79,6 +83,7 @@ function createSubEvents(props: Props & { form: FormData }) {
               eventTypeId: v,
               note: '',
               affectedThings: [],
+              actorsAndRoles: [],
               expanded: true
             }
           ]);
@@ -244,7 +249,9 @@ function ConservationProcessForm(props: ProcessFormProps) {
   );
 }
 
-export default function ConservationComponent(props: Props & { form: FormData }) {
+export default function ConservationComponent(
+  props: Props & { form: FormData, predefinedConservation: PredefinedConservation }
+) {
   return (
     <div className="container">
       <div className="page-header">
@@ -282,12 +289,21 @@ export default function ConservationComponent(props: Props & { form: FormData })
       <form className="form-horizontal">
         <PersonRoleDate
           appSession={props.appSession}
-          personData={toArray(props.form.persons.value)}
+          personData={props.form.actorsAndRoles.value || []}
           updateForm={props.updateForm}
-          fieldName={props.form.persons.name}
-          getDisplayNameForRole={(r: string) => I18n.t(`musit.conservation.roles.${r}`)}
-          roles={['doneBy', 'participating']}
-          showDateForRole={(roleName: string) => ['doneBy'].some(e => e === roleName)}
+          fieldName={props.form.actorsAndRoles.name}
+          getDisplayNameForRole={(r: string) => {
+            const role = find(
+              props.predefinedConservation.roleList,
+              rl => rl.roleId === r
+            );
+            return role.noRole;
+          }}
+          roles={
+            props.predefinedConservation.roleList &&
+            props.predefinedConservation.roleList.map(e => e.roleId)
+          }
+          showDateForRole={(roleName: string) => [1].some(e => e === roleName)}
         />
       </form>
       <br />

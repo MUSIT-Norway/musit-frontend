@@ -37,13 +37,20 @@ describe('ViewPersonRoleDate', () => {
     const wrapperAfter = shallow(
       <ViewPersonRoleDate
         personData={[
-          { fn: 'Stein Olsen', role: 'doneBy', date: '2017-07-02T17:42:28+00:00' },
           {
+            uuid: '0000-0000-0000-0000',
+            fn: 'Stein Olsen',
+            role: 'doneBy',
+            date: '2017-07-02T17:42:28+00:00'
+          },
+          {
+            uuid: '0000-0000-0000-0001',
             fn: 'Thor Heyerdahl',
             role: 'responsible',
             date: '2017-07-02T17:42:28+00:00'
           },
           {
+            uuid: '0000-0000-0000-0002',
             fn: 'Christian Radich',
             role: 'responsible',
             date: '2017-07-02T17:42:28+00:00'
