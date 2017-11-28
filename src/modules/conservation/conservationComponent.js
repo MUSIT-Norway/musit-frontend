@@ -15,6 +15,7 @@ import Treatment from './events/treatment';
 import TechnicalDescription from './events/technicalDescription';
 import StorageAndHandling from './events/storageAndHandling';
 import PersonRoleDate from '../../components/person/PersonRoleDate';
+import HseRisk from './events/hseRisk';
 import toArray from 'lodash/toArray';
 import find from 'lodash/find';
 
@@ -96,6 +97,17 @@ function createSubEvents(
               lightAndUvLevel: '',
               relativeHumidity: '',
               temperature: '',
+              actorsAndRoles: [],
+              affectedThings: [],
+              expanded: true
+            }
+          ]);
+        }
+        case 5: {
+          return acc.concat([
+            {
+              eventTypeId: v,
+              note: '',
               actorsAndRoles: [],
               affectedThings: [],
               expanded: true
@@ -195,13 +207,37 @@ function renderSubEvent(
   } else if (eventType === 4) {
     return (
       <StorageAndHandling
-        key={`techincalDescription_${ind}`}
+        key={`storageAndHandling_${ind}`}
         viewMode={false}
         appSession={appSession}
         affectedThingsWithDetailsMainEvent={props.objects || []}
         storageAndHandling={props.form.events.rawValue[ind]}
         index={ind}
         name={`storageAndHandling_${ind}`}
+        onChange={props.updateConservationSubEvent(
+          props.form.events.name,
+          props.form.events.rawValue,
+          ind
+        )}
+        onDelete={() => deleteSubEvents(props, ind)}
+        expanded={props.form.events.value[ind].expanded}
+        toggleExpanded={props.toggleSingleExpanded(
+          !props.form.events.value[ind].expanded,
+          props.form.events.value,
+          ind
+        )}
+      />
+    );
+  } else if (eventType === 5) {
+    return (
+      <HseRisk
+        key={`hseRisk_${ind}`}
+        viewMode={false}
+        appSession={appSession}
+        affectedThingsWithDetailsMainEvent={props.objects || []}
+        hseRisk={props.form.events.rawValue[ind]}
+        index={ind}
+        name={`hseRisk_${ind}`}
         onChange={props.updateConservationSubEvent(
           props.form.events.name,
           props.form.events.rawValue,

@@ -6,12 +6,9 @@ import ConservationViewComponent from '../conservationViewComponent';
 
 const props: any = {
   appSession: {
-    accessToken: '7dbce915-c87a-47c1-8666-c858f3624d0d',
+    accessToken: '123',
     actor: {
-      fn: 'Rituvesh Kumar',
-      email: 'rituvesh.kumar@usit.uio.no',
-      dataportenId: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
-      dataportenUser: 'rituvesk@uio.no'
+      fn: 'Rituvesh Kumar'
     },
     groups: [
       {

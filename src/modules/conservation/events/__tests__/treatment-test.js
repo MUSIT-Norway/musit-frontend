@@ -155,12 +155,9 @@ const props: any = {
   },
   index: 0,
   appSession: {
-    accessToken: '2977f4df-dbb3-4499-a769-a8e038dc38c2',
+    accessToken: '123',
     actor: {
-      fn: 'Rituvesh Kumar',
-      email: 'rituvesh.kumar@usit.uio.no',
-      dataportenId: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
-      dataportenUser: 'rituvesk@uio.no'
+      fn: 'Rituvesh Kumar'
     },
     groups: [
       {
@@ -170,75 +167,12 @@ const props: any = {
         museumName: 'Test',
         permission: 10000,
         collections: [{ uuid: '00000000-0000-0000-0000-000000000000', name: 'All' }]
-      },
-      {
-        id: 7,
-        shortName: 'Kmn',
-        museumId: 7,
-        museumName: 'Kmn',
-        permission: 10000,
-        collections: [{ uuid: '00000000-0000-0000-0000-000000000000', name: 'All' }]
-      },
-      {
-        id: 6,
-        shortName: 'Tmu',
-        museumId: 6,
-        museumName: 'Tmu',
-        permission: 10000,
-        collections: [{ uuid: '00000000-0000-0000-0000-000000000000', name: 'All' }]
-      },
-      {
-        id: 5,
-        shortName: 'Vm',
-        museumId: 5,
-        museumName: 'Vm',
-        permission: 10000,
-        collections: [{ uuid: '00000000-0000-0000-0000-000000000000', name: 'All' }]
-      },
-      {
-        id: 4,
-        shortName: 'Nhm',
-        museumId: 4,
-        museumName: 'Nhm',
-        permission: 10000,
-        collections: [{ uuid: '00000000-0000-0000-0000-000000000000', name: 'All' }]
-      },
-      {
-        id: 3,
-        shortName: 'Khm',
-        museumId: 3,
-        museumName: 'Khm',
-        permission: 10000,
-        collections: [{ uuid: '00000000-0000-0000-0000-000000000000', name: 'All' }]
-      },
-      {
-        id: 2,
-        shortName: 'Um',
-        museumId: 2,
-        museumName: 'Um',
-        permission: 10000,
-        collections: [{ uuid: '00000000-0000-0000-0000-000000000000', name: 'All' }]
-      },
-      {
-        id: 1,
-        shortName: 'Am',
-        museumId: 1,
-        museumName: 'Am',
-        permission: 10000,
-        collections: [{ uuid: '00000000-0000-0000-0000-000000000000', name: 'All' }]
       }
     ],
     museumId: 99,
     collectionId: '00000000-0000-0000-0000-000000000000',
     buildInfo: {
-      builtAtMillis: '1511339476473',
-      name: 'service_auth',
-      scalaVersion: '2.11.8',
-      buildInfoBuildNumber: '32',
-      version: '0.1-SNAPSHOT',
-      sbtVersion: '0.13.16',
-      commitSha: 'not built on CI',
-      builtAtString: '2017-11-22 08:31:16.473'
+      commitSha: 'not built on CI'
     },
     language: { isEn: true, isNo: false }
   },

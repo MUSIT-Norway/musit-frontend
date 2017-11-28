@@ -487,11 +487,8 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
     <Component
       appSession={
         Object {
-          "accessToken": "7dbce915-c87a-47c1-8666-c858f3624d0d",
+          "accessToken": "123",
           "actor": Object {
-            "dataportenId": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-            "dataportenUser": "rituvesk@uio.no",
-            "email": "rituvesh.kumar@usit.uio.no",
             "fn": "Rituvesh Kumar",
           },
           "buildInfo": Object {
@@ -628,11 +625,8 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
   <ExpandableObjectTable
     appSession={
       Object {
-        "accessToken": "7dbce915-c87a-47c1-8666-c858f3624d0d",
+        "accessToken": "123",
         "actor": Object {
-          "dataportenId": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-          "dataportenUser": "rituvesk@uio.no",
-          "email": "rituvesh.kumar@usit.uio.no",
           "fn": "Rituvesh Kumar",
         },
         "buildInfo": Object {
@@ -1141,11 +1135,8 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
   <FieldMultiSelect
     appSession={
       Object {
-        "accessToken": "7dbce915-c87a-47c1-8666-c858f3624d0d",
+        "accessToken": "123",
         "actor": Object {
-          "dataportenId": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-          "dataportenUser": "rituvesk@uio.no",
-          "email": "rituvesh.kumar@usit.uio.no",
           "fn": "Rituvesh Kumar",
         },
         "buildInfo": Object {
@@ -2316,11 +2307,8 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
     <Component
       appSession={
         Object {
-          "accessToken": "7dbce915-c87a-47c1-8666-c858f3624d0d",
+          "accessToken": "123",
           "actor": Object {
-            "dataportenId": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-            "dataportenUser": "rituvesk@uio.no",
-            "email": "rituvesh.kumar@usit.uio.no",
             "fn": "Rituvesh Kumar",
           },
           "buildInfo": Object {
@@ -2457,11 +2445,8 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
   <ExpandableObjectTable
     appSession={
       Object {
-        "accessToken": "7dbce915-c87a-47c1-8666-c858f3624d0d",
+        "accessToken": "123",
         "actor": Object {
-          "dataportenId": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-          "dataportenUser": "rituvesk@uio.no",
-          "email": "rituvesh.kumar@usit.uio.no",
           "fn": "Rituvesh Kumar",
         },
         "buildInfo": Object {
@@ -3060,11 +3045,8 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
           }
           appSession={
             Object {
-              "accessToken": "7dbce915-c87a-47c1-8666-c858f3624d0d",
+              "accessToken": "123",
               "actor": Object {
-                "dataportenId": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-                "dataportenUser": "rituvesk@uio.no",
-                "email": "rituvesh.kumar@usit.uio.no",
                 "fn": "Rituvesh Kumar",
               },
               "buildInfo": Object {
@@ -3822,11 +3804,8 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
           }
           appSession={
             Object {
-              "accessToken": "7dbce915-c87a-47c1-8666-c858f3624d0d",
+              "accessToken": "123",
               "actor": Object {
-                "dataportenId": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-                "dataportenUser": "rituvesk@uio.no",
-                "email": "rituvesh.kumar@usit.uio.no",
                 "fn": "Rituvesh Kumar",
               },
               "buildInfo": Object {
@@ -3983,11 +3962,8 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
   <FieldMultiSelect
     appSession={
       Object {
-        "accessToken": "7dbce915-c87a-47c1-8666-c858f3624d0d",
+        "accessToken": "123",
         "actor": Object {
-          "dataportenId": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-          "dataportenUser": "rituvesk@uio.no",
-          "email": "rituvesh.kumar@usit.uio.no",
           "fn": "Rituvesh Kumar",
         },
         "buildInfo": Object {

@@ -145,7 +145,18 @@ export type StorageAndHandlingType = {
   toggleSingleExpanded: Function
 };
 
+export type hseRiskType = {
+  eventTypeId: number,
+  note: string,
+  actorsAndRoles: Array<actorsRolesDatesType>,
+  affectedThings?: Array<string>,
+  expanded: boolean,
+  toggleExpanded: Function,
+  toggleSingleExpanded: Function
+};
+
 export type ConservationSubTypes =
   | TreatmentType
   | TechnicalDescriptionType
-  | StorageAndHandlingType;
+  | StorageAndHandlingType
+  | hseRiskType;

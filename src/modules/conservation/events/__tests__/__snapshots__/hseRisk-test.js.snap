@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HseRisk should render properly 1`] = `
+<CollapsibleEvent
+  eventComponent={
+    <div
+      className="container"
+    >
+      <div
+        className="form-group"
+      >
+        <label
+          className="control-label col-md-2"
+          htmlFor="note_1"
+        >
+          Merknad:
+        </label>
+        <div
+          className="col-md-9"
+        >
+          <textarea
+            className="form-control"
+            disabled={true}
+            id="note_1"
+            onChange={[Function]}
+            rows="5"
+            value="test"
+          />
+        </div>
+      </div>
+      <ObjectSelection
+        affectedThingsSubEvent={
+          Array [
+            "ad1b5287-0168-4343-b3df-a477de113bee",
+          ]
+        }
+        affectedThingsSubEventOnChange={[Function]}
+        affectedThingsWithDetailsMainEvent={
+          Array [
+            Object {
+              "collection": 1,
+              "coordinates": Array [],
+              "id": 1,
+              "isDeleted": false,
+              "locations": Array [],
+              "mainObjectId": 1,
+              "materials": Array [],
+              "museumId": 99,
+              "museumNo": "MusK58",
+              "objectData": Object {
+                "collection": 1,
+                "coordinates": Array [],
+                "id": 1,
+                "isDeleted": false,
+                "locations": Array [],
+                "mainObjectId": 1,
+                "materials": Array [],
+                "museumId": 99,
+                "museumNo": "MusK58",
+                "objectType": "collection",
+                "subNo": "1",
+                "term": "Rar dings",
+                "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
+              },
+              "objectType": "collection",
+              "subNo": "1",
+              "term": "Rar dings",
+              "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
+            },
+          ]
+        }
+        viewMode={true}
+      />
+    </div>
+  }
+  eventName="HMS-risiko"
+/>
+`;

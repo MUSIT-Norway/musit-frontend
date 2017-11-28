@@ -2,7 +2,7 @@
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
-import TechnicalDescription from '../technicalDescription';
+import HseRisk from '../hseRisk';
 
 const props: any = {
   affectedThingsWithDetailsMainEvent: [
@@ -37,7 +37,7 @@ const props: any = {
       objectType: 'collection'
     }
   ],
-  technicalDescription: {
+  hseRisk: {
     note: 'test',
     affectedThings: ['ad1b5287-0168-4343-b3df-a477de113bee']
   },
@@ -67,9 +67,9 @@ const props: any = {
   viewMode: true
 };
 
-describe('TechnicalDescription', () => {
+describe('HseRisk', () => {
   it('should render properly', () => {
-    const wrapper = shallow(<TechnicalDescription {...props} />);
+    const wrapper = shallow(<HseRisk {...props} />);
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 });

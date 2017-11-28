@@ -40,6 +40,10 @@
             "lightAndUvLevel":"Light and UV level",
             "relativeHumidity":"RelativeH humidity",
             "temperature":"Temperature"
+          },
+          "hseRisk":{
+            "hseRisk": "HSE-risk",
+            "note":"Note"
           }
         },
         "doCollapse": "Collapse sub evebts",
@@ -1025,6 +1029,10 @@
             "lightAndUvLevel":"Lux",
             "relativeHumidity":"Relativ fuktighet",
             "temperature":"Temperatur"
+          },
+          "hseRisk":{
+            "hseRisk": "HMS-risiko",
+            "note":"Merknad"
           }
         },
         "doCollapse": "Kollaps delhender",
