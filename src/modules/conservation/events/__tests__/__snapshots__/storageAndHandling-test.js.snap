@@ -7,6 +7,11 @@ exports[`StorageAndHandling should render properly 1`] = `
       className="container"
     >
        
+      <Component
+        getDisplayNameForRole={[Function]}
+        personData={Array []}
+      />
+       
       <div
         className="row form-group"
       >

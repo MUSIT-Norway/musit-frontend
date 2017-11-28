@@ -36,30 +36,34 @@ export type Props = {
   toggleSingleExpanded: Function
 };
 
-const addEventComponents = (
+const renderEventComponent = (
   index: number,
   event: any,
-  conservationTypes: any,
+  predefinedConservation: any,
   appSession: AppSession,
   objects: any,
   props: any
 ) => {
+  console.log('ViewProps', props);
   const expandEvent: boolean = props.form.events.value[index]
     ? props.form.events.value[index].expanded
     : true;
   if (event.eventTypeId === 2)
     return (
       <Treatment
+        key={`treatment_${index}`}
         name={`treatment_${index}`}
         affectedThingsWithDetailsMainEvent={objects}
-        materials={conservationTypes.materialList}
-        keywords={conservationTypes.keywordList}
+        materials={predefinedConservation.materialList}
+        keywords={predefinedConservation.keywordList}
         treatment={{
           keywords: event.keywords,
           materials: event.materials,
           note: event.note,
+          actorsAndRoles: event.actorsAndRoles,
           affectedThings: event.affectedThings
         }}
+        roleList={predefinedConservation.roleList}
         index={index}
         appSession={appSession}
         viewMode={true}
@@ -74,11 +78,14 @@ const addEventComponents = (
   else if (event.eventTypeId === 3)
     return (
       <TechnicalDescription
+        key={`technicalDescription_${index}`}
         affectedThingsWithDetailsMainEvent={objects}
         technicalDescription={{
           note: event.note,
+          actorsAndRoles: event.actorsAndRoles,
           affectedThings: event.affectedThings
         }}
+        roleList={predefinedConservation.roleList}
         index={index}
         appSession={appSession}
         viewMode={true}
@@ -93,15 +100,17 @@ const addEventComponents = (
   else if (event.eventTypeId === 4)
     return (
       <StorageAndHandling
+        key={`storageAndHandling${index}`}
         affectedThingsWithDetailsMainEvent={objects}
         storageAndHandling={{
           note: event.note,
+          actorsAndRoles: event.actorsAndRoles,
           affectedThings: event.affectedThings,
           lightAndUvLevel: event.lightAndUvLevel,
           relativeHumidity: event.relativeHumidity,
-          temperature: event.temperature,
-          actorsAndRoles: event.actorsAndRoles
+          temperature: event.temperature
         }}
+        roleList={predefinedConservation.roleList}
         index={index}
         appSession={appSession}
         viewMode={true}
@@ -116,12 +125,14 @@ const addEventComponents = (
   else if (event.eventTypeId === 5)
     return (
       <HseRisk
+        key={`hseRisk_${index}`}
         affectedThingsWithDetailsMainEvent={objects}
         hseRisk={{
           note: event.note,
-          affectedThings: event.affectedThings,
-          actorsAndRoles: event.actorsAndRoles
+          actorsAndRoles: event.actorsAndRoles,
+          affectedThings: event.affectedThings
         }}
+        roleList={predefinedConservation.roleList}
         index={index}
         appSession={appSession}
         viewMode={true}
@@ -244,13 +255,13 @@ export default (props: Props) =>
             </div>
           </div>
         </div>
-        {props.store &&
-          props.store.conservation &&
-          props.store.conservation.events &&
-          props.store.conservation.events.map((e, index) =>
-            addEventComponents(
+        {props.form &&
+          props.form.events &&
+          props.form.events.value &&
+          props.form.events.value.map((event, index) =>
+            renderEventComponent(
               index,
-              e,
+              event,
               props.predefinedConservation,
               props.appSession,
               props.store.conservation && props.store.conservation.affectedThings,

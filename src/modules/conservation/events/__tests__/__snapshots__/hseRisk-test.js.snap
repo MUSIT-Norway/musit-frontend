@@ -6,6 +6,12 @@ exports[`HseRisk should render properly 1`] = `
     <div
       className="container"
     >
+       
+      <Component
+        getDisplayNameForRole={[Function]}
+        personData={Array []}
+      />
+       
       <div
         className="form-group"
       >

@@ -4,12 +4,16 @@ import type { hseRiskType } from '../../../types/conservation';
 import ObjectSelection from '../components/objectSelection';
 import FontAwesome from 'react-fontawesome';
 import CollapsibleEvent from '../components/CollapsibleEvent';
+import PersonRoleDate from '../../../components/person/PersonRoleDate';
+import ViewPersonRoleDate from '../../../components/person/ViewPersonRoleDate';
+import find from 'lodash/find';
 
 export type hseRiskProps = {
   hseRisk: hseRiskType,
   index?: number,
   appSession?: AppSession,
   viewMode?: boolean,
+  onChangePersonActorRole: Function,
   onChange: Function,
   onDelete?: Function,
   expanded?: boolean,
@@ -36,7 +40,29 @@ export default function HseRisk(props: hseRiskProps) {
             <hr />
           </div>
         </div>
-      )}
+      )}{' '}
+      {props.viewMode ? (
+        <ViewPersonRoleDate
+          personData={props.hseRisk.actorsAndRoles || []}
+          getDisplayNameForRole={(r: string) => {
+            const role = find(props.roleList, rl => rl.roleId === r);
+            return role && role.noRole;
+          }}
+        />
+      ) : (
+        <PersonRoleDate
+          appSession={props.appSession}
+          personData={props.hseRisk.actorsAndRoles}
+          fieldName={'actorsAndRoles'}
+          updateForm={props.onChangePersonActorRole}
+          getDisplayNameForRole={(r: string | number) => {
+            const role = find(props.roleList, rl => rl.roleId === r);
+            return role.noRole;
+          }}
+          roles={props.roleList ? props.roleList.map(e => e.roleId) : []}
+          showDateForRole={(roleName: string) => [1].some(e => e === roleName)}
+        />
+      )}{' '}
       <div className="form-group">
         <label className="control-label col-md-2" htmlFor={`note_${props.index}`}>
           {I18n.t('musit.conservation.events.hseRisk.note') + suffix}

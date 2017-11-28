@@ -5,8 +5,10 @@ import type { Location } from '../shared/submit';
 import { simplePost, simplePut } from '../../../shared/RxAjax';
 import type { History } from '../../../types/Routes';
 import type { AppSession } from '../../../types/appSession';
+
 import type { FormData } from '../shared/formType';
 import type { PredefinedConservation } from '../../../types/predefinedConservation';
+import type { Person } from '../../../types/person';
 import type {
   ConservationStoreState as Store,
   ConservationSubTypes
@@ -42,6 +44,7 @@ export default function formProps(
     updateArrayField: updateArrayField(props.updateForm),
     updateMultiSelectField: updateMultiSelectField(props.updateForm),
     updateConservationSubEvent: updateConservationSubEvent(props.updateForm),
+    updatePersonsForSubEvent: updatePersonsForSubEvent(props.updateForm),
     toggleExpanded: toggleExpanded(props.updateForm),
     toggleSingleExpanded: toggleSingleExpanded(props.updateForm),
     clickSave: clickSave(
@@ -116,6 +119,22 @@ function updateConservationSubEvent(updateForm) {
       rawValue: [
         ...events.slice(0, arrayIndex),
         { ...events[arrayIndex], [fieldName]: value },
+        ...events.slice(arrayIndex + 1)
+      ]
+    });
+  };
+}
+
+function updatePersonsForSubEvent(updateForm) {
+  return (name: string, events: Array<ConservationSubTypes>, arrayIndex: number) => (v: {
+    name: string,
+    rawValue: Array<Person>
+  }) => {
+    updateForm({
+      name,
+      rawValue: [
+        ...events.slice(0, arrayIndex),
+        { ...events[arrayIndex], [v.name]: v.rawValue },
         ...events.slice(arrayIndex + 1)
       ]
     });

@@ -28,7 +28,7 @@ export function getConservationCollection(
   location: Location<Array<ObjectData>>
 ) {
   let affectedThings = toArray(form.affectedThings.value);
-  const persons = toArray(form.persons.value);
+  const persons = toArray(form.actorsAndRoles.value);
   const doneBy = findPerson(persons, 'doneBy');
   const participating = findPerson(persons, 'participating');
   if (affectedThings.length === 0) {
@@ -37,7 +37,14 @@ export function getConservationCollection(
   return {
     eventTypeId: form.eventTypeId.value || 1,
     note: form.note.value,
-    events: form.events.value,
+    events: (form.events && form.events.value ? form.events.value : []).map(v => ({
+      ...v,
+      actorsAndRoles: (v.actorsAndRoles || []).map(a => ({
+        actorId: a.uuid,
+        roleId: a.role,
+        date: a.date
+      }))
+    })),
     actorsAndRoles:
       form.actorsAndRoles && form.actorsAndRoles.value
         ? form.actorsAndRoles.value.map((v: Person) => ({

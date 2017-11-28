@@ -8,7 +8,6 @@ import { FormInput, FormTextArea } from '../../forms/components';
 import type { History } from '../../types/Routes';
 import type { AppSession } from '../../types/appSession';
 import FieldMultiSelect from '../../forms/components/FieldMultiSelect';
-import type { FieldMultiSelectProps } from '../../forms/components/FieldMultiSelect';
 import type { PredefinedConservation } from '../../types/predefinedConservation';
 import type { ConservationSubTypes } from '../../types/conservation';
 import Treatment from './events/treatment';
@@ -16,7 +15,6 @@ import TechnicalDescription from './events/technicalDescription';
 import StorageAndHandling from './events/storageAndHandling';
 import PersonRoleDate from '../../components/person/PersonRoleDate';
 import HseRisk from './events/hseRisk';
-import toArray from 'lodash/toArray';
 import find from 'lodash/find';
 
 type ConservationProcessProps = {
@@ -28,6 +26,7 @@ type ConservationProcessProps = {
   updateStringField: Function,
   updateBooleanField: Function,
   updateMultiSelectField: Function,
+  updatePersonsForSubEvent: Function,
   updateConservationSubEvent: Function,
   toggleExpanded: Function,
   toggleSingleExpanded: Function,
@@ -160,10 +159,16 @@ function renderSubEvent(
         key={`treatment_${ind}`}
         keywords={props.predefinedConservation.keywordList}
         materials={props.predefinedConservation.materialList}
+        roleList={props.predefinedConservation.roleList}
         appSession={appSession}
         treatment={props.form.events.rawValue[ind]}
         index={ind}
         onChange={props.updateConservationSubEvent(
+          props.form.events.name,
+          props.form.events.rawValue,
+          ind
+        )}
+        onChangePersonActorRole={props.updatePersonsForSubEvent(
           props.form.events.name,
           props.form.events.rawValue,
           ind
@@ -186,11 +191,17 @@ function renderSubEvent(
         key={`techincalDescription_${ind}`}
         viewMode={false}
         appSession={appSession}
+        roleList={props.predefinedConservation.roleList}
         affectedThingsWithDetailsMainEvent={props.objects || []}
         technicalDescription={props.form.events.rawValue[ind]}
         index={ind}
         name={`techincalDescription_${ind}`}
         onChange={props.updateConservationSubEvent(
+          props.form.events.name,
+          props.form.events.rawValue,
+          ind
+        )}
+        onChangePersonActorRole={props.updatePersonsForSubEvent(
           props.form.events.name,
           props.form.events.rawValue,
           ind
@@ -210,10 +221,16 @@ function renderSubEvent(
         key={`storageAndHandling_${ind}`}
         viewMode={false}
         appSession={appSession}
+        roleList={props.predefinedConservation.roleList}
         affectedThingsWithDetailsMainEvent={props.objects || []}
         storageAndHandling={props.form.events.rawValue[ind]}
         index={ind}
         name={`storageAndHandling_${ind}`}
+        onChangePersonActorRole={props.updatePersonsForSubEvent(
+          props.form.events.name,
+          props.form.events.rawValue,
+          ind
+        )}
         onChange={props.updateConservationSubEvent(
           props.form.events.name,
           props.form.events.rawValue,
@@ -234,10 +251,16 @@ function renderSubEvent(
         key={`hseRisk_${ind}`}
         viewMode={false}
         appSession={appSession}
+        roleList={props.predefinedConservation.roleList}
         affectedThingsWithDetailsMainEvent={props.objects || []}
         hseRisk={props.form.events.rawValue[ind]}
         index={ind}
         name={`hseRisk_${ind}`}
+        onChangePersonActorRole={props.updatePersonsForSubEvent(
+          props.form.events.name,
+          props.form.events.rawValue,
+          ind
+        )}
         onChange={props.updateConservationSubEvent(
           props.form.events.name,
           props.form.events.rawValue,
@@ -386,12 +409,10 @@ export default function ConservationComponent(
         options={
           props.predefinedConservation &&
           props.predefinedConservation.conservationTypes &&
-          props.predefinedConservation.conservationTypes
-            .slice(1) //Taking away the supertype assumed to be the first element
-            .map(v => ({
-              value: v.id.toString(),
-              label: props.appSession.language.isEn ? v.enName : v.noName
-            }))
+          props.predefinedConservation.conservationTypes.filter(r => r.id > 1).map(v => ({
+            value: v.id.toString(),
+            label: props.appSession.language.isEn ? v.enName : v.noName
+          }))
         }
         onChange={props.updateMultiSelectField(props.form.subEventTypes.name)}
       />

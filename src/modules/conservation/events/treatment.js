@@ -7,6 +7,9 @@ import ObjectSelection from '../components/objectSelection';
 import type { TreatmentType } from '../../../types/conservation';
 import FontAwesome from 'react-fontawesome';
 import CollapsibleEvent from '../components/CollapsibleEvent';
+import PersonRoleDate from '../../../components/person/PersonRoleDate';
+import ViewPersonRoleDate from '../../../components/person/ViewPersonRoleDate';
+import find from 'lodash/find';
 
 type types = { id: number, noLabel: string, enLabel?: string };
 
@@ -18,6 +21,7 @@ export type TreatmentProps = {
   treatment: TreatmentType,
   index?: number,
   appSession?: AppSession,
+  onChangePersonActorRole: Function,
   viewMode?: boolean,
   onChange?: Function,
   onDelete?: Function,
@@ -52,6 +56,28 @@ export default function Treatment(props: TreatmentProps) {
             <hr />
           </div>
         </div>
+      )}{' '}
+      {props.viewMode ? (
+        <ViewPersonRoleDate
+          personData={props.treatment.actorsAndRoles || []}
+          getDisplayNameForRole={(r: string) => {
+            const role = find(props.roleList, rl => rl.roleId === r);
+            return role && role.noRole;
+          }}
+        />
+      ) : (
+        <PersonRoleDate
+          appSession={props.appSession}
+          personData={props.treatment.actorsAndRoles}
+          fieldName={'actorsAndRoles'}
+          updateForm={props.onChangePersonActorRole}
+          getDisplayNameForRole={(r: string | number) => {
+            const role = find(props.roleList, rl => rl.roleId === r);
+            return role.noRole;
+          }}
+          roles={props.roleList ? props.roleList.map(e => e.roleId) : []}
+          showDateForRole={(roleName: string) => [1].some(e => e === roleName)}
+        />
       )}{' '}
       <FieldMultiSelect
         name={props.name + 'keywords'}

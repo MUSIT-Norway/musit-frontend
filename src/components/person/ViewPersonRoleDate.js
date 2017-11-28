@@ -29,7 +29,7 @@ export const ViewPersonRoleDate = ({ personData, getDisplayNameForRole }: Props)
       <tbody>
         {personData.map((p: Person, i: number) => {
           return (
-            <tr key={`key-${i}`}>
+            <tr key={`PersonViewKey-${i}`}>
               <td>{p.name}</td>
               <td>{getDisplayNameForRole && getDisplayNameForRole(p.role)}</td>
               <td>{p.date && moment(p.date).format(DATE_FORMAT_DISPLAY)}</td>

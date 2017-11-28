@@ -140,6 +140,14 @@ export function getConservationDetails(
             a => a.actorId
           )
         )
+        .concat(
+          flatten(
+            conservation.events &&
+              conservation.events.map(
+                e => e.actorsAndRoles && e.actorsAndRoles.map(a => a.actorId)
+              )
+          )
+        )
         .filter(p => p),
       token: props.token
     })
@@ -147,9 +155,15 @@ export function getConservationDetails(
         if (actors) {
           const actorNames = getActorNames(actors, conservation);
           const actorsAndRoles = getActorNamesAndRoles(actors, conservation);
+          const events = (conservation.events || []).map(e => {
+            const actorsAndRoles = getActorNamesAndRoles(actors, e);
+            const actorNames = getActorNames(actors, e);
+            return { ...e, ...actorNames, actorsAndRoles };
+          });
           return {
             ...conservation,
             ...actorNames,
+            events,
             actorsAndRoles
           };
         }

@@ -4,6 +4,9 @@ import type { TechnicalDescriptionType } from '../../../types/conservation';
 import ObjectSelection from '../components/objectSelection';
 import FontAwesome from 'react-fontawesome';
 import CollapsibleEvent from '../components/CollapsibleEvent';
+import PersonRoleDate from '../../../components/person/PersonRoleDate';
+import ViewPersonRoleDate from '../../../components/person/ViewPersonRoleDate';
+import find from 'lodash/find';
 
 export type TechnicalDescriptionProps = {
   technicalDescription: TechnicalDescriptionType,
@@ -12,8 +15,11 @@ export type TechnicalDescriptionProps = {
   viewMode?: boolean,
   onChange: Function,
   onDelete?: Function,
+  onChangePersonActorRole: Function,
   expanded?: boolean,
-  toggleExpanded: Function
+  toggleExpanded: Function,
+  actorsAndRoles: Array<Person>,
+  roleList: Array<any>
 };
 
 export default function TechnicalDescription(props: TechnicalDescriptionProps) {
@@ -23,7 +29,7 @@ export default function TechnicalDescription(props: TechnicalDescriptionProps) {
       {!props.viewMode &&
       !props.technicalDescription.id && (
         <div className="row form-group">
-          <div div className="col-md-10">
+          <div className="col-md-10">
             <button
               className="btn btn-default"
               onClick={e => {
@@ -36,7 +42,30 @@ export default function TechnicalDescription(props: TechnicalDescriptionProps) {
             <hr />
           </div>
         </div>
-      )}
+      )}{' '}
+      {props.viewMode ? (
+        <ViewPersonRoleDate
+          personData={props.technicalDescription.actorsAndRoles || []}
+          getDisplayNameForRole={(r: string) => {
+            const role = find(props.roleList, rl => rl.roleId === r);
+            return role && role.noRole;
+          }}
+        />
+      ) : (
+        <PersonRoleDate
+          appSession={props.appSession}
+          personData={props.technicalDescription.actorsAndRoles}
+          fieldName={'actorsAndRoles'}
+          updateForm={props.onChangePersonActorRole}
+          getDisplayNameForRole={(r: string | number) => {
+            const role = find(props.roleList, rl => rl.roleId === r);
+            return role.noRole;
+          }}
+          roles={props.roleList ? props.roleList.map(e => e.roleId) : []}
+          showDateForRole={(roleName: string) => [1].some(e => e === roleName)}
+        />
+      )}{' '}
+      <hr />
       <div className="form-group">
         <label className="control-label col-md-2" htmlFor={`note_${props.index}`}>
           {I18n.t('musit.conservation.events.techincalDescription.note') + suffix}

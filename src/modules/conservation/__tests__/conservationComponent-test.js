@@ -2282,6 +2282,7 @@ describe('ConservationComponent edit page', () => {
         updateMultiSelectField={e => e}
         toggleExpanded={e => e}
         toggleSingleExpanded={e => e}
+        updatePersonsForSubEvent={e => e}
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
@@ -3813,6 +3814,7 @@ describe('ConservationComponent add page', () => {
         updateMultiSelectField={e => e}
         toggleExpanded={e => e}
         toggleSingleExpanded={e => e}
+        updatePersonsForSubEvent={e => e}
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();

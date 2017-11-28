@@ -7,6 +7,11 @@ exports[`Treatment should render properly 1`] = `
       className="container"
     >
        
+      <Component
+        getDisplayNameForRole={[Function]}
+        personData={Array []}
+      />
+       
       <FieldMultiSelect
         name="treatment_0keywords"
         onChange={[Function]}

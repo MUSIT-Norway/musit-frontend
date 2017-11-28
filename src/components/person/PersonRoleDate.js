@@ -40,7 +40,8 @@ export const PersonRoleDate = ({
   showDateForRole,
   getDisplayNameForRole
 }: Props) => {
-  const pArr: Array<Person> = personData.length > 0 ? personData : defaultPersons;
+  const pArr: Array<Person> =
+    personData && personData.length > 0 ? personData : defaultPersons;
   return (
     pArr && (
       <div>
@@ -91,10 +92,10 @@ export const PersonRoleDate = ({
                       r => (getDisplayNameForRole && getDisplayNameForRole(r)) || r
                     )}
                     index={i}
-                    onChange={role =>
+                    onChange={r =>
                       updateForm({
                         name: fieldName,
-                        rawValue: updateRole(i, role, pArr)
+                        rawValue: updateRole(i, r, pArr)
                       })}
                     title={
                       v.role ? (

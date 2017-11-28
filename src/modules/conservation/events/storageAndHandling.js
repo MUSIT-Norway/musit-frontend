@@ -7,6 +7,9 @@ import ObjectSelection from '../components/objectSelection';
 import type { StorageAndHandlingType } from '../../../types/conservation';
 import FontAwesome from 'react-fontawesome';
 import CollapsibleEvent from '../components/CollapsibleEvent';
+import PersonRoleDate from '../../../components/person/PersonRoleDate';
+import ViewPersonRoleDate from '../../../components/person/ViewPersonRoleDate';
+import find from 'lodash/find';
 
 type types = { id: number, noLabel: string, enLabel?: string };
 
@@ -16,6 +19,7 @@ export type StorageAndHandlingProps = {
   storageAndHandling: StorageAndHandlingType,
   index?: number,
   appSession?: AppSession,
+  onChangePersonActorRole: Function,
   viewMode?: boolean,
   onChange?: Function,
   onDelete?: Function,
@@ -27,7 +31,6 @@ export default function StorageAndHandling(props: StorageAndHandlingProps) {
 
   const storageAndHandlingComponents = (
     <div className="container">
-      {console.log('Rituvesh', props)}
       {!props.viewMode &&
       !props.storageAndHandling.id && (
         <div className="row form-group">
@@ -44,6 +47,28 @@ export default function StorageAndHandling(props: StorageAndHandlingProps) {
             <hr />
           </div>
         </div>
+      )}{' '}
+      {props.viewMode ? (
+        <ViewPersonRoleDate
+          personData={props.storageAndHandling.actorsAndRoles || []}
+          getDisplayNameForRole={(r: string) => {
+            const role = find(props.roleList, rl => rl.roleId === r);
+            return role && role.noRole;
+          }}
+        />
+      ) : (
+        <PersonRoleDate
+          appSession={props.appSession}
+          personData={props.storageAndHandling.actorsAndRoles}
+          fieldName={'actorsAndRoles'}
+          updateForm={props.onChangePersonActorRole}
+          getDisplayNameForRole={(r: string | number) => {
+            const role = find(props.roleList, rl => rl.roleId === r);
+            return role.noRole;
+          }}
+          roles={props.roleList ? props.roleList.map(e => e.roleId) : []}
+          showDateForRole={(roleName: string) => [1].some(e => e === roleName)}
+        />
       )}{' '}
       <div className="row form-group">
         <label className="control-label col-md-2" htmlFor={`note_${props.index}`}>

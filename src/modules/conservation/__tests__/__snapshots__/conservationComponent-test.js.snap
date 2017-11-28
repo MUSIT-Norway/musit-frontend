@@ -3629,6 +3629,7 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
           }
           name="treatment_0"
           onChange="events"
+          onChangePersonActorRole="events"
           onDelete={[Function]}
           toggleExpanded={true}
           treatment={
@@ -3935,6 +3936,7 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
           index={1}
           name="techincalDescription_1"
           onChange="events"
+          onChangePersonActorRole="events"
           onDelete={[Function]}
           technicalDescription={
             Object {

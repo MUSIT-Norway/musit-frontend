@@ -6,6 +6,13 @@ exports[`TechnicalDescription should render properly 1`] = `
     <div
       className="container"
     >
+       
+      <Component
+        getDisplayNameForRole={[Function]}
+        personData={Array []}
+      />
+       
+      <hr />
       <div
         className="form-group"
       >

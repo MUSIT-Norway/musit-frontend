@@ -34,7 +34,18 @@ export const fromJsonToForm: (
       date: a.date
     }));
 
+  const subEvents = json.events.map(e => ({
+    ...e,
+    actorsAndRoles: e.actorsAndRoles.map(a => ({
+      uuid: a.actorId,
+      name: a.actorName,
+      role: a.roleId,
+      date: a.date
+    }))
+  }));
+
   formValues.actorsAndRoles = toField('actorsAndRoles', persons);
+  formValues.events = toField('events', subEvents);
 
   return Object.keys(formValues).map(key => formValues[key]);
 };

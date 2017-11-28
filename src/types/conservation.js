@@ -2,6 +2,7 @@
 
 import type { MusitObject } from '../types/object';
 import type { SampleDataExtended } from '../types/samples';
+import type { Person } from '../types/person';
 
 export type ActorsAndRoles = {
   roleId?: number | string,
@@ -60,7 +61,7 @@ export type ConservationCollection = {
   caseNumbers?: ?Array<string>,
   caseNumber?: ?string,
   orgId?: ?number,
-  events?: ?Array<any>,
+  events: Array<any>,
   actorsAndRoles?: Array<ActorsAndRoles>
 };
 
@@ -101,12 +102,6 @@ export type ConservatonSubType = {
   enTerm: string
 };
 
-export type actorsRolesDatesType = {
-  roleId: number,
-  actorId: string,
-  actorDate: string
-};
-
 export type TreatmentType = {
   eventTypeId: number,
   keywords?: Array<string>,
@@ -116,7 +111,7 @@ export type TreatmentType = {
   materialUsageTypes?: Array<ConservatonSubType>,
   materialUsageOnChange?: Function,
   note?: string,
-  actorsAndRoles?: Array<ActorsAndRoles>,
+  actorsAndRoles?: Array<Person>,
   affectedThings?: Array<string>,
   expanded: boolean,
   toggleExpanded: Function,
@@ -125,7 +120,7 @@ export type TreatmentType = {
 export type TechnicalDescriptionType = {
   eventTypeId: number,
   note: string,
-  actorsAndRoles?: Array<ActorsAndRoles>,
+  actorsAndRoles?: Array<Person>,
   affectedThings?: Array<string>,
   expanded: boolean,
   toggleExpanded: Function,
@@ -138,7 +133,7 @@ export type StorageAndHandlingType = {
   lightAndUvLevel: string,
   relativeHumidity: string,
   temperature: string,
-  actorsAndRoles: Array<actorsRolesDatesType>,
+  actorsAndRoles: Array<Person>,
   affectedThings?: Array<string>,
   expanded: boolean,
   toggleExpanded: Function,
@@ -148,7 +143,7 @@ export type StorageAndHandlingType = {
 export type hseRiskType = {
   eventTypeId: number,
   note: string,
-  actorsAndRoles: Array<actorsRolesDatesType>,
+  actorsAndRoles: Array<Person>,
   affectedThings?: Array<string>,
   expanded: boolean,
   toggleExpanded: Function,
