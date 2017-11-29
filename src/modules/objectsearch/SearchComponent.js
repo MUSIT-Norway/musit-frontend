@@ -169,6 +169,30 @@ const RenderResultHits = (props: RenderResultHitsProps) => {
 
 const RightAlignedPagination = pullRight(Pagination);
 
+const toggleAll = (
+  hits: Array<SearchHit>,
+  onClickShoppingCart: (hit: SearchHit) => void,
+  isObjectAdded: (hit: SearchHit) => boolean
+) => (
+  <div className="col" style={{ textAlign: 'right', paddingRight: '12px' }}>
+    <FontAwesome
+      onClick={e => {
+        e.preventDefault();
+        hits && hits.forEach(obj => onClickShoppingCart(obj));
+      }}
+      style={
+        hits && hits.every(isObjectAdded) ? (
+          { fontSize: '1.5em', color: 'Gray' }
+        ) : (
+          { fontSize: '1.5em', color: '#337ab7' }
+        )
+      }
+      name="shopping-cart"
+      className="link"
+    />
+  </div>
+);
+
 const SearchResultItem = (props: {
   onChangePage: (change: ChangePage) => void,
   searchStore: SearchStoreState,
@@ -189,6 +213,7 @@ const SearchResultItem = (props: {
           <RightAlignedPagination paging={pagination} onChangePage={props.onChangePage} />
         )}
 
+        {toggleAll(result.hits.hits, props.onClickShoppingCart, props.isObjectAdded)}
         <RenderResultHits
           hits={result.hits.hits}
           onClickHeader={props.onClickHeader}

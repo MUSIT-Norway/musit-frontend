@@ -49,10 +49,7 @@ const props: any = {
   appSession: {
     accessToken: '123',
     actor: {
-      fn: 'Rituvesh Kumar',
-      email: 'rituvesh.kumar@usit.uio.no',
-      dataportenId: '2345',
-      dataportenUser: '1234'
+      fn: 'Rituvesh Kumar'
     },
     groups: [
       {

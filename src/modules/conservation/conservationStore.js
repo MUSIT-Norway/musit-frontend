@@ -171,7 +171,6 @@ export function getConservationDetails(
       })
       .flatMap(conservation => {
         const affectedThings = conservation.affectedThings;
-        console.log('Kons: ', conservation);
         if (affectedThings && affectedThings.length > 0) {
           // $FlowFixMe | We are passing an array to forkJoin which is not supported by flow-typed definition for rxjs.
           return Observable.forkJoin(
