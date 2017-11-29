@@ -26,7 +26,7 @@ export const fieldsArray = [
   getStrField('updatedByName', null, false),
   getStrField('updatedDate', null, false),
   getStrField('subEventTypes', '', false),
-  getArrField('events', [], true)
+  getArrField('events', [], false)
 ];
 
 export default createForm('conservationForm.js', fieldsArray);
