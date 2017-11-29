@@ -78,7 +78,8 @@ export default function Treatment(props: TreatmentProps) {
           roles={props.roleList ? props.roleList.map(e => e.roleId) : []}
           showDateForRole={(roleName: string) => [1].some(e => e === roleName)}
         />
-      )}{' '}
+      )}
+      <hr />
       <FieldMultiSelect
         name={props.name + 'keywords'}
         stringValue={props.treatment.keywords.join(',')}

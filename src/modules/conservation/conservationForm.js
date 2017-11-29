@@ -2,7 +2,6 @@
 import createForm, {
   getStrField,
   getArrField,
-  getBoolField,
   getNumberField
   // getCompositeField
 } from '../../forms/form';

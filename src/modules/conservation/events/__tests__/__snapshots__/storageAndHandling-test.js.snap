@@ -12,6 +12,7 @@ exports[`StorageAndHandling should render properly 1`] = `
         personData={Array []}
       />
        
+      <hr />
       <div
         className="row form-group"
       >

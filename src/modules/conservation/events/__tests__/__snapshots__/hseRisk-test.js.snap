@@ -11,6 +11,7 @@ exports[`HseRisk should render properly 1`] = `
         getDisplayNameForRole={[Function]}
         personData={Array []}
       />
+      <hr />
        
       <div
         className="form-group"

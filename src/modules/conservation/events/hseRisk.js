@@ -62,7 +62,8 @@ export default function HseRisk(props: hseRiskProps) {
           roles={props.roleList ? props.roleList.map(e => e.roleId) : []}
           showDateForRole={(roleName: string) => [1].some(e => e === roleName)}
         />
-      )}{' '}
+      )}
+      <hr />{' '}
       <div className="form-group">
         <label className="control-label col-md-2" htmlFor={`note_${props.index}`}>
           {I18n.t('musit.conservation.events.hseRisk.note') + suffix}

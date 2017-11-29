@@ -70,6 +70,7 @@ export default function StorageAndHandling(props: StorageAndHandlingProps) {
           showDateForRole={(roleName: string) => [1].some(e => e === roleName)}
         />
       )}{' '}
+      <hr />
       <div className="row form-group">
         <label className="control-label col-md-2" htmlFor={`note_${props.index}`}>
           {I18n.t('musit.conservation.events.storageAndHandling.relativeHumidity') +

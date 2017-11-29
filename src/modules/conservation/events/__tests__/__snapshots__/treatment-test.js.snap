@@ -11,7 +11,7 @@ exports[`Treatment should render properly 1`] = `
         getDisplayNameForRole={[Function]}
         personData={Array []}
       />
-       
+      <hr />
       <FieldMultiSelect
         name="treatment_0keywords"
         onChange={[Function]}
