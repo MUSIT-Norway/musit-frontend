@@ -1,38 +1,105 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`StorageAndHandling should render properly 1`] = `
-<CollapsibleEvent
-  eventComponent={
-    <div
-      className="container"
-    >
-       
-      <Component
-        getDisplayNameForRole={[Function]}
-        personData={Array []}
-      />
-       
-      <hr />
+<SubEventComponentNote
+  affectedThingsWithDetailsMainEvent={
+    Array [
+      Object {
+        "collection": 1,
+        "coordinates": Array [],
+        "id": 1,
+        "isDeleted": false,
+        "locations": Array [],
+        "mainObjectId": 1,
+        "materials": Array [],
+        "museumId": 99,
+        "museumNo": "MusK58",
+        "objectData": Object {
+          "collection": 1,
+          "coordinates": Array [],
+          "id": 1,
+          "isDeleted": false,
+          "locations": Array [],
+          "mainObjectId": 1,
+          "materials": Array [],
+          "museumId": 99,
+          "museumNo": "MusK58",
+          "objectType": "collection",
+          "subNo": "1",
+          "term": "Rar dings",
+          "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
+        },
+        "objectType": "collection",
+        "subNo": "1",
+        "term": "Rar dings",
+        "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
+      },
+    ]
+  }
+  appSession={
+    Object {
+      "accessToken": "123",
+      "actor": Object {
+        "fn": "Rituvesh Kumar",
+      },
+      "collectionId": "00000000-0000-0000-0000-000000000000",
+      "groups": Array [
+        Object {
+          "collections": Array [
+            Object {
+              "name": "All",
+              "uuid": "00000000-0000-0000-0000-000000000000",
+            },
+          ],
+          "id": 99,
+          "museumId": 99,
+          "museumName": "Test",
+          "permission": 10000,
+          "shortName": "Test",
+        },
+        Object {
+          "collections": Array [
+            Object {
+              "name": "All",
+              "uuid": "00000000-0000-0000-0000-000000000000",
+            },
+          ],
+          "id": 7,
+          "museumId": 7,
+          "museumName": "Kmn",
+          "permission": 10000,
+          "shortName": "Kmn",
+        },
+      ],
+      "language": Object {
+        "isEn": false,
+        "isNo": true,
+      },
+      "museumId": 99,
+    }
+  }
+  eventName="Oppvevaring og håndtering"
+  expanded={true}
+  extraAttributes={
+    <div>
       <div
         className="row form-group"
       >
         <label
           className="control-label col-md-2"
-          htmlFor="note_0"
+          htmlFor="relativeHumidity_0"
         >
           Relativ fuktighet:
         </label>
         <div
           className="col-md-3"
         >
-          <input
-            className="form-control"
-            disabled={true}
-            id="note_0"
-            onChange={[Function]}
-            rows="5"
-            value="12"
-          />
+          <p
+            className="form-control-static"
+            id="relativeHumidity_0"
+          >
+            12
+          </p>
         </div>
       </div>
       <div
@@ -40,21 +107,19 @@ exports[`StorageAndHandling should render properly 1`] = `
       >
         <label
           className="control-label col-md-2"
-          htmlFor="note_0"
+          htmlFor="temperature_0"
         >
           Temperatur:
         </label>
         <div
           className="col-md-3"
         >
-          <input
-            className="form-control"
-            disabled={true}
-            id="note_0"
-            onChange={[Function]}
-            rows="5"
-            value="34"
-          />
+          <p
+            className="form-control-static"
+            id="temperature_0"
+          >
+            34
+          </p>
         </div>
       </div>
       <div
@@ -62,91 +127,49 @@ exports[`StorageAndHandling should render properly 1`] = `
       >
         <label
           className="control-label col-md-2"
-          htmlFor="note_0"
+          htmlFor="lightAndUvLevel_0"
         >
           Lux:
         </label>
         <div
           className="col-md-3"
         >
-          <input
-            className="form-control"
-            disabled={true}
-            id="note_0"
-            onChange={[Function]}
-            rows="5"
-            value="3456"
-          />
+          <p
+            className="form-control-static"
+            id="lightAndUvLevel_0"
+          >
+            3456
+          </p>
         </div>
       </div>
-      <div
-        className="row form-group"
-      >
-        <label
-          className="control-label col-md-2"
-          htmlFor="note_0"
-        >
-          Merknad:
-        </label>
-        <div
-          className="col-md-9"
-        >
-          <textarea
-            className="form-control"
-            disabled={true}
-            id="note_0"
-            onChange={[Function]}
-            rows="5"
-            value="erdgdfgdfgdfgdfgdfgg"
-          />
-        </div>
-      </div>
-      <ObjectSelection
-        affectedThingsSubEvent={
-          Array [
-            "ad1b5287-0168-4343-b3df-a477de113bee",
-          ]
-        }
-        affectedThingsSubEventOnChange={[Function]}
-        affectedThingsWithDetailsMainEvent={
-          Array [
-            Object {
-              "collection": 1,
-              "coordinates": Array [],
-              "id": 1,
-              "isDeleted": false,
-              "locations": Array [],
-              "mainObjectId": 1,
-              "materials": Array [],
-              "museumId": 99,
-              "museumNo": "MusK58",
-              "objectData": Object {
-                "collection": 1,
-                "coordinates": Array [],
-                "id": 1,
-                "isDeleted": false,
-                "locations": Array [],
-                "mainObjectId": 1,
-                "materials": Array [],
-                "museumId": 99,
-                "museumNo": "MusK58",
-                "objectType": "collection",
-                "subNo": "1",
-                "term": "Rar dings",
-                "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
-              },
-              "objectType": "collection",
-              "subNo": "1",
-              "term": "Rar dings",
-              "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
-            },
-          ]
-        }
-        viewMode={true}
-      />
     </div>
   }
-  eventName="Oppvevaring og håndtering"
-  expanded={true}
+  index={0}
+  noteLabel="Merknad"
+  storageAndHandling={
+    Object {
+      "actorsAndRoles": Array [],
+      "affectedThings": Array [
+        "ad1b5287-0168-4343-b3df-a477de113bee",
+      ],
+      "lightAndUvLevel": "3456",
+      "note": "erdgdfgdfgdfgdfgdfgg",
+      "relativeHumidity": "12",
+      "temperature": "34",
+    }
+  }
+  subEvent={
+    Object {
+      "actorsAndRoles": Array [],
+      "affectedThings": Array [
+        "ad1b5287-0168-4343-b3df-a477de113bee",
+      ],
+      "lightAndUvLevel": "3456",
+      "note": "erdgdfgdfgdfgdfgdfgg",
+      "relativeHumidity": "12",
+      "temperature": "34",
+    }
+  }
+  viewMode={true}
 />
 `;

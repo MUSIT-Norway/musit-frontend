@@ -3,6 +3,7 @@
 import type { MusitObject } from '../types/object';
 import type { SampleDataExtended } from '../types/samples';
 import type { Person } from '../types/person';
+import type { AppSession } from '../types/appSession';
 
 export type ActorsAndRoles = {
   roleId?: number | string,
@@ -71,6 +72,12 @@ export type ConservationType = {
   enName?: string
 };
 
+export type ConditionCodeType = {
+  conditionCode: number,
+  enCondition?: string,
+  noCondition?: string
+};
+
 export type ConservationTypes = Array<ConservationType>;
 
 export type ConservationTypesObject = {
@@ -102,56 +109,85 @@ export type ConservatonSubType = {
   enTerm: string
 };
 
-export type TreatmentType = {
-  eventTypeId: number,
-  keywords?: Array<string>,
-  keywordTypes?: Array<ConservatonSubType>,
-  keywordTypesOnChange?: Function,
-  materials?: Array<string>,
-  materialUsageTypes?: Array<ConservatonSubType>,
-  materialUsageOnChange?: Function,
-  note?: string,
-  actorsAndRoles?: Array<Person>,
-  affectedThings?: Array<string>,
-  expanded: boolean,
-  toggleExpanded: Function,
-  toggleSingleExpanded: Function
-};
-export type TechnicalDescriptionType = {
+export type SubEventComponentNoteType = {
   eventTypeId: number,
   note: string,
-  actorsAndRoles?: Array<Person>,
+  actorsAndRoles: Array<Person>,
   affectedThings?: Array<string>,
   expanded: boolean,
   toggleExpanded: Function,
   toggleSingleExpanded: Function
 };
+
+type SubEventComponentProps = {
+  index?: number,
+  appSession?: AppSession,
+  viewMode?: boolean,
+  onChange: Function,
+  onDelete?: Function,
+  onChangePersonActorRole: Function,
+  expanded?: boolean,
+  toggleExpanded: Function,
+  actorsAndRoles: Array<Person>,
+  roleList: Array<any>,
+  extraAttributes?: ?any,
+  affectedThingsWithDetailsMainEvent?: ?Array<ObjectInfo>
+};
+
+export type HseRiskType = SubEventComponentNoteType;
+export type TechnicalDescriptionType = SubEventComponentNoteType;
+export type ConditionAssessmentType = SubEventComponentNoteType & {
+  conditionCode: number
+};
+export type ReportType = SubEventComponentNoteType;
+
+export type TreatmentType = {
+  keywords?: Array<string>,
+  materials?: Array<string>
+} & SubEventComponentNoteType;
 
 export type StorageAndHandlingType = {
-  eventTypeId: number,
-  note: string,
   lightAndUvLevel: string,
   relativeHumidity: string,
-  temperature: string,
-  actorsAndRoles: Array<Person>,
-  affectedThings?: Array<string>,
-  expanded: boolean,
-  toggleExpanded: Function,
-  toggleSingleExpanded: Function
-};
+  temperature: string
+} & SubEventComponentNoteType;
 
-export type hseRiskType = {
-  eventTypeId: number,
-  note: string,
-  actorsAndRoles: Array<Person>,
-  affectedThings?: Array<string>,
-  expanded: boolean,
-  toggleExpanded: Function,
-  toggleSingleExpanded: Function
-};
+export type SubEventComponentNoteProps = {
+  subEvent: SubEventComponentNoteType
+} & SubEventComponentProps;
+
+export type TreatmentProps = {
+  materials: Array<any>,
+  keywords: Array<any>,
+  treatment: TreatmentType
+} & SubEventComponentProps;
+
+export type TechnicalDescriptionProps = {
+  technicalDescription: SubEventComponentNoteType
+} & SubEventComponentProps;
+
+export type HseRiskProps = {
+  hseRisk: SubEventComponentNoteType
+} & SubEventComponentProps;
+
+export type StorageAndHandlingProps = {
+  storageAndHandling: StorageAndHandlingType,
+  storageAndHandling: StorageAndHandlingType
+} & SubEventComponentProps;
+
+export type ConditionAssessmentProps = {
+  conditionAssessment: ConditionAssessmentType,
+  conditionCodes: Array<ConditionCodeType>
+} & SubEventComponentProps;
+
+export type ReportProps = {
+  report: SubEventComponentNoteType
+} & SubEventComponentProps;
 
 export type ConservationSubTypes =
   | TreatmentType
   | TechnicalDescriptionType
   | StorageAndHandlingType
-  | hseRiskType;
+  | HseRiskType
+  | ConditionAssessmentType
+  | ReportType;

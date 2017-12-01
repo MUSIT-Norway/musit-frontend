@@ -1,85 +1,92 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TechnicalDescription should render properly 1`] = `
-<CollapsibleEvent
-  eventComponent={
-    <div
-      className="container"
-    >
-       
-      <Component
-        getDisplayNameForRole={[Function]}
-        personData={Array []}
-      />
-       
-      <hr />
-      <div
-        className="form-group"
-      >
-        <label
-          className="control-label col-md-2"
-          htmlFor="note_1"
-        >
-          Merknad:
-        </label>
-        <div
-          className="col-md-9"
-        >
-          <textarea
-            className="form-control"
-            disabled={true}
-            id="note_1"
-            onChange={[Function]}
-            rows="5"
-            value="test"
-          />
-        </div>
-      </div>
-      <ObjectSelection
-        affectedThingsSubEvent={
-          Array [
-            "ad1b5287-0168-4343-b3df-a477de113bee",
-          ]
-        }
-        affectedThingsSubEventOnChange={[Function]}
-        affectedThingsWithDetailsMainEvent={
-          Array [
-            Object {
-              "collection": 1,
-              "coordinates": Array [],
-              "id": 1,
-              "isDeleted": false,
-              "locations": Array [],
-              "mainObjectId": 1,
-              "materials": Array [],
-              "museumId": 99,
-              "museumNo": "MusK58",
-              "objectData": Object {
-                "collection": 1,
-                "coordinates": Array [],
-                "id": 1,
-                "isDeleted": false,
-                "locations": Array [],
-                "mainObjectId": 1,
-                "materials": Array [],
-                "museumId": 99,
-                "museumNo": "MusK58",
-                "objectType": "collection",
-                "subNo": "1",
-                "term": "Rar dings",
-                "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
-              },
-              "objectType": "collection",
-              "subNo": "1",
-              "term": "Rar dings",
-              "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
-            },
-          ]
-        }
-        viewMode={true}
-      />
-    </div>
+<SubEventComponentNote
+  affectedThingsWithDetailsMainEvent={
+    Array [
+      Object {
+        "collection": 1,
+        "coordinates": Array [],
+        "id": 1,
+        "isDeleted": false,
+        "locations": Array [],
+        "mainObjectId": 1,
+        "materials": Array [],
+        "museumId": 99,
+        "museumNo": "MusK58",
+        "objectData": Object {
+          "collection": 1,
+          "coordinates": Array [],
+          "id": 1,
+          "isDeleted": false,
+          "locations": Array [],
+          "mainObjectId": 1,
+          "materials": Array [],
+          "museumId": 99,
+          "museumNo": "MusK58",
+          "objectType": "collection",
+          "subNo": "1",
+          "term": "Rar dings",
+          "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
+        },
+        "objectType": "collection",
+        "subNo": "1",
+        "term": "Rar dings",
+        "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
+      },
+    ]
   }
-  eventName="Technical Description"
+  appSession={
+    Object {
+      "accessToken": "123",
+      "actor": Object {
+        "fn": "Rituvesh Kumar",
+      },
+      "buildInfo": Object {
+        "commitSha": "not built on CI",
+      },
+      "collectionId": "00000000-0000-0000-0000-000000000000",
+      "groups": Array [
+        Object {
+          "collections": Array [
+            Object {
+              "name": "All",
+              "uuid": "00000000-0000-0000-0000-000000000000",
+            },
+          ],
+          "id": 99,
+          "museumId": 99,
+          "museumName": "Test",
+          "permission": 10000,
+          "shortName": "Test",
+        },
+      ],
+      "language": Object {
+        "isEn": true,
+        "isNo": false,
+      },
+      "museumId": 99,
+    }
+  }
+  eventName="Teknisk beskrivelse"
+  index={1}
+  noteLabel="Merknad"
+  subEvent={
+    Object {
+      "affectedThings": Array [
+        "ad1b5287-0168-4343-b3df-a477de113bee",
+      ],
+      "note": "test",
+    }
+  }
+  technicalDescription={
+    Object {
+      "affectedThings": Array [
+        "ad1b5287-0168-4343-b3df-a477de113bee",
+      ],
+      "note": "test",
+    }
+  }
+  viewMode={true}
 />
 `;

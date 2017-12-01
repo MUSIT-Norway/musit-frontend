@@ -129,6 +129,7 @@ export default {
       },
       api: {
         conservation: {
+          getConditionCodeList: `/api/management/conservation/conditionCodes`,
           getMaterialList: `/api/management/conservation/treatmentMaterials`,
           getKeywordList: `/api/management/conservation/treatmentKeywords`,
           getRoleList: `/api/management/conservation/roles`,

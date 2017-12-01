@@ -30,7 +30,7 @@
             "result":"Result",
             "noteDescriptionResult":"Note/Description/Result"
           },
-          "techincalDescription":{
+          "technicalDescription":{
             "technicalDescription": "Technical description",
             "note":"Note"
           },
@@ -43,6 +43,16 @@
           },
           "hseRisk":{
             "hseRisk": "HSE-risk",
+            "note":"Note"
+          },
+          "conditionAssessment":{
+            "conditionAssessment": "Condition assessment",
+            "note":"Note",
+            "conditionCode": "Condition code",
+            "chooseConditionAssessment": "Select condition"            
+          },
+          "report":{
+            "report": "Report",
             "note":"Note"
           }
         },
@@ -1019,7 +1029,7 @@
             "result":"Resultat",
             "noteDescriptionResult":"Merknad/Beskrivelse/Resultat"
           },
-          "techincalDescription":{
+          "technicalDescription":{
             "technicalDescription": "Teknisk beskrivelse",
             "note":"Merknad"
           },
@@ -1032,6 +1042,16 @@
           },
           "hseRisk":{
             "hseRisk": "HMS-risiko",
+            "note":"Merknad"
+          },
+          "conditionAssessment":{
+            "conditionAssessment": "Tilstandsvurdering",
+            "note":"Merknad",
+            "conditionCode": "Tilstandskode",
+            "chooseConditionAssessment": "Velg tilstand"
+          },
+          "report":{
+            "report": "Rapport",
             "note":"Merknad"
           }
         },

@@ -141,6 +141,19 @@ export const getKeywordList: (
   return ajaxGet(url, token, callback).map(r => r.response);
 };
 
+export const getConditionCodeList: (
+  ajaxGet: AjaxGet<*>
+) => (props: {
+  token: string,
+  callback?: ?Callback<*>
+}) => Observable<Array<ConservatonSubType>> = (ajaxGet = simpleGet) => ({
+  token,
+  callback
+}) => {
+  const url = Config.magasin.urls.api.conservation.getConditionCodeList;
+  return ajaxGet(url, token, callback).map(r => r.response);
+};
+
 export const loadPredefinedConservationTypes: (
   ajaxGet: AjaxGet<*>
 ) => (props: {
@@ -152,13 +165,17 @@ export const loadPredefinedConservationTypes: (
     getConservationTypes(ajaxGet)({ museumId, token }),
     getMaterialList(ajaxGet)({ token }),
     getKeywordList(ajaxGet)({ token }),
-    getRoleList(ajaxGet)({ token })
+    getRoleList(ajaxGet)({ token }),
+    getConditionCodeList(ajaxGet)({ token })
   )
-    .map(([conservationTypes, materialList, keywordList, roleList]) => ({
-      conservationTypes: conservationTypes || [],
-      materialList: materialList || [],
-      keywordList: keywordList || [],
-      roleList: roleList || []
-    }))
+    .map(
+      ([conservationTypes, materialList, keywordList, roleList, conditionCodeList]) => ({
+        conservationTypes: conservationTypes || [],
+        materialList: materialList || [],
+        keywordList: keywordList || [],
+        roleList: roleList || [],
+        conditionCodeList: conditionCodeList || []
+      })
+    )
     .do(onComplete);
 };

@@ -14,7 +14,7 @@ type Props = {
 
 export default function CollapsibleEvent(props: Props) {
   return (
-    <div>
+    <div style={{ paddingBottom: '0px', marginBottom: '-20px' }}>
       <Panel
         style={{
           padding: '0',

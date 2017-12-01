@@ -16,6 +16,8 @@ import StorageAndHandling from './events/storageAndHandling';
 import PersonRoleDate from '../../components/person/PersonRoleDate';
 import HseRisk from './events/hseRisk';
 import find from 'lodash/find';
+import ConditionAssessment from './events/conditionAssessment';
+import Report from './events/report';
 
 type ConservationProcessProps = {
   id?: number,
@@ -113,6 +115,29 @@ function createSubEvents(
             }
           ]);
         }
+        case 6: {
+          return acc.concat([
+            {
+              eventTypeId: v,
+              consitionCode: '',
+              note: '',
+              actorsAndRoles: [],
+              affectedThings: [],
+              expanded: true
+            }
+          ]);
+        }
+        case 7: {
+          return acc.concat([
+            {
+              eventTypeId: v,
+              note: '',
+              actorsAndRoles: [],
+              affectedThings: [],
+              expanded: true
+            }
+          ]);
+        }
         default: {
           return [];
         }
@@ -175,7 +200,6 @@ function renderSubEvent(
         )}
         viewMode={false}
         affectedThingsWithDetailsMainEvent={props.objects || []}
-        name={`treatment_${ind}`}
         onDelete={() => deleteSubEvents(props, ind)}
         expanded={props.form.events.value[ind].expanded}
         toggleExpanded={props.toggleSingleExpanded(
@@ -195,7 +219,6 @@ function renderSubEvent(
         affectedThingsWithDetailsMainEvent={props.objects || []}
         technicalDescription={props.form.events.rawValue[ind]}
         index={ind}
-        name={`techincalDescription_${ind}`}
         onChange={props.updateConservationSubEvent(
           props.form.events.name,
           props.form.events.rawValue,
@@ -225,7 +248,6 @@ function renderSubEvent(
         affectedThingsWithDetailsMainEvent={props.objects || []}
         storageAndHandling={props.form.events.rawValue[ind]}
         index={ind}
-        name={`storageAndHandling_${ind}`}
         onChangePersonActorRole={props.updatePersonsForSubEvent(
           props.form.events.name,
           props.form.events.rawValue,
@@ -255,7 +277,65 @@ function renderSubEvent(
         affectedThingsWithDetailsMainEvent={props.objects || []}
         hseRisk={props.form.events.rawValue[ind]}
         index={ind}
-        name={`hseRisk_${ind}`}
+        onChangePersonActorRole={props.updatePersonsForSubEvent(
+          props.form.events.name,
+          props.form.events.rawValue,
+          ind
+        )}
+        onChange={props.updateConservationSubEvent(
+          props.form.events.name,
+          props.form.events.rawValue,
+          ind
+        )}
+        onDelete={() => deleteSubEvents(props, ind)}
+        expanded={props.form.events.value[ind].expanded}
+        toggleExpanded={props.toggleSingleExpanded(
+          !props.form.events.value[ind].expanded,
+          props.form.events.value,
+          ind
+        )}
+      />
+    );
+  } else if (eventType === 6) {
+    return (
+      <ConditionAssessment
+        key={`conditionAssessment_${ind}`}
+        viewMode={false}
+        appSession={appSession}
+        roleList={props.predefinedConservation.roleList}
+        affectedThingsWithDetailsMainEvent={props.objects || []}
+        conditionAssessment={props.form.events.rawValue[ind]}
+        conditionCodes={props.predefinedConservation.conditionCodeList}
+        index={ind}
+        onChangePersonActorRole={props.updatePersonsForSubEvent(
+          props.form.events.name,
+          props.form.events.rawValue,
+          ind
+        )}
+        onChange={props.updateConservationSubEvent(
+          props.form.events.name,
+          props.form.events.rawValue,
+          ind
+        )}
+        onDelete={() => deleteSubEvents(props, ind)}
+        expanded={props.form.events.value[ind].expanded}
+        toggleExpanded={props.toggleSingleExpanded(
+          !props.form.events.value[ind].expanded,
+          props.form.events.value,
+          ind
+        )}
+      />
+    );
+  } else if (eventType === 7) {
+    return (
+      <Report
+        key={`report_${ind}`}
+        viewMode={false}
+        appSession={appSession}
+        roleList={props.predefinedConservation.roleList}
+        affectedThingsWithDetailsMainEvent={props.objects || []}
+        report={props.form.events.rawValue[ind]}
+        index={ind}
         onChangePersonActorRole={props.updatePersonsForSubEvent(
           props.form.events.name,
           props.form.events.rawValue,

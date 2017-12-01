@@ -15,6 +15,8 @@ import TechnicalDescription from './events/technicalDescription';
 import type { ConservationSubTypes } from '../../types/conservation';
 import StorageAndHandling from './events/storageAndHandling';
 import HseRisk from './events/hseRisk';
+import ConditionAssessment from './events/conditionAssessment';
+import Report from './events/report';
 
 export type Props = {
   match: { params: { conservationId: number } },
@@ -127,6 +129,52 @@ const renderEventComponent = (
         key={`hseRisk_${index}`}
         affectedThingsWithDetailsMainEvent={objects}
         hseRisk={{
+          note: event.note,
+          actorsAndRoles: event.actorsAndRoles,
+          affectedThings: event.affectedThings
+        }}
+        roleList={predefinedConservation.roleList}
+        index={index}
+        appSession={appSession}
+        viewMode={true}
+        expanded={expandEvent}
+        toggleExpanded={props.toggleSingleExpanded(
+          !expandEvent,
+          props.form.events.value,
+          index
+        )}
+      />
+    );
+  else if (event.eventTypeId === 6)
+    return (
+      <ConditionAssessment
+        key={`conditionAssessment_${index}`}
+        affectedThingsWithDetailsMainEvent={objects}
+        conditionAssessment={{
+          note: event.note,
+          actorsAndRoles: event.actorsAndRoles,
+          affectedThings: event.affectedThings,
+          conditionCode: event.conditionCode
+        }}
+        conditionCodes={predefinedConservation.conditionCodeList}
+        roleList={predefinedConservation.roleList}
+        index={index}
+        appSession={appSession}
+        viewMode={true}
+        expanded={expandEvent}
+        toggleExpanded={props.toggleSingleExpanded(
+          !expandEvent,
+          props.form.events.value,
+          index
+        )}
+      />
+    );
+  else if (event.eventTypeId === 7)
+    return (
+      <Report
+        key={`report_${index}`}
+        affectedThingsWithDetailsMainEvent={objects}
+        report={{
           note: event.note,
           actorsAndRoles: event.actorsAndRoles,
           affectedThings: event.affectedThings

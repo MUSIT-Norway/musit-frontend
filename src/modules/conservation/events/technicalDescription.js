@@ -1,103 +1,17 @@
 import React from 'react';
 import { I18n } from 'react-i18nify';
-import type { TechnicalDescriptionType } from '../../../types/conservation';
-import ObjectSelection from '../components/objectSelection';
-import FontAwesome from 'react-fontawesome';
-import CollapsibleEvent from '../components/CollapsibleEvent';
-import PersonRoleDate from '../../../components/person/PersonRoleDate';
-import ViewPersonRoleDate from '../../../components/person/ViewPersonRoleDate';
-import find from 'lodash/find';
-
-export type TechnicalDescriptionProps = {
-  technicalDescription: TechnicalDescriptionType,
-  index?: number,
-  appSession?: AppSession,
-  viewMode?: boolean,
-  onChange: Function,
-  onDelete?: Function,
-  onChangePersonActorRole: Function,
-  expanded?: boolean,
-  toggleExpanded: Function,
-  actorsAndRoles: Array<Person>,
-  roleList: Array<any>
-};
+import type { TechnicalDescriptionProps } from '../../../types/conservation';
+import SubEventComponentNote from '../components/subEventComponentNote';
 
 export default function TechnicalDescription(props: TechnicalDescriptionProps) {
-  const suffix = ':';
-  const technicalDescComponent = (
-    <div className="container">
-      {!props.viewMode &&
-      !props.technicalDescription.id && (
-        <div className="row form-group">
-          <div className="col-md-10">
-            <button
-              className="btn btn-default"
-              onClick={e => {
-                e.preventDefault();
-                props.onDelete();
-              }}
-            >
-              <FontAwesome name={'times'} />
-            </button>
-            <hr />
-          </div>
-        </div>
-      )}{' '}
-      {props.viewMode ? (
-        <ViewPersonRoleDate
-          personData={props.technicalDescription.actorsAndRoles || []}
-          getDisplayNameForRole={(r: string) => {
-            const role = find(props.roleList, rl => rl.roleId === r);
-            return role && role.noRole;
-          }}
-        />
-      ) : (
-        <PersonRoleDate
-          appSession={props.appSession}
-          personData={props.technicalDescription.actorsAndRoles}
-          fieldName={'actorsAndRoles'}
-          updateForm={props.onChangePersonActorRole}
-          getDisplayNameForRole={(r: string | number) => {
-            const role = find(props.roleList, rl => rl.roleId === r);
-            return role.noRole;
-          }}
-          roles={props.roleList ? props.roleList.map(e => e.roleId) : []}
-          showDateForRole={(roleName: string) => [1].some(e => e === roleName)}
-        />
-      )}{' '}
-      <hr />
-      <div className="form-group">
-        <label className="control-label col-md-2" htmlFor={`note_${props.index}`}>
-          {I18n.t('musit.conservation.events.techincalDescription.note') + suffix}
-        </label>
-        <div className="col-md-9">
-          <textarea
-            className="form-control"
-            id={`note_${props.index}`}
-            value={props.technicalDescription.note}
-            onChange={t => props.onChange('note')(t.target.value)}
-            rows="5"
-            disabled={props.viewMode}
-          />
-        </div>
-      </div>
-      <ObjectSelection
-        affectedThingsWithDetailsMainEvent={props.affectedThingsWithDetailsMainEvent}
-        affectedThingsSubEvent={props.technicalDescription.affectedThings}
-        affectedThingsSubEventOnChange={t =>
-          props.onChange('affectedThings')(t.map(s => s) || [])}
-        viewMode={props.viewMode}
-      />
-    </div>
-  );
   return (
-    <CollapsibleEvent
+    <SubEventComponentNote
+      {...props}
+      subEvent={props.technicalDescription}
       eventName={I18n.t(
         'musit.conservation.events.technicalDescription.technicalDescription'
       )}
-      eventComponent={technicalDescComponent}
-      expanded={props.expanded}
-      toggleExpanded={props.toggleExpanded}
+      noteLabel={I18n.t('musit.conservation.events.technicalDescription.note')}
     />
   );
 }
