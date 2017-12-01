@@ -1281,7 +1281,6 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
   />
   <button
     className="btn btn-default"
-    disabled={false}
     onClick={[Function]}
   >
     Opprett valgte delhendelser
@@ -4110,7 +4109,6 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
   />
   <button
     className="btn btn-default"
-    disabled={false}
     onClick={[Function]}
   >
     Opprett valgte delhendelser

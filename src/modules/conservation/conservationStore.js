@@ -300,7 +300,7 @@ const saveConservation = (ajaxPost, ajaxPut) => ({
     if (!conservation) {
       return Observable.empty();
     }
-    Observable.of(conservation);
+    return Observable.of(conservation);
   });
 };
 

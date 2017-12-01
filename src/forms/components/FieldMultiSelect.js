@@ -19,7 +19,7 @@ export default function FieldMultiSelect(props: FieldMultiSelectProps) {
   const options = props.options ? props.options : [];
 
   const label = opt => (opt ? opt.label : '');
-  const filterOptions = v => options && options.filter(f => f.value == v);
+  const filterOptions = v => options && options.filter(f => f.value === v);
   const viewOptions: ?Array<string> =
     values && options
       ? values

@@ -2,7 +2,6 @@
 import ConservationEditComponent from './conservationComponent';
 import inject from 'react-rxjs/dist/RxInject';
 import { Observable } from 'rxjs';
-import flowRight from 'lodash/flowRight';
 import conservationForm, { fieldsArray } from './conservationForm';
 import props, { onUnmount } from './shared/formProps';
 import lifeCycle from '../../shared/lifeCycle';
@@ -14,7 +13,6 @@ import type { ObjectData } from '../../types/object';
 import predefinedConservation$ from '../../stores/predefinedConservation';
 import { loadCustomPredefinedConservationTypes } from '../../stores/predefinedConservationLoader';
 import Conservation from '../../models/conservation';
-import Config from '../../config';
 import type { Field } from '../../forms/form';
 
 // FIX ME below 4 lines
@@ -55,8 +53,7 @@ function addProps(
     getConservation: getConservation$.next.bind(getConservation$),
     loadForm: loadForm$.next.bind(loadForm$),
     clearStore: clearStore$.next.bind(clearStore$),
-    clearForm: clearForm$.next.bind(clearForm$),
-    loadingConservation: false
+    clearForm: clearForm$.next.bind(clearForm$)
   };
 }
 

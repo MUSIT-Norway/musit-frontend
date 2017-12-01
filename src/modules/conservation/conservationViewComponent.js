@@ -2,7 +2,6 @@
 import React from 'react';
 import { I18n } from 'react-i18nify';
 import MetaInformation from '../../components/metainfo';
-import toArray from 'lodash/toArray';
 import find from 'lodash/find';
 import ObjectTable from './components/expandableObjects';
 import ViewPersonRoleDate from '../../components/person/ViewPersonRoleDate';

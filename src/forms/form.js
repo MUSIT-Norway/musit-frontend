@@ -108,7 +108,8 @@ export const getBoolField = (
 export const getArrField = (
   field: string,
   defaultValue?: Array<*> = [],
-  required?: boolean = false
+  required?: boolean = false,
+  customValidator?: Function
 ): Field<Array<*>> => ({
   name: field,
   defaultValue: defaultValue,
@@ -116,7 +117,11 @@ export const getArrField = (
   rawValue: defaultValue,
   mapper: noMapper,
   validator: {
-    rawValidator: required ? isNonEmptyArray : null
+    rawValidator: required
+      ? customValidator
+        ? composeValidators(isNonEmptyArray, customValidator)
+        : isNonEmptyArray
+      : customValidator
   }
 });
 

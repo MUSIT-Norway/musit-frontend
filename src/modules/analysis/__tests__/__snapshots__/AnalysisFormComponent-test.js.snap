@@ -417,7 +417,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
               "name": "",
               "rawValue": Array [],
               "validator": Object {
-                "rawValidator": null,
+                "rawValidator": undefined,
               },
               "value": Array [],
             },
@@ -521,7 +521,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
               "name": "",
               "rawValue": Array [],
               "validator": Object {
-                "rawValidator": null,
+                "rawValidator": undefined,
               },
               "value": Array [],
             },
@@ -647,7 +647,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
                 },
               ],
               "validator": Object {
-                "rawValidator": null,
+                "rawValidator": undefined,
               },
               "value": Array [
                 Object {
@@ -801,7 +801,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
               "name": "",
               "rawValue": Array [],
               "validator": Object {
-                "rawValidator": null,
+                "rawValidator": undefined,
               },
               "value": Array [],
             },
