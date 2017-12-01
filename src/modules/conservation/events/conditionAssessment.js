@@ -23,7 +23,10 @@ export default function ConditionAssessment(props: ConditionAssessmentProps) {
           {I18n.t('musit.conservation.events.conditionAssessment.conditionCode') + ':'}
         </label>
         <div className="col-md-9">
-          {props.viewMode ? props.conditionAssessment.conditionCode ? (
+          {props.viewMode ? (props.conditionAssessment.conditionCode === null) |
+          undefined ? (
+            ''
+          ) : (
             <div style={{ paddingTop: '8px' }}>
               {getDisplayNameForConditionCode(
                 props.conditionAssessment.conditionCode,
@@ -32,20 +35,18 @@ export default function ConditionAssessment(props: ConditionAssessmentProps) {
               )}
             </div>
           ) : (
-            ''
-          ) : (
             <DropdownButton
               bsStyle="default"
               title={
-                props.conditionAssessment.conditionCode ? (
+                (props.conditionAssessment.conditionCode === null) | undefined ? (
+                  I18n.t(
+                    'musit.conservation.events.conditionAssessment.chooseConditionAssessment'
+                  )
+                ) : (
                   getDisplayNameForConditionCode(
                     props.conditionAssessment.conditionCode,
                     props.conditionCodes,
                     props.appSession
-                  )
-                ) : (
-                  I18n.t(
-                    'musit.conservation.events.conditionAssessment.chooseConditionAssessment'
                   )
                 )
               }

@@ -510,6 +510,7 @@ export default function ConservationComponent(
       <button className="btn btn-default" onClick={props.clickCancel}>
         {I18n.t('musit.texts.cancel')}
       </button>
+      <div style={{ paddingBottom: '100px' }} />
     </div>
   );
 }

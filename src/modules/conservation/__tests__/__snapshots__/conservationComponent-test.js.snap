@@ -1298,6 +1298,13 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
   >
     Avbryt
   </button>
+  <div
+    style={
+      Object {
+        "paddingBottom": "100px",
+      }
+    }
+  />
 </div>
 `;
 
@@ -4124,5 +4131,12 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
   >
     Avbryt
   </button>
+  <div
+    style={
+      Object {
+        "paddingBottom": "100px",
+      }
+    }
+  />
 </div>
 `;
