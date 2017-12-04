@@ -2273,6 +2273,23 @@ const editPageProps: any = {
   loadingConservation: false
 };
 
+describe('ConservationComponent  page', () => {
+  it('should disable createSubEvents button when subEventTypes is empty', () => {
+    const wrapper = shallow(
+      <ConservationComponent
+        {...editPageProps}
+        updateConservationSubEvent={e => e}
+        updateMultiSelectField={e => e}
+        toggleExpanded={e => e}
+        toggleSingleExpanded={e => e}
+        updatePersonsForSubEvent={e => e}
+      />
+    );
+    const b = wrapper.find('button').find('btn-createSubEvents'); //Todo: Find proper selectors to test if button is enabled or not
+    console.log(b);
+  });
+});
+
 describe('ConservationComponent edit page', () => {
   it('should render edit page properly', () => {
     const wrapper = shallow(

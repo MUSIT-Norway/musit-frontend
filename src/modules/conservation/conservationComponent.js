@@ -56,6 +56,13 @@ type ProcessFormProps = {
   updateStringField: Function
 };
 
+function clearEventTypes(props: Props & { form: FormData }) {
+  props.updateForm({
+    name: 'subEventTypes',
+    rawValue: null
+  });
+}
+
 function createSubEvents(
   props: Props & { form: FormData, predefinedConservation: PredefinedConservation }
 ) {
@@ -147,6 +154,7 @@ function createSubEvents(
       name: props.form.events.name,
       rawValue: props.form.events.rawValue.concat(akk)
     });
+    clearEventTypes(props);
   };
 }
 
@@ -387,7 +395,6 @@ function ConservationProcessForm(props: ProcessFormProps) {
     </div>
   );
 }
-
 export default function ConservationComponent(
   props: Props & { form: FormData, predefinedConservation: PredefinedConservation }
 ) {
@@ -458,6 +465,7 @@ export default function ConservationComponent(
           <div className="row">
             <div className="col-md-2">
               <div
+                key="btn-toggleExpanded"
                 type="button"
                 className="btn btn-default btn-md"
                 onClick={props.toggleExpanded(
@@ -496,11 +504,17 @@ export default function ConservationComponent(
         }
         onChange={props.updateMultiSelectField(props.form.subEventTypes.name)}
       />
-      <button className="btn btn-default" onClick={createSubEvents(props)}>
+      <button
+        key="btn-createSubEvents"
+        className="btn btn-default"
+        onClick={createSubEvents(props)}
+        disabled={!props.form.subEventTypes.value}
+      >
         {I18n.t('musit.conservation.createNewSubEvents')}
       </button>
       <hr />
       <button
+        key="btn-saveConservationProcess"
         className="btn btn-primary"
         disabled={!props.isFormValid}
         onClick={props.clickSave}

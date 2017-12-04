@@ -8,9 +8,9 @@ export default function ConditionAssessment(props: ConditionAssessmentProps) {
   const suffix = ':';
   const getDisplayNameForConditionCode = (v: number, conditionCodes, appSession) => {
     const conditionCodeObj = conditionCodes.find(c => c.conditionCode === v);
-    return appSession.language.isEn
+    return appSession.language.isEn && conditionCodeObj
       ? conditionCodeObj.enCondition
-      : conditionCodeObj.noCondition;
+      : conditionCodeObj ? conditionCodeObj.noCondition : '';
   };
 
   const extraAttributes = (
