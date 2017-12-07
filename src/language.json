@@ -359,6 +359,7 @@
         "badRequest": "Invalid data was rejected by the server.",
         "errorCode": "HTTP error code: %{status}",
         "noGroups": "You do not have access to MUSITbasen. Please contact your Database Coordinator.",
+        "saveDisabled": "Save-button is disabled because of missing data",
         "scanner": {
           "title": "Search for node or object",
           "search": "Search",
@@ -1359,6 +1360,7 @@
         "badRequest": "Ugyldige data ble sendt til serveren.",
         "errorCode": "HTTP feilkode: %{status}",
         "noGroups": "Du har ikke tilgang til MUSITbasen. Vennligst kontakt din Databasekoordinator.",
+        "saveDisabled": "Lagreknappen er ikke aktiv på grunn av manglende data",
         "scanner": {
           "title": "Søk etter node eller objekt",
           "search": "Søk",

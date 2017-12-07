@@ -460,7 +460,9 @@ export default function ConservationComponent(
         appSession={props.appSession}
       />
       <hr />
-      {props.form.events && (
+      {props.form.events &&
+      props.form.events.value &&
+      props.form.events.value.length > 0 && (
         <div className="form-group">
           <div className="row">
             <div className="col-md-2">
@@ -513,8 +515,16 @@ export default function ConservationComponent(
         {I18n.t('musit.conservation.createNewSubEvents')}
       </button>
       <hr />
+      {props.isFormValid || (
+        <span style={{ color: 'Plum' }}>
+          {I18n.t('musit.errorMainMessages.saveDisabled')}
+        </span>
+      )}
+      <br />
       <button
         key="btn-saveConservationProcess"
+        data-toggle="tooltip"
+        title="Feil"
         className="btn btn-primary"
         disabled={!props.isFormValid}
         onClick={props.clickSave}

@@ -14,7 +14,7 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
       {!props.viewMode &&
       !props.subEvent.id && (
         <div className="row form-group">
-          <div div className="col-md-10">
+          <div className="col-md-10">
             <button
               className="btn btn-default"
               onClick={e => {

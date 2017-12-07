@@ -15,6 +15,7 @@ describe('AppComponent', () => {
     const clearBuffer = sinon.spy();
     const clearObjects = sinon.spy();
     const clearNodes = sinon.spy();
+    const clearSearchStore = sinon.spy();
     const toggleEnabled = sinon.spy();
     const wrapper = shallow(
       <AppComponent
@@ -35,6 +36,7 @@ describe('AppComponent', () => {
         }}
         scanner={{}}
         isScannerActive={sinon.spy()}
+        clearSearchStore={clearSearchStore}
         prepareSearch={prepareSearch}
         setMuseumId={setMuseumId}
         setCollectionId={setCollectionId}
