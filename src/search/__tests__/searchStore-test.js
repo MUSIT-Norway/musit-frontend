@@ -67,21 +67,21 @@ describe('searchStore', () => {
           pagination: null,
           result: null,
           from: 0,
-          limit: 10
+          limit: 100
         },
         d: {
           ...initStoreState(),
           queryParam: { q: 'foo' },
           loading: false,
           result: esResponseRawData,
-          pagination: { currentPage: 1, totalPages: 2, showPages: [1, 2] }
+          pagination: { currentPage: 1, totalPages: 1, showPages: [1] }
         },
         e: {
           ...initStoreState(),
           queryParam: {},
           loading: false,
           result: esResponseRawData,
-          pagination: { currentPage: 1, totalPages: 2, showPages: [1, 2] }
+          pagination: { currentPage: 1, totalPages: 1, showPages: [1] }
         }
       };
 
@@ -176,7 +176,7 @@ describe('searchStore', () => {
       expect(res).toEqual({
         currentPage: 11,
         totalPages: 100,
-        showPages: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+        showPages: [6, 7, 8, 9, 10]
       });
     });
   });

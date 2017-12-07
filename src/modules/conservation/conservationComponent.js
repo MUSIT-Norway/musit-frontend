@@ -62,7 +62,14 @@ function clearEventTypes(props: Props & { form: FormData }) {
     rawValue: null
   });
 }
-
+const commonAttributes = v => ({
+  eventTypeId: v,
+  note: '',
+  affectedThings: [],
+  actorsAndRoles: [],
+  attachments: [],
+  expanded: true
+});
 function createSubEvents(
   props: Props & { form: FormData, predefinedConservation: PredefinedConservation }
 ) {
@@ -76,72 +83,48 @@ function createSubEvents(
         case 2: {
           return acc.concat([
             {
-              eventTypeId: v,
               keywords: [],
               materials: [],
-              note: '',
-              affectedThings: [],
-              actorsAndRoles: [],
-              expanded: true
+              ...commonAttributes(v)
             }
           ]);
         }
         case 3: {
           return acc.concat([
             {
-              eventTypeId: v,
-              note: '',
-              affectedThings: [],
-              actorsAndRoles: [],
-              expanded: true
+              ...commonAttributes(v)
             }
           ]);
         }
         case 4: {
           return acc.concat([
             {
-              eventTypeId: v,
-              note: '',
               lightAndUvLevel: '',
               relativeHumidity: '',
               temperature: '',
-              actorsAndRoles: [],
-              affectedThings: [],
-              expanded: true
+              ...commonAttributes(v)
             }
           ]);
         }
         case 5: {
           return acc.concat([
             {
-              eventTypeId: v,
-              note: '',
-              actorsAndRoles: [],
-              affectedThings: [],
-              expanded: true
+              ...commonAttributes(v)
             }
           ]);
         }
         case 6: {
           return acc.concat([
             {
-              eventTypeId: v,
               consitionCode: '',
-              note: '',
-              actorsAndRoles: [],
-              affectedThings: [],
-              expanded: true
+              ...commonAttributes(v)
             }
           ]);
         }
         case 7: {
           return acc.concat([
             {
-              eventTypeId: v,
-              note: '',
-              actorsAndRoles: [],
-              affectedThings: [],
-              expanded: true
+              ...commonAttributes(v)
             }
           ]);
         }
@@ -415,13 +398,7 @@ export default function ConservationComponent(
       </form>
       <hr />
       <ConservationProcessForm
-        caseNumber={props.caseNumber}
-        conservationNote={props.note}
-        doneBy={props.doneBy}
-        doneDate={props.doneDate}
         form={props.form}
-        history={props.history}
-        updateArrayField={props.updateArrayField}
         updateStringField={props.updateStringField}
       />
       <hr />

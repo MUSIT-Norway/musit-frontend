@@ -33,39 +33,6 @@ export type ObjectInfo = {
 } & MusitObject;
 export type ObjectInfoAffectedThing = ?ObjectInfo & ?AffectedThing;
 
-// Fixme this type is incorrect/incomplete
-export type ConservationCollection = {
-  id: number,
-  analysisTypeId: number,
-  objectId?: ?string,
-  doneBy?: ?string,
-  doneDate?: ?string,
-  doneByName?: ?string,
-  registeredBy?: ?string,
-  participating?: ?string,
-  participatingName?: ?string,
-  registeredDate?: ?string,
-  responsible?: ?string,
-  responsibleName?: string,
-  administrator?: ?string,
-  administratorName?: ?string,
-  updatedBy?: ?string,
-  updatedDate?: ?string,
-  completedBy?: ?string,
-  completedByName?: ?string,
-  completedDate?: ?string,
-  note?: ?string,
-  extraAttributes?: { type: string, [string]: string | number },
-  affectedThings?: ?Array<ObjectInfo>,
-  reason?: ?string,
-  status?: ?number,
-  caseNumbers?: ?Array<string>,
-  caseNumber?: ?string,
-  orgId?: ?number,
-  events: Array<any>,
-  actorsAndRoles?: Array<ActorsAndRoles>
-};
-
 export type ConservationType = {
   id: number,
   noName?: string,
@@ -82,12 +49,6 @@ export type ConservationTypes = Array<ConservationType>;
 
 export type ConservationTypesObject = {
   conservationTypes: ConservationTypes
-};
-
-export type ConservationStoreState = {
-  loadingConservation?: boolean,
-  conservation?: ?ConservationCollection,
-  conservationTypes?: Array<string>
 };
 
 export type ConservationSave = {
@@ -114,6 +75,7 @@ export type SubEventComponentNoteType = {
   note: string,
   actorsAndRoles: Array<Person>,
   affectedThings?: Array<string>,
+  attachments?: Array<string>,
   expanded: boolean,
   toggleExpanded: Function,
   toggleSingleExpanded: Function
@@ -191,3 +153,42 @@ export type ConservationSubTypes =
   | HseRiskType
   | ConditionAssessmentType
   | ReportType;
+
+// Fixme this type is incorrect/incomplete
+export type ConservationCollection = {
+  id: number,
+  analysisTypeId: number,
+  objectId?: ?string,
+  doneBy?: ?string,
+  doneDate?: ?string,
+  doneByName?: ?string,
+  registeredBy?: ?string,
+  participating?: ?string,
+  participatingName?: ?string,
+  registeredDate?: ?string,
+  responsible?: ?string,
+  responsibleName?: string,
+  administrator?: ?string,
+  administratorName?: ?string,
+  updatedBy?: ?string,
+  updatedDate?: ?string,
+  completedBy?: ?string,
+  completedByName?: ?string,
+  completedDate?: ?string,
+  note?: ?string,
+  extraAttributes?: { type: string, [string]: string | number },
+  affectedThings?: ?Array<ObjectInfo>,
+  reason?: ?string,
+  status?: ?number,
+  caseNumbers?: ?Array<string>,
+  caseNumber?: ?string,
+  orgId?: ?number,
+  events: Array<any>,
+  actorsAndRoles?: Array<ActorsAndRoles>
+};
+
+export type ConservationStoreState = {
+  loadingConservation?: boolean,
+  conservation?: ?ConservationCollection,
+  conservationTypes?: Array<string>
+};

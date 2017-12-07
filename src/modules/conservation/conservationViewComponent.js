@@ -62,7 +62,8 @@ const renderEventComponent = (
           materials: event.materials,
           note: event.note,
           actorsAndRoles: event.actorsAndRoles,
-          affectedThings: event.affectedThings
+          affectedThings: event.affectedThings,
+          attachments: event.attachments
         }}
         roleList={predefinedConservation.roleList}
         index={index}
@@ -84,7 +85,8 @@ const renderEventComponent = (
         technicalDescription={{
           note: event.note,
           actorsAndRoles: event.actorsAndRoles,
-          affectedThings: event.affectedThings
+          affectedThings: event.affectedThings,
+          attachments: event.attachments
         }}
         roleList={predefinedConservation.roleList}
         index={index}
@@ -109,7 +111,8 @@ const renderEventComponent = (
           affectedThings: event.affectedThings,
           lightAndUvLevel: event.lightAndUvLevel,
           relativeHumidity: event.relativeHumidity,
-          temperature: event.temperature
+          temperature: event.temperature,
+          attachments: event.attachments
         }}
         roleList={predefinedConservation.roleList}
         index={index}
@@ -131,7 +134,8 @@ const renderEventComponent = (
         hseRisk={{
           note: event.note,
           actorsAndRoles: event.actorsAndRoles,
-          affectedThings: event.affectedThings
+          affectedThings: event.affectedThings,
+          attachments: event.attachments
         }}
         roleList={predefinedConservation.roleList}
         index={index}
@@ -154,7 +158,8 @@ const renderEventComponent = (
           note: event.note,
           actorsAndRoles: event.actorsAndRoles,
           affectedThings: event.affectedThings,
-          conditionCode: event.conditionCode
+          conditionCode: event.conditionCode,
+          attachments: event.attachments
         }}
         conditionCodes={predefinedConservation.conditionCodeList}
         roleList={predefinedConservation.roleList}
@@ -177,7 +182,8 @@ const renderEventComponent = (
         report={{
           note: event.note,
           actorsAndRoles: event.actorsAndRoles,
-          affectedThings: event.affectedThings
+          affectedThings: event.affectedThings,
+          attachments: event.attachments
         }}
         roleList={predefinedConservation.roleList}
         index={index}

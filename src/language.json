@@ -3,6 +3,7 @@
     "musit": {
       "conservation": {
         "conservation": "Use & conservation",
+        "attachments": "Attachments",
         "newConservation": "New use & conservation",
         "createConservation": "Create use & conservation",
         "choseNewSubEvents": "Select new sub events to be created",
@@ -1003,6 +1004,7 @@
     "musit": {
       "conservation": {
         "conservation": "Bruk og bevaring",
+        "attachments": "Vedlegg",        
         "newConservation": "Ny bruk og bevaring",
         "createConservation": "Opprett bruk og bevaring",
         "choseNewSubEvents": "Velg delhendelser som skal lages",

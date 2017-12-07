@@ -6,6 +6,11 @@ import CollapsibleEvent from './CollapsibleEvent';
 import PersonRoleDate from '../../../components/person/PersonRoleDate';
 import ViewPersonRoleDate from '../../../components/person/ViewPersonRoleDate';
 import find from 'lodash/find';
+import { FormInput, FormFileSelect, FormElement } from '../../../forms/components';
+import { saveBlob } from '../../../shared/download';
+import { getFileAsBlob } from '../../../models/conservation/attachments';
+import type { ErrorLoading, SavedFile } from '../../../models/conservation/attachments';
+import { I18n } from 'react-i18nify';
 
 export default function SubEventComponentNote(props: SubEventComponentNoteProps) {
   const suffix = ':';
@@ -77,6 +82,58 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
           )}
         </div>
       </div>
+      {!props.viewMode && (
+        <FormFileSelect
+          id="resultFiles"
+          label={I18n.t('musit.conservation.attachments') + suffix}
+          labelWidth={2}
+          elementWidth={5}
+          value={props.subEvent.attachments}
+          multiple={true}
+          onChange={files => {
+            console.log('Rituvesh files', files);
+            props.onChange('attachments')(files ? files.name : []);
+          }}
+        />
+      )}
+      {console.log('Rituvesh props', props)}
+      {props.subEvent.attachments && (
+        <FormElement id="Files" label={''} labelWidth={2} elementWidth={5}>
+          <p className="form-control-static">
+            {Array.isArray(props.subEvent.attachments.files) &&
+              props.subEvent.attachments.files.map(file => {
+                if (file.error) {
+                  return null;
+                }
+                const fid = file.fid;
+                const title = file.title;
+                return (
+                  <p key={fid}>
+                    <button
+                      className="btn-link"
+                      onClick={e => {
+                        e.preventDefault();
+                        getFileAsBlob(
+                          fid,
+                          props.appSession.museumId,
+                          props.appSession.accessToken
+                        )
+                          .do(res => {
+                            if (res instanceof Blob) {
+                              saveBlob(res, title);
+                            }
+                          })
+                          .toPromise();
+                      }}
+                    >
+                      {file.title}
+                    </button>
+                  </p>
+                );
+              })}
+          </p>
+        </FormElement>
+      )}
       <ObjectSelection
         affectedThingsWithDetailsMainEvent={props.affectedThingsWithDetailsMainEvent}
         affectedThingsSubEvent={props.subEvent.affectedThings}

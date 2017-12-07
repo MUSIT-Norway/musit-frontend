@@ -72,7 +72,7 @@ export function updatePagination(result: SearchResult, from: number, limit: numb
   const currentPage = from / limit + 1;
   const showPageFrom = Math.max(1, currentPage - 5);
   const showPageTo =
-    currentPage <= 10
+    currentPage <= 100
       ? Math.min(totalPages + 1, 11)
       : Math.min(totalPages, currentPage + 5) + 1;
 
@@ -95,7 +95,7 @@ function reducer$<E>(
       loading: true,
       pagination: null,
       from: 0,
-      limit: 10
+      limit: 100
     })),
     actions.search$
       .map(toEndpointParam)
@@ -147,7 +147,7 @@ export function initStoreState(): SearchStoreState {
   return {
     loading: false,
     from: 0,
-    limit: 10,
+    limit: 100,
     queryParam: {},
     pagination: null,
     result: null
