@@ -1,6 +1,5 @@
 import React from 'react';
 import { I18n } from 'react-i18nify';
-import Select from 'react-select';
 import type { StorageAndHandlingProps } from '../../../types/conservation';
 import SubEventComponentNote from '../components/subEventComponentNote';
 

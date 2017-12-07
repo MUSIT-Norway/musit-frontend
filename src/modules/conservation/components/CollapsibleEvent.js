@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Button, Panel, Row, Col, Grid } from 'react-bootstrap';
+import { Panel } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 
 type Props = {

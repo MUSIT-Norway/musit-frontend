@@ -140,7 +140,17 @@ export default {
           getConservationById: (mid: MuseumId, conservationId: number) =>
             `/api/management/${mid}/conservation/events/${conservationId}`,
           getConservationForObject: (mid: MuseumId, id: number) =>
-            `/api/management/${mid}/conservation/events/object/${id}`
+            `/api/management/${mid}/conservation/events/object/${id}`,
+          addFileUrl: (mid: MuseumId, collectionId: CollectionId, eventId: number) =>
+            `/api/document/museum/${mid}/conservations/attachments?eventId=${eventId}&collectionId=${collectionId}`
+        },
+        attachments: {
+          getFilesUrl: (files: Array<string>, mid: MuseumId, eventId: number) =>
+            `/api/document/museum/${mid}/collectionManagement/attachments?eventId=${eventId}&fileIds=${files.join(
+              ','
+            )}`,
+          getFileUrl: (fileId: string, mid: MuseumId) =>
+            `/api/document/museum/${mid}/collectionManagement/attachments/${fileId}`
         },
         analysisType: {
           getAllAnalysisTypes: (mid: MuseumId) => `/api/management/${mid}/analyses/types`,
@@ -155,13 +165,13 @@ export default {
           resultsUrl: (mid: MuseumId, analysisId: number) =>
             `/api/management/${mid}/analyses/${analysisId}/results`,
           addFileUrl: (mid: MuseumId, collectionId: CollectionId, analysisId: number) =>
-            `/api/document/museum/${mid}/analyses/attachments?analysisId=${analysisId}&collectionId=${collectionId}`,
+            `/api/document/museum/${mid}/analyses/attachments?eventId=${analysisId}&collectionId=${collectionId}`,
           getFilesUrl: (files: Array<string>, mid: MuseumId, analysisId: number) =>
-            `/api/document/museum/${mid}/analyses/attachments?analysisId=${analysisId}&fileIds=${files.join(
+            `/api/document/museum/${mid}/collectionManagement/attachments?eventId=${analysisId}&fileIds=${files.join(
               ','
             )}`,
           getFileUrl: (file: string, mid: MuseumId) =>
-            `/api/document/museum/${mid}/analyses/attachments/${file}`,
+            `/api/document/museum/${mid}/collectionManagement/attachments/${file}`,
           saveAnalysisEvent: (mid: MuseumId) => `/api/management/${mid}/analyses`,
           getAnalysisById: (mid: MuseumId, analysisId: number) =>
             `/api/management/${mid}/analyses/${analysisId}`,

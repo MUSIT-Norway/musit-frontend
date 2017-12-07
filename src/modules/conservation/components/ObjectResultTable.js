@@ -5,7 +5,6 @@ import './ObjectResultTable.css';
 import type { AppSession } from '../../../types/appSession';
 import type { History } from '../../../types/Routes';
 import FontAwesome from 'react-fontawesome';
-import MusitI18n from '../../../components/MusitI18n';
 import type { ObjectData } from '../../../types/object';
 import ViewOjectData from '../../objects/components/ViewObjectData';
 
@@ -89,8 +88,3 @@ export default function ObjectResultTable({
     </table>
   );
 }
-
-const getRawValue = value =>
-  value && value.rawValue && value.rawValue.length > 0
-    ? value.rawValue
-    : value && value.value && value.value.toString().replace('.', ',');

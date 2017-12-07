@@ -20,7 +20,7 @@ export default function ConditionAssessment(props: ConditionAssessmentProps) {
           className="control-label col-md-2"
           htmlFor={`conditionCode_${props.index}`}
         >
-          {I18n.t('musit.conservation.events.conditionAssessment.conditionCode') + ':'}
+          {I18n.t('musit.conservation.events.conditionAssessment.conditionCode') + suffix}
         </label>
         <div className="col-md-9">
           {props.viewMode ? (props.conditionAssessment.conditionCode === null) |

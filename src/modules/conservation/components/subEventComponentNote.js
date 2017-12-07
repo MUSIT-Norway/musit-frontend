@@ -1,5 +1,4 @@
 import React from 'react';
-import { I18n } from 'react-i18nify';
 import type { SubEventComponentNoteProps } from '../../../types/conservation';
 import ObjectSelection from './objectSelection';
 import FontAwesome from 'react-fontawesome';

@@ -1,11 +1,7 @@
 //@flow
-import type { History } from '../../../types/Routes';
-import type { AppSession } from '../../../types/appSession';
 import type { FormData } from '../shared/formType';
-import type { ConservationSave, ObjectInfo } from '../../../types/conservation';
 import type { ObjectData } from '../../../types/object';
 import type { Person } from '../../../types/person';
-import type { Observable } from 'rxjs';
 import toArray from 'lodash/toArray';
 
 export type Location<T> = {
@@ -28,9 +24,6 @@ export function getConservationCollection(
   location: Location<Array<ObjectData>>
 ) {
   let affectedThings = toArray(form.affectedThings.value);
-  const persons = toArray(form.actorsAndRoles.value);
-  const doneBy = findPerson(persons, 'doneBy');
-  const participating = findPerson(persons, 'participating');
   if (affectedThings.length === 0) {
     affectedThings = location.state;
   }
@@ -57,10 +50,6 @@ export function getConservationCollection(
     affectedThings: affectedThings ? affectedThings.map(o => o.uuid) : [],
     caseNumber: form.caseNumber.value
   };
-}
-
-function findPerson(persons, role) {
-  return persons.find(p => p.role === role);
 }
 
 type ObjectWithUuidAndType = { objectId: ?string, objectType: ?string };
