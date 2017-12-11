@@ -290,37 +290,47 @@ export default (props: Props) =>
           </div>
           <hr />
         </div>
-        <div className="form-group">
-          <div className="col-md-12 col-md-offset-0">
-            <div
-              type="button"
-              className="btn btn-default btn-md"
-              onClick={props.toggleExpanded(
-                !expanded(props.form),
-                props.form.events.value
-              )}
-            >
-              {expanded(props.form) ? (
-                I18n.t('musit.conservation.doCollapse')
-              ) : (
-                I18n.t('musit.conservation.doExpand')
-              )}
+
+        {props.form &&
+        props.form.events &&
+        props.form.events.value &&
+        props.form.events.value.length > 0 && (
+          <div className="form-group">
+            <div className="row">
+              <div className="col-md-12 col-md-offset-0">
+                <div
+                  type="button"
+                  className="btn btn-default btn-md"
+                  onClick={props.toggleExpanded(
+                    !expanded(props.form),
+                    props.form.events.value
+                  )}
+                >
+                  {expanded(props.form) ? (
+                    I18n.t('musit.conservation.doCollapse')
+                  ) : (
+                    I18n.t('musit.conservation.doExpand')
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12 col-md-offset-0">
+                {props.form.events.value &&
+                  props.form.events.value.map((event, index) =>
+                    renderEventComponent(
+                      index,
+                      event,
+                      props.predefinedConservation,
+                      props.appSession,
+                      props.store.conservation && props.store.conservation.affectedThings,
+                      props
+                    )
+                  )}
+              </div>
             </div>
           </div>
-        </div>
-        {props.form &&
-          props.form.events &&
-          props.form.events.value &&
-          props.form.events.value.map((event, index) =>
-            renderEventComponent(
-              index,
-              event,
-              props.predefinedConservation,
-              props.appSession,
-              props.store.conservation && props.store.conservation.affectedThings,
-              props
-            )
-          )}
+        )}
         <hr />
         <button className="btn-link" style={{ marginLeft: 20 }} onClick={props.goBack}>
           {I18n.t('musit.texts.cancel')}

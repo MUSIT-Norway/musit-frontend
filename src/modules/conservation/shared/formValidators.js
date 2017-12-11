@@ -2,6 +2,7 @@
 import * as revalidate from 'revalidate';
 import type { Person } from '../../../types/person';
 import type { ConservationSubTypes } from '../../../types/conservation';
+import { I18n } from 'react-i18nify';
 
 export const subEventValidator = revalidate.createValidator(
   (message: string) => (value: Array<ConservationSubTypes>) => {
@@ -30,10 +31,10 @@ export const actorsAndRolesValidator = revalidate.createValidator(
   (message: string) => (value: Array<Person>) => {
     return value.reduce(function(m, person) {
       if (!person.role) {
-        return 'Actor with empty role is not allowed';
+        return I18n.t('musit.conservation.errorMessages.noRoleForPerson');
       }
       if (!person.uuid) {
-        return 'Actor without UUID is not allowed';
+        return I18n.t('musit.conservation.errorMessages.noUUIDForPerson');
       }
       if (m) {
         return m;

@@ -12,6 +12,10 @@
           "doneBy": "Done by",
           "participating": "Participating"          
         },
+        "errorMessages":  {
+          "noRoleForPerson" : "No role chosen for person",
+          "noUUIDForPerson": "No person chosen from person list"
+        },
         "comments":"Comments",
         "caseNumber":"Case number",
         "personsConnected":"Persons associated with the conservation",
@@ -1012,6 +1016,10 @@
         "roles": {
           "doneBy": "Utført av",
           "participating": "Deltagende"
+        },
+        "errorMessages":  {
+          "noRoleForPerson" : "Ingen rolle valgt for person",
+          "noUUIDForPerson": "Ingen person valgt fra personliste"
         },
         "comments":"Kommentar",
         "caseNumber":"Saksnummer",
