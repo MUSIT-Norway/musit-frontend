@@ -8,14 +8,14 @@ export const subEventValidator = revalidate.createValidator(
     return value.reduce(function(message, e) {
       if (e.actorsAndRoles && e.actorsAndRoles.length > 0) {
         return e.actorsAndRoles.reduce(function(m, a) {
-          if (m) {
-            return m;
-          }
           if (!a.role) {
             return 'Actor with empty role is not allowed';
           }
           if (!a.uuid) {
             return 'Actor without UUID is not allowed';
+          }
+          if (m) {
+            return m;
           }
           return '';
         }, message);
@@ -29,14 +29,14 @@ export const subEventValidator = revalidate.createValidator(
 export const actorsAndRolesValidator = revalidate.createValidator(
   (message: string) => (value: Array<Person>) => {
     return value.reduce(function(m, person) {
-      if (m) {
-        return m;
-      }
       if (!person.role) {
         return 'Actor with empty role is not allowed';
       }
       if (!person.uuid) {
         return 'Actor without UUID is not allowed';
+      }
+      if (m) {
+        return m;
       }
       return '';
     }, '');
