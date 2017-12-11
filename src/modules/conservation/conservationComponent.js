@@ -62,6 +62,14 @@ function clearEventTypes(props: Props & { form: FormData }) {
     rawValue: null
   });
 }
+
+function getStatusTextFromErrors(form: FormData) {
+  return Object.keys(form).reduce(
+    (t: string, e: string) => form[e].status.error || t,
+    ''
+  );
+}
+
 const commonAttributes = v => ({
   eventTypeId: v,
   note: '',
@@ -492,25 +500,30 @@ export default function ConservationComponent(
         {I18n.t('musit.conservation.createNewSubEvents')}
       </button>
       <hr />
-      {props.isFormValid || (
-        <span style={{ color: 'Plum' }}>
-          {I18n.t('musit.errorMainMessages.saveDisabled')}
-        </span>
-      )}
       <br />
-      <button
-        key="btn-saveConservationProcess"
-        data-toggle="tooltip"
-        title="Feil"
-        className="btn btn-primary"
-        disabled={!props.isFormValid}
-        onClick={props.clickSave}
+      <div
+        rel="tooltip"
+        title={
+          props.isFormValid ? null : (
+            `${I18n.t('musit.errorMainMessages.saveDisabled')}: ${getStatusTextFromErrors(
+              props.form
+            )}`
+          )
+        }
+        className="wrap poptooltip"
       >
-        {I18n.t('musit.texts.save')}
-      </button>{' '}
-      <button className="btn btn-default" onClick={props.clickCancel}>
-        {I18n.t('musit.texts.cancel')}
-      </button>
+        <button
+          key="btn-saveConservationProcess"
+          className="btn btn-primary"
+          disabled={!props.isFormValid}
+          onClick={props.clickSave}
+        >
+          {I18n.t('musit.texts.save')}
+        </button>{' '}
+        <button className="btn btn-default" onClick={props.clickCancel}>
+          {I18n.t('musit.texts.cancel')}
+        </button>
+      </div>
       <div style={{ paddingBottom: '100px' }} />
     </div>
   );

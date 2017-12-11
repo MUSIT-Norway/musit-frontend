@@ -1082,20 +1082,24 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
   </button>
   <hr />
   <br />
-  <button
-    className="btn btn-primary"
-    data-toggle="tooltip"
-    disabled={false}
-    title="Feil"
+  <div
+    className="wrap poptooltip"
+    rel="tooltip"
+    title={null}
   >
-    Lagre
-  </button>
-   
-  <button
-    className="btn btn-default"
-  >
-    Avbryt
-  </button>
+    <button
+      className="btn btn-primary"
+      disabled={false}
+    >
+      Lagre
+    </button>
+     
+    <button
+      className="btn btn-default"
+    >
+      Avbryt
+    </button>
+  </div>
   <div
     style={
       Object {
@@ -3765,20 +3769,24 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
   </button>
   <hr />
   <br />
-  <button
-    className="btn btn-primary"
-    data-toggle="tooltip"
-    disabled={false}
-    title="Feil"
+  <div
+    className="wrap poptooltip"
+    rel="tooltip"
+    title={null}
   >
-    Lagre
-  </button>
-   
-  <button
-    className="btn btn-default"
-  >
-    Avbryt
-  </button>
+    <button
+      className="btn btn-primary"
+      disabled={false}
+    >
+      Lagre
+    </button>
+     
+    <button
+      className="btn btn-default"
+    >
+      Avbryt
+    </button>
+  </div>
   <div
     style={
       Object {
