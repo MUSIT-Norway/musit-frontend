@@ -8,8 +8,8 @@ import ViewPersonRoleDate from '../../../components/person/ViewPersonRoleDate';
 import find from 'lodash/find';
 import { FormInput, FormFileSelect, FormElement } from '../../../forms/components';
 import { saveBlob } from '../../../shared/download';
-import { getFileAsBlob } from '../../../models/conservation/attachments';
-import type { ErrorLoading, SavedFile } from '../../../models/conservation/attachments';
+import { getFileAsBlob } from '../../../models/conservation/documents';
+import type { ErrorLoading, SavedFile } from '../../../models/conservation/documents';
 import { I18n } from 'react-i18nify';
 
 export default function SubEventComponentNote(props: SubEventComponentNoteProps) {
@@ -85,23 +85,25 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
       {!props.viewMode && (
         <FormFileSelect
           id="resultFiles"
-          label={I18n.t('musit.conservation.attachments') + suffix}
+          label={I18n.t('musit.conservation.documents') + suffix}
           labelWidth={2}
           elementWidth={5}
-          value={props.subEvent.attachments}
+          value={props.subEvent.documents}
           multiple={true}
           onChange={files => {
-            console.log('Rituvesh files', files);
-            props.onChange('attachments')(files ? files.name : []);
+            files &&
+              files.map(f => {
+                return props.onDocumentUpload(props.subEvent.id, f, props.appSession);
+              });
+            props.onChange('documents')(files ? files : []);
           }}
         />
       )}
-      {console.log('Rituvesh props', props)}
-      {props.subEvent.attachments && (
+      {props.subEvent.files && (
         <FormElement id="Files" label={''} labelWidth={2} elementWidth={5}>
           <p className="form-control-static">
-            {Array.isArray(props.subEvent.attachments.files) &&
-              props.subEvent.attachments.files.map(file => {
+            {Array.isArray(props.subEvent.files) &&
+              props.subEvent.files.map(file => {
                 if (file.error) {
                   return null;
                 }

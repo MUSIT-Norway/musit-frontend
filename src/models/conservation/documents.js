@@ -23,7 +23,7 @@ export type ErrorSaving = {
   file: File
 };
 
-export const addResultFile: (props: {
+export const uploadFile: (props: {
   eventId: number,
   museumId: number,
   collectionId: string,
@@ -32,16 +32,12 @@ export const addResultFile: (props: {
 }) => Observable<SavedFile | ErrorSaving> = props => {
   const formData: FormData = new FormData();
   formData.append('upload', props.file, props.file.name);
-  return ajaxHelper(
-    Config.magasin.urls.api.conservation.addFileUrl(
-      props.museumId,
-      props.collectionId,
-      props.eventId
-    ),
-    'POST',
-    formData,
-    props.token
-  )
+  const url = Config.magasin.urls.api.conservation.addFileUrl(
+    props.museumId,
+    props.collectionId,
+    props.eventId
+  );
+  return ajaxHelper(url, 'POST', formData, props.token)
     .map((res: { status: number, response: any }) => {
       if (res.status >= 200 && res.status < 300) {
         return res.response;
@@ -51,12 +47,13 @@ export const addResultFile: (props: {
         file: props.file
       };
     })
-    .catch(error =>
-      Observable.of({
+    .catch(error => {
+      console.log('Rituvesh upload file error ', error);
+      return Observable.of({
         error: error,
         file: props.file
-      })
-    );
+      });
+    });
 };
 
 export type ErrorLoading = {
@@ -105,16 +102,12 @@ export const getFiles = (props: {
       )
     );
   }
-  return ajaxHelper(
-    Config.magasin.urls.api.attachments.getFilesUrl(
-      props.files,
-      props.museumId,
-      props.eventId
-    ),
-    'GET',
-    null,
-    props.token
-  )
+  const url = Config.magasin.urls.api.attachments.getFilesUrl(
+    props.files,
+    props.museumId,
+    props.eventId
+  );
+  return ajaxHelper(url, 'GET', null, props.token)
     .map((res: { status: number, response: any }) => {
       if (res.status >= 200 && res.status < 300) {
         return res.response ? res.response[0] : res.response;

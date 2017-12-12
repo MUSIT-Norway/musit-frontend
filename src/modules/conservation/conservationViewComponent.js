@@ -63,7 +63,8 @@ const renderEventComponent = (
           note: event.note,
           actorsAndRoles: event.actorsAndRoles,
           affectedThings: event.affectedThings,
-          attachments: event.attachments
+          documents: event.documents,
+          files: event.files
         }}
         roleList={predefinedConservation.roleList}
         index={index}
@@ -86,7 +87,8 @@ const renderEventComponent = (
           note: event.note,
           actorsAndRoles: event.actorsAndRoles,
           affectedThings: event.affectedThings,
-          attachments: event.attachments
+          documents: event.documents,
+          files: event.files
         }}
         roleList={predefinedConservation.roleList}
         index={index}
@@ -112,7 +114,8 @@ const renderEventComponent = (
           lightAndUvLevel: event.lightAndUvLevel,
           relativeHumidity: event.relativeHumidity,
           temperature: event.temperature,
-          attachments: event.attachments
+          documents: event.documents,
+          files: event.files
         }}
         roleList={predefinedConservation.roleList}
         index={index}
@@ -135,7 +138,8 @@ const renderEventComponent = (
           note: event.note,
           actorsAndRoles: event.actorsAndRoles,
           affectedThings: event.affectedThings,
-          attachments: event.attachments
+          documents: event.documents,
+          files: event.files
         }}
         roleList={predefinedConservation.roleList}
         index={index}
@@ -159,7 +163,8 @@ const renderEventComponent = (
           actorsAndRoles: event.actorsAndRoles,
           affectedThings: event.affectedThings,
           conditionCode: event.conditionCode,
-          attachments: event.attachments
+          documents: event.documents,
+          files: event.files
         }}
         conditionCodes={predefinedConservation.conditionCodeList}
         roleList={predefinedConservation.roleList}
@@ -183,7 +188,8 @@ const renderEventComponent = (
           note: event.note,
           actorsAndRoles: event.actorsAndRoles,
           affectedThings: event.affectedThings,
-          attachments: event.attachments
+          documents: event.documents,
+          files: event.files
         }}
         roleList={predefinedConservation.roleList}
         index={index}

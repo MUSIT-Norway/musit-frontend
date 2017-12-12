@@ -75,7 +75,8 @@ export type SubEventComponentNoteType = {
   note: string,
   actorsAndRoles: Array<Person>,
   affectedThings?: Array<string>,
-  attachments?: Array<string>,
+  documents?: Array<string>,
+  files?: Array<any>,
   expanded: boolean,
   toggleExpanded: Function,
   toggleSingleExpanded: Function
@@ -93,7 +94,8 @@ type SubEventComponentProps = {
   actorsAndRoles: Array<Person>,
   roleList: Array<any>,
   extraAttributes?: ?any,
-  affectedThingsWithDetailsMainEvent?: ?Array<ObjectInfo>
+  affectedThingsWithDetailsMainEvent?: ?Array<ObjectInfo>,
+  onDocumentUpload?: Function
 };
 
 export type HseRiskType = SubEventComponentNoteType;

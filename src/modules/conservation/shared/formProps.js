@@ -1,6 +1,6 @@
 // @flow
 import { getObjects, getConservationCollection } from '../shared/submit';
-import { saveConservation$ } from '../conservationStore';
+import { saveConservation$, uploadFile$ } from '../conservationStore';
 import type { Location } from '../shared/submit';
 import { simplePost, simplePut } from '../../../shared/RxAjax';
 import type { History } from '../../../types/Routes';
@@ -19,6 +19,7 @@ import type { ObjectData } from '../../../types/object';
 import { isFormValid } from '../../../forms/validators';
 import { emitError } from '../../../shared/errors';
 import Config from '../../../config';
+import { uploadFile } from '../../../models/conservation/documents';
 
 type FormProps = {|
   updateForm: Function,
@@ -47,6 +48,7 @@ export default function formProps(
     updatePersonsForSubEvent: updatePersonsForSubEvent(props.updateForm),
     toggleExpanded: toggleExpanded(props.updateForm),
     toggleSingleExpanded: toggleSingleExpanded(props.updateForm),
+    clickSaveAndContinue: clickSaveAndContinue,
     clickSave: clickSave(
       props.form,
       props.appSession,
@@ -55,7 +57,8 @@ export default function formProps(
       ajaxPost,
       ajaxPut
     ),
-    clickCancel: clickCancel(props)
+    clickCancel: clickCancel(props),
+    onDocumentUpload: onDocumentUpload
   };
 }
 
@@ -139,6 +142,30 @@ function updatePersonsForSubEvent(updateForm) {
       ]
     });
   };
+}
+
+function onDocumentUpload(eventId: number, file: any, appSession: AppSession) {
+  return uploadFile$.next({
+    eventId,
+    museumId: appSession.museumId,
+    collectionId: appSession.collectionId,
+    token: appSession.accessToken,
+    file: file
+  });
+}
+
+function clickSaveAndContinue(
+  form: any,
+  appSession: AppSession,
+  location: Location<Array<ObjectData>>
+) {
+  return saveConservation$.next({
+    id: form.id.value,
+    appSession,
+    data: getConservationCollection(form, location),
+    ajaxPost: simplePost,
+    ajaxPut: simplePut
+  });
 }
 
 function clickSave(form, appSession, history, location, ajaxPost, ajaxPut) {

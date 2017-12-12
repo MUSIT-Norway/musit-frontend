@@ -1,4 +1,4 @@
-// @flow
+// @ flow
 import { simpleGet, simplePost, simplePut } from '../../shared/RxAjax';
 import { Observable, Subject } from 'rxjs';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
@@ -20,6 +20,7 @@ import Sample from '../../models/sample';
 import type { SampleType } from 'types/sample';
 import { KEEP_ALIVE } from '../../stores/constants';
 import find from 'lodash/find';
+import { uploadFile, getFiles } from '../../models/conservation/documents';
 
 export const initialState: ConservationStoreState = {
   loadingConservation: false,
@@ -56,6 +57,11 @@ const saveConservationAction = (post, put) => props => {
     .do(flagLoading({ loadingConservation: false }));
 };
 
+export const uploadFile$: Subject<*> = createAction('uploadFile$');
+const uploadFileAction = props => {
+  return uploadFile(props);
+};
+
 export const updateConservation$: Subject<*> = createAction('updateConservation$');
 const updateConservationAction$: Observable<*> = updateConservation$
   .do(flagLoading({ loadingConservation: true }))
@@ -66,6 +72,7 @@ export const clearStore$: Subject<*> = createAction('clearStore$');
 
 type Actions = {
   saveConservation$: Subject<*>,
+  uploadFile$: Subject<*>,
   setLoading$: Subject<Flag>,
   getConservationAction$: Observable<*>,
   updateConservationAction$: Observable<*>,
@@ -82,6 +89,9 @@ export const reducer$ = (
     actions.saveConservation$
       .switchMap(saveConservationAction(ajaxPost, ajaxPut))
       .map(saveResult => state => ({ ...state, saveResult })),
+    actions.uploadFile$
+      .switchMap(uploadFileAction)
+      .map(file => state => ({ ...state, file: file, Rk: 'Rituvesh' })),
     actions.setLoading$.map(loading => state => ({ ...state, ...loading })),
     actions.clearStore$.map(() => () => initialState),
     Observable.merge(
@@ -97,6 +107,7 @@ export const reducer$ = (
 export const store$ = (
   actions$: Actions = {
     saveConservation$,
+    uploadFile$,
     setLoading$,
     getConservationAction$,
     updateConservationAction$,
@@ -170,9 +181,37 @@ export function getConservationDetails(
         return conservation;
       })
       .flatMap(conservation => {
+        return conservation && conservation.events
+          ? Observable.forkJoin(
+              conservation.events.map(e => {
+                //const attachments = ["2edbb781-0459-4281-ab0e-84e5b3bd4521", "60abc85c-938b-4af3-bbe0-d2532148a707"];
+                //const attachments = [];
+                const attachments = e.documents || [];
+                if (attachments.length > 0) {
+                  return getFiles({
+                    files: attachments,
+                    museumId: props.museumId,
+                    token: props.token,
+                    eventId: e.id //211
+                  }).map(files => {
+                    const events = { ...e, files: files };
+                    return {
+                      ...events
+                    };
+                  });
+                }
+                return Observable.of(e);
+              })
+            ).map(events => {
+              const output = { ...conservation, events };
+              console.log('attachments', output);
+              return output;
+            })
+          : Observable.of(conservation);
+      })
+      .flatMap(conservation => {
         const affectedThings = conservation.affectedThings;
         if (affectedThings && affectedThings.length > 0) {
-          // $FlowFixMe | We are passing an array to forkJoin which is not supported by flow-typed definition for rxjs.
           return Observable.forkJoin(
             affectedThings.map(getEventObjectDetails(props, ajaxGet))
           ).map(zipObjectInfoWithEvents(conservation));

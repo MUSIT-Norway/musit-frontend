@@ -1,4 +1,4 @@
-//@flow
+// @flow
 import React from 'react';
 import { I18n } from 'react-i18nify';
 import MetaInformation from '../../components/metainfo';
@@ -18,6 +18,8 @@ import HseRisk from './events/hseRisk';
 import find from 'lodash/find';
 import ConditionAssessment from './events/conditionAssessment';
 import Report from './events/report';
+import type { Location } from './shared/submit';
+import type { ObjectData } from '../../types/object';
 
 type ConservationProcessProps = {
   id?: number,
@@ -39,12 +41,15 @@ type ConservationProcessProps = {
   loadingConservation?: boolean,
   history: History,
   clickSave?: Function,
+  clickSaveAndContinue?: ?Function,
   clickCancel?: Function,
   clearForm?: Function,
   clearStore?: Function,
   isFormValid?: boolean,
   store: *,
-  predefinedConservation: PredefinedConservation
+  predefinedConservation: PredefinedConservation,
+  onDocumentUpload?: Function,
+  location: Location<Array<ObjectData>>
 };
 
 export type Props = ConservationProcessProps & {
@@ -75,7 +80,7 @@ const commonAttributes = v => ({
   note: '',
   affectedThings: [],
   actorsAndRoles: [],
-  attachments: [],
+  documents: [],
   expanded: true
 });
 function createSubEvents(
@@ -146,6 +151,7 @@ function createSubEvents(
       rawValue: props.form.events.rawValue.concat(akk)
     });
     clearEventTypes(props);
+    //props.clickSaveAndContinue();
   };
 }
 
@@ -206,6 +212,7 @@ function renderSubEvent(
           props.form.events.value,
           ind
         )}
+        onDocumentUpload={props.onDocumentUpload}
       />
     );
   } else if (eventType === 3) {
@@ -235,6 +242,7 @@ function renderSubEvent(
           props.form.events.value,
           ind
         )}
+        onDocumentUpload={props.onDocumentUpload}
       />
     );
   } else if (eventType === 4) {
@@ -264,6 +272,7 @@ function renderSubEvent(
           props.form.events.value,
           ind
         )}
+        onDocumentUpload={props.onDocumentUpload}
       />
     );
   } else if (eventType === 5) {
@@ -293,6 +302,7 @@ function renderSubEvent(
           props.form.events.value,
           ind
         )}
+        onDocumentUpload={props.onDocumentUpload}
       />
     );
   } else if (eventType === 6) {
@@ -323,6 +333,7 @@ function renderSubEvent(
           props.form.events.value,
           ind
         )}
+        onDocumentUpload={props.onDocumentUpload}
       />
     );
   } else if (eventType === 7) {
@@ -352,6 +363,7 @@ function renderSubEvent(
           props.form.events.value,
           ind
         )}
+        onDocumentUpload={props.onDocumentUpload}
       />
     );
   } else {
@@ -494,7 +506,13 @@ export default function ConservationComponent(
       <button
         key="btn-createSubEvents"
         className="btn btn-default"
-        onClick={createSubEvents(props)}
+        onClick={e => {
+          createSubEvents(props)();
+          return (
+            props.clickSaveAndContinue &&
+            props.clickSaveAndContinue(props.form, props.appSession, props.location)
+          );
+        }}
         disabled={!props.form.subEventTypes.value}
       >
         {I18n.t('musit.conservation.createNewSubEvents')}
