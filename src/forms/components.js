@@ -5,19 +5,32 @@ import type { DomEvent } from '../types/dom';
 export type ElementProps = {
   id: string,
   label: string,
-  labelWidth: number,
+  labelWidth?: number,
+  labelAbove?: boolean,
   elementWidth: number,
   children?: React$Node,
   hasError?: boolean
 };
 
 export function FormElement(props: ElementProps) {
+  if (!props.labelAbove && props.labelWidth) {
+    return (
+      <div className={`form-group ${props.hasError ? 'has-error' : ''}`}>
+        <label className={`control-label col-md-${props.labelWidth}`} htmlFor={props.id}>
+          {props.label}
+        </label>
+        <div className={`col-md-${props.elementWidth}`}>{props.children}</div>
+      </div>
+    );
+  }
   return (
     <div className={`form-group ${props.hasError ? 'has-error' : ''}`}>
-      <label className={`control-label col-md-${props.labelWidth}`} htmlFor={props.id}>
-        {props.label}
-      </label>
-      <div className={`col-md-${props.elementWidth}`}>{props.children}</div>
+      <div className={`col-md-${props.elementWidth}`}>
+        <label className="control-label" htmlFor={props.id}>
+          {props.label}
+        </label>
+        {props.children}
+      </div>
     </div>
   );
 }
@@ -34,6 +47,7 @@ export function FormInput(props: InputProps) {
       label={props.label}
       labelWidth={props.labelWidth}
       elementWidth={props.elementWidth}
+      labelAbove={props.labelAbove}
     >
       <input
         type="text"
@@ -102,6 +116,7 @@ export function FormTextArea(props: TextAreaProps) {
     <FormElement
       id={props.id}
       label={props.label}
+      labelAbove={props.labelAbove}
       labelWidth={props.labelWidth}
       elementWidth={props.elementWidth}
     >
@@ -126,6 +141,7 @@ export function FormSelect(props: SelectProps) {
     <FormElement
       id={props.id}
       label={props.label}
+      labelAbove={props.labelAbove}
       labelWidth={props.labelWidth}
       elementWidth={props.elementWidth}
     >
@@ -152,6 +168,7 @@ export function FormInputSelect(props: SelectProps) {
     <FormElement
       id={props.id}
       label={props.label}
+      labelAbove={props.labelAbove}
       labelWidth={props.labelWidth}
       elementWidth={props.elementWidth}
     >

@@ -157,7 +157,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
     <FormTextArea
       elementWidth={6}
       id="note"
-      label="Kommentar"
+      label="Merknad"
       labelWidth={2}
       onChange=""
       rows={5}

@@ -62,10 +62,10 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
       </div>
       {props.extraAttributes ? props.extraAttributes : ''}
       <div className="row form-group">
-        <label className="control-label col-md-2" htmlFor={`note_${props.index}`}>
-          {props.noteLabel + suffix}
-        </label>
         <div className="col-md-9">
+          <label className="control-label" htmlFor={`note_${props.index}`}>
+            {props.noteLabel + suffix}
+          </label>
           {props.viewMode ? (
             <p className="form-control-static" id={`note_${props.index}`}>
               {props.subEvent.note}

@@ -72,6 +72,7 @@ exports[`Treatment should render properly 1`] = `
   extraAttributes={
     <div>
       <FieldMultiSelect
+        labelAbove={true}
         name="treatment_0keywords"
         onChange={[Function]}
         options={
@@ -147,6 +148,7 @@ exports[`Treatment should render properly 1`] = `
         viewMode={true}
       />
       <FieldMultiSelect
+        labelAbove={true}
         name="treatment_0material"
         onChange={[Function]}
         options={

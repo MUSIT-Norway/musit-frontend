@@ -19,6 +19,7 @@ export default function Treatment(props: TreatmentProps) {
       <FieldMultiSelect
         name={props.name + 'keywords'}
         stringValue={props.treatment.keywords.join(',')}
+        labelAbove={true}
         options={optionsKeywords}
         onChange={v =>
           props.onChange('keywords')(
@@ -30,6 +31,7 @@ export default function Treatment(props: TreatmentProps) {
       <FieldMultiSelect
         name={props.name + 'material'}
         stringValue={props.treatment.materials.join(',')}
+        labelAbove={true}
         options={optionsMaterials}
         onChange={v =>
           props.onChange('materials')(

@@ -8,6 +8,7 @@ export type FieldMultiSelectProps = {
   options: ?Array<any>,
   title: ?string,
   onChange: Function,
+  labelAbove?: boolean,
   inputProps?: { className?: string, style?: {} },
   appSession?: ?AppSession,
   viewMode?: ?boolean
@@ -26,7 +27,39 @@ export default function FieldMultiSelect(props: FieldMultiSelectProps) {
           .split(',')
           .map(v => (filterOptions(v).length > 0 ? label(filterOptions(v)[0]) : ''))
       : [];
-
+  if (props.labelAbove) {
+    return (
+      <div className="row form-group">
+        <div className="col-md-3">
+          {props.title !== '' && (
+            <label className="control-label" htmlFor={name}>
+              {props.title}
+            </label>
+          )}
+          {props.viewMode && (
+            <div style={{ padding: '8px' }}>
+              {' '}
+              {viewOptions && viewOptions.join(', ')}{' '}
+            </div>
+          )}
+          {!props.viewMode && (
+            <Select
+              {...props.inputProps}
+              clearable={false}
+              multi
+              closeOnSelect={true}
+              removeSelected={false}
+              simpleValue
+              id={name}
+              value={values}
+              options={options}
+              onChange={v => props.onChange(v)}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="row form-group">
       {props.title !== '' && (

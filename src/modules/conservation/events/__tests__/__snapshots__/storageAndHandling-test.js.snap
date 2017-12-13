@@ -85,15 +85,14 @@ exports[`StorageAndHandling should render properly 1`] = `
       <div
         className="row form-group"
       >
-        <label
-          className="control-label col-md-2"
-          htmlFor="relativeHumidity_0"
-        >
-          Relativ fuktighet:
-        </label>
         <div
-          className="col-md-3"
+          className="col-md-5"
         >
+          <label
+            htmlFor="relativeHumidity_0"
+          >
+            Relativ fuktighet:
+          </label>
           <p
             className="form-control-static"
             id="relativeHumidity_0"
@@ -105,15 +104,15 @@ exports[`StorageAndHandling should render properly 1`] = `
       <div
         className="row form-group"
       >
-        <label
-          className="control-label col-md-2"
-          htmlFor="temperature_0"
-        >
-          Temperatur:
-        </label>
         <div
-          className="col-md-3"
+          className="col-md-5"
         >
+          <label
+            className="control-label"
+            htmlFor="temperature_0"
+          >
+            Temperatur:
+          </label>
           <p
             className="form-control-static"
             id="temperature_0"
@@ -125,15 +124,15 @@ exports[`StorageAndHandling should render properly 1`] = `
       <div
         className="row form-group"
       >
-        <label
-          className="control-label col-md-2"
-          htmlFor="lightAndUvLevel_0"
-        >
-          Lux:
-        </label>
         <div
-          className="col-md-3"
+          className="col-md-5"
         >
+          <label
+            className="control-label"
+            htmlFor="lightAndUvLevel_0"
+          >
+            Lux:
+          </label>
           <p
             className="form-control-static"
             id="lightAndUvLevel_0"

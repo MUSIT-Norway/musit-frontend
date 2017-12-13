@@ -9,14 +9,11 @@ export default function StorageAndHandling(props: StorageAndHandlingProps) {
   const extraAttributes = (
     <div>
       <div className="row form-group">
-        <label
-          className="control-label col-md-2"
-          htmlFor={`relativeHumidity_${props.index}`}
-        >
-          {I18n.t('musit.conservation.events.storageAndHandling.relativeHumidity') +
-            suffix}
-        </label>
-        <div className="col-md-3">
+        <div className="col-md-5">
+          <label htmlFor={`relativeHumidity_${props.index}`}>
+            {I18n.t('musit.conservation.events.storageAndHandling.relativeHumidity') +
+              suffix}
+          </label>
           {props.viewMode ? (
             <p className="form-control-static" id={`relativeHumidity_${props.index}`}>
               {props.storageAndHandling.relativeHumidity}
@@ -34,10 +31,10 @@ export default function StorageAndHandling(props: StorageAndHandlingProps) {
         </div>
       </div>
       <div className="row form-group">
-        <label className="control-label col-md-2" htmlFor={`temperature_${props.index}`}>
-          {I18n.t('musit.conservation.events.storageAndHandling.temperature') + suffix}
-        </label>
-        <div className="col-md-3">
+        <div className="col-md-5">
+          <label className="control-label" htmlFor={`temperature_${props.index}`}>
+            {I18n.t('musit.conservation.events.storageAndHandling.temperature') + suffix}
+          </label>
           {props.viewMode ? (
             <p className="form-control-static" id={`temperature_${props.index}`}>
               {props.storageAndHandling.temperature}
@@ -55,14 +52,11 @@ export default function StorageAndHandling(props: StorageAndHandlingProps) {
         </div>
       </div>
       <div className="row form-group">
-        <label
-          className="control-label col-md-2"
-          htmlFor={`lightAndUvLevel_${props.index}`}
-        >
-          {I18n.t('musit.conservation.events.storageAndHandling.lightAndUvLevel') +
-            suffix}
-        </label>
-        <div className="col-md-3">
+        <div className="col-md-5">
+          <label className="control-label" htmlFor={`lightAndUvLevel_${props.index}`}>
+            {I18n.t('musit.conservation.events.storageAndHandling.lightAndUvLevel') +
+              suffix}
+          </label>
           {props.viewMode ? (
             <p className="form-control-static" id={`lightAndUvLevel_${props.index}`}>
               {props.storageAndHandling.lightAndUvLevel}

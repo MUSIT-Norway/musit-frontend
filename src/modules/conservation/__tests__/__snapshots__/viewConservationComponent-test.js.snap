@@ -29,15 +29,15 @@ exports[`ConservationViewComponent should render properly 1`] = `
     <div
       className="form-group"
     >
-      <label
-        className="control-label col-md-2"
-        htmlFor="caseNumber"
-      >
-        Saksnummer:
-      </label>
       <div
         className="col-md-10"
       >
+        <label
+          className="control-label2"
+          htmlFor="caseNumber"
+        >
+          Saksnummer:
+        </label>
         <p
           className="form-control-static"
           id="caseNumber"
@@ -48,15 +48,15 @@ exports[`ConservationViewComponent should render properly 1`] = `
     <div
       className="form-group"
     >
-      <label
-        className="control-label col-md-2"
-        htmlFor="note"
-      >
-        Kommentar:
-      </label>
       <div
         className="col-md-10"
       >
+        <label
+          className="control-label"
+          htmlFor="note"
+        >
+          Comments:
+        </label>
         <p
           className="form-control-static"
           id="note"

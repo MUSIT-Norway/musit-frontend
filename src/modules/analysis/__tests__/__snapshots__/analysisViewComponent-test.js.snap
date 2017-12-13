@@ -154,7 +154,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         className="control-label col-md-2"
         htmlFor="note"
       >
-        Kommentar
+        Merknad
       </label>
       <div
         className="col-md-10"

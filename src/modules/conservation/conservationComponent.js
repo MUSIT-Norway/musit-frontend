@@ -379,6 +379,7 @@ function ConservationProcessForm(props: ProcessFormProps) {
           field={props.form.caseNumber}
           label={I18n.t('musit.conservation.caseNumber') + suffix}
           labelWidth={1}
+          labelAbove={true}
           elementWidth={5}
           value={props.form.caseNumber.value}
           onChange={props.updateStringField(props.form.caseNumber.name)}
@@ -388,6 +389,7 @@ function ConservationProcessForm(props: ProcessFormProps) {
           field={props.form.note}
           label={I18n.t('musit.conservation.note') + suffix}
           labelWidth={1}
+          labelAbove={true}
           elementWidth={5}
           rows={5}
           value={props.form.note.value}
