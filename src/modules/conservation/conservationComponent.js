@@ -61,13 +61,6 @@ type ProcessFormProps = {
   updateStringField: Function
 };
 
-function clearEventTypes(props: Props & { form: FormData }) {
-  props.updateForm({
-    name: 'subEventTypes',
-    rawValue: null
-  });
-}
-
 function getStatusTextFromErrors(form: FormData) {
   return Object.keys(form).reduce(
     (t: string, e: string) => form[e].status.error || t,
@@ -146,12 +139,15 @@ function createSubEvents(
         }
       }
     }, []);
-    props.updateForm({
-      name: props.form.events.name,
-      rawValue: props.form.events.rawValue.concat(akk)
-    });
-    clearEventTypes(props);
-    //props.clickSaveAndContinue();
+    props.clickSaveAndContinue &&
+      props.clickSaveAndContinue(
+        props.form,
+        props.appSession,
+        props.location,
+        akk,
+        props.updateForm,
+        props.form.events.name
+      );
   };
 }
 
@@ -508,13 +504,7 @@ export default function ConservationComponent(
       <button
         key="btn-createSubEvents"
         className="btn btn-default"
-        onClick={e => {
-          createSubEvents(props)();
-          return (
-            props.clickSaveAndContinue &&
-            props.clickSaveAndContinue(props.form, props.appSession, props.location)
-          );
-        }}
+        onClick={createSubEvents(props)}
         disabled={!props.form.subEventTypes.value}
       >
         {I18n.t('musit.conservation.createNewSubEvents')}

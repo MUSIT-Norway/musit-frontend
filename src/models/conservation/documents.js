@@ -48,7 +48,6 @@ export const uploadFile: (props: {
       };
     })
     .catch(error => {
-      console.log('Rituvesh upload file error ', error);
       return Observable.of({
         error: error,
         file: props.file

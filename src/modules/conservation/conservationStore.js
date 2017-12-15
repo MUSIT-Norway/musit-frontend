@@ -21,6 +21,8 @@ import type { SampleType } from 'types/sample';
 import { KEEP_ALIVE } from '../../stores/constants';
 import find from 'lodash/find';
 import { uploadFile, getFiles } from '../../models/conservation/documents';
+import { updateConservationSubEvent } from './shared/formProps';
+import { sortBy } from 'lodash';
 
 export const initialState: ConservationStoreState = {
   loadingConservation: false,
@@ -58,8 +60,12 @@ const saveConservationAction = (post, put) => props => {
 };
 
 export const uploadFile$: Subject<*> = createAction('uploadFile$');
-const uploadFileAction = props => {
-  return uploadFile(props);
+//const uploadFileAction = props => {
+const uploadFileAction = (post, put) => props => {
+  return Observable.of(props)
+    .do(flagLoading({ loadingConservation: true }))
+    .flatMap(uploadDocumentAndSaveConservation(post, put))
+    .do(flagLoading({ loadingConservation: false }));
 };
 
 export const updateConservation$: Subject<*> = createAction('updateConservation$');
@@ -79,6 +85,15 @@ type Actions = {
   clearStore$: Subject<*>
 };
 
+const sortSubEvents = data => {
+  if (data && data.events && data.events.length > 1) {
+    const sortedEvents = sortBy(data.events, o => o.id);
+    return { ...data, events: sortedEvents };
+  } else {
+    return data;
+  }
+};
+
 export const reducer$ = (
   actions: Actions,
   ajaxGet: AjaxGet<*>,
@@ -90,8 +105,8 @@ export const reducer$ = (
       .switchMap(saveConservationAction(ajaxPost, ajaxPut))
       .map(saveResult => state => ({ ...state, saveResult })),
     actions.uploadFile$
-      .switchMap(uploadFileAction)
-      .map(file => state => ({ ...state, file: file, Rk: 'Rituvesh' })),
+      .switchMap(uploadFileAction(ajaxPost, ajaxPut))
+      .map(saveResult => state => ({ ...state, saveResult })),
     actions.setLoading$.map(loading => state => ({ ...state, ...loading })),
     actions.clearStore$.map(() => () => initialState),
     Observable.merge(
@@ -99,7 +114,7 @@ export const reducer$ = (
       actions.updateConservationAction$
     ).map(conservation => state => ({
       ...state,
-      conservation
+      conservation: sortSubEvents(conservation)
     }))
   );
 };
@@ -181,7 +196,7 @@ export function getConservationDetails(
         return conservation;
       })
       .flatMap(conservation => {
-        return conservation && conservation.events
+        return conservation && conservation.events && conservation.events.length > 0
           ? Observable.forkJoin(
               conservation.events.map(e => {
                 //const attachments = ["2edbb781-0459-4281-ab0e-84e5b3bd4521", "60abc85c-938b-4af3-bbe0-d2532148a707"];
@@ -322,7 +337,6 @@ const saveConservation = (ajaxPost, ajaxPut) => ({
   result,
   appSession,
   data,
-  events,
   callback
 }) => {
   const token = appSession.accessToken;
@@ -359,3 +373,73 @@ function getConservationUpsert(id, ajaxPut, museumId, data, token, ajaxPost, cal
         callback
       });
 }
+
+const uploadDocumentAndSaveConservation = (ajaxPost, ajaxPut) => ({
+  eventId,
+  parentEventId,
+  museumId,
+  collectionId,
+  token,
+  files,
+  data,
+  callback
+}) => {
+  if (!eventId) {
+    return Observable.empty();
+  }
+
+  const files$ =
+    files.length > 0
+      ? Observable.forkJoin(
+          files.map(file =>
+            uploadFile({
+              eventId: eventId,
+              museumId: museumId,
+              collectionId: collectionId,
+              token: token,
+              file: file
+            })
+          )
+        )
+      : Observable.of([]);
+
+  return files$.flatMap(files => {
+    const newFids = files.reduce((acc, f) => {
+      if (f.fid) {
+        return [...acc, f.fid];
+      }
+      return acc;
+    }, []);
+    const badFiles = files.filter(f => !f.fid);
+    const findEvent = data && data.events && data.events.find(f => f.id === eventId);
+    const existingFids = findEvent ? findEvent.documents : [];
+    const fids = existingFids.concat(newFids);
+
+    const updatedEvent = { ...findEvent, documents: fids };
+    const remaingEvents =
+      data && data.events && data.events.filter(f => f.id !== eventId);
+    const newEvents = remaingEvents.concat(updatedEvent);
+    const updatedData = { ...data, events: newEvents };
+
+    return getConservationUpsert(
+      parentEventId,
+      ajaxPut,
+      museumId,
+      updatedData,
+      token,
+      ajaxPost,
+      callback
+    )
+      .map((conservation?: ConservationCollection) => {
+        if (!conservation) {
+          return Observable.empty();
+        }
+        return Observable.of(conservation);
+      })
+      .do(results => {
+        if (callback && callback.onComplete) {
+          callback.onComplete({ id: eventId, results: results.results, badFiles });
+        }
+      });
+  });
+};

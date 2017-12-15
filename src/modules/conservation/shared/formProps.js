@@ -20,6 +20,7 @@ import { isFormValid } from '../../../forms/validators';
 import { emitError } from '../../../shared/errors';
 import Config from '../../../config';
 import { uploadFile } from '../../../models/conservation/documents';
+import { sortBy } from 'lodash';
 
 type FormProps = {|
   updateForm: Function,
@@ -58,7 +59,12 @@ export default function formProps(
       ajaxPut
     ),
     clickCancel: clickCancel(props),
-    onDocumentUpload: onDocumentUpload
+    onDocumentUpload: onDocumentUpload(
+      props.form,
+      props.appSession,
+      props.location,
+      props.history
+    )
   };
 }
 
@@ -81,7 +87,7 @@ export function toggleSingleExpanded(updateForm: any) {
     });
 }
 
-function updateStringField(updateForm) {
+function updateStringField(updateForm: any) {
   return (name: string) => (evt: DomEvent) =>
     updateForm({
       name,
@@ -89,7 +95,7 @@ function updateStringField(updateForm) {
     });
 }
 
-function updateBooleanField(updateForm) {
+function updateBooleanField(updateForm: any) {
   return (name: string, b: boolean) => () =>
     updateForm({
       name,
@@ -97,7 +103,7 @@ function updateBooleanField(updateForm) {
     });
 }
 
-function updateArrayField(updateForm) {
+function updateArrayField(updateForm: any) {
   return (name: string) => (evt: DomEvent) =>
     updateForm({
       name,
@@ -105,7 +111,7 @@ function updateArrayField(updateForm) {
     });
 }
 
-function updateMultiSelectField(updateForm) {
+function updateMultiSelectField(updateForm: any) {
   return (name: string) => (value: string) =>
     updateForm({
       name,
@@ -113,7 +119,7 @@ function updateMultiSelectField(updateForm) {
     });
 }
 
-function updateConservationSubEvent(updateForm) {
+export function updateConservationSubEvent(updateForm: any) {
   return (name: string, events: Array<ConservationSubTypes>, arrayIndex: number) => (
     fieldName: string
   ) => (value: string) => {
@@ -128,7 +134,7 @@ function updateConservationSubEvent(updateForm) {
   };
 }
 
-function updatePersonsForSubEvent(updateForm) {
+function updatePersonsForSubEvent(updateForm: any) {
   return (name: string, events: Array<ConservationSubTypes>, arrayIndex: number) => (v: {
     name: string,
     rawValue: Array<Person>
@@ -144,27 +150,125 @@ function updatePersonsForSubEvent(updateForm) {
   };
 }
 
-function onDocumentUpload(eventId: number, file: any, appSession: AppSession) {
-  return uploadFile$.next({
-    eventId,
-    museumId: appSession.museumId,
-    collectionId: appSession.collectionId,
-    token: appSession.accessToken,
-    file: file
-  });
+function onDocumentUpload(
+  form: any,
+  appSession: AppSession,
+  location: Location<Array<ObjectData>>,
+  history: any
+) {
+  return (eventId: number, files: any) => {
+    return uploadFile$.next({
+      eventId,
+      parentEventId: form.id.value,
+      museumId: appSession.museumId,
+      collectionId: appSession.collectionId,
+      token: appSession.accessToken,
+      files: files,
+      data: getConservationCollection(form, location),
+      callback: {
+        onComplete: props => {
+          if (!props) {
+            return;
+          }
+          history.replace(
+            Config.magasin.urls.client.conservation.viewConservation(
+              appSession,
+              parseInt(form.id.value, 10)
+            )
+          );
+        },
+        onFailure: err => {
+          emitError(err);
+        }
+      }
+    });
+  };
 }
+
+const sortSubEventsOnly = events => {
+  if (events && events.length > 1) {
+    return sortBy(events, (o: any) => o.id);
+  } else {
+    return events;
+  }
+};
 
 function clickSaveAndContinue(
   form: any,
   appSession: AppSession,
-  location: Location<Array<ObjectData>>
+  location: Location<Array<ObjectData>>,
+  newSubEventsToCreate?: ?any,
+  updateForm?: ?Function,
+  updateFormDataEvenName?: ?any
 ) {
+  const formData = getConservationCollection(form, location);
+  const newSubEvents = newSubEventsToCreate || [];
+  const events =
+    formData && formData.events && formData.events.length > 0
+      ? formData.events.concat(newSubEvents)
+      : newSubEvents;
+  const data = events ? { ...formData, events: events } : formData;
+
   return saveConservation$.next({
     id: form.id.value,
     appSession,
-    data: getConservationCollection(form, location),
+    data: data,
     ajaxPost: simplePost,
-    ajaxPut: simplePut
+    ajaxPut: simplePut,
+    callback: {
+      onComplete: props => {
+        if (!props) {
+          return;
+        }
+        if (updateForm && updateFormDataEvenName) {
+          if (!form.id.value) {
+            updateForm({
+              name: 'id',
+              rawValue: props.response.id
+            });
+          }
+
+          // add form events + new events
+          const formEvents =
+            form &&
+            form.events &&
+            form.events &&
+            form.events.rawValue &&
+            form.events.rawValue.length > 0
+              ? form.events.rawValue
+              : [];
+          const respEvents =
+            props.response && props.response.events && props.response.events.length > 0
+              ? props.response.events
+              : [];
+          const updateEvents =
+            newSubEventsToCreate && newSubEventsToCreate.length > 0 ? true : false;
+
+          const foundOldEventId = (re, formEvents) =>
+            formEvents.find(fe => fe.id === re.id);
+          const newEvents = formEvents
+            ? respEvents.map(
+                re =>
+                  foundOldEventId(re, formEvents) ? foundOldEventId(re, formEvents) : re
+              )
+            : respEvents;
+
+          updateEvents &&
+            updateForm({
+              name: updateFormDataEvenName,
+              rawValue: sortSubEventsOnly(newEvents)
+            });
+
+          updateForm({
+            name: 'subEventTypes',
+            rawValue: null
+          });
+        }
+      },
+      onFailure: err => {
+        emitError(err);
+      }
+    }
   });
 }
 
@@ -198,7 +302,7 @@ function clickSave(form, appSession, history, location, ajaxPost, ajaxPut) {
   };
 }
 
-function clickCancel(props) {
+function clickCancel(props: any) {
   return (evt: DomEvent) => {
     evt.preventDefault();
     props.history.goBack();

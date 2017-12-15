@@ -83,25 +83,21 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
         </div>
       </div>
       {!props.viewMode && (
-        <FormFileSelect
-          id="resultFiles"
-          label={I18n.t('musit.conservation.documents') + suffix}
-          labelWidth={2}
-          elementWidth={5}
-          value={props.subEvent.documents}
-          multiple={true}
-          onChange={files => {
-            files &&
-              files.map(f => {
-                return props.onDocumentUpload(props.subEvent.id, f, props.appSession);
-              });
-            props.onChange('documents')(files ? files : []);
-          }}
-        />
+        <div className="row">
+          <FormFileSelect
+            id="resultFiles"
+            label={I18n.t('musit.conservation.documents') + suffix}
+            labelWidth={2}
+            elementWidth={5}
+            value={props.subEvent.documents}
+            multiple={true}
+            onChange={files => files && props.onDocumentUpload(props.subEvent.id, files)}
+          />
+        </div>
       )}
       {props.subEvent.files && (
         <FormElement id="Files" label={''} labelWidth={2} elementWidth={5}>
-          <p className="form-control-static">
+          <p className="row form-control-static">
             {Array.isArray(props.subEvent.files) &&
               props.subEvent.files.map(file => {
                 if (file.error) {
