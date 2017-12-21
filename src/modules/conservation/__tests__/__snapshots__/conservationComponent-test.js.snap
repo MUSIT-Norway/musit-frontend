@@ -1087,18 +1087,35 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
     rel="tooltip"
     title={null}
   >
-    <button
-      className="btn btn-primary"
-      disabled={false}
+    <div
+      style={
+        Object {
+          "float": "right",
+        }
+      }
     >
-      Lagre
-    </button>
-     
-    <button
-      className="btn btn-default"
-    >
-      Avbryt
-    </button>
+      <button
+        className="btn-link"
+        style={
+          Object {
+            "marginRight": 40,
+          }
+        }
+      >
+        Avbryt
+      </button>
+      <button
+        className="btn btn-primary"
+        disabled={false}
+        style={
+          Object {
+            "marginRight": 20,
+          }
+        }
+      >
+        Lagre
+      </button>
+    </div>
   </div>
   <div
     style={
@@ -3774,18 +3791,35 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
     rel="tooltip"
     title={null}
   >
-    <button
-      className="btn btn-primary"
-      disabled={false}
+    <div
+      style={
+        Object {
+          "float": "right",
+        }
+      }
     >
-      Lagre
-    </button>
-     
-    <button
-      className="btn btn-default"
-    >
-      Avbryt
-    </button>
+      <button
+        className="btn-link"
+        style={
+          Object {
+            "marginRight": 40,
+          }
+        }
+      >
+        Avbryt
+      </button>
+      <button
+        className="btn btn-primary"
+        disabled={false}
+        style={
+          Object {
+            "marginRight": 20,
+          }
+        }
+      >
+        Lagre
+      </button>
+    </div>
   </div>
   <div
     style={

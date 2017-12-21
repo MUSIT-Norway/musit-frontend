@@ -522,17 +522,24 @@ export default function ConservationComponent(
         }
         className="wrap poptooltip"
       >
-        <button
-          key="btn-saveConservationProcess"
-          className="btn btn-primary"
-          disabled={!props.isFormValid}
-          onClick={props.clickSave}
-        >
-          {I18n.t('musit.texts.save')}
-        </button>{' '}
-        <button className="btn btn-default" onClick={props.clickCancel}>
-          {I18n.t('musit.texts.cancel')}
-        </button>
+        <div style={{ float: 'right' }}>
+          <button
+            className="btn-link"
+            style={{ marginRight: 40 }}
+            onClick={props.clickCancel}
+          >
+            {I18n.t('musit.texts.cancel')}
+          </button>
+          <button
+            key="btn-saveConservationProcess"
+            className="btn btn-primary"
+            disabled={!props.isFormValid}
+            onClick={props.clickSave}
+            style={{ marginRight: 20 }}
+          >
+            {I18n.t('musit.texts.save')}
+          </button>
+        </div>
       </div>
       <div style={{ paddingBottom: '100px' }} />
     </div>
