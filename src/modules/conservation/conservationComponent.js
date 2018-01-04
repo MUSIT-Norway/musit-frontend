@@ -500,12 +500,16 @@ export default function ConservationComponent(
           }))
         }
         onChange={props.updateMultiSelectField(props.form.subEventTypes.name)}
+        singleSelect={true}
       />
       <button
         key="btn-createSubEvents"
         className="btn btn-default"
         onClick={createSubEvents(props)}
-        disabled={!props.form.subEventTypes.value}
+        disabled={
+          !props.form.subEventTypes.value ||
+          props.form.subEventTypes.value.split(',').length > 1
+        }
       >
         {I18n.t('musit.conservation.createNewSubEvents')}
       </button>

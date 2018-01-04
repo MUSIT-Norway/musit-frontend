@@ -11,7 +11,8 @@ export type FieldMultiSelectProps = {
   labelAbove?: boolean,
   inputProps?: { className?: string, style?: {} },
   appSession?: ?AppSession,
-  viewMode?: ?boolean
+  viewMode?: ?boolean,
+  singleSelect?: ?boolean
 };
 
 export default function FieldMultiSelect(props: FieldMultiSelectProps) {
@@ -46,7 +47,7 @@ export default function FieldMultiSelect(props: FieldMultiSelectProps) {
             <Select
               {...props.inputProps}
               clearable={false}
-              multi
+              multi={!props.singleSelect}
               closeOnSelect={true}
               removeSelected={false}
               simpleValue
@@ -75,7 +76,7 @@ export default function FieldMultiSelect(props: FieldMultiSelectProps) {
           <Select
             {...props.inputProps}
             clearable={false}
-            multi
+            multi={!props.singleSelect}
             closeOnSelect={true}
             removeSelected={false}
             simpleValue

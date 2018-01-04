@@ -1070,6 +1070,7 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
         },
       ]
     }
+    singleSelect={true}
     stringValue={null}
     title="Velg delhendelser som skal lages:"
   />
@@ -3774,6 +3775,7 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
         },
       ]
     }
+    singleSelect={true}
     stringValue={null}
     title="Velg delhendelser som skal lages:"
   />

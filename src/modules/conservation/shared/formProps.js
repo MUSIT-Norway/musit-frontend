@@ -239,7 +239,7 @@ function clickSaveAndContinue(
               : [];
           const respEvents =
             props.response && props.response.events && props.response.events.length > 0
-              ? props.response.events
+              ? props.response.events.map(e => ({ ...e, expanded: true }))
               : [];
           const updateEvents =
             newSubEventsToCreate && newSubEventsToCreate.length > 0 ? true : false;
