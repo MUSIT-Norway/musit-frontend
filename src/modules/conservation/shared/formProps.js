@@ -21,6 +21,8 @@ import { emitError } from '../../../shared/errors';
 import Config from '../../../config';
 import { uploadFile } from '../../../models/conservation/documents';
 import { sortBy } from 'lodash';
+import { Observable } from 'rxjs';
+import { getFormEvents, getFids } from './utils';
 
 type FormProps = {|
   updateForm: Function,
@@ -63,6 +65,7 @@ export default function formProps(
       props.form,
       props.appSession,
       props.location,
+      props.updateForm,
       props.history
     )
   };
@@ -150,41 +153,6 @@ function updatePersonsForSubEvent(updateForm: any) {
   };
 }
 
-function onDocumentUpload(
-  form: any,
-  appSession: AppSession,
-  location: Location<Array<ObjectData>>,
-  history: any
-) {
-  return (eventId: number, files: any) => {
-    return uploadFile$.next({
-      eventId,
-      parentEventId: form.id.value,
-      museumId: appSession.museumId,
-      collectionId: appSession.collectionId,
-      token: appSession.accessToken,
-      files: files,
-      data: getConservationCollection(form, location),
-      callback: {
-        onComplete: props => {
-          if (!props) {
-            return;
-          }
-          history.replace(
-            Config.magasin.urls.client.conservation.viewConservation(
-              appSession,
-              parseInt(form.id.value, 10)
-            )
-          );
-        },
-        onFailure: err => {
-          emitError(err);
-        }
-      }
-    });
-  };
-}
-
 const sortSubEventsOnly = events => {
   if (events && events.length > 1) {
     return sortBy(events, (o: any) => o.id);
@@ -192,6 +160,55 @@ const sortSubEventsOnly = events => {
     return events;
   }
 };
+
+function onDocumentUpload(
+  form: any,
+  appSession: AppSession,
+  location: Location<Array<ObjectData>>,
+  updateForm?: ?Function,
+  history: any
+) {
+  return (eventId: number, files: any) => {
+    const files$ =
+      files.length > 0
+        ? // $FlowFixMe
+          Observable.forkJoin(
+            files.map(file =>
+              uploadFile({
+                eventId: eventId,
+                museumId: appSession.museumId,
+                collectionId: appSession.collectionId,
+                token: appSession.accessToken,
+                file: file
+              })
+            )
+          )
+        : Observable.of([]);
+    return files$.toPromise().then((r: any) => {
+      if (r.length > 0) {
+        const formEvents: any = getFormEvents(form);
+        const fids: ?Array<string> = getFids(r);
+        const formEventsWithFiles = sortSubEventsOnly(
+          formEvents.map(
+            e =>
+              e.id === eventId
+                ? {
+                    ...e,
+                    files: e.files ? e.files.concat(r) : r,
+                    documents: e.documents ? e.documents.concat(fids) : fids
+                  }
+                : e
+          )
+        );
+        updateForm &&
+          updateForm({
+            name: 'events',
+            rawValue: formEventsWithFiles
+          });
+      }
+    });
+  };
+}
 
 function clickSaveAndContinue(
   form: any,

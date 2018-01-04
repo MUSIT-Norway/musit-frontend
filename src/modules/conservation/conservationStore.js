@@ -219,7 +219,6 @@ export function getConservationDetails(
               })
             ).map(events => {
               const output = { ...conservation, events };
-              console.log('attachments', output);
               return output;
             })
           : Observable.of(conservation);

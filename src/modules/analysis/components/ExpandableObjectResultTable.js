@@ -66,7 +66,6 @@ export default class ExpandableObjectTable extends React.Component<Props, State>
   }
 
   render() {
-    console.log('Data:', this.props.data);
     return (
       <ObjectResultTable
         {...this.props}
