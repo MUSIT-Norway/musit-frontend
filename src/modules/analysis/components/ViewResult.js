@@ -8,7 +8,6 @@ import { FormText, FormElement } from '../../../forms/components';
 import type { ErrorLoading, SavedFile } from '../../../models/analysis/analysisResult';
 import { saveBlob } from '../../../shared/download';
 import { getFileAsBlob } from '../../../models/analysis/analysisResult';
-import type { Field } from '../../../forms/form';
 
 type Props = {
   files: ?Array<SavedFile | ErrorLoading>,

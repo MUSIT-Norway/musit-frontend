@@ -3,11 +3,7 @@ import React from 'react';
 import ObjectResultTable from './ObjectResultTable';
 import type { AppSession } from '../../../types/appSession';
 import type { History } from '../../../types/Routes';
-import type {
-  AnalysisEvent,
-  ExtraResultAttributeValues,
-  ObjectInfo
-} from '../../../types/analysis';
+import type { ExtraResultAttributeValues } from '../../../types/analysis';
 
 type Props = {
   data: Array<any>,

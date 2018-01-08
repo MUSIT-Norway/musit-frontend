@@ -6,10 +6,9 @@ import CollapsibleEvent from './CollapsibleEvent';
 import PersonRoleDate from '../../../components/person/PersonRoleDate';
 import ViewPersonRoleDate from '../../../components/person/ViewPersonRoleDate';
 import find from 'lodash/find';
-import { FormInput, FormFileSelect, FormElement } from '../../../forms/components';
+import { FormFileSelect, FormElement } from '../../../forms/components';
 import { saveBlob } from '../../../shared/download';
 import { getFileAsBlob } from '../../../models/conservation/documents';
-import type { ErrorLoading, SavedFile } from '../../../models/conservation/documents';
 import { I18n } from 'react-i18nify';
 
 export default function SubEventComponentNote(props: SubEventComponentNoteProps) {

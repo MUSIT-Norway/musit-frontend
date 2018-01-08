@@ -17,6 +17,7 @@ import StorageAndHandling from './events/storageAndHandling';
 import HseRisk from './events/hseRisk';
 import ConditionAssessment from './events/conditionAssessment';
 import Report from './events/report';
+import MaterialDetermination from './events/materialDetermination';
 
 export type Props = {
   match: { params: { conservationId: number } },
@@ -45,7 +46,6 @@ const renderEventComponent = (
   objects: any,
   props: any
 ) => {
-  console.log('ViewProps', props);
   const expandEvent: boolean = props.form.events.value[index]
     ? props.form.events.value[index].expanded
     : true;
@@ -191,6 +191,32 @@ const renderEventComponent = (
           documents: event.documents,
           files: event.files
         }}
+        roleList={predefinedConservation.roleList}
+        index={index}
+        appSession={appSession}
+        viewMode={true}
+        expanded={expandEvent}
+        toggleExpanded={props.toggleSingleExpanded(
+          !expandEvent,
+          props.form.events.value,
+          index
+        )}
+      />
+    );
+  else if (event.eventTypeId === 8)
+    return (
+      <MaterialDetermination
+        key={`report_${index}`}
+        affectedThingsWithDetailsMainEvent={objects}
+        materialDetermination={{
+          materialInfo: event.materialInfo,
+          note: event.note,
+          actorsAndRoles: event.actorsAndRoles,
+          affectedThings: event.affectedThings,
+          documents: event.documents,
+          files: event.files
+        }}
+        materialDeterminationList={predefinedConservation.materialDeterminationList}
         roleList={predefinedConservation.roleList}
         index={index}
         appSession={appSession}

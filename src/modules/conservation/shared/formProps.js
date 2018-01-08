@@ -19,10 +19,10 @@ import type { ObjectData } from '../../../types/object';
 import { isFormValid } from '../../../forms/validators';
 import { emitError } from '../../../shared/errors';
 import Config from '../../../config';
-import { uploadFile } from '../../../models/conservation/documents';
 import { sortBy } from 'lodash';
 import { Observable } from 'rxjs';
 import { getFormEvents, getFids } from './utils';
+import { uploadFile } from '../../../models/conservation/documents';
 
 type FormProps = {|
   updateForm: Function,

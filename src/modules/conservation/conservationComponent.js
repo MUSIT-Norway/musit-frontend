@@ -20,6 +20,7 @@ import ConditionAssessment from './events/conditionAssessment';
 import Report from './events/report';
 import type { Location } from './shared/submit';
 import type { ObjectData } from '../../types/object';
+import MaterialDetermination from './events/materialDetermination';
 
 type ConservationProcessProps = {
   id?: number,
@@ -130,6 +131,14 @@ function createSubEvents(
         case 7: {
           return acc.concat([
             {
+              ...commonAttributes(v)
+            }
+          ]);
+        }
+        case 8: {
+          return acc.concat([
+            {
+              materials: [],
               ...commonAttributes(v)
             }
           ]);
@@ -341,6 +350,37 @@ function renderSubEvent(
         roleList={props.predefinedConservation.roleList}
         affectedThingsWithDetailsMainEvent={props.objects || []}
         report={props.form.events.rawValue[ind]}
+        index={ind}
+        onChangePersonActorRole={props.updatePersonsForSubEvent(
+          props.form.events.name,
+          props.form.events.rawValue,
+          ind
+        )}
+        onChange={props.updateConservationSubEvent(
+          props.form.events.name,
+          props.form.events.rawValue,
+          ind
+        )}
+        onDelete={() => deleteSubEvents(props, ind)}
+        expanded={props.form.events.value[ind].expanded}
+        toggleExpanded={props.toggleSingleExpanded(
+          !props.form.events.value[ind].expanded,
+          props.form.events.value,
+          ind
+        )}
+        onDocumentUpload={props.onDocumentUpload}
+      />
+    );
+  } else if (eventType === 8) {
+    return (
+      <MaterialDetermination
+        key={`report_${ind}`}
+        viewMode={false}
+        appSession={appSession}
+        roleList={props.predefinedConservation.roleList}
+        materialDeterminationList={props.predefinedConservation.materialDeterminationList}
+        affectedThingsWithDetailsMainEvent={props.objects || []}
+        materialDetermination={props.form.events.rawValue[ind]}
         index={ind}
         onChangePersonActorRole={props.updatePersonsForSubEvent(
           props.form.events.name,

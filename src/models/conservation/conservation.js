@@ -115,7 +115,7 @@ export const getRoleList: (
   return ajaxGet(url, token, callback).map(r => r.response);
 };
 
-export const getMaterialList: (
+export const getTreatmentMaterialList: (
   ajaxGet: AjaxGet<*>
 ) => (props: {
   token: string,
@@ -124,7 +124,7 @@ export const getMaterialList: (
   token,
   callback
 }) => {
-  const url = Config.magasin.urls.api.conservation.getMaterialList;
+  const url = Config.magasin.urls.api.conservation.getTreatmentMaterialList;
   return ajaxGet(url, token, callback).map(r => r.response);
 };
 
@@ -154,27 +154,64 @@ export const getConditionCodeList: (
   return ajaxGet(url, token, callback).map(r => r.response);
 };
 
+export const getMaterialList: (
+  ajaxGet: AjaxGet<*>
+) => (props: {
+  museumId: number,
+  collectionId: string,
+  token: string,
+  callback?: ?Callback<*>
+}) => Observable<Array<ConservatonSubType>> = (ajaxGet = simpleGet) => ({
+  museumId,
+  collectionId,
+  token,
+  callback
+}) => {
+  const url = Config.magasin.urls.api.conservation.getMaterialList(
+    museumId,
+    collectionId
+  );
+  return ajaxGet(url, token, callback).map(r => r.response);
+};
+
 export const loadPredefinedConservationTypes: (
   ajaxGet: AjaxGet<*>
 ) => (props: {
   museumId: number,
+  collectionId: string,
   token: string,
   onComplete: (predefinedTypes: mixed) => void
-}) => Observable<*> = (ajaxGet = simpleGet) => ({ museumId, token, onComplete }) => {
+}) => Observable<*> = (ajaxGet = simpleGet) => ({
+  museumId,
+  collectionId,
+  token,
+  onComplete
+}) => {
   return Observable.forkJoin(
     getConservationTypes(ajaxGet)({ museumId, token }),
-    getMaterialList(ajaxGet)({ token }),
+    getTreatmentMaterialList(ajaxGet)({ token }),
     getKeywordList(ajaxGet)({ token }),
     getRoleList(ajaxGet)({ token }),
-    getConditionCodeList(ajaxGet)({ token })
+    getConditionCodeList(ajaxGet)({ token }),
+    getMaterialList(ajaxGet)({ museumId, collectionId, token })
   )
     .map(
-      ([conservationTypes, materialList, keywordList, roleList, conditionCodeList]) => ({
+      (
+        [
+          conservationTypes,
+          materialList,
+          keywordList,
+          roleList,
+          conditionCodeList,
+          materialDeterminationList
+        ]
+      ) => ({
         conservationTypes: conservationTypes || [],
         materialList: materialList || [],
         keywordList: keywordList || [],
         roleList: roleList || [],
-        conditionCodeList: conditionCodeList || []
+        conditionCodeList: conditionCodeList || [],
+        materialDeterminationList: materialDeterminationList || []
       })
     )
     .do(onComplete);

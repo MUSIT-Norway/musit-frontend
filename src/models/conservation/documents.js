@@ -1,8 +1,7 @@
 // @flow
 import { Observable } from 'rxjs';
 import Config from '../../config';
-import { simplePost, simplePut, ajaxHelper } from '../../shared/RxAjax';
-import type { Callback, AjaxPut, AjaxPost } from '../../types/ajax';
+import { ajaxHelper } from '../../shared/RxAjax';
 
 export type SavedFile = {
   id: string,

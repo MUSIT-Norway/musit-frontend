@@ -6,7 +6,7 @@ import type { History } from '../../../types/Routes';
 import NavigateToObject from '../../../components/navigations/NavigateToObject';
 import ExtraResultAttribute from './ExtraResultAttribute';
 import { FormInput, FormTextArea, FormFileSelect } from '../../../forms/components';
-import { FormText, FormElement } from '../../../forms/components';
+import { FormElement } from '../../../forms/components';
 import { saveBlob } from '../../../shared/download';
 import { getFileAsBlob } from '../../../models/analysis/analysisResult';
 import type { ErrorLoading, SavedFile } from '../../../models/analysis/analysisResult';

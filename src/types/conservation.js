@@ -116,6 +116,18 @@ export type StorageAndHandlingType = {
   temperature: string
 } & SubEventComponentNoteType;
 
+export type Material = {
+  materialId: number,
+  materialExtra: string,
+  sorting: number
+};
+
+export type MaterialInfo = Array<Material>;
+
+export type MaterialDeterminationType = {
+  materialInfo: MaterialInfo
+} & SubEventComponentNoteType;
+
 export type SubEventComponentNoteProps = {
   subEvent: SubEventComponentNoteType
 } & SubEventComponentProps;
@@ -148,13 +160,19 @@ export type ReportProps = {
   report: SubEventComponentNoteType
 } & SubEventComponentProps;
 
+export type MaterialDeterminationProps = {
+  materialDeterminationList: Array<any>,
+  materialDetermination: SubEventComponentNoteType
+} & MaterialDeterminationType;
+
 export type ConservationSubTypes =
   | TreatmentType
   | TechnicalDescriptionType
   | StorageAndHandlingType
   | HseRiskType
   | ConditionAssessmentType
-  | ReportType;
+  | ReportType
+  | MaterialDeterminationType;
 
 // Fixme this type is incorrect/incomplete
 export type ConservationCollection = {

@@ -35,7 +35,8 @@ export const initialState: State = {
   keywordList: null,
   materialList: null,
   roleList: null,
-  conditionCodeList: null
+  conditionCodeList: null,
+  materialDeterminationList: null
 };
 
 export function reducer$(actions: { [string]: Observable<*> }): Observable<Reducer<any>> {

@@ -21,7 +21,6 @@ import type { SampleType } from 'types/sample';
 import { KEEP_ALIVE } from '../../stores/constants';
 import find from 'lodash/find';
 import { uploadFile, getFiles } from '../../models/conservation/documents';
-import { updateConservationSubEvent } from './shared/formProps';
 import { sortBy } from 'lodash';
 
 export const initialState: ConservationStoreState = {

@@ -130,7 +130,9 @@ export default {
       api: {
         conservation: {
           getConditionCodeList: `/api/management/conservation/conditionCodes`,
-          getMaterialList: `/api/management/conservation/treatmentMaterials`,
+          getMaterialList: (mid: MuseumId, collectionId: CollectionId) =>
+            `/api/management/${mid}/conservation/materials?collectionId=${collectionId}`,
+          getTreatmentMaterialList: `/api/management/conservation/treatmentMaterials`,
           getKeywordList: `/api/management/conservation/treatmentKeywords`,
           getRoleList: `/api/management/conservation/roles`,
           getAllConservationTypes: (mid: MuseumId) =>

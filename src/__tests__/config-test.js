@@ -232,7 +232,16 @@ describe('Config urls', () => {
       endpoints: [
         {
           name: 'getMaterialList',
-          actual: urls.api.conservation.getMaterialList,
+          actual: urls.api.conservation.getMaterialList(
+            99,
+            'ac08361b-3f13-4cde-9428-4ba2776316bd'
+          ),
+          expected:
+            '/api/management/99/conservation/materials?collectionId=ac08361b-3f13-4cde-9428-4ba2776316bd'
+        },
+        {
+          name: 'geTreatmentMaterials',
+          actual: urls.api.conservation.getTreatmentMaterialList,
           expected: '/api/management/conservation/treatmentMaterials'
         },
         {

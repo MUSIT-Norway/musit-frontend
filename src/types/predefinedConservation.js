@@ -17,5 +17,6 @@ export type PredefinedConservation = {
   materialList: ?Array<ConservatonSubType>,
   keywordList: ?Array<ConservatonSubType>,
   roleList: ?Array<ConservatonSubType>,
-  conditionCodeList: ?Array<ConditionCodeType>
+  conditionCodeList: ?Array<ConditionCodeType>,
+  materialDeterminationList: ?Array<any>
 };

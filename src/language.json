@@ -59,6 +59,13 @@
           "report":{
             "report": "Report",
             "note":"Note"
+          },
+          "materialDetermination":{
+            "materialDetermination": "Material determination",
+            "note":"Note",
+            "material":"Material",
+            "specialMaterial":"Special material",
+            "sequence":"Sequence"
           }
         },
         "doCollapse": "Collapse sub evebts",
@@ -1064,6 +1071,13 @@
           "report":{
             "report": "Rapport",
             "note":"Merknad"
+          },
+          "materialDetermination":{
+            "materialDetermination": "Materialbestemmelse",
+            "note":"Merknad",
+            "material":"Material",
+            "specialMaterial":"spematerial",
+            "sequence":"Sekvens"
           }
         },
         "doCollapse": "Kollaps delhendelser",
