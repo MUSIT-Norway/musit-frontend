@@ -88,6 +88,9 @@ type SubEventComponentProps = {
   viewMode?: boolean,
   onChange: Function,
   onDelete?: Function,
+  onEdit?: Function,
+  onSave?: Function,
+  onCancel?: Function,
   onChangePersonActorRole: Function,
   expanded?: boolean,
   toggleExpanded: Function,
@@ -95,7 +98,8 @@ type SubEventComponentProps = {
   roleList: Array<any>,
   extraAttributes?: ?any,
   affectedThingsWithDetailsMainEvent?: ?Array<ObjectInfo>,
-  onDocumentUpload?: Function
+  onDocumentUpload?: Function,
+  editable: ?number
 };
 
 export type HseRiskType = SubEventComponentNoteType;
@@ -177,6 +181,7 @@ export type ConservationSubTypes =
 // Fixme this type is incorrect/incomplete
 export type ConservationCollection = {
   id: number,
+  editable: ?number,
   analysisTypeId: number,
   objectId?: ?string,
   doneBy?: ?string,

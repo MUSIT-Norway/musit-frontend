@@ -2283,6 +2283,10 @@ describe('ConservationComponent edit page', () => {
         toggleExpanded={e => e}
         toggleSingleExpanded={e => e}
         updatePersonsForSubEvent={e => e}
+        onDelete={e => e}
+        onEdit={e => e}
+        onSave={e => e}
+        onCancel={e => e}
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
@@ -3815,6 +3819,10 @@ describe('ConservationComponent add page', () => {
         toggleExpanded={e => e}
         toggleSingleExpanded={e => e}
         updatePersonsForSubEvent={e => e}
+        onDelete={e => e}
+        onEdit={e => e}
+        onSave={e => e}
+        onCancel={e => e}
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();

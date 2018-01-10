@@ -67,6 +67,18 @@ export default function formProps(
       props.location,
       props.updateForm,
       props.history
+    ),
+    onEdit: onEdit(props.updateForm),
+    onDelete: onDelete(props.updateForm),
+    onCancel: onCancel(props.updateForm, props.history, props.appSession),
+    onSave: onSave(
+      props.form,
+      props.appSession,
+      props.history,
+      props.location,
+      ajaxPost,
+      ajaxPut,
+      props.updateForm
     )
   };
 }
@@ -115,11 +127,16 @@ function updateArrayField(updateForm: any) {
 }
 
 function updateMultiSelectField(updateForm: any) {
-  return (name: string) => (value: string) =>
+  return (name: string) => (value: string) => {
     updateForm({
       name,
       rawValue: value
     });
+    return updateForm({
+      name: 'editable',
+      rawValue: value ? '-2' : null
+    });
+  };
 }
 
 export function updateConservationSubEvent(updateForm: any) {
@@ -280,6 +297,11 @@ function clickSaveAndContinue(
             name: 'subEventTypes',
             rawValue: null
           });
+          // in case of add we have to make main event editable
+          updateForm({
+            name: 'editable',
+            rawValue: newEvents.length > 0 ? (newEvents.length - 1).toString() : null
+          });
         }
       },
       onFailure: err => {
@@ -335,3 +357,73 @@ export const onUnmount = (props: OnUnmountProps) => {
   props.clearStore();
   props.clearForm();
 };
+
+function onEdit(updateForm: any) {
+  return (events: Array<ConservationSubTypes>, arrayIndex: number) => (evt: DomEvent) => {
+    evt.preventDefault();
+    console.log('In Edit arrayIndex', arrayIndex, arrayIndex.toString());
+    updateForm({
+      name: 'editable',
+      rawValue: arrayIndex.toString()
+    });
+  };
+}
+
+function onCancel(updateForm, history, appSession) {
+  return (id: number) => (evt: DomEvent) => {
+    evt.preventDefault();
+    console.log('In Cancel ');
+    updateForm({
+      name: 'editable',
+      rawValue: ''
+    });
+    history.replace(
+      Config.magasin.urls.client.conservation.editConservation(
+        appSession,
+        parseInt(id, 10)
+      )
+    );
+  };
+}
+
+export function onDelete(updateForm: any) {
+  return (events: Array<ConservationSubTypes>, arrayIndex: number) => (evt: DomEvent) => {
+    evt.preventDefault();
+    console.log('In onDelete ', events, arrayIndex);
+    return true;
+  };
+}
+
+function onSave(form, appSession, history, location, ajaxPost, ajaxPut, updateForm) {
+  return (evt: DomEvent) => {
+    evt.preventDefault();
+    saveConservation$.next({
+      id: form.id.value,
+      appSession,
+      data: getConservationCollection(form, location),
+      ajaxPost,
+      ajaxPut,
+      callback: {
+        onComplete: props => {
+          if (!props) {
+            return;
+          }
+          const id = props.response.id;
+          updateForm({
+            name: 'editable',
+            rawValue: ''
+          });
+          history.replace(
+            Config.magasin.urls.client.conservation.editConservation(
+              appSession,
+              parseInt(id, 10)
+            )
+          );
+        },
+        onFailure: err => {
+          emitError(err);
+        }
+      }
+    });
+  };
+}

@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Toolbar Test Toobbar is created 1`] = `
+<div
+  className="col-md-11"
+>
+  <button
+    className="btn btn-primary"
+    style={
+      Object {
+        "marginRight": 55,
+      }
+    }
+  >
+    Slett
+  </button>
+  <button
+    className="btn btn-primary"
+    style={
+      Object {
+        "marginLeft": -15,
+      }
+    }
+  >
+    Endre
+  </button>
+  <div
+    style={
+      Object {
+        "float": "right",
+      }
+    }
+  >
+    <button
+      className="btn-link"
+      style={
+        Object {
+          "marginRight": 40,
+        }
+      }
+    >
+      Avbryt
+    </button>
+    <button
+      className="btn btn-primary"
+    >
+      Lagre
+    </button>
+  </div>
+</div>
+`;

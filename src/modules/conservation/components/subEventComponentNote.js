@@ -10,9 +10,17 @@ import { FormFileSelect, FormElement } from '../../../forms/components';
 import { saveBlob } from '../../../shared/download';
 import { getFileAsBlob } from '../../../models/conservation/documents';
 import { I18n } from 'react-i18nify';
+import Toolbar from './Toolbar';
 
 export default function SubEventComponentNote(props: SubEventComponentNoteProps) {
   const suffix = ':';
+  console.log('in SubEventComponentNote props', props);
+  const toolbarBooleanParameter = {
+    saveDisabled: props.viewMode,
+    cancelDisabled: props.viewMode,
+    editDisabled: !!props.editable,
+    deleteDisabled: !!props.editable
+  };
   const subEventComponentNote = (
     <div className="container">
       {!props.viewMode &&
@@ -96,7 +104,7 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
       )}
       {props.subEvent.files && (
         <FormElement id="Files" label={''} labelWidth={2} elementWidth={5}>
-          <p className="row form-control-static">
+          <div className="row form-control-static">
             {Array.isArray(props.subEvent.files) &&
               props.subEvent.files.map(file => {
                 if (file.error) {
@@ -128,7 +136,7 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
                   </p>
                 );
               })}
-          </p>
+          </div>
         </FormElement>
       )}
       <ObjectSelection
@@ -137,6 +145,13 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
         affectedThingsSubEventOnChange={t =>
           props.onChange('affectedThings')(t.map(s => s) || [])}
         viewMode={props.viewMode}
+      />
+      <Toolbar
+        saveOnClick={e => props.onSave(e)}
+        cancelOnClick={e => props.onCancel(e)}
+        deleteOnClick={e => props.onDelete(e)}
+        editOnClick={e => props.onEdit(e)}
+        {...toolbarBooleanParameter}
       />
     </div>
   );

@@ -20,7 +20,9 @@ import ConditionAssessment from './events/conditionAssessment';
 import Report from './events/report';
 import type { Location } from './shared/submit';
 import type { ObjectData } from '../../types/object';
+import Toolbar from './components/Toolbar';
 import MaterialDetermination from './events/materialDetermination';
+import ViewPersonRoleDate from '../../components/person/ViewPersonRoleDate';
 
 type ConservationProcessProps = {
   id?: number,
@@ -50,7 +52,11 @@ type ConservationProcessProps = {
   store: *,
   predefinedConservation: PredefinedConservation,
   onDocumentUpload?: Function,
-  location: Location<Array<ObjectData>>
+  location: Location<Array<ObjectData>>,
+  onDelete: Function,
+  onEdit: Function,
+  onSave: Function,
+  onCancel: Function
 };
 
 export type Props = ConservationProcessProps & {
@@ -75,7 +81,8 @@ const commonAttributes = v => ({
   affectedThings: [],
   actorsAndRoles: [],
   documents: [],
-  expanded: true
+  expanded: true,
+  viewMode: false
 });
 function createSubEvents(
   props: Props & { form: FormData, predefinedConservation: PredefinedConservation }
@@ -188,6 +195,20 @@ function renderSubEvent(
   eventType: number,
   props: Props & { form: FormData }
 ) {
+  console.log('Props in component ', props);
+  const extraAtrribtes = {
+    viewMode: !(
+      props.form.editable &&
+      props.form.editable.rawValue &&
+      props.form.editable.rawValue === ind.toString()
+    ),
+    onDelete: props.onDelete(props.form.events.rawValue, ind),
+    onEdit: props.onEdit(props.form.events.rawValue, ind),
+    onSave: props.onSave,
+    onCancel: props.onCancel(props.form.id.rawValue),
+    editable: props.form.editable && props.form.editable.rawValue
+  };
+
   if (eventType === 2) {
     return (
       <Treatment
@@ -208,9 +229,7 @@ function renderSubEvent(
           props.form.events.rawValue,
           ind
         )}
-        viewMode={false}
         affectedThingsWithDetailsMainEvent={props.objects || []}
-        onDelete={() => deleteSubEvents(props, ind)}
         expanded={props.form.events.value[ind].expanded}
         toggleExpanded={props.toggleSingleExpanded(
           !props.form.events.value[ind].expanded,
@@ -218,13 +237,13 @@ function renderSubEvent(
           ind
         )}
         onDocumentUpload={props.onDocumentUpload}
+        {...extraAtrribtes}
       />
     );
   } else if (eventType === 3) {
     return (
       <TechnicalDescription
         key={`techincalDescription_${ind}`}
-        viewMode={false}
         appSession={appSession}
         roleList={props.predefinedConservation.roleList}
         affectedThingsWithDetailsMainEvent={props.objects || []}
@@ -240,7 +259,6 @@ function renderSubEvent(
           props.form.events.rawValue,
           ind
         )}
-        onDelete={() => deleteSubEvents(props, ind)}
         expanded={props.form.events.value[ind].expanded}
         toggleExpanded={props.toggleSingleExpanded(
           !props.form.events.value[ind].expanded,
@@ -248,13 +266,13 @@ function renderSubEvent(
           ind
         )}
         onDocumentUpload={props.onDocumentUpload}
+        {...extraAtrribtes}
       />
     );
   } else if (eventType === 4) {
     return (
       <StorageAndHandling
         key={`storageAndHandling_${ind}`}
-        viewMode={false}
         appSession={appSession}
         roleList={props.predefinedConservation.roleList}
         affectedThingsWithDetailsMainEvent={props.objects || []}
@@ -270,7 +288,6 @@ function renderSubEvent(
           props.form.events.rawValue,
           ind
         )}
-        onDelete={() => deleteSubEvents(props, ind)}
         expanded={props.form.events.value[ind].expanded}
         toggleExpanded={props.toggleSingleExpanded(
           !props.form.events.value[ind].expanded,
@@ -278,13 +295,13 @@ function renderSubEvent(
           ind
         )}
         onDocumentUpload={props.onDocumentUpload}
+        {...extraAtrribtes}
       />
     );
   } else if (eventType === 5) {
     return (
       <HseRisk
         key={`hseRisk_${ind}`}
-        viewMode={false}
         appSession={appSession}
         roleList={props.predefinedConservation.roleList}
         affectedThingsWithDetailsMainEvent={props.objects || []}
@@ -300,7 +317,6 @@ function renderSubEvent(
           props.form.events.rawValue,
           ind
         )}
-        onDelete={() => deleteSubEvents(props, ind)}
         expanded={props.form.events.value[ind].expanded}
         toggleExpanded={props.toggleSingleExpanded(
           !props.form.events.value[ind].expanded,
@@ -308,13 +324,13 @@ function renderSubEvent(
           ind
         )}
         onDocumentUpload={props.onDocumentUpload}
+        {...extraAtrribtes}
       />
     );
   } else if (eventType === 6) {
     return (
       <ConditionAssessment
         key={`conditionAssessment_${ind}`}
-        viewMode={false}
         appSession={appSession}
         roleList={props.predefinedConservation.roleList}
         affectedThingsWithDetailsMainEvent={props.objects || []}
@@ -331,7 +347,6 @@ function renderSubEvent(
           props.form.events.rawValue,
           ind
         )}
-        onDelete={() => deleteSubEvents(props, ind)}
         expanded={props.form.events.value[ind].expanded}
         toggleExpanded={props.toggleSingleExpanded(
           !props.form.events.value[ind].expanded,
@@ -339,13 +354,13 @@ function renderSubEvent(
           ind
         )}
         onDocumentUpload={props.onDocumentUpload}
+        {...extraAtrribtes}
       />
     );
   } else if (eventType === 7) {
     return (
       <Report
         key={`report_${ind}`}
-        viewMode={false}
         appSession={appSession}
         roleList={props.predefinedConservation.roleList}
         affectedThingsWithDetailsMainEvent={props.objects || []}
@@ -361,7 +376,6 @@ function renderSubEvent(
           props.form.events.rawValue,
           ind
         )}
-        onDelete={() => deleteSubEvents(props, ind)}
         expanded={props.form.events.value[ind].expanded}
         toggleExpanded={props.toggleSingleExpanded(
           !props.form.events.value[ind].expanded,
@@ -369,13 +383,13 @@ function renderSubEvent(
           ind
         )}
         onDocumentUpload={props.onDocumentUpload}
+        {...extraAtrribtes}
       />
     );
   } else if (eventType === 8) {
     return (
       <MaterialDetermination
         key={`report_${ind}`}
-        viewMode={false}
         appSession={appSession}
         roleList={props.predefinedConservation.roleList}
         materialDeterminationList={props.predefinedConservation.materialDeterminationList}
@@ -400,6 +414,7 @@ function renderSubEvent(
           ind
         )}
         onDocumentUpload={props.onDocumentUpload}
+        {...extraAtrribtes}
       />
     );
   } else {
@@ -436,9 +451,60 @@ function ConservationProcessForm(props: ProcessFormProps) {
     </div>
   );
 }
+
+function ViewConservationProcessForm(props: ProcessFormProps) {
+  return (
+    <div className="container">
+      <form className="form-horizontal">
+        <div className="form-group">
+          <div className="col-md-10">
+            <label className="control-label2" htmlFor="caseNumber">
+              {I18n.t('musit.conservation.caseNumber') + suffix}
+            </label>
+            <p className="form-control-static" id="caseNumber">
+              {props.form.caseNumber.value}
+            </p>
+          </div>
+        </div>
+        <hr />
+        <div className="form-group">
+          <div className="col-md-10">
+            <label className="control-label" htmlFor="note">
+              {I18n.t('musit.conservation.comments') + suffix}
+            </label>
+            <p className="form-control-static" id="note">
+              {props.form.note.value}
+            </p>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+}
 export default function ConservationComponent(
   props: Props & { form: FormData, predefinedConservation: PredefinedConservation }
 ) {
+  const viewModeMainEvent = !(
+    props.form.editable &&
+    props.form.editable.rawValue &&
+    props.form.editable.rawValue === '-1'
+  );
+  const editModeForLookup =
+    !(props.form.editable && props.form.editable.rawValue) ||
+    (props.form.editable &&
+      props.form.editable.rawValue &&
+      props.form.editable.rawValue === '-2');
+
+  const editableMainEvent = !!props.form.editable && props.form.editable.rawValue;
+
+  const toolbarBooleanParameter = {
+    saveDisabled: viewModeMainEvent,
+    cancelDisabled: viewModeMainEvent,
+    editDisabled: editableMainEvent,
+    deleteDisabled: editableMainEvent,
+    deleteHide: true
+  };
+
   return (
     <div className="container">
       <div className="page-header">
@@ -455,10 +521,18 @@ export default function ConservationComponent(
         )}
       </form>
       <hr />
-      <ConservationProcessForm
-        form={props.form}
-        updateStringField={props.updateStringField}
-      />
+      {viewModeMainEvent ? (
+        <ViewConservationProcessForm
+          form={props.form}
+          updateStringField={props.updateStringField}
+        />
+      ) : (
+        <ConservationProcessForm
+          form={props.form}
+          updateStringField={props.updateStringField}
+        />
+      )}
+
       <hr />
       <div className="form-group">
         <div className="col-md-12 col-md-offset-0">
@@ -468,25 +542,48 @@ export default function ConservationComponent(
         </div>
       </div>
       <form className="form-horizontal">
-        <PersonRoleDate
-          appSession={props.appSession}
-          personData={props.form.actorsAndRoles.value || []}
-          updateForm={props.updateForm}
-          fieldName={props.form.actorsAndRoles.name}
-          getDisplayNameForRole={(r: string) => {
-            const role = find(
-              props.predefinedConservation.roleList,
-              rl => rl.roleId === r
-            );
-            return role.noRole;
-          }}
-          roles={
-            props.predefinedConservation.roleList &&
-            props.predefinedConservation.roleList.map(e => e.roleId)
-          }
-          showDateForRole={(roleName: string) => [1].some(e => e === roleName)}
-        />
+        {viewModeMainEvent ? (
+          <ViewPersonRoleDate
+            personData={props.form.actorsAndRoles.value || []}
+            getDisplayNameForRole={(r: number) => {
+              const role = find(
+                props.predefinedConservation.roleList,
+                rl => rl.roleId === r
+              );
+              return role.noRole;
+            }}
+          />
+        ) : (
+          <PersonRoleDate
+            appSession={props.appSession}
+            personData={props.form.actorsAndRoles.value || []}
+            updateForm={props.updateForm}
+            fieldName={props.form.actorsAndRoles.name}
+            getDisplayNameForRole={(r: string) => {
+              const role = find(
+                props.predefinedConservation.roleList,
+                rl => rl.roleId === r
+              );
+              return role.noRole;
+            }}
+            roles={
+              props.predefinedConservation.roleList &&
+              props.predefinedConservation.roleList.map(e => e.roleId)
+            }
+            showDateForRole={(roleName: string) => [1].some(e => e === roleName)}
+          />
+        )}
       </form>
+      <br />
+      <Toolbar
+        saveOnClick={e => props.onSave(e)}
+        cancelOnClick={e => props.onCancel(e)}
+        deleteOnClick={e => props.onDelete(e)}
+        editOnClick={props.onEdit([], -1)}
+        {...toolbarBooleanParameter}
+      />
+      <br />
+      <br />
       <br />
       <ObjectTable
         data={props.objects || []}
@@ -541,6 +638,7 @@ export default function ConservationComponent(
         }
         onChange={props.updateMultiSelectField(props.form.subEventTypes.name)}
         singleSelect={true}
+        viewMode={!editModeForLookup}
       />
       <button
         key="btn-createSubEvents"
@@ -569,19 +667,10 @@ export default function ConservationComponent(
         <div style={{ float: 'right' }}>
           <button
             className="btn-link"
-            style={{ marginRight: 40 }}
+            style={{ marginRight: 5 }}
             onClick={props.clickCancel}
           >
-            {I18n.t('musit.texts.cancel')}
-          </button>
-          <button
-            key="btn-saveConservationProcess"
-            className="btn btn-primary"
-            disabled={!props.isFormValid}
-            onClick={props.clickSave}
-            style={{ marginRight: 20 }}
-          >
-            {I18n.t('musit.texts.save')}
+            {I18n.t('musit.texts.back')}
           </button>
         </div>
       </div>

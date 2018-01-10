@@ -40,7 +40,7 @@ import AnalysisSearchContainer from './modules/analysis/search/analysisSearchCon
 import { replace } from 'lodash';
 import ConservationAddContainer from './modules/conservation/conservationAddContainer';
 import ConservationEditContainer from './modules/conservation/conservationEditContainer';
-import ConservationViewContainer from './modules/conservation/conservationViewContainer';
+import ConservationViewContainer from './modules/conservation/conservationEditContainer';
 
 /**
  *

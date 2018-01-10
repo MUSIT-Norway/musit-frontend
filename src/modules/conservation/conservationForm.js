@@ -10,6 +10,7 @@ import { subEventValidator, actorsAndRolesValidator } from './shared/formValidat
 export const fieldsArray = [
   getStrField('id'),
   getNumberField('eventTypeId', null, false),
+  getNumberField('editable', null, false),
   getArrField('actorsAndRoles', [], false, actorsAndRolesValidator),
   getStrField('registeredBy', null, false),
   getStrField('registeredByName', null, false),
