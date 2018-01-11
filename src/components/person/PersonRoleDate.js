@@ -128,14 +128,18 @@ export const PersonRoleDate = ({
                   )}
                 </td>
                 <td>
-                  <FontAwesome
-                    name={'times'}
-                    onClick={() =>
+                  <a
+                    href="delete"
+                    onClick={e => {
+                      e.preventDefault();
                       updateForm({
                         name: fieldName,
                         rawValue: deletePerson(i, pArr)
-                      })}
-                  />
+                      });
+                    }}
+                  >
+                    {I18n.t('musit.texts.delete')}
+                  </a>
                 </td>
               </tr>
             ))}
@@ -143,15 +147,18 @@ export const PersonRoleDate = ({
         </table>
         <Row>
           <Col md={6}>
-            <Button
-              onClick={() =>
+            <a
+              href="add"
+              onClick={e => {
+                e.preventDefault();
                 updateForm({
                   name: fieldName,
                   rawValue: addPerson(pArr)
-                })}
+                });
+              }}
             >
               {I18n.t('musit.analysis.addPersons')}
-            </Button>
+            </a>
           </Col>
         </Row>
       </div>
