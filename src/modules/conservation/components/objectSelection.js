@@ -62,11 +62,13 @@ export default function ObjectSelection({
         className="table table-striped table-responsive table-hover"
       >
         <caption>
-          {viewMode ? (
-            I18n.t('musit.objects.objectsView.messageToViewObjects')
-          ) : (
-            I18n.t('musit.objects.objectsView.messageToSelectObjects')
-          )}
+          <h4>
+            {viewMode ? (
+              I18n.t('musit.objects.objectsView.messageToViewObjects')
+            ) : (
+              I18n.t('musit.objects.objectsView.messageToSelectObjects')
+            )}
+          </h4>
         </caption>
         <thead>
           <tr>

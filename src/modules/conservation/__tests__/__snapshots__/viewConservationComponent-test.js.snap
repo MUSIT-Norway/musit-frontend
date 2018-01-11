@@ -55,7 +55,7 @@ exports[`ConservationViewComponent should render properly 1`] = `
           className="control-label"
           htmlFor="note"
         >
-          Comments:
+          Merknad:
         </label>
         <p
           className="form-control-static"

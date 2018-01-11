@@ -3,6 +3,8 @@
     "musit": {
       "conservation": {
         "conservation": "Use & conservation",
+        "objectsConnected": "Objects connected to conservation",
+        "subEvents": "Sub events",
         "documents": "Documents",
         "newConservation": "New use & conservation",
         "createConservation": "Create use & conservation",
@@ -1018,6 +1020,8 @@
     "musit": {
       "conservation": {
         "conservation": "Bruk og bevaring",
+        "subEvents": "Delhendelser",
+        "objectsConnected": "Objekter knyttet til hendelsen",
         "documents": "Vedlegg",        
         "newConservation": "Ny bruk og bevaring",
         "createConservation": "Opprett bruk og bevaring",

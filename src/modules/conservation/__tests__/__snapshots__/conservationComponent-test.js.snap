@@ -288,19 +288,9 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
     }
   />
   <hr />
-  <div
-    className="form-group"
-  >
-    <div
-      className="col-md-12 col-md-offset-0"
-    >
-      <label
-        className="control-label"
-      >
-        Personer tilknyttet bruk og bevaring
-      </label>
-    </div>
-  </div>
+  <h2>
+    Personer tilknyttet bruk og bevaring
+  </h2>
   <form
     className="form-horizontal"
   >
@@ -324,6 +314,9 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
   <br />
   <br />
   <br />
+  <h2>
+    Objekter knyttet til hendelsen
+  </h2>
   <ExpandableObjectTable
     appSession={
       Object {
@@ -939,6 +932,7 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
         "museumId": 99,
       }
     }
+    labelAbove={true}
     onChange="subEventTypes"
     options={
       Array [
@@ -955,6 +949,7 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
     singleSelect={true}
     stringValue={null}
     title="Velg delhendelser som skal lages:"
+    titleSize="h4"
     viewMode={false}
   />
   <button
@@ -1832,19 +1827,9 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
     }
   />
   <hr />
-  <div
-    className="form-group"
-  >
-    <div
-      className="col-md-12 col-md-offset-0"
-    >
-      <label
-        className="control-label"
-      >
-        Personer tilknyttet bruk og bevaring
-      </label>
-    </div>
-  </div>
+  <h2>
+    Personer tilknyttet bruk og bevaring
+  </h2>
   <form
     className="form-horizontal"
   >
@@ -1868,6 +1853,9 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
   <br />
   <br />
   <br />
+  <h2>
+    Objekter knyttet til hendelsen
+  </h2>
   <ExpandableObjectTable
     appSession={
       Object {
@@ -2317,6 +2305,11 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
           Ekspander delhendelser
         </div>
       </div>
+    </div>
+    <div>
+      <h2>
+        Delhendelser
+      </h2>
     </div>
     <div
       className="row"
@@ -3682,6 +3675,7 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
         "museumId": 99,
       }
     }
+    labelAbove={true}
     onChange="subEventTypes"
     options={
       Array [
@@ -3698,6 +3692,7 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
     singleSelect={true}
     stringValue={null}
     title="Velg delhendelser som skal lages:"
+    titleSize="h4"
     viewMode={false}
   />
   <button

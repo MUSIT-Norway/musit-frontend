@@ -145,6 +145,7 @@ exports[`Treatment should render properly 1`] = `
         }
         stringValue="1"
         title="Stikkord:"
+        titleSize="h4"
         viewMode={true}
       />
       <FieldMultiSelect
@@ -449,6 +450,7 @@ exports[`Treatment should render properly 1`] = `
         }
         stringValue="2"
         title="Materialbruk:"
+        titleSize="h4"
         viewMode={true}
       />
     </div>

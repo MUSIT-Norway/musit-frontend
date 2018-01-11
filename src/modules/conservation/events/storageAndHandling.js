@@ -10,7 +10,7 @@ export default function StorageAndHandling(props: StorageAndHandlingProps) {
     <div>
       <div className="row form-group">
         <div className="col-md-5">
-          <label htmlFor={`relativeHumidity_${props.index}`}>
+          <label className="control-label h4" htmlFor={`relativeHumidity_${props.index}`}>
             {I18n.t('musit.conservation.events.storageAndHandling.relativeHumidity') +
               suffix}
           </label>
@@ -32,7 +32,7 @@ export default function StorageAndHandling(props: StorageAndHandlingProps) {
       </div>
       <div className="row form-group">
         <div className="col-md-5">
-          <label className="control-label" htmlFor={`temperature_${props.index}`}>
+          <label className="control-label h4" htmlFor={`temperature_${props.index}`}>
             {I18n.t('musit.conservation.events.storageAndHandling.temperature') + suffix}
           </label>
           {props.viewMode ? (
@@ -53,7 +53,7 @@ export default function StorageAndHandling(props: StorageAndHandlingProps) {
       </div>
       <div className="row form-group">
         <div className="col-md-5">
-          <label className="control-label" htmlFor={`lightAndUvLevel_${props.index}`}>
+          <label className="control-label h4" htmlFor={`lightAndUvLevel_${props.index}`}>
             {I18n.t('musit.conservation.events.storageAndHandling.lightAndUvLevel') +
               suffix}
           </label>

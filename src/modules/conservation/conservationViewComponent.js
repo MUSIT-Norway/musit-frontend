@@ -275,7 +275,7 @@ export default (props: Props) =>
         <div className="form-group">
           <div className="col-md-10">
             <label className="control-label" htmlFor="note">
-              {I18n.t('musit.conservation.comments') + suffix}
+              {I18n.t('musit.conservation.note') + suffix}
             </label>
             <p className="form-control-static" id="note">
               {props.form.note.value}

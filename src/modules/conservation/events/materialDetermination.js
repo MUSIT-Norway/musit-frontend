@@ -10,7 +10,7 @@ export default function MaterialDetermination(props: MaterialDeterminationProps)
     <div>
       <div className="row form-group">
         <div className="col-md-5">
-          <label htmlFor={`materiale_${props.index}`}>
+          <label className="control-label h4" htmlFor={`materiale_${props.index}`}>
             {I18n.t('musit.conservation.events.materialDetermination.material') + suffix}
           </label>
           {// we have change the below code with component

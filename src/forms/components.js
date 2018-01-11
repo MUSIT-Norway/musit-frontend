@@ -6,6 +6,7 @@ export type ElementProps = {
   id: string,
   label: string,
   labelWidth?: number,
+  labelSize?: string,
   labelAbove?: boolean,
   elementWidth: number,
   children?: React$Node,
@@ -16,7 +17,10 @@ export function FormElement(props: ElementProps) {
   if (!props.labelAbove && props.labelWidth) {
     return (
       <div className={`form-group ${props.hasError ? 'has-error' : ''}`}>
-        <label className={`control-label col-md-${props.labelWidth}`} htmlFor={props.id}>
+        <label
+          className={`control-label ${props.labelSize || ''} col-md-${props.labelWidth}`}
+          htmlFor={props.id}
+        >
           {props.label}
         </label>
         <div className={`col-md-${props.elementWidth}`}>{props.children}</div>
@@ -26,7 +30,7 @@ export function FormElement(props: ElementProps) {
   return (
     <div className={`form-group ${props.hasError ? 'has-error' : ''}`}>
       <div className={`col-md-${props.elementWidth}`}>
-        <label className="control-label" htmlFor={props.id}>
+        <label className={`control-label ${props.labelSize || ''}`} htmlFor={props.id}>
           {props.label}
         </label>
         {props.children}
@@ -45,6 +49,7 @@ export function FormInput(props: InputProps) {
     <FormElement
       id={props.id}
       label={props.label}
+      labelSize={props.labelSize}
       labelWidth={props.labelWidth}
       elementWidth={props.elementWidth}
       labelAbove={props.labelAbove}
@@ -71,6 +76,7 @@ export function FormFileSelect(props: FileSelect) {
     <FormElement
       id={props.id}
       label={props.label}
+      labelSize={props.labelSize}
       labelWidth={props.labelWidth}
       elementWidth={props.elementWidth}
     >
@@ -97,6 +103,7 @@ export function FormText(props: TextProps) {
     <FormElement
       id={props.id}
       label={props.label}
+      labelSize={props.labelSize}
       labelWidth={props.labelWidth}
       elementWidth={props.elementWidth}
     >
@@ -116,6 +123,7 @@ export function FormTextArea(props: TextAreaProps) {
     <FormElement
       id={props.id}
       label={props.label}
+      labelSize={props.labelSize}
       labelAbove={props.labelAbove}
       labelWidth={props.labelWidth}
       elementWidth={props.elementWidth}
@@ -142,6 +150,7 @@ export function FormSelect(props: SelectProps) {
       id={props.id}
       label={props.label}
       labelAbove={props.labelAbove}
+      labelSize={props.labelSize}
       labelWidth={props.labelWidth}
       elementWidth={props.elementWidth}
     >
@@ -169,6 +178,7 @@ export function FormInputSelect(props: SelectProps) {
       id={props.id}
       label={props.label}
       labelAbove={props.labelAbove}
+      labelSize={props.labelSize}
       labelWidth={props.labelWidth}
       elementWidth={props.elementWidth}
     >

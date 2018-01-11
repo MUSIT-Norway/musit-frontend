@@ -195,7 +195,6 @@ function renderSubEvent(
   eventType: number,
   props: Props & { form: FormData }
 ) {
-  console.log('Props in component ', props);
   const extraAtrribtes = {
     viewMode: !(
       props.form.editable &&
@@ -430,6 +429,7 @@ function ConservationProcessForm(props: ProcessFormProps) {
           field={props.form.caseNumber}
           label={I18n.t('musit.conservation.caseNumber') + suffix}
           labelWidth={1}
+          labelSize="h2"
           labelAbove={true}
           elementWidth={5}
           value={props.form.caseNumber.value}
@@ -441,6 +441,7 @@ function ConservationProcessForm(props: ProcessFormProps) {
           label={I18n.t('musit.conservation.note') + suffix}
           labelWidth={1}
           labelAbove={true}
+          labelSize="h2"
           elementWidth={5}
           rows={5}
           value={props.form.note.value}
@@ -458,7 +459,7 @@ function ViewConservationProcessForm(props: ProcessFormProps) {
       <form className="form-horizontal">
         <div className="form-group">
           <div className="col-md-10">
-            <label className="control-label2" htmlFor="caseNumber">
+            <label className="control-label h2" htmlFor="caseNumber">
               {I18n.t('musit.conservation.caseNumber') + suffix}
             </label>
             <p className="form-control-static" id="caseNumber">
@@ -469,8 +470,8 @@ function ViewConservationProcessForm(props: ProcessFormProps) {
         <hr />
         <div className="form-group">
           <div className="col-md-10">
-            <label className="control-label" htmlFor="note">
-              {I18n.t('musit.conservation.comments') + suffix}
+            <label className="control-label h2" htmlFor="note">
+              {I18n.t('musit.conservation.note') + suffix}
             </label>
             <p className="form-control-static" id="note">
               {props.form.note.value}
@@ -534,13 +535,7 @@ export default function ConservationComponent(
       )}
 
       <hr />
-      <div className="form-group">
-        <div className="col-md-12 col-md-offset-0">
-          <label className="control-label">
-            {I18n.t('musit.conservation.personsConnected')}
-          </label>
-        </div>
-      </div>
+      <h2>{I18n.t('musit.conservation.personsConnected')}</h2>
       <form className="form-horizontal">
         {viewModeMainEvent ? (
           <ViewPersonRoleDate
@@ -585,6 +580,7 @@ export default function ConservationComponent(
       <br />
       <br />
       <br />
+      <h2>{I18n.t('musit.conservation.objectsConnected')}</h2>
       <ObjectTable
         data={props.objects || []}
         viewMode={true}
@@ -615,6 +611,9 @@ export default function ConservationComponent(
               </div>
             </div>
           </div>
+          <div>
+            <h2>{I18n.t('musit.conservation.subEvents')}</h2>
+          </div>
           <div className="row">
             <div className="col-md-12">
               {props.form.events.rawValue.map((v, i) => {
@@ -626,7 +625,9 @@ export default function ConservationComponent(
       )}
       <FieldMultiSelect
         title={I18n.t('musit.conservation.choseNewSubEvents') + suffix}
+        titleSize="h4"
         appSession={props.appSession}
+        labelAbove
         stringValue={props.form.subEventTypes.rawValue}
         options={
           props.predefinedConservation &&

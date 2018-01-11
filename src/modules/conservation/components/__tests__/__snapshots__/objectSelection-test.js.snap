@@ -13,7 +13,9 @@ exports[`ObjectSelection should render ObjectSelection as read only 1`] = `
     }
   >
     <caption>
-      Objekter i denne delhendelsen
+      <h4>
+        Objekter i denne delhendelsen
+      </h4>
     </caption>
     <thead>
       <tr>
@@ -90,7 +92,9 @@ exports[`ObjectSelection should render ObjectSelection for add and edit 1`] = `
     }
   >
     <caption>
-      Hvilke objekter gjelder denne del hendelsen for?
+      <h4>
+        Hvilke objekter gjelder denne del hendelsen for?
+      </h4>
     </caption>
     <thead>
       <tr>

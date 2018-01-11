@@ -7,6 +7,7 @@ export type FieldMultiSelectProps = {
   stringValue?: any,
   options: ?Array<any>,
   title: ?string,
+  titleSize?: string,
   onChange: Function,
   labelAbove?: boolean,
   inputProps?: { className?: string, style?: {} },
@@ -33,7 +34,7 @@ export default function FieldMultiSelect(props: FieldMultiSelectProps) {
       <div className="row form-group">
         <div className="col-md-3">
           {props.title !== '' && (
-            <label className="control-label" htmlFor={name}>
+            <label className={`control-label ${props.titleSize || ''}`} htmlFor={name}>
               {props.title}
             </label>
           )}

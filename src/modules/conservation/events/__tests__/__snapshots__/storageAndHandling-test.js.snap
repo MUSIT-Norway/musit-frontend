@@ -89,6 +89,7 @@ exports[`StorageAndHandling should render properly 1`] = `
           className="col-md-5"
         >
           <label
+            className="control-label h4"
             htmlFor="relativeHumidity_0"
           >
             Relativ fuktighet:
@@ -108,7 +109,7 @@ exports[`StorageAndHandling should render properly 1`] = `
           className="col-md-5"
         >
           <label
-            className="control-label"
+            className="control-label h4"
             htmlFor="temperature_0"
           >
             Temperatur:
@@ -128,7 +129,7 @@ exports[`StorageAndHandling should render properly 1`] = `
           className="col-md-5"
         >
           <label
-            className="control-label"
+            className="control-label h4"
             htmlFor="lightAndUvLevel_0"
           >
             Lux:

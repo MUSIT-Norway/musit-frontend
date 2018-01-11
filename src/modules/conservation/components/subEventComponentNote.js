@@ -40,37 +40,45 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
           </div>
         </div>
       )}{' '}
-      <div className="row form-group">
-        <div className="col-md-11">
-          {props.viewMode ? (
-            <ViewPersonRoleDate
-              personData={props.subEvent.actorsAndRoles || []}
-              getDisplayNameForRole={(r: string) => {
-                const role = find(props.roleList, rl => rl.roleId === r);
-                return role && role.noRole;
-              }}
-            />
-          ) : (
-            <PersonRoleDate
-              appSession={props.appSession}
-              personData={props.subEvent.actorsAndRoles}
-              fieldName={'actorsAndRoles'}
-              updateForm={props.onChangePersonActorRole}
-              getDisplayNameForRole={(r: string | number) => {
-                const role = find(props.roleList, rl => rl.roleId === r);
-                return role.noRole;
-              }}
-              roles={props.roleList ? props.roleList.map(e => e.roleId) : []}
-              showDateForRole={(roleName: string) => [1].some(e => e === roleName)}
-            />
-          )}
-          <hr />
+      <br />
+      <div className="form-group">
+        <div className="row">
+          <div className="col-md-11">
+            <h4>Personer tilknyttet rollen</h4>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-11">
+            {props.viewMode ? (
+              <ViewPersonRoleDate
+                personData={props.subEvent.actorsAndRoles || []}
+                getDisplayNameForRole={(r: string) => {
+                  const role = find(props.roleList, rl => rl.roleId === r);
+                  return role && role.noRole;
+                }}
+              />
+            ) : (
+              <PersonRoleDate
+                appSession={props.appSession}
+                personData={props.subEvent.actorsAndRoles}
+                fieldName={'actorsAndRoles'}
+                updateForm={props.onChangePersonActorRole}
+                getDisplayNameForRole={(r: string | number) => {
+                  const role = find(props.roleList, rl => rl.roleId === r);
+                  return role.noRole;
+                }}
+                roles={props.roleList ? props.roleList.map(e => e.roleId) : []}
+                showDateForRole={(roleName: string) => [1].some(e => e === roleName)}
+              />
+            )}
+            <hr />
+          </div>
         </div>
       </div>
       {props.extraAttributes ? props.extraAttributes : ''}
       <div className="row form-group">
         <div className="col-md-9">
-          <label className="control-label" htmlFor={`note_${props.index}`}>
+          <label className="control-label h4" htmlFor={`note_${props.index}`}>
             {props.noteLabel + suffix}
           </label>
           {props.viewMode ? (
@@ -95,6 +103,7 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
             id="resultFiles"
             label={I18n.t('musit.conservation.documents') + suffix}
             labelWidth={2}
+            labelSize="h4"
             elementWidth={5}
             value={props.subEvent.documents}
             multiple={true}
@@ -139,6 +148,7 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
           </div>
         </FormElement>
       )}
+      <hr />
       <ObjectSelection
         affectedThingsWithDetailsMainEvent={props.affectedThingsWithDetailsMainEvent}
         affectedThingsSubEvent={props.subEvent.affectedThings}

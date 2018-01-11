@@ -17,7 +17,7 @@ export default function ConditionAssessment(props: ConditionAssessmentProps) {
     <div>
       <div className="row form-group">
         <label
-          className="control-label col-md-2"
+          className="control-label h4 col-md-2"
           htmlFor={`conditionCode_${props.index}`}
         >
           {I18n.t('musit.conservation.events.conditionAssessment.conditionCode') + suffix}

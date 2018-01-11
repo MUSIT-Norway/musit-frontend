@@ -13,25 +13,19 @@ type Props = {
 
 export default function CollapsibleEvent(props: Props) {
   return (
-    <div
-      className="panel panel-default"
-      style={{
-        paddingBottom: '0px',
-        marginBottom: '20px',
-        fontSize: '18',
-        fontWeight: 'bold'
-      }}
-    >
+    <div className="panel panel-default">
       <div
         onClick={props.toggleExpanded}
         className="panel-heading"
         style={{ background: props.expanded ? '#ffffff' : '#e8e8e8' }}
       >
-        {props.eventName}
-        <FontAwesome
-          name={!props.expanded ? 'chevron-up' : 'chevron-down'}
-          style={{ color: 'black', float: 'right' }}
-        />
+        <h3>
+          {props.eventName}
+          <FontAwesome
+            name={!props.expanded ? 'chevron-up' : 'chevron-down'}
+            style={{ color: 'black', float: 'right' }}
+          />
+        </h3>
       </div>
       <div className={props.expanded ? 'panel collapse in' : 'panel collapse'}>
         {props.eventComponent}
