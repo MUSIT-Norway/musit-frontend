@@ -255,6 +255,11 @@ describe('Config urls', () => {
           expected: '/api/management/99/conservation/types'
         },
         {
+          name: 'getDeleteSubEventUrl',
+          actual: urls.api.conservation.getDeleteSubEventUrl(99, 123),
+          expected: '/api/management/99/conservation/events?eventIds=123'
+        },
+        {
           name: 'addConservationEvent',
           actual: urls.api.conservation.addConservationEvent(99),
           expected: '/api/management/99/conservation/events'

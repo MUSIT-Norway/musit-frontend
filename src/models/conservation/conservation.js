@@ -1,8 +1,8 @@
 // @flow
 import { Observable } from 'rxjs';
 import Config from '../../config';
-import { simpleGet, simplePut, simplePost } from '../../shared/RxAjax';
-import type { Callback, AjaxGet, AjaxPut, AjaxPost } from '../../types/ajax';
+import { simpleGet, simplePut, simplePost, simpleDel } from '../../shared/RxAjax';
+import type { Callback, AjaxGet, AjaxPut, AjaxPost, AjaxDel } from '../../types/ajax';
 import type {
   ConservationCollection,
   ConservationType,
@@ -85,6 +85,18 @@ export const editConservationEvent: (
   return ajaxPut(url, { ...data, id: Number(id) }, token, callback).map(
     ({ response }) => response
   );
+};
+
+export const deleteConservationEvent: (
+  ajaxDel: AjaxDel<*>
+) => (props: {
+  id: number,
+  museumId: number,
+  token: string,
+  callback?: Callback<*>
+}) => Observable<any> = (ajaxDel = simpleDel) => ({ id, museumId, token, callback }) => {
+  const url = Config.magasin.urls.api.conservation.getDeleteSubEventUrl(museumId, id);
+  return ajaxDel(url, token, callback).map(({ response }) => response);
 };
 
 export const getConservationTypes: (

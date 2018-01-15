@@ -144,7 +144,9 @@ export default {
           getConservationForObject: (mid: MuseumId, id: number) =>
             `/api/management/${mid}/conservation/events/object/${id}`,
           addFileUrl: (mid: MuseumId, collectionId: CollectionId, eventId: number) =>
-            `/api/document/museum/${mid}/conservations/attachments?eventId=${eventId}&collectionId=${collectionId}`
+            `/api/document/museum/${mid}/conservations/attachments?eventId=${eventId}&collectionId=${collectionId}`,
+          getDeleteSubEventUrl: (mid: MuseumId, eventId: number) =>
+            `/api/management/${mid}/conservation/events?eventIds=${eventId}`
         },
         attachments: {
           getFilesUrl: (files: Array<string>, mid: MuseumId, eventId: number) =>

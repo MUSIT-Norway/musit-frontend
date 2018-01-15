@@ -14,7 +14,7 @@ export const closeModal = () => {
 export const showConfirm = (message, onYes) => {
   closeModal();
 
-  const title = I18n.t('musit.texts.deleteNode');
+  const title = I18n.t('musit.texts.delete');
   const prompt = `<div>${message}</div>`;
   const $dialog = (__$dialog__ = global.$(prompt).dialog({
     autoOpen: false,

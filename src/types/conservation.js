@@ -4,6 +4,7 @@ import type { MusitObject } from '../types/object';
 import type { SampleDataExtended } from '../types/samples';
 import type { Person } from '../types/person';
 import type { AppSession } from '../types/appSession';
+import type { Field } from './formTypes';
 
 export type ActorsAndRoles = {
   roleId?: number | string,
@@ -178,10 +179,21 @@ export type ConservationSubTypes =
   | ReportType
   | MaterialDeterminationType;
 
+export type EditableValuesMainEvent = {
+  caseNumber: ?string,
+  note: ?string,
+  actorsAndRoles: ?Array<ActorsAndRoles>
+};
+
+export type EditableValuesForm = {
+  editable: ?Field<EditableValuesMainEvent | Array<ConservationSubTypes>>
+};
+
 // Fixme this type is incorrect/incomplete
 export type ConservationCollection = {
   id: number,
   editable: ?number,
+  editableValues: any,
   analysisTypeId: number,
   objectId?: ?string,
   doneBy?: ?string,

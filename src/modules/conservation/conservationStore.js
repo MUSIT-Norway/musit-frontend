@@ -1,5 +1,5 @@
 // @ flow
-import { simpleGet, simplePost, simplePut } from '../../shared/RxAjax';
+import { simpleGet, simplePost, simplePut, simpleDel } from '../../shared/RxAjax';
 import { Observable, Subject } from 'rxjs';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import type { Reducer } from 'react-rxjs/dist/RxStore';
@@ -7,7 +7,7 @@ import MusitConservation from '../../models/conservation';
 import MusitActor from '../../models/actor';
 import MusitObject from '../../models/object';
 import flatten from 'lodash/flatten';
-import type { Callback, AjaxGet, AjaxPost, AjaxPut } from '../../types/ajax';
+import type { Callback, AjaxGet, AjaxPost, AjaxPut, AjaxDel } from '../../types/ajax';
 import type { AppSession } from '../../types/appSession';
 import type {
   ConservationStoreState,
@@ -73,6 +73,11 @@ const updateConservationAction$: Observable<*> = updateConservation$
   .switchMap(MusitConservation.editConservationEvent(simplePut))
   .do(flagLoading({ loadingConservation: false }));
 
+export const deleteConservation$: Subject<*> = createAction('deleteConservation$');
+const deleteConservationAction$: Observable<*> = deleteConservation$.switchMap(
+  MusitConservation.deleteConservationEvent(simpleDel)
+);
+
 export const clearStore$: Subject<*> = createAction('clearStore$');
 
 type Actions = {
@@ -81,7 +86,8 @@ type Actions = {
   setLoading$: Subject<Flag>,
   getConservationAction$: Observable<*>,
   updateConservationAction$: Observable<*>,
-  clearStore$: Subject<*>
+  clearStore$: Subject<*>,
+  deleteConservationAction$: Subject<*>
 };
 
 const sortSubEvents = data => {
@@ -97,9 +103,11 @@ export const reducer$ = (
   actions: Actions,
   ajaxGet: AjaxGet<*>,
   ajaxPost: AjaxPost<*>,
-  ajaxPut: AjaxPut<*>
+  ajaxPut: AjaxPut<*>,
+  ajaxDel: AjaxDel<*>
 ): Observable<Reducer<ConservationStoreState>> => {
   return Observable.merge(
+    actions.deleteConservationAction$.map(() => state => ({ ...state })),
     actions.saveConservation$
       .switchMap(saveConservationAction(ajaxPost, ajaxPut))
       .map(saveResult => state => ({ ...state, saveResult })),
@@ -125,15 +133,17 @@ export const store$ = (
     setLoading$,
     getConservationAction$,
     updateConservationAction$,
-    clearStore$
+    clearStore$,
+    deleteConservationAction$
   },
   ajaxGet?: AjaxGet<*> = simpleGet,
   ajaxPost?: AjaxPost<*> = simplePost,
-  ajaxPut?: AjaxPost<*> = simplePut
+  ajaxPut?: AjaxPost<*> = simplePut,
+  ajaxDel?: AjaxDel<*> = simpleDel
 ) =>
   createStore(
     'conservationStore',
-    reducer$(actions$, ajaxGet, ajaxPost, ajaxPut),
+    reducer$(actions$, ajaxGet, ajaxPost, ajaxPut, simpleDel),
     initialState,
     KEEP_ALIVE
   );

@@ -1,6 +1,10 @@
 // @flow
 import { getObjects, getConservationCollection } from '../shared/submit';
-import { saveConservation$, uploadFile$ } from '../conservationStore';
+import {
+  saveConservation$,
+  uploadFile$,
+  deleteConservation$
+} from '../conservationStore';
 import type { Location } from '../shared/submit';
 import { simplePost, simplePut } from '../../../shared/RxAjax';
 import type { History } from '../../../types/Routes';
@@ -11,18 +15,22 @@ import type { PredefinedConservation } from '../../../types/predefinedConservati
 import type { Person } from '../../../types/person';
 import type {
   ConservationStoreState as Store,
-  ConservationSubTypes
+  ConservationSubTypes,
+  EditableValuesForm
 } from '../../../types/conservation';
 import type { DomEvent } from '../../../types/dom';
 import toArray from 'lodash/toArray';
 import type { ObjectData } from '../../../types/object';
 import { isFormValid } from '../../../forms/validators';
-import { emitError } from '../../../shared/errors';
+import { emitError, emitSuccess } from '../../../shared/errors';
 import Config from '../../../config';
 import { sortBy } from 'lodash';
 import { Observable } from 'rxjs';
 import { getFormEvents, getFids } from './utils';
 import { uploadFile } from '../../../models/conservation/documents';
+import { showConfirm } from '../../../shared/modal';
+
+import { I18n } from 'react-i18nify';
 
 type FormProps = {|
   updateForm: Function,
@@ -52,15 +60,7 @@ export default function formProps(
     toggleExpanded: toggleExpanded(props.updateForm),
     toggleSingleExpanded: toggleSingleExpanded(props.updateForm),
     clickSaveAndContinue: clickSaveAndContinue,
-    clickSave: clickSave(
-      props.form,
-      props.appSession,
-      props.history,
-      props.location,
-      ajaxPost,
-      ajaxPut
-    ),
-    clickCancel: clickCancel(props),
+    onClickBack: onClickBack(props),
     onDocumentUpload: onDocumentUpload(
       props.form,
       props.appSession,
@@ -69,8 +69,8 @@ export default function formProps(
       props.history
     ),
     onEdit: onEdit(props.updateForm),
-    onDelete: onDelete(props.updateForm),
-    onCancel: onCancel(props.updateForm, props.history, props.appSession),
+    onDelete: onDelete(props.updateForm, props.appSession),
+    onCancel: onCancel(props.updateForm),
     onSave: onSave(
       props.form,
       props.appSession,
@@ -311,37 +311,7 @@ function clickSaveAndContinue(
   });
 }
 
-function clickSave(form, appSession, history, location, ajaxPost, ajaxPut) {
-  return (evt: DomEvent) => {
-    evt.preventDefault();
-    saveConservation$.next({
-      id: form.id.value,
-      appSession,
-      data: getConservationCollection(form, location),
-      ajaxPost,
-      ajaxPut,
-      callback: {
-        onComplete: props => {
-          if (!props) {
-            return;
-          }
-          const id = props.response.id;
-          history.replace(
-            Config.magasin.urls.client.conservation.viewConservation(
-              appSession,
-              parseInt(id, 10)
-            )
-          );
-        },
-        onFailure: err => {
-          emitError(err);
-        }
-      }
-    });
-  };
-}
-
-function clickCancel(props: any) {
+function onClickBack(props: any) {
   return (evt: DomEvent) => {
     evt.preventDefault();
     props.history.goBack();
@@ -358,10 +328,25 @@ export const onUnmount = (props: OnUnmountProps) => {
   props.clearForm();
 };
 
+function saveEditableValues(updateForm: any, form: any, i: number) {
+  const rawValue =
+    i && i === -1
+      ? {
+          caseNumber: form.caseNumber.rawValue || '',
+          note: form.note.rawValue || '',
+          actorsAndRoles: form.actorsAndRoles.rawValue || []
+        }
+      : form.events.rawValue || [];
+  updateForm({
+    name: 'editableValues',
+    rawValue: rawValue
+  });
+}
+
 function onEdit(updateForm: any) {
-  return (events: Array<ConservationSubTypes>, arrayIndex: number) => (evt: DomEvent) => {
+  return (form: any, arrayIndex: number) => (evt: DomEvent) => {
     evt.preventDefault();
-    console.log('In Edit arrayIndex', arrayIndex, arrayIndex.toString());
+    saveEditableValues(updateForm, form, arrayIndex);
     updateForm({
       name: 'editable',
       rawValue: arrayIndex.toString()
@@ -369,28 +354,109 @@ function onEdit(updateForm: any) {
   };
 }
 
-function onCancel(updateForm, history, appSession) {
-  return (id: number) => (evt: DomEvent) => {
-    evt.preventDefault();
-    console.log('In Cancel ');
+function updateEditModeFields(updateForm: any) {
+  updateForm({
+    name: 'editableValues',
+    rawValue: ''
+  });
+  updateForm({
+    name: 'editable',
+    rawValue: ''
+  });
+}
+
+function applyEditableValues(
+  updateForm: any,
+  editableValues: EditableValuesForm,
+  i: number,
+  events: Array<ConservationSubTypes>
+) {
+  const rawValue =
+    editableValues && editableValues.rawValue ? editableValues.rawValue : null;
+  if (i && i === -1) {
     updateForm({
-      name: 'editable',
-      rawValue: ''
+      name: 'caseNumber',
+      rawValue: rawValue && rawValue.caseNumber ? rawValue.caseNumber : ''
     });
-    history.replace(
-      Config.magasin.urls.client.conservation.editConservation(
-        appSession,
-        parseInt(id, 10)
-      )
+    updateForm({
+      name: 'note',
+      rawValue: rawValue && rawValue.note ? rawValue.note : ''
+    });
+    updateForm({
+      name: 'actorsAndRoles',
+      rawValue: rawValue && rawValue.actorsAndRoles ? rawValue.actorsAndRoles : []
+    });
+  } else {
+    updateForm({
+      name: 'events',
+      rawValue: rawValue || events
+    });
+  }
+}
+
+function onCancel(updateForm) {
+  return (form: any, arrayIndex: number) => (evt: DomEvent) => {
+    evt.preventDefault();
+    console.log('In Cancel form 1 editableValues', form.editableValues.rawValue);
+    console.log('In Cancel form 1 events', form.events.rawValue);
+    applyEditableValues(
+      updateForm,
+      form.editableValues,
+      arrayIndex,
+      form.events.rawValue
     );
+    console.log('In Cancel form 2', form.events.rawValue);
+    updateEditModeFields(updateForm);
   };
 }
 
-export function onDelete(updateForm: any) {
-  return (events: Array<ConservationSubTypes>, arrayIndex: number) => (evt: DomEvent) => {
+function deleteSubEvents(
+  updateForm: any,
+  events: Array<ConservationSubTypes>,
+  i: number
+) {
+  updateForm({
+    name: 'events',
+    rawValue: [...events.slice(0, i), ...events.slice(i + 1)]
+  });
+}
+
+export function onDelete(updateForm: any, appSession: AppSession) {
+  return (id: number, events: Array<ConservationSubTypes>, arrayIndex: number) => (
+    evt: DomEvent
+  ) => {
     evt.preventDefault();
-    console.log('In onDelete ', events, arrayIndex);
-    return true;
+    console.log('In onDelete ', id);
+    const message = I18n.t('musit.conservation.askForDeleteConfirmation');
+    showConfirm(message, () => {
+      deleteConservation$.next({
+        id: id,
+        museumId: appSession.museumId,
+        token: appSession.accessToken,
+        callback: {
+          onComplete: () => {
+            deleteSubEvents(updateForm, events, arrayIndex);
+            emitSuccess({
+              type: 'deleteSuccess',
+              message: I18n.t('musit.conservation.confirmDelete')
+            });
+          },
+          onFailure: e => {
+            if (e.status === 403) {
+              emitError({
+                type: 'deleteError',
+                message: I18n.t('musit.errorMainMessages.notAllowed')
+              });
+            } else {
+              emitError({
+                type: 'deleteError',
+                message: e.message
+              });
+            }
+          }
+        }
+      });
+    });
   };
 }
 
@@ -409,10 +475,7 @@ function onSave(form, appSession, history, location, ajaxPost, ajaxPut, updateFo
             return;
           }
           const id = props.response.id;
-          updateForm({
-            name: 'editable',
-            rawValue: ''
-          });
+          updateEditModeFields(updateForm);
           history.replace(
             Config.magasin.urls.client.conservation.editConservation(
               appSession,

@@ -43,9 +43,8 @@ type ConservationProcessProps = {
   form: FormData,
   loadingConservation?: boolean,
   history: History,
-  clickSave?: Function,
   clickSaveAndContinue?: ?Function,
-  clickCancel?: Function,
+  onClickBack?: Function,
   clearForm?: Function,
   clearStore?: Function,
   isFormValid?: boolean,
@@ -179,16 +178,6 @@ function expanded(form: FormData) {
 
 const suffix = ':';
 
-function deleteSubEvents(props: Props & { form: FormData }, i: number) {
-  props.updateForm({
-    name: props.form.events.name,
-    rawValue: [
-      ...props.form.events.rawValue.slice(0, i),
-      ...props.form.events.rawValue.slice(i + 1)
-    ]
-  });
-}
-
 function renderSubEvent(
   appSession: AppSession,
   ind: number,
@@ -201,11 +190,16 @@ function renderSubEvent(
       props.form.editable.rawValue &&
       props.form.editable.rawValue === ind.toString()
     ),
-    onDelete: props.onDelete(props.form.events.rawValue, ind),
-    onEdit: props.onEdit(props.form.events.rawValue, ind),
+    onDelete: props.onDelete(
+      props.form.events.rawValue[ind].id,
+      props.form.events.rawValue || [],
+      ind
+    ),
+    onEdit: props.onEdit(props.form, ind),
     onSave: props.onSave,
-    onCancel: props.onCancel(props.form.id.rawValue),
-    editable: props.form.editable && props.form.editable.rawValue
+    onCancel: props.onCancel(props.form, ind),
+    editable: props.form.editable && props.form.editable.rawValue,
+    expanded: props.form.events.value[ind].expanded
   };
 
   if (eventType === 2) {
@@ -229,7 +223,6 @@ function renderSubEvent(
           ind
         )}
         affectedThingsWithDetailsMainEvent={props.objects || []}
-        expanded={props.form.events.value[ind].expanded}
         toggleExpanded={props.toggleSingleExpanded(
           !props.form.events.value[ind].expanded,
           props.form.events.value,
@@ -258,7 +251,6 @@ function renderSubEvent(
           props.form.events.rawValue,
           ind
         )}
-        expanded={props.form.events.value[ind].expanded}
         toggleExpanded={props.toggleSingleExpanded(
           !props.form.events.value[ind].expanded,
           props.form.events.value,
@@ -287,7 +279,6 @@ function renderSubEvent(
           props.form.events.rawValue,
           ind
         )}
-        expanded={props.form.events.value[ind].expanded}
         toggleExpanded={props.toggleSingleExpanded(
           !props.form.events.value[ind].expanded,
           props.form.events.value,
@@ -316,7 +307,6 @@ function renderSubEvent(
           props.form.events.rawValue,
           ind
         )}
-        expanded={props.form.events.value[ind].expanded}
         toggleExpanded={props.toggleSingleExpanded(
           !props.form.events.value[ind].expanded,
           props.form.events.value,
@@ -346,7 +336,6 @@ function renderSubEvent(
           props.form.events.rawValue,
           ind
         )}
-        expanded={props.form.events.value[ind].expanded}
         toggleExpanded={props.toggleSingleExpanded(
           !props.form.events.value[ind].expanded,
           props.form.events.value,
@@ -375,7 +364,6 @@ function renderSubEvent(
           props.form.events.rawValue,
           ind
         )}
-        expanded={props.form.events.value[ind].expanded}
         toggleExpanded={props.toggleSingleExpanded(
           !props.form.events.value[ind].expanded,
           props.form.events.value,
@@ -405,8 +393,6 @@ function renderSubEvent(
           props.form.events.rawValue,
           ind
         )}
-        onDelete={() => deleteSubEvents(props, ind)}
-        expanded={props.form.events.value[ind].expanded}
         toggleExpanded={props.toggleSingleExpanded(
           !props.form.events.value[ind].expanded,
           props.form.events.value,
@@ -424,7 +410,7 @@ function renderSubEvent(
 function ConservationProcessForm(props: ProcessFormProps) {
   return (
     <div className="container">
-      <form className="form-horizontal">
+      <form className="form-horizontal" style={{ marginLeft: -20 }}>
         <FormInput
           field={props.form.caseNumber}
           label={I18n.t('musit.conservation.caseNumber') + suffix}
@@ -436,18 +422,6 @@ function ConservationProcessForm(props: ProcessFormProps) {
           onChange={props.updateStringField(props.form.caseNumber.name)}
           id={props.form.caseNumber.name}
         />
-        <FormTextArea
-          field={props.form.note}
-          label={I18n.t('musit.conservation.note') + suffix}
-          labelWidth={1}
-          labelAbove={true}
-          labelSize="h2"
-          elementWidth={5}
-          rows={5}
-          value={props.form.note.value}
-          onChange={props.updateStringField(props.form.note.name)}
-          id={props.form.note.name}
-        />
       </form>
     </div>
   );
@@ -456,7 +430,7 @@ function ConservationProcessForm(props: ProcessFormProps) {
 function ViewConservationProcessForm(props: ProcessFormProps) {
   return (
     <div className="container">
-      <form className="form-horizontal">
+      <form className="form-horizontal" style={{ marginLeft: -20 }}>
         <div className="form-group">
           <div className="col-md-10">
             <label className="control-label h2" htmlFor="caseNumber">
@@ -464,17 +438,6 @@ function ViewConservationProcessForm(props: ProcessFormProps) {
             </label>
             <p className="form-control-static" id="caseNumber">
               {props.form.caseNumber.value}
-            </p>
-          </div>
-        </div>
-        <hr />
-        <div className="form-group">
-          <div className="col-md-10">
-            <label className="control-label h2" htmlFor="note">
-              {I18n.t('musit.conservation.note') + suffix}
-            </label>
-            <p className="form-control-static" id="note">
-              {props.form.note.value}
             </p>
           </div>
         </div>
@@ -513,12 +476,14 @@ export default function ConservationComponent(
       </div>
       <form className="form-horizontal">
         {props.form.id.value && (
-          <MetaInformation
-            registeredBy={props.form.registeredByName.value}
-            registeredDate={props.form.registeredDate.value}
-            updatedBy={props.form.updatedByName.value}
-            updatedDate={props.form.updatedDate.value}
-          />
+          <div style={{ marginLeft: -85 }}>
+            <MetaInformation
+              registeredBy={props.form.registeredByName.value}
+              registeredDate={props.form.registeredDate.value}
+              updatedBy={props.form.updatedByName.value}
+              updatedDate={props.form.updatedDate.value}
+            />
+          </div>
         )}
       </form>
       <hr />
@@ -571,10 +536,9 @@ export default function ConservationComponent(
       </form>
       <br />
       <Toolbar
-        saveOnClick={e => props.onSave(e)}
-        cancelOnClick={e => props.onCancel(e)}
-        deleteOnClick={e => props.onDelete(e)}
-        editOnClick={props.onEdit([], -1)}
+        saveOnClick={props.onSave}
+        cancelOnClick={props.onCancel(props.form, -1)}
+        editOnClick={props.onEdit(props.form, -1)}
         {...toolbarBooleanParameter}
       />
       <br />
@@ -669,7 +633,7 @@ export default function ConservationComponent(
           <button
             className="btn-link"
             style={{ marginRight: 5 }}
-            onClick={props.clickCancel}
+            onClick={props.onClickBack}
           >
             {I18n.t('musit.texts.back')}
           </button>

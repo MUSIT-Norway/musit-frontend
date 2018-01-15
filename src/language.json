@@ -3,6 +3,8 @@
     "musit": {
       "conservation": {
         "conservation": "Use & conservation",
+        "askForDeleteConfirmation": "Would you like to delete sub-event?",
+        "confirmDelete": "Sub-event has been deleted.",
         "objectsConnected": "Objects connected to conservation",
         "subEvents": "Sub events",
         "documents": "Documents",
@@ -1020,6 +1022,8 @@
     "musit": {
       "conservation": {
         "conservation": "Bruk og bevaring",
+        "askForDeleteConfirmation": "Vil du slette delhendelse?",
+        "confirmDelete": "Delhndelse er slettet.",
         "subEvents": "Delhendelser",
         "objectsConnected": "Objekter knyttet til hendelsen",
         "documents": "Vedlegg",        

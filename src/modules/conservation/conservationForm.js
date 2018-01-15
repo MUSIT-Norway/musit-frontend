@@ -11,6 +11,7 @@ export const fieldsArray = [
   getStrField('id'),
   getNumberField('eventTypeId', null, false),
   getNumberField('editable', null, false),
+  getStrField('editableValues', '', false),
   getArrField('actorsAndRoles', [], false, actorsAndRolesValidator),
   getStrField('registeredBy', null, false),
   getStrField('registeredByName', null, false),
