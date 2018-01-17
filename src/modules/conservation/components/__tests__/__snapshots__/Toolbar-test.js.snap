@@ -3,6 +3,11 @@
 exports[`Test Toolbar Test Toobbar is created 1`] = `
 <div
   className="col-md-11"
+  style={
+    Object {
+      "marginBottom": 20,
+    }
+  }
 >
   <button
     className="btn btn-primary"

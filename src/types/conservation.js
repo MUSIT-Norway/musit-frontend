@@ -133,6 +133,8 @@ export type MaterialDeterminationType = {
   materialInfo: MaterialInfo
 } & SubEventComponentNoteType;
 
+export type NoteType = SubEventComponentNoteType;
+
 export type SubEventComponentNoteProps = {
   subEvent: SubEventComponentNoteType
 } & SubEventComponentProps;
@@ -170,6 +172,10 @@ export type MaterialDeterminationProps = {
   materialDetermination: SubEventComponentNoteType
 } & MaterialDeterminationType;
 
+export type NoteProps = {
+  note: SubEventComponentNoteType
+} & SubEventComponentProps;
+
 export type ConservationSubTypes =
   | TreatmentType
   | TechnicalDescriptionType
@@ -177,7 +183,8 @@ export type ConservationSubTypes =
   | HseRiskType
   | ConditionAssessmentType
   | ReportType
-  | MaterialDeterminationType;
+  | MaterialDeterminationType
+  | NoteType;
 
 export type EditableValuesMainEvent = {
   caseNumber: ?string,

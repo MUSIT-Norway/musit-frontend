@@ -397,15 +397,12 @@ function applyEditableValues(
 function onCancel(updateForm) {
   return (form: any, arrayIndex: number) => (evt: DomEvent) => {
     evt.preventDefault();
-    console.log('In Cancel form 1 editableValues', form.editableValues.rawValue);
-    console.log('In Cancel form 1 events', form.events.rawValue);
     applyEditableValues(
       updateForm,
       form.editableValues,
       arrayIndex,
       form.events.rawValue
     );
-    console.log('In Cancel form 2', form.events.rawValue);
     updateEditModeFields(updateForm);
   };
 }
@@ -426,7 +423,6 @@ export function onDelete(updateForm: any, appSession: AppSession) {
     evt: DomEvent
   ) => {
     evt.preventDefault();
-    console.log('In onDelete ', id);
     const message = I18n.t('musit.conservation.askForDeleteConfirmation');
     showConfirm(message, () => {
       deleteConservation$.next({

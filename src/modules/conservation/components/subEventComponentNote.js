@@ -112,8 +112,13 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
         </div>
       )}
       {props.subEvent.files && (
-        <FormElement id="Files" label={''} labelWidth={2} elementWidth={5}>
-          <div className="row form-control-static">
+        <div className="row form-group">
+          <div className="col-md-2">
+            <label className="control-label h4" htmlFor={`document_${props.index}`}>
+              {props.viewMode ? I18n.t('musit.conservation.documents') + suffix : ''}
+            </label>
+          </div>
+          <div className="col-md-5" style={{ marginTop: 10 }}>
             {Array.isArray(props.subEvent.files) &&
               props.subEvent.files.map(file => {
                 if (file.error) {
@@ -146,9 +151,8 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
                 );
               })}
           </div>
-        </FormElement>
+        </div>
       )}
-      <hr />
       <ObjectSelection
         affectedThingsWithDetailsMainEvent={props.affectedThingsWithDetailsMainEvent}
         affectedThingsSubEvent={props.subEvent.affectedThings}

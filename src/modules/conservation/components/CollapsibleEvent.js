@@ -27,7 +27,7 @@ export default function CollapsibleEvent(props: Props) {
           />
         </h3>
       </div>
-      <div className={props.expanded ? 'panel collapse in' : 'panel collapse'}>
+      <div className={props.expanded ? 'collapse in' : 'panel collapse'}>
         {props.eventComponent}
       </div>
     </div>

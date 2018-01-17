@@ -23,6 +23,7 @@ import type { ObjectData } from '../../types/object';
 import Toolbar from './components/Toolbar';
 import MaterialDetermination from './events/materialDetermination';
 import ViewPersonRoleDate from '../../components/person/ViewPersonRoleDate';
+import Note from './events/note';
 
 type ConservationProcessProps = {
   id?: number,
@@ -149,6 +150,13 @@ function createSubEvents(
             }
           ]);
         }
+        case 9: {
+          return acc.concat([
+            {
+              ...commonAttributes(v)
+            }
+          ]);
+        }
         default: {
           return [];
         }
@@ -199,7 +207,27 @@ function renderSubEvent(
     onSave: props.onSave,
     onCancel: props.onCancel(props.form, ind),
     editable: props.form.editable && props.form.editable.rawValue,
-    expanded: props.form.events.value[ind].expanded
+    expanded: props.form.events.value[ind].expanded,
+    roleList: props.predefinedConservation.roleList,
+    appSession: appSession,
+    index: ind,
+    onChange: props.updateConservationSubEvent(
+      props.form.events.name,
+      props.form.events.rawValue,
+      ind
+    ),
+    onChangePersonActorRole: props.updatePersonsForSubEvent(
+      props.form.events.name,
+      props.form.events.rawValue,
+      ind
+    ),
+    affectedThingsWithDetailsMainEvent: props.objects || [],
+    toggleExpanded: props.toggleSingleExpanded(
+      !props.form.events.value[ind].expanded,
+      props.form.events.value,
+      ind
+    ),
+    onDocumentUpload: props.onDocumentUpload
   };
 
   if (eventType === 2) {
@@ -208,27 +236,7 @@ function renderSubEvent(
         key={`treatment_${ind}`}
         keywords={props.predefinedConservation.keywordList}
         materials={props.predefinedConservation.materialList}
-        roleList={props.predefinedConservation.roleList}
-        appSession={appSession}
         treatment={props.form.events.rawValue[ind]}
-        index={ind}
-        onChange={props.updateConservationSubEvent(
-          props.form.events.name,
-          props.form.events.rawValue,
-          ind
-        )}
-        onChangePersonActorRole={props.updatePersonsForSubEvent(
-          props.form.events.name,
-          props.form.events.rawValue,
-          ind
-        )}
-        affectedThingsWithDetailsMainEvent={props.objects || []}
-        toggleExpanded={props.toggleSingleExpanded(
-          !props.form.events.value[ind].expanded,
-          props.form.events.value,
-          ind
-        )}
-        onDocumentUpload={props.onDocumentUpload}
         {...extraAtrribtes}
       />
     );
@@ -236,27 +244,7 @@ function renderSubEvent(
     return (
       <TechnicalDescription
         key={`techincalDescription_${ind}`}
-        appSession={appSession}
-        roleList={props.predefinedConservation.roleList}
-        affectedThingsWithDetailsMainEvent={props.objects || []}
         technicalDescription={props.form.events.rawValue[ind]}
-        index={ind}
-        onChange={props.updateConservationSubEvent(
-          props.form.events.name,
-          props.form.events.rawValue,
-          ind
-        )}
-        onChangePersonActorRole={props.updatePersonsForSubEvent(
-          props.form.events.name,
-          props.form.events.rawValue,
-          ind
-        )}
-        toggleExpanded={props.toggleSingleExpanded(
-          !props.form.events.value[ind].expanded,
-          props.form.events.value,
-          ind
-        )}
-        onDocumentUpload={props.onDocumentUpload}
         {...extraAtrribtes}
       />
     );
@@ -264,27 +252,7 @@ function renderSubEvent(
     return (
       <StorageAndHandling
         key={`storageAndHandling_${ind}`}
-        appSession={appSession}
-        roleList={props.predefinedConservation.roleList}
-        affectedThingsWithDetailsMainEvent={props.objects || []}
         storageAndHandling={props.form.events.rawValue[ind]}
-        index={ind}
-        onChangePersonActorRole={props.updatePersonsForSubEvent(
-          props.form.events.name,
-          props.form.events.rawValue,
-          ind
-        )}
-        onChange={props.updateConservationSubEvent(
-          props.form.events.name,
-          props.form.events.rawValue,
-          ind
-        )}
-        toggleExpanded={props.toggleSingleExpanded(
-          !props.form.events.value[ind].expanded,
-          props.form.events.value,
-          ind
-        )}
-        onDocumentUpload={props.onDocumentUpload}
         {...extraAtrribtes}
       />
     );
@@ -292,27 +260,7 @@ function renderSubEvent(
     return (
       <HseRisk
         key={`hseRisk_${ind}`}
-        appSession={appSession}
-        roleList={props.predefinedConservation.roleList}
-        affectedThingsWithDetailsMainEvent={props.objects || []}
         hseRisk={props.form.events.rawValue[ind]}
-        index={ind}
-        onChangePersonActorRole={props.updatePersonsForSubEvent(
-          props.form.events.name,
-          props.form.events.rawValue,
-          ind
-        )}
-        onChange={props.updateConservationSubEvent(
-          props.form.events.name,
-          props.form.events.rawValue,
-          ind
-        )}
-        toggleExpanded={props.toggleSingleExpanded(
-          !props.form.events.value[ind].expanded,
-          props.form.events.value,
-          ind
-        )}
-        onDocumentUpload={props.onDocumentUpload}
         {...extraAtrribtes}
       />
     );
@@ -320,28 +268,8 @@ function renderSubEvent(
     return (
       <ConditionAssessment
         key={`conditionAssessment_${ind}`}
-        appSession={appSession}
-        roleList={props.predefinedConservation.roleList}
-        affectedThingsWithDetailsMainEvent={props.objects || []}
         conditionAssessment={props.form.events.rawValue[ind]}
         conditionCodes={props.predefinedConservation.conditionCodeList}
-        index={ind}
-        onChangePersonActorRole={props.updatePersonsForSubEvent(
-          props.form.events.name,
-          props.form.events.rawValue,
-          ind
-        )}
-        onChange={props.updateConservationSubEvent(
-          props.form.events.name,
-          props.form.events.rawValue,
-          ind
-        )}
-        toggleExpanded={props.toggleSingleExpanded(
-          !props.form.events.value[ind].expanded,
-          props.form.events.value,
-          ind
-        )}
-        onDocumentUpload={props.onDocumentUpload}
         {...extraAtrribtes}
       />
     );
@@ -349,56 +277,24 @@ function renderSubEvent(
     return (
       <Report
         key={`report_${ind}`}
-        appSession={appSession}
-        roleList={props.predefinedConservation.roleList}
-        affectedThingsWithDetailsMainEvent={props.objects || []}
         report={props.form.events.rawValue[ind]}
-        index={ind}
-        onChangePersonActorRole={props.updatePersonsForSubEvent(
-          props.form.events.name,
-          props.form.events.rawValue,
-          ind
-        )}
-        onChange={props.updateConservationSubEvent(
-          props.form.events.name,
-          props.form.events.rawValue,
-          ind
-        )}
-        toggleExpanded={props.toggleSingleExpanded(
-          !props.form.events.value[ind].expanded,
-          props.form.events.value,
-          ind
-        )}
-        onDocumentUpload={props.onDocumentUpload}
         {...extraAtrribtes}
       />
     );
   } else if (eventType === 8) {
     return (
       <MaterialDetermination
-        key={`report_${ind}`}
-        appSession={appSession}
-        roleList={props.predefinedConservation.roleList}
+        key={`materialDetermination_${ind}`}
         materialDeterminationList={props.predefinedConservation.materialDeterminationList}
-        affectedThingsWithDetailsMainEvent={props.objects || []}
         materialDetermination={props.form.events.rawValue[ind]}
-        index={ind}
-        onChangePersonActorRole={props.updatePersonsForSubEvent(
-          props.form.events.name,
-          props.form.events.rawValue,
-          ind
-        )}
-        onChange={props.updateConservationSubEvent(
-          props.form.events.name,
-          props.form.events.rawValue,
-          ind
-        )}
-        toggleExpanded={props.toggleSingleExpanded(
-          !props.form.events.value[ind].expanded,
-          props.form.events.value,
-          ind
-        )}
-        onDocumentUpload={props.onDocumentUpload}
+        {...extraAtrribtes}
+      />
+    );
+  } else if (eventType === 9) {
+    return (
+      <Note
+        key={`note_${ind}`}
+        note={props.form.events.rawValue[ind]}
         {...extraAtrribtes}
       />
     );
@@ -448,10 +344,12 @@ function ViewConservationProcessForm(props: ProcessFormProps) {
 export default function ConservationComponent(
   props: Props & { form: FormData, predefinedConservation: PredefinedConservation }
 ) {
+  const addMode = props.form.id.value ? false : true;
   const viewModeMainEvent = !(
-    props.form.editable &&
-    props.form.editable.rawValue &&
-    props.form.editable.rawValue === '-1'
+    (props.form.editable &&
+      props.form.editable.rawValue &&
+      props.form.editable.rawValue === '-1') ||
+    addMode
   );
   const editModeForLookup =
     !(props.form.editable && props.form.editable.rawValue) ||
@@ -461,11 +359,11 @@ export default function ConservationComponent(
 
   const editableMainEvent = !!props.form.editable && props.form.editable.rawValue;
 
-  const toolbarBooleanParameter = {
+  const toolbarBooleanParameterMainEvent = {
     saveDisabled: viewModeMainEvent,
     cancelDisabled: viewModeMainEvent,
-    editDisabled: editableMainEvent,
-    deleteDisabled: editableMainEvent,
+    editDisabled: editableMainEvent || addMode,
+    deleteDisabled: editableMainEvent || addMode,
     deleteHide: true
   };
 
@@ -474,8 +372,8 @@ export default function ConservationComponent(
       <div className="page-header">
         <h1>{I18n.t('musit.conservation.conservation')}</h1>
       </div>
-      <form className="form-horizontal">
-        {props.form.id.value && (
+      {props.form.id.value && (
+        <form className="form-horizontal">
           <div style={{ marginLeft: -85 }}>
             <MetaInformation
               registeredBy={props.form.registeredByName.value}
@@ -484,9 +382,9 @@ export default function ConservationComponent(
               updatedDate={props.form.updatedDate.value}
             />
           </div>
-        )}
-      </form>
-      <hr />
+          <hr />
+        </form>
+      )}
       {viewModeMainEvent ? (
         <ViewConservationProcessForm
           form={props.form}
@@ -539,7 +437,7 @@ export default function ConservationComponent(
         saveOnClick={props.onSave}
         cancelOnClick={props.onCancel(props.form, -1)}
         editOnClick={props.onEdit(props.form, -1)}
-        {...toolbarBooleanParameter}
+        {...toolbarBooleanParameterMainEvent}
       />
       <br />
       <br />
@@ -603,7 +501,7 @@ export default function ConservationComponent(
         }
         onChange={props.updateMultiSelectField(props.form.subEventTypes.name)}
         singleSelect={true}
-        viewMode={!editModeForLookup}
+        viewMode={!editModeForLookup || addMode}
       />
       <button
         key="btn-createSubEvents"

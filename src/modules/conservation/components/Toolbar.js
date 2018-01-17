@@ -24,7 +24,7 @@ export default function Toolbar({
   editDisabled
 }: Props) {
   return (
-    <div className="col-md-11">
+    <div className="col-md-11" style={{ marginBottom: 20 }}>
       {!deleteHide && (
         <button
           key="btn-delete"

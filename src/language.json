@@ -70,6 +70,10 @@
             "material":"Material",
             "specialMaterial":"Special material",
             "sequence":"Sequence"
+          },
+          "note":{
+            "noteEvent":"Note",
+            "note":"Note"
           }
         },
         "doCollapse": "Collapse sub evebts",
@@ -1089,6 +1093,10 @@
             "material":"Material",
             "specialMaterial":"spematerial",
             "sequence":"Sekvens"
+          },
+          "note":{
+            "noteEvent":"Kommentar",
+            "note":"Merknad"
           }
         },
         "doCollapse": "Kollaps delhendelser",
