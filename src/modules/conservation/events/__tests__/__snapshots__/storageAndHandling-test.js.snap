@@ -92,7 +92,7 @@ exports[`StorageAndHandling should render properly 1`] = `
             className="control-label h4"
             htmlFor="relativeHumidity_0"
           >
-            Relativ fuktighet:
+            Relativ fuktighet(%):
           </label>
           <p
             className="form-control-static"
@@ -112,7 +112,7 @@ exports[`StorageAndHandling should render properly 1`] = `
             className="control-label h4"
             htmlFor="temperature_0"
           >
-            Temperatur:
+            Temperatur(°C):
           </label>
           <p
             className="form-control-static"
@@ -130,16 +130,32 @@ exports[`StorageAndHandling should render properly 1`] = `
         >
           <label
             className="control-label h4"
-            htmlFor="lightAndUvLevel_0"
+            htmlFor="lightLevel_0"
           >
             Lux:
           </label>
           <p
             className="form-control-static"
-            id="lightAndUvLevel_0"
+            id="lightLevel_0"
+          />
+        </div>
+      </div>
+      <div
+        className="row form-group"
+      >
+        <div
+          className="col-md-5"
+        >
+          <label
+            className="control-label h4"
+            htmlFor="uvLevel_0"
           >
-            3456
-          </p>
+            UVnivå(μW/lumen):
+          </label>
+          <p
+            className="form-control-static"
+            id="uvLevel_0"
+          />
         </div>
       </div>
     </div>

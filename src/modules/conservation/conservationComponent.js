@@ -81,7 +81,6 @@ const commonAttributes = v => ({
   eventTypeId: v,
   note: '',
   affectedThings: [],
-  actorsAndRoles: [],
   documents: [],
   expanded: true,
   viewMode: false
@@ -90,6 +89,16 @@ function createSubEvents(
   props: Props & { form: FormData, predefinedConservation: PredefinedConservation }
 ) {
   return () => {
+    const defaultActorsAndRoles = [
+      {
+        actorId:
+          props.appSession &&
+          props.appSession.actor &&
+          props.appSession.actor.dataportenId,
+        roleId: 1,
+        date: formatISOString(new Date())
+      }
+    ];
     const eventTypes =
       props.form.subEventTypes && props.form.subEventTypes.rawValue
         ? props.form.subEventTypes.rawValue.split(',').map(t => Number.parseFloat(t))
@@ -101,6 +110,7 @@ function createSubEvents(
             {
               keywords: [],
               materials: [],
+              actorsAndRoles: defaultActorsAndRoles,
               ...commonAttributes(v)
             }
           ]);
@@ -108,6 +118,7 @@ function createSubEvents(
         case 3: {
           return acc.concat([
             {
+              actorsAndRoles: defaultActorsAndRoles,
               ...commonAttributes(v)
             }
           ]);
@@ -115,9 +126,11 @@ function createSubEvents(
         case 4: {
           return acc.concat([
             {
-              lightAndUvLevel: '',
+              lightLevel: '',
+              uvLevel: '',
               relativeHumidity: '',
               temperature: '',
+              actorsAndRoles: defaultActorsAndRoles,
               ...commonAttributes(v)
             }
           ]);
@@ -125,6 +138,7 @@ function createSubEvents(
         case 5: {
           return acc.concat([
             {
+              actorsAndRoles: defaultActorsAndRoles,
               ...commonAttributes(v)
             }
           ]);
@@ -132,6 +146,7 @@ function createSubEvents(
         case 6: {
           return acc.concat([
             {
+              actorsAndRoles: defaultActorsAndRoles,
               consitionCode: '',
               ...commonAttributes(v)
             }
@@ -140,6 +155,8 @@ function createSubEvents(
         case 7: {
           return acc.concat([
             {
+              archiveReference: '',
+              actorsAndRoles: defaultActorsAndRoles,
               ...commonAttributes(v)
             }
           ]);
@@ -148,6 +165,7 @@ function createSubEvents(
           return acc.concat([
             {
               materials: [],
+              actorsAndRoles: defaultActorsAndRoles,
               ...commonAttributes(v)
             }
           ]);
@@ -155,6 +173,7 @@ function createSubEvents(
         case 9: {
           return acc.concat([
             {
+              actorsAndRoles: defaultActorsAndRoles,
               ...commonAttributes(v)
             }
           ]);

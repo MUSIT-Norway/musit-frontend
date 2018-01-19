@@ -108,7 +108,10 @@ export type TechnicalDescriptionType = SubEventComponentNoteType;
 export type ConditionAssessmentType = SubEventComponentNoteType & {
   conditionCode: number
 };
-export type ReportType = SubEventComponentNoteType;
+
+export type ReportType = {
+  archiveReference?: string
+} & SubEventComponentNoteType;
 
 export type TreatmentType = {
   keywords?: Array<string>,
@@ -116,7 +119,8 @@ export type TreatmentType = {
 } & SubEventComponentNoteType;
 
 export type StorageAndHandlingType = {
-  lightAndUvLevel: string,
+  lightLevel: string,
+  uvLevel: string,
   relativeHumidity: string,
   temperature: string
 } & SubEventComponentNoteType;

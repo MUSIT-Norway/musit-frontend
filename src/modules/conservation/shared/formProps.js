@@ -29,6 +29,7 @@ import { Observable } from 'rxjs';
 import { getFormEvents, getFids } from './utils';
 import { uploadFile } from '../../../models/conservation/documents';
 import { showConfirm } from '../../../shared/modal';
+import { formatISOString } from '../../../shared/util';
 
 import { I18n } from 'react-i18nify';
 
@@ -261,18 +262,21 @@ function clickSaveAndContinue(
     ajaxPut: simplePut,
     callback: {
       onComplete: props => {
+        // do nothing is there is no props
         if (!props) {
           return;
         }
+        const add = !form.id.value;
+        // if add then updated the Form with new event id
         if (updateForm && updateFormDataEvenName) {
-          if (!form.id.value) {
+          if (add) {
             updateForm({
               name: 'id',
               rawValue: props.response.id
             });
           }
 
-          // add form events + new events
+          // add Form events + new events
           const formEvents =
             form &&
             form.events &&
@@ -281,6 +285,15 @@ function clickSaveAndContinue(
             form.events.rawValue.length > 0
               ? form.events.rawValue
               : [];
+
+          const defaultActorsAndRoles = [
+            {
+              name: appSession && appSession.actor && appSession.actor.fn,
+              uuid: appSession && appSession.actor && appSession.actor.dataportenId,
+              role: 1,
+              date: formatISOString(new Date())
+            }
+          ];
           const respEvents =
             props.response && props.response.events && props.response.events.length > 0
               ? props.response.events.map(e => ({ ...e, expanded: true }))
@@ -293,9 +306,11 @@ function clickSaveAndContinue(
           const newEvents = formEvents
             ? respEvents.map(
                 re =>
-                  foundOldEventId(re, formEvents) ? foundOldEventId(re, formEvents) : re
+                  foundOldEventId(re, formEvents)
+                    ? foundOldEventId(re, formEvents)
+                    : { ...re, actorsAndRoles: defaultActorsAndRoles }
               )
-            : respEvents;
+            : respEvents.map(re => ({ ...re, actorsAndRoles: defaultActorsAndRoles }));
 
           updateEvents &&
             updateForm({

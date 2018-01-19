@@ -53,20 +53,40 @@ export default function StorageAndHandling(props: StorageAndHandlingProps) {
       </div>
       <div className="row form-group">
         <div className="col-md-5">
-          <label className="control-label h4" htmlFor={`lightAndUvLevel_${props.index}`}>
-            {I18n.t('musit.conservation.events.storageAndHandling.lightAndUvLevel') +
-              suffix}
+          <label className="control-label h4" htmlFor={`lightLevel_${props.index}`}>
+            {I18n.t('musit.conservation.events.storageAndHandling.lightLevel') + suffix}
           </label>
           {props.viewMode ? (
-            <p className="form-control-static" id={`lightAndUvLevel_${props.index}`}>
-              {props.storageAndHandling.lightAndUvLevel}
+            <p className="form-control-static" id={`lightLevel_${props.index}`}>
+              {props.storageAndHandling.lightLevel}
             </p>
           ) : (
             <input
               className="form-control"
               id={`lightAndUvLevel_${props.index}`}
-              value={props.storageAndHandling.lightAndUvLevel}
-              onChange={t => props.onChange('lightAndUvLevel')(t.target.value)}
+              value={props.storageAndHandling.lightLevel}
+              onChange={t => props.onChange('lightLevel')(t.target.value)}
+              rows="5"
+              disabled={props.viewMode}
+            />
+          )}
+        </div>
+      </div>
+      <div className="row form-group">
+        <div className="col-md-5">
+          <label className="control-label h4" htmlFor={`uvLevel_${props.index}`}>
+            {I18n.t('musit.conservation.events.storageAndHandling.uvLevel') + suffix}
+          </label>
+          {props.viewMode ? (
+            <p className="form-control-static" id={`uvLevel_${props.index}`}>
+              {props.storageAndHandling.uvLevel}
+            </p>
+          ) : (
+            <input
+              className="form-control"
+              id={`uvLevel_${props.index}`}
+              value={props.storageAndHandling.uvLevel}
+              onChange={t => props.onChange('uvLevel')(t.target.value)}
               rows="5"
               disabled={props.viewMode}
             />

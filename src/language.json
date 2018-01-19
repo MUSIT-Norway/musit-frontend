@@ -47,9 +47,10 @@
           "storageAndHandling":{
             "storageAndHandling": "Storage and handling",
             "note":"Note",
-            "lightAndUvLevel":"Light and UV level",
-            "relativeHumidity":"RelativeH humidity",
-            "temperature":"Temperature"
+            "lightLevel":"Light level",
+            "uvLevel":"UV level",
+            "relativeHumidity":"RelativeH humidity(%)",
+            "temperature":"Temperature(°C)"
           },
           "hseRisk":{
             "hseRisk": "HSE-risk",
@@ -63,7 +64,8 @@
           },
           "report":{
             "report": "Report",
-            "note":"Note"
+            "note":"Note",
+            "archiveReference":"Archive reference"
           },
           "materialDetermination":{
             "materialDetermination": "Material determination",
@@ -1071,9 +1073,10 @@
           "storageAndHandling":{
             "storageAndHandling": "Oppvevaring og håndtering",
             "note":"Merknad",
-            "lightAndUvLevel":"Lux",
-            "relativeHumidity":"Relativ fuktighet",
-            "temperature":"Temperatur"
+            "lightLevel":"Lux",
+            "uvLevel":"UVnivå(μW/lumen)",
+            "relativeHumidity":"Relativ fuktighet(%)",
+            "temperature":"Temperatur(°C)"
           },
           "hseRisk":{
             "hseRisk": "HMS-risiko",
@@ -1087,7 +1090,8 @@
           },
           "report":{
             "report": "Rapport",
-            "note":"Merknad"
+            "note":"Merknad",
+            "archiveReference":"Arkiv referanse"
           },
           "materialDetermination":{
             "materialDetermination": "Materialbestemmelse",
