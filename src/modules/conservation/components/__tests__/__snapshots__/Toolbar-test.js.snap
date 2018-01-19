@@ -2,7 +2,7 @@
 
 exports[`Test Toolbar Test Toobbar is created 1`] = `
 <div
-  className="col-md-11"
+  className="col-md-undefined"
   style={
     Object {
       "marginBottom": 20,
@@ -18,16 +18,6 @@ exports[`Test Toolbar Test Toobbar is created 1`] = `
     }
   >
     Slett
-  </button>
-  <button
-    className="btn btn-primary"
-    style={
-      Object {
-        "marginLeft": -15,
-      }
-    }
-  >
-    Endre
   </button>
   <div
     style={

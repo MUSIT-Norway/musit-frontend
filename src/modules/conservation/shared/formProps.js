@@ -92,14 +92,24 @@ export function toggleExpanded(updateForm: any) {
 }
 
 export function toggleSingleExpanded(updateForm: any) {
-  return (b: boolean, events: Array<ConservationSubTypes>, index: number) => () =>
-    updateForm({
-      name: 'events',
-      rawValue: events
-        .slice(0, index)
-        .concat([{ ...events[index], expanded: b }])
-        .concat(events.slice(index + 1))
-    });
+  return (
+    b: boolean,
+    events: Array<ConservationSubTypes>,
+    index: number,
+    viewMode: boolean
+  ) => () =>
+    viewMode
+      ? updateForm({
+          name: 'events',
+          rawValue: events
+            .slice(0, index)
+            .concat([{ ...events[index], expanded: b }])
+            .concat(events.slice(index + 1))
+        })
+      : emitError({
+          type: 'deleteError',
+          message: I18n.t('musit.conservation.notAbleToCollapse')
+        });
 }
 
 function updateStringField(updateForm: any) {

@@ -4,6 +4,7 @@
       "conservation": {
         "conservation": "Use & conservation",
         "askForDeleteConfirmation": "Would you like to delete sub-event?",
+        "notAbleToCollapse":"Not allowed to collapse the sub event in edit mode. Please click on save and cancel button to change the edit mode.",
         "confirmDelete": "Sub-event has been deleted.",
         "objectsConnected": "Objects connected to conservation",
         "subEvents": "Sub events",
@@ -11,7 +12,7 @@
         "newConservation": "New use & conservation",
         "createConservation": "Create use & conservation",
         "choseNewSubEvents": "Select new sub events to be created",
-        "createNewSubEvents": "Create selected sub events",
+        "createNewSubEvents": "Create sub event",
         "roles": {"administrator": "Administrator",
           "doneBy": "Done by",
           "participating": "Participating"          
@@ -1027,6 +1028,7 @@
       "conservation": {
         "conservation": "Bruk og bevaring",
         "askForDeleteConfirmation": "Vil du slette delhendelse?",
+        "notAbleToCollapse": "Ikke tillatt å kollapse underhendelsen i redigeringsmodus. Vennligst klikk på lagre og avbryt knappen for å endre redigeringsmodus.",
         "confirmDelete": "Delhndelse er slettet.",
         "subEvents": "Delhendelser",
         "objectsConnected": "Objekter knyttet til hendelsen",
@@ -1034,7 +1036,7 @@
         "newConservation": "Ny bruk og bevaring",
         "createConservation": "Opprett bruk og bevaring",
         "choseNewSubEvents": "Velg delhendelser som skal lages",
-        "createNewSubEvents": "Opprett valgte delhendelser",
+        "createNewSubEvents": "Oprett delhendelse",
         "roles": {
           "doneBy": "Utført av",
           "participating": "Deltagende"
@@ -1593,8 +1595,8 @@
         "makeChoice": "Vennligst velg...",
         "chooseValue": "Velg verdi",
         "datePerformed": "Utført dato",
-        "dateRegistered": "Registrert dato",
-        "registeredBy": "Registrert av",
+        "dateRegistered": "Oprettet dato",
+        "registeredBy": "Oprettet av",
         "performedBy": "Utført av",
         "ok": "OK",
         "notOk": "Ikke OK",

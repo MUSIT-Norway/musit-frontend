@@ -9,8 +9,7 @@ type Props = {
   deleteOnClick?: ?Function,
   deleteDisabled?: ?boolean,
   deleteHide?: ?boolean,
-  editOnClick?: ?Function,
-  editDisabled?: ?boolean
+  md?: number
 };
 export default function Toolbar({
   saveOnClick,
@@ -20,11 +19,10 @@ export default function Toolbar({
   deleteOnClick,
   deleteDisabled,
   deleteHide,
-  editOnClick,
-  editDisabled
+  md
 }: Props) {
   return (
-    <div className="col-md-11" style={{ marginBottom: 20 }}>
+    <div className={'col-md-' + md} style={{ marginBottom: 20 }}>
       {!deleteHide && (
         <button
           key="btn-delete"
@@ -36,16 +34,6 @@ export default function Toolbar({
           {I18n.t('musit.texts.delete')}
         </button>
       )}
-
-      <button
-        key="btn-edit"
-        className="btn btn-primary"
-        disabled={editDisabled}
-        onClick={editOnClick}
-        style={{ marginLeft: -15 }}
-      >
-        {I18n.t('musit.texts.edit')}
-      </button>
 
       <div style={{ float: 'right' }}>
         <button

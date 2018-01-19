@@ -24,6 +24,8 @@ import Toolbar from './components/Toolbar';
 import MaterialDetermination from './events/materialDetermination';
 import ViewPersonRoleDate from '../../components/person/ViewPersonRoleDate';
 import Note from './events/note';
+import { emitError } from '../../shared/errors';
+import { formatISOString } from '../../shared/util';
 
 type ConservationProcessProps = {
   id?: number,
@@ -184,7 +186,7 @@ function expanded(form: FormData) {
   );
 }
 
-const suffix = ':';
+const suffix = '';
 
 function renderSubEvent(
   appSession: AppSession,
@@ -192,12 +194,13 @@ function renderSubEvent(
   eventType: number,
   props: Props & { form: FormData }
 ) {
+  const viewMode = !(
+    props.form.editable &&
+    props.form.editable.rawValue &&
+    props.form.editable.rawValue === ind.toString()
+  );
   const extraAtrribtes = {
-    viewMode: !(
-      props.form.editable &&
-      props.form.editable.rawValue &&
-      props.form.editable.rawValue === ind.toString()
-    ),
+    viewMode: viewMode,
     onDelete: props.onDelete(
       props.form.events.rawValue[ind].id,
       props.form.events.rawValue || [],
@@ -225,7 +228,8 @@ function renderSubEvent(
     toggleExpanded: props.toggleSingleExpanded(
       !props.form.events.value[ind].expanded,
       props.form.events.value,
-      ind
+      ind,
+      viewMode
     ),
     onDocumentUpload: props.onDocumentUpload
   };
@@ -367,24 +371,29 @@ export default function ConservationComponent(
     deleteHide: true
   };
 
+  const defaultActorsAndRoles = [
+    {
+      name: props.appSession && props.appSession.actor && props.appSession.actor.fn,
+      uuid:
+        props.appSession && props.appSession.actor && props.appSession.actor.dataportenId,
+      role: 1,
+      date: formatISOString(new Date())
+    }
+  ];
+
   return (
     <div className="container">
-      <div className="page-header">
-        <h1>{I18n.t('musit.conservation.conservation')}</h1>
-      </div>
-      {props.form.id.value && (
-        <form className="form-horizontal">
-          <div style={{ marginLeft: -85 }}>
-            <MetaInformation
-              registeredBy={props.form.registeredByName.value}
-              registeredDate={props.form.registeredDate.value}
-              updatedBy={props.form.updatedByName.value}
-              updatedDate={props.form.updatedDate.value}
-            />
-          </div>
-          <hr />
-        </form>
-      )}
+      <h1>{I18n.t('musit.conservation.conservation')}</h1>
+      <button
+        key="btn-edit"
+        className="btn btn-primary"
+        disabled={toolbarBooleanParameterMainEvent.editDisabled}
+        onClick={props.onEdit(props.form, -1)}
+        style={{ float: 'right', marginRight: 12 }}
+      >
+        {I18n.t('musit.texts.edit')}
+      </button>
+
       {viewModeMainEvent ? (
         <ViewConservationProcessForm
           form={props.form}
@@ -397,7 +406,6 @@ export default function ConservationComponent(
         />
       )}
 
-      <hr />
       <h2>{I18n.t('musit.conservation.personsConnected')}</h2>
       <form className="form-horizontal">
         {viewModeMainEvent ? (
@@ -436,11 +444,11 @@ export default function ConservationComponent(
       <Toolbar
         saveOnClick={props.onSave}
         cancelOnClick={props.onCancel(props.form, -1)}
-        editOnClick={props.onEdit(props.form, -1)}
         {...toolbarBooleanParameterMainEvent}
+        md={12}
       />
       <br />
-      <br />
+      <div style={{ marginTop: 40, borderBottom: '#cdcdcd 3px solid' }} />
       <br />
       <h2>{I18n.t('musit.conservation.objectsConnected')}</h2>
       <ObjectTable
@@ -449,7 +457,6 @@ export default function ConservationComponent(
         history={props.history}
         appSession={props.appSession}
       />
-      <hr />
       {props.form.events &&
       props.form.events.value &&
       props.form.events.value.length > 0 && (
@@ -515,7 +522,6 @@ export default function ConservationComponent(
         {I18n.t('musit.conservation.createNewSubEvents')}
       </button>
       <hr />
-      <br />
       <div
         rel="tooltip"
         title={
@@ -537,6 +543,20 @@ export default function ConservationComponent(
           </button>
         </div>
       </div>
+      <br />
+
+      {props.form.id.value && (
+        <form className="form-horizontal">
+          <div style={{ marginLeft: -85 }}>
+            <MetaInformation
+              registeredBy={props.form.registeredByName.value}
+              registeredDate={props.form.registeredDate.value}
+              updatedBy={props.form.updatedByName.value}
+              updatedDate={props.form.updatedDate.value}
+            />
+          </div>
+        </form>
+      )}
       <div style={{ paddingBottom: '100px' }} />
     </div>
   );

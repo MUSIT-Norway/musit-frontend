@@ -4,13 +4,291 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
 <div
   className="container"
 >
-  <div
-    className="page-header"
+  <h1>
+    Bruk og bevaring
+  </h1>
+  <button
+    className="btn btn-primary"
+    disabled={true}
+    onClick={
+      Object {
+        "actorsAndRoles": Object {
+          "defaultValue": Array [],
+          "mapper": Object {},
+          "name": "actorsAndRoles",
+          "rawValue": Array [],
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": Array [],
+        },
+        "affectedThings": Object {
+          "defaultValue": Array [],
+          "mapper": Object {},
+          "name": "affectedThings",
+          "rawValue": Array [],
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": Array [],
+        },
+        "caseNumber": Object {
+          "defaultValue": null,
+          "mapper": Object {},
+          "name": "caseNumber",
+          "rawValue": null,
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": null,
+        },
+        "doneBy": Object {
+          "defaultValue": null,
+          "mapper": Object {},
+          "name": "doneBy",
+          "rawValue": null,
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": null,
+        },
+        "doneDate": Object {
+          "defaultValue": null,
+          "mapper": Object {},
+          "name": "doneDate",
+          "rawValue": null,
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": null,
+        },
+        "eventTypeId": Object {
+          "defaultValue": null,
+          "mapper": Object {},
+          "name": "eventTypeId",
+          "rawValue": null,
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": null,
+        },
+        "events": Object {
+          "defaultValue": Array [],
+          "mapper": Object {},
+          "name": "events",
+          "rawValue": Array [],
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": Array [],
+        },
+        "id": Object {
+          "defaultValue": null,
+          "mapper": Object {},
+          "name": "id",
+          "rawValue": null,
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": null,
+        },
+        "note": Object {
+          "defaultValue": null,
+          "mapper": Object {},
+          "name": "note",
+          "rawValue": null,
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": null,
+        },
+        "objects": Object {
+          "defaultValue": Array [],
+          "mapper": Object {},
+          "name": "objects",
+          "rawValue": Array [],
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": Array [],
+        },
+        "participating": Object {
+          "defaultValue": null,
+          "mapper": Object {},
+          "name": "participating",
+          "rawValue": null,
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": null,
+        },
+        "participatingName": Object {
+          "defaultValue": null,
+          "mapper": Object {},
+          "name": "participatingName",
+          "rawValue": null,
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": null,
+        },
+        "registeredBy": Object {
+          "defaultValue": null,
+          "mapper": Object {},
+          "name": "registeredBy",
+          "rawValue": null,
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": null,
+        },
+        "registeredByName": Object {
+          "defaultValue": null,
+          "mapper": Object {},
+          "name": "registeredByName",
+          "rawValue": null,
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": null,
+        },
+        "registeredDate": Object {
+          "defaultValue": null,
+          "mapper": Object {},
+          "name": "registeredDate",
+          "rawValue": null,
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": null,
+        },
+        "subEventTypes": Object {
+          "defaultValue": "",
+          "mapper": Object {},
+          "name": "subEventTypes",
+          "rawValue": null,
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": null,
+        },
+        "updatedBy": Object {
+          "defaultValue": null,
+          "mapper": Object {},
+          "name": "updatedBy",
+          "rawValue": null,
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": null,
+        },
+        "updatedByName": Object {
+          "defaultValue": null,
+          "mapper": Object {},
+          "name": "updatedByName",
+          "rawValue": null,
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": null,
+        },
+        "updatedDate": Object {
+          "defaultValue": null,
+          "mapper": Object {},
+          "name": "updatedDate",
+          "rawValue": null,
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": null,
+        },
+      }
+    }
+    style={
+      Object {
+        "float": "right",
+        "marginRight": 12,
+      }
+    }
   >
-    <h1>
-      Bruk og bevaring
-    </h1>
-  </div>
+    Endre
+  </button>
   <ConservationProcessForm
     form={
       Object {
@@ -283,7 +561,6 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
       }
     }
   />
-  <hr />
   <h2>
     Personer tilknyttet bruk og bevaring
   </h2>
@@ -703,281 +980,19 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
     deleteDisabled={true}
     deleteHide={true}
     editDisabled={true}
-    editOnClick={
-      Object {
-        "actorsAndRoles": Object {
-          "defaultValue": Array [],
-          "mapper": Object {},
-          "name": "actorsAndRoles",
-          "rawValue": Array [],
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": Array [],
-        },
-        "affectedThings": Object {
-          "defaultValue": Array [],
-          "mapper": Object {},
-          "name": "affectedThings",
-          "rawValue": Array [],
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": Array [],
-        },
-        "caseNumber": Object {
-          "defaultValue": null,
-          "mapper": Object {},
-          "name": "caseNumber",
-          "rawValue": null,
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": null,
-        },
-        "doneBy": Object {
-          "defaultValue": null,
-          "mapper": Object {},
-          "name": "doneBy",
-          "rawValue": null,
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": null,
-        },
-        "doneDate": Object {
-          "defaultValue": null,
-          "mapper": Object {},
-          "name": "doneDate",
-          "rawValue": null,
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": null,
-        },
-        "eventTypeId": Object {
-          "defaultValue": null,
-          "mapper": Object {},
-          "name": "eventTypeId",
-          "rawValue": null,
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": null,
-        },
-        "events": Object {
-          "defaultValue": Array [],
-          "mapper": Object {},
-          "name": "events",
-          "rawValue": Array [],
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": Array [],
-        },
-        "id": Object {
-          "defaultValue": null,
-          "mapper": Object {},
-          "name": "id",
-          "rawValue": null,
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": null,
-        },
-        "note": Object {
-          "defaultValue": null,
-          "mapper": Object {},
-          "name": "note",
-          "rawValue": null,
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": null,
-        },
-        "objects": Object {
-          "defaultValue": Array [],
-          "mapper": Object {},
-          "name": "objects",
-          "rawValue": Array [],
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": Array [],
-        },
-        "participating": Object {
-          "defaultValue": null,
-          "mapper": Object {},
-          "name": "participating",
-          "rawValue": null,
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": null,
-        },
-        "participatingName": Object {
-          "defaultValue": null,
-          "mapper": Object {},
-          "name": "participatingName",
-          "rawValue": null,
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": null,
-        },
-        "registeredBy": Object {
-          "defaultValue": null,
-          "mapper": Object {},
-          "name": "registeredBy",
-          "rawValue": null,
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": null,
-        },
-        "registeredByName": Object {
-          "defaultValue": null,
-          "mapper": Object {},
-          "name": "registeredByName",
-          "rawValue": null,
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": null,
-        },
-        "registeredDate": Object {
-          "defaultValue": null,
-          "mapper": Object {},
-          "name": "registeredDate",
-          "rawValue": null,
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": null,
-        },
-        "subEventTypes": Object {
-          "defaultValue": "",
-          "mapper": Object {},
-          "name": "subEventTypes",
-          "rawValue": null,
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": null,
-        },
-        "updatedBy": Object {
-          "defaultValue": null,
-          "mapper": Object {},
-          "name": "updatedBy",
-          "rawValue": null,
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": null,
-        },
-        "updatedByName": Object {
-          "defaultValue": null,
-          "mapper": Object {},
-          "name": "updatedByName",
-          "rawValue": null,
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": null,
-        },
-        "updatedDate": Object {
-          "defaultValue": null,
-          "mapper": Object {},
-          "name": "updatedDate",
-          "rawValue": null,
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": null,
-        },
-      }
-    }
+    md={12}
     saveDisabled={false}
     saveOnClick={[Function]}
   />
   <br />
-  <br />
+  <div
+    style={
+      Object {
+        "borderBottom": "#cdcdcd 3px solid",
+        "marginTop": 40,
+      }
+    }
+  />
   <br />
   <h2>
     Objekter knyttet til hendelsen
@@ -1465,7 +1480,6 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
     }
     viewMode={true}
   />
-  <hr />
   <FieldMultiSelect
     appSession={
       Object {
@@ -1613,7 +1627,7 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
     }
     singleSelect={true}
     stringValue={null}
-    title="Velg delhendelser som skal lages:"
+    title="Velg delhendelser som skal lages"
     titleSize="h4"
     viewMode={true}
   />
@@ -1622,10 +1636,9 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
     disabled={true}
     onClick={[Function]}
   >
-    Opprett valgte delhendelser
+    Oprett delhendelse
   </button>
   <hr />
-  <br />
   <div
     className="wrap poptooltip"
     rel="tooltip"
@@ -1650,6 +1663,7 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
       </button>
     </div>
   </div>
+  <br />
   <div
     style={
       Object {
@@ -1664,32 +1678,828 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
 <div
   className="container"
 >
-  <div
-    className="page-header"
-  >
-    <h1>
-      Bruk og bevaring
-    </h1>
-  </div>
-  <form
-    className="form-horizontal"
-  >
-    <div
-      style={
-        Object {
-          "marginLeft": -85,
-        }
+  <h1>
+    Bruk og bevaring
+  </h1>
+  <button
+    className="btn btn-primary"
+    disabled={false}
+    onClick={
+      Object {
+        "actorsAndRoles": Object {
+          "defaultValue": Array [],
+          "mapper": Object {},
+          "name": "actorsAndRoles",
+          "rawValue": Array [],
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": Array [],
+        },
+        "affectedThings": Object {
+          "defaultValue": Array [
+            Object {
+              "collection": 1,
+              "coordinates": Array [],
+              "id": 28,
+              "isDeleted": false,
+              "locations": Array [],
+              "materials": Array [],
+              "museumId": 99,
+              "museumNo": "MusK314",
+              "objectData": Object {
+                "collection": 1,
+                "coordinates": Array [],
+                "id": 28,
+                "isDeleted": false,
+                "locations": Array [],
+                "materials": Array [],
+                "museumId": 99,
+                "museumNo": "MusK314",
+                "objectType": "collection",
+                "subNo": "b",
+                "term": "Runeskrift",
+                "uuid": "ba56a4f6-b907-4158-9a67-bca6080320bb",
+              },
+              "objectType": "collection",
+              "subNo": "b",
+              "term": "Runeskrift",
+              "uuid": "ba56a4f6-b907-4158-9a67-bca6080320bb",
+            },
+            Object {
+              "collection": 1,
+              "coordinates": Array [],
+              "id": 1,
+              "isDeleted": false,
+              "locations": Array [],
+              "mainObjectId": 1,
+              "materials": Array [],
+              "museumId": 99,
+              "museumNo": "MusK58",
+              "objectData": Object {
+                "collection": 1,
+                "coordinates": Array [],
+                "id": 1,
+                "isDeleted": false,
+                "locations": Array [],
+                "mainObjectId": 1,
+                "materials": Array [],
+                "museumId": 99,
+                "museumNo": "MusK58",
+                "objectType": "collection",
+                "subNo": "1",
+                "term": "Rar dings",
+                "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
+              },
+              "objectType": "collection",
+              "subNo": "1",
+              "term": "Rar dings",
+              "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
+            },
+            Object {
+              "collection": 1,
+              "coordinates": Array [],
+              "id": 2,
+              "isDeleted": false,
+              "locations": Array [],
+              "mainObjectId": 1,
+              "materials": Array [],
+              "museumId": 99,
+              "museumNo": "MusK58",
+              "objectData": Object {
+                "collection": 1,
+                "coordinates": Array [],
+                "id": 2,
+                "isDeleted": false,
+                "locations": Array [],
+                "mainObjectId": 1,
+                "materials": Array [],
+                "museumId": 99,
+                "museumNo": "MusK58",
+                "objectType": "collection",
+                "subNo": "2",
+                "term": "Mansjettknapp",
+                "uuid": "adea8141-8099-4f67-bff9-ea5090e18335",
+              },
+              "objectType": "collection",
+              "subNo": "2",
+              "term": "Mansjettknapp",
+              "uuid": "adea8141-8099-4f67-bff9-ea5090e18335",
+            },
+            Object {
+              "collection": 2,
+              "coordinates": Array [],
+              "id": 9,
+              "isDeleted": false,
+              "locations": Array [],
+              "materials": Array [],
+              "museumId": 99,
+              "museumNo": "MusN28",
+              "objectData": Object {
+                "collection": 2,
+                "coordinates": Array [],
+                "id": 9,
+                "isDeleted": false,
+                "locations": Array [],
+                "materials": Array [],
+                "museumId": 99,
+                "museumNo": "MusN28",
+                "objectType": "collection",
+                "term": "Tusenben",
+                "uuid": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
+              },
+              "objectType": "collection",
+              "term": "Tusenben",
+              "uuid": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
+            },
+            Object {
+              "collection": 2,
+              "coordinates": Array [],
+              "id": 8,
+              "isDeleted": false,
+              "locations": Array [],
+              "materials": Array [],
+              "museumId": 99,
+              "museumNo": "MusN37",
+              "objectData": Object {
+                "collection": 2,
+                "coordinates": Array [],
+                "id": 8,
+                "isDeleted": false,
+                "locations": Array [],
+                "materials": Array [],
+                "museumId": 99,
+                "museumNo": "MusN37",
+                "objectType": "collection",
+                "term": "Bendelorm",
+                "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
+              },
+              "objectType": "collection",
+              "term": "Bendelorm",
+              "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
+            },
+          ],
+          "mapper": Object {},
+          "name": "affectedThings",
+          "rawValue": Array [
+            Object {
+              "collection": 1,
+              "coordinates": Array [],
+              "id": 28,
+              "isDeleted": false,
+              "locations": Array [],
+              "materials": Array [],
+              "museumId": 99,
+              "museumNo": "MusK314",
+              "objectData": Object {
+                "collection": 1,
+                "coordinates": Array [],
+                "id": 28,
+                "isDeleted": false,
+                "locations": Array [],
+                "materials": Array [],
+                "museumId": 99,
+                "museumNo": "MusK314",
+                "objectType": "collection",
+                "subNo": "b",
+                "term": "Runeskrift",
+                "uuid": "ba56a4f6-b907-4158-9a67-bca6080320bb",
+              },
+              "objectType": "collection",
+              "subNo": "b",
+              "term": "Runeskrift",
+              "uuid": "ba56a4f6-b907-4158-9a67-bca6080320bb",
+            },
+            Object {
+              "collection": 1,
+              "coordinates": Array [],
+              "id": 1,
+              "isDeleted": false,
+              "locations": Array [],
+              "mainObjectId": 1,
+              "materials": Array [],
+              "museumId": 99,
+              "museumNo": "MusK58",
+              "objectData": Object {
+                "collection": 1,
+                "coordinates": Array [],
+                "id": 1,
+                "isDeleted": false,
+                "locations": Array [],
+                "mainObjectId": 1,
+                "materials": Array [],
+                "museumId": 99,
+                "museumNo": "MusK58",
+                "objectType": "collection",
+                "subNo": "1",
+                "term": "Rar dings",
+                "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
+              },
+              "objectType": "collection",
+              "subNo": "1",
+              "term": "Rar dings",
+              "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
+            },
+            Object {
+              "collection": 1,
+              "coordinates": Array [],
+              "id": 2,
+              "isDeleted": false,
+              "locations": Array [],
+              "mainObjectId": 1,
+              "materials": Array [],
+              "museumId": 99,
+              "museumNo": "MusK58",
+              "objectData": Object {
+                "collection": 1,
+                "coordinates": Array [],
+                "id": 2,
+                "isDeleted": false,
+                "locations": Array [],
+                "mainObjectId": 1,
+                "materials": Array [],
+                "museumId": 99,
+                "museumNo": "MusK58",
+                "objectType": "collection",
+                "subNo": "2",
+                "term": "Mansjettknapp",
+                "uuid": "adea8141-8099-4f67-bff9-ea5090e18335",
+              },
+              "objectType": "collection",
+              "subNo": "2",
+              "term": "Mansjettknapp",
+              "uuid": "adea8141-8099-4f67-bff9-ea5090e18335",
+            },
+            Object {
+              "collection": 2,
+              "coordinates": Array [],
+              "id": 9,
+              "isDeleted": false,
+              "locations": Array [],
+              "materials": Array [],
+              "museumId": 99,
+              "museumNo": "MusN28",
+              "objectData": Object {
+                "collection": 2,
+                "coordinates": Array [],
+                "id": 9,
+                "isDeleted": false,
+                "locations": Array [],
+                "materials": Array [],
+                "museumId": 99,
+                "museumNo": "MusN28",
+                "objectType": "collection",
+                "term": "Tusenben",
+                "uuid": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
+              },
+              "objectType": "collection",
+              "term": "Tusenben",
+              "uuid": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
+            },
+            Object {
+              "collection": 2,
+              "coordinates": Array [],
+              "id": 8,
+              "isDeleted": false,
+              "locations": Array [],
+              "materials": Array [],
+              "museumId": 99,
+              "museumNo": "MusN37",
+              "objectData": Object {
+                "collection": 2,
+                "coordinates": Array [],
+                "id": 8,
+                "isDeleted": false,
+                "locations": Array [],
+                "materials": Array [],
+                "museumId": 99,
+                "museumNo": "MusN37",
+                "objectType": "collection",
+                "term": "Bendelorm",
+                "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
+              },
+              "objectType": "collection",
+              "term": "Bendelorm",
+              "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
+            },
+          ],
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": Array [
+            Object {
+              "collection": 1,
+              "coordinates": Array [],
+              "id": 28,
+              "isDeleted": false,
+              "locations": Array [],
+              "materials": Array [],
+              "museumId": 99,
+              "museumNo": "MusK314",
+              "objectData": Object {
+                "collection": 1,
+                "coordinates": Array [],
+                "id": 28,
+                "isDeleted": false,
+                "locations": Array [],
+                "materials": Array [],
+                "museumId": 99,
+                "museumNo": "MusK314",
+                "objectType": "collection",
+                "subNo": "b",
+                "term": "Runeskrift",
+                "uuid": "ba56a4f6-b907-4158-9a67-bca6080320bb",
+              },
+              "objectType": "collection",
+              "subNo": "b",
+              "term": "Runeskrift",
+              "uuid": "ba56a4f6-b907-4158-9a67-bca6080320bb",
+            },
+            Object {
+              "collection": 1,
+              "coordinates": Array [],
+              "id": 1,
+              "isDeleted": false,
+              "locations": Array [],
+              "mainObjectId": 1,
+              "materials": Array [],
+              "museumId": 99,
+              "museumNo": "MusK58",
+              "objectData": Object {
+                "collection": 1,
+                "coordinates": Array [],
+                "id": 1,
+                "isDeleted": false,
+                "locations": Array [],
+                "mainObjectId": 1,
+                "materials": Array [],
+                "museumId": 99,
+                "museumNo": "MusK58",
+                "objectType": "collection",
+                "subNo": "1",
+                "term": "Rar dings",
+                "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
+              },
+              "objectType": "collection",
+              "subNo": "1",
+              "term": "Rar dings",
+              "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
+            },
+            Object {
+              "collection": 1,
+              "coordinates": Array [],
+              "id": 2,
+              "isDeleted": false,
+              "locations": Array [],
+              "mainObjectId": 1,
+              "materials": Array [],
+              "museumId": 99,
+              "museumNo": "MusK58",
+              "objectData": Object {
+                "collection": 1,
+                "coordinates": Array [],
+                "id": 2,
+                "isDeleted": false,
+                "locations": Array [],
+                "mainObjectId": 1,
+                "materials": Array [],
+                "museumId": 99,
+                "museumNo": "MusK58",
+                "objectType": "collection",
+                "subNo": "2",
+                "term": "Mansjettknapp",
+                "uuid": "adea8141-8099-4f67-bff9-ea5090e18335",
+              },
+              "objectType": "collection",
+              "subNo": "2",
+              "term": "Mansjettknapp",
+              "uuid": "adea8141-8099-4f67-bff9-ea5090e18335",
+            },
+            Object {
+              "collection": 2,
+              "coordinates": Array [],
+              "id": 9,
+              "isDeleted": false,
+              "locations": Array [],
+              "materials": Array [],
+              "museumId": 99,
+              "museumNo": "MusN28",
+              "objectData": Object {
+                "collection": 2,
+                "coordinates": Array [],
+                "id": 9,
+                "isDeleted": false,
+                "locations": Array [],
+                "materials": Array [],
+                "museumId": 99,
+                "museumNo": "MusN28",
+                "objectType": "collection",
+                "term": "Tusenben",
+                "uuid": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
+              },
+              "objectType": "collection",
+              "term": "Tusenben",
+              "uuid": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
+            },
+            Object {
+              "collection": 2,
+              "coordinates": Array [],
+              "id": 8,
+              "isDeleted": false,
+              "locations": Array [],
+              "materials": Array [],
+              "museumId": 99,
+              "museumNo": "MusN37",
+              "objectData": Object {
+                "collection": 2,
+                "coordinates": Array [],
+                "id": 8,
+                "isDeleted": false,
+                "locations": Array [],
+                "materials": Array [],
+                "museumId": 99,
+                "museumNo": "MusN37",
+                "objectType": "collection",
+                "term": "Bendelorm",
+                "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
+              },
+              "objectType": "collection",
+              "term": "Bendelorm",
+              "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
+            },
+          ],
+        },
+        "caseNumber": Object {
+          "defaultValue": "cvxcvx",
+          "mapper": Object {},
+          "name": "caseNumber",
+          "rawValue": "cvxcvx",
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": "cvxcvx",
+        },
+        "doneBy": Object {
+          "defaultValue": null,
+          "mapper": Object {},
+          "name": "doneBy",
+          "rawValue": null,
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": null,
+        },
+        "doneDate": Object {
+          "defaultValue": null,
+          "mapper": Object {},
+          "name": "doneDate",
+          "rawValue": null,
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": null,
+        },
+        "eventTypeId": Object {
+          "defaultValue": 1,
+          "mapper": Object {},
+          "name": "eventTypeId",
+          "rawValue": "1",
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": 1,
+        },
+        "events": Object {
+          "defaultValue": Array [
+            Object {
+              "affectedThings": Array [
+                "ad1b5287-0168-4343-b3df-a477de113bee",
+                "adea8141-8099-4f67-bff9-ea5090e18335",
+                "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
+                "41be3c71-a71b-486d-a265-c3a92672f4cf",
+              ],
+              "eventTypeId": 2,
+              "id": 113,
+              "keywords": Array [
+                2,
+              ],
+              "materials": Array [
+                2,
+              ],
+              "note": "dfdfsdfsdf",
+              "partOf": 112,
+              "registeredBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+              "registeredDate": "2017-11-21T13:54:28+00:00",
+              "updatedBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+              "updatedDate": "2017-11-21T15:14:29+00:00",
+            },
+            Object {
+              "affectedThings": Array [
+                "adea8141-8099-4f67-bff9-ea5090e18335",
+                "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
+                "41be3c71-a71b-486d-a265-c3a92672f4cf",
+              ],
+              "eventTypeId": 3,
+              "id": 114,
+              "note": "dfsdfsdfsd",
+              "partOf": 112,
+              "registeredBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+              "registeredDate": "2017-11-21T15:09:41+00:00",
+              "updatedBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+              "updatedDate": "2017-11-21T15:14:29+00:00",
+            },
+          ],
+          "mapper": Object {},
+          "name": "events",
+          "rawValue": Array [
+            Object {
+              "affectedThings": Array [
+                "ad1b5287-0168-4343-b3df-a477de113bee",
+                "adea8141-8099-4f67-bff9-ea5090e18335",
+                "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
+                "41be3c71-a71b-486d-a265-c3a92672f4cf",
+              ],
+              "eventTypeId": 2,
+              "id": 113,
+              "keywords": Array [
+                2,
+              ],
+              "materials": Array [
+                2,
+              ],
+              "note": "dfdfsdfsdf",
+              "partOf": 112,
+              "registeredBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+              "registeredDate": "2017-11-21T13:54:28+00:00",
+              "updatedBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+              "updatedDate": "2017-11-21T15:14:29+00:00",
+            },
+            Object {
+              "affectedThings": Array [
+                "adea8141-8099-4f67-bff9-ea5090e18335",
+                "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
+                "41be3c71-a71b-486d-a265-c3a92672f4cf",
+              ],
+              "eventTypeId": 3,
+              "id": 114,
+              "note": "dfsdfsdfsd",
+              "partOf": 112,
+              "registeredBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+              "registeredDate": "2017-11-21T15:09:41+00:00",
+              "updatedBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+              "updatedDate": "2017-11-21T15:14:29+00:00",
+            },
+          ],
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": Array [
+            Object {
+              "affectedThings": Array [
+                "ad1b5287-0168-4343-b3df-a477de113bee",
+                "adea8141-8099-4f67-bff9-ea5090e18335",
+                "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
+                "41be3c71-a71b-486d-a265-c3a92672f4cf",
+              ],
+              "eventTypeId": 2,
+              "id": 113,
+              "keywords": Array [
+                2,
+              ],
+              "materials": Array [
+                2,
+              ],
+              "note": "dfdfsdfsdf",
+              "partOf": 112,
+              "registeredBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+              "registeredDate": "2017-11-21T13:54:28+00:00",
+              "updatedBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+              "updatedDate": "2017-11-21T15:14:29+00:00",
+            },
+            Object {
+              "affectedThings": Array [
+                "adea8141-8099-4f67-bff9-ea5090e18335",
+                "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
+                "41be3c71-a71b-486d-a265-c3a92672f4cf",
+              ],
+              "eventTypeId": 3,
+              "id": 114,
+              "note": "dfsdfsdfsd",
+              "partOf": 112,
+              "registeredBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+              "registeredDate": "2017-11-21T15:09:41+00:00",
+              "updatedBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+              "updatedDate": "2017-11-21T15:14:29+00:00",
+            },
+          ],
+        },
+        "id": Object {
+          "defaultValue": 112,
+          "mapper": Object {},
+          "name": "id",
+          "rawValue": "112",
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": "112",
+        },
+        "note": Object {
+          "defaultValue": "bcvbcv",
+          "mapper": Object {},
+          "name": "note",
+          "rawValue": "bcvbcv",
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": "bcvbcv",
+        },
+        "objects": Object {
+          "defaultValue": Array [],
+          "mapper": Object {},
+          "name": "objects",
+          "rawValue": Array [],
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": Array [],
+        },
+        "participating": Object {
+          "defaultValue": null,
+          "mapper": Object {},
+          "name": "participating",
+          "rawValue": null,
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": null,
+        },
+        "participatingName": Object {
+          "defaultValue": null,
+          "mapper": Object {},
+          "name": "participatingName",
+          "rawValue": null,
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": null,
+        },
+        "registeredBy": Object {
+          "defaultValue": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+          "mapper": Object {},
+          "name": "registeredBy",
+          "rawValue": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+        },
+        "registeredByName": Object {
+          "defaultValue": "Rituvesh Kumar",
+          "mapper": Object {},
+          "name": "registeredByName",
+          "rawValue": "Rituvesh Kumar",
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": "Rituvesh Kumar",
+        },
+        "registeredDate": Object {
+          "defaultValue": "2017-11-21T13:54:28+00:00",
+          "mapper": Object {},
+          "name": "registeredDate",
+          "rawValue": "2017-11-21T13:54:28+00:00",
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": "2017-11-21T13:54:28+00:00",
+        },
+        "subEventTypes": Object {
+          "defaultValue": "",
+          "mapper": Object {},
+          "name": "subEventTypes",
+          "rawValue": null,
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": null,
+        },
+        "updatedBy": Object {
+          "defaultValue": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+          "mapper": Object {},
+          "name": "updatedBy",
+          "rawValue": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+        },
+        "updatedByName": Object {
+          "defaultValue": "Rituvesh Kumar",
+          "mapper": Object {},
+          "name": "updatedByName",
+          "rawValue": "Rituvesh Kumar",
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": "Rituvesh Kumar",
+        },
+        "updatedDate": Object {
+          "defaultValue": "2017-11-21T15:14:29+00:00",
+          "mapper": Object {},
+          "name": "updatedDate",
+          "rawValue": "2017-11-21T15:14:29+00:00",
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": "2017-11-21T15:14:29+00:00",
+        },
       }
-    >
-      <MetaInformation
-        registeredBy="Rituvesh Kumar"
-        registeredDate="2017-11-21T13:54:28+00:00"
-        updatedBy="Rituvesh Kumar"
-        updatedDate="2017-11-21T15:14:29+00:00"
-      />
-    </div>
-    <hr />
-  </form>
+    }
+    style={
+      Object {
+        "float": "right",
+        "marginRight": 12,
+      }
+    }
+  >
+    Endre
+  </button>
   <ViewConservationProcessForm
     form={
       Object {
@@ -2499,7 +3309,6 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
       }
     }
   />
-  <hr />
   <h2>
     Personer tilknyttet bruk og bevaring
   </h2>
@@ -3324,818 +4133,19 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
     deleteDisabled={false}
     deleteHide={true}
     editDisabled={false}
-    editOnClick={
-      Object {
-        "actorsAndRoles": Object {
-          "defaultValue": Array [],
-          "mapper": Object {},
-          "name": "actorsAndRoles",
-          "rawValue": Array [],
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": Array [],
-        },
-        "affectedThings": Object {
-          "defaultValue": Array [
-            Object {
-              "collection": 1,
-              "coordinates": Array [],
-              "id": 28,
-              "isDeleted": false,
-              "locations": Array [],
-              "materials": Array [],
-              "museumId": 99,
-              "museumNo": "MusK314",
-              "objectData": Object {
-                "collection": 1,
-                "coordinates": Array [],
-                "id": 28,
-                "isDeleted": false,
-                "locations": Array [],
-                "materials": Array [],
-                "museumId": 99,
-                "museumNo": "MusK314",
-                "objectType": "collection",
-                "subNo": "b",
-                "term": "Runeskrift",
-                "uuid": "ba56a4f6-b907-4158-9a67-bca6080320bb",
-              },
-              "objectType": "collection",
-              "subNo": "b",
-              "term": "Runeskrift",
-              "uuid": "ba56a4f6-b907-4158-9a67-bca6080320bb",
-            },
-            Object {
-              "collection": 1,
-              "coordinates": Array [],
-              "id": 1,
-              "isDeleted": false,
-              "locations": Array [],
-              "mainObjectId": 1,
-              "materials": Array [],
-              "museumId": 99,
-              "museumNo": "MusK58",
-              "objectData": Object {
-                "collection": 1,
-                "coordinates": Array [],
-                "id": 1,
-                "isDeleted": false,
-                "locations": Array [],
-                "mainObjectId": 1,
-                "materials": Array [],
-                "museumId": 99,
-                "museumNo": "MusK58",
-                "objectType": "collection",
-                "subNo": "1",
-                "term": "Rar dings",
-                "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
-              },
-              "objectType": "collection",
-              "subNo": "1",
-              "term": "Rar dings",
-              "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
-            },
-            Object {
-              "collection": 1,
-              "coordinates": Array [],
-              "id": 2,
-              "isDeleted": false,
-              "locations": Array [],
-              "mainObjectId": 1,
-              "materials": Array [],
-              "museumId": 99,
-              "museumNo": "MusK58",
-              "objectData": Object {
-                "collection": 1,
-                "coordinates": Array [],
-                "id": 2,
-                "isDeleted": false,
-                "locations": Array [],
-                "mainObjectId": 1,
-                "materials": Array [],
-                "museumId": 99,
-                "museumNo": "MusK58",
-                "objectType": "collection",
-                "subNo": "2",
-                "term": "Mansjettknapp",
-                "uuid": "adea8141-8099-4f67-bff9-ea5090e18335",
-              },
-              "objectType": "collection",
-              "subNo": "2",
-              "term": "Mansjettknapp",
-              "uuid": "adea8141-8099-4f67-bff9-ea5090e18335",
-            },
-            Object {
-              "collection": 2,
-              "coordinates": Array [],
-              "id": 9,
-              "isDeleted": false,
-              "locations": Array [],
-              "materials": Array [],
-              "museumId": 99,
-              "museumNo": "MusN28",
-              "objectData": Object {
-                "collection": 2,
-                "coordinates": Array [],
-                "id": 9,
-                "isDeleted": false,
-                "locations": Array [],
-                "materials": Array [],
-                "museumId": 99,
-                "museumNo": "MusN28",
-                "objectType": "collection",
-                "term": "Tusenben",
-                "uuid": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
-              },
-              "objectType": "collection",
-              "term": "Tusenben",
-              "uuid": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
-            },
-            Object {
-              "collection": 2,
-              "coordinates": Array [],
-              "id": 8,
-              "isDeleted": false,
-              "locations": Array [],
-              "materials": Array [],
-              "museumId": 99,
-              "museumNo": "MusN37",
-              "objectData": Object {
-                "collection": 2,
-                "coordinates": Array [],
-                "id": 8,
-                "isDeleted": false,
-                "locations": Array [],
-                "materials": Array [],
-                "museumId": 99,
-                "museumNo": "MusN37",
-                "objectType": "collection",
-                "term": "Bendelorm",
-                "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
-              },
-              "objectType": "collection",
-              "term": "Bendelorm",
-              "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
-            },
-          ],
-          "mapper": Object {},
-          "name": "affectedThings",
-          "rawValue": Array [
-            Object {
-              "collection": 1,
-              "coordinates": Array [],
-              "id": 28,
-              "isDeleted": false,
-              "locations": Array [],
-              "materials": Array [],
-              "museumId": 99,
-              "museumNo": "MusK314",
-              "objectData": Object {
-                "collection": 1,
-                "coordinates": Array [],
-                "id": 28,
-                "isDeleted": false,
-                "locations": Array [],
-                "materials": Array [],
-                "museumId": 99,
-                "museumNo": "MusK314",
-                "objectType": "collection",
-                "subNo": "b",
-                "term": "Runeskrift",
-                "uuid": "ba56a4f6-b907-4158-9a67-bca6080320bb",
-              },
-              "objectType": "collection",
-              "subNo": "b",
-              "term": "Runeskrift",
-              "uuid": "ba56a4f6-b907-4158-9a67-bca6080320bb",
-            },
-            Object {
-              "collection": 1,
-              "coordinates": Array [],
-              "id": 1,
-              "isDeleted": false,
-              "locations": Array [],
-              "mainObjectId": 1,
-              "materials": Array [],
-              "museumId": 99,
-              "museumNo": "MusK58",
-              "objectData": Object {
-                "collection": 1,
-                "coordinates": Array [],
-                "id": 1,
-                "isDeleted": false,
-                "locations": Array [],
-                "mainObjectId": 1,
-                "materials": Array [],
-                "museumId": 99,
-                "museumNo": "MusK58",
-                "objectType": "collection",
-                "subNo": "1",
-                "term": "Rar dings",
-                "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
-              },
-              "objectType": "collection",
-              "subNo": "1",
-              "term": "Rar dings",
-              "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
-            },
-            Object {
-              "collection": 1,
-              "coordinates": Array [],
-              "id": 2,
-              "isDeleted": false,
-              "locations": Array [],
-              "mainObjectId": 1,
-              "materials": Array [],
-              "museumId": 99,
-              "museumNo": "MusK58",
-              "objectData": Object {
-                "collection": 1,
-                "coordinates": Array [],
-                "id": 2,
-                "isDeleted": false,
-                "locations": Array [],
-                "mainObjectId": 1,
-                "materials": Array [],
-                "museumId": 99,
-                "museumNo": "MusK58",
-                "objectType": "collection",
-                "subNo": "2",
-                "term": "Mansjettknapp",
-                "uuid": "adea8141-8099-4f67-bff9-ea5090e18335",
-              },
-              "objectType": "collection",
-              "subNo": "2",
-              "term": "Mansjettknapp",
-              "uuid": "adea8141-8099-4f67-bff9-ea5090e18335",
-            },
-            Object {
-              "collection": 2,
-              "coordinates": Array [],
-              "id": 9,
-              "isDeleted": false,
-              "locations": Array [],
-              "materials": Array [],
-              "museumId": 99,
-              "museumNo": "MusN28",
-              "objectData": Object {
-                "collection": 2,
-                "coordinates": Array [],
-                "id": 9,
-                "isDeleted": false,
-                "locations": Array [],
-                "materials": Array [],
-                "museumId": 99,
-                "museumNo": "MusN28",
-                "objectType": "collection",
-                "term": "Tusenben",
-                "uuid": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
-              },
-              "objectType": "collection",
-              "term": "Tusenben",
-              "uuid": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
-            },
-            Object {
-              "collection": 2,
-              "coordinates": Array [],
-              "id": 8,
-              "isDeleted": false,
-              "locations": Array [],
-              "materials": Array [],
-              "museumId": 99,
-              "museumNo": "MusN37",
-              "objectData": Object {
-                "collection": 2,
-                "coordinates": Array [],
-                "id": 8,
-                "isDeleted": false,
-                "locations": Array [],
-                "materials": Array [],
-                "museumId": 99,
-                "museumNo": "MusN37",
-                "objectType": "collection",
-                "term": "Bendelorm",
-                "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
-              },
-              "objectType": "collection",
-              "term": "Bendelorm",
-              "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
-            },
-          ],
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": Array [
-            Object {
-              "collection": 1,
-              "coordinates": Array [],
-              "id": 28,
-              "isDeleted": false,
-              "locations": Array [],
-              "materials": Array [],
-              "museumId": 99,
-              "museumNo": "MusK314",
-              "objectData": Object {
-                "collection": 1,
-                "coordinates": Array [],
-                "id": 28,
-                "isDeleted": false,
-                "locations": Array [],
-                "materials": Array [],
-                "museumId": 99,
-                "museumNo": "MusK314",
-                "objectType": "collection",
-                "subNo": "b",
-                "term": "Runeskrift",
-                "uuid": "ba56a4f6-b907-4158-9a67-bca6080320bb",
-              },
-              "objectType": "collection",
-              "subNo": "b",
-              "term": "Runeskrift",
-              "uuid": "ba56a4f6-b907-4158-9a67-bca6080320bb",
-            },
-            Object {
-              "collection": 1,
-              "coordinates": Array [],
-              "id": 1,
-              "isDeleted": false,
-              "locations": Array [],
-              "mainObjectId": 1,
-              "materials": Array [],
-              "museumId": 99,
-              "museumNo": "MusK58",
-              "objectData": Object {
-                "collection": 1,
-                "coordinates": Array [],
-                "id": 1,
-                "isDeleted": false,
-                "locations": Array [],
-                "mainObjectId": 1,
-                "materials": Array [],
-                "museumId": 99,
-                "museumNo": "MusK58",
-                "objectType": "collection",
-                "subNo": "1",
-                "term": "Rar dings",
-                "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
-              },
-              "objectType": "collection",
-              "subNo": "1",
-              "term": "Rar dings",
-              "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
-            },
-            Object {
-              "collection": 1,
-              "coordinates": Array [],
-              "id": 2,
-              "isDeleted": false,
-              "locations": Array [],
-              "mainObjectId": 1,
-              "materials": Array [],
-              "museumId": 99,
-              "museumNo": "MusK58",
-              "objectData": Object {
-                "collection": 1,
-                "coordinates": Array [],
-                "id": 2,
-                "isDeleted": false,
-                "locations": Array [],
-                "mainObjectId": 1,
-                "materials": Array [],
-                "museumId": 99,
-                "museumNo": "MusK58",
-                "objectType": "collection",
-                "subNo": "2",
-                "term": "Mansjettknapp",
-                "uuid": "adea8141-8099-4f67-bff9-ea5090e18335",
-              },
-              "objectType": "collection",
-              "subNo": "2",
-              "term": "Mansjettknapp",
-              "uuid": "adea8141-8099-4f67-bff9-ea5090e18335",
-            },
-            Object {
-              "collection": 2,
-              "coordinates": Array [],
-              "id": 9,
-              "isDeleted": false,
-              "locations": Array [],
-              "materials": Array [],
-              "museumId": 99,
-              "museumNo": "MusN28",
-              "objectData": Object {
-                "collection": 2,
-                "coordinates": Array [],
-                "id": 9,
-                "isDeleted": false,
-                "locations": Array [],
-                "materials": Array [],
-                "museumId": 99,
-                "museumNo": "MusN28",
-                "objectType": "collection",
-                "term": "Tusenben",
-                "uuid": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
-              },
-              "objectType": "collection",
-              "term": "Tusenben",
-              "uuid": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
-            },
-            Object {
-              "collection": 2,
-              "coordinates": Array [],
-              "id": 8,
-              "isDeleted": false,
-              "locations": Array [],
-              "materials": Array [],
-              "museumId": 99,
-              "museumNo": "MusN37",
-              "objectData": Object {
-                "collection": 2,
-                "coordinates": Array [],
-                "id": 8,
-                "isDeleted": false,
-                "locations": Array [],
-                "materials": Array [],
-                "museumId": 99,
-                "museumNo": "MusN37",
-                "objectType": "collection",
-                "term": "Bendelorm",
-                "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
-              },
-              "objectType": "collection",
-              "term": "Bendelorm",
-              "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
-            },
-          ],
-        },
-        "caseNumber": Object {
-          "defaultValue": "cvxcvx",
-          "mapper": Object {},
-          "name": "caseNumber",
-          "rawValue": "cvxcvx",
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": "cvxcvx",
-        },
-        "doneBy": Object {
-          "defaultValue": null,
-          "mapper": Object {},
-          "name": "doneBy",
-          "rawValue": null,
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": null,
-        },
-        "doneDate": Object {
-          "defaultValue": null,
-          "mapper": Object {},
-          "name": "doneDate",
-          "rawValue": null,
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": null,
-        },
-        "eventTypeId": Object {
-          "defaultValue": 1,
-          "mapper": Object {},
-          "name": "eventTypeId",
-          "rawValue": "1",
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": 1,
-        },
-        "events": Object {
-          "defaultValue": Array [
-            Object {
-              "affectedThings": Array [
-                "ad1b5287-0168-4343-b3df-a477de113bee",
-                "adea8141-8099-4f67-bff9-ea5090e18335",
-                "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
-                "41be3c71-a71b-486d-a265-c3a92672f4cf",
-              ],
-              "eventTypeId": 2,
-              "id": 113,
-              "keywords": Array [
-                2,
-              ],
-              "materials": Array [
-                2,
-              ],
-              "note": "dfdfsdfsdf",
-              "partOf": 112,
-              "registeredBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-              "registeredDate": "2017-11-21T13:54:28+00:00",
-              "updatedBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-              "updatedDate": "2017-11-21T15:14:29+00:00",
-            },
-            Object {
-              "affectedThings": Array [
-                "adea8141-8099-4f67-bff9-ea5090e18335",
-                "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
-                "41be3c71-a71b-486d-a265-c3a92672f4cf",
-              ],
-              "eventTypeId": 3,
-              "id": 114,
-              "note": "dfsdfsdfsd",
-              "partOf": 112,
-              "registeredBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-              "registeredDate": "2017-11-21T15:09:41+00:00",
-              "updatedBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-              "updatedDate": "2017-11-21T15:14:29+00:00",
-            },
-          ],
-          "mapper": Object {},
-          "name": "events",
-          "rawValue": Array [
-            Object {
-              "affectedThings": Array [
-                "ad1b5287-0168-4343-b3df-a477de113bee",
-                "adea8141-8099-4f67-bff9-ea5090e18335",
-                "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
-                "41be3c71-a71b-486d-a265-c3a92672f4cf",
-              ],
-              "eventTypeId": 2,
-              "id": 113,
-              "keywords": Array [
-                2,
-              ],
-              "materials": Array [
-                2,
-              ],
-              "note": "dfdfsdfsdf",
-              "partOf": 112,
-              "registeredBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-              "registeredDate": "2017-11-21T13:54:28+00:00",
-              "updatedBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-              "updatedDate": "2017-11-21T15:14:29+00:00",
-            },
-            Object {
-              "affectedThings": Array [
-                "adea8141-8099-4f67-bff9-ea5090e18335",
-                "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
-                "41be3c71-a71b-486d-a265-c3a92672f4cf",
-              ],
-              "eventTypeId": 3,
-              "id": 114,
-              "note": "dfsdfsdfsd",
-              "partOf": 112,
-              "registeredBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-              "registeredDate": "2017-11-21T15:09:41+00:00",
-              "updatedBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-              "updatedDate": "2017-11-21T15:14:29+00:00",
-            },
-          ],
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": Array [
-            Object {
-              "affectedThings": Array [
-                "ad1b5287-0168-4343-b3df-a477de113bee",
-                "adea8141-8099-4f67-bff9-ea5090e18335",
-                "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
-                "41be3c71-a71b-486d-a265-c3a92672f4cf",
-              ],
-              "eventTypeId": 2,
-              "id": 113,
-              "keywords": Array [
-                2,
-              ],
-              "materials": Array [
-                2,
-              ],
-              "note": "dfdfsdfsdf",
-              "partOf": 112,
-              "registeredBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-              "registeredDate": "2017-11-21T13:54:28+00:00",
-              "updatedBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-              "updatedDate": "2017-11-21T15:14:29+00:00",
-            },
-            Object {
-              "affectedThings": Array [
-                "adea8141-8099-4f67-bff9-ea5090e18335",
-                "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
-                "41be3c71-a71b-486d-a265-c3a92672f4cf",
-              ],
-              "eventTypeId": 3,
-              "id": 114,
-              "note": "dfsdfsdfsd",
-              "partOf": 112,
-              "registeredBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-              "registeredDate": "2017-11-21T15:09:41+00:00",
-              "updatedBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-              "updatedDate": "2017-11-21T15:14:29+00:00",
-            },
-          ],
-        },
-        "id": Object {
-          "defaultValue": 112,
-          "mapper": Object {},
-          "name": "id",
-          "rawValue": "112",
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": "112",
-        },
-        "note": Object {
-          "defaultValue": "bcvbcv",
-          "mapper": Object {},
-          "name": "note",
-          "rawValue": "bcvbcv",
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": "bcvbcv",
-        },
-        "objects": Object {
-          "defaultValue": Array [],
-          "mapper": Object {},
-          "name": "objects",
-          "rawValue": Array [],
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": Array [],
-        },
-        "participating": Object {
-          "defaultValue": null,
-          "mapper": Object {},
-          "name": "participating",
-          "rawValue": null,
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": null,
-        },
-        "participatingName": Object {
-          "defaultValue": null,
-          "mapper": Object {},
-          "name": "participatingName",
-          "rawValue": null,
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": null,
-        },
-        "registeredBy": Object {
-          "defaultValue": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-          "mapper": Object {},
-          "name": "registeredBy",
-          "rawValue": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-        },
-        "registeredByName": Object {
-          "defaultValue": "Rituvesh Kumar",
-          "mapper": Object {},
-          "name": "registeredByName",
-          "rawValue": "Rituvesh Kumar",
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": "Rituvesh Kumar",
-        },
-        "registeredDate": Object {
-          "defaultValue": "2017-11-21T13:54:28+00:00",
-          "mapper": Object {},
-          "name": "registeredDate",
-          "rawValue": "2017-11-21T13:54:28+00:00",
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": "2017-11-21T13:54:28+00:00",
-        },
-        "subEventTypes": Object {
-          "defaultValue": "",
-          "mapper": Object {},
-          "name": "subEventTypes",
-          "rawValue": null,
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": null,
-        },
-        "updatedBy": Object {
-          "defaultValue": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-          "mapper": Object {},
-          "name": "updatedBy",
-          "rawValue": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-        },
-        "updatedByName": Object {
-          "defaultValue": "Rituvesh Kumar",
-          "mapper": Object {},
-          "name": "updatedByName",
-          "rawValue": "Rituvesh Kumar",
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": "Rituvesh Kumar",
-        },
-        "updatedDate": Object {
-          "defaultValue": "2017-11-21T15:14:29+00:00",
-          "mapper": Object {},
-          "name": "updatedDate",
-          "rawValue": "2017-11-21T15:14:29+00:00",
-          "status": Object {
-            "error": null,
-            "valid": true,
-          },
-          "validator": Object {
-            "rawValidator": null,
-          },
-          "value": "2017-11-21T15:14:29+00:00",
-        },
-      }
-    }
+    md={12}
     saveDisabled={true}
     saveOnClick={[Function]}
   />
   <br />
-  <br />
+  <div
+    style={
+      Object {
+        "borderBottom": "#cdcdcd 3px solid",
+        "marginTop": 40,
+      }
+    }
+  />
   <br />
   <h2>
     Objekter knyttet til hendelsen
@@ -4571,7 +4581,6 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
     }
     viewMode={true}
   />
-  <hr />
   <div
     className="form-group"
   >
@@ -9039,7 +9048,7 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
     }
     singleSelect={true}
     stringValue={null}
-    title="Velg delhendelser som skal lages:"
+    title="Velg delhendelser som skal lages"
     titleSize="h4"
     viewMode={false}
   />
@@ -9048,10 +9057,9 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
     disabled={true}
     onClick={[Function]}
   >
-    Opprett valgte delhendelser
+    Oprett delhendelse
   </button>
   <hr />
-  <br />
   <div
     className="wrap poptooltip"
     rel="tooltip"
@@ -9076,6 +9084,25 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
       </button>
     </div>
   </div>
+  <br />
+  <form
+    className="form-horizontal"
+  >
+    <div
+      style={
+        Object {
+          "marginLeft": -85,
+        }
+      }
+    >
+      <MetaInformation
+        registeredBy="Rituvesh Kumar"
+        registeredDate="2017-11-21T13:54:28+00:00"
+        updatedBy="Rituvesh Kumar"
+        updatedDate="2017-11-21T15:14:29+00:00"
+      />
+    </div>
+  </form>
   <div
     style={
       Object {

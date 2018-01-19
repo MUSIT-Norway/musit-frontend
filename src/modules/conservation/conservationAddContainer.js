@@ -15,6 +15,7 @@ import type { Props } from './conservationComponent';
 import type { Location } from './shared/submit';
 import type { History } from '../../types/Routes';
 import type { ObjectData } from '../../types/object';
+import { formatISOString } from '../../shared/util';
 
 const { form$, updateForm$, clearForm$ } = conservationForm;
 
@@ -51,9 +52,29 @@ const combinedStore$ = createStore(
   )
 );
 
-const ManagedConservationFormComponent = lifeCycle({ onUnmount })(
-  ConservationAddComponent
-);
+export const onReceiveProps = () => (props: any) => {
+  const defaultActorsAndRoles = [
+    {
+      name: props.appSession && props.appSession.actor && props.appSession.actor.fn,
+      uuid:
+        props.appSession && props.appSession.actor && props.appSession.actor.dataportenId,
+      role: 1,
+      date: formatISOString(new Date())
+    }
+  ];
+
+  if (!(props.form.actorsAndRoles.value && props.form.actorsAndRoles.value.length > 0)) {
+    props.updateForm({
+      name: 'actorsAndRoles',
+      rawValue: defaultActorsAndRoles
+    });
+  }
+};
+
+const ManagedConservationFormComponent = lifeCycle({
+  onReceiveProps: onReceiveProps(),
+  onUnmount
+})(ConservationAddComponent);
 
 export default flowRight([
   inject(combinedStore$, addProps),

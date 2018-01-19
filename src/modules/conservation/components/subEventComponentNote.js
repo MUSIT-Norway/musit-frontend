@@ -21,25 +21,18 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
     editDisabled: !!props.editable,
     deleteDisabled: !!props.editable
   };
+
   const subEventComponentNote = (
     <div className="container">
-      {!props.viewMode &&
-      !props.subEvent.id && (
-        <div className="row form-group">
-          <div className="col-md-10">
-            <button
-              className="btn btn-default"
-              onClick={e => {
-                e.preventDefault();
-                props.onDelete && props.onDelete();
-              }}
-            >
-              <FontAwesome name={'times'} />
-            </button>
-            <hr />
-          </div>
-        </div>
-      )}{' '}
+      <button
+        key="btn-edit"
+        className="btn btn-primary"
+        disabled={toolbarBooleanParameter.editDisabled}
+        onClick={props.onEdit}
+        style={{ float: 'right', marginRight: 110 }}
+      >
+        {I18n.t('musit.texts.edit')}
+      </button>
       <br />
       <div className="form-group">
         <div className="row">
@@ -71,7 +64,6 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
                 showDateForRole={(roleName: string) => [1].some(e => e === roleName)}
               />
             )}
-            <hr />
           </div>
         </div>
       </div>
@@ -166,6 +158,7 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
         deleteOnClick={e => props.onDelete(e)}
         editOnClick={e => props.onEdit(e)}
         {...toolbarBooleanParameter}
+        md={11}
       />
     </div>
   );
