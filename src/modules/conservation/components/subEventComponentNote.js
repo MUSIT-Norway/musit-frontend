@@ -47,7 +47,7 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
                 personData={props.subEvent.actorsAndRoles || []}
                 getDisplayNameForRole={(r: string) => {
                   const role = find(props.roleList, rl => rl.roleId === r);
-                  return role && role.noRole;
+                  return props.appSession.language.isEn ? role.enRole : role.noRole;
                 }}
               />
             ) : (
@@ -58,7 +58,7 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
                 updateForm={props.onChangePersonActorRole}
                 getDisplayNameForRole={(r: string | number) => {
                   const role = find(props.roleList, rl => rl.roleId === r);
-                  return role.noRole;
+                  return props.appSession.language.isEn ? role.enRole : role.noRole;
                 }}
                 roles={props.roleList ? props.roleList.map(e => e.roleId) : []}
                 showDateForRole={(roleName: string) => [1].some(e => e === roleName)}

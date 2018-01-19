@@ -52,7 +52,7 @@ const combinedStore$ = createStore(
   )
 );
 
-export const onReceiveProps = () => (props: any) => {
+export const onMountProps = () => (props: any) => {
   const defaultActorsAndRoles = [
     {
       name: props.appSession && props.appSession.actor && props.appSession.actor.fn,
@@ -72,7 +72,7 @@ export const onReceiveProps = () => (props: any) => {
 };
 
 const ManagedConservationFormComponent = lifeCycle({
-  onReceiveProps: onReceiveProps(),
+  onMount: onMountProps(),
   onUnmount
 })(ConservationAddComponent);
 

@@ -49,7 +49,7 @@
             "note":"Note",
             "lightLevel":"Light level",
             "uvLevel":"UV level",
-            "relativeHumidity":"RelativeH humidity(%)",
+            "relativeHumidity":"Relative humidity(%)",
             "temperature":"Temperature(°C)"
           },
           "hseRisk":{
@@ -1041,7 +1041,7 @@
         "createNewSubEvents": "Oprett delhendelse",
         "roles": {
           "doneBy": "Utført av",
-          "participating": "Deltagende"
+          "participating": "Deltatt i"
         },
         "errorMessages":  {
           "noRoleForPerson" : "Ingen rolle valgt for person",
@@ -1091,7 +1091,7 @@
           "report":{
             "report": "Rapport",
             "note":"Merknad",
-            "archiveReference":"Arkiv referanse"
+            "archiveReference":"Arkivreferanse"
           },
           "materialDetermination":{
             "materialDetermination": "Materialbestemmelse",

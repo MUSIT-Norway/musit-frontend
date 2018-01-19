@@ -435,7 +435,7 @@ export default function ConservationComponent(
                 props.predefinedConservation.roleList,
                 rl => rl.roleId === r
               );
-              return role.noRole;
+              return props.appSession.language.isEn ? role.enRole : role.noRole;
             }}
           />
         ) : (
@@ -449,7 +449,7 @@ export default function ConservationComponent(
                 props.predefinedConservation.roleList,
                 rl => rl.roleId === r
               );
-              return role.noRole;
+              return props.appSession.language.isEn ? role.enRole : role.noRole;
             }}
             roles={
               props.predefinedConservation.roleList &&
