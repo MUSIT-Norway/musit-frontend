@@ -79,6 +79,7 @@ export function FormFileSelect(props: FileSelect) {
       labelSize={props.labelSize}
       labelWidth={props.labelWidth}
       elementWidth={props.elementWidth}
+      labelAbove={props.labelAbove}
     >
       <input
         type="file"

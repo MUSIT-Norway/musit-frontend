@@ -1636,7 +1636,7 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
     disabled={true}
     onClick={[Function]}
   >
-    Oprett delhendelse
+    Opprett delhendelse
   </button>
   <hr />
   <div
@@ -9057,7 +9057,7 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
     disabled={true}
     onClick={[Function]}
   >
-    Oprett delhendelse
+    Opprett delhendelse
   </button>
   <hr />
   <div

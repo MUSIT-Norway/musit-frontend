@@ -1031,14 +1031,14 @@
         "conservation": "Bruk og bevaring",
         "askForDeleteConfirmation": "Vil du slette delhendelse?",
         "notAbleToCollapse": "Ikke tillatt å kollapse underhendelsen i redigeringsmodus. Vennligst klikk på lagre og avbryt knappen for å endre redigeringsmodus.",
-        "confirmDelete": "Delhndelse er slettet.",
+        "confirmDelete": "Delhendelse er slettet.",
         "subEvents": "Delhendelser",
         "objectsConnected": "Objekter knyttet til hendelsen",
         "documents": "Vedlegg",        
         "newConservation": "Ny bruk og bevaring",
         "createConservation": "Opprett bruk og bevaring",
         "choseNewSubEvents": "Velg delhendelser som skal lages",
-        "createNewSubEvents": "Oprett delhendelse",
+        "createNewSubEvents": "Opprett delhendelse",
         "roles": {
           "doneBy": "Utført av",
           "participating": "Deltatt i"
@@ -1097,7 +1097,7 @@
             "materialDetermination": "Materialbestemmelse",
             "note":"Merknad",
             "material":"Material",
-            "specialMaterial":"spematerial",
+            "specialMaterial":"Spesialmaterial",
             "sequence":"Sekvens"
           },
           "note":{
@@ -1599,8 +1599,8 @@
         "makeChoice": "Vennligst velg...",
         "chooseValue": "Velg verdi",
         "datePerformed": "Utført dato",
-        "dateRegistered": "Oprettet dato",
-        "registeredBy": "Oprettet av",
+        "dateRegistered": "Opprettet dato",
+        "registeredBy": "Opprettet av",
         "performedBy": "Utført av",
         "ok": "OK",
         "notOk": "Ikke OK",

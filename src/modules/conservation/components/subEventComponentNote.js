@@ -96,6 +96,7 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
             label={I18n.t('musit.conservation.documents') + suffix}
             labelWidth={2}
             labelSize="h4"
+            labelAbove
             elementWidth={5}
             value={props.subEvent.documents}
             multiple={true}
@@ -104,44 +105,44 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
         </div>
       )}
       {props.subEvent.files && (
-        <div className="row form-group">
-          <div className="col-md-2">
-            <label className="control-label h4" htmlFor={`document_${props.index}`}>
-              {props.viewMode ? I18n.t('musit.conservation.documents') + suffix : ''}
-            </label>
-          </div>
-          <div className="col-md-5" style={{ marginTop: 10 }}>
-            {Array.isArray(props.subEvent.files) &&
-              props.subEvent.files.map(file => {
-                if (file.error) {
-                  return null;
-                }
-                const fid = file.fid;
-                const title = file.title;
-                return (
-                  <p key={fid}>
-                    <button
-                      className="btn-link"
-                      onClick={e => {
-                        e.preventDefault();
-                        getFileAsBlob(
-                          fid,
-                          props.appSession.museumId,
-                          props.appSession.accessToken
-                        )
-                          .do(res => {
-                            if (res instanceof Blob) {
-                              saveBlob(res, title);
-                            }
-                          })
-                          .toPromise();
-                      }}
-                    >
-                      {file.title}
-                    </button>
-                  </p>
-                );
-              })}
+        <div className="form-group">
+          <div className="row">
+            <div className="col-md-5">
+              <label className="control-label h4" htmlFor={`document_${props.index}`}>
+                {props.viewMode ? I18n.t('musit.conservation.documents') + suffix : ''}
+              </label>
+              {Array.isArray(props.subEvent.files) &&
+                props.subEvent.files.map(file => {
+                  if (file.error) {
+                    return null;
+                  }
+                  const fid = file.fid;
+                  const title = file.title;
+                  return (
+                    <div key={fid}>
+                      <a
+                        href
+                        onClick={e => {
+                          e.preventDefault();
+                          getFileAsBlob(
+                            fid,
+                            props.appSession.museumId,
+                            props.appSession.accessToken
+                          )
+                            .do(res => {
+                              if (res instanceof Blob) {
+                                saveBlob(res, title);
+                              }
+                            })
+                            .toPromise();
+                        }}
+                      >
+                        {file.title}
+                      </a>
+                    </div>
+                  );
+                })}
+            </div>
           </div>
         </div>
       )}
