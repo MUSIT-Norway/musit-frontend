@@ -171,6 +171,15 @@ function createSubEvents(
           ]);
         }
         case 9: {
+          // #TODO MeasurmentAssessment
+          return acc.concat([
+            {
+              actorsAndRoles: defaultActorsAndRoles,
+              ...commonAttributes(v)
+            }
+          ]);
+        }
+        case 10: {
           return acc.concat([
             {
               actorsAndRoles: defaultActorsAndRoles,
@@ -313,7 +322,7 @@ function renderSubEvent(
         {...extraAtrribtes}
       />
     );
-  } else if (eventType === 9) {
+  } else if (eventType === 10) {
     return (
       <Note
         key={`note_${ind}`}
