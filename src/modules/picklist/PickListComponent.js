@@ -156,6 +156,7 @@ export class PickListComponent extends React.Component {
     const type = this.props.type;
     const pickList = this.props.pickList[type] || [];
     const marked = pickList.filter(p => p.marked);
+    const markedSamples = marked.filter(p => p.value.objectType === 'sample');
     const markedValues = marked.map(p => p.value);
     const isNode = this.props.isTypeNode;
     const isObject = !isNode;
@@ -272,18 +273,27 @@ export class PickListComponent extends React.Component {
                       className="normalAction"
                       style={{
                         fontSize: '1.5em',
-                        color: marked.length < 1 ? 'grey' : null
+                        color:
+                          marked.length < 1 || markedSamples.length > 0 ? 'grey' : null
                       }}
                       name="bank"
                       onClick={() => {
-                        if (marked.length > 0) {
+                        if (marked.length > 0 && markedSamples.length === 0) {
                           this.props.createConservation(
                             markedValues,
                             this.props.appSession
                           );
                         }
                       }}
-                      title={I18n.t(`musit.conservation.createConservation`)}
+                      title={
+                        markedSamples.length === 0 ? (
+                          I18n.t(`musit.conservation.createConservation`)
+                        ) : (
+                          I18n.t(
+                            'musit.conservation.errorMessages.cannotCreateConservationBecauseOfSamples'
+                          )
+                        )
+                      }
                     />
                     {this.selectedCount(isNode, marked.length)}
                     <FontAwesome

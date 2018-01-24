@@ -19,7 +19,8 @@
         },
         "errorMessages":  {
           "noRoleForPerson" : "No role chosen for person",
-          "noUUIDForPerson": "No person chosen from person list"
+          "noUUIDForPerson": "No person chosen from person list",
+          "cannotCreateConservationBecauseOfSamples": "Cannot create conservation for samples (check selected objekcts!)"
         },
         "note":"Note",
         "caseNumber":"Case number",
@@ -1045,7 +1046,8 @@
         },
         "errorMessages":  {
           "noRoleForPerson" : "Ingen rolle valgt for person",
-          "noUUIDForPerson": "Ingen person valgt fra personliste"
+          "noUUIDForPerson": "Ingen person valgt fra personliste",
+          "cannotCreateConservationBecauseOfSamples": "Kan ikke opprette konservering for prøver (sjekk valgte objekter!)"
         },
         "note":"Merknad",
         "caseNumber":"Saksnummer",
