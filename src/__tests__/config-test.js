@@ -275,6 +275,12 @@ describe('Config urls', () => {
           expected: '/api/management/99/conservation/events/object/123'
         },
         {
+          name: 'search',
+          actual: urls.api.conservation.search(99, '1234', 0, 10, 'foo'),
+          expected:
+            '/api/management/99/conservation/search?from=0&limit=10&collectionIds=1234&q=foo'
+        },
+        {
           name: 'getAllAnalysisTypes',
           actual: urls.api.analysisType.getAllAnalysisTypes(99),
           expected: '/api/management/99/analyses/types'

@@ -46,7 +46,17 @@ export default {
           addConservation: (appSession: AppSession) =>
             `${clientContextUrl(appSession)}/conservation/add`,
           viewConservation: (appSession: AppSession, conservationId: number) =>
-            `${clientContextUrl(appSession)}/conservation/${conservationId}`
+            `${clientContextUrl(appSession)}/conservation/${conservationId}`,
+          viewConservationForExpandedSubEvent: (
+            appSession: AppSession,
+            conservationId: number,
+            subEventId: number
+          ) =>
+            `${clientContextUrl(
+              appSession
+            )}/conservation/${conservationId}/${subEventId}`,
+          baseUrl: (appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/conservation`
         },
         analysis: {
           baseUrl: (appSession: AppSession) => `${clientContextUrl(appSession)}/analysis`,
@@ -146,7 +156,21 @@ export default {
           addFileUrl: (mid: MuseumId, collectionId: CollectionId, eventId: number) =>
             `/api/document/museum/${mid}/conservations/attachments?eventId=${eventId}&collectionId=${collectionId}`,
           getDeleteSubEventUrl: (mid: MuseumId, eventId: number) =>
-            `/api/management/${mid}/conservation/events?eventIds=${eventId}`
+            `/api/management/${mid}/conservation/events?eventIds=${eventId}`,
+          search: (
+            mid: MuseumId,
+            collectionIds: string,
+            from: number,
+            limit: number,
+            q: ?string
+          ) =>
+            `/api/management/${mid}/conservation/search` +
+            queryParams({
+              from,
+              limit,
+              collectionIds,
+              q
+            })
         },
         attachments: {
           getFilesUrl: (files: Array<string>, mid: MuseumId, eventId: number) =>

@@ -2,6 +2,8 @@
   "en": {
     "musit": {
       "conservation": {
+        "search": "Conservation search",
+        "queryPlaceholder": "Search for conservation event",
         "conservation": "Conservation",
         "askForDeleteConfirmation": "Would you like to delete sub-event?",
         "notAbleToCollapse":"Not allowed to collapse the sub event in edit mode. Please click on save and cancel button to change the edit mode.",
@@ -1029,6 +1031,8 @@
   "no": {
     "musit": {
       "conservation": {
+        "search": "Konservering søk",
+        "queryPlaceholder": "Søk etter konservering hendelser",
         "conservation": "Konservering",
         "askForDeleteConfirmation": "Vil du slette delhendelse?",
         "notAbleToCollapse": "Ikke tillatt å kollapse underhendelsen i redigeringsmodus. Vennligst klikk på lagre og avbryt knappen for å endre redigeringsmodus.",

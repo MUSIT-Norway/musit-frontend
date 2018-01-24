@@ -58,7 +58,8 @@ type ConservationProcessProps = {
   onDelete: Function,
   onEdit: Function,
   onSave: Function,
-  onCancel: Function
+  onCancel: Function,
+  match?: any
 };
 
 export type Props = ConservationProcessProps & {
@@ -227,6 +228,16 @@ function renderSubEvent(
     props.form.editable.rawValue &&
     props.form.editable.rawValue === ind.toString()
   );
+
+  const urlSubEventId =
+    props.match && props.match.params && props.match.params.subEventId;
+  const expanded =
+    urlSubEventId &&
+    props.form.events.value[ind].id &&
+    urlSubEventId === props.form.events.value[ind].id.toString()
+      ? true
+      : props.form.events.value[ind].expanded;
+
   const extraAttributes = {
     viewMode: viewMode,
     onDelete: props.onDelete(
@@ -238,7 +249,7 @@ function renderSubEvent(
     onSave: props.onSave,
     onCancel: props.onCancel(props.form, ind),
     editable: props.form.editable && props.form.editable.rawValue,
-    expanded: props.form.events.value[ind].expanded,
+    expanded: expanded,
     roleList: props.predefinedConservation.roleList,
     appSession: appSession,
     index: ind,

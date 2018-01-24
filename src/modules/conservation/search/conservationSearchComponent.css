@@ -1,0 +1,25 @@
+.musit__media--search {
+    border-bottom: 1px solid #ddd;
+    margin: 0 !important;
+    padding-top: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.musit__media--search:hover {
+    background-color: #f5f5f5;
+}
+
+.musit__media--search .link a span {
+    position:relative;
+    width:100%;
+    height:100%;
+    top:0;
+    left: 0;
+    z-index: 1;
+}
+
+.musit__media--search .link:hover {
+    color: rgb(0, 156, 0);
+    cursor: pointer;
+}

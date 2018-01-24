@@ -11,6 +11,8 @@ import {
 
 import { fromJsonToForm } from './conservationForm';
 
+import { conservationSearch } from './conservationSearch';
+
 export default {
   fromJsonToForm,
   getConservationForObject,
@@ -19,5 +21,6 @@ export default {
   getConservationTypes,
   loadPredefinedConservationTypes,
   saveConservationEvent,
-  deleteConservationEvent
+  deleteConservationEvent,
+  conservationSearch
 };

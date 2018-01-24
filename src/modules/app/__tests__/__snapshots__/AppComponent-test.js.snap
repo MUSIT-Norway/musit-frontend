@@ -70,6 +70,20 @@ exports[`AppComponent remders 1`] = `
           exact={false}
           replace={false}
           strict={false}
+          to="/museum/99/collections/00000000-0000-0000-0000-000000000000/conservation"
+        >
+          <NavItem
+            active={false}
+            disabled={false}
+          >
+            Konservering
+          </NavItem>
+        </LinkContainer>
+        <LinkContainer
+          activeClassName="active"
+          exact={false}
+          replace={false}
+          strict={false}
           to="/museum/99/collections/00000000-0000-0000-0000-000000000000/reports"
         >
           <NavItem
