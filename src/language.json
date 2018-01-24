@@ -2,15 +2,15 @@
   "en": {
     "musit": {
       "conservation": {
-        "conservation": "Use & conservation",
+        "conservation": "Conservation",
         "askForDeleteConfirmation": "Would you like to delete sub-event?",
         "notAbleToCollapse":"Not allowed to collapse the sub event in edit mode. Please click on save and cancel button to change the edit mode.",
         "confirmDelete": "Sub-event has been deleted.",
         "objectsConnected": "Objects connected to conservation",
         "subEvents": "Sub events",
         "documents": "Documents",
-        "newConservation": "New use & conservation",
-        "createConservation": "Create use & conservation",
+        "newConservation": "New conservation",
+        "createConservation": "Create conservation",
         "choseNewSubEvents": "Select new sub events to be created",
         "createNewSubEvents": "Create sub event",
         "roles": {"administrator": "Administrator",
@@ -144,7 +144,7 @@
             "Analysis": "Analysis",
             "MoveObject": "Relocating",
             "SampleCreated": "Sample",
-            "Conservation": "Use & conservation"            
+            "Conservation": "Conservation"            
           }
         }
       },
@@ -1028,15 +1028,15 @@
   "no": {
     "musit": {
       "conservation": {
-        "conservation": "Bruk og bevaring",
+        "conservation": "Konservering",
         "askForDeleteConfirmation": "Vil du slette delhendelse?",
         "notAbleToCollapse": "Ikke tillatt å kollapse underhendelsen i redigeringsmodus. Vennligst klikk på lagre og avbryt knappen for å endre redigeringsmodus.",
         "confirmDelete": "Delhendelse er slettet.",
         "subEvents": "Delhendelser",
         "objectsConnected": "Objekter knyttet til hendelsen",
         "documents": "Vedlegg",        
-        "newConservation": "Ny bruk og bevaring",
-        "createConservation": "Opprett bruk og bevaring",
+        "newConservation": "Ny konservering",
+        "createConservation": "Opprett konservering",
         "choseNewSubEvents": "Velg delhendelser som skal lages",
         "createNewSubEvents": "Opprett delhendelse",
         "roles": {
@@ -1049,7 +1049,7 @@
         },
         "note":"Merknad",
         "caseNumber":"Saksnummer",
-        "personsConnected":"Personer tilknyttet bruk og bevaring",
+        "personsConnected":"Personer tilknyttet konservering",
         "objectsOrSamples":"Objekter/prøver",
         "events":{
           "treatment":{
@@ -1170,7 +1170,7 @@
             "Analysis": "Analyse",
             "MoveObject": "Flytting",
             "SampleCreated": "Prøveuttak",
-            "Conservation": "Bruk og bevaring"
+            "Conservation": "Konservering"
           }
         }
       },

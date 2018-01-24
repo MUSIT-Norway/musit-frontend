@@ -169,6 +169,7 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
       eventComponent={subEventComponentNote}
       expanded={props.expanded}
       toggleExpanded={props.toggleExpanded}
+      editMode={!props.viewMode}
     />
   );
 }

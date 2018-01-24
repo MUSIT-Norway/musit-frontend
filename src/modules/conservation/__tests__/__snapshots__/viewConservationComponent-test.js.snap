@@ -13,7 +13,7 @@ exports[`ConservationViewComponent should render properly 1`] = `
       Endre
     </button>
     <h1>
-      Bruk og bevaring
+      Konservering
     </h1>
   </div>
   <form
@@ -73,7 +73,7 @@ exports[`ConservationViewComponent should render properly 1`] = `
         <label
           className="control-label"
         >
-          Personer tilknyttet bruk og bevaring
+          Personer tilknyttet konservering
         </label>
       </div>
     </div>

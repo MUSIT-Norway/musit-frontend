@@ -227,7 +227,7 @@ function renderSubEvent(
     props.form.editable.rawValue &&
     props.form.editable.rawValue === ind.toString()
   );
-  const extraAtrribtes = {
+  const extraAttributes = {
     viewMode: viewMode,
     onDelete: props.onDelete(
       props.form.events.rawValue[ind].id,
@@ -269,7 +269,7 @@ function renderSubEvent(
         keywords={props.predefinedConservation.keywordList}
         materials={props.predefinedConservation.materialList}
         treatment={props.form.events.rawValue[ind]}
-        {...extraAtrribtes}
+        {...extraAttributes}
       />
     );
   } else if (eventType === 3) {
@@ -277,7 +277,7 @@ function renderSubEvent(
       <TechnicalDescription
         key={`techincalDescription_${ind}`}
         technicalDescription={props.form.events.rawValue[ind]}
-        {...extraAtrribtes}
+        {...extraAttributes}
       />
     );
   } else if (eventType === 4) {
@@ -285,7 +285,7 @@ function renderSubEvent(
       <StorageAndHandling
         key={`storageAndHandling_${ind}`}
         storageAndHandling={props.form.events.rawValue[ind]}
-        {...extraAtrribtes}
+        {...extraAttributes}
       />
     );
   } else if (eventType === 5) {
@@ -293,7 +293,7 @@ function renderSubEvent(
       <HseRisk
         key={`hseRisk_${ind}`}
         hseRisk={props.form.events.rawValue[ind]}
-        {...extraAtrribtes}
+        {...extraAttributes}
       />
     );
   } else if (eventType === 6) {
@@ -302,7 +302,7 @@ function renderSubEvent(
         key={`conditionAssessment_${ind}`}
         conditionAssessment={props.form.events.rawValue[ind]}
         conditionCodes={props.predefinedConservation.conditionCodeList}
-        {...extraAtrribtes}
+        {...extraAttributes}
       />
     );
   } else if (eventType === 7) {
@@ -310,7 +310,7 @@ function renderSubEvent(
       <Report
         key={`report_${ind}`}
         report={props.form.events.rawValue[ind]}
-        {...extraAtrribtes}
+        {...extraAttributes}
       />
     );
   } else if (eventType === 8) {
@@ -319,7 +319,7 @@ function renderSubEvent(
         key={`materialDetermination_${ind}`}
         materialDeterminationList={props.predefinedConservation.materialDeterminationList}
         materialDetermination={props.form.events.rawValue[ind]}
-        {...extraAtrribtes}
+        {...extraAttributes}
       />
     );
   } else if (eventType === 10) {
@@ -327,7 +327,7 @@ function renderSubEvent(
       <Note
         key={`note_${ind}`}
         note={props.form.events.rawValue[ind]}
-        {...extraAtrribtes}
+        {...extraAttributes}
       />
     );
   } else {
@@ -343,7 +343,7 @@ function ConservationProcessForm(props: ProcessFormProps) {
           field={props.form.caseNumber}
           label={I18n.t('musit.conservation.caseNumber') + suffix}
           labelWidth={1}
-          labelSize="h2"
+          labelSize="h3"
           labelAbove={true}
           elementWidth={5}
           value={props.form.caseNumber.value}
@@ -361,7 +361,7 @@ function ViewConservationProcessForm(props: ProcessFormProps) {
       <form className="form-horizontal" style={{ marginLeft: -20 }}>
         <div className="form-group">
           <div className="col-md-10">
-            <label className="control-label h2" htmlFor="caseNumber">
+            <label className="control-label h3" htmlFor="caseNumber">
               {I18n.t('musit.conservation.caseNumber') + suffix}
             </label>
             <p className="form-control-static" id="caseNumber">
@@ -433,41 +433,21 @@ export default function ConservationComponent(
           updateStringField={props.updateStringField}
         />
       )}
-
-      <h2>{I18n.t('musit.conservation.personsConnected')}</h2>
-      <form className="form-horizontal">
-        {viewModeMainEvent ? (
-          <ViewPersonRoleDate
-            personData={props.form.actorsAndRoles.value || []}
-            getDisplayNameForRole={(r: number) => {
-              const role = find(
-                props.predefinedConservation.roleList,
-                rl => rl.roleId === r
-              );
-              return props.appSession.language.isEn ? role.enRole : role.noRole;
-            }}
-          />
-        ) : (
-          <PersonRoleDate
-            appSession={props.appSession}
-            personData={props.form.actorsAndRoles.value || []}
-            updateForm={props.updateForm}
-            fieldName={props.form.actorsAndRoles.name}
-            getDisplayNameForRole={(r: string) => {
-              const role = find(
-                props.predefinedConservation.roleList,
-                rl => rl.roleId === r
-              );
-              return props.appSession.language.isEn ? role.enRole : role.noRole;
-            }}
-            roles={
-              props.predefinedConservation.roleList &&
-              props.predefinedConservation.roleList.map(e => e.roleId)
-            }
-            showDateForRole={(roleName: string) => [1].some(e => e === roleName)}
-          />
-        )}
-      </form>
+      <hr />
+      {props.form.id.value && (
+        <form className="form-horizontal">
+          <div style={{ marginLeft: 20 }}>
+            <MetaInformation
+              aligned
+              registeredBy={props.form.registeredByName.value}
+              registeredDate={props.form.registeredDate.value}
+              updatedBy={props.form.updatedByName.value}
+              updatedDate={props.form.updatedDate.value}
+            />
+          </div>
+        </form>
+      )}
+      <hr />
       <br />
       <Toolbar
         saveOnClick={props.onSave}
@@ -485,6 +465,9 @@ export default function ConservationComponent(
         history={props.history}
         appSession={props.appSession}
       />
+      <br />
+      <div style={{ marginTop: 40, borderBottom: '#cdcdcd 3px solid' }} />
+      <br />
       {props.form.events &&
       props.form.events.value &&
       props.form.events.value.length > 0 && (
@@ -572,19 +555,6 @@ export default function ConservationComponent(
         </div>
       </div>
       <br />
-
-      {props.form.id.value && (
-        <form className="form-horizontal">
-          <div style={{ marginLeft: -85 }}>
-            <MetaInformation
-              registeredBy={props.form.registeredByName.value}
-              registeredDate={props.form.registeredDate.value}
-              updatedBy={props.form.updatedByName.value}
-              updatedDate={props.form.updatedDate.value}
-            />
-          </div>
-        </form>
-      )}
       <div style={{ paddingBottom: '100px' }} />
     </div>
   );

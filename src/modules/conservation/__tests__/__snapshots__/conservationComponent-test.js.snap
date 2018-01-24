@@ -5,7 +5,7 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
   className="container"
 >
   <h1>
-    Bruk og bevaring
+    Konservering
   </h1>
   <button
     className="btn btn-primary"
@@ -561,149 +561,8 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
       }
     }
   />
-  <h2>
-    Personer tilknyttet bruk og bevaring
-  </h2>
-  <form
-    className="form-horizontal"
-  >
-    <Component
-      appSession={
-        Object {
-          "accessToken": "123",
-          "actor": Object {
-            "fn": "Rituvesh Kumar",
-          },
-          "buildInfo": Object {
-            "buildInfoBuildNumber": "31",
-            "builtAtMillis": "1511169267488",
-            "builtAtString": "2017-11-20 09:14:27.488",
-            "commitSha": "not built on CI",
-            "name": "service_auth",
-            "sbtVersion": "0.13.16",
-            "scalaVersion": "2.11.8",
-            "version": "0.1-SNAPSHOT",
-          },
-          "collectionId": "00000000-0000-0000-0000-000000000000",
-          "groups": Array [
-            Object {
-              "collections": Array [
-                Object {
-                  "name": "All",
-                  "uuid": "00000000-0000-0000-0000-000000000000",
-                },
-              ],
-              "id": 99,
-              "museumId": 99,
-              "museumName": "Test",
-              "permission": 10000,
-              "shortName": "Test",
-            },
-            Object {
-              "collections": Array [
-                Object {
-                  "name": "All",
-                  "uuid": "00000000-0000-0000-0000-000000000000",
-                },
-              ],
-              "id": 7,
-              "museumId": 7,
-              "museumName": "Kmn",
-              "permission": 10000,
-              "shortName": "Kmn",
-            },
-            Object {
-              "collections": Array [
-                Object {
-                  "name": "All",
-                  "uuid": "00000000-0000-0000-0000-000000000000",
-                },
-              ],
-              "id": 6,
-              "museumId": 6,
-              "museumName": "Tmu",
-              "permission": 10000,
-              "shortName": "Tmu",
-            },
-            Object {
-              "collections": Array [
-                Object {
-                  "name": "All",
-                  "uuid": "00000000-0000-0000-0000-000000000000",
-                },
-              ],
-              "id": 5,
-              "museumId": 5,
-              "museumName": "Vm",
-              "permission": 10000,
-              "shortName": "Vm",
-            },
-            Object {
-              "collections": Array [
-                Object {
-                  "name": "All",
-                  "uuid": "00000000-0000-0000-0000-000000000000",
-                },
-              ],
-              "id": 4,
-              "museumId": 4,
-              "museumName": "Nhm",
-              "permission": 10000,
-              "shortName": "Nhm",
-            },
-            Object {
-              "collections": Array [
-                Object {
-                  "name": "All",
-                  "uuid": "00000000-0000-0000-0000-000000000000",
-                },
-              ],
-              "id": 3,
-              "museumId": 3,
-              "museumName": "Khm",
-              "permission": 10000,
-              "shortName": "Khm",
-            },
-            Object {
-              "collections": Array [
-                Object {
-                  "name": "All",
-                  "uuid": "00000000-0000-0000-0000-000000000000",
-                },
-              ],
-              "id": 2,
-              "museumId": 2,
-              "museumName": "Um",
-              "permission": 10000,
-              "shortName": "Um",
-            },
-            Object {
-              "collections": Array [
-                Object {
-                  "name": "All",
-                  "uuid": "00000000-0000-0000-0000-000000000000",
-                },
-              ],
-              "id": 1,
-              "museumId": 1,
-              "museumName": "Am",
-              "permission": 10000,
-              "shortName": "Am",
-            },
-          ],
-          "language": Object {
-            "isEn": true,
-            "isNo": false,
-          },
-          "museumId": 99,
-        }
-      }
-      fieldName="actorsAndRoles"
-      getDisplayNameForRole={[Function]}
-      personData={Array []}
-      showDateForRole={[Function]}
-    />
-  </form>
+  <hr />
+  <hr />
   <br />
   <Toolbar
     cancelDisabled={false}
@@ -1480,6 +1339,16 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
     }
     viewMode={true}
   />
+  <br />
+  <div
+    style={
+      Object {
+        "borderBottom": "#cdcdcd 3px solid",
+        "marginTop": 40,
+      }
+    }
+  />
+  <br />
   <FieldMultiSelect
     appSession={
       Object {
@@ -1679,7 +1548,7 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
   className="container"
 >
   <h1>
-    Bruk og bevaring
+    Konservering
   </h1>
   <button
     className="btn btn-primary"
@@ -3309,17 +3178,27 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
       }
     }
   />
-  <h2>
-    Personer tilknyttet bruk og bevaring
-  </h2>
+  <hr />
   <form
     className="form-horizontal"
   >
-    <Component
-      getDisplayNameForRole={[Function]}
-      personData={Array []}
-    />
+    <div
+      style={
+        Object {
+          "marginLeft": 20,
+        }
+      }
+    >
+      <MetaInformation
+        aligned={true}
+        registeredBy="Rituvesh Kumar"
+        registeredDate="2017-11-21T13:54:28+00:00"
+        updatedBy="Rituvesh Kumar"
+        updatedDate="2017-11-21T15:14:29+00:00"
+      />
+    </div>
   </form>
+  <hr />
   <br />
   <Toolbar
     cancelDisabled={true}
@@ -4581,6 +4460,16 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
     }
     viewMode={true}
   />
+  <br />
+  <div
+    style={
+      Object {
+        "borderBottom": "#cdcdcd 3px solid",
+        "marginTop": 40,
+      }
+    }
+  />
+  <br />
   <div
     className="form-group"
   >
@@ -9085,24 +8974,6 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
     </div>
   </div>
   <br />
-  <form
-    className="form-horizontal"
-  >
-    <div
-      style={
-        Object {
-          "marginLeft": -85,
-        }
-      }
-    >
-      <MetaInformation
-        registeredBy="Rituvesh Kumar"
-        registeredDate="2017-11-21T13:54:28+00:00"
-        updatedBy="Rituvesh Kumar"
-        updatedDate="2017-11-21T15:14:29+00:00"
-      />
-    </div>
-  </form>
   <div
     style={
       Object {
