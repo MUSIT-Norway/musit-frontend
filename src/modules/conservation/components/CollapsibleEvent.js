@@ -12,13 +12,23 @@ type Props = {
   toggleExpanded: Function
 };
 
+function borderStyle(editMode: boolean) {
+  if (editMode) {
+    return {
+      borderColor: editMode ? '#618298' : '#d3d3d3',
+      borderStyle: editMode ? 'groove' : 'initial',
+      borderWidth: editMode ? 'thick' : 'initial'
+    };
+  }
+}
+
 export default function CollapsibleEvent(props: Props) {
   return (
     <div
       className="panel panel-default"
       style={{
-        background: props.expanded ? '#ffffff' : '#e8e8e8',
-        borderColor: props.editMode ? '#618298' : '#d3d3d3'
+        ...borderStyle(props.editMode || false),
+        background: props.expanded ? '#ffffff' : '#e8e8e8'
       }}
     >
       <div onClick={props.toggleExpanded} style={{ padding: 10 }}>

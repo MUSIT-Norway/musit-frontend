@@ -24,5 +24,6 @@ export type FormData = {
   objects: Field<Array<ObjectInfo>>,
   subEventTypes: Field<string>,
   actorsAndRoles: Field<Array<Person>>,
+  objectsExpanded: Field<boolean>,
   events: Field<Array<ConservationSubTypes>>
 };

@@ -26,6 +26,7 @@ import ViewPersonRoleDate from '../../components/person/ViewPersonRoleDate';
 import Note from './events/note';
 import { emitError } from '../../shared/errors';
 import { formatISOString } from '../../shared/util';
+import FontAwesome from 'react-fontawesome';
 
 type ConservationProcessProps = {
   id?: number,
@@ -40,6 +41,7 @@ type ConservationProcessProps = {
   updateConservationSubEvent: Function,
   toggleExpanded: Function,
   toggleSingleExpanded: Function,
+  toggleObjectsExpanded: Function,
   doneBy?: string,
   doneDate?: string,
   note?: string,
@@ -444,10 +446,10 @@ export default function ConservationComponent(
           updateStringField={props.updateStringField}
         />
       )}
-      <hr />
       {props.form.id.value && (
         <form className="form-horizontal">
           <div style={{ marginLeft: 20 }}>
+            <hr />
             <MetaInformation
               aligned
               registeredBy={props.form.registeredByName.value}
@@ -455,10 +457,10 @@ export default function ConservationComponent(
               updatedBy={props.form.updatedByName.value}
               updatedDate={props.form.updatedDate.value}
             />
+            <hr />
           </div>
         </form>
       )}
-      <hr />
       <br />
       <Toolbar
         saveOnClick={props.onSave}
@@ -469,13 +471,35 @@ export default function ConservationComponent(
       <br />
       <div style={{ marginTop: 40, borderBottom: '#cdcdcd 3px solid' }} />
       <br />
-      <h2>{I18n.t('musit.conservation.objectsConnected')}</h2>
-      <ObjectTable
-        data={props.objects || []}
-        viewMode={true}
-        history={props.history}
-        appSession={props.appSession}
-      />
+      <div className="panel panel-default">
+        <div
+          className="panel-heading"
+          onClick={props.toggleObjectsExpanded(!props.form.objectsExpanded.value)}
+        >
+          <h2>
+            {I18n.t('musit.conservation.objectsConnected')}
+            <FontAwesome
+              name={!props.form.objectsExpanded.value ? 'chevron-down' : 'chevron-up'}
+              style={{ color: 'black', float: 'right' }}
+            />
+          </h2>
+          {`${I18n.t('musit.conservation.numOfObjects')} ${props.objects
+            ? props.objects.length
+            : 0}`}
+        </div>
+        <div
+          className={`panel-body ${props.form.objectsExpanded.value
+            ? 'collapse in'
+            : 'collapse'}`}
+        >
+          <ObjectTable
+            data={props.objects || []}
+            viewMode={true}
+            history={props.history}
+            appSession={props.appSession}
+          />
+        </div>
+      </div>
       <br />
       <div style={{ marginTop: 40, borderBottom: '#cdcdcd 3px solid' }} />
       <br />

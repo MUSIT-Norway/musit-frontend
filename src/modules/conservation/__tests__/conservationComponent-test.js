@@ -1224,6 +1224,14 @@ const editPageProps: any = {
       validator: { rawValidator: null },
       status: { valid: true, error: null }
     },
+    objectsExpanded: {
+      name: 'objectsExpanded',
+      defaultValue: false,
+      value: true,
+      rawValue: true,
+      validator: { rawValidator: null },
+      status: { valid: true, error: null }
+    },
     affectedThings: {
       name: 'affectedThings',
       defaultValue: [
@@ -2282,6 +2290,7 @@ describe('ConservationComponent edit page', () => {
         updateMultiSelectField={e => e}
         toggleExpanded={e => e}
         toggleSingleExpanded={e => e}
+        toggleObjectsExpanded={e => e}
         updatePersonsForSubEvent={e => e}
         onDelete={e => e}
         onEdit={e => e}
@@ -3322,6 +3331,14 @@ const addPageProps: any = {
       validator: { rawValidator: null },
       status: { valid: true, error: null }
     },
+    objectsExpanded: {
+      name: 'objectsExpanded',
+      defaultValue: false,
+      value: true,
+      rawValue: true,
+      validator: { rawValidator: null },
+      status: { valid: true, error: null }
+    },
     affectedThings: {
       name: 'affectedThings',
       defaultValue: [],
@@ -3817,6 +3834,7 @@ describe('ConservationComponent add page', () => {
         {...addPageProps}
         updateMultiSelectField={e => e}
         toggleExpanded={e => e}
+        toggleObjectsExpanded={e => e}
         toggleSingleExpanded={e => e}
         updatePersonsForSubEvent={e => e}
         onDelete={e => e}

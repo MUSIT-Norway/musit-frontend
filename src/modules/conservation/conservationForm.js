@@ -2,7 +2,8 @@
 import createForm, {
   getStrField,
   getArrField,
-  getNumberField
+  getNumberField,
+  getBoolField
   // getCompositeField
 } from '../../forms/form';
 import { subEventValidator, actorsAndRolesValidator } from './shared/formValidators';
@@ -24,7 +25,8 @@ export const fieldsArray = [
   getStrField('updatedByName', null, false),
   getStrField('updatedDate', null, false),
   getStrField('subEventTypes', '', false),
-  getArrField('events', [], false, subEventValidator)
+  getArrField('events', [], false, subEventValidator),
+  getBoolField('objectsExpanded', false)
 ];
 
 export default createForm('conservationForm.js', fieldsArray);

@@ -152,6 +152,19 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
           },
           "value": Array [],
         },
+        "objectsExpanded": Object {
+          "defaultValue": false,
+          "name": "objectsExpanded",
+          "rawValue": true,
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": true,
+        },
         "participating": Object {
           "defaultValue": null,
           "mapper": Object {},
@@ -432,6 +445,19 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
           },
           "value": Array [],
         },
+        "objectsExpanded": Object {
+          "defaultValue": false,
+          "name": "objectsExpanded",
+          "rawValue": true,
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": true,
+        },
         "participating": Object {
           "defaultValue": null,
           "mapper": Object {},
@@ -561,8 +587,6 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
       }
     }
   />
-  <hr />
-  <hr />
   <br />
   <Toolbar
     cancelDisabled={false}
@@ -707,6 +731,19 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
             "rawValidator": null,
           },
           "value": Array [],
+        },
+        "objectsExpanded": Object {
+          "defaultValue": false,
+          "name": "objectsExpanded",
+          "rawValue": true,
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": true,
         },
         "participating": Object {
           "defaultValue": null,
@@ -853,320 +890,163 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
     }
   />
   <br />
-  <h2>
-    Objekter knyttet til hendelsen
-  </h2>
-  <ExpandableObjectTable
-    appSession={
-      Object {
-        "accessToken": "123",
-        "actor": Object {
-          "fn": "Rituvesh Kumar",
-        },
-        "buildInfo": Object {
-          "buildInfoBuildNumber": "31",
-          "builtAtMillis": "1511169267488",
-          "builtAtString": "2017-11-20 09:14:27.488",
-          "commitSha": "not built on CI",
-          "name": "service_auth",
-          "sbtVersion": "0.13.16",
-          "scalaVersion": "2.11.8",
-          "version": "0.1-SNAPSHOT",
-        },
-        "collectionId": "00000000-0000-0000-0000-000000000000",
-        "groups": Array [
+  <div
+    className="panel panel-default"
+  >
+    <div
+      className="panel-heading"
+      onClick={false}
+    >
+      <h2>
+        Objekter knyttet til hendelsen
+        <FontAwesome
+          name="chevron-up"
+          style={
+            Object {
+              "color": "black",
+              "float": "right",
+            }
+          }
+        />
+      </h2>
+      Antall: 6
+    </div>
+    <div
+      className="panel-body collapse in"
+    >
+      <ExpandableObjectTable
+        appSession={
           Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 99,
-            "museumId": 99,
-            "museumName": "Test",
-            "permission": 10000,
-            "shortName": "Test",
-          },
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 7,
-            "museumId": 7,
-            "museumName": "Kmn",
-            "permission": 10000,
-            "shortName": "Kmn",
-          },
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 6,
-            "museumId": 6,
-            "museumName": "Tmu",
-            "permission": 10000,
-            "shortName": "Tmu",
-          },
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 5,
-            "museumId": 5,
-            "museumName": "Vm",
-            "permission": 10000,
-            "shortName": "Vm",
-          },
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 4,
-            "museumId": 4,
-            "museumName": "Nhm",
-            "permission": 10000,
-            "shortName": "Nhm",
-          },
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 3,
-            "museumId": 3,
-            "museumName": "Khm",
-            "permission": 10000,
-            "shortName": "Khm",
-          },
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 2,
-            "museumId": 2,
-            "museumName": "Um",
-            "permission": 10000,
-            "shortName": "Um",
-          },
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 1,
-            "museumId": 1,
-            "museumName": "Am",
-            "permission": 10000,
-            "shortName": "Am",
-          },
-        ],
-        "language": Object {
-          "isEn": true,
-          "isNo": false,
-        },
-        "museumId": 99,
-      }
-    }
-    data={
-      Array [
-        Object {
-          "collection": Object {
-            "id": 1,
-            "uuid": "2e4f2455-1b3b-4a04-80a1-ba92715ff613",
-          },
-          "id": "ba56a4f6-b907-4158-9a67-bca6080320bb",
-          "isDeleted": false,
-          "museumId": 99,
-          "museumNo": "MusK314",
-          "objectData": Object {
-            "collection": Object {
-              "id": 1,
-              "uuid": "2e4f2455-1b3b-4a04-80a1-ba92715ff613",
+            "accessToken": "123",
+            "actor": Object {
+              "fn": "Rituvesh Kumar",
             },
-            "id": "ba56a4f6-b907-4158-9a67-bca6080320bb",
-            "isDeleted": false,
-            "museumId": 99,
-            "museumNo": "MusK314",
-            "objectType": "collection",
-            "subNo": "b",
-            "term": "Runeskrift",
-            "uuid": "ba56a4f6-b907-4158-9a67-bca6080320bb",
-          },
-          "objectType": "collection",
-          "subNo": "b",
-          "term": "Runeskrift",
-          "uuid": "ba56a4f6-b907-4158-9a67-bca6080320bb",
-        },
-        Object {
-          "collection": Object {
-            "id": 1,
-            "uuid": "2e4f2455-1b3b-4a04-80a1-ba92715ff613",
-          },
-          "id": "ad1b5287-0168-4343-b3df-a477de113bee",
-          "isDeleted": false,
-          "mainObjectId": 1,
-          "museumId": 99,
-          "museumNo": "MusK58",
-          "objectData": Object {
-            "collection": Object {
-              "id": 1,
-              "uuid": "2e4f2455-1b3b-4a04-80a1-ba92715ff613",
+            "buildInfo": Object {
+              "buildInfoBuildNumber": "31",
+              "builtAtMillis": "1511169267488",
+              "builtAtString": "2017-11-20 09:14:27.488",
+              "commitSha": "not built on CI",
+              "name": "service_auth",
+              "sbtVersion": "0.13.16",
+              "scalaVersion": "2.11.8",
+              "version": "0.1-SNAPSHOT",
             },
-            "id": "ad1b5287-0168-4343-b3df-a477de113bee",
-            "isDeleted": false,
-            "mainObjectId": 1,
-            "museumId": 99,
-            "museumNo": "MusK58",
-            "objectType": "collection",
-            "subNo": "1",
-            "term": "Rar dings",
-            "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
-          },
-          "objectType": "collection",
-          "subNo": "1",
-          "term": "Rar dings",
-          "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
-        },
-        Object {
-          "collection": Object {
-            "id": 1,
-            "uuid": "2e4f2455-1b3b-4a04-80a1-ba92715ff613",
-          },
-          "id": "adea8141-8099-4f67-bff9-ea5090e18335",
-          "isDeleted": false,
-          "mainObjectId": 1,
-          "museumId": 99,
-          "museumNo": "MusK58",
-          "objectData": Object {
-            "collection": Object {
-              "id": 1,
-              "uuid": "2e4f2455-1b3b-4a04-80a1-ba92715ff613",
+            "collectionId": "00000000-0000-0000-0000-000000000000",
+            "groups": Array [
+              Object {
+                "collections": Array [
+                  Object {
+                    "name": "All",
+                    "uuid": "00000000-0000-0000-0000-000000000000",
+                  },
+                ],
+                "id": 99,
+                "museumId": 99,
+                "museumName": "Test",
+                "permission": 10000,
+                "shortName": "Test",
+              },
+              Object {
+                "collections": Array [
+                  Object {
+                    "name": "All",
+                    "uuid": "00000000-0000-0000-0000-000000000000",
+                  },
+                ],
+                "id": 7,
+                "museumId": 7,
+                "museumName": "Kmn",
+                "permission": 10000,
+                "shortName": "Kmn",
+              },
+              Object {
+                "collections": Array [
+                  Object {
+                    "name": "All",
+                    "uuid": "00000000-0000-0000-0000-000000000000",
+                  },
+                ],
+                "id": 6,
+                "museumId": 6,
+                "museumName": "Tmu",
+                "permission": 10000,
+                "shortName": "Tmu",
+              },
+              Object {
+                "collections": Array [
+                  Object {
+                    "name": "All",
+                    "uuid": "00000000-0000-0000-0000-000000000000",
+                  },
+                ],
+                "id": 5,
+                "museumId": 5,
+                "museumName": "Vm",
+                "permission": 10000,
+                "shortName": "Vm",
+              },
+              Object {
+                "collections": Array [
+                  Object {
+                    "name": "All",
+                    "uuid": "00000000-0000-0000-0000-000000000000",
+                  },
+                ],
+                "id": 4,
+                "museumId": 4,
+                "museumName": "Nhm",
+                "permission": 10000,
+                "shortName": "Nhm",
+              },
+              Object {
+                "collections": Array [
+                  Object {
+                    "name": "All",
+                    "uuid": "00000000-0000-0000-0000-000000000000",
+                  },
+                ],
+                "id": 3,
+                "museumId": 3,
+                "museumName": "Khm",
+                "permission": 10000,
+                "shortName": "Khm",
+              },
+              Object {
+                "collections": Array [
+                  Object {
+                    "name": "All",
+                    "uuid": "00000000-0000-0000-0000-000000000000",
+                  },
+                ],
+                "id": 2,
+                "museumId": 2,
+                "museumName": "Um",
+                "permission": 10000,
+                "shortName": "Um",
+              },
+              Object {
+                "collections": Array [
+                  Object {
+                    "name": "All",
+                    "uuid": "00000000-0000-0000-0000-000000000000",
+                  },
+                ],
+                "id": 1,
+                "museumId": 1,
+                "museumName": "Am",
+                "permission": 10000,
+                "shortName": "Am",
+              },
+            ],
+            "language": Object {
+              "isEn": true,
+              "isNo": false,
             },
-            "id": "adea8141-8099-4f67-bff9-ea5090e18335",
-            "isDeleted": false,
-            "mainObjectId": 1,
             "museumId": 99,
-            "museumNo": "MusK58",
-            "objectType": "collection",
-            "subNo": "2",
-            "term": "Mansjettknapp",
-            "uuid": "adea8141-8099-4f67-bff9-ea5090e18335",
-          },
-          "objectType": "collection",
-          "subNo": "2",
-          "term": "Mansjettknapp",
-          "uuid": "adea8141-8099-4f67-bff9-ea5090e18335",
-        },
-        Object {
-          "collection": Object {
-            "id": 2,
-            "uuid": "88b35138-24b5-4e62-bae4-de80fae7df82",
-          },
-          "id": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
-          "isDeleted": false,
-          "museumId": 99,
-          "museumNo": "MusN28",
-          "objectData": Object {
-            "collection": Object {
-              "id": 2,
-              "uuid": "88b35138-24b5-4e62-bae4-de80fae7df82",
-            },
-            "id": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
-            "isDeleted": false,
-            "museumId": 99,
-            "museumNo": "MusN28",
-            "objectType": "collection",
-            "term": "Tusenben",
-            "uuid": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
-          },
-          "objectType": "collection",
-          "term": "Tusenben",
-          "uuid": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
-        },
-        Object {
-          "collection": Object {
-            "id": 2,
-            "uuid": "88b35138-24b5-4e62-bae4-de80fae7df82",
-          },
-          "id": "3dc0ab82-fa0f-415f-a558-92432106fa56",
-          "isDeleted": false,
-          "museumId": 99,
-          "museumNo": "MusN32",
-          "objectData": Object {
-            "collection": Object {
-              "id": 2,
-              "uuid": "88b35138-24b5-4e62-bae4-de80fae7df82",
-            },
-            "id": "3dc0ab82-fa0f-415f-a558-92432106fa56",
-            "isDeleted": false,
-            "museumId": 99,
-            "museumNo": "MusN32",
-            "objectType": "collection",
-            "term": "Museskjelett",
-            "uuid": "3dc0ab82-fa0f-415f-a558-92432106fa56",
-          },
-          "objectType": "collection",
-          "term": "Museskjelett",
-          "uuid": "3dc0ab82-fa0f-415f-a558-92432106fa56",
-        },
-        Object {
-          "collection": Object {
-            "id": 2,
-            "uuid": "88b35138-24b5-4e62-bae4-de80fae7df82",
-          },
-          "id": "41be3c71-a71b-486d-a265-c3a92672f4cf",
-          "isDeleted": false,
-          "museumId": 99,
-          "museumNo": "MusN37",
-          "objectData": Object {
-            "collection": Object {
-              "id": 2,
-              "uuid": "88b35138-24b5-4e62-bae4-de80fae7df82",
-            },
-            "id": "41be3c71-a71b-486d-a265-c3a92672f4cf",
-            "isDeleted": false,
-            "museumId": 99,
-            "museumNo": "MusN37",
-            "objectType": "collection",
-            "term": "Bendelorm",
-            "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
-          },
-          "objectType": "collection",
-          "term": "Bendelorm",
-          "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
-        },
-      ]
-    }
-    history={
-      Object {
-        "action": "PUSH",
-        "length": 50,
-        "location": Object {
-          "hash": "",
-          "key": "m07t50",
-          "pathname": "/museum/99/collections/00000000-0000-0000-0000-000000000000/conservation/add",
-          "search": "",
-          "state": Array [
+          }
+        }
+        data={
+          Array [
             Object {
               "collection": Object {
                 "id": 1,
@@ -1333,12 +1213,192 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
               "term": "Bendelorm",
               "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
             },
-          ],
-        },
-      }
-    }
-    viewMode={true}
-  />
+          ]
+        }
+        history={
+          Object {
+            "action": "PUSH",
+            "length": 50,
+            "location": Object {
+              "hash": "",
+              "key": "m07t50",
+              "pathname": "/museum/99/collections/00000000-0000-0000-0000-000000000000/conservation/add",
+              "search": "",
+              "state": Array [
+                Object {
+                  "collection": Object {
+                    "id": 1,
+                    "uuid": "2e4f2455-1b3b-4a04-80a1-ba92715ff613",
+                  },
+                  "id": "ba56a4f6-b907-4158-9a67-bca6080320bb",
+                  "isDeleted": false,
+                  "museumId": 99,
+                  "museumNo": "MusK314",
+                  "objectData": Object {
+                    "collection": Object {
+                      "id": 1,
+                      "uuid": "2e4f2455-1b3b-4a04-80a1-ba92715ff613",
+                    },
+                    "id": "ba56a4f6-b907-4158-9a67-bca6080320bb",
+                    "isDeleted": false,
+                    "museumId": 99,
+                    "museumNo": "MusK314",
+                    "objectType": "collection",
+                    "subNo": "b",
+                    "term": "Runeskrift",
+                    "uuid": "ba56a4f6-b907-4158-9a67-bca6080320bb",
+                  },
+                  "objectType": "collection",
+                  "subNo": "b",
+                  "term": "Runeskrift",
+                  "uuid": "ba56a4f6-b907-4158-9a67-bca6080320bb",
+                },
+                Object {
+                  "collection": Object {
+                    "id": 1,
+                    "uuid": "2e4f2455-1b3b-4a04-80a1-ba92715ff613",
+                  },
+                  "id": "ad1b5287-0168-4343-b3df-a477de113bee",
+                  "isDeleted": false,
+                  "mainObjectId": 1,
+                  "museumId": 99,
+                  "museumNo": "MusK58",
+                  "objectData": Object {
+                    "collection": Object {
+                      "id": 1,
+                      "uuid": "2e4f2455-1b3b-4a04-80a1-ba92715ff613",
+                    },
+                    "id": "ad1b5287-0168-4343-b3df-a477de113bee",
+                    "isDeleted": false,
+                    "mainObjectId": 1,
+                    "museumId": 99,
+                    "museumNo": "MusK58",
+                    "objectType": "collection",
+                    "subNo": "1",
+                    "term": "Rar dings",
+                    "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
+                  },
+                  "objectType": "collection",
+                  "subNo": "1",
+                  "term": "Rar dings",
+                  "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
+                },
+                Object {
+                  "collection": Object {
+                    "id": 1,
+                    "uuid": "2e4f2455-1b3b-4a04-80a1-ba92715ff613",
+                  },
+                  "id": "adea8141-8099-4f67-bff9-ea5090e18335",
+                  "isDeleted": false,
+                  "mainObjectId": 1,
+                  "museumId": 99,
+                  "museumNo": "MusK58",
+                  "objectData": Object {
+                    "collection": Object {
+                      "id": 1,
+                      "uuid": "2e4f2455-1b3b-4a04-80a1-ba92715ff613",
+                    },
+                    "id": "adea8141-8099-4f67-bff9-ea5090e18335",
+                    "isDeleted": false,
+                    "mainObjectId": 1,
+                    "museumId": 99,
+                    "museumNo": "MusK58",
+                    "objectType": "collection",
+                    "subNo": "2",
+                    "term": "Mansjettknapp",
+                    "uuid": "adea8141-8099-4f67-bff9-ea5090e18335",
+                  },
+                  "objectType": "collection",
+                  "subNo": "2",
+                  "term": "Mansjettknapp",
+                  "uuid": "adea8141-8099-4f67-bff9-ea5090e18335",
+                },
+                Object {
+                  "collection": Object {
+                    "id": 2,
+                    "uuid": "88b35138-24b5-4e62-bae4-de80fae7df82",
+                  },
+                  "id": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
+                  "isDeleted": false,
+                  "museumId": 99,
+                  "museumNo": "MusN28",
+                  "objectData": Object {
+                    "collection": Object {
+                      "id": 2,
+                      "uuid": "88b35138-24b5-4e62-bae4-de80fae7df82",
+                    },
+                    "id": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
+                    "isDeleted": false,
+                    "museumId": 99,
+                    "museumNo": "MusN28",
+                    "objectType": "collection",
+                    "term": "Tusenben",
+                    "uuid": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
+                  },
+                  "objectType": "collection",
+                  "term": "Tusenben",
+                  "uuid": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
+                },
+                Object {
+                  "collection": Object {
+                    "id": 2,
+                    "uuid": "88b35138-24b5-4e62-bae4-de80fae7df82",
+                  },
+                  "id": "3dc0ab82-fa0f-415f-a558-92432106fa56",
+                  "isDeleted": false,
+                  "museumId": 99,
+                  "museumNo": "MusN32",
+                  "objectData": Object {
+                    "collection": Object {
+                      "id": 2,
+                      "uuid": "88b35138-24b5-4e62-bae4-de80fae7df82",
+                    },
+                    "id": "3dc0ab82-fa0f-415f-a558-92432106fa56",
+                    "isDeleted": false,
+                    "museumId": 99,
+                    "museumNo": "MusN32",
+                    "objectType": "collection",
+                    "term": "Museskjelett",
+                    "uuid": "3dc0ab82-fa0f-415f-a558-92432106fa56",
+                  },
+                  "objectType": "collection",
+                  "term": "Museskjelett",
+                  "uuid": "3dc0ab82-fa0f-415f-a558-92432106fa56",
+                },
+                Object {
+                  "collection": Object {
+                    "id": 2,
+                    "uuid": "88b35138-24b5-4e62-bae4-de80fae7df82",
+                  },
+                  "id": "41be3c71-a71b-486d-a265-c3a92672f4cf",
+                  "isDeleted": false,
+                  "museumId": 99,
+                  "museumNo": "MusN37",
+                  "objectData": Object {
+                    "collection": Object {
+                      "id": 2,
+                      "uuid": "88b35138-24b5-4e62-bae4-de80fae7df82",
+                    },
+                    "id": "41be3c71-a71b-486d-a265-c3a92672f4cf",
+                    "isDeleted": false,
+                    "museumId": 99,
+                    "museumNo": "MusN37",
+                    "objectType": "collection",
+                    "term": "Bendelorm",
+                    "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
+                  },
+                  "objectType": "collection",
+                  "term": "Bendelorm",
+                  "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
+                },
+              ],
+            },
+          }
+        }
+        viewMode={true}
+      />
+    </div>
+  </div>
   <br />
   <div
     style={
@@ -2232,6 +2292,19 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
           },
           "value": Array [],
         },
+        "objectsExpanded": Object {
+          "defaultValue": false,
+          "name": "objectsExpanded",
+          "rawValue": true,
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": true,
+        },
         "participating": Object {
           "defaultValue": null,
           "mapper": Object {},
@@ -3049,6 +3122,19 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
           },
           "value": Array [],
         },
+        "objectsExpanded": Object {
+          "defaultValue": false,
+          "name": "objectsExpanded",
+          "rawValue": true,
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": true,
+        },
         "participating": Object {
           "defaultValue": null,
           "mapper": Object {},
@@ -3178,7 +3264,6 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
       }
     }
   />
-  <hr />
   <form
     className="form-horizontal"
   >
@@ -3189,6 +3274,7 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
         }
       }
     >
+      <hr />
       <MetaInformation
         aligned={true}
         registeredBy="Rituvesh Kumar"
@@ -3196,9 +3282,9 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
         updatedBy="Rituvesh Kumar"
         updatedDate="2017-11-21T15:14:29+00:00"
       />
+      <hr />
     </div>
   </form>
-  <hr />
   <br />
   <Toolbar
     cancelDisabled={true}
@@ -3881,6 +3967,19 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
           },
           "value": Array [],
         },
+        "objectsExpanded": Object {
+          "defaultValue": false,
+          "name": "objectsExpanded",
+          "rawValue": true,
+          "status": Object {
+            "error": null,
+            "valid": true,
+          },
+          "validator": Object {
+            "rawValidator": null,
+          },
+          "value": true,
+        },
         "participating": Object {
           "defaultValue": null,
           "mapper": Object {},
@@ -4026,294 +4125,163 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
     }
   />
   <br />
-  <h2>
-    Objekter knyttet til hendelsen
-  </h2>
-  <ExpandableObjectTable
-    appSession={
-      Object {
-        "accessToken": "123",
-        "actor": Object {
-          "fn": "Rituvesh Kumar",
-        },
-        "buildInfo": Object {
-          "buildInfoBuildNumber": "31",
-          "builtAtMillis": "1511169267488",
-          "builtAtString": "2017-11-20 09:14:27.488",
-          "commitSha": "not built on CI",
-          "name": "service_auth",
-          "sbtVersion": "0.13.16",
-          "scalaVersion": "2.11.8",
-          "version": "0.1-SNAPSHOT",
-        },
-        "collectionId": "00000000-0000-0000-0000-000000000000",
-        "groups": Array [
+  <div
+    className="panel panel-default"
+  >
+    <div
+      className="panel-heading"
+      onClick={false}
+    >
+      <h2>
+        Objekter knyttet til hendelsen
+        <FontAwesome
+          name="chevron-up"
+          style={
+            Object {
+              "color": "black",
+              "float": "right",
+            }
+          }
+        />
+      </h2>
+      Antall: 5
+    </div>
+    <div
+      className="panel-body collapse in"
+    >
+      <ExpandableObjectTable
+        appSession={
           Object {
-            "collections": Array [
+            "accessToken": "123",
+            "actor": Object {
+              "fn": "Rituvesh Kumar",
+            },
+            "buildInfo": Object {
+              "buildInfoBuildNumber": "31",
+              "builtAtMillis": "1511169267488",
+              "builtAtString": "2017-11-20 09:14:27.488",
+              "commitSha": "not built on CI",
+              "name": "service_auth",
+              "sbtVersion": "0.13.16",
+              "scalaVersion": "2.11.8",
+              "version": "0.1-SNAPSHOT",
+            },
+            "collectionId": "00000000-0000-0000-0000-000000000000",
+            "groups": Array [
               Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
+                "collections": Array [
+                  Object {
+                    "name": "All",
+                    "uuid": "00000000-0000-0000-0000-000000000000",
+                  },
+                ],
+                "id": 99,
+                "museumId": 99,
+                "museumName": "Test",
+                "permission": 10000,
+                "shortName": "Test",
+              },
+              Object {
+                "collections": Array [
+                  Object {
+                    "name": "All",
+                    "uuid": "00000000-0000-0000-0000-000000000000",
+                  },
+                ],
+                "id": 7,
+                "museumId": 7,
+                "museumName": "Kmn",
+                "permission": 10000,
+                "shortName": "Kmn",
+              },
+              Object {
+                "collections": Array [
+                  Object {
+                    "name": "All",
+                    "uuid": "00000000-0000-0000-0000-000000000000",
+                  },
+                ],
+                "id": 6,
+                "museumId": 6,
+                "museumName": "Tmu",
+                "permission": 10000,
+                "shortName": "Tmu",
+              },
+              Object {
+                "collections": Array [
+                  Object {
+                    "name": "All",
+                    "uuid": "00000000-0000-0000-0000-000000000000",
+                  },
+                ],
+                "id": 5,
+                "museumId": 5,
+                "museumName": "Vm",
+                "permission": 10000,
+                "shortName": "Vm",
+              },
+              Object {
+                "collections": Array [
+                  Object {
+                    "name": "All",
+                    "uuid": "00000000-0000-0000-0000-000000000000",
+                  },
+                ],
+                "id": 4,
+                "museumId": 4,
+                "museumName": "Nhm",
+                "permission": 10000,
+                "shortName": "Nhm",
+              },
+              Object {
+                "collections": Array [
+                  Object {
+                    "name": "All",
+                    "uuid": "00000000-0000-0000-0000-000000000000",
+                  },
+                ],
+                "id": 3,
+                "museumId": 3,
+                "museumName": "Khm",
+                "permission": 10000,
+                "shortName": "Khm",
+              },
+              Object {
+                "collections": Array [
+                  Object {
+                    "name": "All",
+                    "uuid": "00000000-0000-0000-0000-000000000000",
+                  },
+                ],
+                "id": 2,
+                "museumId": 2,
+                "museumName": "Um",
+                "permission": 10000,
+                "shortName": "Um",
+              },
+              Object {
+                "collections": Array [
+                  Object {
+                    "name": "All",
+                    "uuid": "00000000-0000-0000-0000-000000000000",
+                  },
+                ],
+                "id": 1,
+                "museumId": 1,
+                "museumName": "Am",
+                "permission": 10000,
+                "shortName": "Am",
               },
             ],
-            "id": 99,
+            "language": Object {
+              "isEn": true,
+              "isNo": false,
+            },
             "museumId": 99,
-            "museumName": "Test",
-            "permission": 10000,
-            "shortName": "Test",
-          },
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 7,
-            "museumId": 7,
-            "museumName": "Kmn",
-            "permission": 10000,
-            "shortName": "Kmn",
-          },
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 6,
-            "museumId": 6,
-            "museumName": "Tmu",
-            "permission": 10000,
-            "shortName": "Tmu",
-          },
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 5,
-            "museumId": 5,
-            "museumName": "Vm",
-            "permission": 10000,
-            "shortName": "Vm",
-          },
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 4,
-            "museumId": 4,
-            "museumName": "Nhm",
-            "permission": 10000,
-            "shortName": "Nhm",
-          },
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 3,
-            "museumId": 3,
-            "museumName": "Khm",
-            "permission": 10000,
-            "shortName": "Khm",
-          },
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 2,
-            "museumId": 2,
-            "museumName": "Um",
-            "permission": 10000,
-            "shortName": "Um",
-          },
-          Object {
-            "collections": Array [
-              Object {
-                "name": "All",
-                "uuid": "00000000-0000-0000-0000-000000000000",
-              },
-            ],
-            "id": 1,
-            "museumId": 1,
-            "museumName": "Am",
-            "permission": 10000,
-            "shortName": "Am",
-          },
-        ],
-        "language": Object {
-          "isEn": true,
-          "isNo": false,
-        },
-        "museumId": 99,
-      }
-    }
-    data={
-      Array [
-        Object {
-          "collection": 1,
-          "coordinates": Array [],
-          "id": 28,
-          "isDeleted": false,
-          "locations": Array [],
-          "materials": Array [],
-          "museumId": 99,
-          "museumNo": "MusK314",
-          "objectData": Object {
-            "collection": 1,
-            "coordinates": Array [],
-            "id": 28,
-            "isDeleted": false,
-            "locations": Array [],
-            "materials": Array [],
-            "museumId": 99,
-            "museumNo": "MusK314",
-            "objectType": "collection",
-            "subNo": "b",
-            "term": "Runeskrift",
-            "uuid": "ba56a4f6-b907-4158-9a67-bca6080320bb",
-          },
-          "objectType": "collection",
-          "subNo": "b",
-          "term": "Runeskrift",
-          "uuid": "ba56a4f6-b907-4158-9a67-bca6080320bb",
-        },
-        Object {
-          "collection": 1,
-          "coordinates": Array [],
-          "id": 1,
-          "isDeleted": false,
-          "locations": Array [],
-          "mainObjectId": 1,
-          "materials": Array [],
-          "museumId": 99,
-          "museumNo": "MusK58",
-          "objectData": Object {
-            "collection": 1,
-            "coordinates": Array [],
-            "id": 1,
-            "isDeleted": false,
-            "locations": Array [],
-            "mainObjectId": 1,
-            "materials": Array [],
-            "museumId": 99,
-            "museumNo": "MusK58",
-            "objectType": "collection",
-            "subNo": "1",
-            "term": "Rar dings",
-            "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
-          },
-          "objectType": "collection",
-          "subNo": "1",
-          "term": "Rar dings",
-          "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
-        },
-        Object {
-          "collection": 1,
-          "coordinates": Array [],
-          "id": 2,
-          "isDeleted": false,
-          "locations": Array [],
-          "mainObjectId": 1,
-          "materials": Array [],
-          "museumId": 99,
-          "museumNo": "MusK58",
-          "objectData": Object {
-            "collection": 1,
-            "coordinates": Array [],
-            "id": 2,
-            "isDeleted": false,
-            "locations": Array [],
-            "mainObjectId": 1,
-            "materials": Array [],
-            "museumId": 99,
-            "museumNo": "MusK58",
-            "objectType": "collection",
-            "subNo": "2",
-            "term": "Mansjettknapp",
-            "uuid": "adea8141-8099-4f67-bff9-ea5090e18335",
-          },
-          "objectType": "collection",
-          "subNo": "2",
-          "term": "Mansjettknapp",
-          "uuid": "adea8141-8099-4f67-bff9-ea5090e18335",
-        },
-        Object {
-          "collection": 2,
-          "coordinates": Array [],
-          "id": 9,
-          "isDeleted": false,
-          "locations": Array [],
-          "materials": Array [],
-          "museumId": 99,
-          "museumNo": "MusN28",
-          "objectData": Object {
-            "collection": 2,
-            "coordinates": Array [],
-            "id": 9,
-            "isDeleted": false,
-            "locations": Array [],
-            "materials": Array [],
-            "museumId": 99,
-            "museumNo": "MusN28",
-            "objectType": "collection",
-            "term": "Tusenben",
-            "uuid": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
-          },
-          "objectType": "collection",
-          "term": "Tusenben",
-          "uuid": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
-        },
-        Object {
-          "collection": 2,
-          "coordinates": Array [],
-          "id": 8,
-          "isDeleted": false,
-          "locations": Array [],
-          "materials": Array [],
-          "museumId": 99,
-          "museumNo": "MusN37",
-          "objectData": Object {
-            "collection": 2,
-            "coordinates": Array [],
-            "id": 8,
-            "isDeleted": false,
-            "locations": Array [],
-            "materials": Array [],
-            "museumId": 99,
-            "museumNo": "MusN37",
-            "objectType": "collection",
-            "term": "Bendelorm",
-            "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
-          },
-          "objectType": "collection",
-          "term": "Bendelorm",
-          "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
-        },
-      ]
-    }
-    history={
-      Object {
-        "action": "PUSH",
-        "length": 48,
-        "location": Object {
-          "hash": "",
-          "key": "nt6nc4",
-          "pathname": "/museum/99/collections/00000000-0000-0000-0000-000000000000/conservation/edit/112",
-          "search": "",
-          "state": Array [
+          }
+        }
+        data={
+          Array [
             Object {
               "collection": 1,
               "coordinates": Array [],
@@ -4454,12 +4422,166 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
               "term": "Bendelorm",
               "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
             },
-          ],
-        },
-      }
-    }
-    viewMode={true}
-  />
+          ]
+        }
+        history={
+          Object {
+            "action": "PUSH",
+            "length": 48,
+            "location": Object {
+              "hash": "",
+              "key": "nt6nc4",
+              "pathname": "/museum/99/collections/00000000-0000-0000-0000-000000000000/conservation/edit/112",
+              "search": "",
+              "state": Array [
+                Object {
+                  "collection": 1,
+                  "coordinates": Array [],
+                  "id": 28,
+                  "isDeleted": false,
+                  "locations": Array [],
+                  "materials": Array [],
+                  "museumId": 99,
+                  "museumNo": "MusK314",
+                  "objectData": Object {
+                    "collection": 1,
+                    "coordinates": Array [],
+                    "id": 28,
+                    "isDeleted": false,
+                    "locations": Array [],
+                    "materials": Array [],
+                    "museumId": 99,
+                    "museumNo": "MusK314",
+                    "objectType": "collection",
+                    "subNo": "b",
+                    "term": "Runeskrift",
+                    "uuid": "ba56a4f6-b907-4158-9a67-bca6080320bb",
+                  },
+                  "objectType": "collection",
+                  "subNo": "b",
+                  "term": "Runeskrift",
+                  "uuid": "ba56a4f6-b907-4158-9a67-bca6080320bb",
+                },
+                Object {
+                  "collection": 1,
+                  "coordinates": Array [],
+                  "id": 1,
+                  "isDeleted": false,
+                  "locations": Array [],
+                  "mainObjectId": 1,
+                  "materials": Array [],
+                  "museumId": 99,
+                  "museumNo": "MusK58",
+                  "objectData": Object {
+                    "collection": 1,
+                    "coordinates": Array [],
+                    "id": 1,
+                    "isDeleted": false,
+                    "locations": Array [],
+                    "mainObjectId": 1,
+                    "materials": Array [],
+                    "museumId": 99,
+                    "museumNo": "MusK58",
+                    "objectType": "collection",
+                    "subNo": "1",
+                    "term": "Rar dings",
+                    "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
+                  },
+                  "objectType": "collection",
+                  "subNo": "1",
+                  "term": "Rar dings",
+                  "uuid": "ad1b5287-0168-4343-b3df-a477de113bee",
+                },
+                Object {
+                  "collection": 1,
+                  "coordinates": Array [],
+                  "id": 2,
+                  "isDeleted": false,
+                  "locations": Array [],
+                  "mainObjectId": 1,
+                  "materials": Array [],
+                  "museumId": 99,
+                  "museumNo": "MusK58",
+                  "objectData": Object {
+                    "collection": 1,
+                    "coordinates": Array [],
+                    "id": 2,
+                    "isDeleted": false,
+                    "locations": Array [],
+                    "mainObjectId": 1,
+                    "materials": Array [],
+                    "museumId": 99,
+                    "museumNo": "MusK58",
+                    "objectType": "collection",
+                    "subNo": "2",
+                    "term": "Mansjettknapp",
+                    "uuid": "adea8141-8099-4f67-bff9-ea5090e18335",
+                  },
+                  "objectType": "collection",
+                  "subNo": "2",
+                  "term": "Mansjettknapp",
+                  "uuid": "adea8141-8099-4f67-bff9-ea5090e18335",
+                },
+                Object {
+                  "collection": 2,
+                  "coordinates": Array [],
+                  "id": 9,
+                  "isDeleted": false,
+                  "locations": Array [],
+                  "materials": Array [],
+                  "museumId": 99,
+                  "museumNo": "MusN28",
+                  "objectData": Object {
+                    "collection": 2,
+                    "coordinates": Array [],
+                    "id": 9,
+                    "isDeleted": false,
+                    "locations": Array [],
+                    "materials": Array [],
+                    "museumId": 99,
+                    "museumNo": "MusN28",
+                    "objectType": "collection",
+                    "term": "Tusenben",
+                    "uuid": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
+                  },
+                  "objectType": "collection",
+                  "term": "Tusenben",
+                  "uuid": "1c9c91f5-127a-4baf-8c0e-ed37d53f944b",
+                },
+                Object {
+                  "collection": 2,
+                  "coordinates": Array [],
+                  "id": 8,
+                  "isDeleted": false,
+                  "locations": Array [],
+                  "materials": Array [],
+                  "museumId": 99,
+                  "museumNo": "MusN37",
+                  "objectData": Object {
+                    "collection": 2,
+                    "coordinates": Array [],
+                    "id": 8,
+                    "isDeleted": false,
+                    "locations": Array [],
+                    "materials": Array [],
+                    "museumId": 99,
+                    "museumNo": "MusN37",
+                    "objectType": "collection",
+                    "term": "Bendelorm",
+                    "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
+                  },
+                  "objectType": "collection",
+                  "term": "Bendelorm",
+                  "uuid": "41be3c71-a71b-486d-a265-c3a92672f4cf",
+                },
+              ],
+            },
+          }
+        }
+        viewMode={true}
+      />
+    </div>
+  </div>
   <br />
   <div
     style={
@@ -5907,6 +6029,19 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
                 },
                 "value": Array [],
               },
+              "objectsExpanded": Object {
+                "defaultValue": false,
+                "name": "objectsExpanded",
+                "rawValue": true,
+                "status": Object {
+                  "error": null,
+                  "valid": true,
+                },
+                "validator": Object {
+                  "rawValidator": null,
+                },
+                "value": true,
+              },
               "participating": Object {
                 "defaultValue": null,
                 "mapper": Object {},
@@ -6716,6 +6851,19 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
                   "rawValidator": null,
                 },
                 "value": Array [],
+              },
+              "objectsExpanded": Object {
+                "defaultValue": false,
+                "name": "objectsExpanded",
+                "rawValue": true,
+                "status": Object {
+                  "error": null,
+                  "valid": true,
+                },
+                "validator": Object {
+                  "rawValidator": null,
+                },
+                "value": true,
               },
               "participating": Object {
                 "defaultValue": null,
@@ -7828,6 +7976,19 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
                 },
                 "value": Array [],
               },
+              "objectsExpanded": Object {
+                "defaultValue": false,
+                "name": "objectsExpanded",
+                "rawValue": true,
+                "status": Object {
+                  "error": null,
+                  "valid": true,
+                },
+                "validator": Object {
+                  "rawValidator": null,
+                },
+                "value": true,
+              },
               "participating": Object {
                 "defaultValue": null,
                 "mapper": Object {},
@@ -8637,6 +8798,19 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
                   "rawValidator": null,
                 },
                 "value": Array [],
+              },
+              "objectsExpanded": Object {
+                "defaultValue": false,
+                "name": "objectsExpanded",
+                "rawValue": true,
+                "status": Object {
+                  "error": null,
+                  "valid": true,
+                },
+                "validator": Object {
+                  "rawValidator": null,
+                },
+                "value": true,
               },
               "participating": Object {
                 "defaultValue": null,

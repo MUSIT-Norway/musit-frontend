@@ -59,6 +59,7 @@ export default function formProps(
     updateConservationSubEvent: updateConservationSubEvent(props.updateForm),
     updatePersonsForSubEvent: updatePersonsForSubEvent(props.updateForm),
     toggleExpanded: toggleExpanded(props.updateForm),
+    toggleObjectsExpanded: toggleObjectsExpanded(props.updateForm),
     toggleSingleExpanded: toggleSingleExpanded(props.updateForm),
     clickSaveAndContinue: clickSaveAndContinue,
     onClickBack: onClickBack(props),
@@ -89,6 +90,14 @@ export function toggleExpanded(updateForm: any) {
     updateForm({
       name: 'events',
       rawValue: events.map(e => ({ ...e, expanded: b }))
+    });
+}
+
+export function toggleObjectsExpanded(updateForm: any) {
+  return (b: boolean) => () =>
+    updateForm({
+      name: 'objectsExpanded',
+      rawValue: b
     });
 }
 
