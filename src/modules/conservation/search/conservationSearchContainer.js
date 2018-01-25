@@ -59,13 +59,20 @@ const props = (storeProps, upstream: { history: History }) => {
       actions.changeQuery$.next({ name, value });
     },
     goToConservation: (id: number, subEventId: number) => {
-      upstream.history.push(
-        Config.magasin.urls.client.conservation.viewConservationForExpandedSubEvent(
-          storeProps.appSession,
-          id,
-          subEventId
-        )
-      );
+      id
+        ? upstream.history.push(
+            Config.magasin.urls.client.conservation.viewConservationForExpandedSubEvent(
+              storeProps.appSession,
+              id,
+              subEventId
+            )
+          )
+        : upstream.history.push(
+            Config.magasin.urls.client.conservation.viewConservation(
+              storeProps.appSession,
+              subEventId
+            )
+          );
     },
     getConservationTypeText: (id: number): ?string => {
       const type: ?ConservationType =

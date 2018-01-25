@@ -233,8 +233,10 @@ function renderSubEvent(
 
   const urlSubEventId =
     props.match && props.match.params && props.match.params.subEventId;
+  const expandOnView = !(props.form.expandOnView && props.form.expandOnView.rawValue);
   const expanded =
     urlSubEventId &&
+    expandOnView &&
     props.form.events.value[ind].id &&
     urlSubEventId === props.form.events.value[ind].id.toString()
       ? true

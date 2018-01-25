@@ -23,7 +23,10 @@ export const getConservationForObject: (
   id,
   callback
 }) => {
-  const url = Config.magasin.urls.api.conservation.getConservationForObject(museumId, id);
+  const url = Config.magasin.urls.api.conservation.getConservationForObjectAggregated(
+    museumId,
+    id
+  );
   return ajaxGet(url, token, callback).map(({ response }) => {
     if (!Array.isArray(response)) {
       return [];

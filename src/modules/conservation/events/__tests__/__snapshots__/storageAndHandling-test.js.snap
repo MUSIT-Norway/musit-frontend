@@ -78,7 +78,7 @@ exports[`StorageAndHandling should render properly 1`] = `
       "museumId": 99,
     }
   }
-  eventName="Oppvevaring og håndtering"
+  eventName=" Oppbevaring og håndtering"
   expanded={true}
   extraAttributes={
     <div>

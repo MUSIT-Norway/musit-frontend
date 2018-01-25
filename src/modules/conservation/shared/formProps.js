@@ -85,12 +85,21 @@ export default function formProps(
   };
 }
 
+function updateExpandOnView(updateForm: any) {
+  updateForm({
+    name: 'expandOnView',
+    rawValue: 'some data'
+  });
+}
+
 export function toggleExpanded(updateForm: any) {
-  return (b: boolean, events: Array<ConservationSubTypes>) => () =>
+  return (b: boolean, events: Array<ConservationSubTypes>) => () => {
+    updateExpandOnView(updateForm);
     updateForm({
       name: 'events',
       rawValue: events.map(e => ({ ...e, expanded: b }))
     });
+  };
 }
 
 export function toggleObjectsExpanded(updateForm: any) {
@@ -107,7 +116,9 @@ export function toggleSingleExpanded(updateForm: any) {
     events: Array<ConservationSubTypes>,
     index: number,
     viewMode: boolean
-  ) => () =>
+  ) => () => {
+    updateExpandOnView(updateForm);
+
     viewMode
       ? updateForm({
           name: 'events',
@@ -120,6 +131,7 @@ export function toggleSingleExpanded(updateForm: any) {
           type: 'deleteError',
           message: I18n.t('musit.conservation.notAbleToCollapse')
         });
+  };
 }
 
 function updateStringField(updateForm: any) {
@@ -506,12 +518,31 @@ function onSave(form, appSession, history, location, ajaxPost, ajaxPut, updateFo
           }
           const id = props.response.id;
           updateEditModeFields(updateForm);
-          history.replace(
-            Config.magasin.urls.client.conservation.editConservation(
-              appSession,
-              parseInt(id, 10)
-            )
-          );
+
+          // show the updated date when response have it
+          props.response.updatedDate &&
+            updateForm({
+              name: 'updatedDate',
+              rawValue: props.response.updatedDate
+            });
+
+          // on edit show the logged in user as last updated by
+          if (form.id.value && appSession && appSession.actor && appSession.actor.fn) {
+            updateForm({
+              name: 'updatedByName',
+              rawValue: appSession.actor.fn
+            });
+          }
+
+          // incase of Add change the URL
+          if (!form.id.value) {
+            history.replace(
+              Config.magasin.urls.client.conservation.viewConservation(
+                appSession,
+                parseInt(id, 10)
+              )
+            );
+          }
         },
         onFailure: err => {
           emitError(err);

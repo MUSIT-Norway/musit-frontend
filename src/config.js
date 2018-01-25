@@ -153,6 +153,8 @@ export default {
             `/api/management/${mid}/conservation/events/${conservationId}`,
           getConservationForObject: (mid: MuseumId, id: number) =>
             `/api/management/${mid}/conservation/events/object/${id}`,
+          getConservationForObjectAggregated: (mid: MuseumId, id: number) =>
+            `/api/management/${mid}/conservation/conservations/object/${id}`,
           addFileUrl: (mid: MuseumId, collectionId: CollectionId, eventId: number) =>
             `/api/document/museum/${mid}/conservations/attachments?eventId=${eventId}&collectionId=${collectionId}`,
           getDeleteSubEventUrl: (mid: MuseumId, eventId: number) =>

@@ -23,6 +23,8 @@ export type Event = {
   registeredBy: string,
   type: string,
   keyData: string,
+  enKeyData?: Array<string>,
+  noKeyData?: Array<string>,
   note: string,
   caseNumbers: Array<string>,
   analysisTypeId: number,

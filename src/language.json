@@ -1079,7 +1079,7 @@
             "note":"Merknad"
           },
           "storageAndHandling":{
-            "storageAndHandling": "Oppvevaring og håndtering",
+            "storageAndHandling": " Oppbevaring og håndtering",
             "note":"Merknad",
             "lightLevel":"Lux",
             "uvLevel":"UVnivå(μW/lumen)",

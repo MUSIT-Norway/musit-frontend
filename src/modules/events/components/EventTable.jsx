@@ -49,15 +49,10 @@ function getKeyData(
   appSession: AppSession
 ) {
   if (event.type) {
-    if (event.type === 'Conservation' && conservationTypes) {
-      const conservationTypeFound: ?ConservationType = conservationTypes.find(
-        f => f.id && f.id === event.eventTypeId
-      );
-      if (conservationTypeFound) {
-        return appSession.language.isEn
-          ? conservationTypeFound.enName
-          : conservationTypeFound.noName;
-      }
+    if (event.type === 'Conservation') {
+      return appSession.language.isEn
+        ? (event.enKeyData || []).join('/ ')
+        : (event.noKeyData || []).join('/ ');
     }
     if (
       (event.type === 'AnalysisCollection' || event.type === 'Analysis') &&
