@@ -1399,12 +1399,10 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
       />
     </div>
   </div>
-  <br />
   <div
     style={
       Object {
         "borderBottom": "#cdcdcd 3px solid",
-        "marginTop": 40,
       }
     }
   />
@@ -3267,6 +3265,7 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
   <form
     className="form-horizontal"
   >
+    <hr />
     <div
       style={
         Object {
@@ -3274,7 +3273,6 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
         }
       }
     >
-      <hr />
       <MetaInformation
         aligned={true}
         registeredBy="Rituvesh Kumar"
@@ -3282,8 +3280,8 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
         updatedBy="Rituvesh Kumar"
         updatedDate="2017-11-21T15:14:29+00:00"
       />
-      <hr />
     </div>
+    <hr />
   </form>
   <br />
   <Toolbar
@@ -4582,12 +4580,10 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
       />
     </div>
   </div>
-  <br />
   <div
     style={
       Object {
         "borderBottom": "#cdcdcd 3px solid",
-        "marginTop": 40,
       }
     }
   />

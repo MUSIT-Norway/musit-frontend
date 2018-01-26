@@ -160,6 +160,12 @@ export class PickListComponent extends React.Component {
     const markedValues = marked.map(p => p.value);
     const isNode = this.props.isTypeNode;
     const isObject = !isNode;
+    // disable for Archaeology & Ethnography collections and for samples
+    const conservationEnabled =
+      marked.length > 0 &&
+      markedSamples.length === 0 &&
+      this.props.appSession.collectionId !== '2e4f2455-1b3b-4a04-80a1-ba92715ff613' &&
+      this.props.appSession.collectionId !== '88b35138-24b5-4e62-bae4-de80fae7df82';
     return (
       <div>
         <main>
@@ -273,12 +279,11 @@ export class PickListComponent extends React.Component {
                       className="normalAction"
                       style={{
                         fontSize: '1.5em',
-                        color:
-                          marked.length < 1 || markedSamples.length > 0 ? 'grey' : null
+                        color: conservationEnabled ? null : 'grey'
                       }}
                       name="bank"
                       onClick={() => {
-                        if (marked.length > 0 && markedSamples.length === 0) {
+                        if (conservationEnabled) {
                           this.props.createConservation(
                             markedValues,
                             this.props.appSession

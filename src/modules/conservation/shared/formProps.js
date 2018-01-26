@@ -88,7 +88,7 @@ export default function formProps(
 function updateExpandOnView(updateForm: any) {
   updateForm({
     name: 'expandOnView',
-    rawValue: 'some data'
+    rawValue: false
   });
 }
 

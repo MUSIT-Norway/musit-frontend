@@ -233,7 +233,8 @@ function renderSubEvent(
 
   const urlSubEventId =
     props.match && props.match.params && props.match.params.subEventId;
-  const expandOnView = !(props.form.expandOnView && props.form.expandOnView.rawValue);
+  const expandOnView =
+    props.form && props.form.expandOnView && props.form.expandOnView.rawValue;
   const expanded =
     urlSubEventId &&
     expandOnView &&
@@ -269,7 +270,7 @@ function renderSubEvent(
     ),
     affectedThingsWithDetailsMainEvent: props.objects || [],
     toggleExpanded: props.toggleSingleExpanded(
-      !props.form.events.value[ind].expanded,
+      !expanded,
       props.form.events.value,
       ind,
       viewMode
@@ -450,8 +451,8 @@ export default function ConservationComponent(
       )}
       {props.form.id.value && (
         <form className="form-horizontal">
+          <hr />
           <div style={{ marginLeft: 20 }}>
-            <hr />
             <MetaInformation
               aligned
               registeredBy={props.form.registeredByName.value}
@@ -459,8 +460,8 @@ export default function ConservationComponent(
               updatedBy={props.form.updatedByName.value}
               updatedDate={props.form.updatedDate.value}
             />
-            <hr />
           </div>
+          <hr />
         </form>
       )}
       <br />
@@ -502,8 +503,7 @@ export default function ConservationComponent(
           />
         </div>
       </div>
-      <br />
-      <div style={{ marginTop: 40, borderBottom: '#cdcdcd 3px solid' }} />
+      <div style={{ borderBottom: '#cdcdcd 3px solid' }} />
       <br />
       {props.form.events &&
       props.form.events.value &&
