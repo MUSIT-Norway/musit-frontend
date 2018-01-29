@@ -586,6 +586,7 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
         },
       }
     }
+    onSubmit={[Function]}
   />
   <br />
   <Toolbar

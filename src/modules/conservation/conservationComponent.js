@@ -70,7 +70,8 @@ export type Props = ConservationProcessProps & {
 
 type ProcessFormProps = {
   form: FormData,
-  updateStringField: Function
+  updateStringField: Function,
+  onSubmit?: Function
 };
 
 function getStatusTextFromErrors(form: FormData) {
@@ -354,7 +355,11 @@ function renderSubEvent(
 function ConservationProcessForm(props: ProcessFormProps) {
   return (
     <div className="container">
-      <form className="form-horizontal" style={{ marginLeft: -20 }}>
+      <form
+        onSubmit={props.onSubmit}
+        className="form-horizontal"
+        style={{ marginLeft: -20 }}
+      >
         <FormInput
           field={props.form.caseNumber}
           label={I18n.t('musit.conservation.caseNumber') + suffix}
@@ -447,6 +452,7 @@ export default function ConservationComponent(
         <ConservationProcessForm
           form={props.form}
           updateStringField={props.updateStringField}
+          onSubmit={props.onSave}
         />
       )}
       {props.form.id.value && (
