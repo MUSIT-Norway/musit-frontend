@@ -74,13 +74,6 @@ type ProcessFormProps = {
   onSubmit?: Function
 };
 
-function getStatusTextFromErrors(form: FormData) {
-  return Object.keys(form).reduce(
-    (t: string, e: string) => form[e].status.error || t,
-    ''
-  );
-}
-
 const commonAttributes = v => ({
   eventTypeId: v,
   note: '',
@@ -89,6 +82,14 @@ const commonAttributes = v => ({
   expanded: true,
   viewMode: false
 });
+
+function getStatusTextFromErrors(form: FormData) {
+  return Object.keys(form).reduce(
+    (t: string, e: string) => form[e].status.error || t,
+    ''
+  );
+}
+
 function createSubEvents(
   props: Props & { form: FormData, predefinedConservation: PredefinedConservation }
 ) {
@@ -276,7 +277,9 @@ function renderSubEvent(
       ind,
       viewMode
     ),
-    onDocumentUpload: props.onDocumentUpload
+    onDocumentUpload: props.onDocumentUpload,
+    isFormValid: props.isFormValid,
+    getStatusTextFromErrors: getStatusTextFromErrors(props.form)
   };
 
   if (eventType === 2) {
@@ -576,26 +579,14 @@ export default function ConservationComponent(
         {I18n.t('musit.conservation.createNewSubEvents')}
       </button>
       <hr />
-      <div
-        rel="tooltip"
-        title={
-          props.isFormValid ? null : (
-            `${I18n.t('musit.errorMainMessages.saveDisabled')}: ${getStatusTextFromErrors(
-              props.form
-            )}`
-          )
-        }
-        className="wrap poptooltip"
-      >
-        <div style={{ float: 'right' }}>
-          <button
-            className="btn-link"
-            style={{ marginRight: 5 }}
-            onClick={props.onClickBack}
-          >
-            {I18n.t('musit.texts.back')}
-          </button>
-        </div>
+      <div style={{ float: 'right' }}>
+        <button
+          className="btn-link"
+          style={{ marginRight: 5 }}
+          onClick={props.onClickBack}
+        >
+          {I18n.t('musit.texts.back')}
+        </button>
       </div>
       <br />
       <div style={{ paddingBottom: '100px' }} />

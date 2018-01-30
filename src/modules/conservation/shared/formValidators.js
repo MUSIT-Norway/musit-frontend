@@ -6,20 +6,20 @@ import { I18n } from 'react-i18nify';
 
 export const subEventValidator = revalidate.createValidator(
   (message: string) => (value: Array<ConservationSubTypes>) => {
-    return value.reduce(function(message, e) {
+    return value.reduce(function(m: string, e: ConservationSubTypes) {
       if (e.actorsAndRoles && e.actorsAndRoles.length > 0) {
-        return e.actorsAndRoles.reduce(function(m, a) {
+        return e.actorsAndRoles.reduce(function(akk: string, a: Person) {
           if (!a.role) {
-            return 'Actor with empty role is not allowed';
+            return I18n.t('musit.conservation.errorMessages.noRoleForPerson');
           }
           if (!a.uuid) {
-            return 'Actor without UUID is not allowed';
+            return I18n.t('musit.conservation.errorMessages.noUUIDForPerson');
           }
-          if (m) {
-            return m;
+          if (akk) {
+            return akk;
           }
           return '';
-        }, message);
+        }, '');
       }
       return '';
     }, '');

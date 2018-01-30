@@ -53,6 +53,7 @@ export function FormInput(props: InputProps) {
       labelWidth={props.labelWidth}
       elementWidth={props.elementWidth}
       labelAbove={props.labelAbove}
+      hasError={props.hasError}
     >
       <input
         type="text"

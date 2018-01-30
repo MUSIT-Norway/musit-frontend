@@ -100,6 +100,7 @@ type SubEventComponentProps = {
   extraAttributes?: ?any,
   affectedThingsWithDetailsMainEvent?: ?Array<ObjectInfo>,
   onDocumentUpload?: Function,
+  isFormValid: Function,
   editable: ?number
 };
 

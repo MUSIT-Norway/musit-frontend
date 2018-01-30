@@ -1568,28 +1568,22 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
   </button>
   <hr />
   <div
-    className="wrap poptooltip"
-    rel="tooltip"
-    title={null}
+    style={
+      Object {
+        "float": "right",
+      }
+    }
   >
-    <div
+    <button
+      className="btn-link"
       style={
         Object {
-          "float": "right",
+          "marginRight": 5,
         }
       }
     >
-      <button
-        className="btn-link"
-        style={
-          Object {
-            "marginRight": 5,
-          }
-        }
-      >
-        Tilbake
-      </button>
-    </div>
+      Tilbake
+    </button>
   </div>
   <br />
   <div
@@ -4893,7 +4887,9 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
               "museumId": 99,
             }
           }
+          getStatusTextFromErrors=""
           index={0}
+          isFormValid={true}
           keywords={
             Array [
               Object {
@@ -7293,7 +7289,9 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
               "museumId": 99,
             }
           }
+          getStatusTextFromErrors=""
           index={1}
+          isFormValid={true}
           onCancel={
             Object {
               "actorsAndRoles": Object {
@@ -9121,28 +9119,22 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
   </button>
   <hr />
   <div
-    className="wrap poptooltip"
-    rel="tooltip"
-    title={null}
+    style={
+      Object {
+        "float": "right",
+      }
+    }
   >
-    <div
+    <button
+      className="btn-link"
       style={
         Object {
-          "float": "right",
+          "marginRight": 5,
         }
       }
     >
-      <button
-        className="btn-link"
-        style={
-          Object {
-            "marginRight": 5,
-          }
-        }
-      >
-        Tilbake
-      </button>
-    </div>
+      Tilbake
+    </button>
   </div>
   <br />
   <div

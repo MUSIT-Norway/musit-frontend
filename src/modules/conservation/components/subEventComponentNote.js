@@ -1,12 +1,11 @@
 import React from 'react';
 import type { SubEventComponentNoteProps } from '../../../types/conservation';
 import ObjectSelection from './objectSelection';
-import FontAwesome from 'react-fontawesome';
 import CollapsibleEvent from './CollapsibleEvent';
 import PersonRoleDate from '../../../components/person/PersonRoleDate';
 import ViewPersonRoleDate from '../../../components/person/ViewPersonRoleDate';
 import find from 'lodash/find';
-import { FormFileSelect, FormElement } from '../../../forms/components';
+import { FormFileSelect } from '../../../forms/components';
 import { saveBlob } from '../../../shared/download';
 import { getFileAsBlob } from '../../../models/conservation/documents';
 import { I18n } from 'react-i18nify';
@@ -14,9 +13,8 @@ import Toolbar from './Toolbar';
 
 export default function SubEventComponentNote(props: SubEventComponentNoteProps) {
   const suffix = ':';
-  console.log('in SubEventComponentNote props', props);
   const toolbarBooleanParameter = {
-    saveDisabled: props.viewMode,
+    saveDisabled: props.viewMode || !props.isFormValid,
     cancelDisabled: props.viewMode,
     editDisabled: !!props.editable,
     deleteDisabled: !!props.editable
@@ -153,19 +151,32 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
           props.onChange('affectedThings')(t.map(s => s) || [])}
         viewMode={props.viewMode}
       />
-      <Toolbar
-        saveOnClick={e => props.onSave(e)}
-        cancelOnClick={e => props.onCancel(e)}
-        deleteOnClick={e => props.onDelete(e)}
-        editOnClick={e => props.onEdit(e)}
-        {...toolbarBooleanParameter}
-        md={11}
-      />
+      <div
+        rel="tooltip"
+        title={
+          props.isFormValid ? null : (
+            `${I18n.t(
+              'musit.errorMainMessages.saveDisabled'
+            )}: ${props.getStatusTextFromErrors}`
+          )
+        }
+        className="wrap poptooltip"
+      >
+        <Toolbar
+          saveOnClick={e => props.onSave(e)}
+          cancelOnClick={e => props.onCancel(e)}
+          deleteOnClick={e => props.onDelete(e)}
+          editOnClick={e => props.onEdit(e)}
+          {...toolbarBooleanParameter}
+          md={11}
+        />
+      </div>
     </div>
   );
   return (
     <CollapsibleEvent
       eventName={props.eventName}
+      noteLabel
       eventComponent={subEventComponentNote}
       expanded={props.expanded}
       toggleExpanded={props.toggleExpanded}
