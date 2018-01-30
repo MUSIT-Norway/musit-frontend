@@ -161,11 +161,9 @@ export class PickListComponent extends React.Component {
     const isNode = this.props.isTypeNode;
     const isObject = !isNode;
     // disable for Archaeology & Ethnography collections and for samples
-    const conservationEnabled =
-      marked.length > 0 &&
-      markedSamples.length === 0 &&
-      this.props.appSession.collectionId !== '2e4f2455-1b3b-4a04-80a1-ba92715ff613' &&
-      this.props.appSession.collectionId !== '88b35138-24b5-4e62-bae4-de80fae7df82';
+    const conservationEnabled = marked.length > 0 && markedSamples.length === 0; //&&
+    // this.props.appSession.collectionId !== '2e4f2455-1b3b-4a04-80a1-ba92715ff613' &&
+    // this.props.appSession.collectionId !== '88b35138-24b5-4e62-bae4-de80fae7df82';
     return (
       <div>
         <main>

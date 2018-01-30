@@ -2,14 +2,13 @@
 import React from 'react';
 import { I18n } from 'react-i18nify';
 import MetaInformation from '../../components/metainfo';
-import type { FormData } from './shared/formType';
 import ObjectTable from './components/expandableObjects';
 import { FormInput, FormTextArea } from '../../forms/components';
 import type { History } from '../../types/Routes';
 import type { AppSession } from '../../types/appSession';
 import FieldMultiSelect from '../../forms/components/FieldMultiSelect';
 import type { PredefinedConservation } from '../../types/predefinedConservation';
-import type { ConservationSubTypes } from '../../types/conservation';
+import type { ConservationSubTypes, FormData } from '../../types/conservation';
 import Treatment from './events/treatment';
 import TechnicalDescription from './events/technicalDescription';
 import StorageAndHandling from './events/storageAndHandling';
@@ -48,7 +47,7 @@ type ConservationProcessProps = {
   form: FormData,
   loadingConservation?: boolean,
   history: History,
-  clickSaveAndContinue?: ?Function,
+  addNewSubEvent?: ?Function,
   onClickBack?: Function,
   clearForm?: Function,
   clearStore?: Function,
@@ -197,14 +196,13 @@ function createSubEvents(
         }
       }
     }, []);
-    props.clickSaveAndContinue &&
-      props.clickSaveAndContinue(
+    props.addNewSubEvent &&
+      props.addNewSubEvent(
         props.form,
         props.appSession,
         props.location,
         akk,
-        props.updateForm,
-        props.form.events.name
+        props.updateForm
       );
   };
 }

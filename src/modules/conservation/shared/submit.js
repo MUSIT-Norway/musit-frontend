@@ -1,8 +1,8 @@
 //@flow
-import type { FormData } from '../shared/formType';
 import type { ObjectData } from '../../../types/object';
 import type { Person } from '../../../types/person';
 import toArray from 'lodash/toArray';
+import type { FormData } from '../../../types/conservation';
 
 export type Location<T> = {
   state?: T
@@ -48,7 +48,8 @@ export function getConservationCollection(
         : [],
     objects: getObjectsWithType(getObjects(affectedThings, location)),
     affectedThings: affectedThings ? affectedThings.map(o => o.uuid) : [],
-    caseNumber: form.caseNumber.value
+    caseNumber: form.caseNumber.value,
+    updatedEventdId: form.updatedEventdId.value
   };
 }
 

@@ -4,7 +4,7 @@ import type { MusitObject } from '../types/object';
 import type { SampleDataExtended } from '../types/samples';
 import type { Person } from '../types/person';
 import type { AppSession } from '../types/appSession';
-import type { Field } from './formTypes';
+import type { Field } from '../forms/form';
 
 export type ActorsAndRoles = {
   roleId?: number | string,
@@ -201,37 +201,17 @@ export type EditableValuesForm = {
   editable: ?Field<EditableValuesMainEvent | Array<ConservationSubTypes>>
 };
 
-// Fixme this type is incorrect/incomplete
 export type ConservationCollection = {
   id: number,
   editable: ?number,
   editableValues: any,
-  analysisTypeId: number,
-  objectId?: ?string,
-  doneBy?: ?string,
-  doneDate?: ?string,
-  doneByName?: ?string,
   registeredBy?: ?string,
-  participating?: ?string,
-  participatingName?: ?string,
   registeredDate?: ?string,
-  responsible?: ?string,
-  responsibleName?: string,
-  administrator?: ?string,
-  administratorName?: ?string,
   updatedBy?: ?string,
   updatedDate?: ?string,
-  completedBy?: ?string,
-  completedByName?: ?string,
-  completedDate?: ?string,
   note?: ?string,
-  extraAttributes?: { type: string, [string]: string | number },
   affectedThings?: ?Array<ObjectInfo>,
-  reason?: ?string,
-  status?: ?number,
-  caseNumbers?: ?Array<string>,
   caseNumber?: ?string,
-  orgId?: ?number,
   events: Array<any>,
   actorsAndRoles?: Array<ActorsAndRoles>
 };
@@ -259,4 +239,27 @@ export type SavedFile = {
 export type ErrorSaving = {
   error: { status: number, response?: any },
   file: File
+};
+
+export type FormData = {
+  id: Field<string>,
+  eventTypeId: Field<number>,
+  editable: Field<number>,
+  expandOnView: Field<boolean>,
+  editableValues: Field<string>,
+  actorsAndRoles: Field<Array<Person>>,
+  registeredBy: Field<string>,
+  registeredByName: Field<string>,
+  registeredDate: Field<string>,
+  note: Field<string>,
+  caseNumber: Field<string>,
+  affectedThings: Field<Array<string>>,
+  objects: Field<Array<ObjectInfo>>,
+  updatedBy: Field<string>,
+  updatedByName: Field<string>,
+  updatedDate: Field<string>,
+  subEventTypes: Field<string>,
+  events: Field<Array<ConservationSubTypes>>,
+  objectsExpanded: Field<boolean>,
+  updatedEventdId: Field<number>
 };

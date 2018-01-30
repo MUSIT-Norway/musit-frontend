@@ -10,13 +10,13 @@ import { simplePost, simplePut } from '../../../shared/RxAjax';
 import type { History } from '../../../types/Routes';
 import type { AppSession } from '../../../types/appSession';
 
-import type { FormData } from '../shared/formType';
 import type { PredefinedConservation } from '../../../types/predefinedConservation';
 import type { Person } from '../../../types/person';
 import type {
   ConservationStoreState as Store,
   ConservationSubTypes,
-  EditableValuesForm
+  EditableValuesForm,
+  FormData
 } from '../../../types/conservation';
 import type { DomEvent } from '../../../types/dom';
 import toArray from 'lodash/toArray';
@@ -61,7 +61,7 @@ export default function formProps(
     toggleExpanded: toggleExpanded(props.updateForm),
     toggleObjectsExpanded: toggleObjectsExpanded(props.updateForm),
     toggleSingleExpanded: toggleSingleExpanded(props.updateForm),
-    clickSaveAndContinue: clickSaveAndContinue,
+    addNewSubEvent: addNewSubEvent,
     onClickBack: onClickBack(props),
     onDocumentUpload: onDocumentUpload(
       props.form,
@@ -259,13 +259,12 @@ function onDocumentUpload(
   };
 }
 
-function clickSaveAndContinue(
+function addNewSubEvent(
   form: any,
   appSession: AppSession,
   location: Location<Array<ObjectData>>,
   newSubEventsToCreate?: ?any,
-  updateForm?: ?Function,
-  updateFormDataEvenName?: ?any
+  updateForm?: ?Function
 ) {
   const formData = getConservationCollection(form, location);
   const newSubEvents = newSubEventsToCreate || [];
@@ -273,7 +272,7 @@ function clickSaveAndContinue(
     formData && formData.events && formData.events.length > 0
       ? formData.events.concat(newSubEvents)
       : newSubEvents;
-  const data = events ? { ...formData, events: events } : formData;
+  const data = events ? { ...formData, events: events, updatedEventdId: null } : formData;
 
   return saveConservation$.next({
     id: form.id.value,
@@ -287,26 +286,21 @@ function clickSaveAndContinue(
         if (!props) {
           return;
         }
-        const add = !form.id.value;
-        // if add then updated the Form with new event id
-        if (updateForm && updateFormDataEvenName) {
-          if (add) {
-            updateForm({
-              name: 'id',
-              rawValue: props.response.id
-            });
-          }
 
-          // add Form events + new events
+        if (updateForm) {
+          // old Form events
           const formEvents =
-            form &&
-            form.events &&
-            form.events &&
-            form.events.rawValue &&
-            form.events.rawValue.length > 0
+            form && form.events && form.events.rawValue && form.events.rawValue.length > 0
               ? form.events.rawValue
               : [];
 
+          // All events from response
+          const respEvents =
+            props.response && props.response.events && props.response.events.length > 0
+              ? props.response.events
+              : [];
+
+          // default person information for new event
           const defaultActorsAndRoles = [
             {
               name: appSession && appSession.actor && appSession.actor.fn,
@@ -315,39 +309,51 @@ function clickSaveAndContinue(
               date: formatISOString(new Date())
             }
           ];
-          const respEvents =
-            props.response && props.response.events && props.response.events.length > 0
-              ? props.response.events.map(e => ({ ...e, expanded: true }))
-              : [];
-          const updateEvents =
-            newSubEventsToCreate && newSubEventsToCreate.length > 0 ? true : false;
 
+          // new sub event with default attributes
+          const newSubEventWithDefaultAttributes = re => ({
+            ...re,
+            actorsAndRoles: defaultActorsAndRoles,
+            expanded: true
+          });
+
+          // return the from event if reponse has similar event
           const foundOldEventId = (re, formEvents) =>
             formEvents.find(fe => fe.id === re.id);
-          const newEvents = formEvents
-            ? respEvents.map(
-                re =>
-                  foundOldEventId(re, formEvents)
-                    ? foundOldEventId(re, formEvents)
-                    : { ...re, actorsAndRoles: defaultActorsAndRoles }
-              )
-            : respEvents.map(re => ({ ...re, actorsAndRoles: defaultActorsAndRoles }));
 
-          updateEvents &&
-            updateForm({
-              name: updateFormDataEvenName,
-              rawValue: sortSubEventsOnly(newEvents)
-            });
+          // get the new sub events from the response
+          const newSubEvents = respEvents.filter(re => !foundOldEventId(re, formEvents));
 
+          // newAllEvents = old From event + only new reponse event
+          const newAllEvents = sortSubEventsOnly(
+            formEvents.concat(newSubEvents.map(e => newSubEventWithDefaultAttributes(e)))
+          );
+
+          // update evetns with sorted events
+          updateForm({
+            name: 'events',
+            rawValue: newAllEvents
+          });
+
+          // clear the lookup list for sub events
           updateForm({
             name: 'subEventTypes',
             rawValue: null
           });
-          // in case of add we have to make main event editable
-          updateForm({
-            name: 'editable',
-            rawValue: newEvents.length > 0 ? (newEvents.length - 1).toString() : null
-          });
+
+          //New sub event in editable mode
+          if (newSubEvents && newAllEvents && newSubEvents.length > 0) {
+            updateForm({
+              name: 'editable',
+              rawValue: (newAllEvents.length - 1).toString()
+            });
+
+            // new sub event id is added in updatedEventdId so that next save it will go to put
+            updateForm({
+              name: 'updatedEventdId',
+              rawValue: newSubEvents[0].id.toString()
+            });
+          }
         }
       },
       onFailure: err => {
@@ -397,6 +403,15 @@ function onEdit(updateForm: any) {
       name: 'editable',
       rawValue: arrayIndex.toString()
     });
+    const updatedEventId = arrayIndex.toString()
+      ? arrayIndex === -1
+        ? form.id.rawValue.toString()
+        : form.events.rawValue[arrayIndex].id.toString()
+      : '';
+    updateForm({
+      name: 'updatedEventdId',
+      rawValue: updatedEventId
+    });
   };
 }
 
@@ -407,6 +422,10 @@ function updateEditModeFields(updateForm: any) {
   });
   updateForm({
     name: 'editable',
+    rawValue: ''
+  });
+  updateForm({
+    name: 'updatedEventdId',
     rawValue: ''
   });
 }
