@@ -176,7 +176,7 @@ describe('searchStore', () => {
       expect(res).toEqual({
         currentPage: 11,
         totalPages: 100,
-        showPages: [6, 7, 8, 9, 10]
+        showPages: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
       });
     });
   });

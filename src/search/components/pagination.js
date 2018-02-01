@@ -15,6 +15,7 @@ const Pagination = (props: Props) => {
   return (
     <nav aria-label="Page navigation">
       <ul className="pagination">
+        {console.log('Rituvesh pagination', props)}
         <li className={cx({ disabled: paging.currentPage === 1 })}>
           <span
             onClick={() => {

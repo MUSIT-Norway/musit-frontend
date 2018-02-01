@@ -72,7 +72,7 @@ export function updatePagination(result: SearchResult, from: number, limit: numb
   const currentPage = from / limit + 1;
   const showPageFrom = Math.max(1, currentPage - 5);
   const showPageTo =
-    currentPage <= 100
+    currentPage <= 10
       ? Math.min(totalPages + 1, 11)
       : Math.min(totalPages, currentPage + 5) + 1;
 
