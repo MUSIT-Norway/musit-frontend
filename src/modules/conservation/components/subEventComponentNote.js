@@ -144,6 +144,8 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
           </div>
         </div>
       )}
+      <br />
+      <br />
       <ObjectSelection
         affectedThingsWithDetailsMainEvent={props.affectedThingsWithDetailsMainEvent}
         affectedThingsSubEvent={props.subEvent.affectedThings}

@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import FontAwesome from 'react-fontawesome';
+import { borderStyle } from '../conservationComponent';
 
 type Props = {
   eventName?: string,
@@ -11,15 +12,6 @@ type Props = {
   index: number,
   toggleExpanded: Function
 };
-
-function borderStyle(editMode: boolean) {
-  if (editMode) {
-    return {
-      borderColor: editMode ? '#719ECE' : '#d3d3d3',
-      boxShadow: editMode ? '5px 5px 5px #719ECE' : ''
-    };
-  }
-}
 
 export default function CollapsibleEvent(props: Props) {
   return (

@@ -1556,8 +1556,8 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
     stringValue={null}
     style={
       Object {
-        "borderColor": "#719ECE",
-        "boxShadow": "5px 5px 5px #719ECE",
+        "border": "0.5px solid #0099ff",
+        "boxShadow": "0px 0px 3px 0px #33adff",
       }
     }
     title="Velg delhendelser som skal lages"
@@ -9113,8 +9113,8 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
     stringValue={null}
     style={
       Object {
-        "borderColor": "#719ECE",
-        "boxShadow": "5px 5px 5px #719ECE",
+        "border": "0.5px solid #0099ff",
+        "boxShadow": "0px 0px 3px 0px #33adff",
       }
     }
     title="Velg delhendelser som skal lages"

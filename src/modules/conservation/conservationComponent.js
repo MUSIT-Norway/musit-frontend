@@ -79,6 +79,15 @@ const commonAttributes = v => ({
   viewMode: false
 });
 
+export function borderStyle(editMode: boolean) {
+  if (editMode) {
+    return {
+      border: '0.5px solid #0099ff',
+      boxShadow: editMode ? '0px 0px 3px 0px #33adff' : ''
+    };
+  }
+}
+
 function getStatusTextFromErrors(form: FormData) {
   return Object.keys(form).reduce(
     (t: string, e: string) => form[e].status.error || t,
@@ -368,10 +377,7 @@ function ConservationProcessForm(props: ProcessFormProps) {
           value={props.form.caseNumber.value}
           onChange={props.updateStringField(props.form.caseNumber.name)}
           id={props.form.caseNumber.name}
-          style={{
-            borderColor: '#719ECE',
-            boxShadow: '5px 5px 5px #719ECE'
-          }}
+          style={borderStyle(true)}
         />
       </form>
     </div>
@@ -558,10 +564,7 @@ export default function ConservationComponent(
         onChange={props.updateMultiSelectField(props.form.subEventTypes.name)}
         singleSelect={true}
         viewMode={!editModeForLookup || addMode}
-        style={{
-          borderColor: '#719ECE',
-          boxShadow: '5px 5px 5px #719ECE'
-        }}
+        style={borderStyle(true)}
       />
       <button
         key="btn-createSubEvents"
