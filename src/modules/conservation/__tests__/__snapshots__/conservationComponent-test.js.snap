@@ -588,7 +588,6 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
     }
     onSubmit={[Function]}
   />
-  <br />
   <Toolbar
     cancelDisabled={false}
     cancelOnClick={
@@ -1544,17 +1543,23 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
     options={
       Array [
         Object {
-          "label": "treatment",
-          "value": "2",
-        },
-        Object {
           "label": "technical description",
           "value": "3",
+        },
+        Object {
+          "label": "treatment",
+          "value": "2",
         },
       ]
     }
     singleSelect={true}
     stringValue={null}
+    style={
+      Object {
+        "borderColor": "#719ECE",
+        "boxShadow": "5px 5px 5px #719ECE",
+      }
+    }
     title="Velg delhendelser som skal lages"
     titleSize="h4"
     viewMode={true}
@@ -1603,6 +1608,27 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
   <h1>
     Konservering
   </h1>
+  <form
+    className="form-horizontal"
+  >
+    <br />
+    <div
+      style={
+        Object {
+          "marginLeft": 20,
+        }
+      }
+    >
+      <MetaInformation
+        aligned={true}
+        registeredBy="Rituvesh Kumar"
+        registeredDate="2017-11-21T13:54:28+00:00"
+        updatedBy="Rituvesh Kumar"
+        updatedDate="2017-11-21T15:14:29+00:00"
+      />
+    </div>
+    <hr />
+  </form>
   <button
     className="btn btn-primary"
     disabled={false}
@@ -3257,28 +3283,6 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
       }
     }
   />
-  <form
-    className="form-horizontal"
-  >
-    <hr />
-    <div
-      style={
-        Object {
-          "marginLeft": 20,
-        }
-      }
-    >
-      <MetaInformation
-        aligned={true}
-        registeredBy="Rituvesh Kumar"
-        registeredDate="2017-11-21T13:54:28+00:00"
-        updatedBy="Rituvesh Kumar"
-        updatedDate="2017-11-21T15:14:29+00:00"
-      />
-    </div>
-    <hr />
-  </form>
-  <br />
   <Toolbar
     cancelDisabled={true}
     cancelOnClick={
@@ -4594,6 +4598,7 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
       >
         <div
           className="btn btn-default btn-md"
+          disabled={false}
           onClick={true}
           type="button"
         >
@@ -9095,17 +9100,23 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
     options={
       Array [
         Object {
-          "label": "treatment",
-          "value": "2",
-        },
-        Object {
           "label": "technical description",
           "value": "3",
+        },
+        Object {
+          "label": "treatment",
+          "value": "2",
         },
       ]
     }
     singleSelect={true}
     stringValue={null}
+    style={
+      Object {
+        "borderColor": "#719ECE",
+        "boxShadow": "5px 5px 5px #719ECE",
+      }
+    }
     title="Velg delhendelser som skal lages"
     titleSize="h4"
     viewMode={false}

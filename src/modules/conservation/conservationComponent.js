@@ -3,7 +3,7 @@ import React from 'react';
 import { I18n } from 'react-i18nify';
 import MetaInformation from '../../components/metainfo';
 import ObjectTable from './components/expandableObjects';
-import { FormInput, FormTextArea } from '../../forms/components';
+import { FormInput } from '../../forms/components';
 import type { History } from '../../types/Routes';
 import type { AppSession } from '../../types/appSession';
 import FieldMultiSelect from '../../forms/components/FieldMultiSelect';
@@ -12,20 +12,17 @@ import type { ConservationSubTypes, FormData } from '../../types/conservation';
 import Treatment from './events/treatment';
 import TechnicalDescription from './events/technicalDescription';
 import StorageAndHandling from './events/storageAndHandling';
-import PersonRoleDate from '../../components/person/PersonRoleDate';
 import HseRisk from './events/hseRisk';
-import find from 'lodash/find';
 import ConditionAssessment from './events/conditionAssessment';
 import Report from './events/report';
 import type { Location } from './shared/submit';
 import type { ObjectData } from '../../types/object';
 import Toolbar from './components/Toolbar';
 import MaterialDetermination from './events/materialDetermination';
-import ViewPersonRoleDate from '../../components/person/ViewPersonRoleDate';
 import Note from './events/note';
-import { emitError } from '../../shared/errors';
 import { formatISOString } from '../../shared/util';
 import FontAwesome from 'react-fontawesome';
+import { sortBy } from 'lodash';
 
 type ConservationProcessProps = {
   id?: number,
@@ -371,6 +368,10 @@ function ConservationProcessForm(props: ProcessFormProps) {
           value={props.form.caseNumber.value}
           onChange={props.updateStringField(props.form.caseNumber.name)}
           id={props.form.caseNumber.name}
+          style={{
+            borderColor: '#719ECE',
+            boxShadow: '5px 5px 5px #719ECE'
+          }}
         />
       </form>
     </div>
@@ -421,19 +422,34 @@ export default function ConservationComponent(
     deleteHide: true
   };
 
-  const defaultActorsAndRoles = [
-    {
-      name: props.appSession && props.appSession.actor && props.appSession.actor.fn,
-      uuid:
-        props.appSession && props.appSession.actor && props.appSession.actor.dataportenId,
-      role: 1,
-      date: formatISOString(new Date())
-    }
-  ];
+  const conservationTypes =
+    props.predefinedConservation &&
+    props.predefinedConservation.conservationTypes &&
+    props.predefinedConservation.conservationTypes.filter(r => r.id > 1).map(v => ({
+      value: v.id.toString(),
+      label: props.appSession.language.isEn ? v.enName : v.noName
+    }));
+  const sortedConservationTypes = sortBy(conservationTypes || [], o => o.label);
 
   return (
     <div className="container">
       <h1>{I18n.t('musit.conservation.conservation')}</h1>
+
+      {props.form.id.value && (
+        <form className="form-horizontal">
+          <br />
+          <div style={{ marginLeft: 20 }}>
+            <MetaInformation
+              aligned
+              registeredBy={props.form.registeredByName.value}
+              registeredDate={props.form.registeredDate.value}
+              updatedBy={props.form.updatedByName.value}
+              updatedDate={props.form.updatedDate.value}
+            />
+          </div>
+          <hr />
+        </form>
+      )}
       <button
         key="btn-edit"
         className="btn btn-primary"
@@ -456,22 +472,6 @@ export default function ConservationComponent(
           onSubmit={props.onSave}
         />
       )}
-      {props.form.id.value && (
-        <form className="form-horizontal">
-          <hr />
-          <div style={{ marginLeft: 20 }}>
-            <MetaInformation
-              aligned
-              registeredBy={props.form.registeredByName.value}
-              registeredDate={props.form.registeredDate.value}
-              updatedBy={props.form.updatedByName.value}
-              updatedDate={props.form.updatedDate.value}
-            />
-          </div>
-          <hr />
-        </form>
-      )}
-      <br />
       <Toolbar
         saveOnClick={props.onSave}
         cancelOnClick={props.onCancel(props.form, -1)}
@@ -522,6 +522,7 @@ export default function ConservationComponent(
                 key="btn-toggleExpanded"
                 type="button"
                 className="btn btn-default btn-md"
+                disabled={!editModeForLookup}
                 onClick={props.toggleExpanded(
                   !expanded(props.form),
                   props.form.events.value
@@ -553,17 +554,14 @@ export default function ConservationComponent(
         appSession={props.appSession}
         labelAbove
         stringValue={props.form.subEventTypes.rawValue}
-        options={
-          props.predefinedConservation &&
-          props.predefinedConservation.conservationTypes &&
-          props.predefinedConservation.conservationTypes.filter(r => r.id > 1).map(v => ({
-            value: v.id.toString(),
-            label: props.appSession.language.isEn ? v.enName : v.noName
-          }))
-        }
+        options={sortedConservationTypes}
         onChange={props.updateMultiSelectField(props.form.subEventTypes.name)}
         singleSelect={true}
         viewMode={!editModeForLookup || addMode}
+        style={{
+          borderColor: '#719ECE',
+          boxShadow: '5px 5px 5px #719ECE'
+        }}
       />
       <button
         key="btn-createSubEvents"

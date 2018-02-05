@@ -1,8 +1,7 @@
 // @flow
 import React from 'react';
 import { ActorSuggest } from '../../components/suggest/ActorSuggest';
-import { Row, Col, Button } from 'react-bootstrap';
-import FontAwesome from 'react-fontawesome';
+import { Row, Col } from 'react-bootstrap';
 import DropdownButton from '../../components/DropdownButton';
 import DatePicker from '../DatePicker';
 import { DATE_FORMAT_DISPLAY } from '../../shared/util';

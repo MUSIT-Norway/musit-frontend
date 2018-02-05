@@ -1,10 +1,6 @@
 // @flow
 import { getObjects, getConservationCollection } from '../shared/submit';
-import {
-  saveConservation$,
-  uploadFile$,
-  deleteConservation$
-} from '../conservationStore';
+import { saveConservation$, deleteConservation$ } from '../conservationStore';
 import type { Location } from '../shared/submit';
 import { simplePost, simplePut } from '../../../shared/RxAjax';
 import type { History } from '../../../types/Routes';

@@ -58,17 +58,6 @@ const ConservationResultHit = (props: ResultHitProps) => {
   );
 };
 
-const getParent = (hit: SearchHit): ?{ id: number, partOf: number, status?: ?number } => {
-  if (!hit.inner_hits.conservationCollection) {
-    return null;
-  }
-  const hits = hit.inner_hits.conservationCollection.hits;
-  if (hits.total === 0) {
-    return null;
-  }
-  return hits.hits[0]._source;
-};
-
 const getResultHitProps = (
   props: {
     hit: SearchHit
@@ -76,7 +65,6 @@ const getResultHitProps = (
 ): ResultHitProps => {
   if (props && props.hit && props.hit._source) {
     const source = props.hit._source;
-    //const parent = getParent(props.hit);
     const type = props.getConservationTypeText(source.eventTypeId);
     const dateText = moment(source.registeredDate).format(DateFormat);
     return {

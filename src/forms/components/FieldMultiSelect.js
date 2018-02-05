@@ -2,6 +2,7 @@
 import React from 'react';
 import type { AppSession } from '../../types/appSession';
 import Select from 'react-select';
+import { I18n } from 'react-i18nify';
 
 export type FieldMultiSelectProps = {
   stringValue?: any,
@@ -17,6 +18,7 @@ export type FieldMultiSelectProps = {
 };
 
 export default function FieldMultiSelect(props: FieldMultiSelectProps) {
+  const placeholder = I18n.t('musit.texts.makeChoice');
   const name = props.name ? props.name : '';
   const values: ?string = props.stringValue ? props.stringValue : '';
   const options = props.options ? props.options : [];
@@ -32,7 +34,7 @@ export default function FieldMultiSelect(props: FieldMultiSelectProps) {
   if (props.labelAbove) {
     return (
       <div className="row form-group">
-        <div className="col-md-3">
+        <div className="col-md-4">
           {props.title !== '' && (
             <label className={`control-label ${props.titleSize || ''}`} htmlFor={name}>
               {props.title}
@@ -47,6 +49,7 @@ export default function FieldMultiSelect(props: FieldMultiSelectProps) {
           {!props.viewMode && (
             <Select
               {...props.inputProps}
+              placeholder={placeholder}
               clearable={false}
               multi={!props.singleSelect}
               closeOnSelect={true}
@@ -56,6 +59,7 @@ export default function FieldMultiSelect(props: FieldMultiSelectProps) {
               value={values}
               options={options}
               onChange={v => props.onChange(v)}
+              {...props}
             />
           )}
         </div>
@@ -76,6 +80,7 @@ export default function FieldMultiSelect(props: FieldMultiSelectProps) {
         {!props.viewMode && (
           <Select
             {...props.inputProps}
+            placeholder={placeholder}
             clearable={false}
             multi={!props.singleSelect}
             closeOnSelect={true}

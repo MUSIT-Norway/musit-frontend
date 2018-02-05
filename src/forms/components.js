@@ -61,6 +61,7 @@ export function FormInput(props: InputProps) {
         id={props.id}
         value={props.value || ''}
         onChange={props.onChange}
+        {...props}
       />
     </FormElement>
   );

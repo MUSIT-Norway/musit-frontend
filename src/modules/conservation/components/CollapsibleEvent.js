@@ -15,9 +15,8 @@ type Props = {
 function borderStyle(editMode: boolean) {
   if (editMode) {
     return {
-      borderColor: editMode ? '#618298' : '#d3d3d3',
-      borderStyle: editMode ? 'groove' : 'initial',
-      borderWidth: editMode ? 'thick' : 'initial'
+      borderColor: editMode ? '#719ECE' : '#d3d3d3',
+      boxShadow: editMode ? '5px 5px 5px #719ECE' : ''
     };
   }
 }

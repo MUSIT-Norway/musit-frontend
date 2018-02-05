@@ -12,7 +12,7 @@ import type {
 import type { SampleTypesObject } from '../../../types/sample';
 import type { AppSession } from '../../../types/appSession';
 import { getSampleType, getSampleSubType } from '../../sample/shared/types';
-import type { ConservationTypes, ConservationType } from '../../../types/conservation';
+import type { ConservationTypes } from '../../../types/conservation';
 
 type EventTypeProps = {
   events: Events,
