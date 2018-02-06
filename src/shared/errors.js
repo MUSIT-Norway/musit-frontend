@@ -56,6 +56,15 @@ const getErrorMessage = error => {
   return error.response && error.response.body && error.response.body.message;
 };
 
+const handleWarning = new Subject().map(event => {
+  const customMessage = event.message;
+  return {
+    level: 'warning',
+    title: I18n.t('musit.errorMainMessages.applicationError'),
+    message: customMessage
+  };
+});
+
 const handleError = new Subject().map(event => {
   const error = event.error || event;
   const type = event.type;
@@ -109,5 +118,6 @@ const handleError = new Subject().map(event => {
 });
 
 export const emitError = event => handleError.next(event);
+export const emitWarning = event => handleWarning.next(event);
 
-export default Observable.merge(handleSuccess, handleError);
+export default Observable.merge(handleSuccess, handleError, handleWarning);

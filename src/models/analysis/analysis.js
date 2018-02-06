@@ -69,7 +69,7 @@ export const getAnalysesForObject: (
   callback
 }) => {
   const url = Config.magasin.urls.api.analysis.analysesForObject(museumId, id);
-  return ajaxGet(url, token, callback).map(({ response }) => {
+  return ajaxGet(url, token, callback).map(({ error, response }) => {
     if (!Array.isArray(response)) {
       return [];
     }

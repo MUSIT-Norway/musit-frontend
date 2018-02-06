@@ -23,7 +23,8 @@
         "errorMessages":  {
           "noRoleForPerson" : "No role chosen for person",
           "noUUIDForPerson": "No person chosen from person list",
-          "cannotCreateConservationBecauseOfSamples": "Cannot create conservation for samples (check selected objekcts!)"
+          "cannotCreateConservationBecauseOfSamples": "Cannot create conservation for samples (check selected objects!)",
+          "notAllowed" : "You do not have the appropriate access rights to see conservation."
         },
         "note":"Note",
         "caseNumber":"Case number",
@@ -396,6 +397,11 @@
           "cannotActOnObject": "This window can not act on barcodes for objects.",
           "cannotActOnNode": "This window can not act on barcodes for storage facility nodes.",
           "noCurrentLocation": "Object has no storage facility location."
+        },
+        "objects": {
+          "notAllowedToSeeAnalysis" :"No access to analysis or samples for object",
+          "notAllowedToSeeConservations" :"No access to conservations for object",
+          "notAllowedToSeeStorageData" :"No access to storage data for this object"
         }
       },
       "notificationMessages": {
@@ -1024,6 +1030,9 @@
         "messages": {
           "saveNodeError": "Could not save the node",
           "saveNodeSuccess": "Node is saved"
+        },
+        "errorMessages": {
+          "notAllowed": "You have not access to storage facility module"
         }
       },
       "login": "Login through Dataporten"
@@ -1053,7 +1062,8 @@
         "errorMessages":  {
           "noRoleForPerson" : "Ingen rolle valgt for person",
           "noUUIDForPerson": "Ingen person valgt fra personliste",
-          "cannotCreateConservationBecauseOfSamples": "Kan ikke opprette konservering for prøver (sjekk valgte objekter!)"
+          "cannotCreateConservationBecauseOfSamples": "Kan ikke opprette konservering for prøver (sjekk valgte objekter!)",
+          "notAllowed" : "Du har ikke tilgang til konservering."
         },
         "note":"Merknad",
         "caseNumber":"Saksnummer",
@@ -1427,6 +1437,11 @@
           "cannotActOnObject": "Dette skjermbildet håndterer ikke scanning av objekter.",
           "cannotActOnNode": "Dette skjermbildet håndterer ikke scanning av noder.",
           "noCurrentLocation": "Objektet har ingen plassering i magasinet."
+        },
+        "objects": {
+          "notAllowedToSeeAnalysis" :"Du har ikke tilgang til å se analyser eller prøver for dette objectet",
+          "notAllowedToSeeConservations" :"Du har ikke tilgang til å se konserveringer for dette objectet",
+          "notAllowedToSeeStorageData" :"Du har ikke tilgang til å se magasindata for dette objectet"
         }
       },
       "notificationMessages": {
@@ -2055,6 +2070,9 @@
         "messages": {
           "saveNodeError": "Kunne ikke lagre noden",
           "saveNodeSuccess": "Noden er lagret"
+        },
+        "errorMessages": {
+          "notAllowed": "Du har ikke tilgang til magasinmodulen"
         }
       },
       "login": "Logg inn via Dataporten"

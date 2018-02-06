@@ -32,6 +32,9 @@ notification$.subscribe(event => {
   if (event.level === 'error') {
     event = { ...event, autoDismiss: 0 };
   }
+  if (event.level === 'warning') {
+    event = { ...event, autoDismiss: 2 };
+  }
   notificationSystem.addNotification({
     ...event,
     position: 'tc',

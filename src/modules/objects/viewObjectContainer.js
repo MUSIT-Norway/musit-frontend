@@ -1,7 +1,7 @@
 // @flow
 import ViewObjectComponent from './ViewObjectComponent';
 import { RxInjectLegacy as inject } from 'react-rxjs';
-import { emitError } from '../../shared/errors';
+import { emitError, emitWarning } from '../../shared/errors';
 import objectStore$, {
   loadObject$,
   loadMoveAndAnalysisEvents$,
@@ -82,12 +82,25 @@ export const onMount = ({
   loadMoveAndAnalysisEvents({
     ...ajaxProps,
     callback: {
-      onFailure: e =>
-        e.status === 403
-          ? emitError({
-              message: I18n.t('musit.analysis.notAllowed')
-            })
-          : e
+      onFailure: e => {
+        if (e.status === 403 && e.request.url.match('/.*analyses.*/')) {
+          emitWarning({
+            message: I18n.t('musit.errorMainMessages.objects.notAllowedToSeeAnalysis')
+          });
+        }
+        if (e.status === 403 && e.request.url.match('/.*conservation.*/')) {
+          emitWarning({
+            message: I18n.t(
+              'musit.errorMainMessages.objects.notAllowedToSeeConservations'
+            )
+          });
+        }
+        if (e.status === 403 && e.request.url.match('/.*storage.*/')) {
+          emitWarning({
+            message: I18n.t('musit.errorMainMessages.objects.notAllowedToSeeStorageData')
+          });
+        }
+      }
     }
   });
   getAnalysisTypes(ajaxProps);

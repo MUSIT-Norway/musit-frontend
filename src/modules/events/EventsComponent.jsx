@@ -57,7 +57,7 @@ export const EventsComponent = ({ eventsStore: { object, data, currentLocation }
             <Td column="type">{event.type}</Td>
             <Td column="registeredBy">{event.registeredBy}</Td>
             <Td column="note">
-              <span>{event.note}</span>
+              <span>{event.note || event.status}</span>
             </Td>
             <Td column="id">Les mer</Td>
           </Tr>
