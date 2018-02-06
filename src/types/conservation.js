@@ -101,7 +101,8 @@ type SubEventComponentProps = {
   affectedThingsWithDetailsMainEvent?: ?Array<ObjectInfo>,
   onDocumentUpload?: Function,
   isFormValid: Function,
-  editable: ?number
+  editable: ?number,
+  isUpdated?: boolean
 };
 
 export type HseRiskType = SubEventComponentNoteType;
@@ -261,5 +262,5 @@ export type FormData = {
   subEventTypes: Field<string>,
   events: Field<Array<ConservationSubTypes>>,
   objectsExpanded: Field<boolean>,
-  updatedEventdId: Field<number>
+  isUpdated: Field<boolean>
 };

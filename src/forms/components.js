@@ -10,7 +10,8 @@ export type ElementProps = {
   labelAbove?: boolean,
   elementWidth: number,
   children?: React$Node,
-  hasError?: boolean
+  hasError?: boolean,
+  style?: Object
 };
 
 export function FormElement(props: ElementProps) {
@@ -61,7 +62,7 @@ export function FormInput(props: InputProps) {
         id={props.id}
         value={props.value || ''}
         onChange={props.onChange}
-        {...props}
+        style={props.style}
       />
     </FormElement>
   );

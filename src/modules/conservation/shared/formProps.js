@@ -81,14 +81,14 @@ export default function formProps(
   };
 }
 
-function updateExpandOnView(updateForm: any) {
+function updateExpandOnView(updateForm: Function) {
   updateForm({
     name: 'expandOnView',
     rawValue: false
   });
 }
 
-export function toggleExpanded(updateForm: any) {
+export function toggleExpanded(updateForm: Function) {
   return (b: boolean, events: Array<ConservationSubTypes>) => () => {
     updateExpandOnView(updateForm);
     updateForm({
@@ -98,7 +98,7 @@ export function toggleExpanded(updateForm: any) {
   };
 }
 
-export function toggleObjectsExpanded(updateForm: any) {
+export function toggleObjectsExpanded(updateForm: Function) {
   return (b: boolean) => () =>
     updateForm({
       name: 'objectsExpanded',
@@ -106,7 +106,7 @@ export function toggleObjectsExpanded(updateForm: any) {
     });
 }
 
-export function toggleSingleExpanded(updateForm: any) {
+export function toggleSingleExpanded(updateForm: Function) {
   return (
     b: boolean,
     events: Array<ConservationSubTypes>,
@@ -130,7 +130,7 @@ export function toggleSingleExpanded(updateForm: any) {
   };
 }
 
-function updateStringField(updateForm: any) {
+function updateStringField(updateForm: Function) {
   return (name: string) => (evt: DomEvent) =>
     updateForm({
       name,
@@ -138,7 +138,7 @@ function updateStringField(updateForm: any) {
     });
 }
 
-function updateBooleanField(updateForm: any) {
+function updateBooleanField(updateForm: Function) {
   return (name: string, b: boolean) => () =>
     updateForm({
       name,
@@ -146,7 +146,7 @@ function updateBooleanField(updateForm: any) {
     });
 }
 
-function updateArrayField(updateForm: any) {
+function updateArrayField(updateForm: Function) {
   return (name: string) => (evt: DomEvent) =>
     updateForm({
       name,
@@ -154,7 +154,7 @@ function updateArrayField(updateForm: any) {
     });
 }
 
-function updateMultiSelectField(updateForm: any) {
+function updateMultiSelectField(updateForm: Function) {
   return (name: string) => (value: string) => {
     updateForm({
       name,
@@ -167,7 +167,7 @@ function updateMultiSelectField(updateForm: any) {
   };
 }
 
-export function updateConservationSubEvent(updateForm: any) {
+export function updateConservationSubEvent(updateForm: Function) {
   return (name: string, events: Array<ConservationSubTypes>, arrayIndex: number) => (
     fieldName: string
   ) => (value: string) => {
@@ -182,7 +182,7 @@ export function updateConservationSubEvent(updateForm: any) {
   };
 }
 
-function updatePersonsForSubEvent(updateForm: any) {
+function updatePersonsForSubEvent(updateForm: Function) {
   return (name: string, events: Array<ConservationSubTypes>, arrayIndex: number) => (v: {
     name: string,
     rawValue: Array<Person>
@@ -266,9 +266,9 @@ function addNewSubEvent(
   const newSubEvents = newSubEventsToCreate || [];
   const events =
     formData && formData.events && formData.events.length > 0
-      ? formData.events.concat(newSubEvents)
+      ? formData.events.map(e => ({ ...e, isUpdated: false })).concat(newSubEvents)
       : newSubEvents;
-  const data = events ? { ...formData, events: events, updatedEventdId: null } : formData;
+  const data = events ? { ...formData, events: events, isUpdated: false } : formData;
 
   return saveConservation$.next({
     id: form.id.value,
@@ -325,7 +325,7 @@ function addNewSubEvent(
             formEvents.concat(newSubEvents.map(e => newSubEventWithDefaultAttributes(e)))
           );
 
-          // update evetns with sorted events
+          // update event with sorted events
           updateForm({
             name: 'events',
             rawValue: newAllEvents
@@ -344,11 +344,8 @@ function addNewSubEvent(
               rawValue: (newAllEvents.length - 1).toString()
             });
 
-            // new sub event id is added in updatedEventdId so that next save it will go to put
-            updateForm({
-              name: 'updatedEventdId',
-              rawValue: newSubEvents[0].id.toString()
-            });
+            // new sub event has isUpdated true so that next save it will go to put
+            setIsUpdated(updateForm, newAllEvents, newAllEvents.length - 1);
           }
         }
       },
@@ -376,7 +373,7 @@ export const onUnmount = (props: OnUnmountProps) => {
   props.clearForm();
 };
 
-function saveEditableValues(updateForm: any, form: any, i: number) {
+function saveEditableValues(updateForm: Function, form: any, i: number) {
   const rawValue =
     i && i === -1
       ? {
@@ -391,7 +388,28 @@ function saveEditableValues(updateForm: any, form: any, i: number) {
   });
 }
 
-function onEdit(updateForm: any) {
+function setIsUpdated(updateForm: Function, events: any, index?: number) {
+  if (events && events.length > 0) {
+    const eventsWithAttributes = events.map((e, i) => ({
+      ...e,
+      isUpdated: i === index
+    }));
+
+    console.log('Events.isUpdated = ', eventsWithAttributes.map(e => e.isUpdated));
+
+    updateForm({
+      name: 'events',
+      rawValue: eventsWithAttributes
+    });
+  }
+
+  updateForm({
+    name: 'isUpdated',
+    rawValue: false
+  });
+}
+
+function onEdit(updateForm: Function) {
   return (form: any, arrayIndex: number) => (evt: DomEvent) => {
     evt.preventDefault();
     saveEditableValues(updateForm, form, arrayIndex);
@@ -399,19 +417,21 @@ function onEdit(updateForm: any) {
       name: 'editable',
       rawValue: arrayIndex.toString()
     });
-    const updatedEventId = arrayIndex.toString()
-      ? arrayIndex === -1
-        ? form.id.rawValue.toString()
-        : form.events.rawValue[arrayIndex].id.toString()
-      : '';
-    updateForm({
-      name: 'updatedEventdId',
-      rawValue: updatedEventId
-    });
+
+    // add isUpdated true for main event or sub-event
+    if (arrayIndex === -1) {
+      setIsUpdated(updateForm, form.events.rawValue);
+      updateForm({
+        name: 'isUpdated',
+        rawValue: true
+      });
+    } else {
+      setIsUpdated(updateForm, form.events.rawValue, arrayIndex);
+    }
   };
 }
 
-function updateEditModeFields(updateForm: any) {
+function updateEditModeFields(updateForm: Function, form: FormData) {
   updateForm({
     name: 'editableValues',
     rawValue: ''
@@ -420,20 +440,17 @@ function updateEditModeFields(updateForm: any) {
     name: 'editable',
     rawValue: ''
   });
-  updateForm({
-    name: 'updatedEventdId',
-    rawValue: ''
-  });
+  // setIsUpdated(updateForm, form.events.rawValue);
 }
 
 function applyEditableValues(
-  updateForm: any,
+  updateForm: Function,
   editableValues: EditableValuesForm,
   i: number,
   events: Array<ConservationSubTypes>
 ) {
   const rawValue =
-    editableValues && editableValues.rawValue ? editableValues.rawValue : null;
+    editableValues && editableValues.rawValue ? editableValues.rawValue : events;
   if (i && i === -1) {
     updateForm({
       name: 'caseNumber',
@@ -450,7 +467,7 @@ function applyEditableValues(
   } else {
     updateForm({
       name: 'events',
-      rawValue: rawValue || events
+      rawValue: rawValue
     });
   }
 }
@@ -464,12 +481,12 @@ function onCancel(updateForm) {
       arrayIndex,
       form.events.rawValue
     );
-    updateEditModeFields(updateForm);
+    updateEditModeFields(updateForm, form);
   };
 }
 
 function deleteSubEvents(
-  updateForm: any,
+  updateForm: Function,
   events: Array<ConservationSubTypes>,
   i: number
 ) {
@@ -479,7 +496,7 @@ function deleteSubEvents(
   });
 }
 
-export function onDelete(updateForm: any, appSession: AppSession) {
+export function onDelete(updateForm: Function, appSession: AppSession) {
   return (id: number, events: Array<ConservationSubTypes>, arrayIndex: number) => (
     evt: DomEvent
   ) => {
@@ -520,10 +537,12 @@ export function onDelete(updateForm: any, appSession: AppSession) {
 function onSave(form, appSession, history, location, ajaxPost, ajaxPut, updateForm) {
   return (evt: DomEvent) => {
     evt.preventDefault();
+    const id = form.id.value;
+    const data = getConservationCollection(form, location);
     saveConservation$.next({
-      id: form.id.value,
+      id: id,
       appSession,
-      data: getConservationCollection(form, location),
+      data: id ? data : { ...data, isUpdated: true }, // on add of main event isUpdated is true
       ajaxPost,
       ajaxPut,
       callback: {
@@ -532,7 +551,7 @@ function onSave(form, appSession, history, location, ajaxPost, ajaxPut, updateFo
             return;
           }
           const id = props.response.id;
-          updateEditModeFields(updateForm);
+          updateEditModeFields(updateForm, form);
 
           // show the updated date when response have it
           props.response.updatedDate &&

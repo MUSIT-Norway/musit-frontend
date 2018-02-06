@@ -49,7 +49,7 @@ export function getConservationCollection(
     objects: getObjectsWithType(getObjects(affectedThings, location)),
     affectedThings: affectedThings ? affectedThings.map(o => o.uuid) : [],
     caseNumber: form.caseNumber.value,
-    updatedEventdId: form.updatedEventdId.value
+    isUpdated: form.isUpdated.value
   };
 }
 

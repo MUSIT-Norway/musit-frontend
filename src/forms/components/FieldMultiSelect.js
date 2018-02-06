@@ -14,7 +14,8 @@ export type FieldMultiSelectProps = {
   inputProps?: { className?: string, style?: {} },
   appSession?: ?AppSession,
   viewMode?: ?boolean,
-  singleSelect?: ?boolean
+  singleSelect?: ?boolean,
+  style?: any
 };
 
 export default function FieldMultiSelect(props: FieldMultiSelectProps) {
@@ -59,7 +60,7 @@ export default function FieldMultiSelect(props: FieldMultiSelectProps) {
               value={values}
               options={options}
               onChange={v => props.onChange(v)}
-              {...props}
+              style={props.style}
             />
           )}
         </div>

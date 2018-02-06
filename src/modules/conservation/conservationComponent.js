@@ -76,7 +76,8 @@ const commonAttributes = v => ({
   affectedThings: [],
   documents: [],
   expanded: true,
-  viewMode: false
+  viewMode: false,
+  isUpdated: true
 });
 
 export function borderStyle(editMode: boolean) {
@@ -529,10 +530,10 @@ export default function ConservationComponent(
                 type="button"
                 className="btn btn-default btn-md"
                 disabled={!editModeForLookup}
-                onClick={props.toggleExpanded(
-                  !expanded(props.form),
-                  props.form.events.value
-                )}
+                onClick={
+                  editModeForLookup &&
+                  props.toggleExpanded(!expanded(props.form), props.form.events.value)
+                }
               >
                 {expanded(props.form) ? (
                   I18n.t('musit.conservation.doCollapse')
