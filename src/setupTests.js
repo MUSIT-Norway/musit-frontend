@@ -7,5 +7,5 @@ if (!global.localStorage) {
   global.localStorage = new LocalStorage('./');
 }
 
-I18n.loadTranslations(LanguageJson);
+I18n.setTranslations(LanguageJson);
 I18n.setLocale('no');

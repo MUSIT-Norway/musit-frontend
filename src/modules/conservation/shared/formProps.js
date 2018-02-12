@@ -57,6 +57,7 @@ export default function formProps(
     toggleExpanded: toggleExpanded(props.updateForm),
     toggleObjectsExpanded: toggleObjectsExpanded(props.updateForm),
     toggleSingleExpanded: toggleSingleExpanded(props.updateForm),
+    updateSingleObjectField: updateSingleObjectField(props.updateForm),
     addNewSubEvent: addNewSubEvent,
     onClickBack: onClickBack(props),
     onDocumentUpload: onDocumentUpload(
@@ -138,6 +139,14 @@ function updateStringField(updateForm: Function) {
     });
 }
 
+function updateSingleObjectField(updateForm: Function) {
+  return (name: string) => (value: string) =>
+    updateForm({
+      name,
+      rawValue: value
+    });
+}
+
 function updateBooleanField(updateForm: Function) {
   return (name: string, b: boolean) => () =>
     updateForm({
@@ -159,6 +168,10 @@ function updateMultiSelectField(updateForm: Function) {
     updateForm({
       name,
       rawValue: value
+    });
+    updateForm({
+      name: 'singleObjectSelected',
+      rawValue: null
     });
     return updateForm({
       name: 'editable',
@@ -268,12 +281,12 @@ function addNewSubEvent(
     formData && formData.events && formData.events.length > 0
       ? formData.events.map(e => ({ ...e, isUpdated: false })).concat(newSubEvents)
       : newSubEvents;
-  const data = events ? { ...formData, events: events, isUpdated: false } : formData;
+  const data = events ? { ...formData, events, isUpdated: false } : formData;
 
   return saveConservation$.next({
     id: form.id.value,
     appSession,
-    data: data,
+    data,
     ajaxPost: simplePost,
     ajaxPut: simplePut,
     callback: {

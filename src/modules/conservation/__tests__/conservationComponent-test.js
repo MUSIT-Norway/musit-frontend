@@ -2288,6 +2288,7 @@ describe('ConservationComponent edit page', () => {
         {...editPageProps}
         updateConservationSubEvent={e => e}
         updateMultiSelectField={e => e}
+        updateSingleObjectField={e => e}
         toggleExpanded={e => e}
         toggleSingleExpanded={e => e}
         toggleObjectsExpanded={e => e}
@@ -3835,6 +3836,7 @@ describe('ConservationComponent add page', () => {
         updateMultiSelectField={e => e}
         toggleExpanded={e => e}
         toggleObjectsExpanded={e => e}
+        updateSingleObjectField={e => e}
         toggleSingleExpanded={e => e}
         updatePersonsForSubEvent={e => e}
         onDelete={e => e}

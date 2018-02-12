@@ -53,7 +53,7 @@ if (accessToken) {
 } else {
   const dest = document.getElementById('content');
 
-  I18n.loadTranslations(LanguageJson);
+  I18n.setTranslations(LanguageJson);
   loadLanguage();
 
   const SessionProvided = provide({

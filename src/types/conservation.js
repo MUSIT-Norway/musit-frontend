@@ -28,10 +28,8 @@ export type AffectedThing = {
   responsible: string
 };
 
-export type ObjectInfo = {
-  objectData?: ?MusitObject,
-  sampleData?: ?SampleDataExtended
-} & MusitObject;
+export type ObjectInfo = MusitObject;
+
 export type ObjectInfoAffectedThing = ?ObjectInfo & ?AffectedThing;
 
 export type ConservationType = {
@@ -102,7 +100,8 @@ type SubEventComponentProps = {
   onDocumentUpload?: Function,
   isFormValid: Function,
   editable: ?number,
-  isUpdated?: boolean
+  isUpdated?: boolean,
+  objectsReadOnly?: boolean
 };
 
 export type HseRiskType = SubEventComponentNoteType;
@@ -242,6 +241,13 @@ export type ErrorSaving = {
   file: File
 };
 
+export type MaybeSelectedObject = {
+  objectUUID: string,
+  selected: boolean,
+  musNo: string,
+  term: string
+};
+
 export type FormData = {
   id: Field<string>,
   eventTypeId: Field<number>,
@@ -258,6 +264,8 @@ export type FormData = {
   objects: Field<Array<ObjectInfo>>,
   updatedBy: Field<string>,
   updatedByName: Field<string>,
+  addtionalObjects: Field<Array<string>>,
+  singleObjectSelected: Field<string>,
   updatedDate: Field<string>,
   subEventTypes: Field<string>,
   events: Field<Array<ConservationSubTypes>>,

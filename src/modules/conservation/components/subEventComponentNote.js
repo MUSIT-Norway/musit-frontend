@@ -146,13 +146,15 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
       )}
       <br />
       <br />
-      <ObjectSelection
-        affectedThingsWithDetailsMainEvent={props.affectedThingsWithDetailsMainEvent}
-        affectedThingsSubEvent={props.subEvent.affectedThings}
-        affectedThingsSubEventOnChange={t =>
-          props.onChange('affectedThings')(t.map(s => s) || [])}
-        viewMode={props.viewMode}
-      />
+      {
+        <ObjectSelection
+          affectedThingsWithDetailsMainEvent={props.affectedThingsWithDetailsMainEvent}
+          affectedThingsSubEvent={props.subEvent.affectedThings}
+          affectedThingsSubEventOnChange={t =>
+            props.onChange('affectedThings')(t.map(s => s) || [])}
+          viewMode={props.viewMode || props.objectsReadOnly}
+        />
+      }
       <div
         rel="tooltip"
         title={

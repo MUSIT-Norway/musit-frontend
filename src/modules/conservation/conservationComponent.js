@@ -18,11 +18,12 @@ import Report from './events/report';
 import type { Location } from './shared/submit';
 import type { ObjectData } from '../../types/object';
 import Toolbar from './components/Toolbar';
+import SingleObjectSelection from './components/SingleObjectSelection';
 import MaterialDetermination from './events/materialDetermination';
 import Note from './events/note';
 import { formatISOString } from '../../shared/util';
 import FontAwesome from 'react-fontawesome';
-import { sortBy } from 'lodash';
+import { sortBy, toLower, capitalize } from 'lodash';
 
 type ConservationProcessProps = {
   id?: number,
@@ -35,6 +36,7 @@ type ConservationProcessProps = {
   updateMultiSelectField: Function,
   updatePersonsForSubEvent: Function,
   updateConservationSubEvent: Function,
+  updateSingleObjectField: Function,
   toggleExpanded: Function,
   toggleSingleExpanded: Function,
   toggleObjectsExpanded: Function,
@@ -110,6 +112,8 @@ function createSubEvents(
         date: formatISOString(new Date())
       }
     ];
+
+    const affectedThings = [props.form.singleObjectSelected.value];
     const eventTypes =
       props.form.subEventTypes && props.form.subEventTypes.rawValue
         ? props.form.subEventTypes.rawValue.split(',').map(t => Number.parseFloat(t))
@@ -177,7 +181,8 @@ function createSubEvents(
             {
               materials: [],
               actorsAndRoles: defaultActorsAndRoles,
-              ...commonAttributes(v)
+              ...commonAttributes(v),
+              affectedThings: [].concat(affectedThings)
             }
           ]);
         }
@@ -186,7 +191,8 @@ function createSubEvents(
           return acc.concat([
             {
               actorsAndRoles: defaultActorsAndRoles,
-              ...commonAttributes(v)
+              ...commonAttributes(v),
+              affectedThings: [].concat(affectedThings)
             }
           ]);
         }
@@ -409,7 +415,7 @@ export default function ConservationComponent(
   const addMode = props.form.id.value ? false : true;
   const viewModeMainEvent = !(
     (props.form.editable &&
-      props.form.editable.rawValue &&
+      props.form.editable.r &&
       props.form.editable.rawValue === '-1') ||
     addMode
   );
@@ -436,7 +442,9 @@ export default function ConservationComponent(
       value: v.id.toString(),
       label: props.appSession.language.isEn ? v.enName : v.noName
     }));
-  const sortedConservationTypes = sortBy(conservationTypes || [], o => o.label);
+  const sortedConservationTypes = sortBy(conservationTypes || [], o =>
+    toLower(o.label)
+  ).filter(o => o.value !== '9'); //Remove filter when Målbestemmelse is implemented
 
   return (
     <div className="container">
@@ -561,11 +569,23 @@ export default function ConservationComponent(
         appSession={props.appSession}
         labelAbove
         stringValue={props.form.subEventTypes.rawValue}
-        options={sortedConservationTypes}
+        options={sortedConservationTypes.map(
+          o => (o.label === toLower(o.label) ? { ...o, label: capitalize(o.label) } : o)
+        )}
         onChange={props.updateMultiSelectField(props.form.subEventTypes.name)}
         singleSelect={true}
         viewMode={!editModeForLookup || addMode}
         style={borderStyle(true)}
+      />
+      <SingleObjectSelection
+        affectedThingsWithDetailsMainEvent={props.objects}
+        affectedThingSubEventOnChange={props.updateSingleObjectField(
+          'singleObjectSelected'
+        )}
+        visible={
+          props.form.subEventTypes &&
+          ['8', '9'].includes(props.form.subEventTypes.rawValue)
+        }
       />
       <button
         key="btn-createSubEvents"
@@ -573,7 +593,9 @@ export default function ConservationComponent(
         onClick={createSubEvents(props)}
         disabled={
           !props.form.subEventTypes.value ||
-          props.form.subEventTypes.value.split(',').length > 1
+          props.form.subEventTypes.value.split(',').length > 1 ||
+          (['8', '9'].includes(props.form.subEventTypes.rawValue) &&
+            !props.form.singleObjectSelected.value)
         }
       >
         {I18n.t('musit.conservation.createNewSubEvents')}

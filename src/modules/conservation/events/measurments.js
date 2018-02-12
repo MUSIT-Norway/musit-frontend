@@ -1,9 +1,9 @@
 import React from 'react';
 import { I18n } from 'react-i18nify';
-import type { MaterialDeterminationProps } from '../../../types/conservation';
+import type { MeasurmentEventProps } from '../../../types/conservation';
 import SubEventComponentNote from '../components/subEventComponentNote';
 
-export default function MaterialDetermination(props: MaterialDeterminationProps) {
+export default function MeasurmentEvent(props: MeasurmentEventProps) {
   const suffix = ':';
 
   const extraAttributes = (
@@ -37,7 +37,6 @@ export default function MaterialDetermination(props: MaterialDeterminationProps)
     <SubEventComponentNote
       {...props}
       subEvent={props.materialDetermination}
-      objectsReadOnly={true}
       eventName={I18n.t(
         'musit.conservation.events.materialDetermination.materialDetermination'
       )}

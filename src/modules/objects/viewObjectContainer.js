@@ -1,7 +1,7 @@
 // @flow
 import ViewObjectComponent from './ViewObjectComponent';
 import { RxInjectLegacy as inject } from 'react-rxjs';
-import { emitError, emitWarning } from '../../shared/errors';
+import { emitWarning } from '../../shared/errors';
 import objectStore$, {
   loadObject$,
   loadMoveAndAnalysisEvents$,

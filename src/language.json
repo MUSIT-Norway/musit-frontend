@@ -1439,9 +1439,9 @@
           "noCurrentLocation": "Objektet har ingen plassering i magasinet."
         },
         "objects": {
-          "notAllowedToSeeAnalysis" :"Du har ikke tilgang til å se analyser eller prøver for dette objectet",
-          "notAllowedToSeeConservations" :"Du har ikke tilgang til å se konserveringer for dette objectet",
-          "notAllowedToSeeStorageData" :"Du har ikke tilgang til å se magasindata for dette objectet"
+          "notAllowedToSeeAnalysis" :"Du har ikke tilgang til å se analyser eller prøver for dette objektet",
+          "notAllowedToSeeConservations" :"Du har ikke tilgang til å se konserveringer for dette objektet",
+          "notAllowedToSeeStorageData" :"Du har ikke tilgang til å se magasindata for dette objektet"
         }
       },
       "notificationMessages": {
