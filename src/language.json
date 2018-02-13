@@ -79,6 +79,11 @@
             "specialMaterial":"Special material",
             "sequence":"Sequence"
           },
+          "measurementDetermination":{
+            "measurementDetermination": "Measurement determination",
+            "note":"Note",
+            "weight": "Weight(gr)"
+          },
           "note":{
             "noteEvent":"Note",
             "note":"Note"
@@ -1117,6 +1122,11 @@
             "material":"Material",
             "specialMaterial":"Spesialmaterial",
             "sequence":"Sekvens"
+          },
+          "measurementDetermination":{
+            "measurementDetermination": "Målbestemmelse",
+            "note":"Merknad",
+            "weight": "Vekt(gr)"
           },
           "note":{
             "noteEvent":"Kommentar",

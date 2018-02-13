@@ -11,6 +11,7 @@ import type { PredefinedConservation } from '../../types/predefinedConservation'
 import type { ConservationSubTypes, FormData } from '../../types/conservation';
 import Treatment from './events/treatment';
 import TechnicalDescription from './events/technicalDescription';
+import MeasurementDetermination from './events/measurement';
 import StorageAndHandling from './events/storageAndHandling';
 import HseRisk from './events/hseRisk';
 import ConditionAssessment from './events/conditionAssessment';
@@ -187,7 +188,6 @@ function createSubEvents(
           ]);
         }
         case 9: {
-          // #TODO MeasurmentAssessment
           return acc.concat([
             {
               actorsAndRoles: defaultActorsAndRoles,
@@ -353,6 +353,14 @@ function renderSubEvent(
         {...extraAttributes}
       />
     );
+  } else if (eventType === 9) {
+    return (
+      <MeasurementDetermination
+        key={`measurementDetermination${ind}`}
+        measurementDetermination={props.form.events.rawValue[ind]}
+        {...extraAttributes}
+      />
+    );
   } else if (eventType === 10) {
     return (
       <Note
@@ -415,7 +423,7 @@ export default function ConservationComponent(
   const addMode = props.form.id.value ? false : true;
   const viewModeMainEvent = !(
     (props.form.editable &&
-      props.form.editable.r &&
+      props.form.editable.rawValue &&
       props.form.editable.rawValue === '-1') ||
     addMode
   );
@@ -442,9 +450,7 @@ export default function ConservationComponent(
       value: v.id.toString(),
       label: props.appSession.language.isEn ? v.enName : v.noName
     }));
-  const sortedConservationTypes = sortBy(conservationTypes || [], o =>
-    toLower(o.label)
-  ).filter(o => o.value !== '9'); //Remove filter when Målbestemmelse is implemented
+  const sortedConservationTypes = sortBy(conservationTypes || [], o => toLower(o.label)); //Remove filter when Målbestemmelse is implemented
 
   return (
     <div className="container">

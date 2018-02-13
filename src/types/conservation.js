@@ -110,6 +110,25 @@ export type ConditionAssessmentType = SubEventComponentNoteType & {
   conditionCode: number
 };
 
+export type MeasurementDeterminationType = {
+  weight?: number,
+  length?: number,
+  width?: number,
+  thickness?: number,
+  height?: number,
+  largestLength?: number,
+  largestWidth?: number,
+  largestThickness?: number,
+  largestHeight?: number,
+  diameter?: number,
+  tverrmaal?: number,
+  largestMeasurement?: number,
+  measurement?: string,
+  quantity?: number,
+  quantitySymbols?: string,
+  fragmentQuantity?: number
+} & SubEventComponentNoteType;
+
 export type ReportType = {
   archiveReference?: string
 } & SubEventComponentNoteType;
@@ -158,6 +177,10 @@ export type HseRiskProps = {
   hseRisk: SubEventComponentNoteType
 } & SubEventComponentProps;
 
+export type MeasurementDeterminationProps = {
+  measurementDetermination: MeasurementDeterminationType
+} & SubEventComponentProps;
+
 export type StorageAndHandlingProps = {
   storageAndHandling: StorageAndHandlingType,
   storageAndHandling: StorageAndHandlingType
@@ -189,6 +212,7 @@ export type ConservationSubTypes =
   | ConditionAssessmentType
   | ReportType
   | MaterialDeterminationType
+  | MeasurementDeterminationType
   | NoteType;
 
 export type EditableValuesMainEvent = {
