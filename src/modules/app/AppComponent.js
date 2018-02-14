@@ -12,7 +12,7 @@ import Logo from './musitLogo.png';
 import LoginComponent from '../login/LoginComponent';
 import { emitError } from '../../shared/errors';
 import Loader from 'react-loader';
-import { loadAppSession$, setCollectionId$, setMuseumId$ } from '../../stores/appSession';
+import { loadAppSession$, setCollectionId$, setMuseumId$, setRolesForModules$ } from '../../stores/appSession';
 import { RxInjectLegacy as inject } from 'react-rxjs';
 import {
   clearNodes$ as clearNodePicklist$,
@@ -32,6 +32,7 @@ export class AppComponent extends Component {
     setMuseumId: PropTypes.func.isRequired,
     setCollectionId: PropTypes.func.isRequired,
     loadAppSession: PropTypes.func.isRequired,
+    setRolesForModules: PropTypes.func.isRequired,
     pickList: PropTypes.object.isRequired,
     goTo: PropTypes.func.isRequired,
     clearObjectPicklist: PropTypes.func.isRequired,
@@ -49,7 +50,7 @@ export class AppComponent extends Component {
   }
 
   componentWillMount() {
-    this.props.loadAppSession();
+    this.props.loadAppSession();    
   }
 
   handleLogout() {
@@ -76,6 +77,12 @@ export class AppComponent extends Component {
   handleMuseumId(museumId, collectionId) {
     this.props.setMuseumId(museumId);
     this.props.setCollectionId(collectionId);
+    this.props.setRolesForModules({
+      email: this.props.appSession.actor.dataportenUser,
+      museumId: museumId,
+      collectionId: collectionId,
+      isGod: false
+    });
     this.props.clearObjectPicklist();
     this.props.clearNodePicklist();
     this.props.clearSearchStore();
@@ -258,7 +265,8 @@ const commands = {
   setCollectionId$,
   clearObjectPicklist$,
   clearNodePicklist$,
-  clearSearchStore$
+  clearSearchStore$,
+  setRolesForModules$
 };
 
 export default inject(data, commands, props)(AppComponent);

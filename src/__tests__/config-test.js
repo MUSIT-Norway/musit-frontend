@@ -156,6 +156,11 @@ describe('Config urls', () => {
           name: 'groupsUrl',
           actual: urls.api.auth.groupsUrl('someUser@feide.no'),
           expected: '/api/auth/rest/groups/someUser@feide.no'
+        },
+        {
+          name: 'rolesUrl',
+          actual: urls.api.auth.rolesUrl('someUser@feide.no',1,'fcb4c598-8b05-4095-ac00-ce66247be38a'),
+          expected: '/api/auth/rest/1/roles/someUser@feide.no?collectionId=fcb4c598-8b05-4095-ac00-ce66247be38a'
         }
       ]
     },
