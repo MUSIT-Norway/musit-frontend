@@ -10,7 +10,10 @@ describe('makeUrlAware', () => {
     const EnhancedComponent = makeUrlAware(Component);
     const appSession = {
       museumId: 99,
-      collectionId: '1234'
+      collectionId: '1234',
+      actor: {
+        ataportenUser: 'abc@abc.com'
+      }
     };
     const wrapper = mount(
       <EnhancedComponent
@@ -39,7 +42,10 @@ describe('RefreshSession', () => {
     };
     const appSession = {
       museumId: 99,
-      collectionId: 'Lichens'
+      collectionId: 'Lichens',
+      actor: {
+        ataportenUser: 'abc@abc.com'
+      }
     };
     refreshSession(setMuseumId, setCollectionId)(params, appSession);
     expect(setMuseumId.calledOnce).toBe(true);
@@ -56,7 +62,10 @@ describe('RefreshSession', () => {
     };
     const appSession = {
       museumId: 99,
-      collectionId: 'Lichens'
+      collectionId: 'Lichens',
+      actor: {
+        ataportenUser: 'abc@abc.com'
+      }
     };
     refreshSession(setMuseumId, setCollectionId)(match, appSession);
     expect(setMuseumId.calledOnce).toBe(false);
@@ -72,7 +81,10 @@ describe('RefreshSession', () => {
     };
     const appSession = {
       museumId: 99,
-      collectionId: 'Lichens'
+      collectionId: 'Lichens',
+      actor: {
+        ataportenUser: 'abc@abc.com'
+      }
     };
     refreshSession(setMuseumId, setCollectionId)(match, appSession);
     expect(setMuseumId.calledOnce).toBe(false);
@@ -88,7 +100,10 @@ describe('RefreshSession', () => {
     };
     const appSession = {
       museumId: null,
-      collectionId: null
+      collectionId: null,
+      actor: {
+        ataportenUser: 'abc@abc.com'
+      }
     };
     refreshSession(setMuseumId, setCollectionId)(match, appSession);
     expect(setMuseumId.calledOnce).toBe(false);

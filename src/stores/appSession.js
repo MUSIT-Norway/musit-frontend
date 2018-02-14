@@ -143,18 +143,22 @@ const loadAppSession = (ajaxGet = simpleGet, accessToken) => {
   );
 };
 
-
-const getRolesForModules = (props : {email: string, museumId: number, collectionId: string, isGod: boolean}) => {
+const getRolesForModules = (props: {
+  email: string,
+  museumId: number,
+  collectionId: string,
+  isGod: boolean
+}) => {
   const accessToken = getAccessToken();
   if (!accessToken) {
     return Observable.empty();
   }
   if (props.isGod) {
     return Observable.of(
-      {          
+      {
         collectionManagementRead: true,
         collectionManagementWrite: true,
-        storageFacilityRead: true,        
+        storageFacilityRead: true,
         storageFacilityWrite: true,
         documentArchiveRead: true,
         documentArchiveWrite: true
@@ -181,28 +185,30 @@ const getRolesForModules = (props : {email: string, museumId: number, collection
       }
   ]
   */
-)
-
+    );
   } else {
     return simpleGet(
-      Config.magasin.urls.api.auth.rolesUrl(props.email, props.museumId, props.collectionId),
+      Config.magasin.urls.api.auth.rolesUrl(
+        props.email,
+        props.museumId,
+        props.collectionId
+      ),
       accessToken
     ).map(({ response }) => {
       if (!response) {
         // throw new Error(I18n.t('musit.errorMainMessages.noGroups'));
-        return {          
+        return {
           collectionManagementRead: false,
           collectionManagementWrite: false,
-          storageFacilityRead: false,        
+          storageFacilityRead: false,
           storageFacilityWrite: false,
           documentArchiveRead: false,
           documentArchiveWrite: false
         };
       }
-      
-       return response;     
-      
-    })
+
+      return response;
+    });
   }
 };
 
@@ -210,12 +216,13 @@ export const loadAppSession$ = createAction('loadAppSession$').switchMap(loadApp
 export const setMuseumId$ = createAction('setMuseumId$');
 export const setCollectionId$ = createAction('setCollectionId$');
 export const setAccessToken$ = createAction('setAccessToken$');
-export const setRolesForModules$ = createAction('setRolesForModules$').switchMap(getRolesForModules);
-
+export const setRolesForModules$ = createAction('setRolesForModules$').switchMap(
+  getRolesForModules
+);
 
 export const refreshSession = (
   setMuseum = id => setMuseumId$.next(id),
-  setCollection = id => setCollectionId$.next(id)  
+  setCollection = id => setCollectionId$.next(id)
 ) => (params, appSession) => {
   const museumId = appSession.museumId;
   const museumIdFromParam = parseInt(params.museumId, 10);
@@ -226,7 +233,7 @@ export const refreshSession = (
   const collectionIdFromParam = params.collectionIds;
   if (collectionIdFromParam && collectionIdFromParam !== collectionId) {
     setCollection(collectionIdFromParam);
-  }  
+  }
   setRolesForModules$.next({
     email: appSession.actor.dataportenUser,
     museumId: museumIdFromParam,
@@ -246,15 +253,22 @@ export const reducer$ = (actions, onError = emitError) =>
       }),
     actions.setMuseumId$.map(museumId => state => ({ ...state, museumId })),
     actions.setCollectionId$.map(collectionId => state => ({ ...state, collectionId })),
-    actions.setRolesForModules$.map(rolesForModules => state => ({ ...state, rolesForModules: rolesForModules  }))
-    .catch(error => {
-      onError(error);
-      return Observable.of(state => ({ ...state }));
-    })
+    actions.setRolesForModules$
+      .map(rolesForModules => state => ({ ...state, rolesForModules: rolesForModules }))
+      .catch(error => {
+        onError(error);
+        return Observable.of(state => ({ ...state }));
+      })
   );
 
 const session$ = (
-  actions$ = { setMuseumId$, setCollectionId$, setAccessToken$, loadAppSession$, setRolesForModules$ }
+  actions$ = {
+    setMuseumId$,
+    setCollectionId$,
+    setAccessToken$,
+    loadAppSession$,
+    setRolesForModules$
+  }
 ) => createStore('appSession', reducer$(actions$), initialState, KEEP_ALIVE);
 
 const store$ = session$();

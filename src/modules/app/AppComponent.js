@@ -12,7 +12,12 @@ import Logo from './musitLogo.png';
 import LoginComponent from '../login/LoginComponent';
 import { emitError } from '../../shared/errors';
 import Loader from 'react-loader';
-import { loadAppSession$, setCollectionId$, setMuseumId$, setRolesForModules$ } from '../../stores/appSession';
+import {
+  loadAppSession$,
+  setCollectionId$,
+  setMuseumId$,
+  setRolesForModules$
+} from '../../stores/appSession';
 import { RxInjectLegacy as inject } from 'react-rxjs';
 import {
   clearNodes$ as clearNodePicklist$,
@@ -50,7 +55,7 @@ export class AppComponent extends Component {
   }
 
   componentWillMount() {
-    this.props.loadAppSession();    
+    this.props.loadAppSession();
   }
 
   handleLogout() {

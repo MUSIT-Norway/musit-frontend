@@ -159,8 +159,13 @@ describe('Config urls', () => {
         },
         {
           name: 'rolesUrl',
-          actual: urls.api.auth.rolesUrl('someUser@feide.no',1,'fcb4c598-8b05-4095-ac00-ce66247be38a'),
-          expected: '/api/auth/rest/1/roles/someUser@feide.no?collectionId=fcb4c598-8b05-4095-ac00-ce66247be38a'
+          actual: urls.api.auth.rolesUrl(
+            'someUser@feide.no',
+            1,
+            'fcb4c598-8b05-4095-ac00-ce66247be38a'
+          ),
+          expected:
+            '/api/auth/rest/1/roles/someUser@feide.no?collectionId=fcb4c598-8b05-4095-ac00-ce66247be38a'
         }
       ]
     },
