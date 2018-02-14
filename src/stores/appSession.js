@@ -195,19 +195,44 @@ const getRolesForModules = (props: {
       ),
       accessToken
     ).map(({ response }) => {
-      if (!response) {
-        // throw new Error(I18n.t('musit.errorMainMessages.noGroups'));
-        return {
-          collectionManagementRead: false,
-          collectionManagementWrite: false,
-          storageFacilityRead: false,
-          storageFacilityWrite: false,
-          documentArchiveRead: false,
-          documentArchiveWrite: false
-        };
-      }
+      let collectionManagementRead = false;
+      let collectionManagementWrite = false;
+      let storageFacilityRead = false;
+      let storageFacilityWrite = false;
+      let documentArchiveRead = false;
+      let documentArchiveWrite = false;
 
-      return response;
+      response &&
+        response.map(r => {
+          if (r.module && r.roleId) {
+            const read = r.roleId >= 10; // read role for 10, 20, 30 and 40
+            const write = r.roleId > 10; // write role for 20, 30 and 40
+
+            if (r.module === 'Collection Management') {
+              collectionManagementRead = read;
+              collectionManagementWrite = write;
+            }
+
+            if (r.module === 'Storage Facility') {
+              storageFacilityRead = read;
+              storageFacilityWrite = write;
+            }
+
+            if (r.module === 'Document Archive') {
+              documentArchiveRead = read;
+              documentArchiveWrite = write;
+            }
+          }
+        });
+
+      return {
+        collectionManagementRead: collectionManagementRead,
+        collectionManagementWrite: collectionManagementWrite,
+        storageFacilityRead: storageFacilityRead,
+        storageFacilityWrite: storageFacilityWrite,
+        documentArchiveRead: documentArchiveRead,
+        documentArchiveWrite: documentArchiveWrite
+      };
     });
   }
 };
