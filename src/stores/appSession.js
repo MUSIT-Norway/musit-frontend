@@ -130,6 +130,7 @@ const loadAppSession = (ajaxGet = simpleGet, accessToken) => {
         accessToken,
         actor: currentUserRes.response,
         groups: orderedGroups,
+        isGod: !!isGod,
         museumId,
         collectionId,
         buildInfo: buildInfoRes.response,
@@ -149,7 +150,17 @@ const getRolesForModules = (props : {email: string, museumId: number, collection
     return Observable.empty();
   }
   if (props.isGod) {
-    return Observable.of([
+    return Observable.of(
+      {          
+        collectionManagementRead: true,
+        collectionManagementWrite: true,
+        storageFacilityRead: true,        
+        storageFacilityWrite: true,
+        documentArchiveRead: true,
+        documentArchiveWrite: true
+      }
+      /*
+      [
       {
           "module": "Document Archive",
           "moduleId": 3,
@@ -168,7 +179,10 @@ const getRolesForModules = (props : {email: string, museumId: number, collection
           "role": "Admin",
           "roleId": 30
       }
-  ])        
+  ]
+  */
+)
+
   } else {
     return simpleGet(
       Config.magasin.urls.api.auth.rolesUrl(props.email, props.museumId, props.collectionId),
@@ -176,10 +190,17 @@ const getRolesForModules = (props : {email: string, museumId: number, collection
     ).map(({ response }) => {
       if (!response) {
         // throw new Error(I18n.t('musit.errorMainMessages.noGroups'));
-        return [];
+        return {          
+          collectionManagementRead: false,
+          collectionManagementWrite: false,
+          storageFacilityRead: false,        
+          storageFacilityWrite: false,
+          documentArchiveRead: false,
+          documentArchiveWrite: false
+        };
       }
       
-       return response.response;     
+       return response;     
       
     })
   }
@@ -194,7 +215,7 @@ export const setRolesForModules$ = createAction('setRolesForModules$').switchMap
 
 export const refreshSession = (
   setMuseum = id => setMuseumId$.next(id),
-  setCollection = id => setCollectionId$.next(id)
+  setCollection = id => setCollectionId$.next(id)  
 ) => (params, appSession) => {
   const museumId = appSession.museumId;
   const museumIdFromParam = parseInt(params.museumId, 10);
@@ -205,7 +226,13 @@ export const refreshSession = (
   const collectionIdFromParam = params.collectionIds;
   if (collectionIdFromParam && collectionIdFromParam !== collectionId) {
     setCollection(collectionIdFromParam);
-  }
+  }  
+  setRolesForModules$.next({
+    email: appSession.actor.dataportenUser,
+    museumId: museumIdFromParam,
+    collectionId: collectionIdFromParam,
+    isGod: appSession.isGod
+  });
 };
 
 export const reducer$ = (actions, onError = emitError) =>
@@ -219,7 +246,7 @@ export const reducer$ = (actions, onError = emitError) =>
       }),
     actions.setMuseumId$.map(museumId => state => ({ ...state, museumId })),
     actions.setCollectionId$.map(collectionId => state => ({ ...state, collectionId })),
-    actions.setRolesForModules$.map(rolesForModules => state => ({ ...state, ...rolesForModules }))
+    actions.setRolesForModules$.map(rolesForModules => state => ({ ...state, rolesForModules: rolesForModules  }))
     .catch(error => {
       onError(error);
       return Observable.of(state => ({ ...state }));

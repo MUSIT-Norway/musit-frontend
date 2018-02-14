@@ -81,7 +81,7 @@ export class AppComponent extends Component {
       email: this.props.appSession.actor.dataportenUser,
       museumId: museumId,
       collectionId: collectionId,
-      isGod: false
+      isGod: this.props.appSession.isGod
     });
     this.props.clearObjectPicklist();
     this.props.clearNodePicklist();
@@ -97,6 +97,12 @@ export class AppComponent extends Component {
 
   handleCollectionId(collectionId) {
     this.props.setCollectionId(collectionId);
+    this.props.setRolesForModules({
+      email: this.props.appSession.actor.dataportenUser,
+      museumId: this.props.appSession.museumId,
+      collectionId: collectionId,
+      isGod: this.props.appSession.isGod
+    });
     this.props.clearObjectPicklist();
     this.props.clearSearchStore();
     const nodeId = this.props.match.params ? this.props.match.params.id : null;
