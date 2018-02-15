@@ -886,7 +886,8 @@
           "removeSelectedObjectsFromList": "Remove selected objects from list",
           "selectedNodeCount": "Selected node(s) count",
           "selectedObjectCount": "Selected object(s) count",
-          "moveNotAllowed": "No access to move objects/nodes"
+          "moveNotAllowed": "No access to move objects/nodes",
+          "doNotHaveSufficientRole": "Do not have sufficient role to perform the operation"
         },
         "title": {
           "nodes": "Picklist (nodes)",
@@ -1932,7 +1933,8 @@
           "removeSelectedObjectsFromList": "Fjern valgte objekter fra listen",
           "selectedNodeCount": "Valgt node(r)",
           "selectedObjectCount": "Valgt objekte(r)",
-          "moveNotAllowed": "Ikke tilgang til å flytte objekter/noder"
+          "moveNotAllowed": "Ikke tilgang til å flytte objekter/noder",
+          "doNotHaveSufficientRole": "Har ikke tilstrekkelig rolle for å utføre operasjonen"
         },
         "title": {
           "nodes": "Plukkliste (noder)",
