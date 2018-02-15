@@ -12,6 +12,8 @@ import PropTypes from 'prop-types';
 import isEqualWith from 'lodash/isEqualWith';
 import { getLanguage } from '../shared/language';
 import { KEEP_ALIVE } from './constants';
+import { sortBy } from 'lodash';
+
 
 export const makeUrlAware = Component => {
   class Wrapper extends React.Component {
@@ -223,9 +225,11 @@ const getRolesForModules = (props: {
       let storageFacilityAdmin = false;
       let documentArchiveRead = false;
       let documentArchiveWrite = false;
-
-      response &&
-        response.map(r => {
+      
+      
+      if (response) {
+        const sortedResponse = sortBy(response || [], o => (o.roleId));
+        sortedResponse.map(r => {
           /*
           10 = Read
           20 = Write
@@ -254,6 +258,7 @@ const getRolesForModules = (props: {
             }
           }
         });
+      }
 
       return {
         collectionManagementRead: collectionManagementRead,
