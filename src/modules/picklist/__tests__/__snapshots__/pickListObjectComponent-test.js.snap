@@ -2,7 +2,29 @@
 
 exports[`PickListComponent for objects Should not fail horribly 1`] = `
 <PickListComponent
-  appSession={Object {}}
+  appSession={
+    Object {
+      "accessToken": "45667",
+      "actor": Object {
+        "fn": "Test",
+      },
+      "collectionId": "1234",
+      "language": Object {
+        "isEn": false,
+        "isNo": true,
+      },
+      "museumId": 99,
+      "rolesForModules": Object {
+        "collectionManagementRead": true,
+        "collectionManagementWrite": true,
+        "documentArchiveRead": true,
+        "documentArchiveWrite": true,
+        "storageFacilityAdmin": true,
+        "storageFacilityRead": true,
+        "storageFacilityWrite": true,
+      },
+    }
+  }
   classExistsOnDom={[Function]}
   createAnalysis={[Function]}
   createConservation={[Function]}

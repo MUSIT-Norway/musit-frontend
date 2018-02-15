@@ -185,6 +185,15 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
             "isNo": true,
           },
           "museumId": 99,
+          "rolesForModules": Object {
+            "collectionManagementRead": true,
+            "collectionManagementWrite": true,
+            "documentArchiveRead": true,
+            "documentArchiveWrite": true,
+            "storageFacilityAdmin": true,
+            "storageFacilityRead": true,
+            "storageFacilityWrite": true,
+          },
         }
       }
       fieldName=""
@@ -246,6 +255,15 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
                   "isNo": true,
                 },
                 "museumId": 99,
+                "rolesForModules": Object {
+                  "collectionManagementRead": true,
+                  "collectionManagementWrite": true,
+                  "documentArchiveRead": true,
+                  "documentArchiveWrite": true,
+                  "storageFacilityAdmin": true,
+                  "storageFacilityRead": true,
+                  "storageFacilityWrite": true,
+                },
               }
             }
             data={Array []}
@@ -276,6 +294,15 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
               "isNo": true,
             },
             "museumId": 99,
+            "rolesForModules": Object {
+              "collectionManagementRead": true,
+              "collectionManagementWrite": true,
+              "documentArchiveRead": true,
+              "documentArchiveWrite": true,
+              "storageFacilityAdmin": true,
+              "storageFacilityRead": true,
+              "storageFacilityWrite": true,
+            },
           }
         }
         comments="1"
@@ -350,6 +377,15 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
               "isNo": true,
             },
             "museumId": 99,
+            "rolesForModules": Object {
+              "collectionManagementRead": true,
+              "collectionManagementWrite": true,
+              "documentArchiveRead": true,
+              "documentArchiveWrite": true,
+              "storageFacilityAdmin": true,
+              "storageFacilityRead": true,
+              "storageFacilityWrite": true,
+            },
           }
         }
         clickSave={[Function]}

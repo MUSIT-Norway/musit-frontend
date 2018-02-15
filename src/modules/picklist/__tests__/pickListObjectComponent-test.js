@@ -4,6 +4,7 @@ import React from 'react';
 import { PickListComponent } from '../PickListComponent';
 import { expect as e } from 'chai';
 import sinon from 'sinon';
+import { appSession } from '../../../testutils/sampleDataForTest';
 
 describe('PickListComponent for objects', () => {
   const history = {
@@ -81,7 +82,7 @@ describe('PickListComponent for objects', () => {
         markMainObject={x => x}
         removeNode={onRemoveNode}
         removeObject={onRemoveObject}
-        appSession={{}}
+        appSession={appSession}
         refreshNode={x => x}
         refreshObjects={x => x}
         emitError={x => x}
@@ -112,7 +113,7 @@ describe('PickListComponent for objects', () => {
         markMainObject={x => x}
         removeNode={x => x}
         removeObject={x => x}
-        appSession={{}}
+        appSession={appSession}
         refreshNode={x => x}
         refreshObjects={x => x}
         emitError={x => x}
@@ -147,7 +148,7 @@ describe('PickListComponent for objects', () => {
         markMainObject={onToggleMainObject}
         removeNode={onRemoveNode}
         removeObject={onRemoveObject}
-        appSession={{}}
+        appSession={appSession}
         refreshNode={x => x}
         refreshObjects={x => x}
         emitError={x => x}
@@ -195,7 +196,7 @@ describe('PickListComponent for objects', () => {
         markMainObject={onToggleMainObject}
         removeNode={onRemoveNode}
         removeObject={onRemoveObject}
-        appSession={{}}
+        appSession={appSession}
         refreshNode={x => x}
         refreshObjects={x => x}
         emitError={x => x}
@@ -243,7 +244,7 @@ describe('PickListComponent for objects', () => {
         markMainObject={onToggleMainObject}
         removeNode={onRemoveNode}
         removeObject={onRemoveObject}
-        appSession={{}}
+        appSession={appSession}
         refreshNode={x => x}
         refreshObjects={x => x}
         emitError={x => x}
