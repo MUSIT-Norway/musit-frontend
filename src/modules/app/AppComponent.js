@@ -30,6 +30,7 @@ import classnames from 'classnames';
 import env from '../../shared/environment';
 import { clear$ as clearSearchStore$ } from '../../search/searchStore';
 
+const about = '/about'; 
 export class AppComponent extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
@@ -91,13 +92,7 @@ export class AppComponent extends Component {
     this.props.clearObjectPicklist();
     this.props.clearNodePicklist();
     this.props.clearSearchStore();
-    this.props.goTo(
-      Config.magasin.urls.client.storagefacility.goToRoot({
-        ...this.props.appSession,
-        museumId,
-        collectionId
-      })
-    );
+    this.props.goTo(about);
   }
 
   handleCollectionId(collectionId) {
@@ -110,17 +105,7 @@ export class AppComponent extends Component {
     });
     this.props.clearObjectPicklist();
     this.props.clearSearchStore();
-    const nodeId = this.props.match.params ? this.props.match.params.id : null;
-    const localAppSession = { ...this.props.appSession, collectionId };
-    if (nodeId) {
-      this.props.goTo(
-        Config.magasin.urls.client.storagefacility.goToNode(nodeId, localAppSession)
-      );
-    } else {
-      this.props.goTo(
-        Config.magasin.urls.client.storagefacility.goToRoot(localAppSession)
-      );
-    }
+    this.props.goTo(about);    
   }
 
   getFooterClass() {
@@ -159,7 +144,7 @@ export class AppComponent extends Component {
         <Navbar fixedTop>
           <Navbar.Header>
             <Navbar.Brand>
-              <Link to={'/about'}>
+              <Link to={about}>
                 <div className="brand">
                   <img height="40" alt="logo" src={Logo} />
                 </div>
@@ -170,11 +155,13 @@ export class AppComponent extends Component {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav navbar>
+            {this.props.appSession.rolesForModules.storageFacilityRead &&
               <LinkContainer
                 to={Config.magasin.urls.client.magasin.goToMagasin(this.props.appSession)}
               >
                 <NavItem>{I18n.t('musit.texts.magazine')}</NavItem>
               </LinkContainer>
+            }
               {this.props.appSession.rolesForModules.collectionManagementRead &&
               <LinkContainer
                 to={Config.magasin.urls.client.analysis.baseUrl(this.props.appSession)}
