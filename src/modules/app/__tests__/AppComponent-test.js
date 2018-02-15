@@ -32,6 +32,14 @@ describe('AppComponent', () => {
           actor: {
             dataportenId: '1234',
             fn: 'Jarl'
+          },
+          rolesForModules: {
+            collectionManagementRead: false,
+            collectionManagementWrite: false,
+            storageFacilityRead: false,
+            storageFacilityWrite: false,
+            documentArchiveRead: false,
+            documentArchiveWrite: false
           }
         }}
         scanner={{}}

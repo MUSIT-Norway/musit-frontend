@@ -82,18 +82,18 @@ export const makeUrlAware = Component => {
 };
 
 const rolesForModules = {
-  collectionManagementRead: false,
-  collectionManagementWrite: false,
-  storageFacilityRead: false,
-  storageFacilityWrite: false,
-  documentArchiveRead: false,
-  documentArchiveWrite: false
+  collectionManagementRead: true,
+  collectionManagementWrite: true,
+  storageFacilityRead: true,
+  storageFacilityWrite: true,
+  documentArchiveRead: true,
+  documentArchiveWrite: true
 };
 
-const initialState = { 
+const initialState = {
   accessToken: getAccessToken(),
   rolesForModules: rolesForModules
- };
+};
 
 const loadAppSession = (ajaxGet = simpleGet, accessToken) => {
   accessToken = accessToken || getAccessToken();

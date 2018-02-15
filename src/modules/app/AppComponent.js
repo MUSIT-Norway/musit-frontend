@@ -30,7 +30,7 @@ import classnames from 'classnames';
 import env from '../../shared/environment';
 import { clear$ as clearSearchStore$ } from '../../search/searchStore';
 
-const about = '/about'; 
+const about = '/about';
 export class AppComponent extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
@@ -105,7 +105,7 @@ export class AppComponent extends Component {
     });
     this.props.clearObjectPicklist();
     this.props.clearSearchStore();
-    this.props.goTo(about);    
+    this.props.goTo(about);
   }
 
   getFooterClass() {
@@ -155,29 +155,31 @@ export class AppComponent extends Component {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav navbar>
-            {this.props.appSession.rolesForModules.storageFacilityRead &&
-              <LinkContainer
-                to={Config.magasin.urls.client.magasin.goToMagasin(this.props.appSession)}
-              >
-                <NavItem>{I18n.t('musit.texts.magazine')}</NavItem>
-              </LinkContainer>
-            }
-              {this.props.appSession.rolesForModules.collectionManagementRead &&
-              <LinkContainer
-                to={Config.magasin.urls.client.analysis.baseUrl(this.props.appSession)}
-              >
-                <NavItem>{I18n.t('musit.analysis.analysis')}</NavItem>
-              </LinkContainer>
-              }
-              {this.props.appSession.rolesForModules.collectionManagementRead &&
-              <LinkContainer
-                to={Config.magasin.urls.client.conservation.baseUrl(
-                  this.props.appSession
-                )}
-              >              
-                <NavItem>{I18n.t('musit.conservation.conservation')}</NavItem>
-              </LinkContainer>
-              }
+              {this.props.appSession.rolesForModules.storageFacilityRead && (
+                <LinkContainer
+                  to={Config.magasin.urls.client.magasin.goToMagasin(
+                    this.props.appSession
+                  )}
+                >
+                  <NavItem>{I18n.t('musit.texts.magazine')}</NavItem>
+                </LinkContainer>
+              )}
+              {this.props.appSession.rolesForModules.collectionManagementRead && (
+                <LinkContainer
+                  to={Config.magasin.urls.client.analysis.baseUrl(this.props.appSession)}
+                >
+                  <NavItem>{I18n.t('musit.analysis.analysis')}</NavItem>
+                </LinkContainer>
+              )}
+              {this.props.appSession.rolesForModules.collectionManagementRead && (
+                <LinkContainer
+                  to={Config.magasin.urls.client.conservation.baseUrl(
+                    this.props.appSession
+                  )}
+                >
+                  <NavItem>{I18n.t('musit.conservation.conservation')}</NavItem>
+                </LinkContainer>
+              )}
               <LinkContainer
                 to={Config.magasin.urls.client.report.goToReport(this.props.appSession)}
               >
