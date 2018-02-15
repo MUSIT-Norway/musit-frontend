@@ -474,8 +474,18 @@ export default function ConservationComponent(
       <button
         key="btn-edit"
         className="btn btn-primary"
-        disabled={toolbarBooleanParameterMainEvent.editDisabled}
+        disabled={
+          toolbarBooleanParameterMainEvent.editDisabled ||
+          !props.appSession.rolesForModules.collectionManagementWrite
+        }
         onClick={props.onEdit(props.form, -1)}
+        title={
+          !props.appSession.rolesForModules.collectionManagementWrite ? (
+            I18n.t('musit.texts.doNotHaveSufficientRole')
+          ) : (
+            I18n.t('musit.texts.edit')
+          )
+        }
         style={{ float: 'right', marginRight: 12 }}
       >
         {I18n.t('musit.texts.edit')}
@@ -580,7 +590,11 @@ export default function ConservationComponent(
         )}
         onChange={props.updateMultiSelectField(props.form.subEventTypes.name)}
         singleSelect={true}
-        viewMode={!editModeForLookup || addMode}
+        viewMode={
+          !editModeForLookup ||
+          addMode ||
+          !props.appSession.rolesForModules.collectionManagementWrite
+        }
         style={borderStyle(true)}
       />
       <SingleObjectSelection

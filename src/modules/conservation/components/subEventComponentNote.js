@@ -16,8 +16,10 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
   const toolbarBooleanParameter = {
     saveDisabled: props.viewMode || !props.isFormValid,
     cancelDisabled: props.viewMode,
-    editDisabled: !!props.editable,
-    deleteDisabled: !!props.editable
+    editDisabled:
+      !!props.editable || !props.appSession.rolesForModules.collectionManagementWrite,
+    deleteDisabled:
+      !!props.editable || !props.appSession.rolesForModules.collectionManagementWrite
   };
 
   const subEventComponentNote = (
