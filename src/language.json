@@ -885,7 +885,8 @@
           "removeSelectedNodesFromList": "Remove selected nodes from list",
           "removeSelectedObjectsFromList": "Remove selected objects from list",
           "selectedNodeCount": "Selected node(s) count",
-          "selectedObjectCount": "Selected object(s) count"
+          "selectedObjectCount": "Selected object(s) count",
+          "moveNotAllowed": "No access to move objects/nodes"
         },
         "title": {
           "nodes": "Picklist (nodes)",
@@ -1930,7 +1931,8 @@
           "removeSelectedNodesFromList": "Fjern valgte noder fra listen",
           "removeSelectedObjectsFromList": "Fjern valgte objekter fra listen",
           "selectedNodeCount": "Valgt node(r)",
-          "selectedObjectCount": "Valgt objekte(r)"
+          "selectedObjectCount": "Valgt objekte(r)",
+          "moveNotAllowed": "Ikke tilgang til å flytte objekter/noder"
         },
         "title": {
           "nodes": "Plukkliste (noder)",

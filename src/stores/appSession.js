@@ -82,12 +82,13 @@ export const makeUrlAware = Component => {
 };
 
 const rolesForModules = {
-  collectionManagementRead: true,
-  collectionManagementWrite: true,
-  storageFacilityRead: true,
-  storageFacilityWrite: true,
-  documentArchiveRead: true,
-  documentArchiveWrite: true
+  collectionManagementRead: false,
+  collectionManagementWrite: false,
+  storageFacilityRead: false,
+  storageFacilityWrite: false,
+  storageFacilityAdmin: false,
+  documentArchiveRead: false,
+  documentArchiveWrite: false
 };
 
 const initialState = {
@@ -179,6 +180,7 @@ const getRolesForModules = (props: {
         collectionManagementWrite: true,
         storageFacilityRead: true,
         storageFacilityWrite: true,
+        storageFacilityAdmin: true,
         documentArchiveRead: true,
         documentArchiveWrite: true
       }
@@ -218,14 +220,22 @@ const getRolesForModules = (props: {
       let collectionManagementWrite = false;
       let storageFacilityRead = false;
       let storageFacilityWrite = false;
+      let storageFacilityAdmin = false;
       let documentArchiveRead = false;
       let documentArchiveWrite = false;
 
       response &&
         response.map(r => {
+          /*
+          10 = Read
+          20 = Write
+          30 = Admin
+          40 = DBA
+          */
           if (r.module && r.roleId) {
             const read = r.roleId >= 10; // read role for 10, 20, 30 and 40
             const write = r.roleId > 10; // write role for 20, 30 and 40
+            const admin = r.roleId > 20; // admin for 30 and 40
 
             if (r.module === 'Collection Management') {
               collectionManagementRead = read;
@@ -235,6 +245,7 @@ const getRolesForModules = (props: {
             if (r.module === 'Storage Facility') {
               storageFacilityRead = read;
               storageFacilityWrite = write;
+              storageFacilityAdmin = admin;
             }
 
             if (r.module === 'Document Archive') {
@@ -249,6 +260,7 @@ const getRolesForModules = (props: {
         collectionManagementWrite: collectionManagementWrite,
         storageFacilityRead: storageFacilityRead,
         storageFacilityWrite: storageFacilityWrite,
+        storageFacilityAdmin: storageFacilityAdmin,
         documentArchiveRead: documentArchiveRead,
         documentArchiveWrite: documentArchiveWrite
       };

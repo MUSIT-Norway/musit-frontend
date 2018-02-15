@@ -160,6 +160,7 @@ export class PickListComponent extends React.Component {
     const markedValues = marked.map(p => p.value);
     const isNode = this.props.isTypeNode;
     const isObject = !isNode;
+    const isMoveAllowed = marked.length > 0 && this.props.appSession.rolesForModules.storageFacilityWrite;
     // disable for Archaeology & Ethnography collections and for samples
     const conservationEnabled = marked.length > 0 && markedSamples.length === 0; //&&
     // this.props.appSession.collectionId !== '2e4f2455-1b3b-4a04-80a1-ba92715ff613' &&
@@ -259,18 +260,20 @@ export class PickListComponent extends React.Component {
                       name="truck"
                       style={{
                         fontSize: '1.5em',
-                        color: marked.length < 1 ? 'grey' : null
+                        color: isMoveAllowed ? null : 'grey'
                       }}
                       onClick={() => {
-                        if (marked.length > 0) {
+                        if (isMoveAllowed) {
                           this.showMoveNodes(markedValues);
                         }
                       }}
-                      title={I18n.t(
+                      title={marked.length < 1  || isMoveAllowed ?
+                        I18n.t(
                         `musit.pickList.tooltip.${isNode
                           ? 'moveSelectedNodes'
                           : 'moveSelectedObjects'}`
-                      )}
+                      ) : I18n.t('musit.pickList.tooltip.moveNotAllowed')
+                    }
                     />
                     {this.selectedCount(isNode, marked.length)}
                     <FontAwesome
