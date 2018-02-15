@@ -12,5 +12,14 @@ export type AppSession = {
   collectionId: string,
   accessToken: string,
   actor: Actor,
-  language: Language
+  language: Language,
+  rolesForModules: {
+    collectionManagementRead: boolean,
+    collectionManagementWrite: boolean,
+    storageFacilityRead: boolean,
+    storageFacilityWrite: boolean,
+    storageFacilityAdmin: boolean,
+    documentArchiveRead: boolean,
+    documentArchiveWrite: boolean
+  }
 };

@@ -56,60 +56,62 @@ export const ViewObjectComponent = ({
       <PageHeader>{I18n.t('musit.objects.objectsView.objectView')}</PageHeader>
       <ViewObjectData objectData={objectData} />
 
-      <Row>
-        <Col md={2} style={{ paddingTop: '5px' }}>
-          <ControlLabel>
-            {I18n.t('musit.objects.objectsView.createNewEvent')}
-          </ControlLabel>
-        </Col>
-        <Col md={3}>
-          <DropdownButton
-            title={I18n.t('musit.objects.objectsView.selectEvent')}
-            id="bg-nested-dropdown"
-          >
-            <MenuItem
-              eventKey="newAnalysis"
-              onClick={() =>
-                history.push({
-                  pathname: Config.magasin.urls.client.analysis.addAnalysis(appSession),
-                  state: [{ objectData }]
-                })}
+      {appSession.rolesForModules.collectionManagementWrite && (
+        <Row>
+          <Col md={2} style={{ paddingTop: '5px' }}>
+            <ControlLabel>
+              {I18n.t('musit.objects.objectsView.createNewEvent')}
+            </ControlLabel>
+          </Col>
+          <Col md={3}>
+            <DropdownButton
+              title={I18n.t('musit.objects.objectsView.selectEvent')}
+              id="bg-nested-dropdown"
             >
-              {I18n.t('musit.objects.objectsView.newAnalysis')}
-            </MenuItem>
-            {
-              // hide for Archaeology & Ethnography collections
-              //appSession &&
-              //appSession.collectionId !== '2e4f2455-1b3b-4a04-80a1-ba92715ff613' &&
-              //appSession.collectionId !== '88b35138-24b5-4e62-bae4-de80fae7df82' &&
               <MenuItem
-                eventKey="newSample"
+                eventKey="newAnalysis"
                 onClick={() =>
                   history.push({
-                    pathname: Config.magasin.urls.client.analysis.addSample(
-                      appSession,
-                      objectData.uuid
-                    )
+                    pathname: Config.magasin.urls.client.analysis.addAnalysis(appSession),
+                    state: [{ objectData }]
                   })}
               >
-                {I18n.t('musit.objects.objectsView.newSample')}
+                {I18n.t('musit.objects.objectsView.newAnalysis')}
               </MenuItem>
-            }
-            <MenuItem
-              eventKey="newConservation"
-              onClick={() =>
-                history.push({
-                  pathname: Config.magasin.urls.client.conservation.addConservation(
-                    appSession
-                  ),
-                  state: [objectData]
-                })}
-            >
-              {I18n.t('musit.conservation.newConservation')}
-            </MenuItem>
-          </DropdownButton>
-        </Col>
-      </Row>
+              {
+                // hide for Archaeology & Ethnography collections
+                //appSession &&
+                //appSession.collectionId !== '2e4f2455-1b3b-4a04-80a1-ba92715ff613' &&
+                //appSession.collectionId !== '88b35138-24b5-4e62-bae4-de80fae7df82' &&
+                <MenuItem
+                  eventKey="newSample"
+                  onClick={() =>
+                    history.push({
+                      pathname: Config.magasin.urls.client.analysis.addSample(
+                        appSession,
+                        objectData.uuid
+                      )
+                    })}
+                >
+                  {I18n.t('musit.objects.objectsView.newSample')}
+                </MenuItem>
+              }
+              <MenuItem
+                eventKey="newConservation"
+                onClick={() =>
+                  history.push({
+                    pathname: Config.magasin.urls.client.conservation.addConservation(
+                      appSession
+                    ),
+                    state: [objectData]
+                  })}
+              >
+                {I18n.t('musit.conservation.newConservation')}
+              </MenuItem>
+            </DropdownButton>
+          </Col>
+        </Row>
+      )}
       <hr />
       <Tabs defaultActiveKey={1} id="events">
         <Tab title={I18n.t('musit.objects.objectsView.events.events')} eventKey={1}>

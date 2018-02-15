@@ -3,11 +3,13 @@ import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import ViewObjectComponent from '../ViewObjectComponent';
 import ViewOjectData from '../components/ViewObjectData';
+import { appSession } from '../../../testutils/sampleDataForTest';
 
 describe('ViewObjectComponent', () => {
   it('should not display component if loading', () => {
     const wrapper = shallow(
       <ViewObjectComponent
+        appSession={appSession}
         loading={true}
         objectStore={{
           objectData: {
@@ -60,6 +62,7 @@ describe('ViewObjectComponent', () => {
   it('should display component if not loading', () => {
     const wrapper = shallow(
       <ViewObjectComponent
+        appSession={appSession}
         loading={false}
         objectStore={{
           objectData: {
@@ -113,6 +116,7 @@ describe('ViewObjectComponent', () => {
     const wrapper = shallow(
       <ViewObjectComponent
         loading={false}
+        appSession={appSession}
         objectStore={{
           objectData: {
             uuid: '22233-4443-222-333',
@@ -164,6 +168,7 @@ describe('ViewObjectComponent', () => {
   it('should display nathist-component if collection=5 (one of nathist)', () => {
     const wrapper = shallow(
       <ViewOjectData
+        appSession={appSession}
         objectData={{
           uuid: '22233-4443-222-333',
           museumNo: 'O-L-3444',
@@ -197,6 +202,7 @@ describe('ViewObjectComponent', () => {
   it('should display unknown-component if collection is illegal (none of ark, nat, etno, numis)', () => {
     const wrapper = shallow(
       <ViewOjectData
+        appSession={appSession}
         objectData={{
           uuid: '22233-4443-222-333',
           museumNo: 'till-L-3444',
