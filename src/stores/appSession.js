@@ -123,9 +123,16 @@ const loadAppSession = (ajaxGet = simpleGet, accessToken) => {
           museumName: museumsRes.response.find(m => m.id === group.museumId).shortName
         }));
       }
+
       const orderedGroups = orderBy(groups, ['museumId'], ['desc']);
       const museumId = orderedGroups[0].museumId;
       const collectionId = orderedGroups[0].collections[0].uuid;
+      setRolesForModules$.next({
+        email: currentUserRes.response.dataportenUser,
+        museumId: museumId,
+        collectionId: collectionId,
+        isGod: isGod
+      });
       return {
         accessToken,
         actor: currentUserRes.response,
