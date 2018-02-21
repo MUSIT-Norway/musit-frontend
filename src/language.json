@@ -594,6 +594,7 @@
         }
       },
       "texts": {
+        "doNotHaveSufficientRole": "Do not have sufficient role to perform the operation",
         "error": "Error message",
         "musitBase": "MUSIT base",
         "abuotMusit": "About MUSIT",
@@ -900,7 +901,9 @@
           "removeSelectedNodesFromList": "Remove selected nodes from list",
           "removeSelectedObjectsFromList": "Remove selected objects from list",
           "selectedNodeCount": "Selected node(s) count",
-          "selectedObjectCount": "Selected object(s) count"
+          "selectedObjectCount": "Selected object(s) count",
+          "moveNotAllowed": "No access to move objects/nodes",
+          "doNotHaveSufficientRole": "Do not have sufficient role to perform the operation"
         },
         "title": {
           "nodes": "Picklist (nodes)",
@@ -1654,6 +1657,7 @@
         }
       },
       "texts": {
+        "doNotHaveSufficientRole": "Har ikke tilstrekkelig rolle for å utføre operasjonen",
         "error": "Feilmelding",
         "musitBase": "MUSITbasen",
         "abuotMusit": "Om MUSIT",
@@ -1960,7 +1964,9 @@
           "removeSelectedNodesFromList": "Fjern valgte noder fra listen",
           "removeSelectedObjectsFromList": "Fjern valgte objekter fra listen",
           "selectedNodeCount": "Valgt node(r)",
-          "selectedObjectCount": "Valgt objekte(r)"
+          "selectedObjectCount": "Valgt objekte(r)",
+          "moveNotAllowed": "Ikke tilgang til å flytte objekter/noder",
+          "doNotHaveSufficientRole": "Har ikke tilstrekkelig rolle for å utføre operasjonen"
         },
         "title": {
           "nodes": "Plukkliste (noder)",

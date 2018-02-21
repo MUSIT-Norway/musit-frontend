@@ -160,8 +160,16 @@ export class PickListComponent extends React.Component {
     const markedValues = marked.map(p => p.value);
     const isNode = this.props.isTypeNode;
     const isObject = !isNode;
+    const isMoveAllowed =
+      marked.length > 0 && this.props.appSession.rolesForModules.storageFacilityWrite;
+    const isAllowed =
+      marked.length > 0 &&
+      this.props.appSession.rolesForModules.collectionManagementWrite;
     // disable for Archaeology & Ethnography collections and for samples
-    const conservationEnabled = marked.length > 0 && markedSamples.length === 0; //&&
+    const conservationEnabled =
+      marked.length > 0 &&
+      markedSamples.length === 0 &&
+      this.props.appSession.rolesForModules.collectionManagementWrite; //&&
     // this.props.appSession.collectionId !== '2e4f2455-1b3b-4a04-80a1-ba92715ff613' &&
     // this.props.appSession.collectionId !== '88b35138-24b5-4e62-bae4-de80fae7df82';
     return (
@@ -220,16 +228,26 @@ export class PickListComponent extends React.Component {
                         className="icon icon-musit-testtube"
                         style={{
                           fontSize: '1.5em',
-                          color: marked.length < 1 ? 'grey' : '#337ab7'
+                          color: isAllowed ? '#337ab7' : 'grey'
                         }}
                         onClick={() => {
-                          if (marked.length === 1) {
+                          if (
+                            marked.length === 1 &&
+                            this.props.appSession.rolesForModules
+                              .collectionManagementWrite
+                          ) {
                             this.props.createSample(markedValues);
-                          } else if (marked.length > 1) {
+                          } else if (isAllowed) {
                             this.props.createMultipleSamples();
                           }
                         }}
-                        title={I18n.t('musit.analysis.createSample')}
+                        title={
+                          marked.length < 1 || isAllowed ? (
+                            I18n.t('musit.analysis.createSample')
+                          ) : (
+                            I18n.t('musit.pickList.tooltip.doNotHaveSufficientRole')
+                          )
+                        }
                       />
                     )}
                     {isObject && this.selectedCount(isNode, marked.length)}
@@ -239,17 +257,23 @@ export class PickListComponent extends React.Component {
                           className="icon-musit-microscope normalAction"
                           style={{
                             fontSize: '1.5em',
-                            color: marked.length < 1 ? 'grey' : '#337ab7'
+                            color: isAllowed ? '#337ab7' : 'grey'
                           }}
                           onClick={() => {
-                            if (marked.length > 0) {
+                            if (isAllowed) {
                               this.props.createAnalysis(
                                 markedValues,
                                 this.props.appSession
                               );
                             }
                           }}
-                          title={I18n.t('musit.analysis.createAnalysis')}
+                          title={
+                            marked.length < 1 || isAllowed ? (
+                              I18n.t('musit.analysis.createAnalysis')
+                            ) : (
+                              I18n.t('musit.pickList.tooltip.doNotHaveSufficientRole')
+                            )
+                          }
                         />
                         {this.selectedCount(isNode, marked.length)}
                       </span>
@@ -259,18 +283,24 @@ export class PickListComponent extends React.Component {
                       name="truck"
                       style={{
                         fontSize: '1.5em',
-                        color: marked.length < 1 ? 'grey' : null
+                        color: isMoveAllowed ? null : 'grey'
                       }}
                       onClick={() => {
-                        if (marked.length > 0) {
+                        if (isMoveAllowed) {
                           this.showMoveNodes(markedValues);
                         }
                       }}
-                      title={I18n.t(
-                        `musit.pickList.tooltip.${isNode
-                          ? 'moveSelectedNodes'
-                          : 'moveSelectedObjects'}`
-                      )}
+                      title={
+                        marked.length < 1 || isMoveAllowed ? (
+                          I18n.t(
+                            `musit.pickList.tooltip.${isNode
+                              ? 'moveSelectedNodes'
+                              : 'moveSelectedObjects'}`
+                          )
+                        ) : (
+                          I18n.t('musit.pickList.tooltip.moveNotAllowed')
+                        )
+                      }
                     />
                     {this.selectedCount(isNode, marked.length)}
                     <FontAwesome
@@ -289,8 +319,11 @@ export class PickListComponent extends React.Component {
                         }
                       }}
                       title={
-                        markedSamples.length === 0 ? (
-                          I18n.t(`musit.conservation.createConservation`)
+                        markedSamples.length === 0 ? marked.length < 1 ||
+                        conservationEnabled ? (
+                          I18n.t('musit.conservation.createConservation')
+                        ) : (
+                          I18n.t('musit.pickList.tooltip.doNotHaveSufficientRole')
                         ) : (
                           I18n.t(
                             'musit.conservation.errorMessages.cannotCreateConservationBecauseOfSamples'

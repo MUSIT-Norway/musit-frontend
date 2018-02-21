@@ -12,7 +12,12 @@ import Logo from './musitLogo.png';
 import LoginComponent from '../login/LoginComponent';
 import { emitError } from '../../shared/errors';
 import Loader from 'react-loader';
-import { loadAppSession$, setCollectionId$, setMuseumId$ } from '../../stores/appSession';
+import {
+  loadAppSession$,
+  setCollectionId$,
+  setMuseumId$,
+  setRolesForModules$
+} from '../../stores/appSession';
 import { RxInjectLegacy as inject } from 'react-rxjs';
 import {
   clearNodes$ as clearNodePicklist$,
@@ -25,6 +30,7 @@ import classnames from 'classnames';
 import env from '../../shared/environment';
 import { clear$ as clearSearchStore$ } from '../../search/searchStore';
 
+const about = '/about';
 export class AppComponent extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
@@ -32,6 +38,7 @@ export class AppComponent extends Component {
     setMuseumId: PropTypes.func.isRequired,
     setCollectionId: PropTypes.func.isRequired,
     loadAppSession: PropTypes.func.isRequired,
+    setRolesForModules: PropTypes.func.isRequired,
     pickList: PropTypes.object.isRequired,
     goTo: PropTypes.func.isRequired,
     clearObjectPicklist: PropTypes.func.isRequired,
@@ -76,33 +83,29 @@ export class AppComponent extends Component {
   handleMuseumId(museumId, collectionId) {
     this.props.setMuseumId(museumId);
     this.props.setCollectionId(collectionId);
+    this.props.setRolesForModules({
+      email: this.props.appSession.actor.dataportenUser,
+      museumId: museumId,
+      collectionId: collectionId,
+      isGod: this.props.appSession.isGod
+    });
     this.props.clearObjectPicklist();
     this.props.clearNodePicklist();
     this.props.clearSearchStore();
-    this.props.goTo(
-      Config.magasin.urls.client.storagefacility.goToRoot({
-        ...this.props.appSession,
-        museumId,
-        collectionId
-      })
-    );
+    this.props.goTo(about);
   }
 
   handleCollectionId(collectionId) {
     this.props.setCollectionId(collectionId);
+    this.props.setRolesForModules({
+      email: this.props.appSession.actor.dataportenUser,
+      museumId: this.props.appSession.museumId,
+      collectionId: collectionId,
+      isGod: this.props.appSession.isGod
+    });
     this.props.clearObjectPicklist();
     this.props.clearSearchStore();
-    const nodeId = this.props.match.params ? this.props.match.params.id : null;
-    const localAppSession = { ...this.props.appSession, collectionId };
-    if (nodeId) {
-      this.props.goTo(
-        Config.magasin.urls.client.storagefacility.goToNode(nodeId, localAppSession)
-      );
-    } else {
-      this.props.goTo(
-        Config.magasin.urls.client.storagefacility.goToRoot(localAppSession)
-      );
-    }
+    this.props.goTo(about);
   }
 
   getFooterClass() {
@@ -141,7 +144,7 @@ export class AppComponent extends Component {
         <Navbar fixedTop>
           <Navbar.Header>
             <Navbar.Brand>
-              <Link to={'/about'}>
+              <Link to={about}>
                 <div className="brand">
                   <img height="40" alt="logo" src={Logo} />
                 </div>
@@ -152,23 +155,31 @@ export class AppComponent extends Component {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav navbar>
-              <LinkContainer
-                to={Config.magasin.urls.client.magasin.goToMagasin(this.props.appSession)}
-              >
-                <NavItem>{I18n.t('musit.texts.magazine')}</NavItem>
-              </LinkContainer>
-              <LinkContainer
-                to={Config.magasin.urls.client.analysis.baseUrl(this.props.appSession)}
-              >
-                <NavItem>{I18n.t('musit.analysis.analysis')}</NavItem>
-              </LinkContainer>
-              <LinkContainer
-                to={Config.magasin.urls.client.conservation.baseUrl(
-                  this.props.appSession
-                )}
-              >
-                <NavItem>{I18n.t('musit.conservation.conservation')}</NavItem>
-              </LinkContainer>
+              {this.props.appSession.rolesForModules.storageFacilityRead && (
+                <LinkContainer
+                  to={Config.magasin.urls.client.magasin.goToMagasin(
+                    this.props.appSession
+                  )}
+                >
+                  <NavItem>{I18n.t('musit.texts.magazine')}</NavItem>
+                </LinkContainer>
+              )}
+              {this.props.appSession.rolesForModules.collectionManagementRead && (
+                <LinkContainer
+                  to={Config.magasin.urls.client.analysis.baseUrl(this.props.appSession)}
+                >
+                  <NavItem>{I18n.t('musit.analysis.analysis')}</NavItem>
+                </LinkContainer>
+              )}
+              {this.props.appSession.rolesForModules.collectionManagementRead && (
+                <LinkContainer
+                  to={Config.magasin.urls.client.conservation.baseUrl(
+                    this.props.appSession
+                  )}
+                >
+                  <NavItem>{I18n.t('musit.conservation.conservation')}</NavItem>
+                </LinkContainer>
+              )}
               <LinkContainer
                 to={Config.magasin.urls.client.report.goToReport(this.props.appSession)}
               >
@@ -258,7 +269,8 @@ const commands = {
   setCollectionId$,
   clearObjectPicklist$,
   clearNodePicklist$,
-  clearSearchStore$
+  clearSearchStore$,
+  setRolesForModules$
 };
 
 export default inject(data, commands, props)(AppComponent);

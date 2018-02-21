@@ -88,7 +88,16 @@ const editPageProps: any = {
       commitSha: 'not built on CI',
       builtAtString: '2017-11-20 09:14:27.488'
     },
-    language: { isEn: true, isNo: false }
+    language: { isEn: true, isNo: false },
+    rolesForModules: {
+      collectionManagementRead: true,
+      collectionManagementWrite: true,
+      storageFacilityRead: true,
+      storageFacilityWrite: true,
+      storageFacilityAdmin: true,
+      documentArchiveRead: true,
+      documentArchiveWrite: true
+    }
   },
   predefinedConservation: {
     sampleTypes: {
@@ -3220,7 +3229,16 @@ const addPageProps: any = {
       commitSha: 'not built on CI',
       builtAtString: '2017-11-20 09:14:27.488'
     },
-    language: { isEn: true, isNo: false }
+    language: { isEn: true, isNo: false },
+    rolesForModules: {
+      collectionManagementRead: true,
+      collectionManagementWrite: true,
+      storageFacilityRead: true,
+      storageFacilityWrite: true,
+      storageFacilityAdmin: true,
+      documentArchiveRead: true,
+      documentArchiveWrite: true
+    }
   },
   store: { loadingConservation: false, conservation: null },
   form: {

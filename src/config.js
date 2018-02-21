@@ -361,7 +361,13 @@ export default {
           groupsUrl: (feideEmail: string): string =>
             `/api/auth/rest/groups/${feideEmail}`,
           museumsUrl: '/api/auth/rest/museums',
-          buildInfo: '/api/auth/service/auth/buildinfo'
+          buildInfo: '/api/auth/service/auth/buildinfo',
+          rolesUrl: (
+            feideEmail: string,
+            mid: MuseumId,
+            collectionId: CollectionId
+          ): string =>
+            `/api/auth/rest/${mid}/roles/${feideEmail}?collectionId=${collectionId}`
         }
       }
     }

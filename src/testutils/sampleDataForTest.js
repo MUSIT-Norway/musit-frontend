@@ -25,6 +25,15 @@ export const appSession: AppSession = {
   language: {
     isEn: false,
     isNo: true
+  },
+  rolesForModules: {
+    collectionManagementRead: true,
+    collectionManagementWrite: true,
+    storageFacilityRead: true,
+    storageFacilityWrite: true,
+    storageFacilityAdmin: true,
+    documentArchiveRead: true,
+    documentArchiveWrite: true
   }
 };
 

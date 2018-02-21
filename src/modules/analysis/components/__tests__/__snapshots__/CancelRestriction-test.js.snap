@@ -22,6 +22,15 @@ exports[`CancelRestriction should render cancel reason and cancelledByName 1`] =
             "isNo": true,
           },
           "museumId": 99,
+          "rolesForModules": Object {
+            "collectionManagementRead": true,
+            "collectionManagementWrite": true,
+            "documentArchiveRead": true,
+            "documentArchiveWrite": true,
+            "storageFacilityAdmin": true,
+            "storageFacilityRead": true,
+            "storageFacilityWrite": true,
+          },
         }
       }
       id="restrictedBy"

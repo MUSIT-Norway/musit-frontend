@@ -226,6 +226,15 @@ exports[`AnalysisViewComponent should render properly 1`] = `
                   "isNo": true,
                 },
                 "museumId": 99,
+                "rolesForModules": Object {
+                  "collectionManagementRead": true,
+                  "collectionManagementWrite": true,
+                  "documentArchiveRead": true,
+                  "documentArchiveWrite": true,
+                  "storageFacilityAdmin": true,
+                  "storageFacilityRead": true,
+                  "storageFacilityWrite": true,
+                },
               }
             }
             data={
@@ -337,6 +346,15 @@ exports[`AnalysisViewComponent should render properly 1`] = `
               "isNo": true,
             },
             "museumId": 99,
+            "rolesForModules": Object {
+              "collectionManagementRead": true,
+              "collectionManagementWrite": true,
+              "documentArchiveRead": true,
+              "documentArchiveWrite": true,
+              "storageFacilityAdmin": true,
+              "storageFacilityRead": true,
+              "storageFacilityWrite": true,
+            },
           }
         }
         comments="1"

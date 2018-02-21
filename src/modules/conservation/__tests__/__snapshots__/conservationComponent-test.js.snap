@@ -299,6 +299,7 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
         "marginRight": 12,
       }
     }
+    title="Endre"
   >
     Endre
   </button>
@@ -1043,6 +1044,15 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
               "isNo": false,
             },
             "museumId": 99,
+            "rolesForModules": Object {
+              "collectionManagementRead": true,
+              "collectionManagementWrite": true,
+              "documentArchiveRead": true,
+              "documentArchiveWrite": true,
+              "storageFacilityAdmin": true,
+              "storageFacilityRead": true,
+              "storageFacilityWrite": true,
+            },
           }
         }
         data={
@@ -1536,6 +1546,15 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
           "isNo": false,
         },
         "museumId": 99,
+        "rolesForModules": Object {
+          "collectionManagementRead": true,
+          "collectionManagementWrite": true,
+          "documentArchiveRead": true,
+          "documentArchiveWrite": true,
+          "storageFacilityAdmin": true,
+          "storageFacilityRead": true,
+          "storageFacilityWrite": true,
+        },
       }
     }
     labelAbove={true}
@@ -2632,6 +2651,7 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
         "marginRight": 12,
       }
     }
+    title="Endre"
   >
     Endre
   </button>
@@ -4449,6 +4469,15 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
               "isNo": false,
             },
             "museumId": 99,
+            "rolesForModules": Object {
+              "collectionManagementRead": true,
+              "collectionManagementWrite": true,
+              "documentArchiveRead": true,
+              "documentArchiveWrite": true,
+              "storageFacilityAdmin": true,
+              "storageFacilityRead": true,
+              "storageFacilityWrite": true,
+            },
           }
         }
         data={
@@ -5064,6 +5093,15 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
                 "isNo": false,
               },
               "museumId": 99,
+              "rolesForModules": Object {
+                "collectionManagementRead": true,
+                "collectionManagementWrite": true,
+                "documentArchiveRead": true,
+                "documentArchiveWrite": true,
+                "storageFacilityAdmin": true,
+                "storageFacilityRead": true,
+                "storageFacilityWrite": true,
+              },
             }
           }
           getStatusTextFromErrors=""
@@ -7466,6 +7504,15 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
                 "isNo": false,
               },
               "museumId": 99,
+              "rolesForModules": Object {
+                "collectionManagementRead": true,
+                "collectionManagementWrite": true,
+                "documentArchiveRead": true,
+                "documentArchiveWrite": true,
+                "storageFacilityAdmin": true,
+                "storageFacilityRead": true,
+                "storageFacilityWrite": true,
+              },
             }
           }
           getStatusTextFromErrors=""
@@ -9267,6 +9314,15 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
           "isNo": false,
         },
         "museumId": 99,
+        "rolesForModules": Object {
+          "collectionManagementRead": true,
+          "collectionManagementWrite": true,
+          "documentArchiveRead": true,
+          "documentArchiveWrite": true,
+          "storageFacilityAdmin": true,
+          "storageFacilityRead": true,
+          "storageFacilityWrite": true,
+        },
       }
     }
     labelAbove={true}

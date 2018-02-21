@@ -2,6 +2,7 @@
 import PersonRoleDate from '../PersonRoleDate';
 import { shallow } from 'enzyme';
 import React from 'react';
+import { appSession } from '../../../testutils/sampleDataForTest';
 
 describe('PersonRoleDate', () => {
   it('should match snapshot', () => {
@@ -11,16 +12,7 @@ describe('PersonRoleDate', () => {
         roles={['doneBy', 'responsible', 'madman']}
         updateForm={x => x}
         fieldName="Persons"
-        appSession={{
-          museumId: 99,
-          collectionId: 'ererefdfd',
-          accessToken: 'd444dddd',
-          actor: { fn: 'Stein Olsen' },
-          language: {
-            isEn: false,
-            isNo: true
-          }
-        }}
+        appSession={appSession}
         showDateForRole={r => r === 'doneBy'}
         getDisplayNameForRole={(r: string) => {
           if (r === 'doneBy') {
@@ -56,16 +48,7 @@ describe('PersonRoleDate', () => {
             date: '12.01.2001'
           }
         ]}
-        appSession={{
-          museumId: 99,
-          collectionId: 'ererefdfd',
-          accessToken: 'd444dddd',
-          actor: { fn: 'Stein Olsen' },
-          language: {
-            isEn: false,
-            isNo: true
-          }
-        }}
+        appSession={appSession}
         roles={['doneBy', 'responsible', 'madman']}
         updateForm={x => x}
         fieldName="Persons"
