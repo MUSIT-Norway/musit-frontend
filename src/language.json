@@ -82,7 +82,22 @@
           "measurementDetermination":{
             "measurementDetermination": "Measurement determination",
             "note":"Note",
-            "weight": "Weight(gr)"
+            "weight": "Weight(gr)",
+            "length": "Length",
+            "width": "Width",
+            "thickness": "Thickness",
+            "height": "Height",
+            "largestLength": "Largest length",
+            "largestWidth": "Largest width",
+            "largestThickness": "Largest thickness",
+            "largestHeight": "Largest height",
+            "diameter": "Diameter",
+            "tverrmaal": "Tverrmaal",
+            "largestMeasurement": "Largest measurement",
+            "measurement": "Measurement",
+            "quantity": "Quantity",
+            "quantitySymbols": "Symbols",
+            "fragmentQuantity": "Quantity of fragment"
           },
           "note":{
             "noteEvent":"Note",
@@ -1126,7 +1141,22 @@
           "measurementDetermination":{
             "measurementDetermination": "Målbestemmelse",
             "note":"Merknad",
-            "weight": "Vekt(gr)"
+            "weight": "Vekt(gr)",
+            "length": "Lengde",
+            "width": "Bredde",
+            "thickness": "Tykkelse",
+            "height": "Høyde",
+            "largestLength": "Stl.",
+            "largestWidth": "Stb.",
+            "largestThickness": "Stt.",
+            "largestHeight": "Sth.",
+            "diameter": "Diameter",
+            "tverrmaal": "Tverrmål",
+            "largestMeasurement": "Stm.",
+            "measurement": "Annet mål",
+            "quantity": "Antall",
+            "quantitySymbols": "Symbol",
+            "fragmentQuantity": "Antall fragment"
           },
           "note":{
             "noteEvent":"Kommentar",

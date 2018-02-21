@@ -1,7 +1,7 @@
 // @flow
 
 import type { MusitObject } from '../types/object';
-import type { SampleDataExtended } from '../types/samples';
+//import type { SampleDataExtended } from '../types/samples';
 import type { Person } from '../types/person';
 import type { AppSession } from '../types/appSession';
 import type { Field } from '../forms/form';
@@ -69,6 +69,25 @@ export type ConservatonSubType = {
   enTerm: string
 };
 
+export type MeasurementData = {
+  weight?: number,
+  length?: number,
+  width?: number,
+  thickness?: number,
+  height?: number,
+  largestLength?: number,
+  largestWidth?: number,
+  largestThickness?: number,
+  largestHeight?: number,
+  diameter?: number,
+  tverrmaal?: number,
+  largestMeasurement?: number,
+  measurement?: string,
+  quantity?: number,
+  quantitySymbols?: string,
+  fragmentQuantity?: number
+};
+
 export type SubEventComponentNoteType = {
   eventTypeId: number,
   note: string,
@@ -78,7 +97,8 @@ export type SubEventComponentNoteType = {
   files?: Array<any>,
   expanded: boolean,
   toggleExpanded: Function,
-  toggleSingleExpanded: Function
+  toggleSingleExpanded: Function,
+  measurementData?: MeasurementData
 };
 
 type SubEventComponentProps = {
@@ -110,24 +130,9 @@ export type ConditionAssessmentType = SubEventComponentNoteType & {
   conditionCode: number
 };
 
-export type MeasurementDeterminationType = {
-  weight?: number,
-  length?: number,
-  width?: number,
-  thickness?: number,
-  height?: number,
-  largestLength?: number,
-  largestWidth?: number,
-  largestThickness?: number,
-  largestHeight?: number,
-  diameter?: number,
-  tverrmaal?: number,
-  largestMeasurement?: number,
-  measurement?: string,
-  quantity?: number,
-  quantitySymbols?: string,
-  fragmentQuantity?: number
-} & SubEventComponentNoteType;
+
+
+export type MeasurementDeterminationType = SubEventComponentNoteType;
 
 export type ReportType = {
   archiveReference?: string
@@ -182,7 +187,6 @@ export type MeasurementDeterminationProps = {
 } & SubEventComponentProps;
 
 export type StorageAndHandlingProps = {
-  storageAndHandling: StorageAndHandlingType,
   storageAndHandling: StorageAndHandlingType
 } & SubEventComponentProps;
 

@@ -103,7 +103,7 @@ export default function ObjectSelection({
             affectedThingsWithDetailsMainEvent.map((row: any, i: number) => {
               const rows = [
                 !isChecked(row.uuid && row.uuid, affectedThingsSubEvent) && viewMode ? (
-                  ''
+                  null
                 ) : (
                   <tr
                     key={['objectRow', i].join('_')}

@@ -16,4 +16,7 @@ type FileType = [
   }
 ];
 export const getFids = (Files?: ?FileType) =>
-  Files && Files.filter(f => f.fid) ? Files.filter(f => f.fid).map(f => f.fid) : [];
+  Files && Files.filter(f => f.fid)
+    ? Files.filter(f => f.fid).map(f => f.fid)
+    : [];
+

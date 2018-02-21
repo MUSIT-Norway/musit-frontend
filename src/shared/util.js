@@ -1,8 +1,8 @@
 // @flow
-import React from 'react';
-import moment from 'moment';
-import { Observable } from 'rxjs';
-import type { PathName } from 'types/node';
+import React from "react";
+import moment from "moment";
+import { Observable } from "rxjs";
+import type { PathName } from "types/node";
 
 export const toPromise = (fn: (val: *) => Observable<*>) => (val: *) =>
   fn(val).toPromise();
@@ -19,10 +19,14 @@ export const flatten = (arr: Array<*>) => {
   return obj;
 };
 
-export const filter = (arr: Array<*>, fields: Array<string>, pattern: string) => {
+export const filter = (
+  arr: Array<*>,
+  fields: Array<string>,
+  pattern: string
+) => {
   const contains = (s: *, p: string) => {
     return (
-      (s || '')
+      (s || "")
         .toString()
         .toLowerCase()
         .indexOf(p.toLowerCase()) !== -1
@@ -34,7 +38,7 @@ export const filter = (arr: Array<*>, fields: Array<string>, pattern: string) =>
 };
 
 export const getDisplayName = (Component: React.Component<*, *>) => {
-  return Component.displayName || Component.name || 'Component';
+  return Component.displayName || Component.name || "Component";
 };
 
 export const blur = () => {
@@ -53,7 +57,7 @@ export const containsObjectWithField = (
   value: string
 ): boolean => arr.filter(e => e[field] === value).length > 0;
 
-export const DATE_FORMAT_DISPLAY = 'DD.MM.YYYY';
+export const DATE_FORMAT_DISPLAY = "DD.MM.YYYY";
 
 export const parseUTCDate = (dateStr: string) => {
   return moment.utc(dateStr);
@@ -63,15 +67,19 @@ export const parseISODate = (dateStr: string) => {
   return moment(new Date(dateStr));
 };
 export const formatISOString = (d: Date) => {
-  return moment(d).format('YYYY-MM-DDT00:00:00.000Z');
+  return moment(d).format("YYYY-MM-DDT00:00:00.000Z");
 };
 
 export const parseFloatFromString = (value: string): number => {
-  return typeof value === 'string' ? window.parseFloat(value.replace(',', '.')) : value;
+  return typeof value === "string"
+    ? window.parseFloat(value.replace(",", "."))
+    : value;
 };
 
 export const formatFloatToString = (number: number): string => {
-  return typeof number === 'number' ? number.toString().replace('.', ',') : number;
+  return typeof number === "number"
+    ? number.toString().replace(".", ",")
+    : number;
 };
 
 export const hasProp = (obj: *, prop: string): boolean => {
@@ -80,24 +88,24 @@ export const hasProp = (obj: *, prop: string): boolean => {
 
 export const customSortingStorageNodeType = (type: string): string => {
   switch (type) {
-    case 'Organisation':
-      return '01';
-    case 'Building':
-      return '02';
-    case 'Room':
-      return '03';
-    case 'StorageUnit':
-      return '04';
+    case "Organisation":
+      return "01";
+    case "Building":
+      return "02";
+    case "Room":
+      return "03";
+    case "StorageUnit":
+      return "04";
     default:
-      return '99';
+      return "99";
   }
 };
 
 export const isDateBiggerThanToday = (newDate: string | number): boolean => {
   const today = moment();
-  const isAfterYear = moment(newDate).isAfter(today, 'year');
-  const isAfterMonth = moment(newDate).isAfter(today, 'month');
-  const isAfterDay = moment(newDate).isAfter(today, 'day');
+  const isAfterYear = moment(newDate).isAfter(today, "year");
+  const isAfterMonth = moment(newDate).isAfter(today, "month");
+  const isAfterDay = moment(newDate).isAfter(today, "day");
   return isAfterDay || isAfterMonth || isAfterYear;
 };
 
@@ -116,10 +124,10 @@ export class Option {
   }
 }
 
-const testing = process.env.NODE_ENV === 'test';
+const testing = process.env.NODE_ENV === "test";
 
 export const apiUrl = (url: string): string => {
-  return `${testing ? 'http://localhost' : ''}${url}`;
+  return `${testing ? "http://localhost" : ""}${url}`;
 };
 
 export type SomethingLikeNode = {
@@ -134,8 +142,8 @@ export const getPath = (node: SomethingLikeNode) => {
   if (!node) {
     return [];
   }
-  const nodeIds = (node.path || '')
-    .split(',')
+  const nodeIds = (node.path || "")
+    .split(",")
     .slice(1)
     .map(p => parseFloat(p))
     .filter(n => n);
@@ -159,7 +167,15 @@ export const getPath = (node: SomethingLikeNode) => {
       id: pathMatch.nodeUuid,
       nodeId: pathMatch.nodeUuid,
       name: pathMatch.name,
-      url: '/magasin/' + pathMatch.nodeUuid
+      url: "/magasin/" + pathMatch.nodeUuid
     };
   });
+};
+
+export const musitParseFloat = (txt: string) => {
+  if (txt) {
+    const res = txt.replace(",", ".");
+    const extraTxt = res.endsWith(".") ? "." : "";
+    return parseFloat(res) + extraTxt;
+  } else return undefined;
 };

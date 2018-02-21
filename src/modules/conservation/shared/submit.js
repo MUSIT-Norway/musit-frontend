@@ -1,8 +1,10 @@
 //@flow
-import type { ObjectData } from '../../../types/object';
-import type { Person } from '../../../types/person';
-import toArray from 'lodash/toArray';
-import type { FormData } from '../../../types/conservation';
+import type { ObjectData } from "../../../types/object";
+import type { Person } from "../../../types/person";
+import toArray from "lodash/toArray";
+//import { parse } from "path";
+//import type { isUndefined } from 'util';
+import type { FormData } from "../../../types/conservation";
 
 export type Location<T> = {
   state?: T
@@ -30,8 +32,48 @@ export function getConservationCollection(
   return {
     eventTypeId: form.eventTypeId.value || 1,
     note: form.note.value,
-    events: (form.events && form.events.value ? form.events.value : []).map(v => ({
+    events: (form.events && form.events.value
+      ? form.events.value
+      : []).map(v => ({
       ...v,
+      measurementData: v.measurementData
+        ? {
+            ...v.measurementData,
+            weight: v.measurementData.weight
+              ? parseFloat(v.measurementData.weight)
+              : undefined,
+            length: v.measurementData && v.measurementData.length
+              ? parseFloat(v.measurementData.length)
+              : undefined,
+            width: v.measurementData && v.measurementData.width
+              ? parseFloat(v.measurementData.width)
+              : undefined,
+            thickness: v.measurementData && v.measurementData.thickness
+              ? parseFloat(v.measurementData.thickness)
+              : undefined,
+            largestLength: v.measurementData && v.measurementData.largestLength
+              ? parseFloat(v.measurementData.largestLength)
+              : undefined,
+            largestWidth: v.measurementData && v.measurementData.largestWidth
+              ? parseFloat(v.measurementData.largestWidth)
+              : undefined,
+            largestThickness: v.measurementData && v.measurementData.largestThickness
+              ? parseFloat(v.measurementData.largestThickness)
+              : undefined,
+            largestHeight: v.measurementData && v.measurementData.largestHeight
+              ? parseFloat(v.measurementData.largestHeight)
+              : undefined,
+            diameter: v.measurementData && v.measurementData.diameter
+              ? parseFloat(v.measurementData.diameter)
+              : undefined,
+            tverrmaal: v.measurementData && v.measurementData.tverrmaal
+              ? parseFloat(v.measurementData.tverrmaal)
+              : undefined,
+            largestMeasurement: v.measurementData && v.measurementData.largestMeasurement
+              ? parseFloat(v.measurementData.largestMeasurement)
+              : undefined
+          }
+        : undefined,
       actorsAndRoles: (v.actorsAndRoles || []).map(a => ({
         actorId: a.uuid,
         roleId: a.role,
