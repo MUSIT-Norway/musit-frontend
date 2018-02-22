@@ -51,6 +51,9 @@ export function getConservationCollection(
             thickness: v.measurementData && v.measurementData.thickness
               ? parseFloat(v.measurementData.thickness)
               : undefined,
+              height: v.measurementData && v.measurementData.height
+              ? parseFloat(v.measurementData.height)
+              : undefined,  
             largestLength: v.measurementData && v.measurementData.largestLength
               ? parseFloat(v.measurementData.largestLength)
               : undefined,

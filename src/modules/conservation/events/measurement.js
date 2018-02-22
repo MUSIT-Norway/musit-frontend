@@ -4,7 +4,8 @@ import type { MeasurementDeterminationProps } from "../../../types/conservation"
 import SubEventComponentNote from "../components/subEventComponentNote";
 import DropdownButton from "../../../components/DropdownButton";
 import { isNumber } from "util";
-import { musitParseFloat } from "../../../shared/util";
+import { musitParseFloat, musitParseInt } from "../../../shared/util";
+//import { musitParseInt } from "../../../shared/util";
 
 export default function MeasurementEvent(props: MeasurementDeterminationProps) {
   const suffix = ":";
@@ -103,7 +104,7 @@ export default function MeasurementEvent(props: MeasurementDeterminationProps) {
             />
           )}
         </div>
-      </div>git push --set-upstream origin MUSARK-1687
+      </div>
       <div className="row form-group">
         <div className="col-md-1">
           <label
@@ -484,8 +485,7 @@ export default function MeasurementEvent(props: MeasurementDeterminationProps) {
               onChange={t =>
                 props.onChange("measurementData")({
                   ...props.measurementDetermination.measurementData,
-                  quantity: t.target.value ? parseInt(t.target.value)
-                  : undefined
+                  quantity: musitParseInt(t.target.value)
                 })}
               rows="5"
               disabled={props.viewMode}
@@ -556,8 +556,7 @@ export default function MeasurementEvent(props: MeasurementDeterminationProps) {
               onChange={t =>
                 props.onChange("measurementData")({
                   ...props.measurementDetermination.measurementData,
-                  fragmentQuantity:  t.target.value ? parseInt(t.target.value)
-                  : undefined
+                  fragmentQuantity: musitParseInt(t.target.value)
                 })}
               rows="5"
               disabled={props.viewMode}
