@@ -84,7 +84,7 @@ export type MeasurementData = {
   largestMeasurement?: number,
   measurement?: string,
   quantity?: number,
-  quantitySymbols?: string,
+  quantitySymbol?: string,
   fragmentQuantity?: number
 };
 

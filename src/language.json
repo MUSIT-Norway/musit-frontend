@@ -6,7 +6,8 @@
         "queryPlaceholder": "Search for conservation event",
         "conservation": "Conservation",
         "askForDeleteConfirmation": "Would you like to delete sub-event?",
-        "notAbleToCollapse":"Not allowed to collapse the sub event in edit mode. Please click on save and cancel button to change the edit mode.",
+        "notAbleToCollapse":
+          "Not allowed to collapse the sub event in edit mode. Please click on save and cancel button to change the edit mode.",
         "confirmDelete": "Sub-event has been deleted.",
         "objectsConnected": "Objects connected to conservation",
         "numOfObjects": "Number of objects:",
@@ -16,72 +17,89 @@
         "createConservation": "Create conservation",
         "choseNewSubEvents": "Select new sub events to be created",
         "createNewSubEvents": "Create sub event",
-        "roles": {"administrator": "Administrator",
+        "roles": {
+          "administrator": "Administrator",
           "doneBy": "Done by",
-          "participating": "Participating"          
+          "participating": "Participating"
         },
-        "errorMessages":  {
-          "noRoleForPerson" : "No role chosen for person",
+        "errorMessages": {
+          "noRoleForPerson": "No role chosen for person",
           "noUUIDForPerson": "No person chosen from person list",
-          "cannotCreateConservationBecauseOfSamples": "Cannot create conservation for samples (check selected objects!)",
-          "notAllowed" : "You do not have the appropriate access rights to see conservation."
+          "cannotCreateConservationBecauseOfSamples":
+            "Cannot create conservation for samples (check selected objects!)",
+          "notAllowed":
+            "You do not have the appropriate access rights to see conservation."
         },
-        "note":"Note",
-        "caseNumber":"Case number",
-        "personsConnected":"Persons associated with the conservation",
-        "objectsOrSamples":"Objects/samples",
-        "events":{
-          "treatment":{
-            "treatment":"Treatment",
-            "keyword":"Keyword",
-            "treatmentType":"Treatment Type",
-            "keywordTreatmentType)":"Keyword (Treatment Type)",
-            "materialUsage":"Material Usage",
-            "productName":"Product Name",
-            "synonyms":"Synonyms",
-            "materialUsageDetails":"Material Usage (Product Name, Synonyms, Description)",
-            "description":"Description",
-            "note":"Note",
-            "result":"Result",
-            "noteDescriptionResult":"Note/Description/Result"
+        "note": "Note",
+        "caseNumber": "Case number",
+        "personsConnected": "Persons associated with the conservation",
+        "objectsOrSamples": "Objects/samples",
+        "events": {
+          "treatment": {
+            "treatment": "Treatment",
+            "keyword": "Keyword",
+            "treatmentType": "Treatment Type",
+            "keywordTreatmentType)": "Keyword (Treatment Type)",
+            "materialUsage": "Material Usage",
+            "productName": "Product Name",
+            "synonyms": "Synonyms",
+            "materialUsageDetails":
+              "Material Usage (Product Name, Synonyms, Description)",
+            "description": "Description",
+            "note": "Note",
+            "result": "Result",
+            "noteDescriptionResult": "Note/Description/Result"
           },
-          "technicalDescription":{
+          "technicalDescription": {
             "technicalDescription": "Technical description",
-            "note":"Note"
+            "note": "Note"
           },
-          "storageAndHandling":{
+          "storageAndHandling": {
             "storageAndHandling": "Storage and handling",
-            "note":"Note",
-            "lightLevel":"Light level",
-            "uvLevel":"UV level",
-            "relativeHumidity":"Relative humidity(%)",
-            "temperature":"Temperature(°C)"
+            "note": "Note",
+            "lightLevel": "Light level",
+            "uvLevel": "UV level",
+            "relativeHumidity": "Relative humidity(%)",
+            "temperature": "Temperature(°C)"
           },
-          "hseRisk":{
+          "hseRisk": {
             "hseRisk": "HSE-risk",
-            "note":"Note"
+            "note": "Note"
           },
-          "conditionAssessment":{
+          "conditionAssessment": {
             "conditionAssessment": "Condition assessment",
-            "note":"Note",
+            "note": "Note",
             "conditionCode": "Condition code",
-            "chooseConditionAssessment": "Select condition"            
+            "chooseConditionAssessment": "Select condition"
           },
-          "report":{
+          "report": {
             "report": "Report",
-            "note":"Note",
-            "archiveReference":"Archive reference"
+            "note": "Note",
+            "archiveReference": "Archive reference"
           },
-          "materialDetermination":{
+          "materialDetermination": {
             "materialDetermination": "Material determination",
-            "note":"Note",
-            "material":"Material",
-            "specialMaterial":"Special material",
-            "sequence":"Sequence"
+            "note": "Note",
+            "material": "Material",
+            "specialMaterial": "Special material",
+            "sequence": "Sequence"
           },
-          "measurementDetermination":{
+          "measurementDetermination": {
+            "tooltip": {
+              "largestLengthTooltip": "Largest length",
+              "largestWidthTooltip": "Largest width",
+              "largestThicknessTooltip": "Largest thickness",
+              "largestHeightTooltip": "Largest height",
+              "largestMeasurementTooltip": "Largest measurement",
+              "quantityTooltip":
+                "Original number of objects(whole and/or broken",
+              "quantitySymbolTooltip":
+                "Enter any uncertainty in the quantity with >(minimum) or ?",
+              "fragmentQuantityTooltip":
+                "how many fragment the object or objects are presented in"
+            },
             "measurementDetermination": "Measurement determination",
-            "note":"Note",
+            "note": "Note",
             "weight": "Weight(gr)",
             "length": "Length",
             "width": "Width",
@@ -96,12 +114,12 @@
             "largestMeasurement": "Largest measurement",
             "measurement": "Measurement",
             "quantity": "Quantity",
-            "quantitySymbols": "Symbols",
+            "quantitySymbol": "Symbol",
             "fragmentQuantity": "Quantity of fragment"
           },
-          "note":{
-            "noteEvent":"Note",
-            "note":"Note"
+          "note": {
+            "noteEvent": "Note",
+            "note": "Note"
           }
         },
         "doCollapse": "Collapse sub evebts",
@@ -112,15 +130,16 @@
         "noData": "No objects to display",
         "objectsView": {
           "object": "Object",
-          "createNewEvent" : "Create new event",          
-          "selectEvent" : "Select event", 
+          "createNewEvent": "Create new event",
+          "selectEvent": "Select event",
           "location": "Location",
           "musNo": "Museum No.",
           "subNo": "U. No.",
           "termTaxon": "Taxon",
           "termItem": "Artefact",
           "term": "Artefact/Taxon",
-          "messageToSelectObjects": "Which objects are connected to the sub-event?",
+          "messageToSelectObjects":
+            "Which objects are connected to the sub-event?",
           "messageToViewObjects": "Objects connected to the sub-event",
           "arkForm": "Form",
           "objectView": "Object view",
@@ -169,7 +188,7 @@
             "Analysis": "Analysis",
             "MoveObject": "Relocating",
             "SampleCreated": "Sample",
-            "Conservation": "Conservation"            
+            "Conservation": "Conservation"
           }
         }
       },
@@ -236,7 +255,8 @@
         "search": "Analysis search",
         "queryPlaceholder": "Search for analysis event",
         "saveAnalysisError": "Unable to save analysis",
-        "notAllowed" : "You do not have the appropriate access rights to see analysis or samples.",
+        "notAllowed":
+          "You do not have the appropriate access rights to see analysis or samples.",
         "saveAnalysisSuccess": "Analysis saved",
         "filterTheList": "Filter the list",
         "analysisType": "Type of analysis",
@@ -318,7 +338,8 @@
         "editAnalysis": "Edit analysis",
         "createAnalysis": "Create analysis",
         "createSample": "Create sample",
-        "roles": {"administrator": "Administrator",
+        "roles": {
+          "administrator": "Administrator",
           "responsible": "Responsible",
           "doneBy": "Done by",
           "completedBy": "Completed by"
@@ -326,7 +347,8 @@
         "exchange": {
           "pageHeader": "Import analysis result",
           "downloadTemplate": "Download template",
-          "description": "Upload the filled out template and verify that the values are correct.",
+          "description":
+            "Upload the filled out template and verify that the values are correct.",
           "importButton": "Import",
           "cancelImportButton": "Cancel",
 
@@ -406,22 +428,31 @@
         "notAuthenticated": "You are not logged in.",
         "badRequest": "Invalid data was rejected by the server.",
         "errorCode": "HTTP error code: %{status}",
-        "noGroups": "You do not have access to MUSITbasen. Please contact your Database Coordinator.",
+        "noGroups":
+          "You do not have access to MUSITbasen. Please contact your Database Coordinator.",
         "saveDisabled": "Save-button is disabled because of missing data",
         "scanner": {
           "title": "Search for node or object",
           "search": "Search",
-          "noMatchingNodeOrObject": "Could not find any matching node or object with this barcode.",
-          "noMatchingNode": "Could not find any matching node with this barcode.",
-          "noMatchingObject": "Could not find any matching object with this barcode.",
-          "cannotActOnObject": "This window can not act on barcodes for objects.",
-          "cannotActOnNode": "This window can not act on barcodes for storage facility nodes.",
+          "noMatchingNodeOrObject":
+            "Could not find any matching node or object with this barcode.",
+          "noMatchingNode":
+            "Could not find any matching node with this barcode.",
+          "noMatchingObject":
+            "Could not find any matching object with this barcode.",
+          "cannotActOnObject":
+            "This window can not act on barcodes for objects.",
+          "cannotActOnNode":
+            "This window can not act on barcodes for storage facility nodes.",
           "noCurrentLocation": "Object has no storage facility location."
         },
         "objects": {
-          "notAllowedToSeeAnalysis" :"No access to analysis or samples for object",
-          "notAllowedToSeeConservations" :"No access to conservations for object",
-          "notAllowedToSeeStorageData" :"No access to storage data for this object"
+          "notAllowedToSeeAnalysis":
+            "No access to analysis or samples for object",
+          "notAllowedToSeeConservations":
+            "No access to conservations for object",
+          "notAllowedToSeeStorageData":
+            "No access to storage data for this object"
         }
       },
       "notificationMessages": {
@@ -494,7 +525,8 @@
             "askForDeleteConfirmation": "Would you like to delete %{name}?",
             "confirmDelete": "%{name} has been deleted.",
             "errorCommon": "Delete failed.",
-            "errorNotAllowedHadChild": "Not allowed to delete a node that is not empty."
+            "errorNotAllowedHadChild":
+              "Not allowed to delete a node that is not empty."
           },
           "controlsobservations": "Contr./Observ."
         },
@@ -560,8 +592,9 @@
           }
         }
       },
-      "search" : {
-        "stats": "Showing %{from} - %{to} out of %{total} matches. Used %{timeUsed} ms searching.",
+      "search": {
+        "stats":
+          "Showing %{from} - %{to} out of %{total} matches. Used %{timeUsed} ms searching.",
         "ready": "Fill in the form and push the search button.",
         "noResults": "No results."
       },
@@ -594,7 +627,8 @@
         }
       },
       "texts": {
-        "doNotHaveSufficientRole": "Do not have sufficient role to perform the operation",
+        "doNotHaveSufficientRole":
+          "Do not have sufficient role to perform the operation",
         "error": "Error message",
         "musitBase": "MUSIT base",
         "abuotMusit": "About MUSIT",
@@ -614,23 +648,24 @@
         "cancel": "Cancel",
         "edit": "Edit",
         "delete": "Delete",
-        "back":"Back",
+        "back": "Back",
         "cancelTooltip": "Cancel registration",
         "magazine": "Storage facility",
         "deleteNode": "Delete node",
-        "footerText": "The University museums IT-organisation (MUSIT) is a national collaboration between the University of Bergen, the University of Oslo, University of Stavanger, Norwegian University of Science and Technology in Trondheim , and the University of Tromsø -Norway's Arctic University.",
+        "footerText":
+          "The University museums IT-organisation (MUSIT) is a national collaboration between the University of Bergen, the University of Oslo, University of Stavanger, Norwegian University of Science and Technology in Trondheim , and the University of Tromsø -Norway's Arctic University.",
         "showConfirm": {
           "message": "Are you sure about this?",
           "confirm": "Confirm",
           "cancel": "Cancel",
           "ok": "Ok"
         },
-        "uploadFile":"Upload file",
-        "browse":"Browse",
-        "yes":"Yes",
-        "no":"No",
-        "change":"Edit",
-        "lastUpdateBy" : "Last changed by",
+        "uploadFile": "Upload file",
+        "browse": "Browse",
+        "yes": "Yes",
+        "no": "No",
+        "change": "Edit",
+        "lastUpdateBy": "Last changed by",
         "name": "Name",
         "role": "Role",
         "date": "Date",
@@ -666,7 +701,8 @@
         "mold": "Mold",
         "pest": "Pest",
         "envdata": "Environmental Conditions",
-        "controlsRequired": "At least one control type must be checked OK or Not OK",
+        "controlsRequired":
+          "At least one control type must be checked OK or Not OK",
         "registerObservations": "Register observations",
         "dateValidation": "Date of control can not be later than present date.",
         "saveControlError": "Unable to save control",
@@ -688,7 +724,8 @@
           "registeredDate": "Registered date",
           "registeredBy": "Registered by",
           "newButtonLabel": "Add new",
-          "dateValidation": "Date of observation can not be later than present date.",
+          "dateValidation":
+            "Date of observation can not be later than present date.",
           "typeSelect": {
             "labelText": "Choose type"
           },
@@ -698,10 +735,13 @@
           },
           "pest": {
             "identificationValueRequired": "Identification is required.",
-            "identificationValueIncorrect": "Max length for identification is 100 char.",
-            "commentsValueIncorrect": "Max length for Task/Comment is 250 char.",
+            "identificationValueIncorrect":
+              "Max length for identification is 100 char.",
+            "commentsValueIncorrect":
+              "Max length for Task/Comment is 250 char.",
             "countIncorrect": "Quantity must be an integer.",
-            "lifeCycleRequired": "Stage is required when quantity is specified.",
+            "lifeCycleRequired":
+              "Stage is required when quantity is specified.",
             "labelText": "Pest",
             "identificationLabel": "Identification",
             "identificationTooltip": "Pest identification",
@@ -725,7 +765,8 @@
           },
           "alcohol": {
             "statusValueRequired": "Level is required.",
-            "volumeValueIncorrect": "Volume must be a number with max 3 decimals.",
+            "volumeValueIncorrect":
+              "Volume must be a number with max 3 decimals.",
             "commentValueIncorrect": "Max length for Task/Comment is 250 char",
             "labelText": "Alcohol",
             "volumeLabel": "Volume",
@@ -744,11 +785,15 @@
             }
           },
           "temperature": {
-            "toValueSmallerThanFromValue": "Measured value (to) must be bigger than measured value (from).",
+            "toValueSmallerThanFromValue":
+              "Measured value (to) must be bigger than measured value (from).",
             "fromValueRequired": "Measured value (from) is required.",
-            "fromValueIncorrect": "Measured value (from) must be a number with max 3 decimals.",
-            "toValueIncorrect": "Measured value (to) must be a number with max 3 decimals.",
-            "commentsValueIncorrect": "Max length for Task/Comment is 250 char.",
+            "fromValueIncorrect":
+              "Measured value (from) must be a number with max 3 decimals.",
+            "toValueIncorrect":
+              "Measured value (to) must be a number with max 3 decimals.",
+            "commentsValueIncorrect":
+              "Max length for Task/Comment is 250 char.",
             "labelText": "Temperature",
             "fromValueLabelText": "Measured value (from)",
             "toValueLabelText": "Measured value (to)",
@@ -761,11 +806,15 @@
             "notePlaceHolder": "Free text"
           },
           "hypoxicAir": {
-            "toValueSmallerThanFromValue": "Measured value (to) must be bigger than measured value (from).",
+            "toValueSmallerThanFromValue":
+              "Measured value (to) must be bigger than measured value (from).",
             "fromValueRequired": "Measured value (from) is required.",
-            "fromValueIncorrect": "Measured value (from) must be a number with max 3 decimals.",
-            "toValueIncorrect": "Measured value (to) must be a number with max 3 decimals.",
-            "commentsValueIncorrect": "Max length for Task/Comment is 250 char.",
+            "fromValueIncorrect":
+              "Measured value (from) must be a number with max 3 decimals.",
+            "toValueIncorrect":
+              "Measured value (to) must be a number with max 3 decimals.",
+            "commentsValueIncorrect":
+              "Max length for Task/Comment is 250 char.",
             "labelText": "Hypoxic air",
             "fromValueLabelText": "Measured value (from)",
             "toValueLabelText": "Measured value (to)",
@@ -778,11 +827,15 @@
             "notePlaceHolder": "Free text"
           },
           "relativeHumidity": {
-            "toValueSmallerThanFromValue": "Measured value (to) must be bigger than measured value (from).",
+            "toValueSmallerThanFromValue":
+              "Measured value (to) must be bigger than measured value (from).",
             "fromValueRequired": "Measured value (from) is required.",
-            "fromValueIncorrect": "Measured value (from) must be a number with max 3 decimals.",
-            "toValueIncorrect": "Measured value (to) must be a number with max 3 decimals.",
-            "commentsValueIncorrect": "Max length for Task/Comment is 250 char.",
+            "fromValueIncorrect":
+              "Measured value (from) must be a number with max 3 decimals.",
+            "toValueIncorrect":
+              "Measured value (to) must be a number with max 3 decimals.",
+            "commentsValueIncorrect":
+              "Max length for Task/Comment is 250 char.",
             "labelText": "Relative humidity",
             "fromValueLabelText": "Measured value (from)",
             "toValueLabelText": "Measured value (to)",
@@ -807,7 +860,8 @@
             "rightLabelPlaceToolTip": "Task that should be performed"
           },
           "cleaning": {
-            "leftValueRequired": "Description of observed cleaning is required.",
+            "leftValueRequired":
+              "Description of observed cleaning is required.",
             "leftValueIncorrect": "Max length for Description is 100 char.",
             "rightValueIncorrect": "Max length for Task/Comment is 250 char.",
             "labelText": "Cleaning",
@@ -832,7 +886,8 @@
           },
           "lightCondition": {
             "leftValueRequired": "Measured/observed value is required.",
-            "leftValueIncorrect": "Max length for measured/observed value is 100 char.",
+            "leftValueIncorrect":
+              "Max length for measured/observed value is 100 char.",
             "rightValueIncorrect": "Max length for Task/Comment is 250 char.",
             "labelText": "Lighting condition",
             "leftLabelText": "Measured/observed value",
@@ -843,7 +898,8 @@
             "rightLabelPlaceToolTip": "Task that should be performed"
           },
           "skallsikring": {
-            "leftValueRequired": "Description of observed perimeter security status is required.",
+            "leftValueRequired":
+              "Description of observed perimeter security status is required.",
             "leftValueIncorrect": "Max length for description is 100 char.",
             "rightValueIncorrect": "Max length for Task/Comment is 250 char.",
             "labelText": "Perimeter security",
@@ -855,7 +911,8 @@
             "rightLabelPlaceToolTip": "Task that should be performed"
           },
           "brannsikring": {
-            "leftValueRequired": "Description of observed fire protection status is required.",
+            "leftValueRequired":
+              "Description of observed fire protection status is required.",
             "leftValueIncorrect": "Max length for description is 100 char.",
             "rightValueIncorrect": "Max length for Task/Comment is 250 char.",
             "labelText": "Fire protection",
@@ -867,7 +924,8 @@
             "rightLabelPlaceToolTip": "Task that should be performed"
           },
           "vannskaderisiko": {
-            "leftValueRequired": "Description of observed water damage assessment is required.",
+            "leftValueRequired":
+              "Description of observed water damage assessment is required.",
             "leftValueIncorrect": "Max length for descriptionis 100 char.",
             "rightValueIncorrect": "Max length for Task/Comment is 250 char.",
             "labelText": "Water damage assessment",
@@ -879,7 +937,8 @@
             "rightLabelPlaceToolTip": "Task that should be performed"
           },
           "tyverisikring": {
-            "leftValueRequired": "Description of theft protection status is required.",
+            "leftValueRequired":
+              "Description of theft protection status is required.",
             "leftValueIncorrect": "Max length for description is 100 char.",
             "rightValueIncorrect": "Max length for Task/Comment is 250 char.",
             "labelText": "Theft protection",
@@ -903,7 +962,8 @@
           "selectedNodeCount": "Selected node(s) count",
           "selectedObjectCount": "Selected object(s) count",
           "moveNotAllowed": "No access to move objects/nodes",
-          "doNotHaveSufficientRole": "Do not have sufficient role to perform the operation"
+          "doNotHaveSufficientRole":
+            "Do not have sufficient role to perform the operation"
         },
         "title": {
           "nodes": "Picklist (nodes)",
@@ -930,8 +990,10 @@
           "required": "Type is required.",
           "organisationAllowed": "Only organisation type is allowed.",
           "buildingAllowed": "Only building type is allowed.",
-          "organisationAllowedToMove": "Only nodes of type Organisation can be moved to a root node.",
-          "buildingAllowedToMove": "Only nodes of type building can be moved to a node type Organisation.",
+          "organisationAllowedToMove":
+            "Only nodes of type Organisation can be moved to a root node.",
+          "buildingAllowedToMove":
+            "Only nodes of type building can be moved to a node type Organisation.",
           "notAllowedToMove": "A node can not be moved into itself.",
           "placeHolder": "Please choose...",
           "tooltip": "Type of node",
@@ -1009,7 +1071,8 @@
           },
           "relativeHumidity": {
             "labelText": "Rel. humidity",
-            "incorrect": "Relative humidity must be a number with max 3 decimals.",
+            "incorrect":
+              "Relative humidity must be a number with max 3 decimals.",
             "tooltip": "Relative humidity requirement in %",
             "placeHolder": "%"
           },
@@ -1068,12 +1131,13 @@
         "queryPlaceholder": "Søk etter konservering hendelser",
         "conservation": "Konservering",
         "askForDeleteConfirmation": "Vil du slette delhendelse?",
-        "notAbleToCollapse": "Ikke tillatt å kollapse underhendelsen i redigeringsmodus. Vennligst klikk på lagre og avbryt knappen for å endre redigeringsmodus.",
+        "notAbleToCollapse":
+          "Ikke tillatt å kollapse underhendelsen i redigeringsmodus. Vennligst klikk på lagre og avbryt knappen for å endre redigeringsmodus.",
         "confirmDelete": "Delhendelse er slettet.",
         "subEvents": "Delhendelser",
         "objectsConnected": "Objekter knyttet til hendelsen",
         "numOfObjects": "Antall:",
-        "documents": "Vedlegg",        
+        "documents": "Vedlegg",
         "newConservation": "Ny konservering",
         "createConservation": "Opprett konservering",
         "choseNewSubEvents": "Velg delhendelser som skal lages",
@@ -1082,68 +1146,83 @@
           "doneBy": "Utført av",
           "participating": "Deltatt i"
         },
-        "errorMessages":  {
-          "noRoleForPerson" : "Ingen rolle valgt for person",
+        "errorMessages": {
+          "noRoleForPerson": "Ingen rolle valgt for person",
           "noUUIDForPerson": "Ingen person valgt fra personliste",
-          "cannotCreateConservationBecauseOfSamples": "Kan ikke opprette konservering for prøver (sjekk valgte objekter!)",
-          "notAllowed" : "Du har ikke tilgang til konservering."
+          "cannotCreateConservationBecauseOfSamples":
+            "Kan ikke opprette konservering for prøver (sjekk valgte objekter!)",
+          "notAllowed": "Du har ikke tilgang til konservering."
         },
-        "note":"Merknad",
-        "caseNumber":"Saksnummer",
-        "personsConnected":"Personer tilknyttet konservering",
-        "objectsOrSamples":"Objekter/prøver",
-        "events":{
-          "treatment":{
-            "treatment":"Behandling",
-            "keyword":"Stikkord",
-            "treatmentType":"Behandlingstype",
-            "keywordTreatmentType)":"Stikkord (Behandlingstype)",
-            "materialUsage":"Materialbruk",
-            "productName":"Produktnavn",
-            "synonyms":"Synonymer",
-            "materialUsageDetails":"Materialbruk (Produktnavn, Synonymer, Beskrivelse)",
-            "description":"Beskrivelse",
-            "note":"Merknad",
-            "result":"Resultat",
-            "noteDescriptionResult":"Merknad/Beskrivelse/Resultat"
+        "note": "Merknad",
+        "caseNumber": "Saksnummer",
+        "personsConnected": "Personer tilknyttet konservering",
+        "objectsOrSamples": "Objekter/prøver",
+        "events": {
+          "treatment": {
+            "treatment": "Behandling",
+            "keyword": "Stikkord",
+            "treatmentType": "Behandlingstype",
+            "keywordTreatmentType)": "Stikkord (Behandlingstype)",
+            "materialUsage": "Materialbruk",
+            "productName": "Produktnavn",
+            "synonyms": "Synonymer",
+            "materialUsageDetails":
+              "Materialbruk (Produktnavn, Synonymer, Beskrivelse)",
+            "description": "Beskrivelse",
+            "note": "Merknad",
+            "result": "Resultat",
+            "noteDescriptionResult": "Merknad/Beskrivelse/Resultat"
           },
-          "technicalDescription":{
+          "technicalDescription": {
             "technicalDescription": "Teknisk beskrivelse",
-            "note":"Merknad"
+            "note": "Merknad"
           },
-          "storageAndHandling":{
+          "storageAndHandling": {
             "storageAndHandling": " Oppbevaring og håndtering",
-            "note":"Merknad",
-            "lightLevel":"Lux",
-            "uvLevel":"UVnivå(μW/lumen)",
-            "relativeHumidity":"Relativ fuktighet(%)",
-            "temperature":"Temperatur(°C)"
+            "note": "Merknad",
+            "lightLevel": "Lux",
+            "uvLevel": "UVnivå(μW/lumen)",
+            "relativeHumidity": "Relativ fuktighet(%)",
+            "temperature": "Temperatur(°C)"
           },
-          "hseRisk":{
+          "hseRisk": {
             "hseRisk": "HMS-risiko",
-            "note":"Merknad"
+            "note": "Merknad"
           },
-          "conditionAssessment":{
+          "conditionAssessment": {
             "conditionAssessment": "Tilstandsvurdering",
-            "note":"Merknad",
+            "note": "Merknad",
             "conditionCode": "Tilstandskode",
             "chooseConditionAssessment": "Velg tilstand"
           },
-          "report":{
+          "report": {
             "report": "Rapport",
-            "note":"Merknad",
-            "archiveReference":"Arkivreferanse"
+            "note": "Merknad",
+            "archiveReference": "Arkivreferanse"
           },
-          "materialDetermination":{
+          "materialDetermination": {
             "materialDetermination": "Materialbestemmelse",
-            "note":"Merknad",
-            "material":"Material",
-            "specialMaterial":"Spesialmaterial",
-            "sequence":"Sekvens"
+            "note": "Merknad",
+            "material": "Material",
+            "specialMaterial": "Spesialmaterial",
+            "sequence": "Sekvens"
           },
-          "measurementDetermination":{
+          "measurementDetermination": {
+            "tooltip": {
+              "largestLengthTooltip": "Største lengde",
+              "largestWidthTooltip": "Største bredde",
+              "largestThicknessTooltip": "Største tykkelse",
+              "largestHeightTooltip": "Største høyde",
+              "largestMeasurementTooltip": "Største mål",
+              "quantityTooltip":
+                "Opprinnelig antall objekter(hele og/eller ødelagte",
+              "quantitySymbolTooltip":
+                "Angi evt. usikkerhet i antall med >(minst) eller ?",
+              "fragmentQuantityTooltip":
+                "hvor mange fragment gjenstanden eller gjenstandene foreligger i"
+            },
             "measurementDetermination": "Målbestemmelse",
-            "note":"Merknad",
+            "note": "Merknad",
             "weight": "Vekt(gr)",
             "length": "Lengde",
             "width": "Bredde",
@@ -1158,32 +1237,33 @@
             "largestMeasurement": "Stm.",
             "measurement": "Annet mål",
             "quantity": "Antall",
-            "quantitySymbols": "Symbol",
+            "quantitySymbol": "Symbol",
             "fragmentQuantity": "Antall fragment"
           },
-          "note":{
-            "noteEvent":"Kommentar",
-            "note":"Merknad"
+          "note": {
+            "noteEvent": "Kommentar",
+            "note": "Merknad"
           }
         },
         "doCollapse": "Kollaps delhendelser",
         "doExpand": "Ekspander delhendelser"
       },
       "objects": {
-        "goToParentObject": "Gå til objektet",        
+        "goToParentObject": "Gå til objektet",
         "noData": "Ingen objekter å vise",
         "objectsView": {
           "object": "Objekt",
-          "createNewEvent" : "Opprett ny hendelse",
-          "selectEvent" : "Velg hendelse",          
+          "createNewEvent": "Opprett ny hendelse",
+          "selectEvent": "Velg hendelse",
           "location": "Plassering",
           "musNo": "Museumsnr.",
           "subNo": "Undernr.",
           "termTaxon": "Takson",
           "termItem": "Gjenstand",
           "term": "Gjenstand/Takson",
-          "messageToSelectObjects": "Hvilke objekter gjelder denne del hendelsen for?",
-          "messageToViewObjects": "Objekter i denne delhendelsen",          
+          "messageToSelectObjects":
+            "Hvilke objekter gjelder denne del hendelsen for?",
+          "messageToViewObjects": "Objekter i denne delhendelsen",
           "arkForm": "Form",
           "objectView": "Objektvisning",
           "newAnalysis": "Ny analyse",
@@ -1299,7 +1379,7 @@
         "queryPlaceholder": "Søk etter analyse hendelser",
         "saveAnalysisError": "Kunne ikke lagre analyse",
         "saveAnalysisSuccess": "Analyse ble lagret",
-        "notAllowed" : "Du har ikke tilgang til analyser.",
+        "notAllowed": "Du har ikke tilgang til analyser.",
         "filterTheList": "Filtrer listen",
         "analysisType": "Type analyse",
         "chooseCategory": "Velg kategori",
@@ -1390,7 +1470,8 @@
         "exchange": {
           "pageHeader": "Importer analyseresultater",
           "downloadTemplate": "Last ned mal",
-          "description": "Last opp den utfylte malen og verifiser at de feltene stemmer.",
+          "description":
+            "Last opp den utfylte malen og verifiser at de feltene stemmer.",
           "importButton": "Importer",
           "cancelImportButton": "Avbryt",
           "header": {
@@ -1469,22 +1550,29 @@
         "notAuthenticated": "Du er ikke logget inn.",
         "badRequest": "Ugyldige data ble sendt til serveren.",
         "errorCode": "HTTP feilkode: %{status}",
-        "noGroups": "Du har ikke tilgang til MUSITbasen. Vennligst kontakt din Databasekoordinator.",
+        "noGroups":
+          "Du har ikke tilgang til MUSITbasen. Vennligst kontakt din Databasekoordinator.",
         "saveDisabled": "Lagreknappen er ikke aktiv på grunn av manglende data",
         "scanner": {
           "title": "Søk etter node eller objekt",
           "search": "Søk",
-          "noMatchingNodeOrObject": "Fant ingen node eller objekt med denne strekkoden.",
+          "noMatchingNodeOrObject":
+            "Fant ingen node eller objekt med denne strekkoden.",
           "noMatchingNode": "Fant ingen node med denne strekkoden.",
           "noMatchingObject": "Fant ingen objekt med denne strekkoden.",
-          "cannotActOnObject": "Dette skjermbildet håndterer ikke scanning av objekter.",
-          "cannotActOnNode": "Dette skjermbildet håndterer ikke scanning av noder.",
+          "cannotActOnObject":
+            "Dette skjermbildet håndterer ikke scanning av objekter.",
+          "cannotActOnNode":
+            "Dette skjermbildet håndterer ikke scanning av noder.",
           "noCurrentLocation": "Objektet har ingen plassering i magasinet."
         },
         "objects": {
-          "notAllowedToSeeAnalysis" :"Du har ikke tilgang til å se analyser eller prøver for dette objektet",
-          "notAllowedToSeeConservations" :"Du har ikke tilgang til å se konserveringer for dette objektet",
-          "notAllowedToSeeStorageData" :"Du har ikke tilgang til å se magasindata for dette objektet"
+          "notAllowedToSeeAnalysis":
+            "Du har ikke tilgang til å se analyser eller prøver for dette objektet",
+          "notAllowedToSeeConservations":
+            "Du har ikke tilgang til å se konserveringer for dette objektet",
+          "notAllowedToSeeStorageData":
+            "Du har ikke tilgang til å se magasindata for dette objektet"
         }
       },
       "notificationMessages": {
@@ -1539,7 +1627,8 @@
           "nodesMoved": "%{count} noder ble flyttet til %{destination}",
           "objectsMoved": "%{count} objekter ble flyttet til %{destination}",
           "errorNodes": "Flytting av %{count} noder til %{destination} feilet.",
-          "errorObjects": "Flytting av %{count} objekter til %{destination} feilet."
+          "errorObjects":
+            "Flytting av %{count} objekter til %{destination} feilet."
         }
       },
       "leftMenu": {
@@ -1557,7 +1646,8 @@
             "askForDeleteConfirmation": "Vil du slette %{name}?",
             "confirmDelete": "%{name} er slettet.",
             "errorCommon": "Slettingen feilet.",
-            "errorNotAllowedHadChild": "Noden er ikke tom, og kan derfor ikke slettes."
+            "errorNotAllowedHadChild":
+              "Noden er ikke tom, og kan derfor ikke slettes."
           },
           "controlsobservations": "Kontr./Observ."
         },
@@ -1623,8 +1713,9 @@
           }
         }
       },
-      "search" : {
-        "stats": "Viser %{from} - %{to} av %{total} treff. Brukte %{timeUsed} ms på søket.",
+      "search": {
+        "stats":
+          "Viser %{from} - %{to} av %{total} treff. Brukte %{timeUsed} ms på søket.",
         "ready": "Fyll inn og trykk på søk knappen",
         "noResults": "Søket ga ingen treff."
       },
@@ -1657,7 +1748,8 @@
         }
       },
       "texts": {
-        "doNotHaveSufficientRole": "Har ikke tilstrekkelig rolle for å utføre operasjonen",
+        "doNotHaveSufficientRole":
+          "Har ikke tilstrekkelig rolle for å utføre operasjonen",
         "error": "Feilmelding",
         "musitBase": "MUSITbasen",
         "abuotMusit": "Om MUSIT",
@@ -1677,11 +1769,12 @@
         "cancel": "Avbryt",
         "edit": "Endre",
         "delete": "Slett",
-        "back":"Tilbake",
+        "back": "Tilbake",
         "cancelTooltip": "Avbryt registreringen",
         "magazine": "Magasin",
         "deleteNode": "Slett node",
-        "footerText": "Universitetsmuseenes IT-organisasjon (MUSIT) er et nasjonalt samarbeidstiltak mellom Universitetet i Bergen, Universitetet i Oslo, Universitetet i Stavanger, Norges teknisk-naturvitenskapelige universitet og UiT Norges arktiske universitet.",
+        "footerText":
+          "Universitetsmuseenes IT-organisasjon (MUSIT) er et nasjonalt samarbeidstiltak mellom Universitetet i Bergen, Universitetet i Oslo, Universitetet i Stavanger, Norges teknisk-naturvitenskapelige universitet og UiT Norges arktiske universitet.",
         "showConfirm": {
           "message": "Er du sikker på dette?",
           "confirm": "Bekrefte",
@@ -1731,7 +1824,8 @@
         "envdata": "Miljødata",
         "controlsRequired": "Minst en kontroll må merkes OK eller Ikke OK",
         "registerObservations": "Registrer observasjoner",
-        "dateValidation": "Dato for kontrollen kan ikke være større enn dagens dato.",
+        "dateValidation":
+          "Dato for kontrollen kan ikke være større enn dagens dato.",
         "saveControlError": "Kunne ikke lagre kontrollen",
         "saveControlSuccess": "Kontrollen ble lagret"
       },
@@ -1751,7 +1845,8 @@
           "registeredDate": "Registrert dato",
           "registeredBy": "Registrert av",
           "newButtonLabel": "Legg til ny",
-          "dateValidation": "Dato for observasjonen kan ikke være større enn dagens dato.",
+          "dateValidation":
+            "Dato for observasjonen kan ikke være større enn dagens dato.",
           "typeSelect": {
             "labelText": "Velg type"
           },
@@ -1761,7 +1856,8 @@
           },
           "pest": {
             "identificationValueRequired": "Identifikasjon er påkrevd.",
-            "identificationValueIncorrect": "Identifikasjon kan ha maks 100 tegn.",
+            "identificationValueIncorrect":
+              "Identifikasjon kan ha maks 100 tegn.",
             "commentsValueIncorrect": "Tiltak/kommentar kan ha maks 250 tegn.",
             "countIncorrect": "Antall må være et heltall.",
             "lifeCycleRequired": "Stadie er påkrevd når antall er oppgitt.",
@@ -1788,7 +1884,8 @@
           },
           "alcohol": {
             "statusValueRequired": "Nivå er påkrevd.",
-            "volumeValueIncorrect": "Volum må være et tall med maks 3 desimaler.",
+            "volumeValueIncorrect":
+              "Volum må være et tall med maks 3 desimaler.",
             "commentValueIncorrect": "Tiltak/kommentar kan ha maks 250 tegn.",
             "labelText": "Sprit",
             "volumeLabel": "Volum",
@@ -1807,10 +1904,13 @@
             }
           },
           "temperature": {
-            "toValueSmallerThanFromValue": "Målt temperatur (til) må være større enn Målt temperatur (fra).",
+            "toValueSmallerThanFromValue":
+              "Målt temperatur (til) må være større enn Målt temperatur (fra).",
             "fromValueRequired": "Målt temperatur (fra) er påkrevd.",
-            "fromValueIncorrect": "Målt temperatur (fra) må være et tall med maks 3 desimaler.",
-            "toValueIncorrect": "Målt temperatur (til) må være et tall med maks 3 desimaler.",
+            "fromValueIncorrect":
+              "Målt temperatur (fra) må være et tall med maks 3 desimaler.",
+            "toValueIncorrect":
+              "Målt temperatur (til) må være et tall med maks 3 desimaler.",
             "commentsValueIncorrect": "Tiltak/kommentar kan ha maks 250 tegn.",
             "labelText": "Temperatur",
             "fromValueLabelText": "Målt temperatur (fra)",
@@ -1824,10 +1924,13 @@
             "notePlaceHolder": "Fritekst"
           },
           "hypoxicAir": {
-            "toValueSmallerThanFromValue": "Målt inertluft (til) må være større enn Målt inertluft (fra).",
+            "toValueSmallerThanFromValue":
+              "Målt inertluft (til) må være større enn Målt inertluft (fra).",
             "fromValueRequired": "Målt inertluft (fra) er påkrevd.",
-            "fromValueIncorrect": "Målt inertluft (fra) må være et tall med maks 3 desimaler.",
-            "toValueIncorrect": "Målt inertluft (til) må være et tall med maks 3 desimaler.",
+            "fromValueIncorrect":
+              "Målt inertluft (fra) må være et tall med maks 3 desimaler.",
+            "toValueIncorrect":
+              "Målt inertluft (til) må være et tall med maks 3 desimaler.",
             "commentsValueIncorrect": "Tiltak/kommentar kan ha maks 250 tegn.",
             "labelText": "Inertluft",
             "fromValueLabelText": "Målt inertluft (fra)",
@@ -1841,10 +1944,13 @@
             "notePlaceHolder": "Fritekst"
           },
           "relativeHumidity": {
-            "toValueSmallerThanFromValue": "Målt rel. luftfuktighet (til) må være større enn Målt rel. luftfuktighet (fra).",
+            "toValueSmallerThanFromValue":
+              "Målt rel. luftfuktighet (til) må være større enn Målt rel. luftfuktighet (fra).",
             "fromValueRequired": "Målt rel. luftfuktighet (fra) er påkrevd.",
-            "fromValueIncorrect": "Målt rel. luftfuktighet (fra) må være et tall med maks 3 desimaler.",
-            "toValueIncorrect": "Målt rel. luftfuktighet (til) må være et tall med maks 3 desimaler.",
+            "fromValueIncorrect":
+              "Målt rel. luftfuktighet (fra) må være et tall med maks 3 desimaler.",
+            "toValueIncorrect":
+              "Målt rel. luftfuktighet (til) må være et tall med maks 3 desimaler.",
             "commentsValueIncorrect": "Tiltak/kommentar kan ha maks 250 tegn.",
             "labelText": "Relativ luftfuktighet",
             "fromValueLabelText": "Målt rel. luftfuktighet (fra)",
@@ -1859,7 +1965,8 @@
           },
           "mold": {
             "leftValueRequired": "Beskrivelse av observert mugg er påkrevd.",
-            "leftValueIncorrect": "Beskrivelse av observert mugg kan ha maks 100 tegn.",
+            "leftValueIncorrect":
+              "Beskrivelse av observert mugg kan ha maks 100 tegn.",
             "rightValueIncorrect": "Tiltak/kommentar kan ha maks 250 tegn.",
             "labelText": "Mugg",
             "leftLabelText": "Beskrivelse",
@@ -1871,7 +1978,8 @@
           },
           "cleaning": {
             "leftValueRequired": "Beskrivelse av observert renhold er påkrevd.",
-            "leftValueIncorrect": "Beskrivelse av observert renhold kan ha maks 100 tegn.",
+            "leftValueIncorrect":
+              "Beskrivelse av observert renhold kan ha maks 100 tegn.",
             "rightValueIncorrect": "Tiltak/kommentar kan ha maks 250 tegn.",
             "labelText": "Renhold",
             "leftLabelText": "Beskrivelse",
@@ -1906,8 +2014,10 @@
             "rightLabelPlaceToolTip": "Tiltak som bør iverksettes"
           },
           "skallsikring": {
-            "leftValueRequired": "Beskrivelse av skallsikringens tilstand er påkrevd.",
-            "leftValueIncorrect": "Beskrivelse av skallsikringens tilstand kan ha maks 100 tegn.",
+            "leftValueRequired":
+              "Beskrivelse av skallsikringens tilstand er påkrevd.",
+            "leftValueIncorrect":
+              "Beskrivelse av skallsikringens tilstand kan ha maks 100 tegn.",
             "rightValueIncorrect": "Tiltak/kommentar kan ha maks 250 tegn.",
             "labelText": "Skallsikring",
             "leftLabelText": "Beskrivelse",
@@ -1918,8 +2028,10 @@
             "rightLabelPlaceToolTip": "Tiltak som bør iverksettes"
           },
           "brannsikring": {
-            "leftValueRequired": "Beskrivelse av brannsikringens tilstand er påkrevd.",
-            "leftValueIncorrect": "Beskrivelse av brannsikringens tilstand kan ha maks 100 tegn.",
+            "leftValueRequired":
+              "Beskrivelse av brannsikringens tilstand er påkrevd.",
+            "leftValueIncorrect":
+              "Beskrivelse av brannsikringens tilstand kan ha maks 100 tegn.",
             "rightValueIncorrect": "Tiltak/kommentar kan ha maks 250 tegn.",
             "labelText": "Brannsikring",
             "leftLabelText": "Beskrivelse",
@@ -1931,7 +2043,8 @@
           },
           "vannskaderisiko": {
             "leftValueRequired": "Beskrivelse av vannskaderisiko er påkrevd.",
-            "leftValueIncorrect": "Beskrivelse av vannskaderisiko kan ha maks 100 tegn.",
+            "leftValueIncorrect":
+              "Beskrivelse av vannskaderisiko kan ha maks 100 tegn.",
             "rightValueIncorrect": "Tiltak/kommentar kan ha maks 250 tegn.",
             "labelText": "Vannskaderisiko",
             "leftLabelText": "Beskrivelse",
@@ -1942,8 +2055,10 @@
             "rightLabelPlaceToolTip": "Tiltak som bør iverksettes"
           },
           "tyverisikring": {
-            "leftValueRequired": "Beskrivelse av tyverisikringens tilstand er påkrevd.",
-            "leftValueIncorrect": "Beskrivelse av tyverisikringens tilstand kan ha maks 100 tegn.",
+            "leftValueRequired":
+              "Beskrivelse av tyverisikringens tilstand er påkrevd.",
+            "leftValueIncorrect":
+              "Beskrivelse av tyverisikringens tilstand kan ha maks 100 tegn.",
             "rightValueIncorrect": "Tiltak/kommentar kan ha maks 250 tegn.",
             "labelText": "Tyverisikring",
             "leftLabelText": "Beskrivelse",
@@ -1966,7 +2081,8 @@
           "selectedNodeCount": "Valgt node(r)",
           "selectedObjectCount": "Valgt objekte(r)",
           "moveNotAllowed": "Ikke tilgang til å flytte objekter/noder",
-          "doNotHaveSufficientRole": "Har ikke tilstrekkelig rolle for å utføre operasjonen"
+          "doNotHaveSufficientRole":
+            "Har ikke tilstrekkelig rolle for å utføre operasjonen"
         },
         "title": {
           "nodes": "Plukkliste (noder)",
@@ -1991,10 +2107,13 @@
         "type": {
           "labelText": "Type",
           "required": "Type er påkrevd.",
-          "organisationAllowed": "Bare typen organisasjon er tillatt på dette nivå.",
+          "organisationAllowed":
+            "Bare typen organisasjon er tillatt på dette nivå.",
           "buildingAllowed": "Bare typen bygg er tillatt på dette nivå.",
-          "organisationAllowedToMove": "Kun noder av type Organisasjon kan flyttes til en rotnode.",
-          "buildingAllowedToMove": "Kun noder av type Bygg kan flyttes til en node type Organisasjon.",
+          "organisationAllowedToMove":
+            "Kun noder av type Organisasjon kan flyttes til en rotnode.",
+          "buildingAllowedToMove":
+            "Kun noder av type Bygg kan flyttes til en node type Organisasjon.",
           "notAllowedToMove": "En node kan ikke flyttes inn i seg selv.",
           "placeHolder": "Vennligst velg...",
           "tooltip": "Nodens type",
@@ -2072,7 +2191,8 @@
           },
           "relativeHumidity": {
             "labelText": "Rel. luftfuktighet",
-            "incorrect": "Relativ luftfuktighet må være et tall med maks 3 desimaler.",
+            "incorrect":
+              "Relativ luftfuktighet må være et tall med maks 3 desimaler.",
             "tooltip": "Krav til relativ luftfuktighet i %",
             "placeHolder": "%"
           },

@@ -3,11 +3,9 @@ import { I18n } from "react-i18nify";
 import type { MeasurementDeterminationProps } from "../../../types/conservation";
 import SubEventComponentNote from "../components/subEventComponentNote";
 import DropdownButton from "../../../components/DropdownButton";
-import { isNumber } from "util";
 import { musitParseFloat, musitParseInt } from "../../../shared/util";
-//import { musitParseInt } from "../../../shared/util";
 
-export default function MeasurementEvent(props: MeasurementDeterminationProps) {
+export default function MeasurementDetermination(props: MeasurementDeterminationProps) {
   const suffix = ":";
 
   const extraAttributes = (
@@ -32,11 +30,12 @@ export default function MeasurementEvent(props: MeasurementDeterminationProps) {
                 props.measurementDetermination.measurementData &&
                 props.measurementDetermination.measurementData.weight
               }
-              onChange={t => {
+              onChange={t => {
                 props.onChange("measurementData")({
                   ...props.measurementDetermination.measurementData,
                   weight: musitParseFloat(t.target.value)
-                })}}
+                });
+              }}
               rows="5"
               disabled={props.viewMode}
             />
@@ -170,16 +169,19 @@ export default function MeasurementEvent(props: MeasurementDeterminationProps) {
           )}
         </div>
       </div>
+      <label
+        className="control-label h4"
+        htmlFor={`largestLength${props.index}`}
+        title={I18n.t(
+          `musit.conservation.events.measurementDetermination.tooltip.largestLengthTooltip`
+        )}
+      >
+        {I18n.t(
+          "musit.conservation.events.measurementDetermination.largestLength"
+        ) + suffix}
+      </label>
       <div className="row form-group">
         <div className="col-md-1">
-          <label
-            className="control-label h4"
-            htmlFor={`largestLength${props.index}`}
-          >
-            {I18n.t(
-              "musit.conservation.events.measurementDetermination.largestLength"
-            ) + suffix}
-          </label>
           {props.viewMode ? (
             <p
               className="form-control-static"
@@ -207,16 +209,19 @@ export default function MeasurementEvent(props: MeasurementDeterminationProps) {
           )}
         </div>
       </div>
+      <label
+        className="control-label h4"
+        htmlFor={`largestWidth${props.index}`}
+        title={I18n.t(
+          `musit.conservation.events.measurementDetermination.tooltip.largestWidthTooltip`
+        )}
+      >
+        {I18n.t(
+          "musit.conservation.events.measurementDetermination.largestWidth"
+        ) + suffix}
+      </label>
       <div className="row form-group">
         <div className="col-md-1">
-          <label
-            className="control-label h4"
-            htmlFor={`largestWidth${props.index}`}
-          >
-            {I18n.t(
-              "musit.conservation.events.measurementDetermination.largestWidth"
-            ) + suffix}
-          </label>
           {props.viewMode ? (
             <p
               className="form-control-static"
@@ -244,16 +249,19 @@ export default function MeasurementEvent(props: MeasurementDeterminationProps) {
           )}
         </div>
       </div>
+      <label
+        className="control-label h4"
+        htmlFor={`largestThickness${props.index}`}
+        title={I18n.t(
+          `musit.conservation.events.measurementDetermination.tooltip.largestThicknessTooltip`
+        )}
+      >
+        {I18n.t(
+          "musit.conservation.events.measurementDetermination.largestThickness"
+        ) + suffix}
+      </label>
       <div className="row form-group">
         <div className="col-md-1">
-          <label
-            className="control-label h4"
-            htmlFor={`largestThickness${props.index}`}
-          >
-            {I18n.t(
-              "musit.conservation.events.measurementDetermination.largestThickness"
-            ) + suffix}
-          </label>
           {props.viewMode ? (
             <p
               className="form-control-static"
@@ -281,16 +289,19 @@ export default function MeasurementEvent(props: MeasurementDeterminationProps) {
           )}
         </div>
       </div>
+      <label
+        className="control-label h4"
+        htmlFor={`largestHeight${props.index}`}
+        title={I18n.t(
+          `musit.conservation.events.measurementDetermination.tooltip.largestHeightTooltip`
+        )}
+      >
+        {I18n.t(
+          "musit.conservation.events.measurementDetermination.largestHeight"
+        ) + suffix}
+      </label>
       <div className="row form-group">
         <div className="col-md-1">
-          <label
-            className="control-label h4"
-            htmlFor={`largestHeight${props.index}`}
-          >
-            {I18n.t(
-              "musit.conservation.events.measurementDetermination.largestHeight"
-            ) + suffix}
-          </label>
           {props.viewMode ? (
             <p
               className="form-control-static"
@@ -386,16 +397,19 @@ export default function MeasurementEvent(props: MeasurementDeterminationProps) {
           )}
         </div>
       </div>
+      <label
+        className="control-label h4"
+        htmlFor={`largestMeasurement${props.index}`}
+        title={I18n.t(
+          `musit.conservation.events.measurementDetermination.tooltip.largestMeasurementTooltip`
+        )}
+      >
+        {I18n.t(
+          "musit.conservation.events.measurementDetermination.largestMeasurement"
+        ) + suffix}
+      </label>
       <div className="row form-group">
         <div className="col-md-1">
-          <label
-            className="control-label h4"
-            htmlFor={`largestMeasurement${props.index}`}
-          >
-            {I18n.t(
-              "musit.conservation.events.measurementDetermination.largestMeasurement"
-            ) + suffix}
-          </label>
           {props.viewMode ? (
             <p
               className="form-control-static"
@@ -460,7 +474,12 @@ export default function MeasurementEvent(props: MeasurementDeterminationProps) {
         </div>
       </div>
       <div className="row form-group">
-        <div className="col-md-1">
+        <div
+          className="col-md-1"
+          title={I18n.t(
+            `musit.conservation.events.measurementDetermination.tooltip.quantityTooltip`
+          )}
+        >
           <label
             className="control-label h4"
             htmlFor={`quantity${props.index}`}
@@ -485,29 +504,36 @@ export default function MeasurementEvent(props: MeasurementDeterminationProps) {
               onChange={t =>
                 props.onChange("measurementData")({
                   ...props.measurementDetermination.measurementData,
-                  quantity: musitParseInt(t.target.value)
+                  quantity: musitParseInt(
+                    t.target.value
+                  )
                 })}
               rows="5"
               disabled={props.viewMode}
             />
           )}
         </div>
-        <div className="col-md-1">
+        <div
+          className="col-md-1"
+          title={I18n.t(
+            `musit.conservation.events.measurementDetermination.tooltip.quantitySymbolTooltip`
+          )}
+        >
           <label
             className="control-label h4"
-            htmlFor={`quantitySymbols${props.index}`}
+            htmlFor={`quantitySymbol${props.index}`}
           >
             {I18n.t(
-              "musit.conservation.events.measurementDetermination.quantitySymbols"
+              "musit.conservation.events.measurementDetermination.quantitySymbol"
             ) + suffix}
           </label>
           {props.viewMode ? (
             <p
               className="form-control-static"
-              id={`quantitySymbols${props.index}`}
+              id={`quantitySymbol${props.index}`}
             >
               {props.measurementDetermination.measurementData &&
-                props.measurementDetermination.measurementData.quantitySymbols}
+                props.measurementDetermination.measurementData.quantitySymbol}
             </p>
           ) : (
             <DropdownButton
@@ -515,28 +541,31 @@ export default function MeasurementEvent(props: MeasurementDeterminationProps) {
               onChange={r =>
                 props.onChange("measurementData")({
                   ...props.measurementDetermination.measurementData,
-                  quantitySymbols: r
+                  quantitySymbol: r
                 })}
               items={[">", "<", "?", "="]}
               displayItems={[">", "<", "?", "="]}
               title={
-                props.measurementDetermination.measurementData
-                  .quantitySymbols || " "
+                props.measurementDetermination.measurementData.quantitySymbol ||
+                " "
               }
             />
           )}
         </div>
       </div>
+      <label
+        className="control-label h4"
+        htmlFor={`fragmentQuantity${props.index}`}
+        title={I18n.t(
+          `musit.conservation.events.measurementDetermination.tooltip.fragmentQuantityTooltip`
+        )}
+      >
+        {I18n.t(
+          "musit.conservation.events.measurementDetermination.fragmentQuantity"
+        ) + suffix}
+      </label>
       <div className="row form-group">
         <div className="col-md-1">
-          <label
-            className="control-label h4"
-            htmlFor={`fragmentQuantity${props.index}`}
-          >
-            {I18n.t(
-              "musit.conservation.events.measurementDetermination.fragmentQuantity"
-            ) + suffix}
-          </label>
           {props.viewMode ? (
             <p
               className="form-control-static"

@@ -175,13 +175,10 @@ export const getPath = (node: SomethingLikeNode) => {
 export const musitParseFloat = (txt: string) => {
   if (txt) {
     if (txt.length === 1) {
-      console.log("inni 1 lengde ", txt);
       if (isNaN(parseInt(txt))) return "";
       else return txt;
     } else {
-      console.log("inni flere lengder ", txt);
       const res = txt.replace(",", ".");
-      console.log("inni flere lengder ", res);
       const extraTxt = res.endsWith(".") ? "." : "";
       return parseFloat(res) + extraTxt;
     }
@@ -192,11 +189,9 @@ export const musitParseFloat = (txt: string) => {
 export const musitParseInt = (txt: string) => {
   if (txt) {
     if (txt.length === 1) {
-      console.log("inni 1 lengde ", txt);
       if (isNaN(parseInt(txt))) return "";
       else return txt;
     } else {
-      console.log("inni flere lengder ", txt);
       return parseInt(txt);
     }
   }

@@ -11,7 +11,7 @@ import type { PredefinedConservation } from '../../types/predefinedConservation'
 import type { ConservationSubTypes, FormData } from '../../types/conservation';
 import Treatment from './events/treatment';
 import TechnicalDescription from './events/technicalDescription';
-import MeasurementDetermination from './events/measurement';
+import MeasurementDetermination from './events/measurementDetermination';
 import StorageAndHandling from './events/storageAndHandling';
 import HseRisk from './events/hseRisk';
 import ConditionAssessment from './events/conditionAssessment';

@@ -42,39 +42,62 @@ export function getConservationCollection(
             weight: v.measurementData.weight
               ? parseFloat(v.measurementData.weight)
               : undefined,
-            length: v.measurementData && v.measurementData.length
-              ? parseFloat(v.measurementData.length)
-              : undefined,
-            width: v.measurementData && v.measurementData.width
-              ? parseFloat(v.measurementData.width)
-              : undefined,
-            thickness: v.measurementData && v.measurementData.thickness
-              ? parseFloat(v.measurementData.thickness)
-              : undefined,
-              height: v.measurementData && v.measurementData.height
-              ? parseFloat(v.measurementData.height)
-              : undefined,  
-            largestLength: v.measurementData && v.measurementData.largestLength
-              ? parseFloat(v.measurementData.largestLength)
-              : undefined,
-            largestWidth: v.measurementData && v.measurementData.largestWidth
-              ? parseFloat(v.measurementData.largestWidth)
-              : undefined,
-            largestThickness: v.measurementData && v.measurementData.largestThickness
-              ? parseFloat(v.measurementData.largestThickness)
-              : undefined,
-            largestHeight: v.measurementData && v.measurementData.largestHeight
-              ? parseFloat(v.measurementData.largestHeight)
-              : undefined,
-            diameter: v.measurementData && v.measurementData.diameter
-              ? parseFloat(v.measurementData.diameter)
-              : undefined,
-            tverrmaal: v.measurementData && v.measurementData.tverrmaal
-              ? parseFloat(v.measurementData.tverrmaal)
-              : undefined,
-            largestMeasurement: v.measurementData && v.measurementData.largestMeasurement
-              ? parseFloat(v.measurementData.largestMeasurement)
-              : undefined
+            length:
+              v.measurementData && v.measurementData.length
+                ? parseFloat(v.measurementData.length)
+                : undefined,
+            width:
+              v.measurementData && v.measurementData.width
+                ? parseFloat(v.measurementData.width)
+                : undefined,
+            thickness:
+              v.measurementData && v.measurementData.thickness
+                ? parseFloat(v.measurementData.thickness)
+                : undefined,
+            height:
+              v.measurementData && v.measurementData.height
+                ? parseFloat(v.measurementData.height)
+                : undefined,
+            largestLength:
+              v.measurementData && v.measurementData.largestLength
+                ? parseFloat(v.measurementData.largestLength)
+                : undefined,
+            largestWidth:
+              v.measurementData && v.measurementData.largestWidth
+                ? parseFloat(v.measurementData.largestWidth)
+                : undefined,
+            largestThickness:
+              v.measurementData && v.measurementData.largestThickness
+                ? parseFloat(v.measurementData.largestThickness)
+                : undefined,
+            largestHeight:
+              v.measurementData && v.measurementData.largestHeight
+                ? parseFloat(v.measurementData.largestHeight)
+                : undefined,
+            diameter:
+              v.measurementData && v.measurementData.diameter
+                ? parseFloat(v.measurementData.diameter)
+                : undefined,
+            tverrmaal:
+              v.measurementData && v.measurementData.tverrmaal
+                ? parseFloat(v.measurementData.tverrmaal)
+                : undefined,
+            largestMeasurement:
+              v.measurementData && v.measurementData.largestMeasurement
+                ? parseFloat(v.measurementData.largestMeasurement)
+                : undefined,
+            quantity:
+              v.measurementData && v.measurementData.quantity
+                ? parseInt(v.measurementData.quantity)
+                : undefined,
+                quantitySymbol:
+              v.measurementData && isNaN(parseInt(v.measurementData.quantity))
+                ? ""
+                : v.measurementData && v.measurementData.quantitySymbol,
+            fragmentQuantity:
+              v.measurementData && v.measurementData.fragmentQuantity
+                ? parseInt(v.measurementData.fragmentQuantity)
+                : undefined
           }
         : undefined,
       actorsAndRoles: (v.actorsAndRoles || []).map(a => ({
