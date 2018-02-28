@@ -102,9 +102,8 @@ export default function ObjectSelection({
           {affectedThingsWithDetailsMainEvent ? (
             affectedThingsWithDetailsMainEvent.map((row: any, i: number) => {
               const rows = [
-                !isChecked(row.uuid && row.uuid, affectedThingsSubEvent) && viewMode ? (
-                  null
-                ) : (
+                !isChecked(row.uuid && row.uuid, affectedThingsSubEvent) &&
+                viewMode ? null : (
                   <tr
                     key={['objectRow', i].join('_')}
                     onClick={() =>

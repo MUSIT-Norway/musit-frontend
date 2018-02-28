@@ -130,8 +130,6 @@ export type ConditionAssessmentType = SubEventComponentNoteType & {
   conditionCode: number
 };
 
-
-
 export type MeasurementDeterminationType = SubEventComponentNoteType;
 
 export type ReportType = {

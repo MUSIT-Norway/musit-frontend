@@ -1,10 +1,10 @@
 //@flow
-import type { ObjectData } from "../../../types/object";
-import type { Person } from "../../../types/person";
-import toArray from "lodash/toArray";
+import type { ObjectData } from '../../../types/object';
+import type { Person } from '../../../types/person';
+import toArray from 'lodash/toArray';
 //import { parse } from "path";
 //import type { isUndefined } from 'util';
-import type { FormData } from "../../../types/conservation";
+import type { FormData } from '../../../types/conservation';
 
 export type Location<T> = {
   state?: T
@@ -32,9 +32,7 @@ export function getConservationCollection(
   return {
     eventTypeId: form.eventTypeId.value || 1,
     note: form.note.value,
-    events: (form.events && form.events.value
-      ? form.events.value
-      : []).map(v => ({
+    events: (form.events && form.events.value ? form.events.value : []).map(v => ({
       ...v,
       measurementData: v.measurementData
         ? {
@@ -90,9 +88,9 @@ export function getConservationCollection(
               v.measurementData && v.measurementData.quantity
                 ? parseInt(v.measurementData.quantity)
                 : undefined,
-                quantitySymbol:
+            quantitySymbol:
               v.measurementData && isNaN(parseInt(v.measurementData.quantity))
-                ? ""
+                ? ''
                 : v.measurementData && v.measurementData.quantitySymbol,
             fragmentQuantity:
               v.measurementData && v.measurementData.fragmentQuantity

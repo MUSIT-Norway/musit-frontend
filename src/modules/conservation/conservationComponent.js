@@ -193,7 +193,7 @@ function createSubEvents(
               actorsAndRoles: defaultActorsAndRoles,
               ...commonAttributes(v),
               affectedThings: [].concat(affectedThings),
-              measurementData:{}
+              measurementData: {}
             }
           ]);
         }

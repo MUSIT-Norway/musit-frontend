@@ -1,20 +1,21 @@
-import React from "react";
-import { I18n } from "react-i18nify";
-import type { MeasurementDeterminationProps } from "../../../types/conservation";
-import SubEventComponentNote from "../components/subEventComponentNote";
-import DropdownButton from "../../../components/DropdownButton";
-import { musitParseFloat, musitParseInt, getCultureOrNatureUnit } from "../../../shared/util";
+import React from 'react';
+import { I18n } from 'react-i18nify';
+import type { MeasurementDeterminationProps } from '../../../types/conservation';
+import SubEventComponentNote from '../components/subEventComponentNote';
+import DropdownButton from '../../../components/DropdownButton';
+import {
+  musitParseFloat,
+  musitParseInt,
+  getCultureOrNatureUnit
+} from '../../../shared/util';
 
-export default function MeasurementDetermination(
-  props: MeasurementDeterminationProps
-) {
-  const suffix = ":";
+export default function MeasurementDetermination(props: MeasurementDeterminationProps) {
+  const suffix = ':';
 
   const extraAttributes = (
     <div>
       <label className="control-label h4" htmlFor={`weight${props.index}`}>
-        {I18n.t("musit.conservation.events.measurementDetermination.weight") +
-          suffix}
+        {I18n.t('musit.conservation.events.measurementDetermination.weight') + suffix}
       </label>
       <div className="row form-group">
         <div className="col-md-1">
@@ -32,7 +33,7 @@ export default function MeasurementDetermination(
                 props.measurementDetermination.measurementData.weight
               }
               onChange={t => {
-                props.onChange("measurementData")({
+                props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   weight: musitParseFloat(t.target.value)
                 });
@@ -44,7 +45,7 @@ export default function MeasurementDetermination(
         </div>
       </div>
       <label className="control-label h4" htmlFor={`length${props.index}`}>
-        {I18n.t("musit.conservation.events.measurementDetermination.length") +
+        {I18n.t('musit.conservation.events.measurementDetermination.length') +
           getCultureOrNatureUnit(props.appSession) +
           suffix}
       </label>
@@ -64,7 +65,7 @@ export default function MeasurementDetermination(
                 props.measurementDetermination.measurementData.length
               }
               onChange={t =>
-                props.onChange("measurementData")({
+                props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   length: musitParseFloat(t.target.value)
                 })}
@@ -75,7 +76,7 @@ export default function MeasurementDetermination(
         </div>
       </div>
       <label className="control-label h4" htmlFor={`width${props.index}`}>
-        {I18n.t("musit.conservation.events.measurementDetermination.width") +
+        {I18n.t('musit.conservation.events.measurementDetermination.width') +
           getCultureOrNatureUnit(props.appSession) +
           suffix}
       </label>
@@ -95,7 +96,7 @@ export default function MeasurementDetermination(
                 props.measurementDetermination.measurementData.width
               }
               onChange={t =>
-                props.onChange("measurementData")({
+                props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   width: musitParseFloat(t.target.value)
                 })}
@@ -106,9 +107,9 @@ export default function MeasurementDetermination(
         </div>
       </div>
       <label className="control-label h4" htmlFor={`thickness${props.index}`}>
-        {I18n.t(
-          "musit.conservation.events.measurementDetermination.thickness"
-        ) + getCultureOrNatureUnit(props.appSession) + suffix}
+        {I18n.t('musit.conservation.events.measurementDetermination.thickness') +
+          getCultureOrNatureUnit(props.appSession) +
+          suffix}
       </label>
       <div className="row form-group">
         <div className="col-md-1">
@@ -126,7 +127,7 @@ export default function MeasurementDetermination(
                 props.measurementDetermination.measurementData.thickness
               }
               onChange={t =>
-                props.onChange("measurementData")({
+                props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   thickness: musitParseFloat(t.target.value)
                 })}
@@ -137,8 +138,9 @@ export default function MeasurementDetermination(
         </div>
       </div>
       <label className="control-label h4" htmlFor={`height${props.index}`}>
-        {I18n.t("musit.conservation.events.measurementDetermination.height") +
-         getCultureOrNatureUnit(props.appSession) + suffix}
+        {I18n.t('musit.conservation.events.measurementDetermination.height') +
+          getCultureOrNatureUnit(props.appSession) +
+          suffix}
       </label>
       <div className="row form-group">
         <div className="col-md-1">
@@ -156,7 +158,7 @@ export default function MeasurementDetermination(
                 props.measurementDetermination.measurementData.height
               }
               onChange={t =>
-                props.onChange("measurementData")({
+                props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   height: musitParseFloat(t.target.value)
                 })}
@@ -173,17 +175,14 @@ export default function MeasurementDetermination(
           `musit.conservation.events.measurementDetermination.tooltip.largestLengthTooltip`
         )}
       >
-        {I18n.t(
-          "musit.conservation.events.measurementDetermination.largestLength"
-        ) + getCultureOrNatureUnit(props.appSession) + suffix}
+        {I18n.t('musit.conservation.events.measurementDetermination.largestLength') +
+          getCultureOrNatureUnit(props.appSession) +
+          suffix}
       </label>
       <div className="row form-group">
         <div className="col-md-1">
           {props.viewMode ? (
-            <p
-              className="form-control-static"
-              id={`largestLength${props.index}`}
-            >
+            <p className="form-control-static" id={`largestLength${props.index}`}>
               {props.measurementDetermination.measurementData &&
                 props.measurementDetermination.measurementData.largestLength}
             </p>
@@ -196,7 +195,7 @@ export default function MeasurementDetermination(
                 props.measurementDetermination.measurementData.largestLength
               }
               onChange={t =>
-                props.onChange("measurementData")({
+                props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   largestLength: musitParseFloat(t.target.value)
                 })}
@@ -213,17 +212,14 @@ export default function MeasurementDetermination(
           `musit.conservation.events.measurementDetermination.tooltip.largestWidthTooltip`
         )}
       >
-        {I18n.t(
-          "musit.conservation.events.measurementDetermination.largestWidth"
-        ) + getCultureOrNatureUnit(props.appSession) +suffix}
+        {I18n.t('musit.conservation.events.measurementDetermination.largestWidth') +
+          getCultureOrNatureUnit(props.appSession) +
+          suffix}
       </label>
       <div className="row form-group">
         <div className="col-md-1">
           {props.viewMode ? (
-            <p
-              className="form-control-static"
-              id={`largestWidth${props.index}`}
-            >
+            <p className="form-control-static" id={`largestWidth${props.index}`}>
               {props.measurementDetermination.measurementData &&
                 props.measurementDetermination.measurementData.largestWidth}
             </p>
@@ -236,7 +232,7 @@ export default function MeasurementDetermination(
                 props.measurementDetermination.measurementData.largestWidth
               }
               onChange={t =>
-                props.onChange("measurementData")({
+                props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   largestWidth: musitParseFloat(t.target.value)
                 })}
@@ -253,17 +249,14 @@ export default function MeasurementDetermination(
           `musit.conservation.events.measurementDetermination.tooltip.largestThicknessTooltip`
         )}
       >
-        {I18n.t(
-          "musit.conservation.events.measurementDetermination.largestThickness"
-        ) + getCultureOrNatureUnit(props.appSession) + suffix}
+        {I18n.t('musit.conservation.events.measurementDetermination.largestThickness') +
+          getCultureOrNatureUnit(props.appSession) +
+          suffix}
       </label>
       <div className="row form-group">
         <div className="col-md-1">
           {props.viewMode ? (
-            <p
-              className="form-control-static"
-              id={`largestThickness${props.index}`}
-            >
+            <p className="form-control-static" id={`largestThickness${props.index}`}>
               {props.measurementDetermination.measurementData &&
                 props.measurementDetermination.measurementData.largestThickness}
             </p>
@@ -276,7 +269,7 @@ export default function MeasurementDetermination(
                 props.measurementDetermination.measurementData.largestThickness
               }
               onChange={t =>
-                props.onChange("measurementData")({
+                props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   largestThickness: musitParseFloat(t.target.value)
                 })}
@@ -293,17 +286,14 @@ export default function MeasurementDetermination(
           `musit.conservation.events.measurementDetermination.tooltip.largestHeightTooltip`
         )}
       >
-        {I18n.t(
-          "musit.conservation.events.measurementDetermination.largestHeight"
-        ) + getCultureOrNatureUnit(props.appSession) + suffix}
+        {I18n.t('musit.conservation.events.measurementDetermination.largestHeight') +
+          getCultureOrNatureUnit(props.appSession) +
+          suffix}
       </label>
       <div className="row form-group">
         <div className="col-md-1">
           {props.viewMode ? (
-            <p
-              className="form-control-static"
-              id={`largestHeight${props.index}`}
-            >
+            <p className="form-control-static" id={`largestHeight${props.index}`}>
               {props.measurementDetermination.measurementData &&
                 props.measurementDetermination.measurementData.largestHeight}
             </p>
@@ -316,7 +306,7 @@ export default function MeasurementDetermination(
                 props.measurementDetermination.measurementData.largestHeight
               }
               onChange={t =>
-                props.onChange("measurementData")({
+                props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   largestHeight: musitParseFloat(t.target.value)
                 })}
@@ -327,8 +317,9 @@ export default function MeasurementDetermination(
         </div>
       </div>
       <label className="control-label h4" htmlFor={`diameter${props.index}`}>
-        {I18n.t("musit.conservation.events.measurementDetermination.diameter") +
-          getCultureOrNatureUnit(props.appSession) + suffix}
+        {I18n.t('musit.conservation.events.measurementDetermination.diameter') +
+          getCultureOrNatureUnit(props.appSession) +
+          suffix}
       </label>
       <div className="row form-group">
         <div className="col-md-1">
@@ -346,7 +337,7 @@ export default function MeasurementDetermination(
                 props.measurementDetermination.measurementData.diameter
               }
               onChange={t =>
-                props.onChange("measurementData")({
+                props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   diameter: musitParseFloat(t.target.value)
                 })}
@@ -357,9 +348,9 @@ export default function MeasurementDetermination(
         </div>
       </div>
       <label className="control-label h4" htmlFor={`tverrmaal${props.index}`}>
-        {I18n.t(
-          "musit.conservation.events.measurementDetermination.tverrmaal"
-        ) + getCultureOrNatureUnit(props.appSession) + suffix}
+        {I18n.t('musit.conservation.events.measurementDetermination.tverrmaal') +
+          getCultureOrNatureUnit(props.appSession) +
+          suffix}
       </label>
       <div className="row form-group">
         <div className="col-md-1">
@@ -377,7 +368,7 @@ export default function MeasurementDetermination(
                 props.measurementDetermination.measurementData.tverrmaal
               }
               onChange={t =>
-                props.onChange("measurementData")({
+                props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   tverrmaal: musitParseFloat(t.target.value)
                 })}
@@ -394,20 +385,16 @@ export default function MeasurementDetermination(
           `musit.conservation.events.measurementDetermination.tooltip.largestMeasurementTooltip`
         )}
       >
-        {I18n.t(
-          "musit.conservation.events.measurementDetermination.largestMeasurement"
-        ) + getCultureOrNatureUnit(props.appSession) + suffix}
+        {I18n.t('musit.conservation.events.measurementDetermination.largestMeasurement') +
+          getCultureOrNatureUnit(props.appSession) +
+          suffix}
       </label>
       <div className="row form-group">
         <div className="col-md-1">
           {props.viewMode ? (
-            <p
-              className="form-control-static"
-              id={`largestMeasurement${props.index}`}
-            >
+            <p className="form-control-static" id={`largestMeasurement${props.index}`}>
               {props.measurementDetermination.measurementData &&
-                props.measurementDetermination.measurementData
-                  .largestMeasurement}
+                props.measurementDetermination.measurementData.largestMeasurement}
             </p>
           ) : (
             <input
@@ -415,11 +402,10 @@ export default function MeasurementDetermination(
               id={`largestMeasurement${props.index}`}
               value={
                 props.measurementDetermination.measurementData &&
-                props.measurementDetermination.measurementData
-                  .largestMeasurement
+                props.measurementDetermination.measurementData.largestMeasurement
               }
               onChange={t =>
-                props.onChange("measurementData")({
+                props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   largestMeasurement: musitParseFloat(t.target.value)
                 })}
@@ -430,9 +416,8 @@ export default function MeasurementDetermination(
         </div>
       </div>
       <label className="control-label h4" htmlFor={`measurement${props.index}`}>
-        {I18n.t(
-          "musit.conservation.events.measurementDetermination.measurement"
-        ) + suffix}
+        {I18n.t('musit.conservation.events.measurementDetermination.measurement') +
+          suffix}
       </label>
       <div className="row form-group">
         <div className="col-md-9">
@@ -450,7 +435,7 @@ export default function MeasurementDetermination(
                 props.measurementDetermination.measurementData.measurement
               }
               onChange={t =>
-                props.onChange("measurementData")({
+                props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   measurement: t.target.value
                 })}
@@ -467,13 +452,9 @@ export default function MeasurementDetermination(
             `musit.conservation.events.measurementDetermination.tooltip.quantityTooltip`
           )}
         >
-          <label
-            className="control-label h4"
-            htmlFor={`quantity${props.index}`}
-          >
-            {I18n.t(
-              "musit.conservation.events.measurementDetermination.quantity"
-            ) + suffix}
+          <label className="control-label h4" htmlFor={`quantity${props.index}`}>
+            {I18n.t('musit.conservation.events.measurementDetermination.quantity') +
+              suffix}
           </label>
           {props.viewMode ? (
             <p className="form-control-static" id={`quantity${props.index}`}>
@@ -489,7 +470,7 @@ export default function MeasurementDetermination(
                 props.measurementDetermination.measurementData.quantity
               }
               onChange={t =>
-                props.onChange("measurementData")({
+                props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   quantity: musitParseInt(t.target.value)
                 })}
@@ -504,36 +485,26 @@ export default function MeasurementDetermination(
             `musit.conservation.events.measurementDetermination.tooltip.quantitySymbolTooltip`
           )}
         >
-          <label
-            className="control-label h4"
-            htmlFor={`quantitySymbol${props.index}`}
-          >
-            {I18n.t(
-              "musit.conservation.events.measurementDetermination.quantitySymbol"
-            ) + suffix}
+          <label className="control-label h4" htmlFor={`quantitySymbol${props.index}`}>
+            {I18n.t('musit.conservation.events.measurementDetermination.quantitySymbol') +
+              suffix}
           </label>
           {props.viewMode ? (
-            <p
-              className="form-control-static"
-              id={`quantitySymbol${props.index}`}
-            >
+            <p className="form-control-static" id={`quantitySymbol${props.index}`}>
               {props.measurementDetermination.measurementData &&
                 props.measurementDetermination.measurementData.quantitySymbol}
             </p>
           ) : (
             <DropdownButton
-              id={"symbols"}
+              id={'symbols'}
               onChange={r =>
-                props.onChange("measurementData")({
+                props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   quantitySymbol: r
                 })}
-              items={[">", "<", "?", "="]}
-              displayItems={[">", "<", "?", "="]}
-              title={
-                props.measurementDetermination.measurementData.quantitySymbol ||
-                " "
-              }
+              items={['>', '<', '?', '=']}
+              displayItems={['>', '<', '?', '=']}
+              title={props.measurementDetermination.measurementData.quantitySymbol || ' '}
             />
           )}
         </div>
@@ -545,17 +516,13 @@ export default function MeasurementDetermination(
           `musit.conservation.events.measurementDetermination.tooltip.fragmentQuantityTooltip`
         )}
       >
-        {I18n.t(
-          "musit.conservation.events.measurementDetermination.fragmentQuantity"
-        ) + suffix}
+        {I18n.t('musit.conservation.events.measurementDetermination.fragmentQuantity') +
+          suffix}
       </label>
       <div className="row form-group">
         <div className="col-md-1">
           {props.viewMode ? (
-            <p
-              className="form-control-static"
-              id={`fragmentQuantity${props.index}`}
-            >
+            <p className="form-control-static" id={`fragmentQuantity${props.index}`}>
               {props.measurementDetermination.measurementData &&
                 props.measurementDetermination.measurementData.fragmentQuantity}
             </p>
@@ -568,7 +535,7 @@ export default function MeasurementDetermination(
                 props.measurementDetermination.measurementData.fragmentQuantity
               }
               onChange={t =>
-                props.onChange("measurementData")({
+                props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   fragmentQuantity: musitParseInt(t.target.value)
                 })}
@@ -585,11 +552,9 @@ export default function MeasurementDetermination(
       {...props}
       subEvent={props.measurementDetermination}
       eventName={I18n.t(
-        "musit.conservation.events.measurementDetermination.measurementDetermination"
+        'musit.conservation.events.measurementDetermination.measurementDetermination'
       )}
-      noteLabel={I18n.t(
-        "musit.conservation.events.measurementDetermination.note"
-      )}
+      noteLabel={I18n.t('musit.conservation.events.measurementDetermination.note')}
       extraAttributes={extraAttributes}
       objectsReadOnly
     />
