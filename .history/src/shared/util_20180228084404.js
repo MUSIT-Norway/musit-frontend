@@ -235,7 +235,7 @@ export const getCultureOrNatureUnit = (appSession: AppSession) => {
       EthnographyCollectionUuid,
       NumismaticCollectionUuid
     ];
-    if (culture.includes(collectionId)) return "(cm)";
-    else return "(mm)";
-  } else return "(undefined)";
+    if (culture.includes(collectionId)) return " cm";
+    else return " (mm)";
+  } else return " (cm)";
 };

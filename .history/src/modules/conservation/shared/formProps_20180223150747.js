@@ -628,7 +628,9 @@ function onSave(
            * If so, we set quantitySymbol to "" in form.event.rawValue. We do this to show right value in quantitySymbol without having
            * to refresh the whole form.
            */
+          console.log("HIIIIIIIIIIIIIIIIIIITTTT ", localUpdatedIndexValue);
           if (localUpdatedIndexValue && localUpdatedIndexValue >= 0) {
+            console.log("STØØØØØØØØØØØØØRRRE ENN 0");
             if (form.events && form.events.rawValue) {
               if (form.events.rawValue.length > 0) {
                 const formEventsRawValue = form.events.rawValue;
@@ -638,14 +640,17 @@ function onSave(
                   event =>
                     event.id === updatedEventId && event.eventTypeId === 9
                 ); 
+                console.log("EVVVVVVEEEEEEEEEEEEENT ", eventFromDb.id);
                 if (eventFromDb) {
                   const quantitySymbol =
                     eventFromDb.measurementData.quantitySymbol;
+                    console.log("Inni EVENTFROMDb ",  eventFromDb);
                   if (
                     eventFromDb.measurementData.quantitySymbol === "" &&
                     formEventsRawValue[localUpdatedIndexValue].measurementData
                       .quantitySymbol !== ""
                   ) {
+                    console.log("IKKKKKKKKKKKKKKKKKE LIKE SYMBOLER ",  eventFromDb.measurementData.quantitySymbol);
                     const measurementData = {
                       ...formEventsRawValue[localUpdatedIndexValue]
                         .measurementData,
@@ -655,6 +660,7 @@ function onSave(
                       ...formEventsRawValue[localUpdatedIndexValue],
                       measurementData
                     };
+console.log("HIIIIIIIIIIIIIIIIIIITTTT ", newEventToUpdate);
                     updateForm({
                       name: "events",
                       rawValue: [

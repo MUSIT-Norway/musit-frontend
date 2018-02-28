@@ -14,7 +14,7 @@ export default function MeasurementDetermination(
     <div>
       <label className="control-label h4" htmlFor={`weight${props.index}`}>
         {I18n.t("musit.conservation.events.measurementDetermination.weight") +
-          suffix}
+          getCultureOrNatureUnit(props.appSession) +suffix}
       </label>
       <div className="row form-group">
         <div className="col-md-1">
@@ -45,7 +45,7 @@ export default function MeasurementDetermination(
       </div>
       <label className="control-label h4" htmlFor={`length${props.index}`}>
         {I18n.t("musit.conservation.events.measurementDetermination.length") +
-          getCultureOrNatureUnit(props.appSession) +
+          " (cm)" +
           suffix}
       </label>
       <div className="row form-group">
@@ -76,7 +76,7 @@ export default function MeasurementDetermination(
       </div>
       <label className="control-label h4" htmlFor={`width${props.index}`}>
         {I18n.t("musit.conservation.events.measurementDetermination.width") +
-          getCultureOrNatureUnit(props.appSession) +
+          " cm" +
           suffix}
       </label>
       <div className="row form-group">
@@ -108,7 +108,7 @@ export default function MeasurementDetermination(
       <label className="control-label h4" htmlFor={`thickness${props.index}`}>
         {I18n.t(
           "musit.conservation.events.measurementDetermination.thickness"
-        ) + getCultureOrNatureUnit(props.appSession) + suffix}
+        ) + suffix}
       </label>
       <div className="row form-group">
         <div className="col-md-1">
@@ -138,7 +138,7 @@ export default function MeasurementDetermination(
       </div>
       <label className="control-label h4" htmlFor={`height${props.index}`}>
         {I18n.t("musit.conservation.events.measurementDetermination.height") +
-         getCultureOrNatureUnit(props.appSession) + suffix}
+          suffix}
       </label>
       <div className="row form-group">
         <div className="col-md-1">
@@ -175,7 +175,7 @@ export default function MeasurementDetermination(
       >
         {I18n.t(
           "musit.conservation.events.measurementDetermination.largestLength"
-        ) + getCultureOrNatureUnit(props.appSession) + suffix}
+        ) + suffix}
       </label>
       <div className="row form-group">
         <div className="col-md-1">
@@ -215,7 +215,7 @@ export default function MeasurementDetermination(
       >
         {I18n.t(
           "musit.conservation.events.measurementDetermination.largestWidth"
-        ) + getCultureOrNatureUnit(props.appSession) +suffix}
+        ) + suffix}
       </label>
       <div className="row form-group">
         <div className="col-md-1">
@@ -255,7 +255,7 @@ export default function MeasurementDetermination(
       >
         {I18n.t(
           "musit.conservation.events.measurementDetermination.largestThickness"
-        ) + getCultureOrNatureUnit(props.appSession) + suffix}
+        ) + suffix}
       </label>
       <div className="row form-group">
         <div className="col-md-1">
@@ -295,7 +295,7 @@ export default function MeasurementDetermination(
       >
         {I18n.t(
           "musit.conservation.events.measurementDetermination.largestHeight"
-        ) + getCultureOrNatureUnit(props.appSession) + suffix}
+        ) + suffix}
       </label>
       <div className="row form-group">
         <div className="col-md-1">
@@ -328,7 +328,7 @@ export default function MeasurementDetermination(
       </div>
       <label className="control-label h4" htmlFor={`diameter${props.index}`}>
         {I18n.t("musit.conservation.events.measurementDetermination.diameter") +
-          getCultureOrNatureUnit(props.appSession) + suffix}
+          suffix}
       </label>
       <div className="row form-group">
         <div className="col-md-1">
@@ -359,7 +359,7 @@ export default function MeasurementDetermination(
       <label className="control-label h4" htmlFor={`tverrmaal${props.index}`}>
         {I18n.t(
           "musit.conservation.events.measurementDetermination.tverrmaal"
-        ) + getCultureOrNatureUnit(props.appSession) + suffix}
+        ) + suffix}
       </label>
       <div className="row form-group">
         <div className="col-md-1">
@@ -396,7 +396,7 @@ export default function MeasurementDetermination(
       >
         {I18n.t(
           "musit.conservation.events.measurementDetermination.largestMeasurement"
-        ) + getCultureOrNatureUnit(props.appSession) + suffix}
+        ) + suffix}
       </label>
       <div className="row form-group">
         <div className="col-md-1">
