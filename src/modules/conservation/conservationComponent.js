@@ -22,9 +22,11 @@ import Toolbar from './components/Toolbar';
 import SingleObjectSelection from './components/SingleObjectSelection';
 import MaterialDetermination from './events/materialDetermination';
 import Note from './events/note';
-import { formatISOString } from '../../shared/util';
+import { formatISOString,conservationProcessTypeId, treatmentTypeId,technicalDescriptionTypeId,storageAndHandlingTypeId,
+  hseRiskAssessmentTypeId, conditionAssessmentTypeId,reportTypeId, materialDeterminationTypeId, measurementDeterminationTypeId, noteTypeId } from '../../shared/util';
 import FontAwesome from 'react-fontawesome';
 import { sortBy, toLower, capitalize } from 'lodash';
+import { getCurrentMeasurementDataForObject} from '../../models/conservation/conservation';
 
 type ConservationProcessProps = {
   id?: number,
@@ -121,7 +123,7 @@ function createSubEvents(
         : [];
     const akk = eventTypes.reduce((acc, v) => {
       switch (v) {
-        case 2: {
+        case treatmentTypeId: {
           return acc.concat([
             {
               keywords: [],
@@ -131,7 +133,7 @@ function createSubEvents(
             }
           ]);
         }
-        case 3: {
+        case technicalDescriptionTypeId: {
           return acc.concat([
             {
               actorsAndRoles: defaultActorsAndRoles,
@@ -139,7 +141,7 @@ function createSubEvents(
             }
           ]);
         }
-        case 4: {
+        case storageAndHandlingTypeId: {
           return acc.concat([
             {
               lightLevel: '',
@@ -151,7 +153,7 @@ function createSubEvents(
             }
           ]);
         }
-        case 5: {
+        case hseRiskAssessmentTypeId: {
           return acc.concat([
             {
               actorsAndRoles: defaultActorsAndRoles,
@@ -159,7 +161,7 @@ function createSubEvents(
             }
           ]);
         }
-        case 6: {
+        case conditionAssessmentTypeId: {
           return acc.concat([
             {
               actorsAndRoles: defaultActorsAndRoles,
@@ -168,7 +170,7 @@ function createSubEvents(
             }
           ]);
         }
-        case 7: {
+        case reportTypeId: {
           return acc.concat([
             {
               archiveReference: '',
@@ -177,7 +179,7 @@ function createSubEvents(
             }
           ]);
         }
-        case 8: {
+        case materialDeterminationTypeId: {
           return acc.concat([
             {
               materials: [],
@@ -187,7 +189,7 @@ function createSubEvents(
             }
           ]);
         }
-        case 9: {
+        case measurementDeterminationTypeId: {
           return acc.concat([
             {
               actorsAndRoles: defaultActorsAndRoles,
@@ -197,7 +199,7 @@ function createSubEvents(
             }
           ]);
         }
-        case 10: {
+        case noteTypeId: {
           return acc.concat([
             {
               actorsAndRoles: defaultActorsAndRoles,
@@ -294,7 +296,7 @@ function renderSubEvent(
     getStatusTextFromErrors: getStatusTextFromErrors(props.form)
   };
 
-  if (eventType === 2) {
+  if (eventType === treatmentTypeId) {
     return (
       <Treatment
         key={`treatment_${ind}`}
@@ -304,7 +306,7 @@ function renderSubEvent(
         {...extraAttributes}
       />
     );
-  } else if (eventType === 3) {
+  } else if (eventType === technicalDescriptionTypeId) {
     return (
       <TechnicalDescription
         key={`techincalDescription_${ind}`}
@@ -312,7 +314,7 @@ function renderSubEvent(
         {...extraAttributes}
       />
     );
-  } else if (eventType === 4) {
+  } else if (eventType === storageAndHandlingTypeId) {
     return (
       <StorageAndHandling
         key={`storageAndHandling_${ind}`}
@@ -320,7 +322,7 @@ function renderSubEvent(
         {...extraAttributes}
       />
     );
-  } else if (eventType === 5) {
+  } else if (eventType === hseRiskAssessmentTypeId) {
     return (
       <HseRisk
         key={`hseRisk_${ind}`}
@@ -328,7 +330,7 @@ function renderSubEvent(
         {...extraAttributes}
       />
     );
-  } else if (eventType === 6) {
+  } else if (eventType === conditionAssessmentTypeId) {
     return (
       <ConditionAssessment
         key={`conditionAssessment_${ind}`}
@@ -337,7 +339,7 @@ function renderSubEvent(
         {...extraAttributes}
       />
     );
-  } else if (eventType === 7) {
+  } else if (eventType === reportTypeId) {
     return (
       <Report
         key={`report_${ind}`}
@@ -345,7 +347,7 @@ function renderSubEvent(
         {...extraAttributes}
       />
     );
-  } else if (eventType === 8) {
+  } else if (eventType === materialDeterminationTypeId) {
     return (
       <MaterialDetermination
         key={`materialDetermination_${ind}`}
@@ -354,7 +356,7 @@ function renderSubEvent(
         {...extraAttributes}
       />
     );
-  } else if (eventType === 9) {
+  } else if (eventType === measurementDeterminationTypeId) {
     return (
       <MeasurementDetermination
         key={`measurementDetermination${ind}`}
@@ -362,7 +364,7 @@ function renderSubEvent(
         {...extraAttributes}
       />
     );
-  } else if (eventType === 10) {
+  } else if (eventType === noteTypeId) {
     return (
       <Note
         key={`note_${ind}`}

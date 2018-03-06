@@ -10,6 +10,9 @@ import type {
   ConservatonSubType
 } from 'types/conservation';
 
+import {ajaxGetRequest} from '../../shared/ajaxPromise';
+
+
 export const getConservationForObject: (
   ajaxGet: AjaxGet<*>
 ) => (props: {
@@ -217,12 +220,12 @@ export const loadPredefinedConservationTypes: (
           materialList,
           keywordList,
           roleList,
-          conditionCodeList,
+          conditionCodeList, 
           materialDeterminationList
         ]
       ) => ({
         conservationTypes: conservationTypes || [],
-        materialList: materialList || [],
+        materialList: materialList || [], 
         keywordList: keywordList || [],
         roleList: roleList || [],
         conditionCodeList: conditionCodeList || [],
@@ -231,3 +234,18 @@ export const loadPredefinedConservationTypes: (
     )
     .do(onComplete);
 };
+
+
+export function getCurrentMeasurementDataForObject(
+  id: string,
+  museumId: number,
+  token: string,
+) {
+  const url = Config.magasin.urls.api.conservation.getCurrentMeasurementDataForObject(
+    museumId,
+    id
+  );
+  return ajaxGetRequest(url, token);
+}
+
+

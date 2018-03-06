@@ -6,7 +6,8 @@ import {
   getConservationTypes,
   loadPredefinedConservationTypes,
   saveConservationEvent,
-  deleteConservationEvent
+  deleteConservationEvent,
+  getCurrentMeasurementDataForObject
 } from './conservation';
 
 import { fromJsonToForm } from './conservationForm';
@@ -22,5 +23,6 @@ export default {
   loadPredefinedConservationTypes,
   saveConservationEvent,
   deleteConservationEvent,
-  conservationSearch
+  conservationSearch,
+  getCurrentMeasurementDataForObject
 };
