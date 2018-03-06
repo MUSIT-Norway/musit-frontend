@@ -159,6 +159,8 @@ export default {
             `/api/document/museum/${mid}/conservations/attachments?eventId=${eventId}&collectionId=${collectionId}`,
           getDeleteSubEventUrl: (mid: MuseumId, eventId: number) =>
             `/api/management/${mid}/conservation/events?eventIds=${eventId}`,
+          getCurrentMeasurementDataForObject: (mid: MuseumId, id: string) =>
+            `/api/management/${mid}/conservation/object/${id}/measurements`,
           search: (
             mid: MuseumId,
             collectionIds: string,

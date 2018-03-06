@@ -10,6 +10,8 @@ import type {
   ConservatonSubType
 } from 'types/conservation';
 
+import { ajaxGetRequest } from '../../shared/ajaxPromise';
+
 export const getConservationForObject: (
   ajaxGet: AjaxGet<*>
 ) => (props: {
@@ -231,3 +233,15 @@ export const loadPredefinedConservationTypes: (
     )
     .do(onComplete);
 };
+
+export function getCurrentMeasurementDataForObject(
+  id: string,
+  museumId: number,
+  token: string
+) {
+  const url = Config.magasin.urls.api.conservation.getCurrentMeasurementDataForObject(
+    museumId,
+    id
+  );
+  return ajaxGetRequest(url, token);
+}

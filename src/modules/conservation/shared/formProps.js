@@ -25,7 +25,8 @@ import { Observable } from 'rxjs';
 import { getFormEvents, getFids } from './utils';
 import { uploadFile } from '../../../models/conservation/documents';
 import { showConfirm } from '../../../shared/modal';
-import { formatISOString } from '../../../shared/util';
+import { formatISOString, measurementDeterminationTypeId } from '../../../shared/util';
+import { getCurrentMeasurementDataForObject } from '../../../models/conservation/conservation';
 
 import { I18n } from 'react-i18nify';
 
@@ -268,7 +269,7 @@ function onDocumentUpload(
   };
 }
 
-function addNewSubEvent(
+async function addNewSubEvent(
   form: any,
   appSession: AppSession,
   location: Location<Array<ObjectData>>,
@@ -276,13 +277,34 @@ function addNewSubEvent(
   updateForm?: ?Function
 ) {
   const formData = getConservationCollection(form, location);
-  const newSubEvents = newSubEventsToCreate || [];
+  let newSubEvents = newSubEventsToCreate || [];
+
+  if (newSubEvents[0].eventTypeId === measurementDeterminationTypeId) {
+    let measurementevent;
+    try {
+      measurementevent = JSON.parse(
+        await getCurrentMeasurementDataForObject(
+          newSubEvents[0].affectedThings,
+          appSession.museumId,
+          appSession.accessToken
+        )
+      );
+    } catch (error) {
+      measurementevent = undefined;
+    }
+
+    if (measurementevent) {
+      newSubEvents = {
+        ...newSubEvents[0],
+        measurementData: measurementevent
+      };
+    }
+  }
   const events =
     formData && formData.events && formData.events.length > 0
       ? formData.events.map(e => ({ ...e, isUpdated: false })).concat(newSubEvents)
       : newSubEvents;
   const data = events ? { ...formData, events, isUpdated: false } : formData;
-
   return saveConservation$.next({
     id: form.id.value,
     appSession,
@@ -332,7 +354,6 @@ function addNewSubEvent(
 
           // get the new sub events from the response
           const newSubEvents = respEvents.filter(re => !foundOldEventId(re, formEvents));
-
           // newAllEvents = old From event + only new reponse event
           const newAllEvents = sortSubEventsOnly(
             formEvents.concat(newSubEvents.map(e => newSubEventWithDefaultAttributes(e)))
@@ -547,7 +568,15 @@ export function onDelete(updateForm: Function, appSession: AppSession) {
   };
 }
 
-function onSave(form, appSession, history, location, ajaxPost, ajaxPut, updateForm) {
+function onSave(
+  form: any,
+  appSession: AppSession,
+  history,
+  location,
+  ajaxPost,
+  ajaxPut,
+  updateForm
+) {
   return (evt: DomEvent) => {
     evt.preventDefault();
     const id = form.id.value;
@@ -563,6 +592,9 @@ function onSave(form, appSession, history, location, ajaxPost, ajaxPut, updateFo
           if (!props) {
             return;
           }
+          //variable to get hold of which event is to be updated
+          const localUpdatedIndexValue = form.id.value && form.editable.rawValue;
+
           const id = props.response.id;
           updateEditModeFields(updateForm, form);
 
@@ -579,6 +611,50 @@ function onSave(form, appSession, history, location, ajaxPost, ajaxPut, updateFo
               name: 'updatedByName',
               rawValue: appSession.actor.fn
             });
+          }
+          /** check if it's cp to be udated, then do nothing. If it's a measurementDetermination and 
+           * the user removes value from the field quantity, we also remove the value(if it exists) from quantitySymbol before 
+           * saving/summit. We check if the attribute quantitySymbol has value in form.event.rawvalue but has no value from prop.response.
+           * If so, we set quantitySymbol to "" in form.event.rawValue. We do this to show right value in quantitySymbol without having
+           * to refresh the whole form.
+           */
+          if (localUpdatedIndexValue && localUpdatedIndexValue >= 0) {
+            if (form.events && form.events.rawValue) {
+              if (form.events.rawValue.length > 0) {
+                const formEventsRawValue = form.events.rawValue;
+                const updatedEventId = formEventsRawValue[localUpdatedIndexValue].id;
+                const eventFromDb = props.response.events.find(
+                  event =>
+                    event.id === updatedEventId &&
+                    event.eventTypeId === measurementDeterminationTypeId
+                );
+                if (eventFromDb) {
+                  const quantitySymbol = eventFromDb.measurementData.quantitySymbol;
+                  if (
+                    eventFromDb.measurementData.quantitySymbol === '' &&
+                    formEventsRawValue[localUpdatedIndexValue].measurementData
+                      .quantitySymbol !== ''
+                  ) {
+                    const measurementData = {
+                      ...formEventsRawValue[localUpdatedIndexValue].measurementData,
+                      quantitySymbol
+                    };
+                    const newEventToUpdate = {
+                      ...formEventsRawValue[localUpdatedIndexValue],
+                      measurementData
+                    };
+                    updateForm({
+                      name: 'events',
+                      rawValue: [
+                        ...formEventsRawValue.slice(0, localUpdatedIndexValue),
+                        newEventToUpdate,
+                        ...formEventsRawValue.slice(localUpdatedIndexValue + 1)
+                      ]
+                    });
+                  }
+                }
+              }
+            }
           }
 
           // incase of Add change the URL
