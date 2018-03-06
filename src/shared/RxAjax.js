@@ -87,7 +87,7 @@ export const simpleGet: AjaxGet<*> = function simpleGet<R>(
   token: string,
   callback: ?Callback<R>
 ): Observable<R> {
-  console.log("SIMPLEGET " + url);
+  console.log('SIMPLEGET ' + url);
   return simpleAjax(get(url, token), callback);
 };
 

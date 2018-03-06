@@ -1,7 +1,7 @@
 // @flow
 
-import type { MuseumId, CollectionId, NodeId, ObjectId } from "types/ids";
-import queryParams from "./shared/queryParams";
+import type { MuseumId, CollectionId, NodeId, ObjectId } from 'types/ids';
+import queryParams from './shared/queryParams';
 
 type AppSession = {
   museumId: number,
@@ -13,13 +13,13 @@ const clientContextUrl = (appSession: AppSession) =>
   `/museum/${appSession.museumId}/collections/${appSession.collectionId}`;
 
 export default {
-  isDev: process.env.NODE_ENV === "development",
+  isDev: process.env.NODE_ENV === 'development',
   isFake: false,
   useDevTools: process.env.DEV_TOOLS || false,
   print: {
     labelConfig: {
-      codeFormat: { "4": 2 },
-      canSelectPath: { "4": true, "5": true }
+      codeFormat: { '4': 2 },
+      canSelectPath: { '4': true, '5': true }
     }
   },
   magasin: {
@@ -38,13 +38,11 @@ export default {
           goToConservationTypes: (appSession: AppSession) =>
             `${clientContextUrl(appSession)}/administration/conservationtypes`
         },
-        homePage: "/home",
-        aboutPage: "/about",
+        homePage: '/home',
+        aboutPage: '/about',
         conservation: {
           editConservation: (appSession: AppSession, conservationId: number) =>
-            `${clientContextUrl(
-              appSession
-            )}/conservation/edit/${conservationId}`,
+            `${clientContextUrl(appSession)}/conservation/edit/${conservationId}`,
           addConservation: (appSession: AppSession) =>
             `${clientContextUrl(appSession)}/conservation/add`,
           viewConservation: (appSession: AppSession, conservationId: number) =>
@@ -61,8 +59,7 @@ export default {
             `${clientContextUrl(appSession)}/conservation`
         },
         analysis: {
-          baseUrl: (appSession: AppSession) =>
-            `${clientContextUrl(appSession)}/analysis`,
+          baseUrl: (appSession: AppSession) => `${clientContextUrl(appSession)}/analysis`,
           editAnalysis: (appSession: AppSession, analysisId: string) =>
             `${clientContextUrl(appSession)}/analysis/edit/${analysisId}`,
           addAnalysis: (appSession: AppSession) =>
@@ -74,9 +71,7 @@ export default {
           addMultipleSamples: (appSession: AppSession) =>
             `${clientContextUrl(appSession)}/analysis/sample/add`,
           addFromSample: (appSession: AppSession, sampleId: string) =>
-            `${clientContextUrl(
-              appSession
-            )}/analysis/sample/${sampleId}/fromSample`,
+            `${clientContextUrl(appSession)}/analysis/sample/${sampleId}/fromSample`,
           gotoSample: (appSession: AppSession, sampleId: string) =>
             `${clientContextUrl(appSession)}/analysis/sample/${sampleId}`,
           editSample: (appSession: AppSession, sampleId: string) =>
@@ -107,38 +102,25 @@ export default {
             `${clientContextUrl(appSession)}/search/objects`
         },
         storagefacility: {
-          goToRoot: (appSession: AppSession) =>
-            `${clientContextUrl(appSession)}/magasin`,
+          goToRoot: (appSession: AppSession) => `${clientContextUrl(appSession)}/magasin`,
           goToNode: (nodeId: number, appSession: AppSession, page?: ?number) =>
-            `${clientContextUrl(appSession)}/magasin/${nodeId}${page
-              ? `/${page}`
-              : ""}`,
+            `${clientContextUrl(appSession)}/magasin/${nodeId}${page ? `/${page}` : ''}`,
           addNode: (nodeId: number, appSession: AppSession) =>
             `${clientContextUrl(appSession)}/magasin/${nodeId}/add`,
           editNode: (nodeId: number, appSession: AppSession) =>
             `${clientContextUrl(appSession)}/magasin/${nodeId}/view`,
-          goToObjects: (
-            nodeId: number,
-            appSession: AppSession,
-            page?: ?number
-          ) =>
+          goToObjects: (nodeId: number, appSession: AppSession, page?: ?number) =>
             `${clientContextUrl(appSession)}/magasin/${nodeId}/objects${page
               ? `/${page}`
-              : ""}`,
-          goToSamples: (
-            nodeId: number,
-            appSession: AppSession,
-            page?: ?number
-          ) =>
+              : ''}`,
+          goToSamples: (nodeId: number, appSession: AppSession, page?: ?number) =>
             `${clientContextUrl(appSession)}/magasin/${nodeId}/samples${page
               ? `/${page}`
-              : ""}`,
+              : ''}`,
           addObservation: (nodeId: number, appSession: AppSession) =>
             `${clientContextUrl(appSession)}/magasin/${nodeId}/observation/add`,
           editObservation: (nodeId: number, appSession: AppSession) =>
-            `${clientContextUrl(
-              appSession
-            )}/magasin/${nodeId}/observation/edit`,
+            `${clientContextUrl(appSession)}/magasin/${nodeId}/observation/edit`,
           viewObservation: (
             nodeId: number,
             observationId: number,
@@ -149,18 +131,10 @@ export default {
             )}/magasin/${nodeId}/observation/${observationId}`,
           addControl: (nodeId: number, appSession: AppSession) =>
             `${clientContextUrl(appSession)}/magasin/${nodeId}/control/add`,
-          viewControl: (
-            nodeId: string,
-            controlId: number,
-            appSession: AppSession
-          ) =>
-            `${clientContextUrl(
-              appSession
-            )}/magasin/${nodeId}/control/${controlId}`,
+          viewControl: (nodeId: string, controlId: number, appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/magasin/${nodeId}/control/${controlId}`,
           viewControlsObservations: (nodeId: number, appSession: AppSession) =>
-            `${clientContextUrl(
-              appSession
-            )}/magasin/${nodeId}/controlsobservations`
+            `${clientContextUrl(appSession)}/magasin/${nodeId}/controlsobservations`
         }
       },
       api: {
@@ -181,11 +155,7 @@ export default {
             `/api/management/${mid}/conservation/events/object/${id}`,
           getConservationForObjectAggregated: (mid: MuseumId, id: number) =>
             `/api/management/${mid}/conservation/conservations/object/${id}`,
-          addFileUrl: (
-            mid: MuseumId,
-            collectionId: CollectionId,
-            eventId: number
-          ) =>
+          addFileUrl: (mid: MuseumId, collectionId: CollectionId, eventId: number) =>
             `/api/document/museum/${mid}/conservations/attachments?eventId=${eventId}&collectionId=${collectionId}`,
           getDeleteSubEventUrl: (mid: MuseumId, eventId: number) =>
             `/api/management/${mid}/conservation/events?eventIds=${eventId}`,
@@ -209,45 +179,32 @@ export default {
         attachments: {
           getFilesUrl: (files: Array<string>, mid: MuseumId, eventId: number) =>
             `/api/document/museum/${mid}/collectionManagement/attachments?eventId=${eventId}&fileIds=${files.join(
-              ","
+              ','
             )}`,
           getFileUrl: (fileId: string, mid: MuseumId) =>
             `/api/document/museum/${mid}/collectionManagement/attachments/${fileId}`
         },
         analysisType: {
-          getAllAnalysisTypes: (mid: MuseumId) =>
-            `/api/management/${mid}/analyses/types`,
+          getAllAnalysisTypes: (mid: MuseumId) => `/api/management/${mid}/analyses/types`,
           getAnalysisCategories: (mid: MuseumId) =>
             `/api/management/${mid}/analyses/categories`,
           getAnalysisTypesForCategory: (mid: MuseumId, categoryId: string) =>
             `/api/management/${mid}/analyses/types/categories/${categoryId}`,
-          getAnalysisTypesForCollection: (
-            mid: MuseumId,
-            musuemcollectionId: string
-          ) =>
+          getAnalysisTypesForCollection: (mid: MuseumId, musuemcollectionId: string) =>
             `/api/management/${mid}/analyses/types?collectionIds=${musuemcollectionId}`
         },
         analysis: {
           resultsUrl: (mid: MuseumId, analysisId: number) =>
             `/api/management/${mid}/analyses/${analysisId}/results`,
-          addFileUrl: (
-            mid: MuseumId,
-            collectionId: CollectionId,
-            analysisId: number
-          ) =>
+          addFileUrl: (mid: MuseumId, collectionId: CollectionId, analysisId: number) =>
             `/api/document/museum/${mid}/analyses/attachments?eventId=${analysisId}&collectionId=${collectionId}`,
-          getFilesUrl: (
-            files: Array<string>,
-            mid: MuseumId,
-            analysisId: number
-          ) =>
+          getFilesUrl: (files: Array<string>, mid: MuseumId, analysisId: number) =>
             `/api/document/museum/${mid}/collectionManagement/attachments?eventId=${analysisId}&fileIds=${files.join(
-              ","
+              ','
             )}`,
           getFileUrl: (file: string, mid: MuseumId) =>
             `/api/document/museum/${mid}/collectionManagement/attachments/${file}`,
-          saveAnalysisEvent: (mid: MuseumId) =>
-            `/api/management/${mid}/analyses`,
+          saveAnalysisEvent: (mid: MuseumId) => `/api/management/${mid}/analyses`,
           getAnalysisById: (mid: MuseumId, analysisId: number) =>
             `/api/management/${mid}/analyses/${analysisId}`,
           getChildAnalyses: (mid: MuseumId, analysisId: number) =>
@@ -260,7 +217,7 @@ export default {
             `/api/management/${mid}/analyses/objects/${id}`,
           analysesForObject: (mid: MuseumId, objectId: number): string =>
             `/api/management/${mid}/analyses/objects/${objectId}`,
-          getPurposes: "/api/management/purposes",
+          getPurposes: '/api/management/purposes',
           search: (
             mid: MuseumId,
             collectionIds: string,
@@ -274,26 +231,21 @@ export default {
               limit,
               collectionIds,
               q,
-              types: ["analysis", "analysisCollection"]
+              types: ['analysis', 'analysisCollection']
             }),
-          getAnalysisEvents: (
-            mid: MuseumId,
-            collectionIds: Array<CollectionId>
-          ) =>
-            `/api/management/${mid}/analyses?collectionIds=${collectionIds.join(
-              ","
-            )}`
+          getAnalysisEvents: (mid: MuseumId, collectionIds: Array<CollectionId>) =>
+            `/api/management/${mid}/analyses?collectionIds=${collectionIds.join(',')}`
         },
         samples: {
           baseUrl: (mid: MuseumId): string => `/api/management/${mid}/samples`,
-          sampleTypes: "/api/management/sampletypes",
+          sampleTypes: '/api/management/sampletypes',
           childrenSamples: (mid: MuseumId, objectId: string): string =>
             `/api/management/${mid}/samples/${objectId}/children`,
           originatedFromObject: (mid: MuseumId, objectId: string): string =>
             `/api/management/${mid}/samples/${objectId}/all`,
-          treatments: "/api/management/treatments",
-          storagecontainer: "/api/management/storagecontainer",
-          storagemediums: "/api/management/storagemediums",
+          treatments: '/api/management/treatments',
+          storagecontainer: '/api/management/storagecontainer',
+          storagemediums: '/api/management/storagemediums',
           getSample: (mid: MuseumId, sampleId: string) =>
             `/api/management/${mid}/samples/${sampleId}`,
           samplesForNode: (
@@ -332,7 +284,7 @@ export default {
             objectType?: ?string
           ): string =>
             `/api/storagefacility/museum/${mid}/storagenodes/objects/${objectId}/currentlocation?objectType=${objectType ||
-              "collection"}`,
+              'collection'}`,
           currentLocations: (mid: MuseumId): string =>
             `/api/storagefacility/museum/${mid}/storagenodes/objects/currentlocations`,
           moveObject: (mid: MuseumId): string =>
@@ -343,13 +295,8 @@ export default {
             `/api/storagefacility/museum/${mid}/storagenodes/objects/${objectId}/locations`
         },
         thingaggregate: {
-          baseUrl: (mid: MuseumId): string =>
-            `/api/thingaggregate/museum/${mid}`,
-          scanOldUrl: (
-            oldBarcode: number,
-            mid: MuseumId,
-            collectionId: CollectionId
-          ) =>
+          baseUrl: (mid: MuseumId): string => `/api/thingaggregate/museum/${mid}`,
+          scanOldUrl: (oldBarcode: number, mid: MuseumId, collectionId: CollectionId) =>
             `/api/thingaggregate/museum/${mid}/scan?oldBarcode=${oldBarcode}&collectionIds=${collectionId}`,
           nodeStatsUrl: (mid: MuseumId, uuid: string): string =>
             `/api/thingaggregate/museum/${mid}/storagenodes/${uuid}/stats`,
@@ -398,27 +345,25 @@ export default {
         },
         actor: {
           searchUrl: (term: string, mid: MuseumId): string =>
-            `/api/actor/person?museumId=${mid}&search=[${encodeURIComponent(
-              term
-            )}]`,
-          baseUrl: "/api/actor/person",
-          currentUser: "/api/actor/dataporten/currentUser",
-          getLabList: "/api/actor/organisation/labs"
+            `/api/actor/person?museumId=${mid}&search=[${encodeURIComponent(term)}]`,
+          baseUrl: '/api/actor/person',
+          currentUser: '/api/actor/dataporten/currentUser',
+          getLabList: '/api/actor/organisation/labs'
         },
         geolocation: {
           searchUrl: (term: string): string =>
             `/api/geolocation/address?search=[${encodeURIComponent(term)}]`
         },
         barcode: {
-          templatesUrl: "/api/barcode/templates",
+          templatesUrl: '/api/barcode/templates',
           templateRenderUrl: (templateId: number, format: number) =>
             `/api/barcode/templates/${templateId}/render?codeFormat=${format}`
         },
         auth: {
           groupsUrl: (feideEmail: string): string =>
             `/api/auth/rest/groups/${feideEmail}`,
-          museumsUrl: "/api/auth/rest/museums",
-          buildInfo: "/api/auth/service/auth/buildinfo",
+          museumsUrl: '/api/auth/rest/museums',
+          buildInfo: '/api/auth/service/auth/buildinfo',
           rolesUrl: (
             feideEmail: string,
             mid: MuseumId,

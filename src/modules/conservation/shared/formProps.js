@@ -1,37 +1,34 @@
 // @flow
-import { getObjects, getConservationCollection } from "../shared/submit";
-import { saveConservation$, deleteConservation$ } from "../conservationStore";
-import type { Location } from "../shared/submit";
-import { simplePost, simplePut } from "../../../shared/RxAjax";
-import type { History } from "../../../types/Routes";
-import type { AppSession } from "../../../types/appSession";
+import { getObjects, getConservationCollection } from '../shared/submit';
+import { saveConservation$, deleteConservation$ } from '../conservationStore';
+import type { Location } from '../shared/submit';
+import { simplePost, simplePut } from '../../../shared/RxAjax';
+import type { History } from '../../../types/Routes';
+import type { AppSession } from '../../../types/appSession';
 
-import type { PredefinedConservation } from "../../../types/predefinedConservation";
-import type { Person } from "../../../types/person";
+import type { PredefinedConservation } from '../../../types/predefinedConservation';
+import type { Person } from '../../../types/person';
 import type {
   ConservationStoreState as Store,
   ConservationSubTypes,
   EditableValuesForm,
   FormData
-} from "../../../types/conservation";
-import type { DomEvent } from "../../../types/dom";
-import toArray from "lodash/toArray";
-import type { ObjectData } from "../../../types/object";
-import { isFormValid } from "../../../forms/validators";
-import { emitError, emitSuccess } from "../../../shared/errors";
-import Config from "../../../config";
-import { sortBy } from "lodash";
-import { Observable } from "rxjs";
-import { getFormEvents, getFids } from "./utils";
-import { uploadFile } from "../../../models/conservation/documents";
-import { showConfirm } from "../../../shared/modal";
-import {
-  formatISOString,
-  measurementDeterminationTypeId
-} from "../../../shared/util";
-import { getCurrentMeasurementDataForObject } from "../../../models/conservation/conservation";
+} from '../../../types/conservation';
+import type { DomEvent } from '../../../types/dom';
+import toArray from 'lodash/toArray';
+import type { ObjectData } from '../../../types/object';
+import { isFormValid } from '../../../forms/validators';
+import { emitError, emitSuccess } from '../../../shared/errors';
+import Config from '../../../config';
+import { sortBy } from 'lodash';
+import { Observable } from 'rxjs';
+import { getFormEvents, getFids } from './utils';
+import { uploadFile } from '../../../models/conservation/documents';
+import { showConfirm } from '../../../shared/modal';
+import { formatISOString, measurementDeterminationTypeId } from '../../../shared/util';
+import { getCurrentMeasurementDataForObject } from '../../../models/conservation/conservation';
 
-import { I18n } from "react-i18nify";
+import { I18n } from 'react-i18nify';
 
 type FormProps = {|
   updateForm: Function,
@@ -51,10 +48,7 @@ export default function formProps(
   return {
     ...props,
     isFormValid: isFormValid(props.form),
-    objects: getObjects(
-      toArray(props.form.affectedThings.value),
-      props.location
-    ),
+    objects: getObjects(toArray(props.form.affectedThings.value), props.location),
     updateStringField: updateStringField(props.updateForm),
     updateBooleanField: updateBooleanField(props.updateForm),
     updateArrayField: updateArrayField(props.updateForm),
@@ -91,7 +85,7 @@ export default function formProps(
 
 function updateExpandOnView(updateForm: Function) {
   updateForm({
-    name: "expandOnView",
+    name: 'expandOnView',
     rawValue: false
   });
 }
@@ -100,7 +94,7 @@ export function toggleExpanded(updateForm: Function) {
   return (b: boolean, events: Array<ConservationSubTypes>) => () => {
     updateExpandOnView(updateForm);
     updateForm({
-      name: "events",
+      name: 'events',
       rawValue: events.map(e => ({ ...e, expanded: b }))
     });
   };
@@ -109,7 +103,7 @@ export function toggleExpanded(updateForm: Function) {
 export function toggleObjectsExpanded(updateForm: Function) {
   return (b: boolean) => () =>
     updateForm({
-      name: "objectsExpanded",
+      name: 'objectsExpanded',
       rawValue: b
     });
 }
@@ -125,15 +119,15 @@ export function toggleSingleExpanded(updateForm: Function) {
 
     viewMode
       ? updateForm({
-          name: "events",
+          name: 'events',
           rawValue: events
             .slice(0, index)
             .concat([{ ...events[index], expanded: b }])
             .concat(events.slice(index + 1))
         })
       : emitError({
-          type: "deleteError",
-          message: I18n.t("musit.conservation.notAbleToCollapse")
+          type: 'deleteError',
+          message: I18n.t('musit.conservation.notAbleToCollapse')
         });
   };
 }
@@ -166,7 +160,7 @@ function updateArrayField(updateForm: Function) {
   return (name: string) => (evt: DomEvent) =>
     updateForm({
       name,
-      rawValue: evt.target.value.split(",").map(v => v.trim())
+      rawValue: evt.target.value.split(',').map(v => v.trim())
     });
 }
 
@@ -177,22 +171,20 @@ function updateMultiSelectField(updateForm: Function) {
       rawValue: value
     });
     updateForm({
-      name: "singleObjectSelected",
+      name: 'singleObjectSelected',
       rawValue: null
     });
     return updateForm({
-      name: "editable",
-      rawValue: value ? "-2" : null
+      name: 'editable',
+      rawValue: value ? '-2' : null
     });
   };
 }
 
 export function updateConservationSubEvent(updateForm: Function) {
-  return (
-    name: string,
-    events: Array<ConservationSubTypes>,
-    arrayIndex: number
-  ) => (fieldName: string) => (value: string) => {
+  return (name: string, events: Array<ConservationSubTypes>, arrayIndex: number) => (
+    fieldName: string
+  ) => (value: string) => {
     updateForm({
       name,
       rawValue: [
@@ -205,11 +197,10 @@ export function updateConservationSubEvent(updateForm: Function) {
 }
 
 function updatePersonsForSubEvent(updateForm: Function) {
-  return (
+  return (name: string, events: Array<ConservationSubTypes>, arrayIndex: number) => (v: {
     name: string,
-    events: Array<ConservationSubTypes>,
-    arrayIndex: number
-  ) => (v: { name: string, rawValue: Array<Person> }) => {
+    rawValue: Array<Person>
+  }) => {
     updateForm({
       name,
       rawValue: [
@@ -270,7 +261,7 @@ function onDocumentUpload(
         );
         updateForm &&
           updateForm({
-            name: "events",
+            name: 'events',
             rawValue: formEventsWithFiles
           });
       }
@@ -287,21 +278,25 @@ async function addNewSubEvent(
 ) {
   const formData = getConservationCollection(form, location);
   let newSubEvents = newSubEventsToCreate || [];
- 
-  const measurementevent = JSON.parse(await getCurrentMeasurementDataForObject(newSubEvents[0].affectedThings,  appSession.museumId,
-    appSession.accessToken));
 
-    newSubEvents =({
-      ...newSubEvents[0],measurementData:measurementevent
-    }) 
-  
+  const measurementevent = JSON.parse(
+    await getCurrentMeasurementDataForObject(
+      newSubEvents[0].affectedThings,
+      appSession.museumId,
+      appSession.accessToken
+    )
+  );
+
+  newSubEvents = {
+    ...newSubEvents[0],
+    measurementData: measurementevent
+  };
+
   const events =
-  formData && formData.events && formData.events.length > 0
-    ? formData.events
-        .map(e => ({ ...e, isUpdated: false }))
-        .concat(newSubEvents)
-    : newSubEvents;
-const data = events ? { ...formData, events, isUpdated: false } : formData;
+    formData && formData.events && formData.events.length > 0
+      ? formData.events.map(e => ({ ...e, isUpdated: false })).concat(newSubEvents)
+      : newSubEvents;
+  const data = events ? { ...formData, events, isUpdated: false } : formData;
   return saveConservation$.next({
     id: form.id.value,
     appSession,
@@ -318,18 +313,13 @@ const data = events ? { ...formData, events, isUpdated: false } : formData;
         if (updateForm) {
           // old Form events
           const formEvents =
-            form &&
-            form.events &&
-            form.events.rawValue &&
-            form.events.rawValue.length > 0
+            form && form.events && form.events.rawValue && form.events.rawValue.length > 0
               ? form.events.rawValue
               : [];
 
           // All events from response
           const respEvents =
-            props.response &&
-            props.response.events &&
-            props.response.events.length > 0
+            props.response && props.response.events && props.response.events.length > 0
               ? props.response.events
               : [];
 
@@ -337,8 +327,7 @@ const data = events ? { ...formData, events, isUpdated: false } : formData;
           const defaultActorsAndRoles = [
             {
               name: appSession && appSession.actor && appSession.actor.fn,
-              uuid:
-                appSession && appSession.actor && appSession.actor.dataportenId,
+              uuid: appSession && appSession.actor && appSession.actor.dataportenId,
               role: 1,
               date: formatISOString(new Date())
             }
@@ -356,32 +345,28 @@ const data = events ? { ...formData, events, isUpdated: false } : formData;
             formEvents.find(fe => fe.id === re.id);
 
           // get the new sub events from the response
-          const newSubEvents = respEvents.filter(
-            re => !foundOldEventId(re, formEvents)
-          );
+          const newSubEvents = respEvents.filter(re => !foundOldEventId(re, formEvents));
           // newAllEvents = old From event + only new reponse event
           const newAllEvents = sortSubEventsOnly(
-            formEvents.concat(
-              newSubEvents.map(e => newSubEventWithDefaultAttributes(e))
-            )
+            formEvents.concat(newSubEvents.map(e => newSubEventWithDefaultAttributes(e)))
           );
 
           // update event with sorted events
           updateForm({
-            name: "events",
+            name: 'events',
             rawValue: newAllEvents
           });
 
           // clear the lookup list for sub events
           updateForm({
-            name: "subEventTypes",
+            name: 'subEventTypes',
             rawValue: null
           });
 
           //New sub event in editable mode
           if (newSubEvents && newAllEvents && newSubEvents.length > 0) {
             updateForm({
-              name: "editable",
+              name: 'editable',
               rawValue: (newAllEvents.length - 1).toString()
             });
 
@@ -418,13 +403,13 @@ function saveEditableValues(updateForm: Function, form: any, i: number) {
   const rawValue =
     i && i === -1
       ? {
-          caseNumber: form.caseNumber.rawValue || "",
-          note: form.note.rawValue || "",
+          caseNumber: form.caseNumber.rawValue || '',
+          note: form.note.rawValue || '',
           actorsAndRoles: form.actorsAndRoles.rawValue || []
         }
       : form.events.rawValue || [];
   updateForm({
-    name: "editableValues",
+    name: 'editableValues',
     rawValue: rawValue
   });
 }
@@ -436,19 +421,16 @@ function setIsUpdated(updateForm: Function, events: any, index?: number) {
       isUpdated: i === index
     }));
 
-    console.log(
-      "Events.isUpdated = ",
-      eventsWithAttributes.map(e => e.isUpdated)
-    );
+    console.log('Events.isUpdated = ', eventsWithAttributes.map(e => e.isUpdated));
 
     updateForm({
-      name: "events",
+      name: 'events',
       rawValue: eventsWithAttributes
     });
   }
 
   updateForm({
-    name: "isUpdated",
+    name: 'isUpdated',
     rawValue: false
   });
 }
@@ -458,7 +440,7 @@ function onEdit(updateForm: Function) {
     evt.preventDefault();
     saveEditableValues(updateForm, form, arrayIndex);
     updateForm({
-      name: "editable",
+      name: 'editable',
       rawValue: arrayIndex.toString()
     });
 
@@ -466,7 +448,7 @@ function onEdit(updateForm: Function) {
     if (arrayIndex === -1) {
       setIsUpdated(updateForm, form.events.rawValue);
       updateForm({
-        name: "isUpdated",
+        name: 'isUpdated',
         rawValue: true
       });
     } else {
@@ -477,12 +459,12 @@ function onEdit(updateForm: Function) {
 
 function updateEditModeFields(updateForm: Function, form: FormData) {
   updateForm({
-    name: "editableValues",
-    rawValue: ""
+    name: 'editableValues',
+    rawValue: ''
   });
   updateForm({
-    name: "editable",
-    rawValue: ""
+    name: 'editable',
+    rawValue: ''
   });
   // setIsUpdated(updateForm, form.events.rawValue);
 }
@@ -494,26 +476,23 @@ function applyEditableValues(
   events: Array<ConservationSubTypes>
 ) {
   const rawValue =
-    editableValues && editableValues.rawValue
-      ? editableValues.rawValue
-      : events;
+    editableValues && editableValues.rawValue ? editableValues.rawValue : events;
   if (i && i === -1) {
     updateForm({
-      name: "caseNumber",
-      rawValue: rawValue && rawValue.caseNumber ? rawValue.caseNumber : ""
+      name: 'caseNumber',
+      rawValue: rawValue && rawValue.caseNumber ? rawValue.caseNumber : ''
     });
     updateForm({
-      name: "note",
-      rawValue: rawValue && rawValue.note ? rawValue.note : ""
+      name: 'note',
+      rawValue: rawValue && rawValue.note ? rawValue.note : ''
     });
     updateForm({
-      name: "actorsAndRoles",
-      rawValue:
-        rawValue && rawValue.actorsAndRoles ? rawValue.actorsAndRoles : []
+      name: 'actorsAndRoles',
+      rawValue: rawValue && rawValue.actorsAndRoles ? rawValue.actorsAndRoles : []
     });
   } else {
     updateForm({
-      name: "events",
+      name: 'events',
       rawValue: rawValue
     });
   }
@@ -538,19 +517,17 @@ function deleteSubEvents(
   i: number
 ) {
   updateForm({
-    name: "events",
+    name: 'events',
     rawValue: [...events.slice(0, i), ...events.slice(i + 1)]
   });
 }
 
 export function onDelete(updateForm: Function, appSession: AppSession) {
-  return (
-    id: number,
-    events: Array<ConservationSubTypes>,
-    arrayIndex: number
-  ) => (evt: DomEvent) => {
+  return (id: number, events: Array<ConservationSubTypes>, arrayIndex: number) => (
+    evt: DomEvent
+  ) => {
     evt.preventDefault();
-    const message = I18n.t("musit.conservation.askForDeleteConfirmation");
+    const message = I18n.t('musit.conservation.askForDeleteConfirmation');
     showConfirm(message, () => {
       deleteConservation$.next({
         id: id,
@@ -560,19 +537,19 @@ export function onDelete(updateForm: Function, appSession: AppSession) {
           onComplete: () => {
             deleteSubEvents(updateForm, events, arrayIndex);
             emitSuccess({
-              type: "deleteSuccess",
-              message: I18n.t("musit.conservation.confirmDelete")
+              type: 'deleteSuccess',
+              message: I18n.t('musit.conservation.confirmDelete')
             });
           },
           onFailure: e => {
             if (e.status === 403) {
               emitError({
-                type: "deleteError",
-                message: I18n.t("musit.errorMainMessages.notAllowed")
+                type: 'deleteError',
+                message: I18n.t('musit.errorMainMessages.notAllowed')
               });
             } else {
               emitError({
-                type: "deleteError",
+                type: 'deleteError',
                 message: e.message
               });
             }
@@ -608,8 +585,7 @@ function onSave(
             return;
           }
           //variable to get hold of which event is to be updated
-          const localUpdatedIndexValue =
-            form.id.value && form.editable.rawValue;
+          const localUpdatedIndexValue = form.id.value && form.editable.rawValue;
 
           const id = props.response.id;
           updateEditModeFields(updateForm, form);
@@ -617,19 +593,14 @@ function onSave(
           // show the updated date when response have it
           props.response.updatedDate &&
             updateForm({
-              name: "updatedDate",
+              name: 'updatedDate',
               rawValue: props.response.updatedDate
             });
 
           // on edit show the logged in user as last updated by
-          if (
-            form.id.value &&
-            appSession &&
-            appSession.actor &&
-            appSession.actor.fn
-          ) {
+          if (form.id.value && appSession && appSession.actor && appSession.actor.fn) {
             updateForm({
-              name: "updatedByName",
+              name: 'updatedByName',
               rawValue: appSession.actor.fn
             });
           }
@@ -643,24 +614,21 @@ function onSave(
             if (form.events && form.events.rawValue) {
               if (form.events.rawValue.length > 0) {
                 const formEventsRawValue = form.events.rawValue;
-                const updatedEventId =
-                  formEventsRawValue[localUpdatedIndexValue].id;
+                const updatedEventId = formEventsRawValue[localUpdatedIndexValue].id;
                 const eventFromDb = props.response.events.find(
                   event =>
                     event.id === updatedEventId &&
                     event.eventTypeId === measurementDeterminationTypeId
                 );
                 if (eventFromDb) {
-                  const quantitySymbol =
-                    eventFromDb.measurementData.quantitySymbol;
+                  const quantitySymbol = eventFromDb.measurementData.quantitySymbol;
                   if (
-                    eventFromDb.measurementData.quantitySymbol === "" &&
+                    eventFromDb.measurementData.quantitySymbol === '' &&
                     formEventsRawValue[localUpdatedIndexValue].measurementData
-                      .quantitySymbol !== ""
+                      .quantitySymbol !== ''
                   ) {
                     const measurementData = {
-                      ...formEventsRawValue[localUpdatedIndexValue]
-                        .measurementData,
+                      ...formEventsRawValue[localUpdatedIndexValue].measurementData,
                       quantitySymbol
                     };
                     const newEventToUpdate = {
@@ -668,7 +636,7 @@ function onSave(
                       measurementData
                     };
                     updateForm({
-                      name: "events",
+                      name: 'events',
                       rawValue: [
                         ...formEventsRawValue.slice(0, localUpdatedIndexValue),
                         newEventToUpdate,

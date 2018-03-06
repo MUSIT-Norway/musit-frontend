@@ -26,14 +26,12 @@ function makeRequest(opts) {
     var params = opts.params;
     // We'll need to stringify if we've been given an object
     // If we have a string, this is skipped.
-    if (params && typeof params === "object") {
+    if (params && typeof params === 'object') {
       params = Object.keys(params)
         .map(function(key) {
-          return (
-            encodeURIComponent(key) + "=" + encodeURIComponent(params[key])
-          );
+          return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
         })
-        .join("&");
+        .join('&');
     }
     xhr.send(params);
   });
@@ -41,8 +39,8 @@ function makeRequest(opts) {
 
 export function ajaxGetRequest(url: string, token: string) {
   return makeRequest({
-    method: "GET",
-    headers: {'Authorization': 'Bearer ' + token},
+    method: 'GET',
+    headers: { Authorization: 'Bearer ' + token },
     url: url
   });
 }

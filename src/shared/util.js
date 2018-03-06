@@ -217,7 +217,7 @@ export const numismaticCollectionUuid = '8bbdf9b3-56d1-479a-9509-2ea82842e8f8';
 export const fungiCollectionUuid = '23ca0166-5f9e-44c2-ab0d-b4cdd704af07';
 export const allCollectionUuid = '00000000-0000-0000-0000-000000000000';
 
-export const getCultureOrNatureUnit = (appSession? : AppSession) => {
+export const getCultureOrNatureUnit = (appSession?: AppSession) => {
   if (appSession) {
     const collectionId = appSession.collectionId;
     const culture = [

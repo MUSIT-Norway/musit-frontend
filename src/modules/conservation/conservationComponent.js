@@ -22,11 +22,22 @@ import Toolbar from './components/Toolbar';
 import SingleObjectSelection from './components/SingleObjectSelection';
 import MaterialDetermination from './events/materialDetermination';
 import Note from './events/note';
-import { formatISOString,conservationProcessTypeId, treatmentTypeId,technicalDescriptionTypeId,storageAndHandlingTypeId,
-  hseRiskAssessmentTypeId, conditionAssessmentTypeId,reportTypeId, materialDeterminationTypeId, measurementDeterminationTypeId, noteTypeId } from '../../shared/util';
+import {
+  formatISOString,
+  conservationProcessTypeId,
+  treatmentTypeId,
+  technicalDescriptionTypeId,
+  storageAndHandlingTypeId,
+  hseRiskAssessmentTypeId,
+  conditionAssessmentTypeId,
+  reportTypeId,
+  materialDeterminationTypeId,
+  measurementDeterminationTypeId,
+  noteTypeId
+} from '../../shared/util';
 import FontAwesome from 'react-fontawesome';
 import { sortBy, toLower, capitalize } from 'lodash';
-import { getCurrentMeasurementDataForObject} from '../../models/conservation/conservation';
+import { getCurrentMeasurementDataForObject } from '../../models/conservation/conservation';
 
 type ConservationProcessProps = {
   id?: number,
