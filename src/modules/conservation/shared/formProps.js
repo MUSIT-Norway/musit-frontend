@@ -279,31 +279,27 @@ async function addNewSubEvent(
   const formData = getConservationCollection(form, location);
   let newSubEvents = newSubEventsToCreate || [];
 
-  if(newSubEvents[0].eventTypeId === measurementDeterminationTypeId) {
+  if (newSubEvents[0].eventTypeId === measurementDeterminationTypeId) {
+    let measurementevent;
+    try {
+      measurementevent = JSON.parse(
+        await getCurrentMeasurementDataForObject(
+          newSubEvents[0].affectedThings,
+          appSession.museumId,
+          appSession.accessToken
+        )
+      );
+    } catch (error) {
+      measurementevent = undefined;
+    }
 
-  
-   let measurementevent 
-   try {
-    measurementevent=JSON.parse(
-      await getCurrentMeasurementDataForObject(
-        newSubEvents[0].affectedThings,
-        appSession.museumId,
-        appSession.accessToken
-      ));
-       
-   } catch (error) {
-    measurementevent = undefined
-   } 
-  
-
-
-if(measurementevent){
-  newSubEvents = {
-    ...newSubEvents[0],
-    measurementData: measurementevent
-  }};
-
-  };
+    if (measurementevent) {
+      newSubEvents = {
+        ...newSubEvents[0],
+        measurementData: measurementevent
+      };
+    }
+  }
   const events =
     formData && formData.events && formData.events.length > 0
       ? formData.events.map(e => ({ ...e, isUpdated: false })).concat(newSubEvents)
