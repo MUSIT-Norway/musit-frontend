@@ -398,6 +398,7 @@ export default class TableComponent extends React.Component {
     return (
       <div style={{ paddingTop: 10 }}>
         <NodeLeftMenuComponent
+          appSession={this.props.appSession}
           showNewNode={!!rootNode}
           showButtons={rootNode && !MusitNode.isRootNode(rootNode)}
           onClickNewNode={() =>
@@ -560,6 +561,7 @@ export default class TableComponent extends React.Component {
     return (
       <Loader loaded={!isLoading}>
         <NodeGrid
+          appSession={this.props.appSession}
           tableData={matches ? filter(matches, ['name'], searchPattern) : []}
           goToEvents={node =>
             this.props.goTo(

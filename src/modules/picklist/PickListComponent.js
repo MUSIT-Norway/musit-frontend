@@ -160,8 +160,12 @@ export class PickListComponent extends React.Component {
     const markedValues = marked.map(p => p.value);
     const isNode = this.props.isTypeNode;
     const isObject = !isNode;
-    const isMoveAllowed =
-      marked.length > 0 && this.props.appSession.rolesForModules.storageFacilityWrite;
+    const isMoveAllowed = isObject
+      ? marked.length > 0 && this.props.appSession.rolesForModules.storageFacilityWrite
+      : isNode
+        ? marked.length > 0 && this.props.appSession.rolesForModules.storageFacilityAdmin
+        : false;
+
     const isAllowed =
       marked.length > 0 &&
       this.props.appSession.rolesForModules.collectionManagementWrite;
@@ -303,35 +307,38 @@ export class PickListComponent extends React.Component {
                       }
                     />
                     {this.selectedCount(isNode, marked.length)}
-                    <FontAwesome
-                      className="normalAction"
-                      style={{
-                        fontSize: '1.5em',
-                        color: conservationEnabled ? null : 'grey'
-                      }}
-                      name="bank"
-                      onClick={() => {
-                        if (conservationEnabled) {
-                          this.props.createConservation(
-                            markedValues,
-                            this.props.appSession
-                          );
-                        }
-                      }}
-                      title={
-                        markedSamples.length === 0 ? marked.length < 1 ||
-                        conservationEnabled ? (
-                          I18n.t('musit.conservation.createConservation')
-                        ) : (
-                          I18n.t('musit.pickList.tooltip.doNotHaveSufficientRole')
-                        ) : (
-                          I18n.t(
-                            'musit.conservation.errorMessages.cannotCreateConservationBecauseOfSamples'
+                    {isObject && (
+                      <FontAwesome
+                        className="normalAction"
+                        style={{
+                          fontSize: '1.5em',
+                          color: conservationEnabled ? null : 'grey'
+                        }}
+                        name="bank"
+                        onClick={() => {
+                          if (conservationEnabled) {
+                            this.props.createConservation(
+                              markedValues,
+                              this.props.appSession
+                            );
+                          }
+                        }}
+                        title={
+                          markedSamples.length === 0 ? marked.length < 1 ||
+                          conservationEnabled ? (
+                            I18n.t('musit.conservation.createConservation')
+                          ) : (
+                            I18n.t('musit.pickList.tooltip.doNotHaveSufficientRole')
+                          ) : (
+                            I18n.t(
+                              'musit.conservation.errorMessages.cannotCreateConservationBecauseOfSamples'
+                            )
                           )
-                        )
-                      }
-                    />
-                    {this.selectedCount(isNode, marked.length)}
+                        }
+                      />
+                    )}
+
+                    {isObject && this.selectedCount(isNode, marked.length)}
                     <FontAwesome
                       className="normalAction"
                       style={{

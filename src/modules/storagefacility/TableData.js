@@ -82,12 +82,21 @@ export default function TableData(props: TableDataProps) {
             href=""
             onClick={e => {
               e.preventDefault();
-              props.onMove(props.rowData);
+              props.appSession.rolesForModules.storageFacilityWrite &&
+                props.onMove(props.rowData);
               e.stopPropagation();
             }}
             title={I18n.t('musit.grid.object.iconTooltip.moveObject')}
           >
-            <FontAwesome style={{ fontSize: '1.5em' }} name="truck" />
+            <FontAwesome
+              style={{
+                fontSize: '1.5em',
+                color: props.appSession.rolesForModules.storageFacilityWrite
+                  ? null
+                  : 'grey'
+              }}
+              name="truck"
+            />
           </a>
         )}
       </td>

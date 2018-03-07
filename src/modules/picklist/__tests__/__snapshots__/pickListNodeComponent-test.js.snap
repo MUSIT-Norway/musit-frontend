@@ -114,30 +114,6 @@ exports[`PickListComponent for nodes should display component (nodes) correctly 
               </span>
               <FontAwesome
                 className="normalAction"
-                name="bank"
-                onClick={[Function]}
-                style={
-                  Object {
-                    "color": null,
-                    "fontSize": "1.5em",
-                  }
-                }
-                title="Opprett konservering"
-              />
-              <span
-                className="normalActionNoPadding"
-                style={
-                  Object {
-                    "color": "#337ab7",
-                    "fontSize": "0.8em",
-                  }
-                }
-                title="Valgt node(r)"
-              >
-                (4)
-              </span>
-              <FontAwesome
-                className="normalAction"
                 name="remove"
                 onClick={[Function]}
                 style={

@@ -51,12 +51,25 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
     <ObjectAndSampleDetails
       appSession={
         Object {
+          "accessToken": "45667",
           "actor": Object {
-            "dataportenId": "12345",
-            "fn": "Jarl",
+            "fn": "Test",
+          },
+          "collectionId": "1234",
+          "language": Object {
+            "isEn": false,
+            "isNo": true,
           },
           "museumId": 99,
-          "token": "1234",
+          "rolesForModules": Object {
+            "collectionManagementRead": true,
+            "collectionManagementWrite": true,
+            "documentArchiveRead": true,
+            "documentArchiveWrite": true,
+            "storageFacilityAdmin": true,
+            "storageFacilityRead": true,
+            "storageFacilityWrite": true,
+          },
         }
       }
       objectData={

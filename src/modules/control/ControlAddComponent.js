@@ -358,6 +358,7 @@ export class ControlAddContainer extends React.Component {
                     ? 'musit.newControl.registerObservations'
                     : 'musit.texts.save'
                 )}
+                saveDisabled={!this.props.appSession.rolesForModules.storageFacilityWrite}
                 translate={translate}
                 onClickSave={e => this.handleSubmit(e)}
                 onClickCancel={() => this.props.goBack()}

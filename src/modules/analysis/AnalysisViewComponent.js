@@ -48,9 +48,11 @@ export default (props: Props) =>
   !props.loadingAnalysis ? (
     <div className="container">
       <div className="page-header">
-        <button className="btn btn-default pull-right" onClick={props.clickEdit}>
-          {I18n.t('musit.texts.change')}
-        </button>
+        {props.appSession.rolesForModules.collectionManagementWrite && (
+          <button className="btn btn-default pull-right" onClick={props.clickEdit}>
+            {I18n.t('musit.texts.change')}
+          </button>
+        )}
         <h1>{I18n.t('musit.analysis.analysis')}</h1>
       </div>
       <form className="form-horizontal">

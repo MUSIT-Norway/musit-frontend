@@ -526,7 +526,9 @@ export default class ObservationPage extends React.Component {
                 onClickSave={this.handleSubmit}
                 onClickCancel={() => this.props.goBack()}
                 saveDisabled={
-                  this.props.saveDisabled === true || this.state.observations.length === 0
+                  this.props.saveDisabled === true ||
+                  this.state.observations.length === 0 ||
+                  !this.props.appSession.rolesForModules.storageFacilityWrite
                 }
                 cancelDisabled={this.props.cancelDisabled}
               />

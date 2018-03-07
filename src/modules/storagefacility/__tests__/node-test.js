@@ -3,11 +3,12 @@ import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import NodeLeftMenuComponent from '../TableLeftMenu';
 import NodeDetails from '../NodeDetails';
-
+import { appSession } from '../../../testutils/sampleDataForTest';
 describe('NodeLeftMenuComponent', () => {
   it('renders properly', () => {
     const wrapper = shallow(
       <NodeLeftMenuComponent
+        appSession={appSession}
         showNewNode={true}
         translate={key => key}
         onClickNewNode={key => key}

@@ -2,6 +2,7 @@ import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import { EventsComponent } from '../EventsComponent';
+import { appSession } from '../../../testutils/sampleDataForTest';
 
 describe('EventsComponent', () => {
   const history = {
@@ -23,7 +24,7 @@ describe('EventsComponent', () => {
             id: '1'
           }
         }}
-        appSession={{}}
+        appSession={appSession}
         clearEvents={() => true}
         loadEvents={() => true}
         loadRootNode={() => true}
@@ -46,7 +47,7 @@ describe('EventsComponent', () => {
             id: '1'
           }
         }}
-        appSession={{}}
+        appSession={appSession}
         clearEvents={() => true}
         loadEvents={() => true}
         loadRootNode={() => true}

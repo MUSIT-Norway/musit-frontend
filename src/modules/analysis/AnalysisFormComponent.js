@@ -311,7 +311,10 @@ export default function AnalysisFormComponent(props: Props) {
         <hr />
         <button
           className="btn btn-primary"
-          disabled={!props.isFormValid}
+          disabled={
+            !props.isFormValid ||
+            !props.appSession.rolesForModules.collectionManagementWrite
+          }
           onClick={props.clickSave}
         >
           {I18n.t('musit.texts.save')}

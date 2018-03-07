@@ -526,7 +526,12 @@ export default class NodeDetails extends Component {
                           <br />
                           {this.props.loaded && (
                             <SaveCancel
-                              saveDisabled={this.props.loading || !this.props.rootNode}
+                              saveDisabled={
+                                this.props.loading ||
+                                !this.props.rootNode ||
+                                !this.props.appSession.rolesForModules
+                                  .storageFacilityWrite
+                              }
                               onClickSave={this.handleSubmit}
                               onClickCancel={() => this.props.goBack()}
                             />

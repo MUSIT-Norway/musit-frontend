@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { ControlLabel, Button } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import { I18n } from 'react-i18nify';
-
+import { AppSession } from '../../types/appSession';
 export default class NodeLeftMenuComponent extends Component {
   static propTypes = {
     showNewNode: PropTypes.bool,
@@ -17,7 +17,8 @@ export default class NodeLeftMenuComponent extends Component {
     onClickControlObservations: PropTypes.func.isRequired,
     onClickMoveNode: PropTypes.func.isRequired,
     onClickDelete: PropTypes.func.isRequired,
-    showButtons: PropTypes.bool
+    showButtons: PropTypes.bool,
+    appSession: AppSession
   };
 
   render() {
@@ -71,27 +72,36 @@ export default class NodeLeftMenuComponent extends Component {
         </Button>
       </div>
     );
+    const storageFacilityAdmin = this.props.appSession.rolesForModules
+      .storageFacilityAdmin;
 
     return (
       <div>
-        {showNewNode && newButton()}
+        {showNewNode && storageFacilityAdmin && newButton()}
         {showButtons && <hr />}
         {showButtons && showCount('numNodes')}
         {showButtons && showCount('numObjects')}
         {showButtons && showCount('totalObjects')}
         {showButtons && <hr />}
-        {showButtons && buttonLink('properties', 'cog', onClickProperties)}
+        {showButtons &&
+          buttonLink('properties', 'cog', onClickProperties, !storageFacilityAdmin)}
         {showButtons &&
           buttonLink(
             'controlsobservations',
             'musitcontrolobsicon',
             onClickControlObservations,
-            false,
+            !this.props.appSession.rolesForModules.storageFacilityWrite,
             true
           )}
-        {showButtons && buttonLink('moveNode', 'truck', onClickMoveNode)}
         {showButtons &&
-          buttonLink('delete', 'trash-o', onClickDelete, this.isDeleteDisabled())}
+          buttonLink('moveNode', 'truck', onClickMoveNode, !storageFacilityAdmin)}
+        {showButtons &&
+          buttonLink(
+            'delete',
+            'trash-o',
+            onClickDelete,
+            this.isDeleteDisabled() || !storageFacilityAdmin
+          )}
       </div>
     );
   }

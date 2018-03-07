@@ -4,6 +4,7 @@ import React from 'react';
 import sinon from 'sinon';
 import NodeGrid from '../NodeTable';
 import { expect as e } from 'chai';
+import { appSession } from '../../../testutils/sampleDataForTest';
 
 describe('NodeTable', () => {
   const tableData = [
@@ -21,6 +22,7 @@ describe('NodeTable', () => {
   const dummyArg = { preventDefault: () => null };
   const wrapper = shallow(
     <NodeGrid
+      appSession={appSession}
       tableData={tableData}
       goToEvents={goToEvents}
       pickNode={pickNode}

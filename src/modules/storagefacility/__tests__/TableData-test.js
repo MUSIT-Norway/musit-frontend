@@ -4,6 +4,7 @@ import React from 'react';
 import sinon from 'sinon';
 import TableData from '../TableData';
 import { expect as e } from 'chai';
+import { appSession } from '../../../testutils/sampleDataForTest';
 
 describe('TableData', () => {
   const pickObject = sinon.spy();
@@ -13,7 +14,7 @@ describe('TableData', () => {
   const rowData = { id: 1, museumNo: 'TRH-V-1-2', subNo: '2', term: 'Carex' };
   const wrapper = shallow(
     <TableData
-      appSession={{}}
+      appSession={appSession}
       goToObject={() => {}}
       rowData={rowData}
       pickObject={pickObject}

@@ -58,19 +58,26 @@ export default function SampleViewComponent(props: Props & SampleProps) {
     <div className="container">
       <form className="form-horizontal">
         <div className="page-header">
-          <button className="btn btn-default pull-right" onClick={props.clickEditSample}>
-            {I18n.t('musit.sample.updateSample')}
-          </button>
+          {props.appSession.rolesForModules.collectionManagementWrite && (
+            <button
+              className="btn btn-default pull-right"
+              onClick={props.clickEditSample}
+            >
+              {I18n.t('musit.sample.updateSample')}
+            </button>
+          )}
           <h1>{I18n.t('musit.sample.sample')}</h1>
         </div>
-        <div className="pull-right">
-          <button className="btn btn-default" onClick={props.clickCreateAnalysis}>
-            {I18n.t('musit.analysis.createAnalysis')}
-          </button>
-          <button className="btn btn-default" onClick={props.clickCreateSample}>
-            {` ${I18n.t('musit.analysis.createSample')}`}
-          </button>
-        </div>
+        {props.appSession.rolesForModules.collectionManagementWrite && (
+          <div className="pull-right">
+            <button className="btn btn-default" onClick={props.clickCreateAnalysis}>
+              {I18n.t('musit.analysis.createAnalysis')}
+            </button>
+            <button className="btn btn-default" onClick={props.clickCreateSample}>
+              {` ${I18n.t('musit.analysis.createSample')}`}
+            </button>
+          </div>
+        )}
         <div>
           <MetaInformation
             updatedBy={sample.updatedStamp ? sample.updatedStamp.name : null}

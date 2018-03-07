@@ -2,15 +2,10 @@ import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import SampleViewComponent from '../SampleViewComponent';
+import { appSession } from '../../../testutils/sampleDataForTest';
 
 describe('AnalysisSampleFormPageView', () => {
   it('should display correctly', () => {
-    const appSession = {
-      token: '1234',
-      museumId: 99,
-      actor: { dataportenId: '12345', fn: 'Jarl' }
-    };
-
     const sampleStore = {
       sample: {
         note: '23444455555',
@@ -63,7 +58,6 @@ describe('AnalysisSampleFormPageView', () => {
         goBack={() => {}}
       />
     );
-
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 });

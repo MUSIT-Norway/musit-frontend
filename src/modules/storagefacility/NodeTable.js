@@ -4,6 +4,7 @@ import { Table, FormGroup } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import { I18n } from 'react-i18nify';
 import MusitNode from '../../models/node';
+import AppSession from '../../types/appSession';
 
 export default class NodeGrid extends Component {
   static propTypes = {
@@ -12,7 +13,8 @@ export default class NodeGrid extends Component {
     pickNode: PropTypes.func.isRequired,
     isNodeAdded: PropTypes.func.isRequired,
     onMove: PropTypes.func.isRequired,
-    onClick: PropTypes.func.isRequired
+    onClick: PropTypes.func.isRequired,
+    appSession: AppSession
   };
 
   render() {
@@ -73,11 +75,21 @@ export default class NodeGrid extends Component {
                             href=""
                             onClick={e => {
                               e.preventDefault();
-                              this.props.onMove(c);
+                              this.props.appSession.rolesForModules
+                                .storageFacilityAdmin && this.props.onMove(c);
                             }}
                             title={I18n.t('musit.grid.node.iconTooltip.moveNode')}
                           >
-                            <FontAwesome style={{ fontSize: '1.5em' }} name="truck" />
+                            <FontAwesome
+                              style={{
+                                fontSize: '1.5em',
+                                color: this.props.appSession.rolesForModules
+                                  .storageFacilityAdmin
+                                  ? null
+                                  : 'grey'
+                              }}
+                              name="truck"
+                            />
                           </a>
                         )}
                       </td>

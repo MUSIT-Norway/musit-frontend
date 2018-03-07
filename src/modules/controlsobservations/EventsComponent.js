@@ -76,22 +76,24 @@ export class EventsComponent extends React.Component {
     const appSession = this.props.appSession;
     return (
       <div style={{ paddingTop: 10 }}>
-        <EventsLeftMenu
-          id={nodeId}
-          selectObservation
-          selectControl
-          onClickNewObservation={() =>
-            historyPush(
-              Config.magasin.urls.client.storagefacility.addObservation(
-                nodeId,
-                appSession
-              )
-            )}
-          onClickNewControl={() =>
-            historyPush(
-              Config.magasin.urls.client.storagefacility.addControl(nodeId, appSession)
-            )}
-        />
+        {appSession.rolesForModules.storageFacilityWrite && (
+          <EventsLeftMenu
+            id={nodeId}
+            selectObservation
+            selectControl
+            onClickNewObservation={() =>
+              historyPush(
+                Config.magasin.urls.client.storagefacility.addObservation(
+                  nodeId,
+                  appSession
+                )
+              )}
+            onClickNewControl={() =>
+              historyPush(
+                Config.magasin.urls.client.storagefacility.addControl(nodeId, appSession)
+              )}
+          />
+        )}
       </div>
     );
   }

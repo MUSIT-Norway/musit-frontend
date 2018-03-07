@@ -2,13 +2,13 @@ import { shallow } from 'enzyme';
 import { RenderDoubleTextArea, RenderPest } from '../render';
 import React from 'react';
 import ObservationPage from '../ObservationPage';
-
+import { appSession } from '../../../testutils/sampleDataForTest';
 describe('Render oobservation page in edit mode', () => {
   it('should set default date and have correct date format', () => {
     const observationPage = shallow(
       <ObservationPage
         goBack={() => {}}
-        appSession={{}}
+        appSession={appSession}
         observations={[
           {
             type: 'gas',

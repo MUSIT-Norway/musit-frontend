@@ -305,7 +305,10 @@ export default function SampleFormComponent(props: Props) {
         </div>
         <button
           className="btn btn-primary"
-          disabled={!props.isFormValid}
+          disabled={
+            !props.isFormValid ||
+            !props.appSession.rolesForModules.collectionManagementWrite
+          }
           onClick={props.clickSave}
         >
           {I18n.t('musit.texts.save')}
