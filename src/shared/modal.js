@@ -55,7 +55,7 @@ export const showModal = (title, componentToRender, closeFn) => {
     title: title,
     autoResize: true,
     minHeight: 'auto',
-    resizable: false,
+    resizable: true,
     width: 'auto',
     close: function() {
       ReactDOM.unmountComponentAtNode(this);

@@ -5,6 +5,7 @@ import toArray from 'lodash/toArray';
 //import { parse } from "path";
 //import type { isUndefined } from 'util';
 import type { FormData } from '../../../types/conservation';
+import uniq from 'lodash/uniq';
 
 export type Location<T> = {
   state?: T
@@ -113,7 +114,7 @@ export function getConservationCollection(
           }))
         : [],
     objects: getObjectsWithType(getObjects(affectedThings, location)),
-    affectedThings: affectedThings ? affectedThings.map(o => o.uuid) : [],
+    affectedThings: affectedThings ? uniq(affectedThings.map(o => o.uuid)) : [],
     caseNumber: form.caseNumber.value,
     isUpdated: form.isUpdated.value
   };

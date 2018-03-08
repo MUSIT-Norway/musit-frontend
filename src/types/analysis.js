@@ -84,7 +84,10 @@ export type AffectedThing = {
   type: 'Analysis' | 'AnalysisCollection'
 };
 
-export type ObjectInfo = { objectData?: ?MusitObject, sampleData?: ?SampleDataExtended };
+export type ObjectInfo = {
+  objectData?: ?MusitObject,
+  sampleData?: ?SampleDataExtended
+};
 export type AnalysisEvent = AffectedThing &
   ObjectInfo & {
     result?: {

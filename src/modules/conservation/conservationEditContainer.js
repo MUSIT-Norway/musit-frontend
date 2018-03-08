@@ -14,6 +14,7 @@ import predefinedConservation$ from '../../stores/predefinedConservation';
 import { loadCustomPredefinedConservationTypes } from '../../stores/predefinedConservationLoader';
 import Conservation from '../../models/conservation';
 import type { Field } from '../../forms/form';
+import type { ChangePage } from '../../search/searchStore';
 
 // FIX ME below 4 lines
 //import type { Props } from './conservationComponent';
@@ -42,11 +43,13 @@ function addProps(
   storeProps: *,
   upstream: { history: History, location: Location<Array<ObjectData>> }
 ): Props {
+  console.log('StoreProps', storeProps);
   const sharedProps = props({
     ...storeProps,
     ...upstream,
     updateForm: updateForm$.next.bind(updateForm$)
   });
+  console.log('SharedProps', sharedProps);
   return {
     ...sharedProps,
     loadingConservation: !storeProps.store.conservation,

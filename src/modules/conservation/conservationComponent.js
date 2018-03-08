@@ -51,9 +51,14 @@ type ConservationProcessProps = {
   updatePersonsForSubEvent: Function,
   updateConservationSubEvent: Function,
   updateSingleObjectField: Function,
+  addObjectsToSubEvent: Function,
+  addNewObjectToSubEventAndProcess: Function,
+  getEventObjectDetails?: Function,
+  addAffectedThings: Function,
   toggleExpanded: Function,
   toggleSingleExpanded: Function,
   toggleObjectsExpanded: Function,
+  searchStore: any,
   doneBy?: string,
   doneDate?: string,
   note?: string,
@@ -63,7 +68,7 @@ type ConservationProcessProps = {
   addNewSubEvent?: ?Function,
   onClickBack?: Function,
   clearForm?: Function,
-  clearStore?: Function,
+  setLoading?: Function,
   isFormValid?: boolean,
   store: *,
   predefinedConservation: PredefinedConservation,
@@ -73,6 +78,8 @@ type ConservationProcessProps = {
   onEdit: Function,
   onSave: Function,
   onCancel: Function,
+  onChangeQueryParam?: Function,
+  onSearch?: Function,
   match?: any
 };
 
@@ -113,7 +120,10 @@ function getStatusTextFromErrors(form: FormData) {
 }
 
 function createSubEvents(
-  props: Props & { form: FormData, predefinedConservation: PredefinedConservation }
+  props: Props & {
+    form: FormData,
+    predefinedConservation: PredefinedConservation
+  }
 ) {
   return () => {
     const defaultActorsAndRoles = [
@@ -295,6 +305,22 @@ function renderSubEvent(
       props.form.events.rawValue,
       ind
     ),
+    addNewObjectToSubEventAndProcess: props.addNewObjectToSubEventAndProcess(
+      props.form.events.name,
+      props.form.events.rawValue,
+      ind,
+      props.form.affectedThings.value
+    ),
+    onAddObjectsToSubEvent: props.addObjectsToSubEvent(
+      props.form.events.name,
+      props.form.events.value,
+      ind
+    ),
+    getEventObjectDetails: props.getEventObjectDetails,
+    onAddAffectedThings: props.addAffectedThings(props.form.affectedThings.name)(
+      props.form.affectedThings.value
+    ),
+    searchStore: props.searchStore,
     affectedThingsWithDetailsMainEvent: props.objects || [],
     toggleExpanded: props.toggleSingleExpanded(
       !expanded,
@@ -432,7 +458,10 @@ function ViewConservationProcessForm(props: ProcessFormProps) {
   );
 }
 export default function ConservationComponent(
-  props: Props & { form: FormData, predefinedConservation: PredefinedConservation }
+  props: Props & {
+    form: FormData,
+    predefinedConservation: PredefinedConservation
+  }
 ) {
   const addMode = props.form.id.value ? false : true;
   const viewModeMainEvent = !(
