@@ -3,7 +3,8 @@ import {
   parseUTCDate,
   parseISODate,
   customSortingStorageNodeType,
-  formatISOString
+  formatISOString,
+  musitParseFloat
 } from '../util';
 import moment from 'moment';
 import { expect as expectChai } from 'chai';
@@ -170,4 +171,28 @@ describe('parseISOString and formatISOString are inverse functions', () => {
       .to.equal(dateAfterFormatISOString)
       .and.equal(dateAfterParsedISODate);
   });
+});
+
+describe('test function musitParseFloat', () => {
+  it('parse float with nulls', () => {
+    const weight = '00,001' 
+    const output = musitParseFloat(weight);
+    expect(output).toBe("0.001");
+  });
+  it('parse float with nulls and dot', () => {
+    const weight = '10,001' 
+    const output = musitParseFloat(weight);
+    expect(output).toBe("10.001");
+  });
+  it('parse float with 100 and four decimal', () => {
+    const weight = '100.0101' 
+    const output = musitParseFloat(weight);
+    expect(output).toBe("100.0101");
+  });
+  it('parse float with 103 and four decimal', () => {
+    const weight = '103.0101' 
+    const output = musitParseFloat(weight);
+    expect(output).toBe("103.0101");
+  });
+
 });
