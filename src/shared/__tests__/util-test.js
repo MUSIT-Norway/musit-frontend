@@ -175,24 +175,23 @@ describe('parseISOString and formatISOString are inverse functions', () => {
 
 describe('test function musitParseFloat', () => {
   it('parse float with nulls', () => {
-    const weight = '00,001' 
+    const weight = '00,001';
     const output = musitParseFloat(weight);
-    expect(output).toBe("0.001");
+    expect(output).toBe('0.001');
   });
   it('parse float with nulls and dot', () => {
-    const weight = '10,001' 
+    const weight = '10,001';
     const output = musitParseFloat(weight);
-    expect(output).toBe("10.001");
+    expect(output).toBe('10.001');
   });
   it('parse float with 100 and four decimal', () => {
-    const weight = '100.0101' 
+    const weight = '100.0101';
     const output = musitParseFloat(weight);
-    expect(output).toBe("100.0101");
+    expect(output).toBe('100.0101');
   });
   it('parse float with 103 and four decimal', () => {
-    const weight = '103.0101' 
+    const weight = '103.0101';
     const output = musitParseFloat(weight);
-    expect(output).toBe("103.0101");
+    expect(output).toBe('103.0101');
   });
-
 });
