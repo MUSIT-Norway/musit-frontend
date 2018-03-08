@@ -42,7 +42,11 @@ const getConservationAction$: Observable<*> = getConservation$
       getConservationDetails(simpleGet, simplePost, props)
     )
   )
-  .do(flagLoading({ loadingConservation: false }));
+  .do(
+    flagLoading({
+      loadingConservation: false
+    })
+  );
 
 export type SaveProps = {
   id: ?number,
@@ -250,7 +254,7 @@ type AjaxParams = {
   sampleTypes: SampleTypes
 };
 
-function getEventObjectDetails(
+export function getEventObjectDetails(
   props: AjaxParams,
   ajaxGet: AjaxGet<*>
 ): (t: any) => Observable<ObjectInfo> {
@@ -302,7 +306,11 @@ export function zipObjectInfoWithEvents(conservation: ConservationCollection) {
           return od ? { ...od, ...e } : e;
         })
       : [];
-    return { ...conservation, events: events, affectedThings: arrayOfObjectDetails };
+    return {
+      ...conservation,
+      events: events,
+      affectedThings: arrayOfObjectDetails
+    };
   };
 }
 
@@ -446,7 +454,11 @@ const uploadDocumentAndSaveConservation = (ajaxPost, ajaxPut) => ({
       })
       .do(results => {
         if (callback && callback.onComplete) {
-          callback.onComplete({ id: eventId, results: results.results, badFiles });
+          callback.onComplete({
+            id: eventId,
+            results: results.results,
+            badFiles
+          });
         }
       });
   });

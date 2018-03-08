@@ -2306,6 +2306,9 @@ describe('ConservationComponent edit page', () => {
         onEdit={e => e}
         onSave={e => e}
         onCancel={e => e}
+        addNewObjectToSubEventAndProcess={e => e}
+        addObjectsToSubEvent={e => e}
+        addAffectedThings={() => e => e}
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
@@ -3861,6 +3864,9 @@ describe('ConservationComponent add page', () => {
         onEdit={e => e}
         onSave={e => e}
         onCancel={e => e}
+        addNewObjectToSubEventAndProcess={e => e}
+        addObjectsToSubEvent={e => e}
+        addAffectedThings={() => e => e}
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();

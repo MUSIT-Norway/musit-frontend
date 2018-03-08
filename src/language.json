@@ -627,6 +627,12 @@
         }
       },
       "texts": {
+        "search": "Search",
+        "select": "Select",
+        "searchData": "Search data",  
+        "selected": "Selected",
+        "notSelected": "Not selected",      
+        "selectObjects": "Select objects",  
         "doNotHaveSufficientRole":
           "Do not have sufficient role to perform the operation",
         "error": "Error message",
@@ -649,6 +655,7 @@
         "edit": "Edit",
         "delete": "Delete",
         "back": "Back",
+        "addObjects": "Add objects",
         "cancelTooltip": "Cancel registration",
         "magazine": "Storage facility",
         "deleteNode": "Delete node",
@@ -1748,6 +1755,12 @@
         }
       },
       "texts": {
+        "search": "Søk",
+        "select": "Velg",
+        "searchData": "Søkedata",
+        "selected": "Valgt",
+        "notSelected": "Ikke valgt", 
+        "selectObjects": "Velg objekter",
         "doNotHaveSufficientRole":
           "Har ikke tilstrekkelig rolle for å utføre operasjonen",
         "error": "Feilmelding",
@@ -1770,6 +1783,7 @@
         "edit": "Endre",
         "delete": "Slett",
         "back": "Tilbake",
+        "addObjects": "Legg til objekter",
         "cancelTooltip": "Avbryt registreringen",
         "magazine": "Magasin",
         "deleteNode": "Slett node",

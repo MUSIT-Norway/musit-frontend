@@ -2,7 +2,8 @@
 import { getObjects, getConservationCollection } from '../shared/submit';
 import { saveConservation$, deleteConservation$ } from '../conservationStore';
 import type { Location } from '../shared/submit';
-import { simplePost, simplePut } from '../../../shared/RxAjax';
+import { simplePost, simplePut, simpleGet } from '../../../shared/RxAjax';
+import MusitObject from '../../../models/object';
 import type { History } from '../../../types/Routes';
 import type { AppSession } from '../../../types/appSession';
 
@@ -27,12 +28,14 @@ import { uploadFile } from '../../../models/conservation/documents';
 import { showConfirm } from '../../../shared/modal';
 import { formatISOString, measurementDeterminationTypeId } from '../../../shared/util';
 import { getCurrentMeasurementDataForObject } from '../../../models/conservation/conservation';
+import uniq from 'lodash/uniq';
 
 import { I18n } from 'react-i18nify';
 
 type FormProps = {|
   updateForm: Function,
   store: Store,
+  searchStore?: any,
   appSession: AppSession,
   form: FormData,
   history: History,
@@ -43,7 +46,8 @@ type FormProps = {|
 export default function formProps(
   props: FormProps,
   ajaxPost: Function = simplePost,
-  ajaxPut: Function = simplePut
+  ajaxPut: Function = simplePut,
+  ajaxGet: Function = simpleGet
 ) {
   return {
     ...props,
@@ -51,14 +55,22 @@ export default function formProps(
     objects: getObjects(toArray(props.form.affectedThings.value), props.location),
     updateStringField: updateStringField(props.updateForm),
     updateBooleanField: updateBooleanField(props.updateForm),
+    addNewObjectToSubEventAndProcess: addNewObjectToSubEventAndProcess(
+      props.updateForm,
+      props.appSession,
+      ajaxGet
+    ),
     updateArrayField: updateArrayField(props.updateForm),
     updateMultiSelectField: updateMultiSelectField(props.updateForm),
     updateConservationSubEvent: updateConservationSubEvent(props.updateForm),
     updatePersonsForSubEvent: updatePersonsForSubEvent(props.updateForm),
     toggleExpanded: toggleExpanded(props.updateForm),
+    addObjectsToSubEvent: addObjectsToSubEvent(props.updateForm),
+    addAffectedThings: addAffectedThings(props.updateForm),
     toggleObjectsExpanded: toggleObjectsExpanded(props.updateForm),
     toggleSingleExpanded: toggleSingleExpanded(props.updateForm),
     updateSingleObjectField: updateSingleObjectField(props.updateForm),
+
     addNewSubEvent: addNewSubEvent,
     onClickBack: onClickBack(props),
     onDocumentUpload: onDocumentUpload(
@@ -164,6 +176,21 @@ function updateArrayField(updateForm: Function) {
     });
 }
 
+function addAffectedThings(updateForm: Function) {
+  return (name: string) => (affectedThings: string[]) => (objects: string[]) => {
+    const objectsData = objects.map((o: any) => ({
+      ...o,
+      uuid: o.id,
+      collection: o.collection.id,
+      objectData: { ...o, uuid: o.id, collection: o.collection.id }
+    }));
+    updateForm({
+      name,
+      rawValue: affectedThings.concat(objectsData)
+    });
+  };
+}
+
 function updateMultiSelectField(updateForm: Function) {
   return (name: string) => (value: string) => {
     updateForm({
@@ -181,6 +208,25 @@ function updateMultiSelectField(updateForm: Function) {
   };
 }
 
+function addNewObjectToSubEventAndProcess(
+  updateForm: Function,
+  appSession: AppSession,
+  simpleGet: Function
+) {
+  return (
+    name: string,
+    events: ConservationSubTypes[],
+    index: number,
+    processAffectedThings: any[]
+  ) => (uuids: string[]) => {
+    const props = {
+      museumId: appSession.museumId,
+      collectionId: appSession.collectionId,
+      token: appSession.accessToken
+    };
+  };
+}
+
 export function updateConservationSubEvent(updateForm: Function) {
   return (name: string, events: Array<ConservationSubTypes>, arrayIndex: number) => (
     fieldName: string
@@ -190,6 +236,26 @@ export function updateConservationSubEvent(updateForm: Function) {
       rawValue: [
         ...events.slice(0, arrayIndex),
         { ...events[arrayIndex], [fieldName]: value },
+        ...events.slice(arrayIndex + 1)
+      ]
+    });
+  };
+}
+type ObjectType = { id: string };
+export function addObjectsToSubEvent(updateForm: Function) {
+  return (name: string, events: Array<ConservationSubTypes>, arrayIndex: number) => (
+    fieldName: string
+  ) => (value: Array<ObjectType>) => {
+    updateForm({
+      name,
+      rawValue: [
+        ...events.slice(0, arrayIndex),
+        {
+          ...events[arrayIndex],
+          [fieldName]: uniq(
+            events[arrayIndex][fieldName].concat(value.map((o: ObjectType) => o.id))
+          )
+        },
         ...events.slice(arrayIndex + 1)
       ]
     });

@@ -143,7 +143,6 @@ export class PickListComponent extends React.Component {
       this.props.removeObject(item);
     }
   }
-
   toggle(item, on) {
     if (this.props.isTypeNode) {
       this.props.markNode({ item, on });

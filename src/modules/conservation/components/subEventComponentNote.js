@@ -10,6 +10,8 @@ import { saveBlob } from '../../../shared/download';
 import { getFileAsBlob } from '../../../models/conservation/documents';
 import { I18n } from 'react-i18nify';
 import Toolbar from './Toolbar';
+import { showModal } from '../../../shared/modal';
+import SelectAdditionalObjectsComponent from './selectAdditionalObjectsComponent/SelectAdditionalObjectsComponent';
 
 export default function SubEventComponentNote(props: SubEventComponentNoteProps) {
   const suffix = ':';
@@ -21,6 +23,18 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
     deleteDisabled:
       !!props.editable || !props.appSession.rolesForModules.collectionManagementWrite
   };
+
+  function addObjects() {
+    showModal(
+      I18n.t('musit.texts.selectObjects'),
+      <SelectAdditionalObjectsComponent
+        addObjects={(objects: string[]) => {
+          props.onAddAffectedThings(objects);
+          props.onAddObjectsToSubEvent('affectedThings')(objects);
+        }}
+      />
+    );
+  }
 
   const subEventComponentNote = (
     <div className="container">
@@ -148,15 +162,25 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
       )}
       <br />
       <br />
-      {
-        <ObjectSelection
-          affectedThingsWithDetailsMainEvent={props.affectedThingsWithDetailsMainEvent}
-          affectedThingsSubEvent={props.subEvent.affectedThings}
-          affectedThingsSubEventOnChange={t =>
-            props.onChange('affectedThings')(t.map(s => s) || [])}
-          viewMode={props.viewMode || props.objectsReadOnly}
-        />
-      }
+      <button
+        key="btn-addObject"
+        className="btn btn-primary"
+        disabled={props.viewMode}
+        onClick={objects => addObjects(objects)}
+        style={{ float: 'left', marginRight: 110 }}
+      >
+        {I18n.t('musit.texts.addObjects')}
+      </button>
+      <ObjectSelection
+        affectedThingsWithDetailsMainEvent={props.affectedThingsWithDetailsMainEvent}
+        affectedThingsSubEvent={props.subEvent.affectedThings}
+        affectedThingsSubEventOnChange={t =>
+          props.onChange('affectedThings')(t.map(s => s) || [])}
+        viewMode={props.viewMode || props.objectsReadOnly}
+      />
+
+      <br />
+      <br />
       <div
         rel="tooltip"
         title={
