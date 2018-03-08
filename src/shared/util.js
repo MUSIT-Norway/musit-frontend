@@ -166,17 +166,23 @@ export const getPath = (node: SomethingLikeNode) => {
 };
 
 export const musitParseFloat = (txt: string) => {
-  if (txt) {
-    if (txt.length === 1) {
-      if (isNaN(parseInt(txt))) return '';
-      else return txt;
-    } else {
-      const res = txt.replace(',', '.');
-      const extraTxt = res.endsWith('.') ? '.' : '';
-      return parseFloat(res) + extraTxt;
-    }
+  if (!txt) return undefined;
+  if (txt.length === 1) {
+    if (isNaN(parseInt(txt))) return '';
+    else return txt;
   }
-  return undefined;
+
+  const res = txt.replace(',', '.');
+
+  const reg = /(.*?)(0*)$/;
+  const svar = reg.exec(res);
+  const endNulls = svar[2];
+  let startTxt = svar[1];
+  const maybeDot = startTxt.endsWith('.') ? '.' : '';
+  console.log('svaret er : ' + svar);
+  if (startTxt) startTxt = parseFloat(startTxt);
+
+  return startTxt + maybeDot + endNulls;
 };
 
 export const musitParseInt = (txt: string) => {
