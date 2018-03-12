@@ -51,7 +51,7 @@ export default function MeasurementDetermination(props: MeasurementDetermination
           suffix}
       </label>
       <div className="row form-group">
-        <div className="col-md-1">
+        <div className="col-md-2">
           {props.viewMode ? (
             <p className="form-control-static" id={`length${props.index}`}>
               {props.measurementDetermination.measurementData &&
@@ -83,7 +83,7 @@ export default function MeasurementDetermination(props: MeasurementDetermination
           suffix}
       </label>
       <div className="row form-group">
-        <div className="col-md-1">
+        <div className="col-md-2">
           {props.viewMode ? (
             <p className="form-control-static" id={`width${props.index}`}>
               {props.measurementDetermination.measurementData &&
@@ -115,7 +115,7 @@ export default function MeasurementDetermination(props: MeasurementDetermination
           suffix}
       </label>
       <div className="row form-group">
-        <div className="col-md-1">
+        <div className="col-md-2">
           {props.viewMode ? (
             <p className="form-control-static" id={`thickness${props.index}`}>
               {props.measurementDetermination.measurementData &&
@@ -147,7 +147,7 @@ export default function MeasurementDetermination(props: MeasurementDetermination
           suffix}
       </label>
       <div className="row form-group">
-        <div className="col-md-1">
+        <div className="col-md-2">
           {props.viewMode ? (
             <p className="form-control-static" id={`height${props.index}`}>
               {props.measurementDetermination.measurementData &&
@@ -185,7 +185,7 @@ export default function MeasurementDetermination(props: MeasurementDetermination
           suffix}
       </label>
       <div className="row form-group">
-        <div className="col-md-1">
+        <div className="col-md-2">
           {props.viewMode ? (
             <p className="form-control-static" id={`largestLength${props.index}`}>
               {props.measurementDetermination.measurementData &&
@@ -223,7 +223,7 @@ export default function MeasurementDetermination(props: MeasurementDetermination
           suffix}
       </label>
       <div className="row form-group">
-        <div className="col-md-1">
+        <div className="col-md-2">
           {props.viewMode ? (
             <p className="form-control-static" id={`largestWidth${props.index}`}>
               {props.measurementDetermination.measurementData &&
@@ -261,7 +261,7 @@ export default function MeasurementDetermination(props: MeasurementDetermination
           suffix}
       </label>
       <div className="row form-group">
-        <div className="col-md-1">
+        <div className="col-md-2">
           {props.viewMode ? (
             <p className="form-control-static" id={`largestThickness${props.index}`}>
               {props.measurementDetermination.measurementData &&
@@ -299,7 +299,7 @@ export default function MeasurementDetermination(props: MeasurementDetermination
           suffix}
       </label>
       <div className="row form-group">
-        <div className="col-md-1">
+        <div className="col-md-2">
           {props.viewMode ? (
             <p className="form-control-static" id={`largestHeight${props.index}`}>
               {props.measurementDetermination.measurementData &&
@@ -331,7 +331,7 @@ export default function MeasurementDetermination(props: MeasurementDetermination
           suffix}
       </label>
       <div className="row form-group">
-        <div className="col-md-1">
+        <div className="col-md-2">
           {props.viewMode ? (
             <p className="form-control-static" id={`diameter${props.index}`}>
               {props.measurementDetermination.measurementData &&
@@ -363,7 +363,7 @@ export default function MeasurementDetermination(props: MeasurementDetermination
           suffix}
       </label>
       <div className="row form-group">
-        <div className="col-md-1">
+        <div className="col-md-2">
           {props.viewMode ? (
             <p className="form-control-static" id={`tverrmaal${props.index}`}>
               {props.measurementDetermination.measurementData &&
@@ -401,7 +401,7 @@ export default function MeasurementDetermination(props: MeasurementDetermination
           suffix}
       </label>
       <div className="row form-group">
-        <div className="col-md-1">
+        <div className="col-md-2">
           {props.viewMode ? (
             <p className="form-control-static" id={`largestMeasurement${props.index}`}>
               {props.measurementDetermination.measurementData &&
