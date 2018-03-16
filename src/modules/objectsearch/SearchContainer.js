@@ -47,7 +47,7 @@ function getSource(hit: SearchHit): ?ObjectData | ?SampleData {
 function props(p, upstream: { history: History }) {
   return {
     onSearch: () => {
-      actions.clear$;
+     // actions.clear$; have to check this later, what is the meaning of this?(actions.clear$.next()???)
       actions.setLoading$.next();
       actions.search$.next({
         from: 0,
@@ -59,11 +59,11 @@ function props(p, upstream: { history: History }) {
       });
     },
     onChangeQueryParam: (name: string, value: string) => {
-      actions.clear$;
+      // actions.clear$; have to check this later, what is the meaning of this?(actions.clear$.next()???)
       actions.changeQuery$.next({ name, value });
     },
     onChangePage: (page: ChangePage) => {
-      actions.clear$;
+     // actions.clear$; have to check this later, what is the meaning of this?(actions.clear$.next()???)
       actions.selectPage$.next({ page, appSession: p.store.appSession });
     },
     onClickHeader: (hit: SearchHit) => {
