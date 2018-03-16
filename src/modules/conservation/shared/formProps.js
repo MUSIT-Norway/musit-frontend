@@ -360,10 +360,10 @@ async function addNewSubEvent(
     }
 
     if (measurementevent) {
-      newSubEvents = {
+      newSubEvents = [].concat({
         ...newSubEvents[0],
         measurementData: measurementevent
-      };
+      });
     }
   }
   const events =
