@@ -1,25 +1,25 @@
 // @flow
 
-import React from "react";
-import Modal from "../../../../components/modal/MusitModal";
-import PropTypes from "prop-types";
-import { RxInjectLegacy as inject } from "react-rxjs";
-import appSession$ from "../../../../stores/appSession";
-import type { AppSession } from "../../../../types/appSession";
-import Config from "../../../../config";
-import type { SearchResult } from "types/search";
-import { ajaxGetRequest } from "../../../../shared/ajaxPromise";
-import type { MuseumId, CollectionId } from "types/ids";
+import React from 'react';
+import Modal from '../../../../components/modal/MusitModal';
+import PropTypes from 'prop-types';
+import { RxInjectLegacy as inject } from 'react-rxjs';
+import appSession$ from '../../../../stores/appSession';
+import type { AppSession } from '../../../../types/appSession';
+import Config from '../../../../config';
+import type { SearchResult } from 'types/search';
+import { ajaxGetRequest } from '../../../../shared/ajaxPromise';
+import type { MuseumId, CollectionId } from 'types/ids';
 
-import range from "lodash/range";
+import range from 'lodash/range';
 /* import {
   actions as searchActions,
   store$ as searchStore$
 } from '../../../objectsearch/searchStore'; */
-import { I18n } from "react-i18nify";
+import { I18n } from 'react-i18nify';
 
-import pullRight from "../../../../shared/pullRight";
-import cx from "classnames";
+import pullRight from '../../../../shared/pullRight';
+import cx from 'classnames';
 
 const data = {
   appSession$
@@ -46,10 +46,7 @@ class Pagination extends React.Component<PaginationProps> {
   };
 
   firstVisiblePage = () =>
-    Math.max(
-      1,
-      this.props.currentPage - Math.floor(this.props.visiblePageCount / 2)
-    );
+    Math.max(1, this.props.currentPage - Math.floor(this.props.visiblePageCount / 2));
 
   gotoPage = (newCurrentPage: number) => {
     this.props.onChangePage(newCurrentPage);
@@ -57,14 +54,14 @@ class Pagination extends React.Component<PaginationProps> {
 
   render = () => {
     let firstVisible = this.firstVisiblePage();
-    const lastVisible = Math.min(firstVisible + this.props.visiblePageCount - 1, this.totalPageCount());
-
-    firstVisible = Math.min(firstVisible, (lastVisible - this.props.visiblePageCount) + 1);
-    firstVisible = Math.max(1, firstVisible)
-    const visiblePages = range(
-      firstVisible,
-      lastVisible + 1
+    const lastVisible = Math.min(
+      firstVisible + this.props.visiblePageCount - 1,
+      this.totalPageCount()
     );
+
+    firstVisible = Math.min(firstVisible, lastVisible - this.props.visiblePageCount + 1);
+    firstVisible = Math.max(1, firstVisible);
+    const visiblePages = range(firstVisible, lastVisible + 1);
     /* console.log("firstvisible " + firstVisible + " - "+ Math.min(firstVisible + this.props.visiblePageCount, this.totalPageCount()))
     console.log("visiblepages " + visiblePages) */
     if (this.props.totalObjectCount <= this.props.objectsPerPage) {
@@ -156,7 +153,7 @@ export class SelectAdditionalObjectsComponent extends React.Component<
     this.state = {
       currentPageObjects: [],
       selectedObjects: new Set(),
-      q: "",
+      q: '',
       esFrom: 0,
       currentPage: 1,
       totalObjectCount: 0
@@ -164,19 +161,18 @@ export class SelectAdditionalObjectsComponent extends React.Component<
   }
 
   toggleObject(currentObject: CurrentPageObject, index: number) {
-    this.setState(prevState =>{
-
+    this.setState(prevState => {
       const newSet = new Set(prevState.selectedObjects);
       const wasSelected = newSet.has(currentObject.id);
-      if(wasSelected) {
-        newSet.delete(currentObject.id)
+      if (wasSelected) {
+        newSet.delete(currentObject.id);
+      } else {
+        newSet.add(currentObject.id);
       }
-      else {
-        newSet.add(currentObject.id)
-      }
-      
-      return ({selectedObjects: newSet});
-  })};
+
+      return { selectedObjects: newSet };
+    });
+  }
 
   doSearch = async (newSearch: boolean, from?: number = 0) => {
     const soek = `*${this.state.q}*`;
@@ -194,11 +190,11 @@ export class SelectAdditionalObjectsComponent extends React.Component<
     const objects =
       (result &&
         result.hits.hits.map(o => ({
-          ...o._source//,
+          ...o._source //,
           //selected: false
         }))) ||
       [];
-    console.log("Objects", objects);
+    console.log('Objects', objects);
     this.setState(() => ({
       currentPageObjects: objects,
       totalObjectCount: result.hits.total,
@@ -213,7 +209,7 @@ export class SelectAdditionalObjectsComponent extends React.Component<
   };
 
   enterKey = (key: KeyboardEvent) => {
-    if (key.key == "Enter") {
+    if (key.key == 'Enter') {
       this.doSearch(true);
     }
   };
@@ -222,7 +218,7 @@ export class SelectAdditionalObjectsComponent extends React.Component<
     const body = (
       <div>
         <div className="form-group">
-          <label htmlFor="query"> {I18n.t("musit.texts.searchData")}</label>
+          <label htmlFor="query"> {I18n.t('musit.texts.searchData')}</label>
           <input
             type="text"
             className="form-control"
@@ -238,15 +234,14 @@ export class SelectAdditionalObjectsComponent extends React.Component<
             this.doSearch(true);
           }}
         >
-          {I18n.t("musit.texts.search")}
+          {I18n.t('musit.texts.search')}
         </button>
-        <span>
-          &nbsp;&nbsp;&nbsp;
-          </span>
+        <span>&nbsp;&nbsp;&nbsp;</span>
         <button
           onClick={() => {
             this.props.addObjects(
-              this.state.selectedObjects /*.currentPageObjects
+              this.state
+                .selectedObjects /*.currentPageObjects
                 .map(o => ({ id: o.id, selected: o.selected, ...o }))
                 .filter(o => o.selected)
                 .map(o => o)*/
@@ -254,14 +249,14 @@ export class SelectAdditionalObjectsComponent extends React.Component<
             this.context.closeModal();
           }}
         >
-          {I18n.t("musit.texts.select")}
-        </button>{" "}
+          {I18n.t('musit.texts.select')}
+        </button>{' '}
+        <span>&nbsp;&nbsp;&nbsp;</span>
         <span>
-          &nbsp;&nbsp;&nbsp;
-          </span>
-        <span>  {I18n.t("musit.texts.count")}:{this.state.totalObjectCount} 
-        &nbsp;&nbsp;&nbsp; Antall valgte: {this.state.selectedObjects.size}
-       </span>
+          {' '}
+          {I18n.t('musit.texts.count')}:{this.state.totalObjectCount}
+          &nbsp;&nbsp;&nbsp; Antall valgte: {this.state.selectedObjects.size}
+        </span>
         <RightAlignedPagination
           objectsPerPage={objectsPerPage}
           visiblePageCount={5}
@@ -271,11 +266,11 @@ export class SelectAdditionalObjectsComponent extends React.Component<
         />
         <table className="table">
           <thead>
-            <tr key={"resultat"}>
-              <th> {I18n.t("musit.objectsearch.museumNo.label")}</th>
-              <th> {I18n.t("musit.objectsearch.subNo.label")}</th>
-              <th> {I18n.t("musit.objectsearch.term.label")}</th>
-              <th> {I18n.t("musit.texts.select")}</th>
+            <tr key={'resultat'}>
+              <th> {I18n.t('musit.objectsearch.museumNo.label')}</th>
+              <th> {I18n.t('musit.objectsearch.subNo.label')}</th>
+              <th> {I18n.t('musit.objectsearch.term.label')}</th>
+              <th> {I18n.t('musit.texts.select')}</th>
             </tr>
           </thead>
           <tbody>
@@ -290,9 +285,9 @@ export class SelectAdditionalObjectsComponent extends React.Component<
                   }}
                 >
                   {this.state.selectedObjects.has(o.id) ? (
-                    I18n.t("musit.texts.selected")
+                    I18n.t('musit.texts.selected')
                   ) : (
-                    I18n.t("musit.texts.notSelected")
+                    I18n.t('musit.texts.notSelected')
                   )}
                 </td>
               </tr>
@@ -328,6 +323,4 @@ export async function executeSearch(
   return result;
 }
 
-export default inject(data, {})(
-  SelectAdditionalObjectsComponent
-);
+export default inject(data, {})(SelectAdditionalObjectsComponent);
