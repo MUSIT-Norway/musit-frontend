@@ -126,12 +126,13 @@ type CurrentPageObject = {
   museumNo?: string,
   subNo?: string,
   term?: string
-}; //& any
+}; // & any
+
 
 type SelectAdditionalObjectsComponentState = {
   currentPageObjects: CurrentPageObject[], //The search result, with selected info etc as well.
   q: string, //current value in search field
-  selectedObjects: Set<string>,
+  selectedObjects: Map<string,CurrentPageObject>,
   esFrom: number,
   currentPage: number,
   totalObjectCount: number
@@ -152,7 +153,7 @@ export class SelectAdditionalObjectsComponent extends React.Component<
     super(props);
     this.state = {
       currentPageObjects: [],
-      selectedObjects: new Set(),
+      selectedObjects: new Map(),
       q: '',
       esFrom: 0,
       currentPage: 1,
@@ -162,15 +163,15 @@ export class SelectAdditionalObjectsComponent extends React.Component<
 
   toggleObject(currentObject: CurrentPageObject, index: number) {
     this.setState(prevState => {
-      const newSet = new Set(prevState.selectedObjects);
-      const wasSelected = newSet.has(currentObject.id);
+      const newMap = new Map(prevState.selectedObjects);
+      const wasSelected = newMap.has(currentObject.id);
       if (wasSelected) {
-        newSet.delete(currentObject.id);
+        newMap.delete(currentObject.id);
       } else {
-        newSet.add(currentObject.id);
+        newMap.set(currentObject.id,currentObject);
       }
 
-      return { selectedObjects: newSet };
+      return { selectedObjects: newMap };
     });
   }
 
@@ -194,12 +195,12 @@ export class SelectAdditionalObjectsComponent extends React.Component<
           //selected: false
         }))) ||
       [];
-    console.log('Objects', objects);
+    console.log('Objects', JSON.stringify(objects));
     this.setState(() => ({
       currentPageObjects: objects,
       totalObjectCount: result.hits.total,
       currentPage: from == 0 ? 1 : this.state.currentPage,
-      selectedObjects: newSearch ? new Set() : this.state.selectedObjects
+      selectedObjects: newSearch ? new Map() : this.state.selectedObjects
     }));
   };
 
@@ -239,12 +240,7 @@ export class SelectAdditionalObjectsComponent extends React.Component<
         <span>&nbsp;&nbsp;&nbsp;</span>
         <button
           onClick={() => {
-            this.props.addObjects(
-              this.state
-                .selectedObjects /*.currentPageObjects
-                .map(o => ({ id: o.id, selected: o.selected, ...o }))
-                .filter(o => o.selected)
-                .map(o => o)*/
+            this.props.addObjects(Array.from(this.state.selectedObjects.values())
             );
             this.context.closeModal();
           }}
