@@ -54,7 +54,8 @@ export const showModal = (title, componentToRender, closeFn) => {
     modal: true,
     title: title,
     autoResize: true,
-    minHeight: 'auto',
+   // minHeight: 'auto',
+   overflowY: 'hidden',
     resizable: true,
     width: 'auto',
     close: function() {
@@ -82,6 +83,7 @@ export const showModal = (title, componentToRender, closeFn) => {
         <div
           style={{
             minHeight: 500,
+            maxHeight: 500,
             minWidth: 700
           }}
         >
