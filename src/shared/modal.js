@@ -54,8 +54,8 @@ export const showModal = (title, componentToRender, closeFn) => {
     modal: true,
     title: title,
     autoResize: true,
-   // minHeight: 'auto',
-   overflowY: 'hidden',
+    // minHeight: 'auto',
+    overflowY: 'hidden',
     resizable: true,
     width: 'auto',
     close: function() {

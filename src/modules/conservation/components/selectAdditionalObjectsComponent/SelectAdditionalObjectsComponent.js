@@ -128,21 +128,20 @@ type CurrentPageObject = {
   term?: string
 }; // & any
 
-
 type SelectAdditionalObjectsComponentState = {
   currentPageObjects: CurrentPageObject[], //The search result, with selected info etc as well.
   q: string, //current value in search field
-  selectedObjects: Map<string,CurrentPageObject>,
+  selectedObjects: Map<string, CurrentPageObject>,
   esFrom: number,
   currentPage: number,
   totalObjectCount: number
 };
 
-const wait = (ms) => {
-  return new Promise((resolve) => {
+const wait = ms => {
+  return new Promise(resolve => {
     setTimeout(resolve, ms);
   });
- }
+};
 
 const objectsPerPage = 15;
 const RightAlignedPagination = pullRight(Pagination);
@@ -173,48 +172,44 @@ export class SelectAdditionalObjectsComponent extends React.Component<
       if (wasSelected) {
         newMap.delete(currentObject.id);
       } else {
-        newMap.set(currentObject.id,currentObject);
+        newMap.set(currentObject.id, currentObject);
       }
 
       return { selectedObjects: newMap };
     });
   }
 
-  
-
   doSearch = async (newSearch: boolean, from?: number = 0) => {
     const soek = `*${this.state.q}*`;
     const esQuery = `(museumNo:${soek} OR subNo:${soek} OR term:${soek}) AND objectType: collection`;
-    const oldCursor =  (document.body :any).style.cursor;
-     (document.body :any).style.cursor = "wait";
-    try{
-    const result = await executeSearch(
-      esQuery,
-      from,
-      objectsPerPage, // limit: number,«
-      this.props.appSession.collectionId,
-      this.props.appSession.museumId,
-      this.props.appSession.accessToken
-    );
-    const objects =
-      (result &&
-        result.hits.hits.map(o => ({
-          ...o._source //,
-          //selected: false
-        }))) ||
-      [];
-    //console.log('Objects', JSON.stringify(objects));
-    this.setState(() => ({
-      currentPageObjects: objects,
-      totalObjectCount: result.hits.total,
-      currentPage: from == 0 ? 1 : this.state.currentPage,
-      selectedObjects: newSearch ? new Map() : this.state.selectedObjects
-    }));
-  }
-  finally
-  {
-    (document.body :any).style.cursor = 'default';
-  }
+    const oldCursor = (document.body: any).style.cursor;
+    (document.body: any).style.cursor = 'wait';
+    try {
+      const result = await executeSearch(
+        esQuery,
+        from,
+        objectsPerPage, // limit: number,«
+        this.props.appSession.collectionId,
+        this.props.appSession.museumId,
+        this.props.appSession.accessToken
+      );
+      const objects =
+        (result &&
+          result.hits.hits.map(o => ({
+            ...o._source //,
+            //selected: false
+          }))) ||
+        [];
+      //console.log('Objects', JSON.stringify(objects));
+      this.setState(() => ({
+        currentPageObjects: objects,
+        totalObjectCount: result.hits.total,
+        currentPage: from == 0 ? 1 : this.state.currentPage,
+        selectedObjects: newSearch ? new Map() : this.state.selectedObjects
+      }));
+    } finally {
+      (document.body: any).style.cursor = 'default';
+    }
   };
 
   changePage = (changedTo: number) => {
@@ -253,8 +248,7 @@ export class SelectAdditionalObjectsComponent extends React.Component<
         <span>&nbsp;&nbsp;&nbsp;</span>
         <button
           onClick={() => {
-            this.props.addObjects(Array.from(this.state.selectedObjects.values())
-            );
+            this.props.addObjects(Array.from(this.state.selectedObjects.values()));
             this.context.closeModal();
           }}
         >
@@ -273,9 +267,9 @@ export class SelectAdditionalObjectsComponent extends React.Component<
           currentPage={this.state.currentPage}
           onChangePage={changedTo => this.changePage(changedTo)}
         />
-        <table className="table" >
+        <table className="table">
           <thead>
-            <tr key={'resultat'} >
+            <tr key={'resultat'}>
               <th> {I18n.t('musit.objectsearch.museumNo.label')}</th>
               <th> {I18n.t('musit.objectsearch.subNo.label')}</th>
               <th> {I18n.t('musit.objectsearch.term.label')}</th>

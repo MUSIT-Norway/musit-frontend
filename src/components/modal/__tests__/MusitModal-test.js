@@ -8,8 +8,8 @@ describe('MusitModal', () => {
     const wrapper = shallow(
       <Modal
         header={<span>A header</span>}
-        body={<div>Some really cool body</div>}
         footer={<span>A footer</span>}
+        body={<div>Some really cool body</div>}
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();

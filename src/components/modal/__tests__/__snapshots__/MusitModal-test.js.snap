@@ -13,18 +13,18 @@ exports[`MusitModal should render header, body and footer 1`] = `
     </span>
   </div>
   <div
-    className="musit-modal-body"
-  >
-    <div>
-      Some really cool body
-    </div>
-  </div>
-  <div
     className="musit-modal-footer"
   >
     <span>
       A footer
     </span>
+  </div>
+  <div
+    className="musit-modal-body"
+  >
+    <div>
+      Some really cool body
+    </div>
   </div>
 </div>
 `;
