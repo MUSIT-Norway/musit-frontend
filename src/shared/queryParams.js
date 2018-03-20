@@ -11,7 +11,7 @@ const encodeValue = value => encodeURIComponent(value.toString());
  * values will be ignored (including the key).
  */
 export default (queryParamObj: {
-  [string]: ?string | ?number | ?Array<string | number>
+  [string]: ?string | ?number | ?Array<string | number> | ?boolean
 }): string => {
   const encQueryParams = reduce(
     queryParamObj,

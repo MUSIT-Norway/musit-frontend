@@ -308,7 +308,8 @@ export default {
             limit: number,
             from: number,
             collectionId: CollectionId,
-            museumId: MuseumId
+            museumId: MuseumId,
+            ignoreSamples: boolean
           ): string => {
             const baseUrl = `/api/thingaggregate/museum/${museumId}/objects/search`;
             const qs = queryParams({
@@ -318,7 +319,8 @@ export default {
               from,
               limit,
               q,
-              collectionIds: collectionId
+              collectionIds: collectionId,
+              ignoreSamples: ignoreSamples
             });
             return baseUrl + qs;
           },

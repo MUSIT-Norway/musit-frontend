@@ -181,7 +181,8 @@ export class SelectAdditionalObjectsComponent extends React.Component<
 
   doSearch = async (newSearch: boolean, from?: number = 0) => {
     const soek = `*${this.state.q}*`;
-    const esQuery = `(museumNo:${soek} OR subNo:${soek} OR term:${soek}) AND objectType: collection`;
+    //const esQuery = `(museumNo:${soek} OR subNo:${soek} OR term:${soek})AND objectType:collection`;
+    const esQuery = `(museumNo:${soek} OR subNo:${soek} OR term:${soek})AND  _type:collection`;
     const oldCursor = (document.body: any).style.cursor;
     (document.body: any).style.cursor = 'wait';
     try {
@@ -320,7 +321,8 @@ export async function executeSearch(
     limit, // this.props.limit,
     from, //this.state.esFrom,
     collectionId,
-    museumId
+    museumId,
+    true
   );
   const result = JSON.parse(await ajaxGetRequest(url, token));
   return result;
