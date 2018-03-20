@@ -32,7 +32,9 @@ export function objectSearch(ajaxGet: AjaxGet<*> = simpleGet) {
       props.limit,
       props.from,
       props.collectionIds,
-      props.museumId
+      props.museumId,
+      false
+
     );
     return ajaxGet(url, props.token).map(({ response }) => response);
   };
