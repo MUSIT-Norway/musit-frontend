@@ -34,7 +34,6 @@ export function objectSearch(ajaxGet: AjaxGet<*> = simpleGet) {
       props.collectionIds,
       props.museumId,
       false
-
     );
     return ajaxGet(url, props.token).map(({ response }) => response);
   };
