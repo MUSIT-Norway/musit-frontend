@@ -57,9 +57,10 @@ const CollectionResultHit = (props: ResultHitProps) => {
             <span />
           </a>
         </h4>
-        <div className="row">
+        <div className="row">{console.log("ELLLLLLLLLLLLLLLLLLLLLLLLLLLL", object)}
           <div className="col-md-3">MuseumNo: {object.museumNo}</div>
           <div className="col-md-3">SubNo: {object.subNo}</div>
+          <div className="col-md-3">currentLocation: {object.currentLocation}</div>
           <div
             className="col-md-2 pull-right"
             onClick={() => props.onClickShoppingCart(props.hit)}
@@ -101,9 +102,11 @@ const SampleResultHit = (props: ResultHitProps) => {
           </a>
         </h4>
         <div className="row">
+        {console.log("ELLLLLLLLLLLLLLLLLLLLLLLLLLLL", sample)}
           <div className="col-md-3">MuseumNo: {object ? object.museumNo : ''}</div>
           <div className="col-md-3">SubNo: {object ? object.subNo : ''}</div>
           <div className="col-md-3">Gjenstand/Takson: {object ? object.term : ''}</div>
+          <div className="col-md-3">currentLocation: {sample ? sample.currentLocation : ''}</div>
           <div
             className="col-md-2 pull-right"
             onClick={() => props.onClickShoppingCart(props.hit)}
