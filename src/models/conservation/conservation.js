@@ -245,3 +245,17 @@ export function getCurrentMeasurementDataForObject(
   );
   return ajaxGetRequest(url, token);
 }
+
+export function getConservationReport(
+  eventId: string,
+  museumId: number,
+  collectionId: string,
+  token: string
+) {
+  const url = Config.magasin.urls.api.conservation.getConservationReport(
+    museumId,
+    collectionId,
+    eventId
+  );
+  return ajaxGetRequest(url, token);
+}

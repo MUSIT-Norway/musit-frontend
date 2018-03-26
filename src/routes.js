@@ -40,7 +40,6 @@ import AnalysisSearchContainer from './modules/analysis/search/analysisSearchCon
 import { replace } from 'lodash';
 import ConservationAddContainer from './modules/conservation/conservationAddContainer';
 import ConservationEditContainer from './modules/conservation/conservationEditContainer';
-import ConservationViewContainer from './modules/conservation/conservationEditContainer';
 import ConservationSearchContainer from './modules/conservation/search/conservationSearchContainer';
 
 /**
@@ -247,7 +246,7 @@ const ConservationPage = props => (
     <Route
       path={rt(props, '/:conservationId/:subEventId?')}
       exact
-      component={ConservationViewContainer}
+      component={ConservationEditContainer}
     />
 
     <Route component={NotFoundPage} />

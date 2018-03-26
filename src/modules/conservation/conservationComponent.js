@@ -80,7 +80,8 @@ type ConservationProcessProps = {
   onCancel: Function,
   onChangeQueryParam?: Function,
   onSearch?: Function,
-  match?: any
+  match?: any,
+  downloadConservationReport?: Function
 };
 
 export type Props = ConservationProcessProps & {
@@ -498,7 +499,29 @@ export default function ConservationComponent(
   return (
     <div className="container">
       <h1>{I18n.t('musit.conservation.conservation')}</h1>
-
+      {props.match &&
+      props.match.params &&
+      props.match.params.subEventId &&
+      props.match.params.subEventId === 'report' && (
+        <button
+          key="btn-report"
+          className="btn btn-primary"
+          disabled={!props.appSession.rolesForModules.collectionManagementRead}
+          onClick={e =>
+            props.downloadConservationReport &&
+            props.downloadConservationReport(props.appSession, props.form.id.value)}
+          title={
+            !props.appSession.rolesForModules.collectionManagementRead ? (
+              I18n.t('musit.texts.doNotHaveSufficientRole')
+            ) : (
+              I18n.t('musit.texts.conservationReport')
+            )
+          }
+          style={{ float: 'right', marginRight: 12 }}
+        >
+          {I18n.t('musit.texts.report')}
+        </button>
+      )}
       {props.form.id.value && (
         <form className="form-horizontal">
           <br />
@@ -514,6 +537,7 @@ export default function ConservationComponent(
           <hr />
         </form>
       )}
+
       <button
         key="btn-edit"
         className="btn btn-primary"

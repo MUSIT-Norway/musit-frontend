@@ -27,9 +27,12 @@ import { getFormEvents, getFids } from './utils';
 import { uploadFile } from '../../../models/conservation/documents';
 import { showConfirm } from '../../../shared/modal';
 import { formatISOString, measurementDeterminationTypeId } from '../../../shared/util';
-import { getCurrentMeasurementDataForObject } from '../../../models/conservation/conservation';
+import {
+  getCurrentMeasurementDataForObject,
+  getConservationReport
+} from '../../../models/conservation/conservation';
 import uniq from 'lodash/uniq';
-
+import moment from 'moment';
 import { I18n } from 'react-i18nify';
 
 type FormProps = {|
@@ -91,8 +94,33 @@ export default function formProps(
       ajaxPost,
       ajaxPut,
       props.updateForm
-    )
+    ),
+    downloadConservationReport: downloadConservationReport
   };
+}
+
+function downloadFile(HTML: any, fileName: string) {
+  var element = document.createElement('a');
+  var file = new Blob([HTML], { type: 'text/plain' });
+  element.href = URL.createObjectURL(file);
+  element.download = `${fileName}.html`;
+  element.click();
+}
+async function downloadConservationReport(appSession: AppSession, eventId: string) {
+  try {
+    const report = await getConservationReport(
+      eventId,
+      appSession.museumId,
+      appSession.collectionId,
+      appSession.accessToken
+    );
+    downloadFile(report, `ConservationReport_${eventId}_${moment().format()}`);
+  } catch (error) {
+    emitError({
+      type: 'error',
+      message: I18n.t('musit.conservation.errorDownloadingOperation')
+    });
+  }
 }
 
 function updateExpandOnView(updateForm: Function) {
