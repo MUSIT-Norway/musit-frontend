@@ -87,5 +87,4 @@ export type ObjectData = {
   nodeId: string
 } & MusitObject;
 
-
 export type objectTypeAndId = Array<{ objectType: string, id: string }>;

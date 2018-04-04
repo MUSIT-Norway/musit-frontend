@@ -9,7 +9,7 @@ import Pagination from '../../search/components/pagination';
 import SearchStats from '../../search/components/SearchStats';
 import pullRight from '../../shared/pullRight';
 import Breadcrumb from '../../components/layout/Breadcrumb';
-import type {  ObjectData } from '../../types/object';
+import type { ObjectData } from '../../types/object';
 
 import type { SearchStoreState, ChangePage } from '../../search/searchStore';
 import type { SearchHit } from '../../types/search';
@@ -25,7 +25,6 @@ export type Events = {
   isObjectAdded: (hit: SearchHit) => boolean,
   onClickBreadcrumb: (node: Node, isObject: boolean) => void
 };
-
 
 /*
 function CollectionResultHit(props: ResultHitProps) {
@@ -60,7 +59,7 @@ const CollectionResultHit = (props: ResultHitProps) => {
   // we know the type due to the index and type from elasticsearch
   const collObject = (props.hit._source: ?ObjectData);
   if (!collObject) return null;
-  return  (
+  return (
     <div className="media musit__media--search">
       <div className="media-left">
         <FontAwesome name="tag" style={{ fontSize: '1.3em', height: 25 }} />
@@ -78,8 +77,8 @@ const CollectionResultHit = (props: ResultHitProps) => {
           <div className="col-md-3">Gjenstand/Takson: {collObject.term}</div>
           <div className="col-md-3">
             {(collObject: ObjectData).currentLocation &&
-            (collObject : any).currentLocation.breadcrumb &&
-            (collObject : any).currentLocation.breadcrumb.length > 0 ? (
+            (collObject: any).currentLocation.breadcrumb &&
+            (collObject: any).currentLocation.breadcrumb.length > 0 ? (
               <span className="labelText">
                 <Breadcrumb
                   node={collObject.currentLocation}
@@ -112,7 +111,7 @@ const CollectionResultHit = (props: ResultHitProps) => {
         </div>
       </div>
     </div>
-  )
+  );
 };
 
 const SampleResultHit = (props: ResultHitProps) => {
