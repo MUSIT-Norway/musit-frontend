@@ -49,14 +49,15 @@ function props(p, upstream: { history: History }) {
     onClickBreadcrumb: (node, isObject) => {
       if (node.nodeId) {
         upstream.history.push(
-          isObject ? 
-          Config.magasin.urls.client.storagefacility.goToObjects(
-            node.nodeId,
-            p.store.appSession
-          ) :  Config.magasin.urls.client.storagefacility.goToSamples(
-            node.nodeId,
-            p.store.appSession
-          )
+          isObject
+            ? Config.magasin.urls.client.storagefacility.goToObjects(
+                node.nodeId,
+                p.store.appSession
+              )
+            : Config.magasin.urls.client.storagefacility.goToSamples(
+                node.nodeId,
+                p.store.appSession
+              )
         );
       } else {
         upstream.history.push(
