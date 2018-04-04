@@ -24,15 +24,6 @@ type SearchProps = {
   token: string
 };
 
-/* return Observable.forkJoin(
-  samples.map(sample => {
-    return MusitObject.getObjectLocation(simpleGet)({
-      ...params,
-      objectType: 'sample',
-      objectId: sample.objectId
-    }).map(currentLocation => ({ ...sample, currentLocation }));
-  }) */
-
 const hentPlassering = (
   id: string,
   objectType: string,
