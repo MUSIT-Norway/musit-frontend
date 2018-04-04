@@ -47,10 +47,9 @@ function getSource(hit: SearchHit): ?ObjectData | ?SampleData {
 function props(p, upstream: { history: History }) {
   return {
     onClickBreadcrumb: (node, isObject) => {
-
       if (node.nodeId) {
-        console.log("node.nodeid " + node.nodeId)
-        console.log("node.id " + node.id)
+        console.log('node.nodeid ' + node.nodeId);
+        console.log('node.id ' + node.id);
         upstream.history.push(
           isObject
             ? Config.magasin.urls.client.storagefacility.goToObjects(
