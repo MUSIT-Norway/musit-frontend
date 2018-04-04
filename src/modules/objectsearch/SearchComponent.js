@@ -247,7 +247,7 @@ const SearchResultItem = (props: {
   getObject: (hit: SearchHit) => ?ObjectData,
   getSampleTypeStr: (sample: SampleData) => string,
   isObjectAdded: (hit: SearchHit) => boolean,
-  onClickBreadcrumb: (node: Node) => void
+  onClickBreadcrumb: (node: Node, isObject: boolean) => void
 }) => {
   const result = props.searchStore.result;
   if (result && result.hits.total > 0) {
