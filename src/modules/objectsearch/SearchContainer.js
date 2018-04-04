@@ -46,6 +46,27 @@ function getSource(hit: SearchHit): ?ObjectData | ?SampleData {
 
 function props(p, upstream: { history: History }) {
   return {
+    onClickBreadcrumb: (node, isObject) => {
+      if (node.nodeId) {
+        console.log('node.nodeid ' + node.nodeId);
+        console.log('node.id ' + node.id);
+        upstream.history.push(
+          isObject
+            ? Config.magasin.urls.client.storagefacility.goToObjects(
+                node.nodeId,
+                p.store.appSession
+              )
+            : Config.magasin.urls.client.storagefacility.goToSamples(
+                node.nodeId,
+                p.store.appSession
+              )
+        );
+      } else {
+        upstream.history.push(
+          Config.magasin.urls.client.storagefacility.goToRoot(p.store.appSession)
+        );
+      }
+    },
     onSearch: () => {
       // actions.clear$; have to check this later, what is the meaning of this?(actions.clear$.next()???)
       actions.setLoading$.next();
@@ -132,6 +153,7 @@ function props(p, upstream: { history: History }) {
       return `Unknown: ${sample.sampleTypeId.toString()}`;
     },
     searchStore: p.store.searchStore,
+
     isObjectAdded: (hit: SearchHit): boolean => {
       return isItemAdded(hit._source, p.pickList && p.pickList.objects);
     }

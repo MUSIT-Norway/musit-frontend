@@ -54,7 +54,7 @@ describe('AnalysisSampleFormPageAdd', () => {
             term: 'Carex saxatilis',
             subNo: 'a',
             objectType: 'collection',
-            currentLocation: { pathNames: null },
+            currentLocation: { breadcrumb: undefined, pathNames: null },
             objectUUID: '0000-0000-123',
             nodeId: 'blee',
             derivedFrom: sample
@@ -136,7 +136,7 @@ describe('AnalysisSampleFormPageAdd', () => {
             term: 'Carex saxatilis',
             subNo: 'a',
             objectType: 'collection',
-            currentLocation: { pathNames: null },
+            currentLocation: { breadcrumb: undefined, pathNames: null },
             objectUUID: '0000-0000-123',
             nodeId: 'blee',
             derivedFrom: sample

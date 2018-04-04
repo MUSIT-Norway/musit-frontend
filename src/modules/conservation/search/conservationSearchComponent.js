@@ -11,6 +11,7 @@ import './conservationSearchComponent.css';
 import moment from 'moment';
 import pullRight from '../../../shared/pullRight';
 import FontAwesome from 'react-fontawesome';
+import { conservationProcessTypeId } from '../../../shared/util';
 
 const DateFormat = 'DD.MM.YYYY HH:mm';
 
@@ -71,7 +72,9 @@ const getResultHitProps = (
       icon: 'bank',
       header: `${I18n.t('musit.conservation.conservation')} - ${type || ''}`,
       metaInfo: [
-        I18n.t('musit.conservation.note') + ': ' + source.note,
+        source.eventTypeId === conservationProcessTypeId
+          ? I18n.t('musit.conservation.caseNumber') + ': ' + source.caseNumber
+          : I18n.t('musit.conservation.note') + ': ' + source.note,
         I18n.t('musit.texts.dateRegistered') + ': ' + dateText
       ],
       onClickHeader: () => props.goToConservation(source.partOf, source.id)

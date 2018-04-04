@@ -61,7 +61,6 @@ class Breadcrumb extends React.Component {
     } else if (this.props.node && this.props.node.length) {
       path = this.props.node;
     }
-
     const itemsWithIndex = map(path, (item, index) => ({ ...item, index }));
     const itemsCropped = takeRight(itemsWithIndex, crumbLimit);
     // Emulating lazy val by making it a function
