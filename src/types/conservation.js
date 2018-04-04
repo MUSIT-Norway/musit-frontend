@@ -127,7 +127,8 @@ type SubEventComponentProps = {
   isFormValid: Function,
   editable: ?number,
   isUpdated?: boolean,
-  objectsReadOnly?: boolean
+  objectsReadOnly?: boolean,
+  downloadConservationReport?: Function
 };
 
 export type HseRiskType = SubEventComponentNoteType;

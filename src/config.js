@@ -161,6 +161,12 @@ export default {
             `/api/management/${mid}/conservation/events?eventIds=${eventId}`,
           getCurrentMeasurementDataForObject: (mid: MuseumId, id: string) =>
             `/api/management/${mid}/conservation/object/${id}/measurements`,
+          getConservationReport: (
+            mid: MuseumId,
+            collectionId: CollectionId,
+            eventId: string
+          ) =>
+            `/api/management/${mid}/conservation/conservationReportHTML/${eventId}?collectionId=${collectionId}`,
           search: (
             mid: MuseumId,
             collectionIds: string,
