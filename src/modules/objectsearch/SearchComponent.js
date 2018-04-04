@@ -9,10 +9,10 @@ import Pagination from '../../search/components/pagination';
 import SearchStats from '../../search/components/SearchStats';
 import pullRight from '../../shared/pullRight';
 import Breadcrumb from '../../components/layout/Breadcrumb';
+import type {  ObjectData } from '../../types/object';
 
 import type { SearchStoreState, ChangePage } from '../../search/searchStore';
 import type { SearchHit } from '../../types/search';
-import type { ObjectData } from '../../types/object';
 import type { SampleData } from '../../types/samples';
 
 import type { Node } from '../../types/node';
@@ -23,9 +23,17 @@ export type Events = {
   onClickHeader: (hit: SearchHit) => void,
   onClickShoppingCart: (hit: SearchHit) => void,
   isObjectAdded: (hit: SearchHit) => boolean,
-  onClickBreadcrumb: (node: Node) => void
+  onClickBreadcrumb: (node: Node, isObject: boolean) => void
 };
 
+
+/*
+function CollectionResultHit(props: ResultHitProps) {
+  // we know the type due to the index and type from elasticsearch
+  let hallo=(("test" : any) : ObjectData);
+}
+
+*/
 export type Getters = {
   getObject: (hit: SearchHit) => ?ObjectData,
   getSampleTypeStr: (sample: SampleData) => string
@@ -50,30 +58,31 @@ export type RenderResultHitsProps = {
 
 const CollectionResultHit = (props: ResultHitProps) => {
   // we know the type due to the index and type from elasticsearch
-  const object = (props.hit._source: ?ObjectData);
-  return object ? (
+  const collObject = (props.hit._source: ?ObjectData);
+  if (!collObject) return null;
+  return  (
     <div className="media musit__media--search">
       <div className="media-left">
         <FontAwesome name="tag" style={{ fontSize: '1.3em', height: 25 }} />
       </div>
       <div className="media-body">
         <h4 className="media-heading link" onClick={() => props.onClickHeader(props.hit)}>
-          {object.term}
+          {collObject.term}
           <a href="select">
             <span />
           </a>
         </h4>
         <div className="row">
-          <div className="col-md-3">MuseumNo: {object.museumNo}</div>
-          <div className="col-md-2">SubNo: {object.subNo}</div>
-          <div className="col-md-3">Gjenstand/Takson: {object.term}</div>
+          <div className="col-md-3">MuseumNo: {collObject.museumNo}</div>
+          <div className="col-md-2">SubNo: {collObject.subNo}</div>
+          <div className="col-md-3">Gjenstand/Takson: {collObject.term}</div>
           <div className="col-md-3">
-            {(object: ObjectData).currentLocation &&
-            object.currentLocation.breadcrumb &&
-            object.currentLocation.breadcrumb.length > 0 ? (
+            {(collObject: ObjectData).currentLocation &&
+            (collObject : any).currentLocation.breadcrumb &&
+            (collObject : any).currentLocation.breadcrumb.length > 0 ? (
               <span className="labelText">
                 <Breadcrumb
-                  node={object.currentLocation}
+                  node={collObject.currentLocation}
                   onClickCrumb={x => props.onClickBreadcrumb(x, true)}
                   allActive
                 />
@@ -103,7 +112,7 @@ const CollectionResultHit = (props: ResultHitProps) => {
         </div>
       </div>
     </div>
-  ) : null;
+  )
 };
 
 const SampleResultHit = (props: ResultHitProps) => {
