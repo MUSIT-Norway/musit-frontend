@@ -179,7 +179,7 @@ export const musitParseFloat = (txt: string) => {
   const endNulls = svar[2];
   let startTxt = svar[1];
   const maybeDot = startTxt.endsWith('.') ? '.' : '';
-  console.log('svaret er : ' + svar);
+  /*  console.log('svaret er : ' + svar); */
   if (startTxt) startTxt = parseFloat(startTxt);
 
   return startTxt + maybeDot + endNulls;

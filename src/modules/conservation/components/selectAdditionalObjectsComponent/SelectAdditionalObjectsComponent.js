@@ -62,8 +62,6 @@ class Pagination extends React.Component<PaginationProps> {
     firstVisible = Math.min(firstVisible, lastVisible - this.props.visiblePageCount + 1);
     firstVisible = Math.max(1, firstVisible);
     const visiblePages = range(firstVisible, lastVisible + 1);
-    /* console.log("firstvisible " + firstVisible + " - "+ Math.min(firstVisible + this.props.visiblePageCount, this.totalPageCount()))
-    console.log("visiblepages " + visiblePages) */
     if (this.props.totalObjectCount <= this.props.objectsPerPage) {
       return <span> </span>;
     } else {
@@ -200,7 +198,6 @@ export class SelectAdditionalObjectsComponent extends React.Component<
             //selected: false
           }))) ||
         [];
-      //console.log('Objects', JSON.stringify(objects));
       this.setState(() => ({
         currentPageObjects: objects,
         totalObjectCount: result.hits.total,

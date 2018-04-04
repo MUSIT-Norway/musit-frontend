@@ -1,13 +1,13 @@
 // @flow
 
-import { simpleGet } from "../../shared/RxAjax";
-import Config from "../../config";
-import { Observable } from "rxjs";
+import { simpleGet } from '../../shared/RxAjax';
+import Config from '../../config';
+import { Observable } from 'rxjs';
 
-import type { AjaxGet } from "types/ajax";
-import type { SearchResult } from "types/search";
-import type { MuseumId } from "types/ids";
-import MusitObject from "../object";
+import type { AjaxGet } from 'types/ajax';
+import type { SearchResult } from 'types/search';
+import type { MuseumId } from 'types/ids';
+import MusitObject from '../object';
 import { getPath } from '../../shared/util';
 
 type SearchProps = {
@@ -44,7 +44,7 @@ const hentPlassering = (
     objectType: objectType,
     objectId: id,
     token: token
-  }).map(path => JSON.stringify(path));
+  }).map(path => path);
 
 export function objectSearch(ajaxGet: AjaxGet<*> = simpleGet) {
   return (props: SearchProps): Observable<SearchResult> => {
@@ -75,15 +75,12 @@ export function objectSearch(ajaxGet: AjaxGet<*> = simpleGet) {
         }));
       });
       const newNewObject = Observable.forkJoin(newObjects).map(no => {
-        //newObjects.map(m => console.log("newObjects: "+ m))
-
         const svar = { ...r, hits: { ...r.hits, hits: no } };
-        console.log("svaaaaaaaaaaaaaar" + JSON.stringify(svar));
 
         return svar;
       });
       return newNewObject;
-    }); //console.log("RES: "+ JSON.stringify(//console.log("RES: "+ JSON.stringify(res))//console.log("RES: "+ JSON.stringify(res))res))
+    });
     return res;
   };
 }

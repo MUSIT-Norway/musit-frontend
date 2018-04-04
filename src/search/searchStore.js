@@ -133,8 +133,6 @@ function reducer$<E>(
     }),
     actions.changeQuery$.map(param => state => {
       const queryParam = { ...state.queryParam };
-      console.log('param ' + JSON.stringify(param));
-      console.log('queryParam ' + JSON.stringify(queryParam));
       if (param.value === '') {
         return { ...state, queryParam: omit(queryParam, param.name) };
       } else {

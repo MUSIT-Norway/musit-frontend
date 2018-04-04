@@ -8,16 +8,22 @@ import './searchComponent.css';
 import Pagination from '../../search/components/pagination';
 import SearchStats from '../../search/components/SearchStats';
 import pullRight from '../../shared/pullRight';
+import Breadcrumb from '../../components/layout/Breadcrumb';
 
 import type { SearchStoreState, ChangePage } from '../../search/searchStore';
 import type { SearchHit } from '../../types/search';
 import type { ObjectData } from '../../types/object';
 import type { SampleData } from '../../types/samples';
 
+import type { Node } from '../../types/node';
+import { _createBrowserHistory } from 'history';
+import type { AppSession } from '../../types/appSession';
+
 export type Events = {
   onClickHeader: (hit: SearchHit) => void,
   onClickShoppingCart: (hit: SearchHit) => void,
-  isObjectAdded: (hit: SearchHit) => boolean
+  isObjectAdded: (hit: SearchHit) => boolean,
+  onClickBreadcrumb: (node: Node) => void
 };
 
 export type Getters = {
@@ -57,10 +63,25 @@ const CollectionResultHit = (props: ResultHitProps) => {
             <span />
           </a>
         </h4>
-        <div className="row">{console.log("ELLLLLLLLLLLLLLLLLLLLLLLLLLLL", object)}
+        <div className="row">
           <div className="col-md-3">MuseumNo: {object.museumNo}</div>
-          <div className="col-md-3">SubNo: {object.subNo}</div>
-          <div className="col-md-3">currentLocation: {object.currentLocation}</div>
+          <div className="col-md-2">SubNo: {object.subNo}</div>
+          <div className="col-md-3">Gjenstand/Takson: {object.term}</div>
+          <div className="col-md-3">
+            {object.currentLocation &&
+            object.currentLocation.breadcrumb &&
+            object.currentLocation.breadcrumb.length > 0 ? (
+              <span className="labelText">
+                <Breadcrumb
+                  node={object.currentLocation}
+                  onClickCrumb={props.onClickBreadcrumb}
+                  allActive
+                />
+              </span>
+            ) : (
+              ''
+            )}
+          </div>
           <div
             className="col-md-2 pull-right"
             onClick={() => props.onClickShoppingCart(props.hit)}
@@ -102,11 +123,24 @@ const SampleResultHit = (props: ResultHitProps) => {
           </a>
         </h4>
         <div className="row">
-        {console.log("ELLLLLLLLLLLLLLLLLLLLLLLLLLLL", sample)}
           <div className="col-md-3">MuseumNo: {object ? object.museumNo : ''}</div>
-          <div className="col-md-3">SubNo: {object ? object.subNo : ''}</div>
+          <div className="col-md-2">SubNo: {object ? object.subNo : ''}</div>
           <div className="col-md-3">Gjenstand/Takson: {object ? object.term : ''}</div>
-          <div className="col-md-3">currentLocation: {sample ? sample.currentLocation : ''}</div>
+          <div className="col-md-3">
+            {sample.currentLocation &&
+            sample.currentLocation.breadcrumb &&
+            sample.currentLocation.breadcrumb.length > 0 ? (
+              <span className="labelText">
+                <Breadcrumb
+                  node={sample.currentLocation}
+                  onClickCrumb={props.onClickBreadcrumb}
+                  allActive
+                />
+              </span>
+            ) : (
+              ''
+            )}
+          </div>
           <div
             className="col-md-2 pull-right"
             onClick={() => props.onClickShoppingCart(props.hit)}
@@ -163,6 +197,7 @@ const RenderResultHits = (props: RenderResultHitsProps) => {
             getObject={props.getObject}
             getSampleTypeStr={props.getSampleTypeStr}
             isObjectAdded={props.isObjectAdded}
+            onClickBreadcrumb={props.onClickBreadcrumb}
           />
         );
       })}
@@ -203,7 +238,8 @@ const SearchResultItem = (props: {
   onClickShoppingCart: (hit: SearchHit) => void,
   getObject: (hit: SearchHit) => ?ObjectData,
   getSampleTypeStr: (sample: SampleData) => string,
-  isObjectAdded: (hit: SearchHit) => boolean
+  isObjectAdded: (hit: SearchHit) => boolean,
+  onClickBreadcrumb: (node: Node) => void
 }) => {
   const result = props.searchStore.result;
   if (result && result.hits.total > 0) {
@@ -224,6 +260,7 @@ const SearchResultItem = (props: {
           getObject={props.getObject}
           getSampleTypeStr={props.getSampleTypeStr}
           isObjectAdded={props.isObjectAdded}
+          onClickBreadcrumb={props.onClickBreadcrumb}
         />
 
         {pagination && (
@@ -255,6 +292,7 @@ const SearchComponent = (props: SearchComponentProps) => (
         getObject={props.getObject}
         getSampleTypeStr={props.getSampleTypeStr}
         isObjectAdded={props.isObjectAdded}
+        onClickBreadcrumb={props.onClickBreadcrumb}
       />
     ) : (
       <div>{I18n.t('musit.search.ready')}</div>

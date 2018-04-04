@@ -72,7 +72,9 @@ const getResultHitProps = (
       icon: 'bank',
       header: `${I18n.t('musit.conservation.conservation')} - ${type || ''}`,
       metaInfo: [
-       (source.eventTypeId === conservationProcessTypeId)? I18n.t('musit.conservation.caseNumber') + ': '+source.caseNumber : I18n.t('musit.conservation.note') + ': ' + source.note,
+        source.eventTypeId === conservationProcessTypeId
+          ? I18n.t('musit.conservation.caseNumber') + ': ' + source.caseNumber
+          : I18n.t('musit.conservation.note') + ': ' + source.note,
         I18n.t('musit.texts.dateRegistered') + ': ' + dateText
       ],
       onClickHeader: () => props.goToConservation(source.partOf, source.id)

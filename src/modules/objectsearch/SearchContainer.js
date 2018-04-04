@@ -46,6 +46,20 @@ function getSource(hit: SearchHit): ?ObjectData | ?SampleData {
 
 function props(p, upstream: { history: History }) {
   return {
+    onClickBreadcrumb: node => {
+      if (node.nodeId) {
+        upstream.history.push(
+          Config.magasin.urls.client.storagefacility.goToNode(
+            node.nodeId,
+            p.store.appSession
+          )
+        );
+      } else {
+        upstream.history.push(
+          Config.magasin.urls.client.storagefacility.goToRoot(p.store.appSession)
+        );
+      }
+    },
     onSearch: () => {
       // actions.clear$; have to check this later, what is the meaning of this?(actions.clear$.next()???)
       actions.setLoading$.next();
