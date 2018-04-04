@@ -1801,6 +1801,20 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
   <h1>
     Konservering
   </h1>
+  <button
+    className="btn btn-primary"
+    disabled={false}
+    onClick={[Function]}
+    style={
+      Object {
+        "float": "right",
+        "marginRight": 12,
+      }
+    }
+    title="Konservering report"
+  >
+    Report
+  </button>
   <form
     className="form-horizontal"
   >

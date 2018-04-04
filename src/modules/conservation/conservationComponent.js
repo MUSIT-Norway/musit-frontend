@@ -499,10 +499,7 @@ export default function ConservationComponent(
   return (
     <div className="container">
       <h1>{I18n.t('musit.conservation.conservation')}</h1>
-      {props.match &&
-      props.match.params &&
-      props.match.params.subEventId &&
-      props.match.params.subEventId === 'report' && (
+      {props.form.id.value && (
         <button
           key="btn-report"
           className="btn btn-primary"
