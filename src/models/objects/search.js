@@ -2,7 +2,8 @@
 
 import { simpleGet } from '../../shared/RxAjax';
 import Config from '../../config';
-import { Observable } from 'rxjs';
+import { Observable} from 'rxjs';
+import {forkJoin} from 'rxjs/observable/forkJoin';
 
 import type { AjaxGet } from 'types/ajax';
 import type { SearchResult } from 'types/search';
@@ -65,7 +66,7 @@ export function objectSearch(ajaxGet: AjaxGet<*> = simpleGet) {
           _source: { ...a._source, currentLocation: cl }
         }));
       });
-      const newNewObject = Observable.forkJoin(newObjects).map(no => {
+      const newNewObject = forkJoin( newObjects).map(no=>{
         const svar = { ...r, hits: { ...r.hits, hits: no } };
 
         return svar;

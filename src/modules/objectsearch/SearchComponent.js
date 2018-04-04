@@ -50,8 +50,9 @@ export type RenderResultHitsProps = {
 
 const CollectionResultHit = (props: ResultHitProps) => {
   // we know the type due to the index and type from elasticsearch
-  const object: ?ObjectData = props.hit._source;
+  const object  = (props.hit._source : ?ObjectData);
   return object ? (
+    
     <div className="media musit__media--search">
       <div className="media-left">
         <FontAwesome name="tag" style={{ fontSize: '1.3em', height: 25 }} />
@@ -68,13 +69,13 @@ const CollectionResultHit = (props: ResultHitProps) => {
           <div className="col-md-2">SubNo: {object.subNo}</div>
           <div className="col-md-3">Gjenstand/Takson: {object.term}</div>
           <div className="col-md-3">
-            {object.currentLocation &&
+            {(object : ObjectData).currentLocation &&
             object.currentLocation.breadcrumb &&
             object.currentLocation.breadcrumb.length > 0 ? (
               <span className="labelText">
                 <Breadcrumb
                   node={object.currentLocation}
-                  onClickCrumb={props.onClickBreadcrumb}
+                  onClickCrumb = {(x)=>props.onClickBreadcrumb(x, true)}
                   allActive
                 />
               </span>
@@ -133,7 +134,7 @@ const SampleResultHit = (props: ResultHitProps) => {
               <span className="labelText">
                 <Breadcrumb
                   node={sample.currentLocation}
-                  onClickCrumb={props.onClickBreadcrumb}
+                  onClickCrumb = {(x)=>props.onClickBreadcrumb(x, false)}
                   allActive
                 />
               </span>
@@ -293,6 +294,7 @@ const SearchComponent = (props: SearchComponentProps) => (
         getSampleTypeStr={props.getSampleTypeStr}
         isObjectAdded={props.isObjectAdded}
         onClickBreadcrumb={props.onClickBreadcrumb}
+
       />
     ) : (
       <div>{I18n.t('musit.search.ready')}</div>

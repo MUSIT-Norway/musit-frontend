@@ -46,10 +46,14 @@ function getSource(hit: SearchHit): ?ObjectData | ?SampleData {
 
 function props(p, upstream: { history: History }) {
   return {
-    onClickBreadcrumb: node => {
+    onClickBreadcrumb: (node, isObject) => {
       if (node.nodeId) {
         upstream.history.push(
-          Config.magasin.urls.client.storagefacility.goToNode(
+          isObject ? 
+          Config.magasin.urls.client.storagefacility.goToObjects(
+            node.nodeId,
+            p.store.appSession
+          ) :  Config.magasin.urls.client.storagefacility.goToSamples(
             node.nodeId,
             p.store.appSession
           )
@@ -146,6 +150,7 @@ function props(p, upstream: { history: History }) {
       return `Unknown: ${sample.sampleTypeId.toString()}`;
     },
     searchStore: p.store.searchStore,
+
     isObjectAdded: (hit: SearchHit): boolean => {
       return isItemAdded(hit._source, p.pickList && p.pickList.objects);
     }
