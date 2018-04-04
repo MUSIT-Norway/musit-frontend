@@ -24,7 +24,7 @@ exports[`ObjectSelection should render ObjectSelection as read only 1`] = `
           Museumsnr.
         </th>
         <th>
-          Undernr.
+          Unr.
         </th>
         <th>
           Gjenstand/Takson
@@ -111,7 +111,7 @@ exports[`ObjectSelection should render ObjectSelection for add and edit 1`] = `
           Museumsnr.
         </th>
         <th>
-          Undernr.
+          Unr.
         </th>
         <th>
           Gjenstand/Takson

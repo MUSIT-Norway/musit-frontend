@@ -72,9 +72,15 @@ const CollectionResultHit = (props: ResultHitProps) => {
           </a>
         </h4>
         <div className="row">
-          <div className="col-md-3">MuseumNo: {collObject.museumNo}</div>
-          <div className="col-md-2">SubNo: {collObject.subNo}</div>
-          <div className="col-md-3">Gjenstand/Takson: {collObject.term}</div>
+          <div className="col-md-3">
+            {I18n.t('musit.objects.objectsView.musNo')}: {collObject.museumNo}
+          </div>
+          <div className="col-md-2">
+            {I18n.t('musit.objects.objectsView.subNo')}: {collObject.subNo}
+          </div>
+          <div className="col-md-3">
+            {I18n.t('musit.objects.objectsView.term')}: {collObject.term}
+          </div>
           <div className="col-md-3">
             {(collObject: ObjectData).currentLocation &&
             (collObject: any).currentLocation.breadcrumb &&
@@ -131,9 +137,17 @@ const SampleResultHit = (props: ResultHitProps) => {
           </a>
         </h4>
         <div className="row">
-          <div className="col-md-3">MuseumNo: {object ? object.museumNo : ''}</div>
-          <div className="col-md-2">SubNo: {object ? object.subNo : ''}</div>
-          <div className="col-md-3">Gjenstand/Takson: {object ? object.term : ''}</div>
+          <div className="col-md-3">
+            {' '}
+            {I18n.t('musit.objects.objectsView.musNo')}: {object ? object.museumNo : ''}
+          </div>
+          <div className="col-md-2">
+            {' '}
+            {I18n.t('musit.objects.objectsView.subNo')}: {object ? object.subNo : ''}
+          </div>
+          <div className="col-md-3">
+            {I18n.t('musit.objects.objectsView.term')}: {object ? object.term : ''}
+          </div>
           <div className="col-md-3">
             {sample.currentLocation &&
             sample.currentLocation.breadcrumb &&
