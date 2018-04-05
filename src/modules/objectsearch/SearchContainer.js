@@ -69,7 +69,9 @@ function props(p, upstream: { history: History }) {
       //console.log("heyheyesdfadsfdf "+ p.store.appSession);
       // actions.clear$; have to check this later, what is the meaning of this?(actions.clear$.next()???)
       actions.setLoading$.next();
-      console.log("heyheyesdfadsfdf "+ JSON.stringify(p.store.appSession.rolesForModules));
+      console.log(
+        'heyheyesdfadsfdf ' + JSON.stringify(p.store.appSession.rolesForModules)
+      );
       actions.search$.next({
         from: 0,
         limit: 100,

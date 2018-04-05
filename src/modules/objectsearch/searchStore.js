@@ -5,11 +5,10 @@ import createStore from 'react-rxjs/dist/RxStore';
 import appSession$ from '../../stores/appSession';
 import predefined$ from '../../stores/predefined';
 import createSearchStore from '../../search/searchStore';
-import { objectSearch  } from '../../models/objects/search';
+import { objectSearch } from '../../models/objects/search';
 import { simpleGet } from '../../shared/RxAjax';
 
 const searchEndpoint = objectSearch(simpleGet);
-
 
 const objectSearchStore = createSearchStore('objectSearch', searchEndpoint, props => ({
   queryParam: props.queryParam,

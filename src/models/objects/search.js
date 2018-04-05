@@ -1,14 +1,14 @@
 // @flow
 
-import { simpleGet } from "../../shared/RxAjax";
-import Config from "../../config";
-import { Observable } from "rxjs";
-import { forkJoin } from "rxjs/observable/forkJoin";
+import { simpleGet } from '../../shared/RxAjax';
+import Config from '../../config';
+import { Observable } from 'rxjs';
+import { forkJoin } from 'rxjs/observable/forkJoin';
 
-import type { AjaxGet } from "types/ajax";
-import type { SearchResult } from "types/search";
-import type { MuseumId } from "types/ids";
-import MusitObject from "../object";
+import type { AjaxGet } from 'types/ajax';
+import type { SearchResult } from 'types/search';
+import type { MuseumId } from 'types/ids';
+import MusitObject from '../object';
 
 type SearchProps = {
   queryParam: {
@@ -52,8 +52,11 @@ export function objectSearch(ajaxGet: AjaxGet<*> = simpleGet) {
       false
     );
     const res = ajaxGet(url, props.token).flatMap(({ response }) => {
-      if (response.error || (response.hits && response.hits.total === 0)||
-      (!props.storageFacilityReadRole)) {
+      if (
+        response.error ||
+        (response.hits && response.hits.total === 0) ||
+        !props.storageFacilityReadRole
+      ) {
         return Observable.of(response);
       }
       const newObjects: Array<Observable<any>> = response.hits.hits.map(a => {
@@ -74,9 +77,8 @@ export function objectSearch(ajaxGet: AjaxGet<*> = simpleGet) {
         return svar;
       });
       return newNewObject;
-    
     });
-  
+
     return res;
   };
 }
