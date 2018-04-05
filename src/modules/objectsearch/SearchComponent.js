@@ -16,8 +16,6 @@ import type { SearchHit } from '../../types/search';
 import type { SampleData } from '../../types/samples';
 
 import type { Node } from '../../types/node';
-import { _createBrowserHistory } from 'history';
-import type { AppSession } from '../../types/appSession';
 
 export type Events = {
   onClickHeader: (hit: SearchHit) => void,
@@ -263,8 +261,9 @@ const SearchResultItem = (props: {
   isObjectAdded: (hit: SearchHit) => boolean,
   onClickBreadcrumb: (node: Node, isObject: boolean) => void
 }) => {
+  console.log('Searchstore', props.searchStore);
   const result = props.searchStore.result;
-  if (result && result.hits.total > 0) {
+  if (result && result.hits && result.hits.total > 0) {
     const pagination = props.searchStore.pagination;
     return (
       <div>
