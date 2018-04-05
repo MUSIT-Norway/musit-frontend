@@ -201,7 +201,7 @@ export class SelectAdditionalObjectsComponent extends React.Component<
       this.setState(() => ({
         currentPageObjects: objects,
         totalObjectCount: result.hits.total,
-        currentPage: from == 0 ? 1 : this.state.currentPage,
+        currentPage: from === 0 ? 1 : this.state.currentPage,
         selectedObjects: newSearch ? new Map() : this.state.selectedObjects
       }));
     } finally {
@@ -215,7 +215,7 @@ export class SelectAdditionalObjectsComponent extends React.Component<
   };
 
   enterKey = (key: KeyboardEvent) => {
-    if (key.key == 'Enter') {
+    if (key.key === 'Enter') {
       this.doSearch(true);
     }
   };

@@ -51,10 +51,11 @@ export function objectSearch(ajaxGet: AjaxGet<*> = simpleGet) {
       props.museumId,
       false
     );
-    let res = ajaxGet(url, props.token).map(({ response }) => response);
-
-    res = res.flatMap(r => {
-      const newObjects: Array<Observable<any>> = r.hits.hits.map(a => {
+    const res = ajaxGet(url, props.token).flatMap(({ response }) => {
+      if (response.error || (response.hits && response.hits.total === 0)) {
+        return Observable.of(response);
+      }
+      const newObjects: Array<Observable<any>> = response.hits.hits.map(a => {
         const currentLocation = hentPlassering(
           a._source.id || a._source.objectId,
           a._type,
@@ -67,7 +68,7 @@ export function objectSearch(ajaxGet: AjaxGet<*> = simpleGet) {
         }));
       });
       const newNewObject = forkJoin(newObjects).map(no => {
-        const svar = { ...r, hits: { ...r.hits, hits: no } };
+        const svar = { ...response, hits: { ...response.hits, hits: no } };
 
         return svar;
       });

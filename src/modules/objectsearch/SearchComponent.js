@@ -263,8 +263,9 @@ const SearchResultItem = (props: {
   isObjectAdded: (hit: SearchHit) => boolean,
   onClickBreadcrumb: (node: Node, isObject: boolean) => void
 }) => {
+  console.log('Searchstore', props.searchStore);
   const result = props.searchStore.result;
-  if (result && result.hits.total > 0) {
+  if (result && result.hits && result.hits.total > 0) {
     const pagination = props.searchStore.pagination;
     return (
       <div>
