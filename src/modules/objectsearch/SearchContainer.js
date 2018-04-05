@@ -48,8 +48,6 @@ function props(p, upstream: { history: History }) {
   return {
     onClickBreadcrumb: (node, isObject) => {
       if (node.nodeId) {
-        console.log('node.nodeid ' + node.nodeId);
-        console.log('node.id ' + node.id);
         upstream.history.push(
           isObject
             ? Config.magasin.urls.client.storagefacility.goToObjects(
@@ -68,15 +66,18 @@ function props(p, upstream: { history: History }) {
       }
     },
     onSearch: () => {
+      //console.log("heyheyesdfadsfdf "+ p.store.appSession);
       // actions.clear$; have to check this later, what is the meaning of this?(actions.clear$.next()???)
       actions.setLoading$.next();
+      console.log("heyheyesdfadsfdf "+ JSON.stringify(p.store.appSession.rolesForModules));
       actions.search$.next({
         from: 0,
         limit: 100,
         queryParam: p.store.searchStore.queryParam,
         museumId: p.store.appSession.museumId,
         collectionIds: p.store.appSession.collectionId,
-        token: p.store.appSession.accessToken
+        token: p.store.appSession.accessToken,
+        storageFacilityReadRole: p.store.appSession.rolesForModules.storageFacilityRead
       });
     },
     onChangeQueryParam: (name: string, value: string) => {

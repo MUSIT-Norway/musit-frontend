@@ -22,7 +22,8 @@ type SearchProps = {
   from: number,
   museumId: MuseumId,
   collectionIds: string,
-  token: string
+  token: string,
+  storageFacilityReadRole?: boolean
 };
 
 const hentPlassering = (
@@ -52,7 +53,7 @@ export function objectSearch(ajaxGet: AjaxGet<*> = simpleGet) {
       false
     );
     let res = ajaxGet(url, props.token).map(({ response }) => response);
-
+if (props.storageFacilityReadRole) {
     res = res.flatMap(r => {
       const newObjects: Array<Observable<any>> = r.hits.hits.map(a => {
         const currentLocation = hentPlassering(
@@ -73,6 +74,8 @@ export function objectSearch(ajaxGet: AjaxGet<*> = simpleGet) {
       });
       return newNewObject;
     });
+  }
+
     return res;
   };
 }
