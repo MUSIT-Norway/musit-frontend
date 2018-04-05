@@ -16,8 +16,6 @@ import type { SearchHit } from '../../types/search';
 import type { SampleData } from '../../types/samples';
 
 import type { Node } from '../../types/node';
-import { _createBrowserHistory } from 'history';
-import type { AppSession } from '../../types/appSession';
 
 export type Events = {
   onClickHeader: (hit: SearchHit) => void,

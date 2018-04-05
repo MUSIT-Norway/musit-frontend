@@ -9,7 +9,7 @@ import type { AppSession } from '../../../../types/appSession';
 import Config from '../../../../config';
 import type { SearchResult } from 'types/search';
 import { ajaxGetRequest } from '../../../../shared/ajaxPromise';
-import type { MuseumId, CollectionId } from 'types/ids';
+import type { CollectionId } from 'types/ids';
 
 import range from 'lodash/range';
 /* import {
@@ -37,10 +37,6 @@ type PaginationProps = {
 };
 
 class Pagination extends React.Component<PaginationProps> {
-  constructor(props) {
-    super(props);
-  }
-
   totalPageCount = () => {
     return Math.ceil(this.props.totalObjectCount / this.props.objectsPerPage);
   };
@@ -135,12 +131,6 @@ type SelectAdditionalObjectsComponentState = {
   totalObjectCount: number
 };
 
-const wait = ms => {
-  return new Promise(resolve => {
-    setTimeout(resolve, ms);
-  });
-};
-
 const objectsPerPage = 15;
 const RightAlignedPagination = pullRight(Pagination);
 export class SelectAdditionalObjectsComponent extends React.Component<
@@ -180,7 +170,6 @@ export class SelectAdditionalObjectsComponent extends React.Component<
   doSearch = async (newSearch: boolean, from?: number = 0) => {
     const soek = `*${this.state.q}*`;
     const esQuery = `museumNo:${soek} OR subNo:${soek} OR term:${soek}`;
-    const oldCursor = (document.body: any).style.cursor;
     (document.body: any).style.cursor = 'wait';
     try {
       const result = await executeSearch(

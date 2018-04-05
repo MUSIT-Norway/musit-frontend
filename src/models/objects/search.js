@@ -9,7 +9,6 @@ import type { AjaxGet } from 'types/ajax';
 import type { SearchResult } from 'types/search';
 import type { MuseumId } from 'types/ids';
 import MusitObject from '../object';
-import { getPath } from '../../shared/util';
 
 type SearchProps = {
   queryParam: {
