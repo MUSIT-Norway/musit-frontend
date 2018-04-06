@@ -21,7 +21,8 @@ type SearchProps = {
   from: number,
   museumId: MuseumId,
   collectionIds: string,
-  token: string
+  token: string,
+  storageFacilityReadRole?: boolean
 };
 
 const hentPlassering = (
@@ -51,7 +52,11 @@ export function objectSearch(ajaxGet: AjaxGet<*> = simpleGet) {
       false
     );
     const res = ajaxGet(url, props.token).flatMap(({ response }) => {
-      if (response.error || (response.hits && response.hits.total === 0)) {
+      if (
+        response.error ||
+        (response.hits && response.hits.total === 0) ||
+        !props.storageFacilityReadRole
+      ) {
         return Observable.of(response);
       }
       const newObjects: Array<Observable<any>> = response.hits.hits.map(a => {
@@ -73,6 +78,7 @@ export function objectSearch(ajaxGet: AjaxGet<*> = simpleGet) {
       });
       return newNewObject;
     });
+
     return res;
   };
 }

@@ -12,13 +12,15 @@ import type { AppSession } from '../types/appSession';
 /**
  * Store types
  */
+
 export type SearchParam = {
   queryParam: { [string]: ?string },
   from: number,
   limit: number,
   museumId: MuseumId,
   collectionIds: CollectionId,
-  token: string
+  token: string,
+  storageFacilityReadRole?: boolean
 };
 
 export type ChangePage = number | 'next' | 'previous';

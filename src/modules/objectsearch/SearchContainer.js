@@ -48,8 +48,6 @@ function props(p, upstream: { history: History }) {
   return {
     onClickBreadcrumb: (node, isObject) => {
       if (node.nodeId) {
-        console.log('node.nodeid ' + node.nodeId);
-        console.log('node.id ' + node.id);
         upstream.history.push(
           isObject
             ? Config.magasin.urls.client.storagefacility.goToObjects(
@@ -76,7 +74,8 @@ function props(p, upstream: { history: History }) {
         queryParam: p.store.searchStore.queryParam,
         museumId: p.store.appSession.museumId,
         collectionIds: p.store.appSession.collectionId,
-        token: p.store.appSession.accessToken
+        token: p.store.appSession.accessToken,
+        storageFacilityReadRole: p.store.appSession.rolesForModules.storageFacilityRead
       });
     },
     onChangeQueryParam: (name: string, value: string) => {
