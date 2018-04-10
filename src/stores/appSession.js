@@ -201,8 +201,26 @@ const loadAppSession = (ajaxGet = simpleGet, accessToken) => {
       }
 
       const orderedGroups = orderBy(groups, ['museumId'], ['desc']);
-      const museumId = orderedGroups[0].museumId;
-      const collectionId = orderedGroups[0].collections[0].uuid;
+      const storedMuseumId = localStorage.getItem('museumId');
+      const storedCollectionId = localStorage.getItem('collectionId');
+      const museumId =
+        storedMuseumId &&
+        orderedGroups.some(g => g.museumId.toString() === storedMuseumId)
+          ? Number(storedMuseumId)
+          : orderedGroups[0].museumId;
+      const collectionId =
+        storedCollectionId &&
+        orderedGroups.some(g =>
+          g.collections.some(
+            c => c.uuid === storedCollectionId && g.museumId.toString() === storedMuseumId
+          )
+        )
+          ? storedCollectionId
+          : orderedGroups[0].collections[0].uuid;
+
+      !storedMuseumId && localStorage.setItem('museumId', museumId);
+      !storedCollectionId && localStorage.setItem('collectionId', collectionId);
+
       setRolesForModules$.next({
         email: currentUserRes.response.dataportenUser,
         museumId: museumId,

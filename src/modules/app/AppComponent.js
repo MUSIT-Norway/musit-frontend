@@ -80,6 +80,11 @@ export class AppComponent extends Component {
     window.location.reload(true);
   }
 
+  setMuseumCollectionId(museumId, collectionId) {
+    localStorage.setItem('museumId', museumId);
+    localStorage.setItem('collectionId', collectionId);
+  }
+
   handleMuseumId(museumId, collectionId) {
     this.props.setMuseumId(museumId);
     this.props.setCollectionId(collectionId);
@@ -92,6 +97,7 @@ export class AppComponent extends Component {
     this.props.clearObjectPicklist();
     this.props.clearNodePicklist();
     this.props.clearSearchStore();
+    this.setMuseumCollectionId(museumId, collectionId);
     this.props.goTo(about);
   }
 
@@ -105,6 +111,7 @@ export class AppComponent extends Component {
     });
     this.props.clearObjectPicklist();
     this.props.clearSearchStore();
+    this.setMuseumCollectionId(this.props.appSession.museumId, collectionId);
     this.props.goTo(about);
   }
 
