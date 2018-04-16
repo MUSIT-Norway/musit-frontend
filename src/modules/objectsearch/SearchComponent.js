@@ -302,7 +302,21 @@ const SearchComponent = (props: SearchComponentProps) => (
       onChange={props.onChangeQueryParam}
       search={props.onSearch}
     />
-
+    <select
+      id="pageSize"
+      onChange={e => {
+        e.preventDefault();
+        localStorage.setItem('SearchPageSize', e.target.value);
+      }}
+    >
+      <option selected disabled hidden>
+        {localStorage.getItem('SearchPageSize') || 100}
+      </option>
+      <option>100</option>
+      <option>200</option>
+      <option>500</option>
+      <option>1000</option>
+    </select>
     {props.searchStore && props.searchStore.loading && <div>Searching...</div>}
     {props.searchStore && !props.searchStore.loading && props.searchStore.result ? (
       <SearchResultItem
