@@ -97,7 +97,7 @@ function reducer$<E>(
       loading: true,
       pagination: null,
       from: 0,
-      limit: 100
+      limit: 1000
     })),
     actions.search$
       .map(toEndpointParam)
@@ -149,7 +149,7 @@ export function initStoreState(): SearchStoreState {
   return {
     loading: false,
     from: 0,
-    limit: 100,
+    limit: 1000,
     queryParam: {},
     pagination: null,
     result: null
