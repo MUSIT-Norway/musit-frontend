@@ -629,6 +629,7 @@
       },
       "texts": {
         "search": "Search",
+        "cookiesBlockedMessage": "Cookies blocked. You must enable cookies in Your browser to use this service.",
         "conservationReport": "Conservation report",
         "report": "Report",
         "select": "Select",
@@ -1762,6 +1763,7 @@
       },
       "texts": {
         "search": "Søk",
+        "cookiesBlockedMessage": "Cookies blokkert. Du må endre innstillingene i nettleseren din til å godta cookies for å bruke denne tjenesten.",
         "conservationReport": "Konservering report",        
         "report": "Report",
         "select": "Legg til",
