@@ -83,8 +83,8 @@ function props(p, upstream: { history: History }) {
       actions.changeQuery$.next({ name, value });
     },
     onChangePage: (page: ChangePage) => {
-      // actions.clear$; have to check this later, what is the meaning of this?(actions.clear$.next()???)     
-      actions.selectPage$.next({ page, appSession: p.store.appSession});
+      // actions.clear$; have to check this later, what is the meaning of this?(actions.clear$.next()???)
+      actions.selectPage$.next({ page, appSession: p.store.appSession });
     },
     onClickHeader: (hit: SearchHit) => {
       const object = getSource(hit);

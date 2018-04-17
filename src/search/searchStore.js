@@ -25,7 +25,7 @@ export type SearchParam = {
 
 export type ChangePage = number | 'next' | 'previous';
 
-export type SelectPage = { page: ChangePage, appSession: AppSession};
+export type SelectPage = { page: ChangePage, appSession: AppSession };
 
 export type ChangeQuery = { name: string, value: string };
 
