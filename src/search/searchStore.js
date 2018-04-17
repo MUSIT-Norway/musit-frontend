@@ -25,7 +25,7 @@ export type SearchParam = {
 
 export type ChangePage = number | 'next' | 'previous';
 
-export type SelectPage = { page: ChangePage, appSession: AppSession };
+export type SelectPage = { page: ChangePage, appSession: AppSession};
 
 export type ChangeQuery = { name: string, value: string };
 
@@ -129,7 +129,8 @@ function reducer$<E>(
         limit: newState.limit,
         museumId: props.appSession.museumId,
         collectionIds: props.appSession.collectionId,
-        token: props.appSession.accessToken
+        token: props.appSession.accessToken,
+        storageFacilityReadRole: props.appSession.rolesForModules.storageFacilityRead
       });
       return newState;
     }),
