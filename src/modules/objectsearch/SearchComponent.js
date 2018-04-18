@@ -236,7 +236,7 @@ const toggleAll = (
     <FontAwesome
       onClick={e => {
         e.preventDefault();
-        hits && hits.forEach(obj => onClickShoppingCart(obj));
+        hits && onClickShoppingCart(hits);
       }}
       style={
         hits && hits.every(isObjectAdded) ? (
@@ -316,6 +316,7 @@ const SearchComponent = (props: SearchComponentProps) => (
       <option>200</option>
       <option>500</option>
       <option>1000</option>
+      <option>10000</option>
     </select>
     {props.searchStore && props.searchStore.loading && <div>Searching...</div>}
     {props.searchStore && !props.searchStore.loading && props.searchStore.result ? (

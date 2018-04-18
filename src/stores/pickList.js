@@ -28,13 +28,13 @@ export const isItemAdded = (item, items = []) => {
 };
 
 const addItem = (item, items = [], toggle) => {
-  if (items.findIndex(node => item.value.id === node.value.id) > -1) {
-    if (toggle) {
-      return items.filter(node => item.value.id !== node.value.id);
-    }
-    return items;
-  }
-  return items.concat({ marked: false, value: item.value, path: item.path });
+  // if (items.findIndex(node => item.value.id === node.value.id) > -1) {
+  //   if (toggle) {
+  //     return items.filter(node => item.value.id !== node.value.id);
+  //   }
+  //   return items;
+  // }
+  return items.concat(item);
 };
 
 const toggleMarked = ({ item, on }, items = []) => {

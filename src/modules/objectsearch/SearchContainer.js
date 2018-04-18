@@ -109,14 +109,17 @@ function props(p, upstream: { history: History }) {
       }
     },
     onClickShoppingCart: (hit: SearchHit) => {
-      const source = getSource(hit);
-      const object = getObject(hit);
-      if (source && object) {
+      const output = hit.map( h => {
         let toAddToPickList;
-        if (hit._type === 'collection') {
+      const source = getSource(h);
+      const object = getObject(h);
+      if (source && object) {
+        
+        if (h._type === 'collection') {
           // we know that source is an object, and that it most likely is not null
           const musitObject: ObjectData = (source: any);
           toAddToPickList = {
+            marked: true,
             value: {
               ...musitObject,
               uuid: musitObject.id.toString(),
@@ -124,10 +127,11 @@ function props(p, upstream: { history: History }) {
             },
             path: []
           };
-        } else if (hit._type === 'sample') {
+        } else if (h._type === 'sample') {
           // we know that source is a sample, and that it most likely is not null
           const sample: SampleData = (source: any);
           toAddToPickList = {
+            marked: true,
             value: flattenSample(
               p.store.appSession,
               p.store.predefined.sampleTypes ? p.store.predefined.sampleTypes.raw : [],
@@ -137,8 +141,13 @@ function props(p, upstream: { history: History }) {
             path: []
           };
         }
-        toggleObject$.next(toAddToPickList);
-      }
+        
+       }
+       return toAddToPickList;
+      } )
+
+        toggleObject$.next(output);
+      
     },
     getObject,
     getSampleTypeStr: (sample: SampleData): string => {

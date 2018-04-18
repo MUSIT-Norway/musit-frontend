@@ -55,7 +55,7 @@ export function objectSearch(ajaxGet: AjaxGet<*> = simpleGet) {
       if (
         response.error ||
         (response.hits && response.hits.total === 0) ||
-        !props.storageFacilityReadRole
+        !props.storageFacilityReadRole || Number(localStorage.getItem('SearchPageSize')) >= 1000
       ) {
         return Observable.of(response);
       }
