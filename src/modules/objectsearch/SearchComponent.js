@@ -16,6 +16,7 @@ import type { SearchHit } from '../../types/search';
 import type { SampleData } from '../../types/samples';
 
 import type { Node } from '../../types/node';
+import Loader from 'react-loader';
 
 export type Events = {
   onClickHeader: (hit: SearchHit) => void,
@@ -332,8 +333,13 @@ const SearchComponent = (props: SearchComponentProps) => (
       <option>1000</option>
       <option>10000</option>
     </select>
-
+  { 
+    
+    Number(document.getElementById("pageSize") && document.getElementById("pageSize").options[document.getElementById("pageSize").selectedIndex || 0].text) ===10000
+ && " To improve the performace, location of objects/samples will not show on the search result."}
     {props.searchStore && props.searchStore.loading && <div>Searching...</div>}
+    {props.searchStore && <Loader loaded={!props.searchStore.loading} />
+ }
     {props.searchStore && !props.searchStore.loading && props.searchStore.result ? (
       <SearchResultItem
         searchStore={props.searchStore}
