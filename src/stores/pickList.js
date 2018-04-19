@@ -25,7 +25,7 @@ export const clearNodes$ = createAction('clearNodes$');
 export const refreshNode$ = createAction('refreshNode$').flatMap(MusitNode.getNode());
 
 export const isItemAdded = (item, items = []) => {
-  return items.findIndex(node => item.id === node.value.id) > -1;
+  return items.findIndex(node => (item.id || item.objectId)=== node.value.id) > -1;
 };
 
 const addItem = (item, items = [], toggle) => {
