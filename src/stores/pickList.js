@@ -6,6 +6,7 @@ import orderBy from 'lodash/orderBy';
 import toLower from 'lodash/toLower';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import { KEEP_ALIVE } from './constants';
+import { uniqWith } from 'lodash';
 
 export const addObject$ = createAction('addObject$');
 export const addObjects$ = createAction('addObjects$');
@@ -39,8 +40,8 @@ const addItem = (item, items = [], toggle) => {
   return items.concat({ marked: false, value: item.value, path: item.path });
 };
 
-const addItems = (itemList, items = [], toggle) => {
-  return items.concat(itemList);
+const addItems = (itemList, items = []) => {
+  return items.concat(itemList.filter(f => !items.some(i => i.value.id===f.value.id) ))
 };
 
 const toggleMarked = ({ item, on }, items = []) => {
