@@ -9,6 +9,7 @@ import { KEEP_ALIVE } from './constants';
 
 export const addObject$ = createAction('addObject$');
 export const addObjects$ = createAction('addObjects$');
+export const adding$ = createAction('adding$');
 export const toggleObject$ = createAction('toggleObject$');
 export const removeObject$ = createAction('removeObject$');
 export const markObject$ = createAction('markObject$');
@@ -25,7 +26,7 @@ export const clearNodes$ = createAction('clearNodes$');
 export const refreshNode$ = createAction('refreshNode$').flatMap(MusitNode.getNode());
 
 export const isItemAdded = (item, items = []) => {
-  return items.findIndex(node => (item.id || item.objectId)=== node.value.id) > -1;
+  return items.findIndex(node => (item.id || item.objectId) === node.value.id) > -1;
 };
 
 const addItem = (item, items = [], toggle) => {
@@ -39,12 +40,6 @@ const addItem = (item, items = [], toggle) => {
 };
 
 const addItems = (itemList, items = [], toggle) => {
-  // if (items.findIndex(node => item.value.id === node.value.id) > -1) {
-  //   if (toggle) {
-  //     return items.filter(node => item.value.id !== node.value.id);
-  //   }
-  //   return items;
-  // }
   return items.concat(itemList);
 };
 
@@ -151,7 +146,12 @@ export const reducer$ = actions =>
     })),
     actions.addObjects$.map(items => state => ({
       ...state,
-      objects: addItems(items, state.objects)
+      objects: addItems(items, state.objects),
+      adding: false
+    })),
+    actions.adding$.map(() => state => ({
+      ...state,
+      adding: true
     })),
     actions.toggleObject$.map(item => state => ({
       ...state,
@@ -195,6 +195,7 @@ export const store$ = (
     clearNodes$,
     addObject$,
     addObjects$,
+    adding$,
     toggleObject$,
     removeObject$,
     markObject$,
@@ -206,7 +207,7 @@ export const store$ = (
   createStore(
     'pickList',
     reducer$(actions$),
-    { nodes: [], objects: [] },
+    { nodes: [], objects: [], adding: false },
     KEEP_ALIVE
   ).map(state => ({
     nodes: orderBy(state.nodes, [
@@ -217,7 +218,8 @@ export const store$ = (
       o => toLower(o.value.museumNo),
       o => toLower(o.value.subNo),
       o => toLower(o.value.term)
-    ])
+    ]),
+    adding: state.adding
   }));
 
 export default store$();

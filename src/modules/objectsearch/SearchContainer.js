@@ -3,7 +3,7 @@
 import inject from 'react-rxjs/dist/RxInject';
 import ObjectSearchComponent from './SearchComponent';
 import store$, { actions } from './searchStore';
-import { addObjects$, toggleObject$, isItemAdded } from '../../stores/pickList';
+import { adding$, addObjects$, toggleObject$, isItemAdded } from '../../stores/pickList';
 import pickList$ from '../../stores/pickList';
 import type { ChangePage } from '../../search/searchStore';
 import type { Hit, InnerHits, SearchHit } from '../../types/search';
@@ -140,8 +140,8 @@ function props(p, upstream: { history: History }) {
         toggleObject$.next(toAddToPickList);
       }
     },
-    onClickAddAllToShoppingCart: (hit: Array<SearchHit>) => {      
-      const listOfItems =  hit.map(h => {
+    onClickAddAllToShoppingCart: (hit: Array<SearchHit>) => {
+      const listOfItems = hit.map(h => {
         let toAddToPickList;
         const source = getSource(h);
         const object = getObject(h);
@@ -174,8 +174,9 @@ function props(p, upstream: { history: History }) {
           }
         }
         return toAddToPickList;
-      });    
-      addObjects$.next(listOfItems);   
+      });
+      adding$.next();
+      addObjects$.next(listOfItems);
     },
     getObject,
     getSampleTypeStr: (sample: SampleData): string => {
@@ -192,7 +193,8 @@ function props(p, upstream: { history: History }) {
 
     isObjectAdded: (hit: SearchHit): boolean => {
       return isItemAdded(hit._source, p.pickList && p.pickList.objects);
-    }
+    },
+    adding: p && p.pickList && p.pickList.adding ? true : false
   };
 }
 

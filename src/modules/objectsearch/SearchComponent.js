@@ -35,7 +35,8 @@ function CollectionResultHit(props: ResultHitProps) {
 */
 export type Getters = {
   getObject: (hit: SearchHit) => ?ObjectData,
-  getSampleTypeStr: (sample: SampleData) => string
+  getSampleTypeStr: (sample: SampleData) => string,
+  adding: boolean
 };
 
 export type EventsAndGetters = Events & Getters;
@@ -242,9 +243,8 @@ const toggleAll = (
         hits &&
           (Number(localStorage.getItem('SearchPageSize')) > 1000
             ? onClickAddAllToShoppingCart(hits)
-            : hits.forEach(obj => onClickShoppingCart(obj)));          
-        }
-      }
+            : hits.forEach(obj => onClickShoppingCart(obj)));
+      }}
       style={
         hits && hits.every(isObjectAdded) ? (
           { fontSize: '1.5em', color: 'Gray' }
@@ -280,15 +280,13 @@ const SearchResultItem = (props: {
         {pagination && (
           <RightAlignedPagination paging={pagination} onChangePage={props.onChangePage} />
         )}
-        
-       {
-      toggleAll(
-        result.hits.hits,
-        props.onClickShoppingCart,
-        props.isObjectAdded,
-        props.onClickAddAllToShoppingCart
-      )
-    }
+
+        {toggleAll(
+          result.hits.hits,
+          props.onClickShoppingCart,
+          props.isObjectAdded,
+          props.onClickAddAllToShoppingCart
+        )}
         <RenderResultHits
           hits={result.hits.hits}
           onClickHeader={props.onClickHeader}
@@ -333,13 +331,18 @@ const SearchComponent = (props: SearchComponentProps) => (
       <option>1000</option>
       <option>10000</option>
     </select>
-  { 
-    
-    Number(document.getElementById("pageSize") && document.getElementById("pageSize").options[document.getElementById("pageSize").selectedIndex || 0].text) ===10000
- && " To improve the performace, location of objects/samples will not show on the search result."}
+
+    {Number(
+      document.getElementById('pageSize') &&
+        document.getElementById('pageSize').options[
+          document.getElementById('pageSize').selectedIndex || 0
+        ].text
+    ) === 10000 &&
+      ' To improve the performace, location of objects/samples will not show on the search result.'}
     {props.searchStore && props.searchStore.loading && <div>Searching...</div>}
-    {props.searchStore && <Loader loaded={!props.searchStore.loading} />
- }
+    {props.searchStore && <Loader loaded={!props.searchStore.loading} />}
+    {console.log('rk props ', props)}
+    <Loader loaded={!props.adding} />
     {props.searchStore && !props.searchStore.loading && props.searchStore.result ? (
       <SearchResultItem
         searchStore={props.searchStore}
