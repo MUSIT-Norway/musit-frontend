@@ -21,7 +21,8 @@ export type Events = {
   onClickHeader: (hit: SearchHit) => void,
   onClickShoppingCart: (hit: SearchHit) => void,
   isObjectAdded: (hit: SearchHit) => boolean,
-  onClickBreadcrumb: (node: Node, isObject: boolean) => void
+  onClickBreadcrumb: (node: Node, isObject: boolean) => void,
+  onClickAddAllToShoppingCart: (hit: Array<SearchHit>) => void
 };
 
 /*
@@ -230,14 +231,19 @@ const RightAlignedPagination = pullRight(Pagination);
 const toggleAll = (
   hits: Array<SearchHit>,
   onClickShoppingCart: (hit: SearchHit) => void,
-  isObjectAdded: (hit: SearchHit) => boolean
+  isObjectAdded: (hit: SearchHit) => boolean,
+  onClickAddAllToShoppingCart: (hit: Array<SearchHit>) => void
 ) => (
   <div className="col" style={{ textAlign: 'right', paddingRight: '12px' }}>
     <FontAwesome
       onClick={e => {
         e.preventDefault();
-        hits && onClickShoppingCart(hits);
-      }}
+        hits &&
+          (Number(localStorage.getItem('SearchPageSize')) > 1000
+            ? onClickAddAllToShoppingCart(hits)
+            : hits.forEach(obj => onClickShoppingCart(obj)));          
+        }
+      }
       style={
         hits && hits.every(isObjectAdded) ? (
           { fontSize: '1.5em', color: 'Gray' }
@@ -259,7 +265,8 @@ const SearchResultItem = (props: {
   getObject: (hit: SearchHit) => ?ObjectData,
   getSampleTypeStr: (sample: SampleData) => string,
   isObjectAdded: (hit: SearchHit) => boolean,
-  onClickBreadcrumb: (node: Node, isObject: boolean) => void
+  onClickBreadcrumb: (node: Node, isObject: boolean) => void,
+  onClickAddAllToShoppingCart: (hit: Array<SearchHit>) => void
 }) => {
   console.log('Searchstore', props.searchStore);
   const result = props.searchStore.result;
@@ -272,8 +279,15 @@ const SearchResultItem = (props: {
         {pagination && (
           <RightAlignedPagination paging={pagination} onChangePage={props.onChangePage} />
         )}
-
-        {toggleAll(result.hits.hits, props.onClickShoppingCart, props.isObjectAdded)}
+        
+       {
+      toggleAll(
+        result.hits.hits,
+        props.onClickShoppingCart,
+        props.isObjectAdded,
+        props.onClickAddAllToShoppingCart
+      )
+    }
         <RenderResultHits
           hits={result.hits.hits}
           onClickHeader={props.onClickHeader}
@@ -318,6 +332,7 @@ const SearchComponent = (props: SearchComponentProps) => (
       <option>1000</option>
       <option>10000</option>
     </select>
+
     {props.searchStore && props.searchStore.loading && <div>Searching...</div>}
     {props.searchStore && !props.searchStore.loading && props.searchStore.result ? (
       <SearchResultItem
@@ -329,6 +344,7 @@ const SearchComponent = (props: SearchComponentProps) => (
         getSampleTypeStr={props.getSampleTypeStr}
         isObjectAdded={props.isObjectAdded}
         onClickBreadcrumb={props.onClickBreadcrumb}
+        onClickAddAllToShoppingCart={props.onClickAddAllToShoppingCart}
       />
     ) : (
       <div>{I18n.t('musit.search.ready')}</div>

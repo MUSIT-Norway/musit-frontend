@@ -3,7 +3,7 @@
 import inject from 'react-rxjs/dist/RxInject';
 import ObjectSearchComponent from './SearchComponent';
 import store$, { actions } from './searchStore';
-import { toggleObject$, isItemAdded } from '../../stores/pickList';
+import { addObjects$, toggleObject$, isItemAdded } from '../../stores/pickList';
 import pickList$ from '../../stores/pickList';
 import type { ChangePage } from '../../search/searchStore';
 import type { Hit, InnerHits, SearchHit } from '../../types/search';
@@ -109,45 +109,73 @@ function props(p, upstream: { history: History }) {
       }
     },
     onClickShoppingCart: (hit: SearchHit) => {
-      const output = hit.map( h => {
-        let toAddToPickList;
-      const source = getSource(h);
-      const object = getObject(h);
+      const source = getSource(hit);
+      const object = getObject(hit);
       if (source && object) {
-        
-        if (h._type === 'collection') {
+        let toAddToPickList;
+        if (hit._type === 'collection') {
           // we know that source is an object, and that it most likely is not null
           const musitObject: ObjectData = (source: any);
           toAddToPickList = {
-            marked: true,
             value: {
               ...musitObject,
               uuid: musitObject.id.toString(),
               objectData: { ...musitObject, uuid: musitObject.id }
             },
-            path: []
+            path: object.currentLocation
           };
-        } else if (h._type === 'sample') {
+        } else if (hit._type === 'sample') {
           // we know that source is a sample, and that it most likely is not null
           const sample: SampleData = (source: any);
           toAddToPickList = {
-            marked: true,
             value: flattenSample(
               p.store.appSession,
               p.store.predefined.sampleTypes ? p.store.predefined.sampleTypes.raw : [],
               object,
               sample
             ),
-            path: []
+            path: sample.currentLocation
           };
         }
-        
-       }
-       return toAddToPickList;
-      } )
-
-        toggleObject$.next(output);
-      
+        toggleObject$.next(toAddToPickList);
+      }
+    },
+    onClickAddAllToShoppingCart: (hit: Array<SearchHit>) => {      
+      const listOfItems =  hit.map(h => {
+        let toAddToPickList;
+        const source = getSource(h);
+        const object = getObject(h);
+        if (source && object) {
+          if (h._type === 'collection') {
+            // we know that source is an object, and that it most likely is not null
+            const musitObject: ObjectData = (source: any);
+            toAddToPickList = {
+              marked: true,
+              value: {
+                ...musitObject,
+                uuid: musitObject.id.toString(),
+                objectData: { ...musitObject, uuid: musitObject.id }
+              },
+              path: object.currentLocation
+            };
+          } else if (h._type === 'sample') {
+            // we know that source is a sample, and that it most likely is not null
+            const sample: SampleData = (source: any);
+            toAddToPickList = {
+              marked: true,
+              value: flattenSample(
+                p.store.appSession,
+                p.store.predefined.sampleTypes ? p.store.predefined.sampleTypes.raw : [],
+                object,
+                sample
+              ),
+              path: sample.currentLocation
+            };
+          }
+        }
+        return toAddToPickList;
+      });    
+      addObjects$.next(listOfItems);   
     },
     getObject,
     getSampleTypeStr: (sample: SampleData): string => {

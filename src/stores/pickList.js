@@ -8,6 +8,7 @@ import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import { KEEP_ALIVE } from './constants';
 
 export const addObject$ = createAction('addObject$');
+export const addObjects$ = createAction('addObjects$');
 export const toggleObject$ = createAction('toggleObject$');
 export const removeObject$ = createAction('removeObject$');
 export const markObject$ = createAction('markObject$');
@@ -28,13 +29,23 @@ export const isItemAdded = (item, items = []) => {
 };
 
 const addItem = (item, items = [], toggle) => {
+  if (items.findIndex(node => item.value.id === node.value.id) > -1) {
+    if (toggle) {
+      return items.filter(node => item.value.id !== node.value.id);
+    }
+    return items;
+  }
+  return items.concat({ marked: false, value: item.value, path: item.path });
+};
+
+const addItems = (itemList, items = [], toggle) => {
   // if (items.findIndex(node => item.value.id === node.value.id) > -1) {
   //   if (toggle) {
   //     return items.filter(node => item.value.id !== node.value.id);
   //   }
   //   return items;
   // }
-  return items.concat(item);
+  return items.concat(itemList);
 };
 
 const toggleMarked = ({ item, on }, items = []) => {
@@ -138,6 +149,10 @@ export const reducer$ = actions =>
       ...state,
       objects: addItem(item, state.objects)
     })),
+    actions.addObjects$.map(items => state => ({
+      ...state,
+      objects: addItems(items, state.objects)
+    })),
     actions.toggleObject$.map(item => state => ({
       ...state,
       objects: addItem(item, state.objects, true)
@@ -179,6 +194,7 @@ export const store$ = (
     refreshNode$,
     clearNodes$,
     addObject$,
+    addObjects$,
     toggleObject$,
     removeObject$,
     markObject$,

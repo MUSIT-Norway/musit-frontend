@@ -9,16 +9,18 @@ describe('pickList', () => {
   it('testing and clear', () => {
     const testScheduler = new MusitTestScheduler();
     // mock streams
-    const toggleNode = '---------------11--------';
-    const refreshNode = '-----------------1-------';
-    const clearNodes = '--------x----------------';
-    const removeObject = '---------1---------------';
-    const removeNode = '------------------1------';
-    const addNode = '----1-------121----------';
-    const clearObjects = '----------x--------------';
-    const addObject = '---1---------------3--2--';
-    const refreshObjects = '---------------------1--2';
-    const expected = 'a--de---fng-hijkjlop-rs-u';
+    const toggleNode = '---------------11---------';
+    const refreshNode = '-----------------1--------';
+    const clearNodes = '--------x-----------------';
+    const removeObject = '---------1----------------';
+    const removeNode = '------------------1-------';
+    const addNode = '----1-------121-----------';
+    const clearObjects = '----------x---------------';
+    const addObject = '---1---------------3--2---';
+    const refreshObjects = '---------------------1--2-';
+    const addObjects = '-------------------------1';
+
+    const expected = 'a--de---fng-hijkjlop-rs-uv';
 
     const expectedStateMap = {
       a: { nodes: [], objects: [] },
@@ -138,6 +140,50 @@ describe('pickList', () => {
           }
         ],
         nodes: [{ marked: false, value: { id: 1 }, path: [] }]
+      },
+      v: {
+        objects: [
+          {
+            marked: false,
+            value: { id: 3, uuid: 3 },
+            path: [
+              {
+                id: '403cebde-082c-4002-8f78-16ad178a054a',
+                nodeId: '403cebde-082c-4002-8f78-16ad178a054a',
+                name: 'test',
+                url: '/magasin/403cebde-082c-4002-8f78-16ad178a054a'
+              }
+            ]
+          },
+          {
+            marked: false,
+            value: { id: 2, uuid: 2 },
+            path: [
+              {
+                id: '403cebde-082c-4002-8f78-16ad178a054a',
+                nodeId: '403cebde-082c-4002-8f78-16ad178a054a',
+                name: 'test',
+                url: '/magasin/403cebde-082c-4002-8f78-16ad178a054a'
+              }
+            ]
+          },
+          {
+            marked: true,
+            value: { id: 7, uuid: 7 },
+            path: []
+          },
+          {
+            marked: true,
+            value: { id: 8, uuid: 8 },
+            path: []
+          },
+          {
+            marked: true,
+            value: { id: 9, uuid: 9 },
+            path: []
+          }
+        ],
+        nodes: [{ marked: false, value: { id: 1 }, path: [] }]
       }
     };
 
@@ -176,6 +222,13 @@ describe('pickList', () => {
       '3': { value: { id: 3, uuid: 3 }, path: [] }
     });
     const toggleObject$ = new Subject();
+    const addObjects$ = testScheduler.createHotObservable(addObjects, {
+      '1': [
+        { marked: true, value: { id: 7, uuid: 7 }, path: [] },
+        { marked: true, value: { id: 8, uuid: 8 }, path: [] },
+        { marked: true, value: { id: 9, uuid: 9 }, path: [] }
+      ]
+    });
 
     const refreshObjects$ = testScheduler
       .createHotObservable(refreshObjects, {
@@ -233,6 +286,7 @@ describe('pickList', () => {
       markObject$,
       markMainObject$,
       addObject$,
+      addObjects$,
       toggleObject$,
       clearNodes$,
       removeNode$,
