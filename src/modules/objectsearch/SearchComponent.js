@@ -241,9 +241,9 @@ const toggleAll = (
       onClick={e => {
         e.preventDefault();
         hits &&
-          (Number(localStorage.getItem('SearchPageSize')) > 1000
-            ? onClickAddAllToShoppingCart(hits)
-            : hits.forEach(obj => onClickShoppingCart(obj)));
+          //(Number(localStorage.getItem('SearchPageSize')) > 1000 ? 
+            onClickAddAllToShoppingCart(hits)
+            //: hits.forEach(obj => onClickShoppingCart(obj)));
       }}
       style={
         hits && hits.every(isObjectAdded) ? (
