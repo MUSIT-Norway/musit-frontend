@@ -23,52 +23,45 @@ describe('pickList', () => {
     const expected = 'a--de---fng-hijkjlop-rs-uv';
 
     const expectedStateMap = {
-      a: { nodes: [], objects: [], adding: false },
+      a: { nodes: [], objects: [] },
       d: {
         objects: [{ marked: false, value: { id: 1 }, path: [] }],
-        nodes: [],
-        adding: false
+        nodes: []
       },
       e: {
         objects: [{ marked: false, value: { id: 1 }, path: [] }],
-        nodes: [{ marked: false, value: { id: 1 }, path: [] }],
-        adding: false
+        nodes: [{ marked: false, value: { id: 1 }, path: [] }]
       },
       f: {
         objects: [{ marked: false, value: { id: 1 }, path: [] }],
-        nodes: [],
-        adding: false
+        nodes: []
       },
-      n: { objects: [], nodes: [], adding: false },
-      g: { objects: [], nodes: [], adding: false },
+      n: { objects: [], nodes: [] },
+      g: { objects: [], nodes: [] },
       h: {
         objects: [],
-        nodes: [{ marked: false, value: { id: 1 }, path: [] }],
-        adding: false
+        nodes: [{ marked: false, value: { id: 1 }, path: [] }]
       },
       i: {
         objects: [],
         nodes: [
           { marked: false, value: { id: 1 }, path: [] },
           { marked: false, value: { id: 2 }, path: [] }
-        ],
-        adding: false
+        ]
       },
       j: {
         objects: [],
         nodes: [
           { marked: false, value: { id: 1 }, path: [] },
           { marked: false, value: { id: 2 }, path: [] }
-        ],
-        adding: false
+        ]
       },
       k: {
         objects: [],
         nodes: [
           { marked: true, value: { id: 1 }, path: [] },
           { marked: false, value: { id: 2 }, path: [] }
-        ],
-        adding: false
+        ]
       },
       l: {
         objects: [],
@@ -86,18 +79,15 @@ describe('pickList', () => {
               }
             ]
           }
-        ],
-        adding: false
+        ]
       },
       o: {
         objects: [],
-        nodes: [{ marked: false, value: { id: 1 }, path: [] }],
-        adding: false
+        nodes: [{ marked: false, value: { id: 1 }, path: [] }]
       },
       p: {
         objects: [{ marked: false, value: { id: 3, uuid: 3 }, path: [] }],
-        nodes: [{ marked: false, value: { id: 1 }, path: [] }],
-        adding: false
+        nodes: [{ marked: false, value: { id: 1 }, path: [] }]
       },
       r: {
         objects: [
@@ -114,8 +104,7 @@ describe('pickList', () => {
             ]
           }
         ],
-        nodes: [{ marked: false, value: { id: 1 }, path: [] }],
-        adding: false
+        nodes: [{ marked: false, value: { id: 1 }, path: [] }]
       },
       s: {
         objects: [
@@ -133,8 +122,7 @@ describe('pickList', () => {
           },
           { marked: false, value: { id: 2, uuid: 2 }, path: [] }
         ],
-        nodes: [{ marked: false, value: { id: 1 }, path: [] }],
-        adding: false
+        nodes: [{ marked: false, value: { id: 1 }, path: [] }]
       },
       u: {
         objects: [
@@ -163,8 +151,7 @@ describe('pickList', () => {
             ]
           }
         ],
-        nodes: [{ marked: false, value: { id: 1 }, path: [] }],
-        adding: false
+        nodes: [{ marked: false, value: { id: 1 }, path: [] }]
       },
       v: {
         objects: [
@@ -208,8 +195,7 @@ describe('pickList', () => {
             path: []
           }
         ],
-        nodes: [{ marked: false, value: { id: 1 }, path: [] }],
-        adding: false
+        nodes: [{ marked: false, value: { id: 1 }, path: [] }]
       }
     };
 
@@ -248,8 +234,6 @@ describe('pickList', () => {
       '3': { value: { id: 3, uuid: 3 }, path: [] }
     });
     const toggleObject$ = new Subject();
-    const adding$ = new Subject();
-
     const addObjects$ = testScheduler.createHotObservable(addObjects, {
       '1': [
         { marked: true, value: { id: 7, uuid: 7 }, path: [] },
@@ -316,7 +300,6 @@ describe('pickList', () => {
       addObject$,
       addObjects$,
       toggleObject$,
-      adding$,
       clearNodes$,
       removeNode$,
       markNode$,

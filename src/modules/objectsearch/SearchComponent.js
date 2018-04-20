@@ -35,8 +35,7 @@ function CollectionResultHit(props: ResultHitProps) {
 */
 export type Getters = {
   getObject: (hit: SearchHit) => ?ObjectData,
-  getSampleTypeStr: (sample: SampleData) => string,
-  adding?: boolean
+  getSampleTypeStr: (sample: SampleData) => string
 };
 
 export type EventsAndGetters = Events & Getters;
@@ -336,7 +335,6 @@ const SearchComponent = (props: SearchComponentProps) => (
 
     {props.searchStore && <Loader loaded={!props.searchStore.loading} />}
     {console.log('Props ', props)}
-    <Loader loaded={!props.adding} />
     {props.searchStore && !props.searchStore.loading && props.searchStore.result ? (
       <SearchResultItem
         searchStore={props.searchStore}

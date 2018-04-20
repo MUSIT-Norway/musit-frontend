@@ -3,7 +3,7 @@
 import inject from 'react-rxjs/dist/RxInject';
 import ObjectSearchComponent from './SearchComponent';
 import store$, { actions } from './searchStore';
-import { adding$, addObjects$, toggleObject$, isItemAdded } from '../../stores/pickList';
+import { addObjects$, toggleObject$, isItemAdded } from '../../stores/pickList';
 import pickList$ from '../../stores/pickList';
 import type { ChangePage } from '../../search/searchStore';
 import type { Hit, InnerHits, SearchHit } from '../../types/search';
@@ -175,7 +175,6 @@ function props(p, upstream: { history: History }) {
         }
         return toAddToPickList;
       });
-      adding$.next();
       addObjects$.next(listOfItems);
     },
     getObject,
@@ -193,8 +192,7 @@ function props(p, upstream: { history: History }) {
 
     isObjectAdded: (hit: SearchHit): boolean => {
       return isItemAdded(hit._source, p.pickList && p.pickList.objects);
-    },
-    adding: p.pickList && p.pickList.adding ? true : false
+    }
   };
 }
 

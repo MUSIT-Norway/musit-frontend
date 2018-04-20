@@ -9,7 +9,6 @@ import { KEEP_ALIVE } from './constants';
 
 export const addObject$ = createAction('addObject$');
 export const addObjects$ = createAction('addObjects$');
-export const adding$ = createAction('adding$');
 export const toggleObject$ = createAction('toggleObject$');
 export const removeObject$ = createAction('removeObject$');
 export const markObject$ = createAction('markObject$');
@@ -146,12 +145,7 @@ export const reducer$ = actions =>
     })),
     actions.addObjects$.map(items => state => ({
       ...state,
-      objects: addItems(items, state.objects),
-      adding: false
-    })),
-    actions.adding$.map(() => state => ({
-      ...state,
-      adding: true
+      objects: addItems(items, state.objects)
     })),
     actions.toggleObject$.map(item => state => ({
       ...state,
@@ -195,7 +189,6 @@ export const store$ = (
     clearNodes$,
     addObject$,
     addObjects$,
-    adding$,
     toggleObject$,
     removeObject$,
     markObject$,
@@ -207,7 +200,7 @@ export const store$ = (
   createStore(
     'pickList',
     reducer$(actions$),
-    { nodes: [], objects: [], adding: false },
+    { nodes: [], objects: [] },
     KEEP_ALIVE
   ).map(state => ({
     nodes: orderBy(state.nodes, [
@@ -218,8 +211,7 @@ export const store$ = (
       o => toLower(o.value.museumNo),
       o => toLower(o.value.subNo),
       o => toLower(o.value.term)
-    ]),
-    adding: state.adding
+    ])
   }));
 
 export default store$();
