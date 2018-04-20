@@ -60,7 +60,7 @@ const handleWarning = new Subject().map(event => {
   const customMessage = event.message;
   return {
     level: 'warning',
-    title: I18n.t('musit.errorMainMessages.applicationError'),
+    title: I18n.t('musit.errorMainMessages.applicationWarning'),
     message: customMessage
   };
 });

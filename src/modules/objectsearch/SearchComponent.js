@@ -17,13 +17,13 @@ import type { SampleData } from '../../types/samples';
 
 import type { Node } from '../../types/node';
 import Loader from 'react-loader';
+import { emitWarning } from '../../shared/errors';
 
 export type Events = {
   onClickHeader: (hit: SearchHit) => void,
   onClickShoppingCart: (hit: SearchHit) => void,
   isObjectAdded: (hit: SearchHit) => boolean,
-  onClickBreadcrumb: (node: Node, isObject: boolean) => void,
-  onClickAddAllToShoppingCart: (hit: Array<SearchHit>) => void
+  onClickBreadcrumb: (node: Node, isObject: boolean) => void
 };
 
 /*
@@ -36,7 +36,7 @@ function CollectionResultHit(props: ResultHitProps) {
 export type Getters = {
   getObject: (hit: SearchHit) => ?ObjectData,
   getSampleTypeStr: (sample: SampleData) => string,
-  adding: boolean
+  adding?: boolean
 };
 
 export type EventsAndGetters = Events & Getters;
@@ -45,7 +45,8 @@ export type SearchComponentProps = {
   searchStore: SearchStoreState,
   onChangeQueryParam: (string, string) => void,
   onChangePage: (change: ChangePage) => void,
-  onSearch: () => void
+  onSearch: () => void,
+  onClickAddAllToShoppingCart: (hit: Array<SearchHit>) => void
 } & EventsAndGetters;
 
 export type ResultHitProps = {
@@ -240,10 +241,7 @@ const toggleAll = (
     <FontAwesome
       onClick={e => {
         e.preventDefault();
-        hits &&
-          //(Number(localStorage.getItem('SearchPageSize')) > 1000 ? 
-            onClickAddAllToShoppingCart(hits)
-            //: hits.forEach(obj => onClickShoppingCart(obj)));
+        hits && onClickAddAllToShoppingCart(hits);
       }}
       style={
         hits && hits.every(isObjectAdded) ? (
@@ -320,6 +318,10 @@ const SearchComponent = (props: SearchComponentProps) => (
       onChange={e => {
         e.preventDefault();
         localStorage.setItem('SearchPageSize', e.target.value);
+        Number(e.target.value) === 10000 &&
+          emitWarning({
+            message: I18n.t('musit.texts.pageSizeMessage')
+          });
       }}
     >
       <option selected disabled hidden>
@@ -332,16 +334,8 @@ const SearchComponent = (props: SearchComponentProps) => (
       <option>10000</option>
     </select>
 
-    {Number(
-      document.getElementById('pageSize') &&
-        document.getElementById('pageSize').options[
-          document.getElementById('pageSize').selectedIndex || 0
-        ].text
-    ) === 10000 &&
-      ' To improve the performace, location of objects/samples will not show on the search result.'}
-    {props.searchStore && props.searchStore.loading && <div>Searching...</div>}
     {props.searchStore && <Loader loaded={!props.searchStore.loading} />}
-    {console.log('rk props ', props)}
+    {console.log('Props ', props)}
     <Loader loaded={!props.adding} />
     {props.searchStore && !props.searchStore.loading && props.searchStore.result ? (
       <SearchResultItem

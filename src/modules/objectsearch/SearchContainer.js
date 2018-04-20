@@ -194,7 +194,7 @@ function props(p, upstream: { history: History }) {
     isObjectAdded: (hit: SearchHit): boolean => {
       return isItemAdded(hit._source, p.pickList && p.pickList.objects);
     },
-    adding: p && p.pickList && p.pickList.adding ? true : false
+    adding: p.pickList && p.pickList.adding ? true : false
   };
 }
 

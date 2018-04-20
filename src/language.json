@@ -423,6 +423,7 @@
       },
       "errorMainMessages": {
         "applicationError": "Application error.",
+        "applicationWarning":"Application warning",
         "networkError": "Network error.",
         "notFound": "The resource was not found.",
         "notAllowed": "You do not have the appropriate access rights.",
@@ -629,6 +630,7 @@
       },
       "texts": {
         "search": "Search",
+        "pageSizeMessage" : "To improve the performance, location of objects/samples will not show on the search result.",
         "cookiesBlockedMessage": "Cookies blocked. You must enable cookies in Your browser to use this service.",
         "conservationReport": "Conservation report",
         "report": "Report",
@@ -1558,6 +1560,7 @@
       },
       "errorMainMessages": {
         "applicationError": "Applikasjonsfeil.",
+        "applicationWarning":"Programvarsling",
         "networkError": "Nettverksfeil",
         "notFound": "Ressursen ble ikke funnet.",
         "notAllowed": "Du har ikke tilgang.",
@@ -1763,6 +1766,7 @@
       },
       "texts": {
         "search": "Søk",
+        "pageSizeMessage" : "For å forbedre ytelsen vil plasseringen av objekter / prøver ikke vises på søkeresultatet.",
         "cookiesBlockedMessage": "Cookies blokkert. Du må endre innstillingene i nettleseren din til å godta cookies for å bruke denne tjenesten.",
         "conservationReport": "Konservering report",        
         "report": "Report",
