@@ -308,6 +308,7 @@ export default {
             `/api/thingaggregate/museum/${mid}/storagenodes/${uuid}/stats`,
           searchObjectUrl: (
             museumNo: ?string,
+            museumNoAsANumber: ?string,
             subNo: ?string,
             term: ?string,
             q: ?string,
@@ -320,6 +321,7 @@ export default {
             const baseUrl = `/api/thingaggregate/museum/${museumId}/objects/search`;
             const qs = queryParams({
               museumNo,
+              museumNoAsANumber,
               subNo,
               term,
               from,

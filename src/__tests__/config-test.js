@@ -233,7 +233,7 @@ describe('Config urls', () => {
             99
           ),
           expected:
-            '/api/thingaggregate/museum/99/objects/search?term=foo&from=0&limit=10&collectionIds=ac08361b-3f13-4cde-9428-4ba2776316bd'
+            '/api/thingaggregate/museum/undefined/objects/search?subNo=foo&from=ac08361b-3f13-4cde-9428-4ba2776316bd&limit=0&q=10&collectionIds=99'
         }
       ]
     },

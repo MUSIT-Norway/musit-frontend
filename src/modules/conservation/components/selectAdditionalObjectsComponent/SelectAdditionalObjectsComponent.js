@@ -300,6 +300,7 @@ export async function executeSearch(
 ): Promise<SearchResult> {
   const url = Config.magasin.urls.api.thingaggregate.searchObjectUrl(
     undefined, //props.queryParam.museumNo,
+    undefined, //props.queryParam.museumNoAsANumber,
     undefined, //props.queryParam.subNo,
     undefined, // props.queryParam.term,
     query,

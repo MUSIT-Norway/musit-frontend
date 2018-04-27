@@ -30,6 +30,7 @@ const SearchInputFormComponent = (props: Props) => (
   <form>
     <div className="row">
       <SearchParam id="museumNo" onChange={props.onChange} />
+      <SearchParam id="museumNoAsANumber" onChange={props.onChange} />
       <SearchParam id="subNo" onChange={props.onChange} />
       <SearchParam id="term" onChange={props.onChange} />
       <SearchParam id="q" onChange={props.onChange} />

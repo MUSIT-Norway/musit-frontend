@@ -13,6 +13,7 @@ import MusitObject from '../object';
 type SearchProps = {
   queryParam: {
     museumNo: ?string,
+    museumNoAsANumber: ?string,
     subNo: ?string,
     term: ?string,
     q: ?string
@@ -42,6 +43,7 @@ export function objectSearch(ajaxGet: AjaxGet<*> = simpleGet) {
   return (props: SearchProps): Observable<SearchResult> => {
     const url = Config.magasin.urls.api.thingaggregate.searchObjectUrl(
       props.queryParam.museumNo,
+      props.queryParam.museumNoAsANumber,
       props.queryParam.subNo,
       props.queryParam.term,
       props.queryParam.q,

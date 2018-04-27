@@ -135,6 +135,7 @@
           "selectEvent": "Select event",
           "location": "Location",
           "musNo": "Museum No.",
+          "museumNoAsANumber": "Number part of Museum No.",
           "subNo": "Sub No.",
           "termTaxon": "Taxon",
           "termItem": "Artefact",
@@ -606,6 +607,10 @@
         "addAllToPickList": "Add all",
         "museumNo": {
           "label": "Museum No.",
+          "placeHolder": " "
+        },
+        "museumNoAsANumber": {
+          "label": "Number part of Museum No.",
           "placeHolder": " "
         },
         "subNo": {
@@ -1273,6 +1278,7 @@
           "selectEvent": "Velg hendelse",
           "location": "Plassering",
           "musNo": "Museumsnr.",
+          "museumNoAsANumber": "Nummerdel av Museumsnr.",
           "subNo": "Unr.",
           "termTaxon": "Takson",
           "termItem": "Gjenstand",
@@ -1742,6 +1748,10 @@
         "addAllToPickList": "Legg til alle i plukklisten",
         "museumNo": {
           "label": "Museumsnr.",
+          "placeHolder": " "
+        },
+        "museumNoAsANumber": {
+          "label": "Nummerdel av Museumsnr.",
           "placeHolder": " "
         },
         "subNo": {
