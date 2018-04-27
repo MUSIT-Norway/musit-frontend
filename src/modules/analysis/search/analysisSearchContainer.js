@@ -55,7 +55,7 @@ const props = (storeProps, upstream: { history: History }) => {
       actions.selectPage$.next({ page, appSession: storeProps.appSession });
     },
     onChangeQueryParam: (name: string, value: string) => {
-      actions.clear$;
+      actions.setLoadingSelectPage$.next();
       actions.changeQuery$.next({ name, value });
     },
     goToAnalysis: (id: number) => {

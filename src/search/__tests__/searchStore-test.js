@@ -1,6 +1,6 @@
 // @flow
 
-import { Observable } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import createSearchStore, {
   createStoreWithActions,
   initStoreState,
@@ -67,25 +67,28 @@ describe('searchStore', () => {
           pagination: null,
           result: null,
           from: 0,
-          limit: 100
+          limit: 10
         },
         d: {
           ...initStoreState(),
           queryParam: { q: 'foo' },
           loading: false,
           result: esResponseRawData,
-          pagination: { currentPage: 1, totalPages: 1, showPages: [1] }
+          pagination: { currentPage: 1, totalPages: 2, showPages: [1, 2] }
         },
         e: {
           ...initStoreState(),
           queryParam: {},
           loading: false,
           result: esResponseRawData,
-          pagination: { currentPage: 1, totalPages: 1, showPages: [1] }
+          pagination: { currentPage: 1, totalPages: 2, showPages: [1, 2] }
         }
       };
 
       const clear$ = testScheduler.createHotObservable(streams.clear);
+
+      const setLoadingSelectPage$ = new Subject();
+
       const setLoading$ = testScheduler.createHotObservable(streams.setLoading);
       const search$ = testScheduler.createHotObservable(streams.search, {
         d: {}
@@ -102,6 +105,7 @@ describe('searchStore', () => {
           clear$,
           setLoading$,
           search$,
+          setLoadingSelectPage$,
           changeQuery$,
           selectPage$,
           searchResult$: defaultActions.search$

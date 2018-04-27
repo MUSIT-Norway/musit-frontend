@@ -54,12 +54,14 @@ export type SearchStoreState = {
 type Actions = {
   clear$: Subject<void>,
   setLoading$: Subject<void>,
+  setLoadingSelectPage$: Subject<void>,
   changeQuery$: Subject<ChangeQuery>,
   selectPage$: Subject<SelectPage>,
   search$: Subject<SearchParam>
 };
 
 const setLoading$: Subject<void> = createAction('search');
+const setLoadingSelectPage$: Subject<void> = createAction('setLoadingSelectPage');
 export const clear$: Subject<void> = createAction('clear');
 const changeQuery$: Subject<ChangeQuery> = createAction('changeQuery');
 const selectPage$: Subject<SelectPage> = createAction('selectPage');
@@ -97,7 +99,11 @@ function reducer$<E>(
       loading: true,
       pagination: null,
       from: 0,
-      limit: Number(localStorage.getItem('SearchPageSize') || 100)
+      limit: Number(localStorage.getItem('SearchPageSize') || 10)
+    })),
+    actions.setLoadingSelectPage$.map(() => state => ({
+      ...state,
+      loading: true
     })),
     actions.search$
       .map(toEndpointParam)
@@ -150,7 +156,7 @@ export function initStoreState(): SearchStoreState {
   return {
     loading: false,
     from: 0,
-    limit: Number(localStorage.getItem('SearchPageSize') || 100),
+    limit: Number(localStorage.getItem('SearchPageSize') || 10),
     queryParam: {},
     pagination: null,
     result: null
@@ -160,6 +166,7 @@ export function initStoreState(): SearchStoreState {
 export const defaultActions = {
   clear$,
   setLoading$,
+  setLoadingSelectPage$,
   changeQuery$,
   selectPage$,
   search$

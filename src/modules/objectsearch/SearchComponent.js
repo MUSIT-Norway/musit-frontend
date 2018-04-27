@@ -326,11 +326,11 @@ const SearchComponent = (props: SearchComponentProps) => (
       <option selected disabled hidden>
         {localStorage.getItem('SearchPageSize') || 100}
       </option>
+      <option>10</option>
       <option>100</option>
       <option>200</option>
       <option>500</option>
       <option>1000</option>
-      <option>10000</option>
     </select>
 
     {props.searchStore && <Loader loaded={!props.searchStore.loading} />}

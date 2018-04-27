@@ -84,6 +84,7 @@ function props(p, upstream: { history: History }) {
     },
     onChangePage: (page: ChangePage) => {
       // actions.clear$; have to check this later, what is the meaning of this?(actions.clear$.next()???)
+      actions.setLoadingSelectPage$.next();
       actions.selectPage$.next({ page, appSession: p.store.appSession });
     },
     onClickHeader: (hit: SearchHit) => {
