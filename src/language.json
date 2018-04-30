@@ -135,7 +135,7 @@
           "selectEvent": "Select event",
           "location": "Location",
           "musNo": "Museum No.",
-          "museumNoAsANumber": "Number part of Museum No.",
+          "museumNoAsANumber": "Number range",
           "subNo": "Sub No.",
           "termTaxon": "Taxon",
           "termItem": "Artefact",
@@ -610,7 +610,7 @@
           "placeHolder": " "
         },
         "museumNoAsANumber": {
-          "label": "Number part of Museum No.",
+          "label": "Number range",
           "placeHolder": " "
         },
         "subNo": {
@@ -1278,7 +1278,7 @@
           "selectEvent": "Velg hendelse",
           "location": "Plassering",
           "musNo": "Museumsnr.",
-          "museumNoAsANumber": "Nummerdel av Museumsnr.",
+          "museumNoAsANumber": "Nummer og Intervall",
           "subNo": "Unr.",
           "termTaxon": "Takson",
           "termItem": "Gjenstand",
@@ -1751,7 +1751,7 @@
           "placeHolder": " "
         },
         "museumNoAsANumber": {
-          "label": "Nummerdel av Museumsnr.",
+          "label": "Nummer og Intervall",
           "placeHolder": " "
         },
         "subNo": {

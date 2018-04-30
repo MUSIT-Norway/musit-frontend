@@ -43,7 +43,9 @@ export function objectSearch(ajaxGet: AjaxGet<*> = simpleGet) {
   return (props: SearchProps): Observable<SearchResult> => {
     const url = Config.magasin.urls.api.thingaggregate.searchObjectUrl(
       props.queryParam.museumNo,
-      props.queryParam.museumNoAsANumber,
+      props.queryParam.museumNoAsANumber
+        ? props.queryParam.museumNoAsANumber.replace(/\s/g, '')
+        : null, //remove space
       props.queryParam.subNo,
       props.queryParam.term,
       props.queryParam.q,
