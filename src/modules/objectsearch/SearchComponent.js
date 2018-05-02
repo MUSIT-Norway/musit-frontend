@@ -311,6 +311,7 @@ const SearchComponent = (props: SearchComponentProps) => (
     <SearchInputFormComponent
       onChange={props.onChangeQueryParam}
       search={props.onSearch}
+      searchStore={props.searchStore}
     />
     <select
       id="pageSize"
