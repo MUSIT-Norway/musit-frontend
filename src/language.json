@@ -1778,7 +1778,7 @@
       "texts": {
         "search": "Søk",
         "pageSizeMessage" : "For å forbedre ytelsen vil plasseringen av objekter / prøver ikke vises på søkeresultatet.",
-        "numberRangeMessage" : "Museum nummer rekkevidde må være i 12..13 format.",
+        "numberRangeMessage" : "useumsnummer-intervall må være på formen 12..13",
         "cookiesBlockedMessage": "Cookies blokkert. Du må endre innstillingene i nettleseren din til å godta cookies for å bruke denne tjenesten.",
         "conservationReport": "Konservering report",        
         "report": "Report",
