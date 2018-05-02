@@ -3,10 +3,12 @@
 import React from 'react';
 import FontAwesome from 'react-fontawesome';
 import { I18n } from 'react-i18nify';
+import type { SearchStoreState } from '../../../search/searchStore';
 
 export type Props = {
   onChangeQueryParam: (key: string, value: string) => void,
-  onSearch: () => void
+  onSearch: () => void,
+  searchStore: SearchStoreState
 };
 
 const AnalysisInputFormComponent = (props: Props) => (
@@ -16,6 +18,7 @@ const AnalysisInputFormComponent = (props: Props) => (
         <input
           className="col-md-7 col-md-offset-2 col-xs-11"
           onChange={e => props.onChangeQueryParam('q', e.target.value)}
+          value={props && props.searchStore && props.searchStore.queryParam && props.searchStore.queryParam.q}
           placeholder={I18n.t('musit.analysis.queryPlaceholder')}
           type="text"
         />

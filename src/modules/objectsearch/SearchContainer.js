@@ -2,7 +2,7 @@
 
 import inject from 'react-rxjs/dist/RxInject';
 import ObjectSearchComponent from './SearchComponent';
-import store$, { actions } from './searchStore';
+//import store$, { actions } from './searchStore';
 import { addObjects$, toggleObject$, isItemAdded } from '../../stores/pickList';
 import pickList$ from '../../stores/pickList';
 import type { ChangePage } from '../../search/searchStore';
@@ -13,6 +13,38 @@ import type { ObjectData } from '../../types/object';
 import type { SampleData } from '../../types/samples';
 import { flattenSample, getSampleTypeAndSubType } from '../sample/shared/types';
 import { loadPredefinedTypes } from '../../stores/predefinedLoader';
+
+import { Observable } from 'rxjs';
+import appSession$ from '../../stores/appSession';
+import predefined$ from '../../stores/predefined';
+import createSearchStore from '../../search/searchStore';
+import { objectSearch } from '../../models/objects/search';
+import { simpleGet } from '../../shared/RxAjax';
+
+
+
+const searchEndpoint = objectSearch(simpleGet);
+
+
+const { store$, actions } = createSearchStore('objectSearch', searchEndpoint, props => ({
+  queryParam: props.queryParam,
+  from: props.from,
+  limit: props.limit,
+  museumId: props.museumId,
+  collectionIds: props.collectionIds,
+  token: props.token,
+  storageFacilityReadRole: props.storageFacilityReadRole
+
+}));
+
+const  stores = () =>
+  Observable.combineLatest(appSession$, store$, predefined$, pickList$, (a, s, p, l) => ({
+    appSession: a,
+    searchStore: s,
+    predefined: p,
+    pickList: l
+  }));
+
 
 function getObject(hit: SearchHit): ?ObjectData {
   switch (hit._type) {
@@ -52,16 +84,16 @@ function props(p, upstream: { history: History }) {
           isObject
             ? Config.magasin.urls.client.storagefacility.goToObjects(
                 node.nodeId,
-                p.store.appSession
+                p.appSession
               )
             : Config.magasin.urls.client.storagefacility.goToSamples(
                 node.nodeId,
-                p.store.appSession
+                p.appSession
               )
         );
       } else {
         upstream.history.push(
-          Config.magasin.urls.client.storagefacility.goToRoot(p.store.appSession)
+          Config.magasin.urls.client.storagefacility.goToRoot(p.appSession)
         );
       }
     },
@@ -71,11 +103,11 @@ function props(p, upstream: { history: History }) {
       actions.search$.next({
         from: 0,
         limit: Number(localStorage.getItem('SearchPageSize') || 100),
-        queryParam: p.store.searchStore.queryParam,
-        museumId: p.store.appSession.museumId,
-        collectionIds: p.store.appSession.collectionId,
-        token: p.store.appSession.accessToken,
-        storageFacilityReadRole: p.store.appSession.rolesForModules.storageFacilityRead
+        queryParam: p.searchStore.queryParam,
+        museumId: p.appSession.museumId,
+        collectionIds: p.appSession.collectionId,
+        token: p.appSession.accessToken,
+        storageFacilityReadRole: p.appSession.rolesForModules.storageFacilityRead
       });
     },
     onChangeQueryParam: (name: string, value: string) => {
@@ -85,7 +117,7 @@ function props(p, upstream: { history: History }) {
     onChangePage: (page: ChangePage) => {
       // actions.clear$; have to check this later, what is the meaning of this?(actions.clear$.next()???)
       actions.setLoadingSelectPage$.next();
-      actions.selectPage$.next({ page, appSession: p.store.appSession });
+      actions.selectPage$.next({ page, appSession: p.appSession });
     },
     onClickHeader: (hit: SearchHit) => {
       const object = getSource(hit);
@@ -94,13 +126,13 @@ function props(p, upstream: { history: History }) {
         if (hit._type === 'collection') {
           const o: ObjectData = (object: any);
           url = Config.magasin.urls.client.object.gotoObject(
-            p.store.appSession,
+            p.appSession,
             o.id.toString()
           );
         } else if (hit._type === 'sample') {
           const s: SampleData = (object: any);
           url = Config.magasin.urls.client.analysis.gotoSample(
-            p.store.appSession,
+            p.appSession,
             s.objectId
           );
         }
@@ -130,8 +162,8 @@ function props(p, upstream: { history: History }) {
           const sample: SampleData = (source: any);
           toAddToPickList = {
             value: flattenSample(
-              p.store.appSession,
-              p.store.predefined.sampleTypes ? p.store.predefined.sampleTypes.raw : [],
+              p.appSession,
+              p.predefined.sampleTypes ? p.predefined.sampleTypes.raw : [],
               object,
               sample
             ),
@@ -165,8 +197,8 @@ function props(p, upstream: { history: History }) {
             toAddToPickList = {
               marked: true,
               value: flattenSample(
-                p.store.appSession,
-                p.store.predefined.sampleTypes ? p.store.predefined.sampleTypes.raw : [],
+                p.appSession,
+                p.predefined.sampleTypes ? p.predefined.sampleTypes.raw : [],
                 object,
                 sample
               ),
@@ -180,16 +212,16 @@ function props(p, upstream: { history: History }) {
     },
     getObject,
     getSampleTypeStr: (sample: SampleData): string => {
-      if (p.store.predefined.sampleTypes) {
+      if (p.predefined.sampleTypes) {
         return getSampleTypeAndSubType(
-          p.store.predefined.sampleTypes.raw,
+          p.predefined.sampleTypes.raw,
           sample.sampleTypeId,
-          p.store.appSession
+          p.appSession
         );
       }
       return `Unknown: ${sample.sampleTypeId.toString()}`;
     },
-    searchStore: p.store.searchStore,
+    searchStore: p.searchStore,
 
     isObjectAdded: (hit: SearchHit): boolean => {
       return isItemAdded(hit._source, p.pickList && p.pickList.objects);
@@ -197,9 +229,4 @@ function props(p, upstream: { history: History }) {
   };
 }
 
-const data = {
-  store$,
-  pickList$
-};
-
-export default loadPredefinedTypes(inject(data, props)(ObjectSearchComponent));
+export default loadPredefinedTypes(inject(stores, props)(ObjectSearchComponent));

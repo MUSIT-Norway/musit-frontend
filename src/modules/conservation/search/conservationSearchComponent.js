@@ -154,6 +154,7 @@ const ConservationSearchComponent = (props: ConservationSearchComoponentProps) =
     <ConservationInputFormComponent
       onChangeQueryParam={props.onChangeQueryParam}
       onSearch={props.onSearch}
+      searchStore={props.searchStore}
     />
 
     {props.searchStore.loading && <div>Searching...</div>}
