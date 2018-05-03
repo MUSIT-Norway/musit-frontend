@@ -75,7 +75,7 @@ const SearchInputFormComponent = (props: Props) => (
         type="submit"
         onClick={e => {
           e.preventDefault();
-          validateNumberRangeField(
+          return validateNumberRangeField(
             props &&
               props.searchStore &&
               props.searchStore.queryParam &&
