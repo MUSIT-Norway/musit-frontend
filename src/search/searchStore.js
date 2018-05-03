@@ -13,14 +13,6 @@ import type { AppSession } from '../types/appSession';
  * Store types
  */
 
-// type QueryParam = {
-//   museumNo?: ?string,
-//   museumNoAsANumber?: ?string,
-//   subNo?: ?string,
-//   term?: ?string,
-//   q?: ?string
-// };
-
 export type QueryParam = {
   museumNo?: ?string,
   museumNoAsANumber?: ?string,
