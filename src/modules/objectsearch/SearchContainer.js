@@ -104,15 +104,15 @@ function props(storeProps, upstream: { history: History }) {
         token: storeProps.appSession.accessToken,
         storageFacilityReadRole: storeProps.appSession.rolesForModules.storageFacilityRead
       });
+      actions.setQueryParam$.next(storeProps.searchStore.queryParam);
     },
     onChangeQueryParam: (name: string, value: string) => {
-      // actions.clear$; have to check this later, what is the meaning of this?(actions.clear$.next()???)
       actions.changeQuery$.next({ name, value });
     },
     onChangePage: (page: ChangePage) => {
-      // actions.clear$; have to check this later, what is the meaning of this?(actions.clear$.next()???)
       actions.setLoadingSelectPage$.next();
       actions.selectPage$.next({ page, appSession: storeProps.appSession });
+      actions.setQueryParam$.next(storeProps.searchStore.queryParam);
     },
     onClickHeader: (hit: SearchHit) => {
       const object = getSource(hit);

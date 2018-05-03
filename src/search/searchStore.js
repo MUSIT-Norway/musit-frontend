@@ -13,8 +13,24 @@ import type { AppSession } from '../types/appSession';
  * Store types
  */
 
+// type QueryParam = {
+//   museumNo?: ?string,
+//   museumNoAsANumber?: ?string,
+//   subNo?: ?string,
+//   term?: ?string,
+//   q?: ?string
+// };
+
+export type QueryParam = {
+  museumNo?: ?string,
+  museumNoAsANumber?: ?string,
+  subNo?: ?string,
+  term?: ?string,
+  q?: ?string
+};
+
 export type SearchParam = {
-  queryParam: { [string]: ?string },
+  queryParam: QueryParam,
   from: number,
   limit: number,
   museumId: MuseumId,
@@ -42,7 +58,7 @@ export type SearchStoreState = {
   from: number,
   limit: number,
   pagination: ?Paging,
-  queryParam: { [string]: ?string },
+  queryParam: QueryParam,
   result: ?SearchResult
 };
 
@@ -57,7 +73,8 @@ type Actions = {
   setLoadingSelectPage$: Subject<void>,
   changeQuery$: Subject<ChangeQuery>,
   selectPage$: Subject<SelectPage>,
-  search$: Subject<SearchParam>
+  search$: Subject<SearchParam>,
+  setQueryParam$: Subject<QueryParam>
 };
 
 const setLoading$: Subject<void> = createAction('search');
@@ -66,6 +83,7 @@ export const clear$: Subject<void> = createAction('clear');
 const changeQuery$: Subject<ChangeQuery> = createAction('changeQuery');
 const selectPage$: Subject<SelectPage> = createAction('selectPage');
 const search$: Subject<SearchParam> = createAction('searchResult');
+const setQueryParam$: Subject<any> = createAction('setQueryParam');
 
 /**
  * Store setup
@@ -148,6 +166,9 @@ function reducer$<E>(
         queryParam[param.name] = param.value;
         return { ...state, queryParam };
       }
+    }),
+    actions.setQueryParam$.map(queryParam => state => {
+      return { ...state, queryParam };
     })
   );
 }
@@ -169,7 +190,8 @@ export const defaultActions = {
   setLoadingSelectPage$,
   changeQuery$,
   selectPage$,
-  search$
+  search$,
+  setQueryParam$
 };
 
 export function createStoreWithActions<E>(

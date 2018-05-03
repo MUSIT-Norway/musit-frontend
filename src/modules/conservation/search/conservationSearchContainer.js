@@ -48,9 +48,12 @@ const props = (storeProps, upstream: { history: History }) => {
         collectionIds: storeProps.appSession.collectionId,
         token: storeProps.appSession.accessToken
       });
+      actions.setQueryParam$.next(storeProps.searchStore.queryParam);
     },
     onChangePage: (page: ChangePage) => {
+      actions.setLoadingSelectPage$.next();
       actions.selectPage$.next({ page, appSession: storeProps.appSession });
+      actions.setQueryParam$.next(storeProps.searchStore.queryParam);
     },
     onChangeQueryParam: (name: string, value: string) => {
       actions.changeQuery$.next({ name, value });
