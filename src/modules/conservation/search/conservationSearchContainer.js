@@ -53,7 +53,6 @@ const props = (storeProps, upstream: { history: History }) => {
       actions.selectPage$.next({ page, appSession: storeProps.appSession });
     },
     onChangeQueryParam: (name: string, value: string) => {
-      actions.setLoadingSelectPage$.next();
       actions.changeQuery$.next({ name, value });
     },
     goToConservation: (id: number, subEventId: number) => {

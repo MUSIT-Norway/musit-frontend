@@ -11,6 +11,7 @@ import { getStatusText } from '../shared/getters';
 import './analysisSearchComponent.css';
 import moment from 'moment';
 import pullRight from '../../../shared/pullRight';
+import Loader from 'react-loader';
 
 const DateFormat = 'DD.MM.YYYY HH:mm';
 
@@ -194,7 +195,7 @@ const AnalysisSearchComponent = (props: AnlysisSearchComoponentProps) => (
       searchStore={props.searchStore}
     />
 
-    {props.searchStore.loading && <div>Searching...</div>}
+    {props.searchStore && <Loader loaded={!props.searchStore.loading} />}
     {!props.searchStore.loading && props.searchStore.result ? (
       <SearchResultItem
         searchStore={props.searchStore}

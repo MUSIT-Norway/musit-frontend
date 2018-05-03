@@ -12,6 +12,7 @@ import moment from 'moment';
 import pullRight from '../../../shared/pullRight';
 import FontAwesome from 'react-fontawesome';
 import { conservationProcessTypeId } from '../../../shared/util';
+import Loader from 'react-loader';
 
 const DateFormat = 'DD.MM.YYYY HH:mm';
 
@@ -157,7 +158,7 @@ const ConservationSearchComponent = (props: ConservationSearchComoponentProps) =
       searchStore={props.searchStore}
     />
 
-    {props.searchStore.loading && <div>Searching...</div>}
+    {props.searchStore && <Loader loaded={!props.searchStore.loading} />}
     {!props.searchStore.loading && props.searchStore.result ? (
       <SearchResultItem
         searchStore={props.searchStore}
