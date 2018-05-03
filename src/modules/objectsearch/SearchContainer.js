@@ -21,12 +21,9 @@ import createSearchStore from '../../search/searchStore';
 import { objectSearch } from '../../models/objects/search';
 import { simpleGet } from '../../shared/RxAjax';
 
-
-
 const searchEndpoint = objectSearch(simpleGet);
 
-
-const { store$, actions } = createSearchStore('objectSearch', searchEndpoint, props => ({
+const { store$, actions } = createSearchStore('object', searchEndpoint, props => ({
   queryParam: props.queryParam,
   from: props.from,
   limit: props.limit,
@@ -34,17 +31,15 @@ const { store$, actions } = createSearchStore('objectSearch', searchEndpoint, pr
   collectionIds: props.collectionIds,
   token: props.token,
   storageFacilityReadRole: props.storageFacilityReadRole
-
 }));
 
-const  stores = () =>
+const stores = () =>
   Observable.combineLatest(appSession$, store$, predefined$, pickList$, (a, s, p, l) => ({
     appSession: a,
     searchStore: s,
     predefined: p,
     pickList: l
   }));
-
 
 function getObject(hit: SearchHit): ?ObjectData {
   switch (hit._type) {
@@ -76,7 +71,7 @@ function getSource(hit: SearchHit): ?ObjectData | ?SampleData {
   }
 }
 
-function props(p, upstream: { history: History }) {
+function props(storeProps, upstream: { history: History }) {
   return {
     onClickBreadcrumb: (node, isObject) => {
       if (node.nodeId) {
@@ -84,16 +79,16 @@ function props(p, upstream: { history: History }) {
           isObject
             ? Config.magasin.urls.client.storagefacility.goToObjects(
                 node.nodeId,
-                p.appSession
+                storeProps.appSession
               )
             : Config.magasin.urls.client.storagefacility.goToSamples(
                 node.nodeId,
-                p.appSession
+                storeProps.appSession
               )
         );
       } else {
         upstream.history.push(
-          Config.magasin.urls.client.storagefacility.goToRoot(p.appSession)
+          Config.magasin.urls.client.storagefacility.goToRoot(storeProps.appSession)
         );
       }
     },
@@ -103,11 +98,11 @@ function props(p, upstream: { history: History }) {
       actions.search$.next({
         from: 0,
         limit: Number(localStorage.getItem('SearchPageSize') || 100),
-        queryParam: p.searchStore.queryParam,
-        museumId: p.appSession.museumId,
-        collectionIds: p.appSession.collectionId,
-        token: p.appSession.accessToken,
-        storageFacilityReadRole: p.appSession.rolesForModules.storageFacilityRead
+        queryParam: storeProps.searchStore.queryParam,
+        museumId: storeProps.appSession.museumId,
+        collectionIds: storeProps.appSession.collectionId,
+        token: storeProps.appSession.accessToken,
+        storageFacilityReadRole: storeProps.appSession.rolesForModules.storageFacilityRead
       });
     },
     onChangeQueryParam: (name: string, value: string) => {
@@ -117,7 +112,7 @@ function props(p, upstream: { history: History }) {
     onChangePage: (page: ChangePage) => {
       // actions.clear$; have to check this later, what is the meaning of this?(actions.clear$.next()???)
       actions.setLoadingSelectPage$.next();
-      actions.selectPage$.next({ page, appSession: p.appSession });
+      actions.selectPage$.next({ page, appSession: storeProps.appSession });
     },
     onClickHeader: (hit: SearchHit) => {
       const object = getSource(hit);
@@ -126,13 +121,13 @@ function props(p, upstream: { history: History }) {
         if (hit._type === 'collection') {
           const o: ObjectData = (object: any);
           url = Config.magasin.urls.client.object.gotoObject(
-            p.appSession,
+            storeProps.appSession,
             o.id.toString()
           );
         } else if (hit._type === 'sample') {
           const s: SampleData = (object: any);
           url = Config.magasin.urls.client.analysis.gotoSample(
-            p.appSession,
+            storeProps.appSession,
             s.objectId
           );
         }
@@ -162,8 +157,10 @@ function props(p, upstream: { history: History }) {
           const sample: SampleData = (source: any);
           toAddToPickList = {
             value: flattenSample(
-              p.appSession,
-              p.predefined.sampleTypes ? p.predefined.sampleTypes.raw : [],
+              storeProps.appSession,
+              storeProps.predefined.sampleTypes
+                ? storeProps.predefined.sampleTypes.raw
+                : [],
               object,
               sample
             ),
@@ -197,8 +194,10 @@ function props(p, upstream: { history: History }) {
             toAddToPickList = {
               marked: true,
               value: flattenSample(
-                p.appSession,
-                p.predefined.sampleTypes ? p.predefined.sampleTypes.raw : [],
+                storeProps.appSession,
+                storeProps.predefined.sampleTypes
+                  ? storeProps.predefined.sampleTypes.raw
+                  : [],
                 object,
                 sample
               ),
@@ -212,19 +211,19 @@ function props(p, upstream: { history: History }) {
     },
     getObject,
     getSampleTypeStr: (sample: SampleData): string => {
-      if (p.predefined.sampleTypes) {
+      if (storeProps.predefined.sampleTypes) {
         return getSampleTypeAndSubType(
-          p.predefined.sampleTypes.raw,
+          storeProps.predefined.sampleTypes.raw,
           sample.sampleTypeId,
-          p.appSession
+          storeProps.appSession
         );
       }
       return `Unknown: ${sample.sampleTypeId.toString()}`;
     },
-    searchStore: p.searchStore,
+    searchStore: storeProps.searchStore,
 
     isObjectAdded: (hit: SearchHit): boolean => {
-      return isItemAdded(hit._source, p.pickList && p.pickList.objects);
+      return isItemAdded(hit._source, storeProps.pickList && storeProps.pickList.objects);
     }
   };
 }

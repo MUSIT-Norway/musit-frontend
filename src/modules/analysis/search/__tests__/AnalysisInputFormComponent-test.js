@@ -13,6 +13,7 @@ describe('AnalysisInputFormComponent', () => {
       <AnalysisInputFormComponent
         onChangeQueryParam={onChangeQueryParam}
         onSearch={onSearch}
+        searchStore={sinon.spy()}
       />
     );
 
@@ -32,6 +33,7 @@ describe('AnalysisInputFormComponent', () => {
       <AnalysisInputFormComponent
         onChangeQueryParam={onChangeQueryParam}
         onSearch={onSearch}
+        searchStore={sinon.spy()}
       />
     );
 

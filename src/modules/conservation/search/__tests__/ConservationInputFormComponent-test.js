@@ -13,6 +13,7 @@ describe('ConservationInputFormComponent', () => {
       <ConservationInputFormComponent
         onChangeQueryParam={onChangeQueryParam}
         onSearch={onSearch}
+        searchStore={sinon.spy()}
       />
     );
 
@@ -32,6 +33,7 @@ describe('ConservationInputFormComponent', () => {
       <ConservationInputFormComponent
         onChangeQueryParam={onChangeQueryParam}
         onSearch={onSearch}
+        searchStore={sinon.spy()}
       />
     );
 

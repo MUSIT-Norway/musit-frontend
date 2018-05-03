@@ -18,7 +18,12 @@ const AnalysisInputFormComponent = (props: Props) => (
         <input
           className="col-md-7 col-md-offset-2 col-xs-11"
           onChange={e => props.onChangeQueryParam('q', e.target.value)}
-          value={props && props.searchStore && props.searchStore.queryParam && props.searchStore.queryParam.q}
+          value={
+            props &&
+            props.searchStore &&
+            props.searchStore.queryParam &&
+            props.searchStore.queryParam.q
+          }
           placeholder={I18n.t('musit.analysis.queryPlaceholder')}
           type="text"
         />

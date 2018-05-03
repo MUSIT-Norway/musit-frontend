@@ -12,6 +12,7 @@ import { emitWarning } from '../../shared/errors';
 
 const SearchParam = props => (
   <div className="form-group col-md-3">
+    {console.log('SearchInputFormComponent > SearchParam > props', props)}
     <label className="control-label" htmlFor={'search-' + props.id}>
       {I18n.t(`musit.objectsearch.${props.id}.label`)}
     </label>{' '}
@@ -27,7 +28,7 @@ const SearchParam = props => (
             props.searchStore.queryParam.museumNoAsANumber
           )
         ) : (
-          props.searchStore.queryParam[props.id]
+          props.searchStore.queryParam[props.id] || ''
         ) : (
           ''
         )
@@ -53,6 +54,7 @@ export type Props = {
 
 const SearchInputFormComponent = (props: Props) => (
   <form>
+    {console.log('SearchInputFormComponent > props', props)}
     <div className="row">
       <SearchParam
         id="museumNo"
