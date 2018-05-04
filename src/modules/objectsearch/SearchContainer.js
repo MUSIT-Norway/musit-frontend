@@ -107,6 +107,7 @@ function props(storeProps, upstream: { history: History }) {
       actions.setQueryParam$.next(storeProps.searchStore.queryParam);
     },
     onChangeQueryParam: (name: string, value: string) => {
+      actions.setStore$.next(storeProps.searchStore);
       actions.changeQuery$.next({ name, value });
     },
     onChangePage: (page: ChangePage) => {
@@ -224,6 +225,10 @@ function props(storeProps, upstream: { history: History }) {
 
     isObjectAdded: (hit: SearchHit): boolean => {
       return isItemAdded(hit._source, storeProps.pickList && storeProps.pickList.objects);
+    },
+    onClearSearch: () => {
+      actions.setStore$.next(storeProps.searchStore);
+      actions.setQueryParam$.next({});
     }
   };
 }

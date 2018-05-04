@@ -56,6 +56,7 @@ const props = (storeProps, upstream: { history: History }) => {
       actions.setQueryParam$.next(storeProps.searchStore.queryParam);
     },
     onChangeQueryParam: (name: string, value: string) => {
+      actions.setStore$.next(storeProps.searchStore);
       actions.changeQuery$.next({ name, value });
     },
     goToAnalysis: (id: number) => {

@@ -49,7 +49,8 @@ const SearchParam = props => (
 export type Props = {
   onChange: (name: string, value: string) => void,
   search: () => void,
-  searchStore: SearchStoreState
+  searchStore: SearchStoreState,
+  onClearSearch: () => void
 };
 
 const SearchInputFormComponent = (props: Props) => (
@@ -88,6 +89,16 @@ const SearchInputFormComponent = (props: Props) => (
         }}
       >
         <FontAwesome name="search" style={{ fontSize: '1.3em' }} />
+      </button>
+      <button
+        className="btn btn-default pull-right"
+        style={{ marginRight: '20px' }}
+        onClick={e => {
+          e.preventDefault();
+          return props.onClearSearch();
+        }}
+      >
+        {I18n.t('musit.texts.clearSearch')}
       </button>
     </div>
   </form>

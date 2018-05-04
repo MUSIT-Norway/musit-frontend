@@ -90,6 +90,7 @@ describe('searchStore', () => {
       const setLoadingSelectPage$ = new Subject();
 
       const setQueryParam$ = new Subject();
+      const setStore$ = new Subject();
 
       const setLoading$ = testScheduler.createHotObservable(streams.setLoading);
       const search$ = testScheduler.createHotObservable(streams.search, {
@@ -111,7 +112,8 @@ describe('searchStore', () => {
           changeQuery$,
           selectPage$,
           searchResult$: defaultActions.search$,
-          setQueryParam$
+          setQueryParam$,
+          setStore$
         },
         () => Observable.of(esResponseRawData),
         () => ({})

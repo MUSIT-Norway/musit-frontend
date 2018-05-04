@@ -45,6 +45,7 @@ export type SearchComponentProps = {
   onChangeQueryParam: (string, string) => void,
   onChangePage: (change: ChangePage) => void,
   onSearch: () => void,
+  onClearSearch: () => void,
   onClickAddAllToShoppingCart: (hit: Array<SearchHit>) => void
 } & EventsAndGetters;
 
@@ -312,6 +313,7 @@ const SearchComponent = (props: SearchComponentProps) => (
       onChange={props.onChangeQueryParam}
       search={props.onSearch}
       searchStore={props.searchStore}
+      onClearSearch={props.onClearSearch}
     />
     <select
       id="pageSize"

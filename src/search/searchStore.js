@@ -66,7 +66,8 @@ type Actions = {
   changeQuery$: Subject<ChangeQuery>,
   selectPage$: Subject<SelectPage>,
   search$: Subject<SearchParam>,
-  setQueryParam$: Subject<QueryParam>
+  setQueryParam$: Subject<QueryParam>,
+  setStore$: Subject<SearchStoreState>
 };
 
 const setLoading$: Subject<void> = createAction('search');
@@ -75,7 +76,8 @@ export const clear$: Subject<void> = createAction('clear');
 const changeQuery$: Subject<ChangeQuery> = createAction('changeQuery');
 const selectPage$: Subject<SelectPage> = createAction('selectPage');
 const search$: Subject<SearchParam> = createAction('searchResult');
-const setQueryParam$: Subject<any> = createAction('setQueryParam');
+const setQueryParam$: Subject<QueryParam> = createAction('setQueryParam');
+const setStore$: Subject<SearchStoreState> = createAction('setStore');
 
 /**
  * Store setup
@@ -161,6 +163,9 @@ function reducer$<E>(
     }),
     actions.setQueryParam$.map(queryParam => state => {
       return { ...state, queryParam };
+    }),
+    actions.setStore$.map(store => state => {
+      return { ...state, ...store };
     })
   );
 }
@@ -183,7 +188,8 @@ export const defaultActions = {
   changeQuery$,
   selectPage$,
   search$,
-  setQueryParam$
+  setQueryParam$,
+  setStore$
 };
 
 export function createStoreWithActions<E>(
