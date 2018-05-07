@@ -18,6 +18,7 @@ import type { SampleData } from '../../types/samples';
 import type { Node } from '../../types/node';
 import Loader from 'react-loader';
 import { emitWarning } from '../../shared/errors';
+import {archaeologyCollectionUuid} from '../../shared/util'
 
 export type Events = {
   onClickHeader: (hit: SearchHit) => void,
@@ -82,6 +83,11 @@ const CollectionResultHit = (props: ResultHitProps) => {
           </div>
           <div className="col-md-3">
             {I18n.t('musit.objects.objectsView.term')}: {collObject.term}
+          </div>
+          <div className="col-md-3">
+          { collObject.collection && collObject.collection.uuid === archaeologyCollectionUuid ? (
+         I18n.t('musit.objects.objectsView.findingNo') + ':' + (collObject.arkFindingNo ? collObject.arkFindingNo : '') ) :
+          '' }
           </div>
           <div className="col-md-3">
             {(collObject: ObjectData).currentLocation &&
@@ -149,6 +155,11 @@ const SampleResultHit = (props: ResultHitProps) => {
           </div>
           <div className="col-md-3">
             {I18n.t('musit.objects.objectsView.term')}: {object ? object.term : ''}
+          </div>
+          <div className="col-md-3">
+          { object && object.collection && object.collection.uuid === archaeologyCollectionUuid ? (
+          I18n.t('musit.objects.objectsView.findingNo') + ':' + (object.arkFindingNo ? object.arkFindingNo : '') ) :
+          '' }
           </div>
           <div className="col-md-3">
             {sample.currentLocation &&
