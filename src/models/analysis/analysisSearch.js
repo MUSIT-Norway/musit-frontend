@@ -32,5 +32,19 @@ export const analysisSearch: (
     limit,
     queryParam.q
   );
-  return ajaxGet(url, token).map(({ response }) => response);
+  const nullOutputForSearch = {
+    timed_out: false,
+    took: 0,
+    hits: {
+      total: 0,
+      max_score: 0,
+      hits: []
+    }
+  };
+  return ajaxGet(url, token).map(({ response }) => {
+    if (!response) {
+      return nullOutputForSearch;
+    }
+    return response;
+  });
 };

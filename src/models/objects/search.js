@@ -55,7 +55,19 @@ export function objectSearch(ajaxGet: AjaxGet<*> = simpleGet) {
       props.museumId,
       false
     );
+    const nullOutputForSearch = {
+      timed_out: false,
+      took: 0,
+      hits: {
+        total: 0,
+        max_score: 0,
+        hits: []
+      }
+    };
     const res = ajaxGet(url, props.token).flatMap(({ response }) => {
+      if (!response) {
+        return Observable.of(nullOutputForSearch);
+      }
       if (
         response.error ||
         (response.hits && response.hits.total === 0) ||
