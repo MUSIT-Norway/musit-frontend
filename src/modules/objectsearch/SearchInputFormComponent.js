@@ -11,7 +11,7 @@ import type { SearchStoreState } from '../../search/searchStore';
 import { emitWarning } from '../../shared/errors';
 
 const SearchParam = props => (
-  <div className="form-group col-md-3">
+  <div className={'form-group col-md-' + (props.md || 3)}>
     {console.log('SearchInputFormComponent > SearchParam > props', props)}
     <label className="control-label" htmlFor={'search-' + props.id}>
       {I18n.t(`musit.objectsearch.${props.id}.label`)}
@@ -61,18 +61,37 @@ const SearchInputFormComponent = (props: Props) => (
         id="museumNo"
         onChange={props.onChange}
         searchStore={props.searchStore}
+        md={2}
       />
       <SearchParam
         id="museumNoAsANumber"
         onChange={props.onChange}
         searchStore={props.searchStore}
+        md={2}
       />
-      <SearchParam id="subNo" onChange={props.onChange} searchStore={props.searchStore} />
-      <SearchParam id="term" onChange={props.onChange} searchStore={props.searchStore} />
-      <SearchParam id="q" onChange={props.onChange} searchStore={props.searchStore} />
+      <SearchParam
+        id="subNo"
+        onChange={props.onChange}
+        searchStore={props.searchStore}
+        md={2}
+      />
+    </div>
+    <div className="row">
+      <SearchParam
+        id="term"
+        onChange={props.onChange}
+        searchStore={props.searchStore}
+        md={2}
+      />
+      <SearchParam
+        id="q"
+        onChange={props.onChange}
+        searchStore={props.searchStore}
+        md={4}
+      />
       <button
         className="btn btn-default pull-right"
-        style={{ marginRight: '20px' }}
+        style={{ marginRight: '20px', marginTop: '40px' }}
         type="submit"
         onClick={e => {
           e.preventDefault();
@@ -92,7 +111,7 @@ const SearchInputFormComponent = (props: Props) => (
       </button>
       <button
         className="btn btn-default pull-right"
-        style={{ marginRight: '20px' }}
+        style={{ marginRight: '20px', marginTop: '40px' }}
         onClick={e => {
           e.preventDefault();
           return props.onClearSearch();

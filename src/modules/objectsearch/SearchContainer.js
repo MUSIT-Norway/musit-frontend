@@ -229,7 +229,9 @@ function props(storeProps, upstream: { history: History }) {
     onClearSearch: () => {
       actions.setStore$.next(storeProps.searchStore);
       actions.setQueryParam$.next({});
-    }
+    },
+    history: url => url && upstream.history.push(url),
+    appSession: storeProps.appSession
   };
 }
 

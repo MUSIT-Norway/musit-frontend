@@ -19,6 +19,8 @@ import type { Node } from '../../types/node';
 import Loader from 'react-loader';
 import { emitWarning } from '../../shared/errors';
 import { archaeologyCollectionUuid } from '../../shared/util';
+import NavigateSearch from '../../search/NavigateSearch';
+import type { AppSession } from '../../types/appSession';
 
 export type Events = {
   onClickHeader: (hit: SearchHit) => void,
@@ -47,6 +49,8 @@ export type SearchComponentProps = {
   onChangePage: (change: ChangePage) => void,
   onSearch: () => void,
   onClearSearch: () => void,
+  history: () => void,
+  appSession: AppSession,
   onClickAddAllToShoppingCart: (hit: Array<SearchHit>) => void
 } & EventsAndGetters;
 
@@ -329,8 +333,12 @@ const SearchResultItem = (props: {
 
 const SearchComponent = (props: SearchComponentProps) => (
   <div className="container">
+    <NavigateSearch
+      appSession={props.appSession}
+      history={props.history}
+      disableObject={true}
+    />
     <h1>{I18n.t('musit.objectsearch.title')}</h1>
-
     <SearchInputFormComponent
       onChange={props.onChangeQueryParam}
       search={props.onSearch}

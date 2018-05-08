@@ -83,7 +83,9 @@ const props = (storeProps, upstream: { history: History }) => {
         ? storeProps.appSession.language.isEn ? type.enName : type.noName
         : null;
     },
-    searchStore: storeProps.searchStore
+    searchStore: storeProps.searchStore,
+    history: url => url && upstream.history.push(url),
+    appSession: storeProps.appSession
   };
 };
 

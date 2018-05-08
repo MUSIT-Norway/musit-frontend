@@ -12,6 +12,8 @@ import './analysisSearchComponent.css';
 import moment from 'moment';
 import pullRight from '../../../shared/pullRight';
 import Loader from 'react-loader';
+import NavigateSearch from '../../../search/NavigateSearch';
+import type { AppSession } from '../../../types/appSession';
 
 const DateFormat = 'DD.MM.YYYY HH:mm';
 
@@ -25,7 +27,9 @@ export type AnlysisSearchComoponentProps = {
   onSearch: () => void,
   onChangeQueryParam: (name: string, value: string) => void,
   onChangePage: (page: ChangePage) => void,
-  searchStore: SearchStoreState
+  searchStore: SearchStoreState,
+  history: () => void,
+  appSession: AppSession
 } & Methods;
 
 export type ResultHitProps = {
@@ -187,6 +191,11 @@ const SearchResultItem = (
 
 const AnalysisSearchComponent = (props: AnlysisSearchComoponentProps) => (
   <div className="container">
+    <NavigateSearch
+      appSession={props.appSession}
+      history={props.history}
+      disableAnalysis={true}
+    />
     <h1>{I18n.t('musit.analysis.search')}</h1>
 
     <AnalysisInputFormComponent

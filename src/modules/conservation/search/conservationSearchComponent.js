@@ -13,6 +13,8 @@ import pullRight from '../../../shared/pullRight';
 import FontAwesome from 'react-fontawesome';
 import { conservationProcessTypeId } from '../../../shared/util';
 import Loader from 'react-loader';
+import NavigateSearch from '../../../search/NavigateSearch';
+import type { AppSession } from '../../../types/appSession';
 
 const DateFormat = 'DD.MM.YYYY HH:mm';
 
@@ -25,7 +27,9 @@ export type ConservationSearchComoponentProps = {
   onSearch: () => void,
   onChangeQueryParam: (name: string, value: string) => void,
   onChangePage: (page: ChangePage) => void,
-  searchStore: SearchStoreState
+  searchStore: SearchStoreState,
+  history: () => void,
+  appSession: AppSession
 } & Methods;
 
 export type ResultHitProps = {
@@ -150,6 +154,12 @@ const SearchResultItem = (
 
 const ConservationSearchComponent = (props: ConservationSearchComoponentProps) => (
   <div className="container">
+    <NavigateSearch
+      appSession={props.appSession}
+      history={props.history}
+      disableConservation={true}
+    />
+
     <h1>{I18n.t('musit.conservation.search')}</h1>
 
     <ConservationInputFormComponent

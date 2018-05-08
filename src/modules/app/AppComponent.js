@@ -171,22 +171,7 @@ export class AppComponent extends Component {
                   <NavItem>{I18n.t('musit.texts.magazine')}</NavItem>
                 </LinkContainer>
               )}
-              {this.props.appSession.rolesForModules.collectionManagementRead && (
-                <LinkContainer
-                  to={Config.magasin.urls.client.analysis.baseUrl(this.props.appSession)}
-                >
-                  <NavItem>{I18n.t('musit.analysis.analysis')}</NavItem>
-                </LinkContainer>
-              )}
-              {this.props.appSession.rolesForModules.collectionManagementRead && (
-                <LinkContainer
-                  to={Config.magasin.urls.client.conservation.baseUrl(
-                    this.props.appSession
-                  )}
-                >
-                  <NavItem>{I18n.t('musit.conservation.conservation')}</NavItem>
-                </LinkContainer>
-              )}
+
               <LinkContainer
                 to={Config.magasin.urls.client.report.goToReport(this.props.appSession)}
               >
