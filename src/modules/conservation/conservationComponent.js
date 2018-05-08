@@ -38,6 +38,7 @@ import {
 import FontAwesome from 'react-fontawesome';
 import { sortBy, toLower, capitalize } from 'lodash';
 import { getCurrentMeasurementDataForObject } from '../../models/conservation/conservation';
+import Loader from 'react-loader';
 
 type ConservationProcessProps = {
   id?: number,
@@ -498,6 +499,8 @@ export default function ConservationComponent(
 
   return (
     <div className="container">
+      {props.store && <Loader loaded={!props.store.loadingConservation} />}
+
       <h1>{I18n.t('musit.conservation.conservation')}</h1>
       {props.form.id.value && (
         <button

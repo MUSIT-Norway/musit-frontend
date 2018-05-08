@@ -4,6 +4,12 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
 <div
   className="container"
 >
+  <Component
+    component="div"
+    loaded={true}
+    loadedClassName="loadedContent"
+    parentClassName="loader"
+  />
   <h1>
     Konservering
   </h1>
@@ -1798,6 +1804,12 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
 <div
   className="container"
 >
+  <Component
+    component="div"
+    loaded={true}
+    loadedClassName="loadedContent"
+    parentClassName="loader"
+  />
   <h1>
     Konservering
   </h1>
