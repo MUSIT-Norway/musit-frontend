@@ -82,7 +82,8 @@ type ConservationProcessProps = {
   onChangeQueryParam?: Function,
   onSearch?: Function,
   match?: any,
-  downloadConservationReport?: Function
+  downloadConservationReport?: Function,
+  addMode?: boolean
 };
 
 export type Props = ConservationProcessProps & {
@@ -499,9 +500,10 @@ export default function ConservationComponent(
 
   return (
     <div className="container">
+      <Loader loaded={!props.addMode && props.store ? props.store.conservation : true} />
       {props.store && <Loader loaded={!props.store.loadingConservation} />}
-
       <h1>{I18n.t('musit.conservation.conservation')}</h1>
+
       {props.form.id.value && (
         <button
           key="btn-report"

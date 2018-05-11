@@ -32,7 +32,8 @@ function addProps(
     ...sharedProps,
     clearStore: clearStore$.next.bind(clearStore$),
     clearForm: clearForm$.next.bind(clearForm$),
-    loadingConservation: false
+    loadingConservation: false,
+    addMode: true
   };
 }
 
