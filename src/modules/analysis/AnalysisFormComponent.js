@@ -267,35 +267,57 @@ export default function AnalysisFormComponent(props: Props) {
               {I18n.t('musit.analysis.restrictions.restrictions')}
             </label>
             <div className="col-md-10">
-              <div className="btn-group" data-toggle="buttons">
-                <label
-                  className={`btn btn-default ${props.form.restrictions.value
-                    ? 'active'
-                    : ''}`}
-                >
-                  <input
-                    type="radio"
-                    name="options"
-                    onClick={props.updateBooleanField(props.form.restrictions.name, true)}
-                  />{' '}
-                  {I18n.t('musit.texts.yes')}
-                </label>
-                <label
-                  className={`btn btn-default ${!props.form.restrictions.value
-                    ? 'active'
-                    : ''}`}
-                >
-                  <input
-                    type="radio"
-                    name="options"
-                    onClick={props.updateBooleanField(
-                      props.form.restrictions.name,
-                      false
-                    )}
-                  />{' '}
-                  {I18n.t('musit.texts.no')}
-                </label>
-              </div>
+              {(!props.form.id.value ||
+                (props.form.restriction &&
+                  props.form.restriction.rawValue &&
+                  JSON.stringify(props.form.restriction.rawValue) === '{}') ||
+                !(
+                  props.form.restriction &&
+                  props.form.restriction.rawValue &&
+                  (props.form.restriction.rawValue.expirationDate ||
+                    props.form.restriction.rawValue.reason ||
+                    (props.form.restriction.rawValue.caseNumbers &&
+                    (props.form.restriction.rawValue.caseNumbers: any).length > 0
+                      ? true
+                      : false) ||
+                    (props.form.restriction.rawValue.requester
+                      ? props.form.restriction.rawValue.requester
+                      : false))
+                )) && (
+                <div className="btn-group" data-toggle="buttons">
+                  <label
+                    className={`btn btn-default ${props.form.restrictions.value
+                      ? 'active'
+                      : ''}`}
+                  >
+                    <input
+                      type="radio"
+                      name="options"
+                      onClick={props.updateBooleanField(
+                        props.form.restrictions.name,
+                        true
+                      )}
+                    />{' '}
+                    {I18n.t('musit.texts.yes')}
+                  </label>
+
+                  <label
+                    className={`btn btn-default ${!props.form.restrictions.value
+                      ? 'active'
+                      : ''}`}
+                  >
+                    <input
+                      type="radio"
+                      name="options"
+                      onClick={props.updateBooleanField(
+                        props.form.restrictions.name,
+                        false
+                      )}
+                    />{' '}
+                    {I18n.t('musit.texts.no')}
+                  </label>
+                </div>
+              )}
             </div>
           </div>
           <FormRestriction
@@ -309,11 +331,23 @@ export default function AnalysisFormComponent(props: Props) {
           />
         </div>
         <hr />
+        {console.log('props.form.restriction ', props.form.restriction)}
         <button
           className="btn btn-primary"
           disabled={
             !props.isFormValid ||
-            !props.appSession.rolesForModules.collectionManagementWrite
+            !props.appSession.rolesForModules.collectionManagementWrite ||
+            (props.form.restrictions.value &&
+              !(
+                props.form.restrictions.value &&
+                props.form.restriction &&
+                props.form.restriction.rawValue &&
+                props.form.restriction.rawValue.expirationDate &&
+                props.form.restriction.rawValue.reason &&
+                (props.form.restriction.rawValue.requester
+                  ? props.form.restriction.rawValue.requester
+                  : false)
+              ))
           }
           onClick={props.clickSave}
         >
@@ -340,11 +374,13 @@ function FormRestriction(props) {
   const restrictionProps = {
     appSession: props.appSession,
     restriction: restrictionObj,
-    updateRestriction: restriction =>
-      props.updateForm({
+    updateRestriction: restriction => {
+      console.log('FormRestriction > restriction', restriction);
+      return props.updateForm({
         name: props.form.restriction.name,
         rawValue: restriction
-      })
+      });
+    }
   };
   return hasRestriction && isEmptyOrInProgress ? (
     <AddRestriction {...restrictionProps} />

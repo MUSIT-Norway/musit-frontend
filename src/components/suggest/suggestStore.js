@@ -4,6 +4,12 @@ import { createStore, createActions } from 'react-rxjs/dist/RxStore';
 
 export const { update$, clear$ } = createActions('update$', 'clear$');
 
+const emptyActor = {
+  dataportenId: '',
+  dataportenUser: '',
+  email: '',
+  fn: ''
+};
 export default (name, urlFn) =>
   createStore(
     name,

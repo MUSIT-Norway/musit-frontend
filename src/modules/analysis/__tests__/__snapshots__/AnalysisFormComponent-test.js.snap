@@ -334,35 +334,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
         </label>
         <div
           className="col-md-10"
-        >
-          <div
-            className="btn-group"
-            data-toggle="buttons"
-          >
-            <label
-              className="btn btn-default active"
-            >
-              <input
-                name="options"
-                onClick=""
-                type="radio"
-              />
-               
-              Ja
-            </label>
-            <label
-              className="btn btn-default "
-            >
-              <input
-                name="options"
-                onClick=""
-                type="radio"
-              />
-               
-              Nei
-            </label>
-          </div>
-        </div>
+        />
       </div>
       <FormRestriction
         appSession={
