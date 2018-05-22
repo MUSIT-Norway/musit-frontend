@@ -41,6 +41,9 @@ import { replace } from 'lodash';
 import ConservationAddContainer from './modules/conservation/conservationAddContainer';
 import ConservationEditContainer from './modules/conservation/conservationEditContainer';
 import ConservationSearchContainer from './modules/conservation/search/conservationSearchContainer';
+import { AddPersonName } from './modules/person/PersonName';
+import { Person } from './modules/person/Person';
+import Place from './modules/object/places/PlaceComponent';
 
 /**
  *
@@ -80,6 +83,8 @@ const AppPage = props => (
       <Route exact path={rt(props, '/')} component={AboutPage} />
       <Route exact path={rt(props, '/home')} component={HomePage} />
       <Route exact path={rt(props, '/about')} component={AboutPage} />
+      <Route path={rt(props, '/person')} component={PersonPage} />
+      <Route path={rt(props, '/place')} component={PlacePage} />
       <Route
         path={rt(props, '/museum/:museumId/collections/:collectionIds')}
         component={MuseumAndCollectionPageUrlAware}
@@ -114,6 +119,20 @@ const data = {
 
 const MuseumAndCollectionPageUrlAware = flowRight([inject(data), makeUrlAware])(
   MuseumAndCollectionPage
+);
+
+const PersonPage = props => (
+  <Switch>
+    <Route path={rt(props, '/addperson')} exact component={AddPersonName} />
+
+    <Route path={rt(props, '/')} exact component={Person} />
+  </Switch>
+);
+
+const PlacePage = props => (
+  <Switch>
+    <Route path={rt(props, '/')} exact component={Place} />
+  </Switch>
 );
 
 const PicklistPage = props => (
