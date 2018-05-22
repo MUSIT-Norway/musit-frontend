@@ -15,6 +15,7 @@ import type { History } from '../../types/Routes';
 import ViewRestriction from './components/ViewRestriction';
 import MusitI18n from '../../components/MusitI18n';
 import type { Predefined } from '../../types/predefined';
+import Loader from 'react-loader';
 
 export type Props = {
   match: { params: { analysisId: string } },
@@ -227,5 +228,5 @@ export default (props: Props) =>
       </form>
     </div>
   ) : (
-    <div className="loading" />
+    <Loader loaded={false} />
   );
