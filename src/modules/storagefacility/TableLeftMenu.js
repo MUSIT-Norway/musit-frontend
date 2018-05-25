@@ -82,6 +82,8 @@ export default class NodeLeftMenuComponent extends Component {
         {showButtons && showCount('numNodes')}
         {showButtons && showCount('numObjects')}
         {showButtons && showCount('totalObjects')}
+        {showButtons && showCount('numSamples')}
+        {showButtons && showCount('totalSamples')}
         {showButtons && <hr />}
         {showButtons &&
           buttonLink('properties', 'cog', onClickProperties, !storageFacilityAdmin)}

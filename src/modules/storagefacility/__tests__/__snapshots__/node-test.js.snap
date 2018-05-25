@@ -86,6 +86,36 @@ exports[`NodeLeftMenuComponent renders properly 1`] = `
       78
     </ControlLabel>
   </div>
+  <div
+    style={
+      Object {
+        "border": "none",
+        "textAlign": "center",
+      }
+    }
+  >
+    Prøver på node:
+    <br />
+    <ControlLabel
+      bsClass="control-label"
+      srOnly={false}
+    />
+  </div>
+  <div
+    style={
+      Object {
+        "border": "none",
+        "textAlign": "center",
+      }
+    }
+  >
+    Totalt ant. prøver:
+    <br />
+    <ControlLabel
+      bsClass="control-label"
+      srOnly={false}
+    />
+  </div>
   <hr />
   <div
     style={
