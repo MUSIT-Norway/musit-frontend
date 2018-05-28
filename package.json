@@ -1,13 +1,18 @@
 {
-  "name": "MUSIT-Frontend",
+  "name": "TypeScriptReactProject",
   "version": "1.0.0",
-  "description": "",
-  "main": "src/index.js",
+  "description": "TypeScriptReactProject",
+  "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/MUSIT-Norway/musit-frontend.git"
+    "url": "git+ssh://git@gitlab.com/rituvesh/TypeScriptReactProject.git"
   },
-  "private": true,
+  "author": "Rituvesh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/rituvesh/TypeScriptReactProject/issues"
+  },
+  "homepage": "https://rituvesh.gitlab.io/TypeScriptReactProject/",
   "dependencies": {
     "bootstrap": "3.3.7",
     "classnames": "^2.2.5",
@@ -32,17 +37,36 @@
     "react-router-bootstrap": "0.24.3",
     "react-router-dom": "^4.1.1",
     "react-rxjs": "https://gitlab.com/MUSIT-Norway/react-rxjs.git#v3.0.8",
+    "react-scripts-ts": "2.16.0",
     "react-select": "^1.0.0-rc.4",
     "reactable": "^0.14.1",
     "revalidate": "^1.1.0",
     "rxjs": "5.4.3",
     "xlsx": "^0.11.3"
   },
+  "scripts": {
+    "start": "react-scripts-ts start",
+    "build": "react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject",
+    "codacy": "cat coverage/lcov.info",
+    "coverage": "npm test a -- --coverage --collectCoverageFrom='src/!(_poc*)**/*.{js,jsx}'",
+    "flow": "./node_modules/.bin/flow check --show-all-errors",
+    "formatcode": "./node_modules/.bin/prettier --single-quote --trailing-comma none --print-width 90 --write \"{src,__{tests,mocks}__}/**/*.{js,jsx}\""
+  },
   "devDependencies": {
+    "@types/jest": "^22.2.3",
+    "@types/node": "^10.1.3",
+    "@types/prop-types": "^15.5.3",
+    "@types/query-string": "^5.1.0",
+    "@types/react": "^16.3.14",
+    "@types/react-dom": "^16.0.5",
+    "@types/react-notification-system": "^0.2.37",
     "chai": "^4.1.2",
     "codacy-coverage": "^2.0.2",
     "deep-diff": "0.3.5",
-    "enzyme": "^2.8.2",
+    "enzyme": "^2.9.1",
+    "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^1.5.1",
     "flow-bin": "0.54.1",
     "flow-typed": "^2.1.5",
@@ -54,17 +78,7 @@
     "react-addons-test-utils": "^15.5.1",
     "react-scripts": "1.0.13",
     "react-test-renderer": "^15.5.4",
-    "sinon": "^3.2.1"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "codacy": "cat coverage/lcov.info",
-    "coverage": "npm test a -- --coverage --collectCoverageFrom='src/!(_poc*)**/*.{js,jsx}'",
-    "flow": "./node_modules/.bin/flow check --show-all-errors",
-    "formatcode":
-      "./node_modules/.bin/prettier --single-quote --trailing-comma none --print-width 90 --write \"{src,__{tests,mocks}__}/**/*.{js,jsx}\""
+    "sinon": "^3.2.1",
+    "typescript": "^2.8.3"
   }
 }

@@ -4,6 +4,7 @@ import { Table, PageHeader, Panel, Grid, Row } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
 import Config from '../../config';
 import { RxInjectLegacy as inject } from 'react-rxjs';
+import App from './App.tsx';
 
 const reports = [
   {
@@ -19,6 +20,8 @@ export const ReportsOverview = props => {
       <main>
         <Panel>
           <Grid>
+            <div>hiiiii</div>
+            <App />
             <Row className="row-centered">
               <PageHeader>{I18n.t('musit.reports.reports')}</PageHeader>
               <Table>
