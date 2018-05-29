@@ -20,7 +20,6 @@ export const ReportsOverview = props => {
       <main>
         <Panel>
           <Grid>
-            <div>hiiiii</div>
             <App />
             <Row className="row-centered">
               <PageHeader>{I18n.t('musit.reports.reports')}</PageHeader>
