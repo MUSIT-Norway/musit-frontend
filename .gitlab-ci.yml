@@ -15,7 +15,6 @@ test:
 
   cache:
     paths:
-      - node_modules/
 
   before_script:
     - apt-get update -qq && apt-get install -qy libelf1
