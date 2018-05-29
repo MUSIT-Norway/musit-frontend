@@ -1,18 +1,13 @@
 {
-  "name": "TypeScriptReactProject",
+  "name": "MUSIT-Frontend",
   "version": "1.0.0",
-  "description": "TypeScriptReactProject",
-  "main": "index.js",
+  "description": "",
+  "main": "src/index.js",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@gitlab.com/rituvesh/TypeScriptReactProject.git"
+    "url": "git://github.com/MUSIT-Norway/musit-frontend.git"
   },
-  "author": "Rituvesh",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://gitlab.com/rituvesh/TypeScriptReactProject/issues"
-  },
-  "homepage": "https://rituvesh.gitlab.io/TypeScriptReactProject/",
+  "private": true,
   "dependencies": {
     "bootstrap": "3.3.7",
     "classnames": "^2.2.5",
