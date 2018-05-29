@@ -113,6 +113,7 @@ exports[`Reports overview should display correctly 1`] = `
         componentClass="div"
         fluid={false}
       >
+        <App />
         <Row
           bsClass="row"
           className="row-centered"

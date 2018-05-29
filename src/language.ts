@@ -1,4 +1,4 @@
-{
+export const  LanguageJson = {
   "en": {
     "musit": {
       "conservation": {

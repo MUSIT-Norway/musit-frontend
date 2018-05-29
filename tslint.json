@@ -8,7 +8,8 @@
       "src/**/*.jsx",
       "src/**/*.tsx",
       "src/index.tsx",
-      "flow-typed/**"
+      "flow-typed/**",
+      "*.ts"
     ]
   }
 }

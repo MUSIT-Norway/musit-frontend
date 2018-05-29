@@ -4,7 +4,7 @@ import * as PropTypes from 'prop-types';
 import * as ReactDOM from 'react-dom';
 import MusitRoutes from './routes';
 import config from './config';
-import LanguageJson from './language.json';
+import { LanguageJson } from './language';
 import { I18n } from 'react-i18nify';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';

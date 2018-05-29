@@ -40,16 +40,16 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
             href=""
             onClick={[Function]}
             title="Legg til alle i plukklisten"
-      >
+          >
             <FontAwesome
-                  name="shopping-cart"
-                  style={
-                        Object {
-                              "fontSize": "1.3em",
-                            }
-                  }
+              name="shopping-cart"
+              style={
+                Object {
+                  "fontSize": "1.3em",
+                }
+              }
             />
-      </a>,
+          </a>,
         },
       ]
     }
