@@ -3,7 +3,6 @@
   "linterOptions": {
     "exclude": [
       "config/**/*.js",
-<<<<<<< HEAD
       "node_modules/**/*.ts",
       "src/**/*.js",
       "src/**/*.jsx",
@@ -12,9 +11,6 @@
       "flow-typed/**",
       "*.ts",
       "src/**/*.ts"
-=======
-      "node_modules/**/*.ts"
->>>>>>> c9c068afe21b66886b37fb95af31ef5ec9f2bd95
     ]
   }
 }
