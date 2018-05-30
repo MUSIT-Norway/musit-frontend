@@ -27,6 +27,7 @@ test:
     - npm run formatcode
     - git status
     - git diff --exit-code src/ || (echo "ERROR The codebase isn't formatted! See list of files above"; false)
+    
     # Run tests
     - npm test -- --coverage --collectCoverageFrom='src/**/*.{js,jsx}'
 
