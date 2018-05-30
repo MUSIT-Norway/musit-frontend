@@ -15,6 +15,7 @@ test:
 
   cache:
     paths:
+      - node_modules/
 
   before_script:
     - apt-get update -qq && apt-get install -qy libelf1
@@ -28,8 +29,7 @@ test:
     - git status
     - git diff --exit-code src/ || (echo "ERROR The codebase isn't formatted! See list of files above"; false)
     # Run tests
-    - node --max-old-space-size=16000 `which npm`  test -- --coverage --collectCoverageFrom='src/**/*.{js,jsx}'
-    - npm run codacy
+    - npm test
 
 build:
   stage: build
