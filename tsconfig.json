@@ -25,7 +25,11 @@
     "acceptance-tests",
     "webpack",
     "jest",
+<<<<<<< HEAD
     "src/setupTests.ts",
     "flow-typed"
+=======
+    "src/setupTests.ts"
+>>>>>>> c9c068afe21b66886b37fb95af31ef5ec9f2bd95
   ]
 }
