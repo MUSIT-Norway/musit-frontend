@@ -1,3 +1,5 @@
+import { Maybe } from "./common";
+
 // @flow
 
 export type AnalysisResultTypes =
@@ -9,17 +11,17 @@ export type AnalysisResultTypes =
 
 export type GenericResult = {
   type: AnalysisResultTypes,
-  registeredBy?: ?string,
-  registeredDate?: ?string,
-  extRef: ?Array<string>,
-  comment: ?string
+  registeredBy?: Maybe<string>,
+  registeredDate?: Maybe<string>,
+  extRef: Maybe<Array<string>>,
+  comment: Maybe<string>
 };
 export type AgeResult = GenericResult & {
-  age: ?string
+  age:Maybe<string>
 };
 export type RadioCarbonResult = GenericResult & {
-  ageEstimate: ?string,
-  standardDeviation: ?string
+  ageEstimate:Maybe<string>,
+  standardDeviation:Maybe<string>
 };
 
 export type Size = {
@@ -27,17 +29,17 @@ export type Size = {
   value: number
 };
 export type MeasurementResult = GenericResult & {
-  measurementId: ?string,
-  measurementType: ?string,
-  size: ?Size,
-  precision: ?string,
-  method: ?string
+  measurementId:Maybe<string>,
+  measurementType:Maybe<string>,
+  size: Maybe<Size>,
+  precision:Maybe<string>,
+  method:Maybe<string>
 };
 
 export type ExtractionResult = GenericResult & {
-  storageMedium: ?string,
-  concentration: ?Size,
-  volume: ?Size
+  storageMedium:Maybe<string>,
+  concentration: Maybe<Size>,
+  volume: Maybe<Size>
 };
 
 export type AnalysisResult =

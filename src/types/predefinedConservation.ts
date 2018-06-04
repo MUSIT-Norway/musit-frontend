@@ -1,22 +1,22 @@
 // @flow
-import type {
-  ConservationTypes,
-  ConservatonSubType,
-  ConditionCodeType
-} from './conservation';
-import type { SampleType } from './sample';
+import { ConservationTypes, ConservatonSubType, ConditionCodeType } from "./conservation";
+import { SampleType } from "./sample";
+import { Maybe } from "./common";
 
 export type SampleTypes = {
-  [string]: Array<SampleType>,
-  raw: Array<SampleType>
+  [key: string]: Array<SampleType>;
+  raw: Array<SampleType>;
 };
 
-export type PredefinedConservation = {
-  sampleTypes: ?SampleTypes,
-  conservationTypes: ?ConservationTypes,
-  materialList: ?Array<ConservatonSubType>,
-  keywordList: ?Array<ConservatonSubType>,
-  roleList: ?Array<ConservatonSubType>,
-  conditionCodeList: ?Array<ConditionCodeType>,
-  materialDeterminationList: ?Array<any>
-};
+export interface PredefinedConservation {
+  sampleTypes: Maybe<SampleTypes>;
+  conservationTypes: Maybe<ConservationTypes>;
+  materialList: Maybe<Array<ConservatonSubType>>;
+  keywordList: Maybe<Array<ConservatonSubType>>;
+  roleList: Maybe<Array<ConservatonSubType>>;
+  conditionCodeList: Maybe<Array<ConditionCodeType>>;
+  materialDeterminationList: Maybe<Array<any>>;
+
+  loadingSampleTypes: boolean; //?
+  loadingConservationTypes: boolean //?
+}

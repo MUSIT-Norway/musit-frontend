@@ -1,23 +1,24 @@
 // @flow
 
-import type { ActorId } from './ids';
+import { ActorId } from "./ids";
+import { Maybe } from "./common";
 
 export type Actor = {
-  dataportenId?: ?string,
-  applicationId?: ?string,
-  fn: string
+  dataportenId?: Maybe<string>;
+  applicationId?: Maybe<string>;
+  fn: string;
 };
 
 export type ActorRoleDate = {
-  actorId: string,
-  roleId: string,
-  date: string
+  actorId: string;
+  roleId: string;
+  date: string;
 };
 
 /**
  * This is the actual response object from the backend.
  */
 export type ActorStamp = {
-  user: ActorId,
-  date: string
+  user: ActorId;
+  date: string;
 };

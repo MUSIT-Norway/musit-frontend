@@ -1,8 +1,12 @@
 // @flow
 
+//Deprecated. As we now use TypeScript, we can instead use @types/elasticsearch instead of some
+// homegrown semi-complete typings.
+//TODO: Fjern denne fila.
+
 export type Hit = {
   _index: string,
-  _type: 'collection' | 'sample',
+  _type: 'collection' | 'sample' | 'analysis' | 'analysisCollection',
   _id: string,
   _score: number,
   _source?: any
@@ -10,7 +14,7 @@ export type Hit = {
 
 export type InnerHits = {
   inner_hits: {
-    [string]: {
+    [key: string]: {
       hits: {
         total: number,
         max_score: number,

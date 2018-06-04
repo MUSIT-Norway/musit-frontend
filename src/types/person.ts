@@ -1,7 +1,7 @@
 // @flow
-export type Person = {
+export interface Person  {
   name?: string,
-  uuid: string,
+  uuid?: string,
   role?: string | number,
   date?: string
 };
