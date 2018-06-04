@@ -1,46 +1,47 @@
 // @flow
+import { Maybe, Star } from "./common";
 
 export type NatLocation = {
-  natCountry: ?string,
-  natStateProv: ?string,
-  natMunicipality: ?string,
-  natLocality: ?string,
-  natCoordinate: ?string,
-  natCoordDatum: ?string,
-  natSoneBand: ?string
+  natCountry: Maybe<string>;
+  natStateProv: Maybe<string>;
+  natMunicipality: Maybe<string>;
+  natLocality: Maybe<string>;
+  natCoordinate: Maybe<string>;
+  natCoordDatum: Maybe<string>;
+  natSoneBand: Maybe<string>;
 };
 
 export type ArkCoordinate = {
-  projection: ?string,
-  precision: ?string,
-  north: ?string,
-  east: ?string
+  projection: Maybe<string>;
+  precision: Maybe<string>;
+  north: Maybe<string>;
+  east: Maybe<string>;
 };
 
 export type ArkLocation = {
-  farmName?: ?string,
-  farmNo?: ?number,
-  propertyUnitNo?: ?string
+  farmName?: Maybe<string>;
+  farmNo?: Maybe<number>;
+  propertyUnitNo?: Maybe<string>;
 };
 
 export type EtnoLocation = {
-  place: ?string,
-  country: ?string,
-  region1: ?string,
-  region2: ?string,
-  area: ?string
+  place: Maybe<string>;
+  country: Maybe<string>;
+  region1: Maybe<string>;
+  region2: Maybe<string>;
+  area: Maybe<string>;
 };
 
 export type ArkMaterial = {
-  material: string,
-  spesMaterial: ?string,
-  sortering: ?string
+  material: string;
+  spesMaterial: Maybe<string>;
+  sortering: Maybe<string>;
 };
 
 export type EtnoMaterial = {
-  material: string,
-  materialType: ?string,
-  materialElement: ?string
+  material: string;
+  materialType: Maybe<string>;
+  materialElement: Maybe<string>;
 };
 export type Material = EtnoMaterial | ArkMaterial;
 
@@ -48,43 +49,43 @@ export type Material = EtnoMaterial | ArkMaterial;
  * This is the actual response object from the backend.
  */
 export type NamedPathElement = {
-  name: string,
-  nodeId: number,
-  nodeUuid: string
+  name: string;
+  nodeId: number;
+  nodeUuid: string;
 };
 
 /**
  * This is the actual response object from the backend.
  */
 export type MusitObject = {
-  id: number,
-  uuid: string,
-  museumId: number,
-  museumNo: string,
-  subNo?: ?string,
-  term: string,
-  currentLocationId?: ?string,
-  path?: ?string,
-  pathNames?: ?Array<NamedPathElement>,
-  mainObjectId?: ?number,
-  collection?: ?number,
-  arkForm?: ?string,
-  arkFindingNo?: ?string,
-  natStage?: ?string,
-  natGender?: ?string,
-  natLegDate?: ?string,
-  materials?: ?Array<any>,
-  locations?: ?Array<any>,
-  coordinates?: ?Array<ArkCoordinate>,
-  objectType: 'sample' | 'collection'
+  id: number;
+  uuid: string;
+  museumId: number;
+  museumNo: string;
+  subNo?: Maybe<string>;
+  term: string;
+  currentLocationId?: Maybe<string>;
+  path?: Maybe<string>;
+  pathNames?: Maybe<Array<NamedPathElement>>;
+  mainObjectId?: Maybe<number>;
+  collection?: Maybe<number>;
+  arkForm?: Maybe<string>;
+  arkFindingNo?: Maybe<string>;
+  natStage?: Maybe<string>;
+  natGender?: Maybe<string>;
+  natLegDate?: Maybe<string>;
+  materials?: Maybe<Array<Star>>;
+  locations?: Maybe<Array<Star>>;
+  coordinates?: Maybe<Array<ArkCoordinate>>;
+  objectType: "sample" | "collection";
 };
 
 export type ObjectData = {
   // not provided from the backend
-  objectId?: ?string,
-  objectUUID?: ?string,
-  currentLocation?: { pathNames: ?Array<NamedPathElement> },
-  nodeId: string
+  objectId?: Maybe<string>;
+  objectUUID?: Maybe<string>;
+  currentLocation?: { pathNames: Maybe<Array<NamedPathElement>> };
+  nodeId: string;
 } & MusitObject;
 
-export type objectTypeAndId = Array<{ objectType: string, id: string }>;
+export type objectTypeAndId = Array<{ objectType: string; id: string }>;

@@ -1,10 +1,12 @@
 // @flow
 
-import type { MusitObject } from '../types/object';
-//import type { SampleDataExtended } from '../types/samples';
-import type { Person } from '../types/person';
-import type { AppSession } from '../types/appSession';
-import type { Field } from '../forms/form';
+import { MusitObject } from '../types/object';
+import  { SampleDataExtended } from '../types/samples';
+import  { Person } from '../types/person';
+import  { AppSession } from '../types/appSession';
+import  { Field } from '../forms/form';
+import { Maybe } from './common';
+import { MouseEventHandler } from 'react';
 
 export type ActorsAndRoles = {
   roleId?: number | string,
@@ -21,16 +23,19 @@ export type AffectedThing = {
   analysisTypeId: number,
   doneBy: string,
   doneDate: string,
-  note?: ?string,
+  note?: Maybe<string>,
   partOf: number,
   registeredBy: string,
   registeredDate: string,
   responsible: string
 };
 
-export type ObjectInfo = MusitObject;
+export type ObjectInfo = {
+  objectData?: Maybe<MusitObject>;
+  sampleData?: Maybe<SampleDataExtended>;
+} & MusitObject;
 
-export type ObjectInfoAffectedThing = ?ObjectInfo & ?AffectedThing;
+export type ObjectInfoAffectedThing = Maybe<ObjectInfo> & Maybe<AffectedThing>;
 
 export type ConservationType = {
   id: number,
@@ -51,16 +56,16 @@ export type ConservationTypesObject = {
 };
 
 export type ConservationSave = {
-  doneBy?: ?string,
-  doneDate?: ?string,
-  responsible?: ?string,
-  administrator?: ?string,
-  completedBy?: ?string,
-  completedDate?: ?string,
-  caseNumber?: ?string,
-  affectedThings?: ?Array<string>,
-  actorsAndRoles?: Array<ActorsAndRoles>,
-  note?: ?string
+  doneBy?: Maybe<string>;
+  doneDate?: Maybe<string>;
+  responsible?: Maybe<string>;
+  administrator?: Maybe<string>;
+  completedBy?: Maybe<string>;
+  completedDate?: Maybe<string>;
+  caseNumber?: Maybe<string>;
+  affectedThings?: Maybe<Array<string>>;
+  actorsAndRoles?: Array<ActorsAndRoles>;
+  note?: Maybe<string>;
 };
 
 export type ConservatonSubType = {
@@ -68,6 +73,7 @@ export type ConservatonSubType = {
   noTerm: string,
   enTerm: string
 };
+
 
 export type MeasurementData = {
   weight?: number,
@@ -109,7 +115,7 @@ type SubEventComponentProps = {
   viewMode?: boolean,
   onChange: Function,
   onDelete?: Function,
-  onEdit?: Function,
+  onEdit?:  MouseEventHandler<HTMLElement>,
   onSave?: Function,
   onCancel?: Function,
   onChangePersonActorRole: Function,
@@ -118,14 +124,14 @@ type SubEventComponentProps = {
   onAddObjectsToSubEvent: Function,
   addNewObjectToSubEventAndProcess: Function,
   expanded?: boolean,
-  toggleExpanded: Function,
+  toggleExpanded: MouseEventHandler<HTMLElement>,
   actorsAndRoles: Array<Person>,
   roleList: Array<any>,
-  extraAttributes?: ?any,
-  affectedThingsWithDetailsMainEvent?: ?Array<ObjectInfo>,
+  extraAttributes?: Maybe<any>,
+  affectedThingsWithDetailsMainEvent?: Maybe<Array<ObjectInfo>>,
   onDocumentUpload?: Function,
   isFormValid: Function,
-  editable: ?number,
+  editable?: number,
   isUpdated?: boolean,
   objectsReadOnly?: boolean,
   downloadConservationReport?: Function
@@ -224,36 +230,35 @@ export type ConservationSubTypes =
   | MeasurementDeterminationType
   | NoteType;
 
-export type EditableValuesMainEvent = {
-  caseNumber: ?string,
-  note: ?string,
-  actorsAndRoles: ?Array<ActorsAndRoles>
-};
+  export type EditableValuesMainEvent = {
+    caseNumber: Maybe<string>;
+    note: Maybe<string>;
+    actorsAndRoles: Maybe<Array<ActorsAndRoles>>;
+  };
 
-export type EditableValuesForm = {
-  editable: ?Field<EditableValuesMainEvent | Array<ConservationSubTypes>>
-};
+  export type EditableValuesForm = {
+    editable: Maybe<Field<EditableValuesMainEvent | Array<ConservationSubTypes>>>;
+  };
 
-export type ConservationCollection = {
-  id: number,
-  editable: ?number,
-  editableValues: any,
-  registeredBy?: ?string,
-  registeredDate?: ?string,
-  updatedBy?: ?string,
-  updatedDate?: ?string,
-  note?: ?string,
-  affectedThings?: ?Array<ObjectInfo>,
-  caseNumber?: ?string,
-  events: Array<any>,
-  actorsAndRoles?: Array<ActorsAndRoles>
-};
-
-export type ConservationStoreState = {
-  loadingConservation?: boolean,
-  conservation?: ?ConservationCollection,
-  conservationTypes?: Array<string>
-};
+  export type ConservationCollection = {
+    id: number;
+    editable: Maybe<number>;
+    editableValues: any;
+    registeredBy?: Maybe<string>;
+    registeredDate?: Maybe<string>;
+    updatedBy?: Maybe<string>;
+    updatedDate?: Maybe<string>;
+    note?: Maybe<string>;
+    affectedThings?: Maybe<Array<ObjectInfo>>;
+    caseNumber?: Maybe<string>;
+    events: Array<any>;
+    actorsAndRoles?: Array<ActorsAndRoles>;
+  };
+  export type ConservationStoreState = {
+    loadingConservation?: boolean;
+    conservation?: Maybe<ConservationCollection>;
+    conservationTypes?: Array<string>;
+  };
 
 export type SavedFile = {
   id: string,

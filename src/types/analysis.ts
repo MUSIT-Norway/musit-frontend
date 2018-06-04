@@ -1,29 +1,30 @@
 // @flow
-import type { MusitObject } from '../types/object';
-import type { SampleDataExtended } from '../types/samples';
-import type { AnalysisResultTypes } from 'types/analysisResult';
-import type { ErrorLoading, SavedFile } from '../models/analysis/analysisResult';
+import  { MusitObject } from '../types/object';
+import  { SampleDataExtended } from '../types/samples';
+import  { AnalysisResultTypes } from '../types/analysisResult';
+import  { ErrorLoading, SavedFile } from '../models/analysis/analysisResult';
+import { Maybe, Star, ArrayAny } from './common';
 
 export const isMultipleSelectAttribute = (attributeType: string) =>
   /^Array\[.*]$/.test(attributeType);
 
-export type Size = { value: number, unit: string, rawValue?: ?string };
+export type Size = { value: number, unit: string, rawValue?: Maybe<string> };
 
 export type ExtraResultAttribute =
   | string
   | {
-      type: ?string,
-      value: ?string | ?number | ?Size
+      type: Maybe<string>,
+      value: Maybe<string> | Maybe<number> | Maybe<Size>
     };
 
 export type ExtraResultAttributeValues = {
-  [string]: ?ExtraResultAttribute
+  [key: string]: Maybe<ExtraResultAttribute>
 };
 
 export type ExtraAttribute = {
   attributeKey: string,
   attributeType: string,
-  allowedValues?: ?Array<*>
+  allowedValues?: Maybe<Array<Star>>
 };
 
 export type AnalysisType = {
@@ -35,38 +36,43 @@ export type AnalysisType = {
   extraDescriptionAttributes?: Array<ExtraAttribute>,
   extraDescriptionType?: string,
   extraResultType?: AnalysisResultTypes,
-  extraResultAttributes?: { [string]: string }
+  extraResultAttributes?: { [key: string]: string }
 };
 
 export type AnalysisTypes = AnalysisType[];
 
 export type AnalysisTypesObject = {
   analysisTypes: AnalysisTypes,
-  analysisTypeCategories: []
+  analysisTypeCategories: ArrayAny
 };
 
 export type Restriction = {
-  requester?: ?string,
-  expirationDate?: ?string,
-  reason?: ?string,
-  caseNumbers?: ?Array<string>,
-  registeredStamp?: ?{ user: string, date: string },
-  cancelledStamp?: ?{ user: string, date: string },
-  cancelledReason?: ?string
+  requester?: Maybe<string>,
+  expirationDate?: Maybe<string>,
+  reason?: Maybe<string>,
+  caseNumbers?: Maybe<Array<string>>,
+  registeredStamp?: Maybe<{ user: string, date: string }>,
+  cancelledStamp?: Maybe<{ user: string, date: string }>,
+  cancelledReason?: Maybe<string>
 } & {
-  requesterName?: ?string,
-  cancelledBy?: ?string,
-  cancelledByName?: ?string,
-  cancelledDate?: ?string
+  requesterName?: Maybe<string>;
+  cancelledBy?: Maybe<string>;
+  cancelledByName?: Maybe<string>;
+  cancelledDate?: Maybe<string>;
 };
 
 export type Result = {
-  type: ?string,
-  extRef?: ?Array<string>,
-  comment?: ?string,
-  files?: ?Array<File>,
-  attachments?: Array<string>,
-  [string]: string | number | { value: number, unit: string }
+  type: Maybe<string>;
+  extRef?: Maybe<Array<string>>;
+  comment?: Maybe<string>;
+  files?: Maybe<Array<File>>;
+  attachments?: Array<string>;
+  [key: string]:
+  | string
+  | number
+  | { value: number; unit: string }
+  | Maybe<Array<string>>
+  | Maybe<Array<File>>;
 };
 
 export type AffectedThing = {
@@ -76,7 +82,7 @@ export type AffectedThing = {
   analysisTypeId: number,
   doneBy: string,
   doneDate: string,
-  note?: ?string,
+  note?: Maybe<string>,
   partOf: number,
   registeredBy: string,
   registeredDate: string,
@@ -85,47 +91,48 @@ export type AffectedThing = {
 };
 
 export type ObjectInfo = {
-  objectData?: ?MusitObject,
-  sampleData?: ?SampleDataExtended
+  objectData?: Maybe<MusitObject>;
+  sampleData?: Maybe<SampleDataExtended>;
 };
 export type AnalysisEvent = AffectedThing &
   ObjectInfo & {
     result?: {
-      [string]: string | { value?: string | Array<string> },
-      extRef?: Array<string>,
-      comment?: string
-    },
-    expanded?: boolean,
-    files?: ?Array<SavedFile | File>
+      [key: string]: string | { value?: string | Array<string> } | Array<string> | (String[] | undefined);
+      extRef?: Array<string>;
+      comment?: string;
+    };
+    expanded?: boolean;
+    files?: Maybe<Array<SavedFile | File>>;
   };
 
 // Fixme this type is incorrect/incomplete
+
 export type AnalysisCollection = {
-  id: number,
-  analysisTypeId: number,
-  objectId?: ?string,
-  doneBy?: ?string,
-  doneDate?: ?string,
-  doneByName?: ?string,
-  registeredBy?: ?string,
-  registeredDate?: ?string,
-  responsible?: ?string,
-  responsibleName?: string,
-  administrator?: ?string,
-  administratorName?: ?string,
-  updatedBy?: ?string,
-  updatedDate?: ?string,
-  completedBy?: ?string,
-  completedByName?: ?string,
-  completedDate?: ?string,
-  note?: ?string,
-  extraAttributes?: { type: string, [string]: string | number },
-  result?: ?Result,
-  files?: ?Array<SavedFile | ErrorLoading>,
-  events: ?Array<AnalysisEvent>,
-  restriction?: ?Restriction,
-  reason?: ?string,
-  status?: ?number,
-  caseNumbers?: ?Array<string>,
-  orgId?: ?number
+  id: number;
+  analysisTypeId: number;
+  objectId?: Maybe<string>;
+  doneBy?: Maybe<string>
+  doneDate?: Maybe<string>;
+  doneByName?: Maybe<string>;
+  registeredBy?: Maybe<string>;
+  registeredDate?: Maybe<string>;
+  responsible?: Maybe<string>;
+  responsibleName?: string;
+  administrator?: Maybe<string>;
+  administratorName?: Maybe<string>;
+  updatedBy?: Maybe<string>;
+  updatedDate?: Maybe<string>;
+  completedBy?: Maybe<string>;
+  completedByName?: Maybe<string>;
+  completedDate?: Maybe<string>;
+  note?: Maybe<string>;
+  extraAttributes?: { type: string;[key: string]: string | number };
+  result?: Maybe<Result>;
+  files?: Maybe<Array<SavedFile | ErrorLoading>>;
+  events: Maybe<Array<AnalysisEvent>>;
+  restriction?: Maybe<Restriction>;
+  reason?: Maybe<string>;
+  status?: Maybe<number>;
+  caseNumbers?: Maybe<Array<string>>;
+  orgId?: Maybe<number>;
 };
