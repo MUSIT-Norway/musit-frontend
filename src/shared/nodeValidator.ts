@@ -1,12 +1,13 @@
 import { I18n } from 'react-i18nify';
 import MusitNode from '../models/node';
+import { MUSTFIX, TODO } from '../types/common';
 
-export const getPathLength = formProps => {
-  const { pathNames } = formProps || {};
+export const getPathLength = (formProps:TODO) => {
+  const { pathNames }  = (formProps || {}) as MUSTFIX;
   return pathNames && pathNames.length;
 };
 
-export const checkNodeType = (from, to) => {
+export const checkNodeType = (from:TODO, to:TODO) => {
   const matchFromType = from.value ? from.value.type : from.type;
 
   if (MusitNode.isRootNode(to) && 'Organisation' !== matchFromType) {
@@ -22,9 +23,9 @@ export const checkNodeType = (from, to) => {
   }
 };
 
-export const checkNodeBranch = (from, to) => {
+export const checkNodeBranch = (from: TODO, to: TODO) => {
   const pathNameFound = to.pathNames
-    ? to.pathNames.filter(id => {
+    ? to.pathNames.filter((id: TODO) => {
         const matchOnValue = from.value && id.nodeId === from.value.id;
         return id.nodeId === from.id || matchOnValue;
       })
@@ -35,6 +36,6 @@ export const checkNodeBranch = (from, to) => {
   }
 };
 
-export const checkNodeBranchAndType = (from, to) => {
+export const checkNodeBranchAndType = (from: TODO, to: TODO) => {
   return checkNodeType(from, to) || checkNodeBranch(from, to);
 };

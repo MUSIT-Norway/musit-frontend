@@ -1,30 +1,27 @@
 // @flow
-import React from 'react';
+import * as React from "react";
+import { Star } from "../types/common";
 
 export type Methods<P> = {
-  onMount?: (props: P) => void,
-  onReceiveProps?: (props: P) => void,
-  onUnmount?: (props: P) => void
+  onMount?: (props: P) => void;
+  onReceiveProps?: (props: P) => void;
+  onUnmount?: (props: P) => void;
 };
 
-const noop = props => {};
+const noop = (props:any) => {};
 
-export type Hoc<P> = (comp: React$ComponentType<P>) => React$ComponentType<P>;
+export type Hoc<P> = (comp: React.ComponentType<P>) => React.ComponentType<P>;
 
 export default function lifeCycle<P>(methods: Methods<P>): Hoc<P> {
-  return Component => {
-    if (typeof methods === 'function') {
-      throw new Error(
-        'Illegal lifecycle argument, expected an object but found a function.'
-      );
+  return (MyComponent: React.ComponentType<P>) => {
+    if (typeof methods === "function") {
+      throw new Error("Illegal lifecycle argument, expected an object but found a function.");
     }
     const onMount = methods.onMount || noop;
     const onUnmount = methods.onUnmount || noop;
     const onReceiveProps = methods.onReceiveProps || noop;
 
     class MountWrapper extends React.Component<P, void> {
-      props: P;
-
       componentWillMount() {
         onMount(this.props);
       }
@@ -33,14 +30,14 @@ export default function lifeCycle<P>(methods: Methods<P>): Hoc<P> {
         onUnmount(this.props);
       }
 
-      componentWillReceiveProps(props: P, context: *) {
+      componentWillReceiveProps(props: P, context: Star) {
         onReceiveProps(props);
       }
 
       render() {
-        return <Component {...(this.props: any)} />;
+        return <MyComponent {...this.props as any} />;
       }
     }
-    return MountWrapper;
+    return MountWrapper as any;
   };
 }
