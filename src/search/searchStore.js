@@ -28,7 +28,8 @@ export type SearchParam = {
   museumId: MuseumId,
   collectionIds: CollectionId,
   token: string,
-  storageFacilityReadRole?: boolean
+  storageFacilityReadRole?: boolean,
+  databaseSearch?: boolean
 };
 
 export type ChangePage = number | 'next' | 'previous';

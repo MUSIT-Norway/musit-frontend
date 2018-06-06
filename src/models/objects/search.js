@@ -23,7 +23,8 @@ type SearchProps = {
   museumId: MuseumId,
   collectionIds: string,
   token: string,
-  storageFacilityReadRole?: boolean
+  storageFacilityReadRole?: boolean,
+  databaseSearch?: boolean
 };
 
 const hentPlassering = (
@@ -41,20 +42,41 @@ const hentPlassering = (
 
 export function objectSearch(ajaxGet: AjaxGet<*> = simpleGet) {
   return (props: SearchProps): Observable<SearchResult> => {
-    const url = Config.magasin.urls.api.thingaggregate.searchObjectUrl(
-      props.queryParam.museumNo,
-      props.queryParam.museumNoAsANumber
-        ? props.queryParam.museumNoAsANumber.replace(/\s/g, '')
-        : null, //remove space
-      props.queryParam.subNo,
-      props.queryParam.term,
-      props.queryParam.q,
-      props.limit,
-      props.from,
-      props.collectionIds,
-      props.museumId,
-      false
-    );
+    const dbSearch =
+      props.databaseSearch ||
+      (localStorage.getItem('objectDatabaseSearch') &&
+        localStorage.getItem('objectDatabaseSearch') === 'true')
+        ? true
+        : false;
+    const url = dbSearch
+      ? Config.magasin.urls.api.thingaggregate.searchDatabaseObjectUrl(
+          props.queryParam.museumNo,
+          props.queryParam.museumNoAsANumber
+            ? props.queryParam.museumNoAsANumber.replace(/\s/g, '')
+            : null, //remove space
+          props.queryParam.subNo,
+          props.queryParam.term,
+          props.queryParam.q,
+          props.limit,
+          props.from,
+          props.collectionIds,
+          props.museumId,
+          false
+        )
+      : Config.magasin.urls.api.thingaggregate.searchObjectUrl(
+          props.queryParam.museumNo,
+          props.queryParam.museumNoAsANumber
+            ? props.queryParam.museumNoAsANumber.replace(/\s/g, '')
+            : null, //remove space
+          props.queryParam.subNo,
+          props.queryParam.term,
+          props.queryParam.q,
+          props.limit,
+          props.from,
+          props.collectionIds,
+          props.museumId,
+          false
+        );
     const nullOutputForSearch = {
       timed_out: false,
       took: 0,
@@ -64,19 +86,69 @@ export function objectSearch(ajaxGet: AjaxGet<*> = simpleGet) {
         hits: []
       }
     };
-    const res = ajaxGet(url, props.token).flatMap(({ response }) => {
-      if (!response) {
+
+    const mapDbToESResponse = r => ({
+      timed_out: false,
+      took: 0,
+      hits: {
+        max_score: 0,
+        total: r.totalMatches,
+        hits: [...r.matches]
+      }
+    });
+
+    const mapDbHitsToESHist = (d: {
+      uuid: string,
+      museumId: number,
+      museumNo: string,
+      term: string,
+      type?: string
+    }) => ({
+      _type: d.type ? d.type : 'collection',
+      _id: d.uuid,
+      _score: 0,
+      _source: {
+        objectId: d.uuid,
+        id: d.uuid,
+        museumId: d.museumId,
+        museumNo: d.museumNo,
+        term: d.term,
+        collection: {
+          id: null,
+          uuid: props.collectionIds
+        },
+        isDeleted: false,
+        museumNoAsANumber: null,
+        museumNoAsLowerCase: null,
+        objectType: d.type ? d.type : 'collection'
+      }
+    });
+
+    const res = ajaxGet(url, props.token).flatMap(output => {
+      const r = output.response;
+      console.log('Response--------------------------- ', r);
+      console.log(
+        'Mapped response--------------------------- ',
+        dbSearch ? mapDbToESResponse(r) : r
+      );
+      if (!r) {
         return Observable.of(nullOutputForSearch);
       }
       if (
-        response.error ||
-        (response.hits && response.hits.total === 0) ||
+        r.error ||
+        (r.hits && r.hits.total === 0) ||
         !props.storageFacilityReadRole ||
         Number(localStorage.getItem('SearchPageSize')) > 1000
       ) {
-        return Observable.of(response);
+        return Observable.of(dbSearch ? mapDbToESResponse(r) : r);
       }
-      const newObjects: Array<Observable<any>> = response.hits.hits.map(a => {
+      if (dbSearch && r.matches.length === 0) {
+        return Observable.of(nullOutputForSearch);
+      }
+      const response = dbSearch ? mapDbToESResponse(r) : r;
+      console.log('Inner response after transform--------------------------- ', response);
+      const newObjects: Array<Observable<any>> = response.hits.hits.map(d => {
+        const a = dbSearch ? mapDbHitsToESHist(d) : d;
         const currentLocation = hentPlassering(
           a._source.id || a._source.objectId,
           a._type,

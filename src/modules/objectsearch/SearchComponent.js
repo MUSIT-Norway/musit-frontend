@@ -47,7 +47,7 @@ export type SearchComponentProps = {
   searchStore: SearchStoreState,
   onChangeQueryParam: (string, string) => void,
   onChangePage: (change: ChangePage) => void,
-  onSearch: () => void,
+  onSearch: (databaseSearch: boolean) => void,
   onClearSearch: () => void,
   history: () => void,
   appSession: AppSession,

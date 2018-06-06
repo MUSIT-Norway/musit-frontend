@@ -26,21 +26,31 @@ const SearchParam = props => (
         'museumNoAsANumber' ? (
           removeInvalidKeysForNumberRangeString(
             props.searchStore.queryParam.museumNoAsANumber
+              ? props.searchStore.queryParam.museumNoAsANumber
+              : localStorage.getItem(props.id) ? localStorage.getItem(props.id) : ''
           )
+        ) : props.searchStore.queryParam[props.id] ? (
+          props.searchStore.queryParam[props.id]
+        ) : localStorage.getItem(props.id) ? (
+          localStorage.getItem(props.id)
         ) : (
-          props.searchStore.queryParam[props.id] || ''
+          ''
+        ) : localStorage.getItem(props.id) ? (
+          localStorage.getItem(props.id)
         ) : (
           ''
         )
       }
       placeholder={I18n.t(`musit.objectsearch.${props.id}.placeHolder`)}
-      onChange={e =>
+      onChange={e => {
+        localStorage.setItem(props.id, e.target.value || '');
         props.onChange(
           props.id,
           props.id === 'museumNoAsANumber'
             ? removeInvalidKeysForNumberRangeString(e.target.value)
             : e.target.value
-        )}
+        );
+      }}
       // ref={field => (this[id] = ReactDOM.findDOMNode(field))}
     />
   </div>
@@ -48,7 +58,7 @@ const SearchParam = props => (
 
 export type Props = {
   onChange: (name: string, value: string) => void,
-  search: () => void,
+  search: (databaseSearch: boolean) => void,
   searchStore: SearchStoreState,
   onClearSearch: () => void
 };
@@ -101,7 +111,28 @@ const SearchInputFormComponent = (props: Props) => (
               props.searchStore.queryParam &&
               props.searchStore.queryParam.museumNoAsANumber
           )
-            ? props.search()
+            ? props.search(true)
+            : emitWarning({
+                message: I18n.t('musit.texts.numberRangeMessage')
+              });
+        }}
+      >
+        <FontAwesome name="database" style={{ fontSize: '1.3em' }} />
+        <FontAwesome name="search" style={{ fontSize: '1.3em' }} />
+      </button>
+      <button
+        className="btn btn-default pull-right"
+        style={{ marginRight: '20px', marginTop: '40px' }}
+        type="submit"
+        onClick={e => {
+          e.preventDefault();
+          return validateNumberRangeField(
+            props &&
+              props.searchStore &&
+              props.searchStore.queryParam &&
+              props.searchStore.queryParam.museumNoAsANumber
+          )
+            ? props.search(false)
             : emitWarning({
                 message: I18n.t('musit.texts.numberRangeMessage')
               });
@@ -114,6 +145,11 @@ const SearchInputFormComponent = (props: Props) => (
         style={{ marginRight: '20px', marginTop: '40px' }}
         onClick={e => {
           e.preventDefault();
+          localStorage.setItem('museumNo', '');
+          localStorage.setItem('museumNoAsANumber', '');
+          localStorage.setItem('subNo', '');
+          localStorage.setItem('term', '');
+          localStorage.setItem('q', '');
           return props.onClearSearch();
         }}
       >
