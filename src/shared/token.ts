@@ -1,3 +1,5 @@
+import { TODO } from "../types/common";
+
 export const getAccessToken = () => {
   let localStorage;
   try {
@@ -15,5 +17,5 @@ export const getAccessToken = () => {
   if (accessToken) {
     user = JSON.parse(accessToken);
   }
-  return user.accessToken;
+  return (user as TODO).accessToken;
 };

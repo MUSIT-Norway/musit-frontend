@@ -4,9 +4,10 @@ import { ajax } from 'rxjs/observable/dom/ajax';
 import { emitError } from './errors';
 import { closeModal } from './modal';
 import { setAccessToken$ } from '../stores/appSession';
-import type { Callback, AjaxGet, AjaxPost, AjaxPut, AjaxDel } from '../types/ajax';
+import  { Callback, AjaxGet, AjaxPost, AjaxPut, AjaxDel } from '../types/ajax';
+import { Star, Maybe, MUSTFIX } from '../types/common';
 
-export function onComplete<R>(callback: ?Callback<R>) {
+export function onComplete<R>(callback: Maybe<Callback<R>>) {
   return (response: R) => {
     if (callback && callback.onComplete) {
       callback.onComplete(response);
@@ -18,8 +19,8 @@ const shouldLog = function() {
   return process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
 };
 
-export function onFailure<R>(callback: ?Callback<R>): (error: *) => Observable<*> {
-  return (error: *) => {
+export function onFailure<R>(callback: Maybe<Callback<R>>): (error: Star) => Observable<Star> {
+  return (error: Star) => {
     switch (error.status) {
       case 401:
         if (shouldLog()) {
@@ -59,8 +60,8 @@ export function ajaxHelper<R, B>(
   method: string,
   body: B,
   token: string,
-  headers: ?{ [string]: string },
-  responseType?: ?string = 'json'
+  headers?: { [key: string]: string } | null,
+  responseType: string = 'json'
 ): Observable<R> {
   return ajax({
     url,
@@ -71,10 +72,10 @@ export function ajaxHelper<R, B>(
       Authorization: 'Bearer ' + token,
       ...headers
     }
-  });
+  }) as MUSTFIX;
 }
 
-function simpleAjax<R>(ajax$: Observable<R>, callback: ?Callback<R>): Observable<R> {
+function simpleAjax<R>(ajax$: Observable<R>, callback: Maybe<Callback<R>>): Observable<R> {
   return ajax$.do(onComplete(callback)).catch(onFailure(callback));
 }
 
@@ -82,10 +83,10 @@ export function get<R>(url: string, token: string): Observable<R> {
   return ajaxHelper(url, 'GET', null, token);
 }
 
-export const simpleGet: AjaxGet<*> = function simpleGet<R>(
+export const simpleGet: AjaxGet<Star> = function simpleGet<R>(
   url: string,
   token: string,
-  callback: ?Callback<R>
+  callback: Maybe<Callback<R>>
 ): Observable<R> {
   console.log('SIMPLEGET ' + url);
   return simpleAjax(get(url, token), callback);
@@ -95,10 +96,10 @@ export function del<R>(url: string, token: string): Observable<R> {
   return ajaxHelper(url, 'DELETE', null, token);
 }
 
-export const simpleDel: AjaxDel<*> = function<R>(
+export const simpleDel: AjaxDel<Star> = function<R>(
   url: string,
   token: string,
-  callback: ?Callback<R>
+  callback: Maybe<Callback<R>>
 ): Observable<R> {
   return simpleAjax(del(url, token), callback);
 };
@@ -107,11 +108,11 @@ export function post<B, R>(url: string, body: B, token: string): Observable<R> {
   return ajaxHelper(url, 'POST', body, token, { 'Content-Type': 'application/json' });
 }
 
-export const simplePost: AjaxPost<*> = function<B, R>(
+export const simplePost: AjaxPost<Star> = function<B, R>(
   url: string,
   data: B,
   token: string,
-  callback: ?Callback<R>
+  callback: Maybe<Callback<R>>
 ): Observable<R> {
   return simpleAjax(post(url, data, token), callback);
 };
@@ -120,11 +121,11 @@ export function put<B, R>(url: string, data: B, token: string): Observable<R> {
   return ajaxHelper(url, 'PUT', data, token, { 'Content-Type': 'application/json' });
 }
 
-export const simplePut: AjaxPut<*> = function<B, R>(
+export const simplePut: AjaxPut<Star> = function<B, R>(
   url: string,
   data: B,
   token: string,
-  callback: ?Callback<R>
+  callback: Maybe<Callback<R>>
 ): Observable<R> {
   return simpleAjax(put(url, data, token), callback);
 };

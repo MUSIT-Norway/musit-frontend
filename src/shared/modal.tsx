@@ -1,9 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
+import * as ReactDOM from 'react-dom';
 import { I18n } from 'react-i18nify';
+import { MUSTFIX, TODO } from '../types/common';
 
-let __$dialog__;
+let __$dialog__: TODO;
+
+type REMOVEJQUERY = TODO
 
 export const closeModal = () => {
   if (__$dialog__ && typeof __$dialog__.close === 'function') {
@@ -11,19 +14,19 @@ export const closeModal = () => {
   }
 };
 
-export const showConfirm = (message, onYes) => {
+export const showConfirm = (message: TODO, onYes: TODO) => {
   closeModal();
 
   const title = I18n.t('musit.texts.delete');
   const prompt = `<div>${message}</div>`;
-  const $dialog = (__$dialog__ = global.$(prompt).dialog({
+  const $dialog = (__$dialog__ = (global as REMOVEJQUERY).$(prompt).dialog({
     autoOpen: false,
     modal: true,
     title: title,
     autoResize: true,
     resizable: false,
     close: function() {
-      global.$(this).remove();
+      (global as REMOVEJQUERY).$(this).remove();
     }
   }));
   $dialog.dialog({
@@ -32,13 +35,13 @@ export const showConfirm = (message, onYes) => {
         text: I18n.t('musit.texts.showConfirm.ok'),
         click: function() {
           onYes();
-          global.$(this).dialog('close');
+          (global as REMOVEJQUERY).$(this).dialog('close');
         }
       },
       {
         text: I18n.t('musit.texts.showConfirm.cancel'),
         click: function() {
-          global.$(this).dialog('close');
+          (global as REMOVEJQUERY).$(this).dialog('close');
         }
       }
     ]
@@ -46,10 +49,10 @@ export const showConfirm = (message, onYes) => {
   $dialog.dialog('open');
 };
 
-export const showModal = (title, componentToRender, closeFn) => {
+export const showModal = (title: TODO, componentToRender: TODO, closeFn: TODO) => {
   closeModal();
 
-  const $dialog = (__$dialog__ = global.$('<div>').dialog({
+  const $dialog = (__$dialog__ = (global as REMOVEJQUERY).$('<div>').dialog({
     autoOpen: false,
     modal: true,
     title: title,
@@ -60,7 +63,7 @@ export const showModal = (title, componentToRender, closeFn) => {
     width: 'auto',
     close: function() {
       ReactDOM.unmountComponentAtNode(this);
-      global.$(this).remove();
+    (global as REMOVEJQUERY).$(this).remove();
       if (typeof closeFn === 'function') {
         closeFn();
       }
