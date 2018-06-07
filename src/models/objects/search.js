@@ -48,15 +48,23 @@ export function objectSearch(ajaxGet: AjaxGet<*> = simpleGet) {
         localStorage.getItem('objectDatabaseSearch') === 'true')
         ? true
         : false;
+    const queryParam = {
+      museumNo: localStorage.getItem('museumNo') || props.queryParam.museumNo,
+      museumNoAsANumber:
+        localStorage.getItem('museumNoAsANumber') || props.queryParam.museumNoAsANumber,
+      subNo: localStorage.getItem('subNo') || props.queryParam.subNo,
+      term: localStorage.getItem('term') || props.queryParam.term,
+      q: localStorage.getItem('q') || props.queryParam.q
+    };
     const url = dbSearch
       ? Config.magasin.urls.api.thingaggregate.searchDatabaseObjectUrl(
-          props.queryParam.museumNo,
-          props.queryParam.museumNoAsANumber
-            ? props.queryParam.museumNoAsANumber.replace(/\s/g, '')
+          queryParam.museumNo,
+          queryParam.museumNoAsANumber
+            ? queryParam.museumNoAsANumber.replace(/\s/g, '')
             : null, //remove space
-          props.queryParam.subNo,
-          props.queryParam.term,
-          props.queryParam.q,
+          queryParam.subNo,
+          queryParam.term,
+          queryParam.q,
           props.limit,
           props.from,
           props.collectionIds,
@@ -64,13 +72,13 @@ export function objectSearch(ajaxGet: AjaxGet<*> = simpleGet) {
           false
         )
       : Config.magasin.urls.api.thingaggregate.searchObjectUrl(
-          props.queryParam.museumNo,
-          props.queryParam.museumNoAsANumber
-            ? props.queryParam.museumNoAsANumber.replace(/\s/g, '')
+          queryParam.museumNo,
+          queryParam.museumNoAsANumber
+            ? queryParam.museumNoAsANumber.replace(/\s/g, '')
             : null, //remove space
-          props.queryParam.subNo,
-          props.queryParam.term,
-          props.queryParam.q,
+          queryParam.subNo,
+          queryParam.term,
+          queryParam.q,
           props.limit,
           props.from,
           props.collectionIds,
