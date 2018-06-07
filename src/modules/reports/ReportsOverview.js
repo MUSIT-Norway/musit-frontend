@@ -1,15 +1,15 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Table, PageHeader, Panel, Grid, Row } from "react-bootstrap";
-import { I18n } from "react-i18nify";
-import Config from "../../config";
-import { RxInjectLegacy as inject } from "react-rxjs";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Table, PageHeader, Panel, Grid, Row } from 'react-bootstrap';
+import { I18n } from 'react-i18nify';
+import Config from '../../config';
+import { RxInjectLegacy as inject } from 'react-rxjs';
 
 const reports = [
   {
-    title: "musit.reports.securingCollections.title",
+    title: 'musit.reports.securingCollections.title',
     url: Config.magasin.urls.client.report.goToKdReport,
-    description: "musit.reports.securingCollections.description"
+    description: 'musit.reports.securingCollections.description'
   }
 ];
 
@@ -20,12 +20,12 @@ export const ReportsOverview = props => {
         <Panel>
           <Grid>
             <Row className="row-centered">
-              <PageHeader>{I18n.t("musit.reports.reports")}</PageHeader>
+              <PageHeader>{I18n.t('musit.reports.reports')}</PageHeader>
               <Table>
                 <thead>
                   <tr>
-                    <th>{I18n.t("musit.reports.titleHeader")}</th>
-                    <th>{I18n.t("musit.reports.descriptionHeader")}</th>
+                    <th>{I18n.t('musit.reports.titleHeader')}</th>
+                    <th>{I18n.t('musit.reports.descriptionHeader')}</th>
                   </tr>
                 </thead>
                 <tbody>
