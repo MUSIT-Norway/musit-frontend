@@ -22,13 +22,14 @@ import notification$ from './shared/errors';
 import * as queryParser from 'query-string';
 import { loadLanguage } from './shared/language';
 import Config from './config';
+import { TODO } from './types/common';
 
 // let LanguageJson  = require('./language.json');
 //let {provide} = require('react-rxjs/dist/RxProvide');
 
 const notificationSystem = ReactDOM.render(<NotificationSystem />, document.getElementById('errors')) as any; //TODO!
 notification$.subscribe((origEvent) => {
-	let event: any = { ...origEvent, message: null, body: origEvent.message };
+	let event: any = { ...origEvent, message: null, body: (origEvent as TODO).message };
 	if (event.level === 'error') {
 		event = { ...event, autoDismiss: 0 };
 	}

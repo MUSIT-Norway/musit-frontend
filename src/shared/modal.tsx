@@ -1,15 +1,15 @@
-import * as React from 'react';
-import * as PropTypes from 'prop-types';
-import * as ReactDOM from 'react-dom';
-import { I18n } from 'react-i18nify';
-import { MUSTFIX, TODO } from '../types/common';
+import * as React from "react";
+import * as PropTypes from "prop-types";
+import * as ReactDOM from "react-dom";
+import { I18n } from "react-i18nify";
+import { TODO } from "../types/common";
 
 let __$dialog__: TODO;
 
-type REMOVEJQUERY = TODO
+type REMOVEJQUERY = TODO;
 
 export const closeModal = () => {
-  if (__$dialog__ && typeof __$dialog__.close === 'function') {
+  if (__$dialog__ && typeof __$dialog__.close === "function") {
     __$dialog__.close();
   }
 };
@@ -17,7 +17,7 @@ export const closeModal = () => {
 export const showConfirm = (message: TODO, onYes: TODO) => {
   closeModal();
 
-  const title = I18n.t('musit.texts.delete');
+  const title = I18n.t("musit.texts.delete");
   const prompt = `<div>${message}</div>`;
   const $dialog = (__$dialog__ = (global as REMOVEJQUERY).$(prompt).dialog({
     autoOpen: false,
@@ -32,39 +32,39 @@ export const showConfirm = (message: TODO, onYes: TODO) => {
   $dialog.dialog({
     buttons: [
       {
-        text: I18n.t('musit.texts.showConfirm.ok'),
+        text: I18n.t("musit.texts.showConfirm.ok"),
         click: function() {
           onYes();
-          (global as REMOVEJQUERY).$(this).dialog('close');
+          (global as REMOVEJQUERY).$(this).dialog("close");
         }
       },
       {
-        text: I18n.t('musit.texts.showConfirm.cancel'),
+        text: I18n.t("musit.texts.showConfirm.cancel"),
         click: function() {
-          (global as REMOVEJQUERY).$(this).dialog('close');
+          (global as REMOVEJQUERY).$(this).dialog("close");
         }
       }
     ]
   });
-  $dialog.dialog('open');
+  $dialog.dialog("open");
 };
 
 export const showModal = (title: TODO, componentToRender: TODO, closeFn: TODO) => {
   closeModal();
 
-  const $dialog = (__$dialog__ = (global as REMOVEJQUERY).$('<div>').dialog({
+  const $dialog = (__$dialog__ = (global as REMOVEJQUERY).$("<div>").dialog({
     autoOpen: false,
     modal: true,
     title: title,
     autoResize: true,
     // minHeight: 'auto',
-    overflowY: 'hidden',
+    overflowY: "hidden",
     resizable: true,
-    width: 'auto',
+    width: "auto",
     close: function() {
       ReactDOM.unmountComponentAtNode(this);
-    (global as REMOVEJQUERY).$(this).remove();
-      if (typeof closeFn === 'function') {
+      (global as REMOVEJQUERY).$(this).remove();
+      if (typeof closeFn === "function") {
         closeFn();
       }
     }
@@ -77,7 +77,7 @@ export const showModal = (title: TODO, componentToRender: TODO, closeFn: TODO) =
 
     getChildContext() {
       return {
-        closeModal: () => $dialog.dialog('close')
+        closeModal: () => $dialog.dialog("close")
       };
     }
 
@@ -98,5 +98,5 @@ export const showModal = (title: TODO, componentToRender: TODO, closeFn: TODO) =
 
   ReactDOM.render(<ClosableAndProvided />, $dialog[0]);
 
-  $dialog.dialog('open');
+  $dialog.dialog("open");
 };
