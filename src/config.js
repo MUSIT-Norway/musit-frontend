@@ -332,6 +332,32 @@ export default {
             });
             return baseUrl + qs;
           },
+          searchDatabaseObjectUrl: (
+            museumNo: ?string,
+            museumNoAsANumber: ?string,
+            subNo: ?string,
+            term: ?string,
+            q: ?string,
+            limit: number,
+            from: number,
+            collectionId: CollectionId,
+            museumId: MuseumId,
+            ignoreSamples: boolean
+          ): string => {
+            const baseUrl = `/api/thingaggregate/museum/${museumId}/objects/searchDb`;
+            const qs = queryParams({
+              museumNo,
+              museumNoAsANumber,
+              subNo,
+              term,
+              from,
+              limit,
+              q,
+              collectionIds: collectionId,
+              ignoreSamples: ignoreSamples
+            });
+            return baseUrl + qs;
+          },
           objectDetailsUrl: (
             mid: MuseumId,
             objectId: ObjectId,

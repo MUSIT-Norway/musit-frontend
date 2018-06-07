@@ -30,7 +30,8 @@ const { store$, actions } = createSearchStore('object', searchEndpoint, props =>
   museumId: props.museumId,
   collectionIds: props.collectionIds,
   token: props.token,
-  storageFacilityReadRole: props.storageFacilityReadRole
+  storageFacilityReadRole: props.storageFacilityReadRole,
+  databaseSearch: props.databaseSearch
 }));
 
 const stores = () =>
@@ -92,7 +93,7 @@ function props(storeProps, upstream: { history: History }) {
         );
       }
     },
-    onSearch: () => {
+    onSearch: (databaseSearch: boolean) => {
       // actions.clear$; have to check this later, what is the meaning of this?(actions.clear$.next()???)
       actions.setLoading$.next();
       actions.search$.next({
@@ -102,8 +103,11 @@ function props(storeProps, upstream: { history: History }) {
         museumId: storeProps.appSession.museumId,
         collectionIds: storeProps.appSession.collectionId,
         token: storeProps.appSession.accessToken,
-        storageFacilityReadRole: storeProps.appSession.rolesForModules.storageFacilityRead
+        storageFacilityReadRole:
+          storeProps.appSession.rolesForModules.storageFacilityRead,
+        databaseSearch: databaseSearch
       });
+      localStorage.setItem('objectDatabaseSearch', databaseSearch ? 'true' : 'false');
       actions.setQueryParam$.next(storeProps.searchStore.queryParam);
     },
     onChangeQueryParam: (name: string, value: string) => {
