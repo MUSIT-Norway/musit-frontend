@@ -23,7 +23,7 @@ test:
   script:
     - echo "Running frontend tests..."
     - npm install
-    - npm run flow
+    # npm run flow
     # Check formatting
     - npm run formatcode
     - git status
