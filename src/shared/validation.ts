@@ -10,7 +10,12 @@ export const removeInvalidKeysForNumberRange = (key: string): Maybe<string> =>
   key && validKeysForNumberRange(key) ? key : "";
 
 export const removeInvalidKeysForNumberRangeString = (input: string): Maybe<string> =>
-  input ? [...(input as any)].filter(s => validKeysForNumberRange(s)).join("") : "";
+  input
+    ? input
+        .split("")
+        .filter(s => validKeysForNumberRange(s))
+        .join("")
+    : "";
 
 export const validateNumberRangeField = (input: string): boolean => {
   const re = /^(\d*)(\.\.)?(\d*)$/;
