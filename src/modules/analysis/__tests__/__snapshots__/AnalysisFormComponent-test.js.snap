@@ -270,8 +270,15 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
             extraAttributes={null}
             history={
               Object {
+                "action": undefined,
+                "block": [Function],
+                "createHref": [Function],
+                "go": [Function],
                 "goBack": [Function],
                 "goForward": [Function],
+                "length": 0,
+                "listen": [Function],
+                "location": undefined,
                 "push": [Function],
                 "replace": [Function],
               }
@@ -310,8 +317,15 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
         extraAttributes={null}
         history={
           Object {
+            "action": undefined,
+            "block": [Function],
+            "createHref": [Function],
+            "go": [Function],
             "goBack": [Function],
             "goForward": [Function],
+            "length": 0,
+            "listen": [Function],
+            "location": undefined,
             "push": [Function],
             "replace": [Function],
           }

@@ -59,6 +59,7 @@ export type SavedFile = {
   owner: { ownerId: string, ownerType: string },
   collection: string,
   path: string,
+  size: string,
   version: number,
   published: boolean,
   createdStamp: { date: string, by: string },

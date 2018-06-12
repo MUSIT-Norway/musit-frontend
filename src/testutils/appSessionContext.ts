@@ -1,9 +1,9 @@
 // @flow
 
-import PropTypes from 'prop-types';
-import { Observable } from 'rxjs';
+import * as PropTypes from "prop-types";
+import { Observable } from "rxjs";
 
-import type { AppSession } from 'types/appSession';
+import { AppSession } from "../types/appSession";
 
 export const createAppSessionContext = (appSession: AppSession) => ({
   context: {
@@ -15,9 +15,9 @@ export const createAppSessionContext = (appSession: AppSession) => ({
 export const createEnLangAppSessionContext = () =>
   createAppSessionContext({
     museumId: 99,
-    collectionId: '0000-0000-0000',
-    accessToken: 'dummy-token',
-    actor: { fn: 'Test Testersen' },
+    collectionId: "0000-0000-0000",
+    accessToken: "dummy-token",
+    actor: { fn: "Test Testersen" },
     language: { isEn: false, isNo: true },
     rolesForModules: {
       collectionManagementRead: true,
@@ -33,9 +33,9 @@ export const createEnLangAppSessionContext = () =>
 export const createNoLangAppSessionContect = () =>
   createAppSessionContext({
     museumId: 99,
-    collectionId: '0000-0000-0000',
-    accessToken: 'dummy-token',
-    actor: { fn: 'Test Testersen' },
+    collectionId: "0000-0000-0000",
+    accessToken: "dummy-token",
+    actor: { fn: "Test Testersen" },
     language: { isEn: false, isNo: true },
     rolesForModules: {
       collectionManagementRead: true,

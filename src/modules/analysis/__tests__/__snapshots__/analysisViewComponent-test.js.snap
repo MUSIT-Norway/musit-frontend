@@ -322,8 +322,15 @@ exports[`AnalysisViewComponent should render properly 1`] = `
             extraAttributes={Object {}}
             history={
               Object {
+                "action": undefined,
+                "block": [Function],
+                "createHref": [Function],
+                "go": [Function],
                 "goBack": [Function],
                 "goForward": [Function],
+                "length": 0,
+                "listen": [Function],
+                "location": undefined,
                 "push": [Function],
                 "replace": [Function],
               }
@@ -360,10 +367,43 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         comments="1"
         externalSource="1"
         extraAttributes={Object {}}
+        files={
+          Array [
+            Object {
+              "createdStamp": Object {
+                "by": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+                "date": "2018-06-12T11:14:44.649+00:00",
+              },
+              "documentDetails": Object {
+                "number": 1,
+              },
+              "fid": "7b0aac35-3bc4-452f-9f8d-8964a91fdcf0",
+              "fileType": "image/png",
+              "id": "cf70910e-6e31-11e8-9251-13f2b8765574",
+              "owner": Object {
+                "ownerId": "99",
+                "ownerType": "org",
+              },
+              "path": "/root/Modules/Analysis/1",
+              "published": false,
+              "size": "305586",
+              "title": "Screenshot from 2017-05-31 11-28-54 (13th copy).png",
+              "type": "archive_document",
+              "version": 1,
+            },
+          ]
+        }
         history={
           Object {
+            "action": undefined,
+            "block": [Function],
+            "createHref": [Function],
+            "go": [Function],
             "goBack": [Function],
             "goForward": [Function],
+            "length": 0,
+            "listen": [Function],
+            "location": undefined,
             "push": [Function],
             "replace": [Function],
           }
@@ -390,6 +430,51 @@ exports[`AnalysisViewComponent should render properly 1`] = `
           </p>
         </div>
       </div>
+      <ViewRestrictionComponent
+        appSession={
+          Object {
+            "accessToken": "45667",
+            "actor": Object {
+              "fn": "Test",
+            },
+            "collectionId": "1234",
+            "language": Object {
+              "isEn": false,
+              "isNo": true,
+            },
+            "museumId": 99,
+            "rolesForModules": Object {
+              "collectionManagementRead": true,
+              "collectionManagementWrite": true,
+              "documentArchiveRead": true,
+              "documentArchiveWrite": true,
+              "storageFacilityAdmin": true,
+              "storageFacilityRead": true,
+              "storageFacilityWrite": true,
+            },
+          }
+        }
+        cancelRestriction={[Function]}
+        isRestrictionValidForCancellation={false}
+        restriction={
+          Object {
+            "caseNumbers": Array [
+              "123",
+            ],
+            "expirationDate": "2018-06-13T22:00:00+00:00",
+            "reason": "dfdfs",
+            "registeredStamp": Object {
+              "date": "2018-06-12T11:14:43+00:00",
+              "user": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+            },
+            "requester": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+            "requesterName": "Rituvesh Kumar",
+          }
+        }
+        toggleCancelDialog={[Function]}
+        updateRestriction={[Function]}
+        viewMode={true}
+      />
     </div>
   </form>
 </div>

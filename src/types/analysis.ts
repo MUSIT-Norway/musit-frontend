@@ -115,6 +115,7 @@ export type AnalysisCollection = {
   doneDate?: Maybe<string>;
   doneByName?: Maybe<string>;
   registeredBy?: Maybe<string>;
+  registeredByName: Maybe<string>;
   registeredDate?: Maybe<string>;
   responsible?: Maybe<string>;
   responsibleName?: string;
@@ -135,4 +136,6 @@ export type AnalysisCollection = {
   status?: Maybe<number>;
   caseNumbers?: Maybe<Array<string>>;
   orgId?: Maybe<number>;
+  type: string;
 };
+

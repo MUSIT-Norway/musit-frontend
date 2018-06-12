@@ -50,6 +50,8 @@
     "formatcode": "./node_modules/.bin/prettier --single-quote --trailing-comma none --print-width 90 --write \"{src,__{tests,mocks}__}/**/*.{js,jsx}\""
   },
   "devDependencies": {
+    "@types/deep-diff": "0.0.31",
+    "@types/history": "^4.6.2",
     "@types/jest": "^22.2.3",
     "@types/lodash": "^4.14.109",
     "@types/node": "^10.1.3",
