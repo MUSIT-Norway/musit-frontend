@@ -41,9 +41,10 @@ import { replace } from 'lodash';
 import ConservationAddContainer from './modules/conservation/conservationAddContainer';
 import ConservationEditContainer from './modules/conservation/conservationEditContainer';
 import ConservationSearchContainer from './modules/conservation/search/conservationSearchContainer';
-import { AddPersonName } from './modules/person/PersonName';
-import { Person } from './modules/person/Person';
+import { AddPersonName } from './modules/object/person/PersonName';
+import { Person } from './modules/object/person/Person';
 import Place from './modules/object/places/PlaceComponent';
+import ClassEventPage from './modules/object/taxon/TaxonClassification';
 
 /**
  *
@@ -85,6 +86,8 @@ const AppPage = props => (
       <Route exact path={rt(props, '/about')} component={AboutPage} />
       <Route path={rt(props, '/person')} component={PersonPage} />
       <Route path={rt(props, '/place')} component={PlacePage} />
+      <Route path={rt(props, '/classEvents')} component={ClassEventPage} />
+
       <Route
         path={rt(props, '/museum/:museumId/collections/:collectionIds')}
         component={MuseumAndCollectionPageUrlAware}

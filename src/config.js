@@ -138,6 +138,12 @@ export default {
         }
       },
       api: {
+        taxon: {
+          getLatinNamesFromName: (scientificName: string) =>
+            `/Api/Taxon/ScientificName?${scientificName}`,
+          getSynonymsFromLatinNameId: (scientificNameId: number) =>
+            `/Api/Taxon/ScientificName/${scientificNameId}`
+        },
         conservation: {
           getConditionCodeList: `/api/management/conservation/conditionCodes`,
           getMaterialList: (mid: MuseumId, collectionId: CollectionId) =>
