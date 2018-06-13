@@ -163,12 +163,12 @@ describe("AnalysisViewContainer", () => {
         {
           defaultValue: [
             {
-              administrator: "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+              //administrator: "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
               affectedThing: "a982bcc0-133c-4af8-99cc-f02df98c2b0b",
               affectedType: "collection",
               analysisTypeId: 27,
-              completedBy: "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
-              completedDate: "2018-06-12T11:13:43+00:00",
+              //completedBy: "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+              //completedDate: "2018-06-12T11:13:43+00:00",
               doneBy: "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
               doneDate: "2018-06-12T11:13:19+00:00",
               id: 2,

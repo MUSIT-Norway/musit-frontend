@@ -1,6 +1,6 @@
 // @flow
-import keys from 'lodash/keys';
-import type {
+import {keys} from 'lodash';
+import  {
   AnalysisType,
   AnalysisEvent,
   AnalysisCollection,
@@ -9,11 +9,12 @@ import type {
   Result
 } from '../../../types/analysis';
 import { I18n } from 'react-i18nify';
-import type { Language } from '../../../types/appSession';
-import type { AnalysisLab, Purpose } from '../../../types/predefined';
+import  { Language } from '../../../types/appSession';
+import  { AnalysisLab, Purpose } from '../../../types/predefined';
 import { getAnalysisResultFieldAllowedValues } from './analysisResult';
+import { Maybe, Star, MUSTFIX, TODO } from '../../../types/common';
 
-export function getStatusText(status?: ?number): string {
+export function getStatusText(status?: Maybe<number>): string {
   if (!status) {
     return '';
   }
@@ -33,7 +34,7 @@ export function getStatusText(status?: ?number): string {
   }
 }
 
-export type Value = { rawValue?: ?string, value?: ?number };
+export type Value = { rawValue?: Maybe<string>, value?: Maybe<number> };
 
 export function parseValue(value: Value): Value {
   return typeof value.rawValue !== 'undefined'
@@ -45,8 +46,8 @@ export function parseValue(value: Value): Value {
 }
 
 export function getLabPlaceText(
-  analysisLabList: ?Array<AnalysisLab>,
-  actorId: ?number
+  analysisLabList: Maybe<Array<AnalysisLab>>,
+  actorId: Maybe<number>
 ): string {
   if (!actorId || !analysisLabList) {
     return '';
@@ -59,8 +60,8 @@ export function getLabPlaceText(
 }
 
 export function getAnalysisPurpose(
-  reason: ?string,
-  purposes: ?Array<Purpose>,
+  reason: Maybe<string>,
+  purposes: Maybe<Array<Purpose>>,
   language: Language
 ): string {
   if (reason && purposes) {
@@ -73,8 +74,8 @@ export function getAnalysisPurpose(
 }
 
 export function getAnalysisTypeTerm(
-  analysisTypeId: ?number,
-  analysisTypes: ?Array<AnalysisType>,
+  analysisTypeId: Maybe<number>,
+  analysisTypes: Maybe<Array<AnalysisType>>,
   language: Language
 ): string {
   if (analysisTypeId && analysisTypes) {
@@ -87,18 +88,18 @@ export function getAnalysisTypeTerm(
 }
 
 export function getAnalysisType(
-  analysisTypeId: ?number,
-  analysisTypes: ?Array<AnalysisType>
-): ?AnalysisType {
+  analysisTypeId: Maybe<number>,
+  analysisTypes: Maybe<Array<AnalysisType>>
+): Maybe<AnalysisType> {
   return analysisTypeId && analysisTypes
     ? analysisTypes.find(at => at.id === analysisTypeId)
     : null;
 }
 
 export function getExtraDescriptionAttributes(
-  analysisType: ?AnalysisType,
-  analysis: ?AnalysisCollection,
-  extraDescriptionAttributes: *
+  analysisType: Maybe<AnalysisType>,
+  analysis: Maybe<AnalysisCollection>,
+  extraDescriptionAttributes: Star
 ) {
   const extraDescriptionAttributesType = analysisType
     ? analysisType.extraDescriptionType
@@ -128,13 +129,13 @@ export function getExtraDescriptionAttributes(
     : null;
 }
 
-type ExtraDescriptionAttributes = { type: string, [string]: string | number };
+type ExtraDescriptionAttributes = { type: string, [key: string]: string | number };
 
 type ExtraDescriptionAttributesWithType = ExtraDescriptionAttributes & { type: string };
 
 export function containsAttributes(
   extraDescriptionAttributes: ExtraDescriptionAttributes,
-  existingAttributesFromBackend: ?ExtraDescriptionAttributesWithType
+  existingAttributesFromBackend: Maybe<ExtraDescriptionAttributesWithType>
 ) {
   const newAttributes = keys(extraDescriptionAttributes)
     .filter(k => extraDescriptionAttributes[k])
@@ -146,11 +147,11 @@ export function containsAttributes(
 }
 
 export function getExtraResultAttributes(
-  analysisType: ?AnalysisType,
-  analysis: ?AnalysisCollection,
-  extraResultAttributes: ?ExtraResultAttributeValues,
+  analysisType: Maybe<AnalysisType>,
+  analysis: Maybe<AnalysisCollection>,
+  extraResultAttributes: Maybe<ExtraResultAttributeValues>,
   language: Language
-): ?ExtraResultAttributeValues {
+): Maybe<ExtraResultAttributeValues> {
   const initial =
     analysisType && analysisType.extraResultType
       ? {
@@ -169,7 +170,7 @@ export function getExtraResultAttributes(
             ? extraResultAttributes[field]
             : analysis ? getApiResult(field, type, analysis.result) : null;
         const allowedValues = getAnalysisResultFieldAllowedValues(
-          extraResultType,
+          extraResultType as MUSTFIX,
           field,
           language
         );
@@ -187,9 +188,9 @@ export function getExtraResultAttributes(
 
 export function getApiResult(
   name: string,
-  type: ?string,
-  result: ?Result
-): ?string | ?number | ?{ value: number, unit: string, rawValue: ?string } {
+  type: Maybe<string>,
+  result: Maybe<Result>
+): Maybe<string> | Maybe<number> | Maybe<{ value: number, unit: string, rawValue: Maybe<string> }> {
   const value = result && result[name];
   if (
     value &&
@@ -197,10 +198,10 @@ export function getApiResult(
     typeof value !== 'number' &&
     typeof value !== 'string'
   ) {
-    if (value.value) {
+    if ((value as TODO).value) {
       return {
-        ...value,
-        rawValue: value.value.toString().replace('.', ',')
+        ...value as TODO,
+        rawValue: (value as TODO).value.toString().replace('.', ',')
       };
     }
   }
@@ -208,7 +209,7 @@ export function getApiResult(
 }
 
 export const getExtraDescriptionAttributesWithValue = (
-  analysis: ?AnalysisCollection,
+  analysis: Maybe<AnalysisCollection>,
   extraDescriptionAttributes: Array<ExtraAttribute>,
   language: Language
 ) =>
@@ -227,7 +228,7 @@ export const getExtraDescriptionAttributesWithValue = (
     return { ...attr, attributeValue };
   });
 
-export function getParentObjectId(analysisEvent: AnalysisEvent): ?string {
+export function getParentObjectId(analysisEvent: AnalysisEvent): Maybe<string> {
   return analysisEvent.sampleData && analysisEvent.sampleData.originatedObjectUuid
     ? analysisEvent.sampleData.originatedObjectUuid
     : analysisEvent.objectData ? analysisEvent.objectData.uuid : null;

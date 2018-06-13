@@ -1,8 +1,8 @@
 // @flow
-import type { Field } from '../../../forms/form';
-import type { Person } from '../../../types/person';
-import type { AnalysisEvent, Result } from '../../../types/analysis';
-import type { Restriction } from '../../../types/analysis';
+import  { Field } from '../../../forms/form';
+import  { Person } from '../../../types/person';
+import  { AnalysisEvent, Result } from '../../../types/analysis';
+import  { Restriction } from '../../../types/analysis';
 
 export type FormData = {
   id: Field<number>,

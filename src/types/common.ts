@@ -14,6 +14,9 @@ export type RemoveMaybe<T> = Maybe<T>;
 
 export type ArrayAny = Array<any>; //Translation of [] in Flow.
 
+//Temporary quick fixes during initial translation to TS.
+export type STEIN_OR_RITUVESH_MUST_LOOK_INTO_THIS = any;
+
 //Really must look into! :)
 export type BUG = any;
 

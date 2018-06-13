@@ -1,11 +1,12 @@
 // @flow
-import type { AnalysisType, AnalysisCollection } from '../../../types/analysis';
+import { AnalysisType, AnalysisCollection } from '../../../types/analysis';
+import { Maybe } from '../../../types/common';
 
 export type Store = {
-  analysis?: ?AnalysisCollection,
+  analysis?: Maybe<AnalysisCollection>,
   analysisTypes?: Array<AnalysisType>,
   analysisTypeCategories?: Array<string>,
   extraDescriptionAttributes: any,
   extraResultAttributes: any,
-  showRestrictionCancelDialog?: ?boolean
+  showRestrictionCancelDialog?: Maybe<boolean>
 };

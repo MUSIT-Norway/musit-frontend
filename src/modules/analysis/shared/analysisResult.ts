@@ -1,5 +1,6 @@
 // @flow
-import type { Language } from '../../../types/appSession';
+import { Language } from '../../../types/appSession';
+import { Maybe } from '../../../types/common';
 
 export const ExtractionResultStorageMediumValues = [
   'Buffer',
@@ -68,7 +69,7 @@ const MeasurementResultMeasurementMethodValues = (language: Language): Array<str
 
 export const MeasurementResultSizeValues = ['mm', 'g.', 'individ', 'stk'];
 
-function getMeasurementValues(era: string, language: Language): ?Array<string> {
+function getMeasurementValues(era: string, language: Language): Maybe<Array<string>> {
   if (era === 'measurementType') {
     return MeasurementResultMeasurementTypeValues(language);
   }
@@ -78,9 +79,11 @@ function getMeasurementValues(era: string, language: Language): ?Array<string> {
   if (era === 'size') {
     return MeasurementResultSizeValues;
   }
+  else
+    return undefined; //TODO: Is this correct?
 }
 
-function getExtractionValues(era: string): ?Array<string> {
+function getExtractionValues(era: string): Maybe<Array<string>> {
   if (era === 'storageMedium') {
     return ExtractionResultStorageMediumValues;
   }
@@ -90,17 +93,21 @@ function getExtractionValues(era: string): ?Array<string> {
   if (era === 'concentration') {
     return ExtractionResultConcentrationValues;
   }
+  else
+    return undefined; //TODO: Is this correct?
 }
 
 export function getAnalysisResultFieldAllowedValues(
   extraResultType: string,
   era: string,
   language: Language
-): ?Array<string> {
+): Maybe<Array<string>> {
   if (extraResultType === 'ExtractionResult') {
     return getExtractionValues(era);
   }
   if (extraResultType === 'MeasurementResult') {
     return getMeasurementValues(era, language);
   }
+  else
+    return undefined; //TODO: Is this correct?
 }

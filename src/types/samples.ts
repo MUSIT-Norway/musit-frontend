@@ -2,7 +2,7 @@
 import { SampleType } from "./sample";
 import { ActorStamp } from "./actor";
 import { ObjectId, MuseumId, ActorId, SampleId, SampleTypeId } from "./ids";
-import { Maybe, Star, ArrayAny } from "./common";
+import { Maybe, Star, ArrayAny, STEIN_OR_RITUVESH_MUST_LOOK_INTO_THIS } from "./common";
 
 export type ActorStampWithName = ActorStamp & { name?: Maybe<string> };
 export type ParentObjectWithData = ParentObject & { sampleOrObjectData?: Maybe<Star> };
@@ -70,6 +70,13 @@ export type SampleData = Sample & {
   updatedDate?: Maybe<string>;
   registeredDate: string;
   currentLocation?: Maybe<{ breadcrumb: Maybe<Array<Star>>; pathNames: Maybe<Array<Star>> }>;
+  uuid: STEIN_OR_RITUVESH_MUST_LOOK_INTO_THIS; //Was used in sampleDataForTest
+  museumNo: STEIN_OR_RITUVESH_MUST_LOOK_INTO_THIS; //Was used in sampleDataForTest
+  term: STEIN_OR_RITUVESH_MUST_LOOK_INTO_THIS; //Was used in sampleDataForTest
+  subNo: STEIN_OR_RITUVESH_MUST_LOOK_INTO_THIS; //Was used in sampleDataForTest
+  objectType: STEIN_OR_RITUVESH_MUST_LOOK_INTO_THIS; //Was used in sampleDataForTest
+  objectUUID: STEIN_OR_RITUVESH_MUST_LOOK_INTO_THIS; //Was used in sampleDataForTest
+  nodeId: STEIN_OR_RITUVESH_MUST_LOOK_INTO_THIS; //Was used in sampleDataForTest
 };
 
 export type Samples = SampleData[];
