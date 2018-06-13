@@ -28,7 +28,7 @@ export class ActorSuggestComponent extends React.Component {
 
   componentWillReceiveProps(next) {
     if (next.value !== this.props.value) {
-      this.setState({ ...this.state, value: next.value });
+      this.setState(ps => ({ ...ps, value: next.value }));
     }
   }
 
@@ -37,7 +37,7 @@ export class ActorSuggestComponent extends React.Component {
     placeholder: this.props.placeHolder,
     type: 'search',
     onBlur: this.props.clear,
-    onChange: (event, { newValue }) => this.setState({ ...this.state, value: newValue })
+    onChange: (event, { newValue }) => this.setState(ps => ({ ...ps, value: newValue }))
   };
 
   requestSuggestionUpdate(update) {
@@ -58,7 +58,10 @@ export class ActorSuggestComponent extends React.Component {
         renderSuggestion={suggestion => (
           <span className={'suggestion-content'}>{`${suggestion.fn}`}</span>
         )}
-        inputProps={{ ...this.doneByProps, value: this.state.value }}
+        inputProps={{
+          ...this.doneByProps,
+          value: this.state.value
+        }}
         shouldRenderSuggestions={v => v !== 'undefined'}
         onSuggestionSelected={(event, { suggestion }) => {
           if (event.keyCode === 13) {

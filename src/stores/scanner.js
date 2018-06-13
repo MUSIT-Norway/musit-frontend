@@ -6,7 +6,12 @@ import omit from 'lodash/omit';
 import MusitObject from '../models/object';
 import MusitNode from '../models/node';
 
-export const initialState = { buffer: '', code: '', uuid: false, number: false };
+export const initialState = {
+  buffer: '',
+  code: '',
+  uuid: false,
+  number: false
+};
 
 export const charReducer$ = source$ =>
   source$
@@ -82,7 +87,7 @@ export const connectToScanner = (
     }
 
     toggleScanner(scannerEnabled = !this.state.scannerEnabled) {
-      this.setState({ ...this.state, scannerEnabled });
+      this.setState(ps => ({ ...ps, scannerEnabled }));
       if (scannerEnabled) {
         this.enableScanner();
       } else {

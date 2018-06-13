@@ -61,12 +61,15 @@ export class EventsComponent extends React.Component {
         labelLeft={I18n.t('musit.grid.button.observations')}
         placeHolderSearch={I18n.t('musit.grid.search.placeHolder')}
         clickShowCenter={() =>
-          this.setState({ ...this.state, showControls: !this.state.showControls })}
+          this.setState(ps => ({
+            ...ps,
+            showControls: !this.state.showControls
+          }))}
         clickShowLeft={() =>
-          this.setState({
-            ...this.state,
+          this.setState(ps => ({
+            ...ps,
             showObservations: !this.state.showObservations
-          })}
+          }))}
       />
     );
   }

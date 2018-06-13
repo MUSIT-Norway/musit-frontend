@@ -79,7 +79,7 @@ export class ControlAddContainer extends React.Component {
 
   setStateBasedOnRootNode(rootNode) {
     const requirement = rootNode.environmentRequirement;
-    this.setState({
+    this.setState(ps => ({
       temperature: requirement ? requirement.temperature : ' ',
       temperatureTolerance: requirement ? requirement.temperatureTolerance : ' ',
       relativeHumidity: requirement ? requirement.relativeHumidity : ' ',
@@ -90,15 +90,15 @@ export class ControlAddContainer extends React.Component {
       cleaning: requirement ? requirement.cleaning : ' ',
       doneDate: this.props.doneDate ? this.props.doneDate : formatISOString(new Date()),
       doneBy: this.props.appSession.actor
-    });
+    }));
   }
 
   onControlClick(key, bool) {
     return () => {
       if (this.state[key] != null && this.state[key] === bool) {
-        this.setState({ ...this.state, [key]: null });
+        this.setState(ps => ({ ...ps, [key]: null }));
       } else {
-        this.setState({ ...this.state, [key]: bool });
+        this.setState(ps => ({ ...ps, [key]: bool }));
       }
     };
   }
@@ -167,9 +167,9 @@ export class ControlAddContainer extends React.Component {
           type: 'dateValidationError',
           message: I18n.t('musit.newControl.dateValidation')
         });
-        this.setState({ ...this.state, doneDate: formatISOString(new Date()) });
+        this.setState(ps => ({ ...ps, doneDate: formatISOString(new Date()) }));
       } else {
-        this.setState({ ...this.state, doneDate: newValue });
+        this.setState(ps => ({ ...ps, doneDate: newValue }));
       }
     }
   };
@@ -192,7 +192,7 @@ export class ControlAddContainer extends React.Component {
     if (errors.length === 0) {
       this.onClickSave();
     } else {
-      this.setState({ ...this.state, errors });
+      this.setState(ps => ({ ...ps, errors }));
     }
   }
 
@@ -279,7 +279,10 @@ export class ControlAddContainer extends React.Component {
                           dateFormat={DATE_FORMAT_DISPLAY}
                           value={this.state.doneDate}
                           onClear={newValue =>
-                            this.setState({ ...this.state, doneDate: newValue })}
+                            this.setState(ps => ({
+                              ...ps,
+                              doneDate: newValue
+                            }))}
                           onChange={newValue => {
                             this.setDate(newValue);
                           }}
@@ -302,10 +305,10 @@ export class ControlAddContainer extends React.Component {
                         value={this.state.doneBy ? this.state.doneBy.fn : ''}
                         placeHolder="Find actor"
                         onChange={newValue => {
-                          this.setState({
-                            ...this.state,
+                          this.setState(ps => ({
+                            ...ps,
                             doneBy: newValue
-                          });
+                          }));
                         }}
                       />
                     </Col>

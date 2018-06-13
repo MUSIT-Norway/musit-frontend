@@ -24,14 +24,14 @@
     "react-autosuggest": "3.7.4",
     "react-bootstrap": "^0.31.0",
     "react-bootstrap-date-picker": "^5.0.1",
-    "react-dom": "^15.5.4",
+    "react-dom": "^15.4.4",
     "react-fontawesome": "^1.6.1",
     "react-i18nify": "^1.8.7",
     "react-loader": "^2.4.2",
     "react-notification-system": "^0.2.14",
     "react-router-bootstrap": "0.24.3",
     "react-router-dom": "^4.1.1",
-    "react-rxjs": "https://gitlab.com/MUSIT-Norway/react-rxjs.git#v3.0.8",
+    "react-rxjs": "https://gitlab.com/MUSIT-Norway/react-rxjs.git#v3.1.0",
     "react-scripts-ts": "2.16.0",
     "react-select": "^1.0.0-rc.4",
     "reactable": "^0.14.1",
@@ -45,9 +45,11 @@
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
     "codacy": "cat coverage/lcov.info",
-    "coverage": "npm test a -- --coverage --collectCoverageFrom='src/!(_poc*)**/*.{js,jsx}'",
+    "coverage":
+      "npm test a -- --coverage --collectCoverageFrom='src/!(_poc*)**/*.{js,jsx}'",
     "flow": "./node_modules/.bin/flow check --show-all-errors",
-    "formatcode": "./node_modules/.bin/prettier --single-quote --trailing-comma none --print-width 90 --write \"{src,__{tests,mocks}__}/**/*.{js,jsx}\""
+    "formatcode":
+      "./node_modules/.bin/prettier --single-quote --trailing-comma none --print-width 90 --write \"{src,__{tests,mocks}__}/**/*.{js,jsx}\""
   },
   "devDependencies": {
     "@types/deep-diff": "0.0.31",

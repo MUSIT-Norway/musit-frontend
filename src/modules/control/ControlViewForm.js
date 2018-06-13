@@ -106,9 +106,9 @@ export default class ControlView extends Component {
         <Button
           id={`${this.props.id}_${observationType}_downButton`}
           onClick={() =>
-            this.setState({
+            this.setState(ps => ({
               [observationType]: { open: !this.state[observationType].open }
-            })}
+            }))}
           bsStyle="link"
         >
           {ok ? null : <FontAwesome name="sort-desc" style={{ fontSize: 'x-large' }} />}
