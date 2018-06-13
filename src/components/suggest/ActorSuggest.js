@@ -28,7 +28,7 @@ export class ActorSuggestComponent extends React.Component {
 
   componentWillReceiveProps(next) {
     if (next.value !== this.props.value) {
-      this.setState({ ...this.state, value: next.value });
+      this.setState(ps => ({ ...ps, value: next.value }));
     }
   }
 
@@ -37,7 +37,7 @@ export class ActorSuggestComponent extends React.Component {
     placeholder: this.props.placeHolder,
     type: 'search',
     onBlur: this.props.clear,
-    onChange: (event, { newValue }) => this.setState({ ...this.state, value: newValue })
+    onChange: (event, { newValue }) => this.setState(ps => ({ ...ps, value: newValue }))
   };
 
   requestSuggestionUpdate(update) {

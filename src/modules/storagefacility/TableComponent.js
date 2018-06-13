@@ -369,7 +369,7 @@ export default class TableComponent extends React.Component {
         placeHolderSearch={I18n.t('musit.grid.search.placeHolder')}
         searchValue={searchPattern}
         onSearchChanged={newPattern =>
-          this.setState({ ...this.state, searchPattern: newPattern })}
+          this.setState(ps => ({ ...ps, searchPattern: newPattern }))}
         clickShowCenter={() => {
           this.showObjects();
           blur();

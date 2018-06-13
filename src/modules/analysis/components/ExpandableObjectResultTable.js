@@ -39,7 +39,7 @@ export default class ExpandableObjectTable extends React.Component<Props, State>
       ? currentExpandedRows.filter(id => id !== rowId)
       : currentExpandedRows.concat(rowId);
 
-    this.setState({ expandedRowIds: newExpandedRows });
+    this.setState(ps => ({ expandedRowIds: newExpandedRows }));
   }
 
   static isRowIdExpanded(currentExpandedRows: Array<string>, rowId: string): boolean {
