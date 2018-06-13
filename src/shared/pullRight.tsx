@@ -1,5 +1,5 @@
 // @flow
-import * as React from "react";
+import * as React from 'react';
 
 /**
  * Creates a row and a single column of 12 column spans, and then pulls the wrapped component to the right most part of the screen.

@@ -1,4 +1,4 @@
-import { Maybe } from "./common";
+import { Maybe } from './common';
 
 // @flow
 
@@ -28,7 +28,7 @@ export type EnvironmentRequirement = {
   comment: Maybe<string>;
 };
 
-export interface Node  {
+export interface Node {
   id: number;
   nodeId: string;
   name: string;
@@ -45,5 +45,5 @@ export interface Node  {
   storageType: string;
   updatedBy: Maybe<string>;
   updatedDate: Maybe<string>;
-  type?: string; 
-};
+  type?: string;
+}

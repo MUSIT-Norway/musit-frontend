@@ -1,4 +1,4 @@
-import { TODO } from "../types/common";
+import { TODO } from '../types/common';
 
 export const getAccessToken = () => {
   try {

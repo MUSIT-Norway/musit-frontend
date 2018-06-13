@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent } from 'react';
 
 export type Uuid = string;
 
@@ -46,7 +46,9 @@ export function eventTargetResult(event: Event) {
 
 type EventTargetWithValue = { value: any };
 
-export function eventTargetValue(event: Event | ChangeEvent<HTMLElement> | React.MouseEvent<any>) {
+export function eventTargetValue(
+  event: Event | ChangeEvent<HTMLElement> | React.MouseEvent<any>
+) {
   return ((event.target as any) as EventTargetWithValue).value;
 }
 

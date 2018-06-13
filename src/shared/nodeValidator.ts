@@ -2,12 +2,12 @@ import { I18n } from 'react-i18nify';
 import MusitNode from '../models/node';
 import { MUSTFIX, TODO } from '../types/common';
 
-export const getPathLength = (formProps:TODO) => {
-  const { pathNames }  = (formProps || {}) as MUSTFIX;
+export const getPathLength = (formProps: TODO) => {
+  const { pathNames } = (formProps || {}) as MUSTFIX;
   return pathNames && pathNames.length;
 };
 
-export const checkNodeType = (from:TODO, to:TODO) => {
+export const checkNodeType = (from: TODO, to: TODO) => {
   const matchFromType = from.value ? from.value.type : from.type;
 
   if (MusitNode.isRootNode(to) && 'Organisation' !== matchFromType) {

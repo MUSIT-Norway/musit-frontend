@@ -1,7 +1,7 @@
 // @flow
 
-import { join, reduce, isUndefined } from "lodash";
-import { Maybe, MUSTFIX, TODO } from "../types/common";
+import { join, reduce, isUndefined } from 'lodash';
+import { Maybe, MUSTFIX, TODO } from '../types/common';
 
 const encodeValue = (value: TODO) => encodeURIComponent(value.toString());
 
@@ -10,7 +10,11 @@ const encodeValue = (value: TODO) => encodeURIComponent(value.toString());
  * values will be ignored (including the key).
  */
 export default (queryParamObj: {
-  [key: string]: Maybe<string> | Maybe<number> | Maybe<Array<string | number>> | Maybe<boolean>;
+  [key: string]:
+    | Maybe<string>
+    | Maybe<number>
+    | Maybe<Array<string | number>>
+    | Maybe<boolean>;
 }): string => {
   const encQueryParams = reduce(
     queryParamObj,
@@ -19,9 +23,9 @@ export default (queryParamObj: {
         return result;
       } else {
         const encVal = Array.isArray(value)
-          ? join(value.map(encodeValue), ",")
+          ? join(value.map(encodeValue), ',')
           : encodeValue(value);
-        result.push(key + "=" + encVal);
+        result.push(key + '=' + encVal);
         return result;
       }
     },
@@ -29,8 +33,8 @@ export default (queryParamObj: {
   );
 
   if (encQueryParams.length === 0) {
-    return "";
+    return '';
   } else {
-    return "?" + join(encQueryParams, "&");
+    return '?' + join(encQueryParams, '&');
   }
 };

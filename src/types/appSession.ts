@@ -1,7 +1,7 @@
 // @flow
 
-import { Actor } from "./actor";
-import { Uuid } from "./common";
+import { Actor } from './actor';
+import { Uuid } from './common';
 
 export type Language = {
   isEn: boolean;

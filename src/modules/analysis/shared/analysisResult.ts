@@ -78,9 +78,7 @@ function getMeasurementValues(era: string, language: Language): Maybe<Array<stri
   }
   if (era === 'size') {
     return MeasurementResultSizeValues;
-  }
-  else
-    return undefined; //TODO: Is this correct?
+  } else return undefined; //TODO: Is this correct?
 }
 
 function getExtractionValues(era: string): Maybe<Array<string>> {
@@ -92,9 +90,7 @@ function getExtractionValues(era: string): Maybe<Array<string>> {
   }
   if (era === 'concentration') {
     return ExtractionResultConcentrationValues;
-  }
-  else
-    return undefined; //TODO: Is this correct?
+  } else return undefined; //TODO: Is this correct?
 }
 
 export function getAnalysisResultFieldAllowedValues(
@@ -107,7 +103,5 @@ export function getAnalysisResultFieldAllowedValues(
   }
   if (extraResultType === 'MeasurementResult') {
     return getMeasurementValues(era, language);
-  }
-  else
-    return undefined; //TODO: Is this correct?
+  } else return undefined; //TODO: Is this correct?
 }

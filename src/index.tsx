@@ -27,54 +27,57 @@ import { TODO } from './types/common';
 // let LanguageJson  = require('./language.json');
 //let {provide} = require('react-rxjs/dist/RxProvide');
 
-const notificationSystem = ReactDOM.render(<NotificationSystem />, document.getElementById('errors')) as any; //TODO!
-notification$.subscribe((origEvent) => {
-	let event: any = { ...origEvent, message: null, body: (origEvent as TODO).message };
-	if (event.level === 'error') {
-		event = { ...event, autoDismiss: 0 };
-	}
-	if (event.level === 'warning') {
-		event = { ...event, autoDismiss: 2 };
-	}
-	notificationSystem.addNotification({
-		...event,
-		position: 'tc',
-		children: (
-			<div style={{ margin: '30px' }}>
-				<p>{event.body}</p>
-			</div>
-		)
-	});
+const notificationSystem = ReactDOM.render(
+  <NotificationSystem />,
+  document.getElementById('errors')
+) as any; //TODO!
+notification$.subscribe(origEvent => {
+  let event: any = { ...origEvent, message: null, body: (origEvent as TODO).message };
+  if (event.level === 'error') {
+    event = { ...event, autoDismiss: 0 };
+  }
+  if (event.level === 'warning') {
+    event = { ...event, autoDismiss: 2 };
+  }
+  notificationSystem.addNotification({
+    ...event,
+    position: 'tc',
+    children: (
+      <div style={{ margin: '30px' }}>
+        <p>{event.body}</p>
+      </div>
+    )
+  });
 });
 
 const accessToken = queryParser.parse(window.location.search)['_at'];
 if (accessToken) {
-	localStorage.setItem('accessToken', JSON.stringify({ accessToken }));
-	window.location.href = Config.magasin.urls.client.aboutPage;
+  localStorage.setItem('accessToken', JSON.stringify({ accessToken }));
+  window.location.href = Config.magasin.urls.client.aboutPage;
 } else {
-	const dest = document.getElementById('content');
+  const dest = document.getElementById('content');
 
-	I18n.setTranslations(LanguageJson);
-	loadLanguage();
+  I18n.setTranslations(LanguageJson);
+  loadLanguage();
 
-	const SessionProvided = provide({
-		appSession$: {
-			type: PropTypes.object,
-			value: appSession$
-		},
-		pickList$: {
-			type: PropTypes.object,
-			value: pickList$
-		},
-		predefined$: {
-			type: PropTypes.object,
-			value: predefined$
-		}
-	})(MusitRoutes);
+  const SessionProvided = provide({
+    appSession$: {
+      type: PropTypes.object,
+      value: appSession$
+    },
+    pickList$: {
+      type: PropTypes.object,
+      value: pickList$
+    },
+    predefined$: {
+      type: PropTypes.object,
+      value: predefined$
+    }
+  })(MusitRoutes);
 
-	ReactDOM.render(<SessionProvided />, dest);
+  ReactDOM.render(<SessionProvided />, dest);
 
-	if (config.isDev) {
-		window['React'] = React;
-	}
+  if (config.isDev) {
+    window['React'] = React;
+  }
 }

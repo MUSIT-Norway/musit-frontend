@@ -1,9 +1,9 @@
-import * as React from "react";
+import * as React from 'react';
 
 type TaxonNameState = {
   taxonName: string;
-  presicionType?: "C" | "A";
-  taxonCathegory?: "VA" | "SS" | "SP" | "GE";
+  presicionType?: 'C' | 'A';
+  taxonCathegory?: 'VA' | 'SS' | 'SP' | 'GE';
 };
 
 type TaxonEditingState = {
@@ -24,9 +24,7 @@ type TaxonProps = TaxonState & {
   setEditingIndex: (i: number) => void;
   taxonEditingState?: TaxonEditingState;
   onChangeTaxonEditingStatus: (field: string) => (value: number) => void;
-  onChangeTaxonField: (
-    index: number
-  ) => (fieldName: string) => (value: string) => void;
+  onChangeTaxonField: (index: number) => (fieldName: string) => (value: string) => void;
 };
 
 type SexAndLifeStage = {
@@ -66,11 +64,11 @@ type Genus = {
 };
 
 const genusSelect: Genus[] = [
-  { id: 1, name: "Carex" },
-  { id: 2, name: "Salix" },
-  { id: 3, name: "Betula" },
-  { id: 4, name: "Picea" },
-  { id: 5, name: "Pinus" }
+  { id: 1, name: 'Carex' },
+  { id: 2, name: 'Salix' },
+  { id: 3, name: 'Betula' },
+  { id: 4, name: 'Picea' },
+  { id: 5, name: 'Pinus' }
 ];
 
 type TaxonName = {
@@ -78,15 +76,15 @@ type TaxonName = {
   name: string;
 };
 const speciesSelect: TaxonName[] = [
-  { genus: 1, name: "Carex saxatilis" },
-  { genus: 1, name: "Carex saxatilis ssp. saxatilis" },
-  { genus: 1, name: "Carex rigida" },
-  { genus: 2, name: "Salix repens" },
-  { genus: 3, name: "Betula nana" },
-  { genus: 3, name: "Betua pendula" },
-  { genus: 3, name: "Beula pubescens" },
-  { genus: 4, name: "Picea abies" },
-  { genus: 5, name: "Pinus sylvestris" }
+  { genus: 1, name: 'Carex saxatilis' },
+  { genus: 1, name: 'Carex saxatilis ssp. saxatilis' },
+  { genus: 1, name: 'Carex rigida' },
+  { genus: 2, name: 'Salix repens' },
+  { genus: 3, name: 'Betula nana' },
+  { genus: 3, name: 'Betua pendula' },
+  { genus: 3, name: 'Beula pubescens' },
+  { genus: 4, name: 'Picea abies' },
+  { genus: 5, name: 'Pinus sylvestris' }
 ];
 
 class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
@@ -101,7 +99,7 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
                 <th>Sex</th>
                 <th> Stage</th>
                 <th> Count</th>
-                <th> Estimated count</th>{" "}
+                <th> Estimated count</th>{' '}
               </tr>
             </thead>
             <tbody>
@@ -109,7 +107,7 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
                 return (
                   <tr
                     key={`tr-row${i}`}
-                    className={i === this.props.editingIndex ? "info" : ""}
+                    className={i === this.props.editingIndex ? 'info' : ''}
                     onClick={e => {
                       e.preventDefault();
                       this.props.setEditingIndex(i);
@@ -133,14 +131,12 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
                 type="text"
                 className="form-control"
                 id="sex"
-                value={
-                  this.props.sexAndStages[this.props.editingIndex].sex || ""
-                }
+                value={this.props.sexAndStages[this.props.editingIndex].sex || ''}
                 onChange={e => {
                   e.preventDefault();
-                  this.props.onChangeSexAndLifeStageField(
-                    this.props.editingIndex
-                  )("sex")(e.target.value);
+                  this.props.onChangeSexAndLifeStageField(this.props.editingIndex)('sex')(
+                    e.target.value
+                  );
                 }}
               />
             </div>
@@ -152,14 +148,12 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
               <input
                 id="presicionType"
                 className="form-control"
-                value={
-                  this.props.sexAndStages[this.props.editingIndex].stage || ""
-                }
+                value={this.props.sexAndStages[this.props.editingIndex].stage || ''}
                 onChange={e => {
                   e.preventDefault();
-                  this.props.onChangeSexAndLifeStageField(
-                    this.props.editingIndex
-                  )("stage")(e.target.value);
+                  this.props.onChangeSexAndLifeStageField(this.props.editingIndex)(
+                    'stage'
+                  )(e.target.value);
                 }}
               />
             </div>
@@ -171,14 +165,12 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
               <input
                 id="taxonCathegory"
                 className="form-control"
-                value={
-                  this.props.sexAndStages[this.props.editingIndex].count || ""
-                }
+                value={this.props.sexAndStages[this.props.editingIndex].count || ''}
                 onChange={e => {
                   e.preventDefault();
-                  this.props.onChangeSexAndLifeStageField(
-                    this.props.editingIndex
-                  )("count")(e.target.value);
+                  this.props.onChangeSexAndLifeStageField(this.props.editingIndex)(
+                    'count'
+                  )(e.target.value);
                 }}
               />
             </div>
@@ -190,15 +182,12 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
                 type="text"
                 className="form-control"
                 id="estimated"
-                value={
-                  this.props.sexAndStages[this.props.editingIndex].estimated ||
-                  ""
-                }
+                value={this.props.sexAndStages[this.props.editingIndex].estimated || ''}
                 onChange={e => {
                   e.preventDefault();
-                  this.props.onChangeSexAndLifeStageField(
-                    this.props.editingIndex
-                  )("estimated")(e.target.value);
+                  this.props.onChangeSexAndLifeStageField(this.props.editingIndex)(
+                    'estimated'
+                  )(e.target.value);
                 }}
               />
             </div>
@@ -230,7 +219,7 @@ class TaxonTable extends React.Component<TaxonProps> {
                     return (
                       <tr
                         key={`tr-row${i}`}
-                        className={i === this.props.editingIndex ? "info" : ""}
+                        className={i === this.props.editingIndex ? 'info' : ''}
                         onClick={e => {
                           e.preventDefault();
                           this.props.setEditingIndex(i);
@@ -261,7 +250,7 @@ class TaxonTable extends React.Component<TaxonProps> {
                 onChange={e => {
                   e.preventDefault();
                   console.log(e.target.value);
-                  this.props.onChangeTaxonEditingStatus("selectedGenus")(
+                  this.props.onChangeTaxonEditingStatus('selectedGenus')(
                     parseInt(e.target.value)
                   );
                 }}
@@ -296,9 +285,9 @@ class TaxonTable extends React.Component<TaxonProps> {
                 }
                 onChange={e => {
                   e.preventDefault();
-                  this.props.onChangeTaxonField(this.props.editingIndex)(
-                    "taxonName"
-                  )(e.target.value);
+                  this.props.onChangeTaxonField(this.props.editingIndex)('taxonName')(
+                    e.target.value
+                  );
                 }}
               >
                 {(speciesSelect ? speciesSelect : [])
@@ -329,15 +318,12 @@ class TaxonTable extends React.Component<TaxonProps> {
               <select
                 id="presicionType"
                 className="form-control"
-                value={
-                  this.props.taxonNames[this.props.editingIndex]
-                    .presicionType || ""
-                }
+                value={this.props.taxonNames[this.props.editingIndex].presicionType || ''}
                 onChange={e => {
                   e.preventDefault();
-                  this.props.onChangeTaxonField(this.props.editingIndex)(
-                    "presicionType"
-                  )(e.target.value);
+                  this.props.onChangeTaxonField(this.props.editingIndex)('presicionType')(
+                    e.target.value
+                  );
                 }}
               >
                 <option>Velg type</option>
@@ -354,13 +340,12 @@ class TaxonTable extends React.Component<TaxonProps> {
                 id="taxonCathegory"
                 className="form-control"
                 value={
-                  this.props.taxonNames[this.props.editingIndex]
-                    .taxonCathegory || ""
+                  this.props.taxonNames[this.props.editingIndex].taxonCathegory || ''
                 }
                 onChange={e => {
                   e.preventDefault();
                   this.props.onChangeTaxonField(this.props.editingIndex)(
-                    "taxonCathegory"
+                    'taxonCathegory'
                   )(e.target.value);
                 }}
               >
@@ -389,7 +374,7 @@ export class TaxonComponent extends React.Component<TaxonProps> {
             <TaxonTable {...this.props} />
           </div>
           <div className="col-md-1">
-            <div style={{ textAlign: "left", verticalAlign: "bottom" }}>
+            <div style={{ textAlign: 'left', verticalAlign: 'bottom' }}>
               <label htmlFor="btnAddTaxon">Add</label>
               <button
                 type="button"
@@ -450,7 +435,7 @@ export class SexAndStages extends React.Component<SexAndLifeStageProps> {
         </div>
         <div className="row">
           <div className="col-md-12">
-            <div style={{ textAlign: "right" }}>
+            <div style={{ textAlign: 'right' }}>
               <button
                 type="button"
                 className="btn btn-default"
@@ -478,9 +463,7 @@ export class SexAndStages extends React.Component<SexAndLifeStageProps> {
   }
 }
 
-class ClassificationHistoryTable extends React.Component<
-  ClassificationHistoryProps
-> {
+class ClassificationHistoryTable extends React.Component<ClassificationHistoryProps> {
   render() {
     return <div />;
   }
@@ -494,9 +477,7 @@ export default class ClassificationComponent extends React.Component<
     super(props);
 
     this.state = {
-      taxonClassifications: [
-        { taxonNames: [{ taxonName: "" }], editingIndex: 0 }
-      ],
+      taxonClassifications: [{ taxonNames: [{ taxonName: '' }], editingIndex: 0 }],
       taxonEditingState: {},
       currentTaxonClassificationIndex: 0,
       sexAndStage: { sexAndStages: [{}], editingIndex: 0 }
@@ -506,16 +487,16 @@ export default class ClassificationComponent extends React.Component<
   }
 
   getFullHybridName() {
-    return "";
+    return '';
   }
 
   render() {
     return (
       <div
         style={{
-          paddingTop: "30px",
-          paddingLeft: "20px",
-          paddingRight: "20px"
+          paddingTop: '30px',
+          paddingLeft: '20px',
+          paddingRight: '20px'
         }}
       >
         <div className="row">
@@ -540,9 +521,7 @@ export default class ClassificationComponent extends React.Component<
                 onChangeNoteField={(value: string) => {
                   this.setState((ps: ClassificationHistoryState) => {
                     const currentClassification =
-                      ps.taxonClassifications[
-                        ps.currentTaxonClassificationIndex
-                      ];
+                      ps.taxonClassifications[ps.currentTaxonClassificationIndex];
 
                     return {
                       ...ps,
@@ -575,9 +554,7 @@ export default class ClassificationComponent extends React.Component<
                           ps.currentTaxonClassificationIndex
                         ),
                         {
-                          ...ps.taxonClassifications[
-                            ps.currentTaxonClassificationIndex
-                          ],
+                          ...ps.taxonClassifications[ps.currentTaxonClassificationIndex],
                           editingIndex: index
                         },
                         ...ps.taxonClassifications.slice(
@@ -592,11 +569,8 @@ export default class ClassificationComponent extends React.Component<
                 ) => {
                   this.setState((ps: ClassificationHistoryState) => {
                     const currentClassification =
-                      ps.taxonClassifications[
-                        ps.currentTaxonClassificationIndex
-                      ];
-                    const currentTaxonName =
-                      currentClassification.taxonNames[index];
+                      ps.taxonClassifications[ps.currentTaxonClassificationIndex];
+                    const currentTaxonName = currentClassification.taxonNames[index];
                     const newTaxon = {
                       ...currentTaxonName,
                       [fieldName]: value
@@ -626,20 +600,17 @@ export default class ClassificationComponent extends React.Component<
                 onAddTaxon={() => {
                   this.setState((ps: ClassificationHistoryState) => {
                     const newTaxonNames = [
-                      ...ps.taxonClassifications[
-                        ps.currentTaxonClassificationIndex
-                      ].taxonNames,
+                      ...ps.taxonClassifications[ps.currentTaxonClassificationIndex]
+                        .taxonNames,
                       {
-                        taxonName: "",
+                        taxonName: '',
                         presicionType: undefined,
                         taxonCathegory: undefined,
                         infraspesName: undefined
                       }
                     ];
                     const currentClassification =
-                      ps.taxonClassifications[
-                        ps.currentTaxonClassificationIndex
-                      ];
+                      ps.taxonClassifications[ps.currentTaxonClassificationIndex];
                     return {
                       ...ps,
                       taxonClassifications: [
@@ -685,12 +656,11 @@ export default class ClassificationComponent extends React.Component<
                     };
                   });
                 }}
-                onChangeSexAndLifeStageField={(index: number) => (
-                  fieldName: string
-                ) => (value: any) => {
+                onChangeSexAndLifeStageField={(index: number) => (fieldName: string) => (
+                  value: any
+                ) => {
                   this.setState((ps: ClassificationHistoryState) => {
-                    const currentSexAndStage =
-                      ps.sexAndStage.sexAndStages[index];
+                    const currentSexAndStage = ps.sexAndStage.sexAndStages[index];
                     const newSexAndStage = {
                       ...currentSexAndStage,
                       [fieldName]: value

@@ -1,6 +1,6 @@
 // @flow
-import {keys} from 'lodash';
-import  {
+import { keys } from 'lodash';
+import {
   AnalysisType,
   AnalysisEvent,
   AnalysisCollection,
@@ -9,8 +9,8 @@ import  {
   Result
 } from '../../../types/analysis';
 import { I18n } from 'react-i18nify';
-import  { Language } from '../../../types/appSession';
-import  { AnalysisLab, Purpose } from '../../../types/predefined';
+import { Language } from '../../../types/appSession';
+import { AnalysisLab, Purpose } from '../../../types/predefined';
 import { getAnalysisResultFieldAllowedValues } from './analysisResult';
 import { Maybe, Star, MUSTFIX, TODO } from '../../../types/common';
 
@@ -34,7 +34,7 @@ export function getStatusText(status?: Maybe<number>): string {
   }
 }
 
-export type Value = { rawValue?: Maybe<string>, value?: Maybe<number> };
+export type Value = { rawValue?: Maybe<string>; value?: Maybe<number> };
 
 export function parseValue(value: Value): Value {
   return typeof value.rawValue !== 'undefined'
@@ -129,7 +129,7 @@ export function getExtraDescriptionAttributes(
     : null;
 }
 
-type ExtraDescriptionAttributes = { type: string, [key: string]: string | number };
+type ExtraDescriptionAttributes = { type: string; [key: string]: string | number };
 
 type ExtraDescriptionAttributesWithType = ExtraDescriptionAttributes & { type: string };
 
@@ -190,7 +190,10 @@ export function getApiResult(
   name: string,
   type: Maybe<string>,
   result: Maybe<Result>
-): Maybe<string> | Maybe<number> | Maybe<{ value: number, unit: string, rawValue: Maybe<string> }> {
+):
+  | Maybe<string>
+  | Maybe<number>
+  | Maybe<{ value: number; unit: string; rawValue: Maybe<string> }> {
   const value = result && result[name];
   if (
     value &&

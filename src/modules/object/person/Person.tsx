@@ -1,6 +1,6 @@
-import * as React from "react";
-import DatePicker from "../../../components/DatePicker";
-import FieldMultiSelect from "../../../forms/components/FieldMultiSelect";
+import * as React from 'react';
+import DatePicker from '../../../components/DatePicker';
+import FieldMultiSelect from '../../../forms/components/FieldMultiSelect';
 
 export type PersonName = {
   title?: string;
@@ -33,12 +33,8 @@ export type PersonProps = PersonState & {
   onClickAdd: (newPersonName?: PersonName) => void;
   onAddExternalId: () => void;
   onChangeCollections: (newString: string) => void;
-  onDeleteExternalId: (
-    i: number
-  ) => (e: React.SyntheticEvent<HTMLAnchorElement>) => void;
-  onChangeExternalIds: (
-    i: number
-  ) => (field: string) => (value: string) => void;
+  onDeleteExternalId: (i: number) => (e: React.SyntheticEvent<HTMLAnchorElement>) => void;
+  onChangeExternalIds: (i: number) => (field: string) => (value: string) => void;
   externalIds?: ExternalId[];
   synonymes?: Array<PersonName>;
   newPerson?: PersonName;
@@ -71,17 +67,15 @@ const ExternalIDStrings = (props: {
             <div className="col-sm-2 form-group">
               <input
                 className="form-control"
-                value={
-                  (props.externalIds && props.externalIds[i].database) || ""
-                }
-                onChange={e => props.onChange(i)("database")(e.target.value)}
+                value={(props.externalIds && props.externalIds[i].database) || ''}
+                onChange={e => props.onChange(i)('database')(e.target.value)}
               />
             </div>
             <div className="col-sm-2 form-group">
               <input
                 className="form-control"
-                value={(props.externalIds && props.externalIds[i].uuid) || ""}
-                onChange={e => props.onChange(i)("uuid")(e.target.value)}
+                value={(props.externalIds && props.externalIds[i].uuid) || ''}
+                onChange={e => props.onChange(i)('uuid')(e.target.value)}
               />
             </div>
             <div className="col-sm-2">
@@ -111,28 +105,28 @@ const AddPersonName = (props: {
           id="title"
           className="form-control"
           type="text"
-          value={(props.newPerson && props.newPerson.title) || ""}
-          onChange={e => props.onChange("title")(e.target.value)}
+          value={(props.newPerson && props.newPerson.title) || ''}
+          onChange={e => props.onChange('title')(e.target.value)}
         />
-      </div>{" "}
+      </div>{' '}
       <div className="col-sm-3 form-group">
         <label htmlFor="firstName"> Fornavn </label>
         <input
           id="firstName"
           className="form-control"
           type="text"
-          value={(props.newPerson && props.newPerson.firstName) || ""}
-          onChange={e => props.onChange("firstName")(e.target.value)}
+          value={(props.newPerson && props.newPerson.firstName) || ''}
+          onChange={e => props.onChange('firstName')(e.target.value)}
         />
-      </div>{" "}
+      </div>{' '}
       <div className="col-sm-3 form-group">
         <label htmlFor="lastName"> Etternavn </label>
         <input
           id="lastName"
           className="form-control"
           type="text"
-          value={(props.newPerson && props.newPerson.lastName) || ""}
-          onChange={e => props.onChange("lastName")(e.target.value)}
+          value={(props.newPerson && props.newPerson.lastName) || ''}
+          onChange={e => props.onChange('lastName')(e.target.value)}
         />
       </div>
     </div>
@@ -174,7 +168,7 @@ const PersonNames = (props: {
 export const PersonPage = (props: PersonProps) => {
   return (
     <div>
-      <form style={{ padding: "25px" }}>
+      <form style={{ padding: '25px' }}>
         <div className="form-group">
           <label htmlFor="legalEntityType">Legal entity type</label>
           <select className="form-control" id="legalEntityType">
@@ -189,13 +183,13 @@ export const PersonPage = (props: PersonProps) => {
           stringValue={props.collections}
           labelAbove
           options={[
-            { label: "Lav", value: "L" },
-            { label: "Karplanter", value: "V" },
-            { label: "Mose", value: "M" },
-            { label: "Alger", value: "A" },
-            { label: "Sopp", value: "F" },
-            { label: "Terristiske evertebrater", value: "TI" },
-            { label: "Terristiske evertebrater", value: "MI" }
+            { label: 'Lav', value: 'L' },
+            { label: 'Karplanter', value: 'V' },
+            { label: 'Mose', value: 'M' },
+            { label: 'Alger', value: 'A' },
+            { label: 'Sopp', value: 'F' },
+            { label: 'Terristiske evertebrater', value: 'TI' },
+            { label: 'Terristiske evertebrater', value: 'MI' }
           ]}
           onChange={(event: string) => {
             props.onChangeCollections(event);
@@ -209,7 +203,7 @@ export const PersonPage = (props: PersonProps) => {
             className="form-control"
             id="displayName"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              props.onChange("displayName")(e.target.value)}
+              props.onChange('displayName')(e.target.value)}
           />
         </div>
         <div className="row form-group">
@@ -243,7 +237,7 @@ export const PersonPage = (props: PersonProps) => {
             className="form-control"
             id="url"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              props.onChange("url")(e.target.value)}
+              props.onChange('url')(e.target.value)}
           />
         </div>
 
@@ -264,10 +258,7 @@ export const PersonPage = (props: PersonProps) => {
           />
         )}
 
-        <AddPersonName
-          newPerson={props.newPerson}
-          onChange={props.onChangePersonName}
-        />
+        <AddPersonName newPerson={props.newPerson} onChange={props.onChangePersonName} />
 
         <button
           type="button"
@@ -288,7 +279,7 @@ export class Person extends React.Component<PersonProps, PersonState> {
   }
   render() {
     return (
-      <div className="container" style={{ paddingTop: "25px" }}>
+      <div className="container" style={{ paddingTop: '25px' }}>
         <PersonPage
           synonymes={this.state.synonymes}
           collections={this.state.collections}
@@ -308,8 +299,7 @@ export class Person extends React.Component<PersonProps, PersonState> {
             if (newPersonName) {
               this.setState(ps => ({
                 ...ps,
-                synonymes:
-                  newPersonName && (ps.synonymes || []).concat([newPersonName]),
+                synonymes: newPersonName && (ps.synonymes || []).concat([newPersonName]),
                 newPerson: undefined
               }));
             }
@@ -318,14 +308,11 @@ export class Person extends React.Component<PersonProps, PersonState> {
             this.setState((ps: PersonState) => {
               return {
                 ...ps,
-                externalIds: (ps.externalIds || [])
-                  .concat([{ database: "", uuid: "" }])
+                externalIds: (ps.externalIds || []).concat([{ database: '', uuid: '' }])
               };
             });
           }}
-          onChangeExternalIds={(index: number) => (fn: string) => (
-            value: string
-          ) => {
+          onChangeExternalIds={(index: number) => (fn: string) => (value: string) => {
             this.setState((ps: PersonState) => {
               const newExternalIDItem: ExternalId =
                 ps.externalIds && ps.externalIds[index]
@@ -351,9 +338,7 @@ export class Person extends React.Component<PersonProps, PersonState> {
             this.setState((p: PersonState) => {
               const newExteralIDItem = (p.externalIds
                 ? p.externalIds.slice(0, index)
-                : []).concat(
-                p.externalIds ? p.externalIds.slice(index + 1) : []
-              );
+                : []).concat(p.externalIds ? p.externalIds.slice(index + 1) : []);
               return {
                 ...p,
                 externalIds: newExteralIDItem
@@ -375,20 +360,16 @@ export class Person extends React.Component<PersonProps, PersonState> {
           onChangePersonName={(fieldName: string) => (value: string) => {
             this.setState((ps: PersonState) => {
               const lastName =
-                fieldName === "lastName"
-                  ? value
-                  : ps.newPerson && ps.newPerson.lastName;
+                fieldName === 'lastName' ? value : ps.newPerson && ps.newPerson.lastName;
               const title =
-                fieldName === "title"
-                  ? value
-                  : ps.newPerson && ps.newPerson.title;
+                fieldName === 'title' ? value : ps.newPerson && ps.newPerson.title;
               const firstName =
-                fieldName === "firstName"
+                fieldName === 'firstName'
                   ? value
                   : ps.newPerson && ps.newPerson.firstName;
-              const nameString = `${lastName || ""}${title || firstName
-                ? ", "
-                : ""}${title || ""}${title ? " " : ""}${firstName || ""}`;
+              const nameString = `${lastName || ''}${title || firstName
+                ? ', '
+                : ''}${title || ''}${title ? ' ' : ''}${firstName || ''}`;
 
               return {
                 ...ps,

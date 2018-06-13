@@ -1,19 +1,15 @@
 // @flow
-import  {
-  ExtraResultAttributeValues,
-  Size,
-  AnalysisEvent
-} from '../../../types/analysis';
-import {toArray, omit, keys} from 'lodash';
-import  { FormData } from './formType';
-import  { Restriction } from '../../../types/analysis';
+import { ExtraResultAttributeValues, Size, AnalysisEvent } from '../../../types/analysis';
+import { toArray, omit, keys } from 'lodash';
+import { FormData } from './formType';
+import { Restriction } from '../../../types/analysis';
 import { Maybe, mixed, TODO } from '../../../types/common';
 import { Person } from '../../../types/person';
 
-type ObjectWithUuidAndType = { objectId: Maybe<string>, objectType: Maybe<string> };
+type ObjectWithUuidAndType = { objectId: Maybe<string>; objectType: Maybe<string> };
 
 export type Location<T> = {
-  state?: T
+  state?: T;
 };
 
 function getRestrictions(form: FormData): Maybe<Restriction> {
@@ -31,11 +27,11 @@ export function getResult(
   const extraAttributes = keys(extraResultAttributes).reduce((acc, att) => {
     let value = extraResultAttributes && extraResultAttributes[att];
     if (value && typeof value !== 'string' && value.type === 'Size') {
-      const size: Size = (value.value as any);
+      const size: Size = value.value as any;
       value = omit(size, ['rawValue']) as TODO;
     }
     if (value && typeof value !== 'string' && value.type === 'String') {
-      value = (value.value as any);
+      value = value.value as any;
     }
     if (keys(value).length === 0) {
       return acc;
