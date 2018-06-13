@@ -1,9 +1,9 @@
 // @flow
-import { Observable } from "rxjs";
-import Config from "../../config";
-import { simplePost, simplePut, ajaxHelper } from "../../shared/RxAjax";
-import type { Callback, AjaxPut, AjaxPost } from "../../types/ajax";
-import type { ImportAnalysisResult } from "types/analysisResult";
+import { Observable } from 'rxjs';
+import Config from '../../config';
+import { simplePost, simplePut, ajaxHelper } from '../../shared/RxAjax';
+import type { Callback, AjaxPut, AjaxPost } from '../../types/ajax';
+import type { ImportAnalysisResult } from 'types/analysisResult';
 
 type AnalysisResultSavePayload = {
   extRef?: ?Array<string>,
@@ -39,8 +39,17 @@ export const importResult: (
   museumId: number,
   token: string,
   result: ImportAnalysisResult
-}) => Observable<*> = (ajaxPut = simplePut) => ({ analysisId, museumId, token, result }) =>
-  ajaxPut(Config.magasin.urls.api.analysis.importResults(museumId, analysisId), result, token);
+}) => Observable<*> = (ajaxPut = simplePut) => ({
+  analysisId,
+  museumId,
+  token,
+  result
+}) =>
+  ajaxPut(
+    Config.magasin.urls.api.analysis.importResults(museumId, analysisId),
+    result,
+    token
+  );
 
 export type SavedFile = {
   id: string,
@@ -71,14 +80,14 @@ export const addResultFile: (props: {
   file: File
 }) => Observable<SavedFile | ErrorSaving> = props => {
   const formData: FormData = new FormData();
-  formData.append("upload", props.file, props.file.name);
+  formData.append('upload', props.file, props.file.name);
   return ajaxHelper(
     Config.magasin.urls.api.analysis.addFileUrl(
       props.museumId,
       props.collectionId,
       props.analysisId
     ),
-    "POST",
+    'POST',
     formData,
     props.token
   )
@@ -118,8 +127,12 @@ export const getFiles = (props: {
       // $FlowFixMe
       props.files.map(file =>
         ajaxHelper(
-          Config.magasin.urls.api.analysis.getFilesUrl([file], props.museumId, props.analysisId),
-          "GET",
+          Config.magasin.urls.api.analysis.getFilesUrl(
+            [file],
+            props.museumId,
+            props.analysisId
+          ),
+          'GET',
           null,
           props.token
         )
@@ -142,8 +155,12 @@ export const getFiles = (props: {
     );
   }
   return ajaxHelper(
-    Config.magasin.urls.api.analysis.getFilesUrl(props.files, props.museumId, props.analysisId),
-    "GET",
+    Config.magasin.urls.api.analysis.getFilesUrl(
+      props.files,
+      props.museumId,
+      props.analysisId
+    ),
+    'GET',
     null,
     props.token
   )
@@ -177,11 +194,11 @@ export const getFileAsBlob = (
 ): Observable<Blob | ErrorDownloading> => {
   return ajaxHelper(
     Config.magasin.urls.api.analysis.getFileUrl(fileId, museumId),
-    "GET",
+    'GET',
     null,
     token,
     null,
-    "blob"
+    'blob'
   )
     .map((res: { status: number, response: any }) => {
       if (res.status >= 200 && res.status < 300) {
