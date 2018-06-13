@@ -1,4 +1,4 @@
-import { Star, Maybe, RemoveMaybe } from './common';
+import { Star, Maybe, RemoveMaybe } from "./common";
 
 // @flow
 
