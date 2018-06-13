@@ -77,12 +77,12 @@ export default class ObservationPage extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.mode === 'VIEW') {
-      this.setState({
-        ...this.state,
+      this.setState(ps => ({
+        ...ps,
         doneBy: nextProps.doneBy,
         doneDate: nextProps.doneDate,
         observations: nextProps.observations
-      });
+      }));
     }
     if (
       this.props.mode === 'ADD' &&
@@ -90,16 +90,16 @@ export default class ObservationPage extends React.Component {
       this.props.doneBy &&
       nextProps.doneBy !== this.props.doneBy
     ) {
-      this.setState({
-        ...this.state,
+      this.setState(ps => ({
+        ...ps,
         doneBy: nextProps.doneBy
-      });
+      }));
     }
     if (nextProps.doneBy !== this.props.doneBy) {
-      this.setState({
-        ...this.state,
+      this.setState(ps => ({
+        ...ps,
         doneBy: nextProps.doneBy
-      });
+      }));
     }
   }
 
@@ -109,7 +109,7 @@ export default class ObservationPage extends React.Component {
       ...observations[index],
       data: { ...observations[index].data, [field]: value }
     };
-    this.setState({ ...this.state, observations });
+    this.setState(ps => ({ ...ps, observations }));
   }
 
   onChangePestObservation(pestObservationIndex, field, value, pestIndex) {
@@ -117,7 +117,7 @@ export default class ObservationPage extends React.Component {
     const pestObj = observations[pestIndex];
     const pestObservations = pestObj.data.observations;
     pestObservations[pestObservationIndex][field] = value;
-    this.setState({ ...this.state, observations });
+    this.setState(ps => ({ ...ps, observations }));
   }
 
   onRemovePestObservation(pestObservationIndex, pestIndex) {
@@ -126,7 +126,7 @@ export default class ObservationPage extends React.Component {
     pestObj.data.observations = pestObj.data.observations.filter(
       (elm, index) => index !== pestObservationIndex
     );
-    this.setState({ ...this.state, observations });
+    this.setState(ps => ({ ...ps, observations }));
   }
 
   onClickAddObservation(pestIndex) {
@@ -134,14 +134,14 @@ export default class ObservationPage extends React.Component {
     const pestObj = observations[pestIndex];
     const pestObservations = pestObj.data.observations;
     pestObservations.push({ lifeCycle: '', count: '' });
-    this.setState({ ...this.state, observations });
+    this.setState(ps => ({ ...ps, observations }));
   }
 
   onChangeTypeSelect(e) {
-    this.setState({
-      ...this.state,
+    this.setState(ps => ({
+      ...ps,
       selectedType: e.target.options[e.target.selectedIndex].value
-    });
+    }));
   }
 
   setDate = newValue => {
@@ -152,9 +152,9 @@ export default class ObservationPage extends React.Component {
           message: I18n.t('musit.observation.page.dateValidation')
         });
 
-        this.setState({ ...this.state, doneDate: formatISOString(new Date()) });
+        this.setState(ps => ({ ...ps, doneDate: formatISOString(new Date()) }));
       } else {
-        this.setState({ ...this.state, doneDate: newValue });
+        this.setState(ps => ({ ...ps, doneDate: newValue }));
       }
     }
   };
@@ -235,7 +235,7 @@ export default class ObservationPage extends React.Component {
     }
     const typeProps = { ...data, ...this.typeDefinitions[type].data };
     const observations = [{ type, data: typeProps }, ...this.state.observations];
-    this.setState({ ...this.state, observations, selectedType: null });
+    this.setState(ps => ({ ...ps, observations, selectedType: null }));
   }
 
   isTypeSelectable(typeStr) {
@@ -244,10 +244,10 @@ export default class ObservationPage extends React.Component {
 
   removeObservation(index) {
     const observations = this.state.observations;
-    this.setState({
-      ...this.state,
+    this.setState(ps => ({
+      ...ps,
       observations: observations.filter((o, i) => i !== index)
-    });
+    }));
   }
 
   validateForm(formProps) {
@@ -280,7 +280,7 @@ export default class ObservationPage extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     const errors = this.validateForm(this.state);
-    this.setState({ ...this.state, errors });
+    this.setState(ps => ({ ...ps, errors }));
     if (Object.keys(errors).length === 0) {
       this.props.onSaveObservation(this.props.id, this.state);
     }
@@ -370,7 +370,7 @@ export default class ObservationPage extends React.Component {
                   <DatePicker
                     dateFormat={DATE_FORMAT_DISPLAY}
                     onClear={newValue =>
-                      this.setState({ ...this.state, doneDate: newValue })}
+                      this.setState(ps => ({ ...ps, doneDate: newValue }))}
                     value={this.state.doneDate}
                     onChange={newValue => this.setDate(newValue)}
                     disabled={this.props.mode === 'VIEW'}
@@ -404,10 +404,10 @@ export default class ObservationPage extends React.Component {
                     }
                     placeHolder="Find actor"
                     onChange={newValue => {
-                      this.setState({
-                        ...this.state,
+                      this.setState(ps => ({
+                        ...ps,
                         doneBy: newValue
-                      });
+                      }));
                     }}
                   />
                 )}

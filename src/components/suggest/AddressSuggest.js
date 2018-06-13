@@ -34,12 +34,12 @@ export class AddressSuggest extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.value !== this.props.value) {
-      this.setState({ ...this.state, value: nextProps.value });
+      this.setState(ps => ({ ...ps, value: nextProps.value }));
     }
   }
 
   onChange(event, { newValue }) {
-    this.setState({ ...this.state, value: newValue });
+    this.setState(ps => ({ ...ps, value: newValue }));
     this.props.onChange(newValue);
   }
 
