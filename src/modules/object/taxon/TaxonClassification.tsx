@@ -1,5 +1,7 @@
 import * as React from "react";
-
+import { TaxonSuggest } from "../../../components/suggest/TaxonSuggest";
+import { AppSession } from "../../../types/appSession";
+import appSession$ from "../../../stores/appSession";
 type TaxonNameState = {
   taxonName: string;
   presicionType?: "C" | "A";
@@ -58,7 +60,9 @@ type ClassificationHistoryState = {
   sexAndStage: SexAndLifeStageState;
 };
 
-type ClassificationHistoryProps = ClassificationHistoryState;
+type ClassificationHistoryProps = ClassificationHistoryState & {
+  appSession: AppSession;
+};
 
 type Genus = {
   id: number;
@@ -413,6 +417,10 @@ export class TaxonComponent extends React.Component<TaxonProps> {
               id="aggregatedTaxonName"
             />
           </div>
+          <div className="col-md-4">
+            <label htmlFor="taxonSuggest">Taxon name</label>
+            <TaxonSuggest id="taxonSuggest" />
+          </div>
         </div>
 
         <div className="row">
@@ -741,7 +749,7 @@ export default class ClassificationComponent extends React.Component<
           <div className="col-md-12">
             <div className="well">
               <h3>Revisions</h3>
-              <ClassificationHistoryTable {...this.state} />
+              <ClassificationHistoryTable {...this.props} />
             </div>
           </div>
         </div>
@@ -749,3 +757,4 @@ export default class ClassificationComponent extends React.Component<
     );
   }
 }
+
