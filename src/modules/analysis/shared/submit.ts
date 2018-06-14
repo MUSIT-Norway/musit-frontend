@@ -1,28 +1,24 @@
 // @flow
-import type {
-  ExtraResultAttributeValues,
-  Size,
-  AnalysisEvent
-} from '../../../types/analysis';
-import toArray from 'lodash/toArray';
-import omit from 'lodash/omit';
-import keys from 'lodash/keys';
-import type { FormData } from './formType';
-import type { Restriction } from '../../../types/analysis';
+import { ExtraResultAttributeValues, Size, AnalysisEvent } from '../../../types/analysis';
+import { toArray, omit, keys } from 'lodash';
+import { FormData } from './formType';
+import { Restriction } from '../../../types/analysis';
+import { Maybe, mixed, TODO } from '../../../types/common';
+import { Person } from '../../../types/person';
 
-type ObjectWithUuidAndType = { objectId: ?string, objectType: ?string };
+type ObjectWithUuidAndType = { objectId: Maybe<string>; objectType: Maybe<string> };
 
 export type Location<T> = {
-  state?: T
+  state?: T;
 };
 
-function getRestrictions(form: FormData): ?Restriction {
+function getRestrictions(form: FormData): Maybe<Restriction> {
   return form.restrictions.value ? form.restriction.value : null;
 }
 
 export function getResult(
   form: FormData,
-  extraResultAttributes: ?ExtraResultAttributeValues
+  extraResultAttributes: Maybe<ExtraResultAttributeValues>
 ) {
   const extraAttributeType =
     extraResultAttributes && extraResultAttributes.type
@@ -31,11 +27,11 @@ export function getResult(
   const extraAttributes = keys(extraResultAttributes).reduce((acc, att) => {
     let value = extraResultAttributes && extraResultAttributes[att];
     if (value && typeof value !== 'string' && value.type === 'Size') {
-      const size: Size = (value.value: any);
-      value = omit(size, ['rawValue']);
+      const size: Size = value.value as any;
+      value = omit(size, ['rawValue']) as TODO;
     }
     if (value && typeof value !== 'string' && value.type === 'String') {
-      value = (value.value: any);
+      value = value.value as any;
     }
     if (keys(value).length === 0) {
       return acc;
@@ -57,7 +53,7 @@ export function getResult(
 
 export function getAnalysisCollection(
   form: FormData,
-  extraDescriptionAttributes: ?mixed,
+  extraDescriptionAttributes: Maybe<mixed>,
   location: Location<Array<AnalysisEvent>>
 ) {
   const events = toArray(form.events.value);
@@ -86,7 +82,7 @@ export function getAnalysisCollection(
   };
 }
 
-function findPerson(persons, role) {
+function findPerson(persons: Array<Person>, role: TODO) {
   return persons.find(p => p.role === role);
 }
 

@@ -113,7 +113,9 @@ export type SaveProps = {
         }
       }
   >,
-  callback: Callback<*>
+  callback: Callback<*>,
+  ajaxPost: MUSTFIX, //I needed to add these to get another file to compile
+  ajaxPut: MUSTFIX //I needed to add these to get another file to compile
 };
 export const saveAnalysis$: Subject<SaveProps> = createAction('saveAnalysis$');
 const saveAnalysisAction = (post, put) => props => {

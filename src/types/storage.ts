@@ -1,5 +1,5 @@
-import {TODO} from './common';
+import { TODO } from './common';
 export interface SampleStore {
-    sampleTypes: TODO;
-    nodeSamples: TODO;
+  sampleTypes: TODO;
+  nodeSamples: TODO;
 }

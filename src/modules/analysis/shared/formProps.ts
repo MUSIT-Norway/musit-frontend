@@ -1,17 +1,17 @@
 // @flow
 import { getObjects, getAnalysisCollection, getResult } from '../shared/submit';
 import { saveAnalysis$ } from '../analysisStore';
-import type { Location } from '../shared/submit';
+import { Location } from '../shared/submit';
 import { simplePost, simplePut } from '../../../shared/RxAjax';
-import type { History } from '../../../types/Routes';
-import type { AppSession } from '../../../types/appSession';
-import type { FormData } from '../shared/formType';
-import type { Predefined } from '../../../types/predefined';
-import type { Store } from '../shared/storeType';
-import type { DomEvent } from '../../../types/dom';
-import toArray from 'lodash/toArray';
+import { History } from 'history';
+import { AppSession } from '../../../types/appSession';
+import { FormData } from '../shared/formType';
+import { Predefined } from '../../../types/predefined';
+import { Store } from '../shared/storeType';
+import { DomEvent } from '../../../types/dom';
+import { toArray } from 'lodash';
 import { isMultipleSelectAttribute } from '../../../types/analysis';
-import type { Restriction, AnalysisEvent } from '../../../types/analysis';
+import { Restriction, AnalysisEvent } from '../../../types/analysis';
 import {
   getAnalysisTypeTerm,
   getAnalysisType,
@@ -19,37 +19,38 @@ import {
   getExtraResultAttributes
 } from './getters';
 import { isFormValid } from '../../../forms/validators';
-import type {
+import {
   AnalysisType,
   Size,
   ExtraResultAttribute,
   ExtraResultAttributeValues
-} from 'types/analysis';
+} from '../../../types/analysis';
 import { emitError } from '../../../shared/errors';
 import Config from '../../../config';
+import { Exact, Maybe, MUSTFIX, TODO } from '../../../types/common';
 
-type FormProps = {|
-  updateForm: Function,
-  store: Store,
-  appSession: AppSession,
-  form: FormData,
-  history: History,
-  predefined: Predefined,
-  location: Location<Array<AnalysisEvent>>,
-  updateExtraDescriptionAttribute: Function,
-  updateExtraResultAttribute: Function
-|};
+type FormProps = Exact<{
+  updateForm: Function;
+  store: Store;
+  appSession: AppSession;
+  form: FormData;
+  history: History;
+  predefined: Predefined;
+  location: Location<Array<AnalysisEvent>>;
+  updateExtraDescriptionAttribute: Function;
+  updateExtraResultAttribute: Function;
+}>;
 
 export default function formProps(
   props: FormProps,
   ajaxPost: Function = simplePost,
   ajaxPut: Function = simplePut
 ) {
-  const analysisType: ?AnalysisType = getAnalysisType(
+  const analysisType: Maybe<AnalysisType> = getAnalysisType(
     parseInt(
-      props.store.analysis
+      (props.store.analysis
         ? props.store.analysis.analysisTypeId
-        : props.form.analysisTypeId.value,
+        : props.form.analysisTypeId.value) as MUSTFIX,
       10
     ),
     props.predefined.analysisTypes
@@ -118,7 +119,9 @@ export default function formProps(
   };
 }
 
-export function isRestrictionValidForCancellation(restriction: ?Restriction): boolean {
+export function isRestrictionValidForCancellation(
+  restriction: Maybe<Restriction>
+): boolean {
   return !!(
     restriction &&
     restriction.cancelledReason &&
@@ -128,7 +131,7 @@ export function isRestrictionValidForCancellation(restriction: ?Restriction): bo
   );
 }
 
-function updateStringField(updateForm) {
+function updateStringField(updateForm: TODO) {
   return (name: string) => (evt: DomEvent) =>
     updateForm({
       name,
@@ -136,7 +139,7 @@ function updateStringField(updateForm) {
     });
 }
 
-function updateBooleanField(updateForm) {
+function updateBooleanField(updateForm: TODO) {
   return (name: string, b: boolean) => () =>
     updateForm({
       name,
@@ -144,7 +147,7 @@ function updateBooleanField(updateForm) {
     });
 }
 
-function updateArrayField(updateForm) {
+function updateArrayField(updateForm: TODO) {
   return (name: string) => (evt: DomEvent) =>
     updateForm({
       name,
@@ -152,7 +155,7 @@ function updateArrayField(updateForm) {
     });
 }
 
-function updateAnalysisCategory(updateForm) {
+function updateAnalysisCategory(updateForm: TODO) {
   return (evt: DomEvent) => {
     updateForm({
       name: 'analysisTypeCategory',
@@ -165,7 +168,7 @@ function updateAnalysisCategory(updateForm) {
   };
 }
 
-function updateAnalysisTypeId(updateForm) {
+function updateAnalysisTypeId(updateForm: TODO) {
   return (evt: DomEvent) => {
     updateForm({
       name: 'analysisTypeId',
@@ -174,8 +177,8 @@ function updateAnalysisTypeId(updateForm) {
   };
 }
 
-function parseOption(type) {
-  return option => {
+function parseOption(type: TODO) {
+  return (option: TODO) => {
     switch (type) {
       case 'Array[Int]':
       case 'Int':
@@ -187,8 +190,8 @@ function parseOption(type) {
 }
 
 type OnUnmountProps = {
-  clearForm: Function,
-  clearStore: Function
+  clearForm: Function;
+  clearStore: Function;
 };
 
 export const onUnmount = (props: OnUnmountProps) => {
@@ -197,34 +200,34 @@ export const onUnmount = (props: OnUnmountProps) => {
 };
 
 function clickSave(
-  form,
-  appSession,
-  history,
-  location,
-  extraDescriptionAttributes,
-  extraResultAttributes,
-  ajaxPost,
-  ajaxPut
+  form: TODO,
+  appSession: AppSession,
+  history: History,
+  location: TODO,
+  extraDescriptionAttributes: TODO,
+  extraResultAttributes: TODO,
+  ajaxPost: TODO,
+  ajaxPut: TODO
 ) {
   return (evt: DomEvent) => {
     evt.preventDefault();
     saveAnalysis$.next({
       id: form.id.value,
-      result: getResult(form, extraResultAttributes),
+      result: getResult(form, extraResultAttributes) as TODO,
       appSession,
       data: getAnalysisCollection(form, extraDescriptionAttributes, location),
       events: toArray(form.events.value),
       ajaxPost,
       ajaxPut,
       callback: {
-        onComplete: props => {
+        onComplete: (props: TODO) => {
           if (!props) {
             return;
           }
           const maybeErrorMessage = props.results
-            .filter(res => res.error)
+            .filter((res: TODO) => res.error)
             .concat(props.badFiles)
-            .map(res => res.error.xhr.response.message)
+            .map((res: TODO) => res.error.xhr.response.message)
             .join('\n')
             .trim();
           if (maybeErrorMessage.length > 0) {
@@ -243,7 +246,7 @@ function clickSave(
   };
 }
 
-function clickCancel(props) {
+function clickCancel(props: TODO) {
   return (evt: DomEvent) => {
     evt.preventDefault();
     props.history.goBack();
@@ -267,8 +270,8 @@ export function getExtraAttributeValue(evt: DomEvent, type: string) {
 }
 
 function isResultValid(
-  analysisType?: ?AnalysisType,
-  resultAttributes?: ?ExtraResultAttributeValues
+  analysisType?: Maybe<AnalysisType>,
+  resultAttributes?: Maybe<ExtraResultAttributeValues>
 ): boolean {
   if (!analysisType) {
     return false;
@@ -287,21 +290,26 @@ function isResultValid(
   }, true);
 }
 
-function isResultAttributeValid(type?: ?string, attr?: ?ExtraResultAttribute): boolean {
-  if (!attr || !attr.value) {
+function isResultAttributeValid(
+  type?: Maybe<string>,
+  attr?: Maybe<ExtraResultAttribute>
+): boolean {
+  if (!attr || !(attr as MUSTFIX).value) {
     return true;
   }
   if (type === 'String') {
-    return typeof attr.value === 'string' && attr.value.length > 0;
+    return (
+      typeof (attr as MUSTFIX).value === 'string' && (attr as MUSTFIX).value.length > 0
+    );
   }
   if (type === 'Int') {
-    return typeof attr.value === 'number';
+    return typeof (attr as MUSTFIX).value === 'number';
   }
   if (type === 'Size') {
     if (!attr) {
       return false;
     }
-    const size: ?Size = (attr.value: any);
+    const size: Maybe<Size> = (attr as MUSTFIX).value as any;
     if (!size) {
       return false;
     }

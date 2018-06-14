@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent } from 'react';
 
 export type Uuid = string;
 
@@ -13,6 +13,9 @@ export type Star = any; //* in Flow. Existential type: https://flow.org/en/docs/
 export type RemoveMaybe<T> = Maybe<T>;
 
 export type ArrayAny = Array<any>; //Translation of [] in Flow.
+
+//Temporary quick fixes during initial translation to TS.
+export type STEIN_OR_RITUVESH_MUST_LOOK_INTO_THIS = any;
 
 //Really must look into! :)
 export type BUG = any;
@@ -43,7 +46,9 @@ export function eventTargetResult(event: Event) {
 
 type EventTargetWithValue = { value: any };
 
-export function eventTargetValue(event: Event | ChangeEvent<HTMLElement> | React.MouseEvent<any>) {
+export function eventTargetValue(
+  event: Event | ChangeEvent<HTMLElement> | React.MouseEvent<any>
+) {
   return ((event.target as any) as EventTargetWithValue).value;
 }
 

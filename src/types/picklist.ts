@@ -1,4 +1,4 @@
-import { TODO } from "./common";
+import { TODO } from './common';
 interface PicklistNode {
   marked: boolean;
   value: TODO;

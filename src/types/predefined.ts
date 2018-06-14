@@ -1,8 +1,8 @@
 // @flow
-import { AnalysisType } from "./analysis";
-import { SampleType } from "./sample";
-import { ConservationTypes } from "./conservation";
-import { Maybe } from "./common";
+import { AnalysisType } from './analysis';
+import { SampleType } from './sample';
+import { ConservationTypes } from './conservation';
+import { Maybe } from './common';
 
 export type AnalysisTypes = Array<AnalysisType>;
 

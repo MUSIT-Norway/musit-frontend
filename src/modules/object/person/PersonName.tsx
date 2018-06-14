@@ -1,9 +1,9 @@
 // @flow
 
-import * as React from "react";
+import * as React from 'react';
 //import FieldMultiSelect from "../../../forms/components/FieldMultiSelect";
-import { PersonPage } from "./Person";
-import { PersonState, PersonProps, PersonName, ExternalId } from "./Person";
+import { PersonPage } from './Person';
+import { PersonState, PersonProps, PersonName, ExternalId } from './Person';
 
 type PersonNameState = {
   title?: string;
@@ -122,18 +122,13 @@ const Person = (props: PersonProps) => (
 
 const PersonName = (props: PersonNameProps) => (
   <div>
-    {" "}
-    <form style={{ padding: "25px" }}>
+    {' '}
+    <form style={{ padding: '25px' }}>
       <h3>Person-name</h3>
       <div className="form-group row">
         <div className="col-sm-3">
           <label htmlFor="title">Title</label>
-          <input
-            value={props.title}
-            type="text"
-            className="form-control"
-            id="title"
-          />
+          <input value={props.title} type="text" className="form-control" id="title" />
         </div>
       </div>
       <div className="form-group row">
@@ -171,11 +166,7 @@ const PersonName = (props: PersonNameProps) => (
             <option>Parker, Peter</option>
             <option>Lane, Louise</option>
           </select>
-          <button
-            type="button"
-            className="btn btn-default"
-            onClick={props.onClick}
-          >
+          <button type="button" className="btn btn-default" onClick={props.onClick}>
             Ny person
           </button>
         </div>
@@ -194,7 +185,7 @@ export class AddPersonName extends React.Component<
   }
   render() {
     return (
-      <div style={{ padding: "25px" }}>
+      <div style={{ padding: '25px' }}>
         <PersonName
           firstName={this.props.firstName}
           title={this.props.title}
@@ -225,9 +216,7 @@ export class AddPersonName extends React.Component<
                 const newExteralIDItem = (personState.externalIds
                   ? personState.externalIds.slice(0, index)
                   : []).concat(
-                  personState.externalIds
-                    ? personState.externalIds.slice(index + 1)
-                    : []
+                  personState.externalIds ? personState.externalIds.slice(index + 1) : []
                 );
                 return {
                   ...p,
@@ -255,23 +244,20 @@ export class AddPersonName extends React.Component<
                 const newPersonState = ps.person;
 
                 const lastName =
-                  fieldName === "lastName"
+                  fieldName === 'lastName'
                     ? value
-                    : newPersonState.newPerson &&
-                      newPersonState.newPerson.lastName;
+                    : newPersonState.newPerson && newPersonState.newPerson.lastName;
                 const title =
-                  fieldName === "title"
+                  fieldName === 'title'
                     ? value
-                    : newPersonState.newPerson &&
-                      newPersonState.newPerson.title;
+                    : newPersonState.newPerson && newPersonState.newPerson.title;
                 const firstName =
-                  fieldName === "firstName"
+                  fieldName === 'firstName'
                     ? value
-                    : newPersonState.newPerson &&
-                      newPersonState.newPerson.firstName;
-                const nameString = `${lastName || ""}${title || firstName
-                  ? ", "
-                  : ""}${title || ""}${title ? " " : ""}${firstName || ""}`;
+                    : newPersonState.newPerson && newPersonState.newPerson.firstName;
+                const nameString = `${lastName || ''}${title || firstName
+                  ? ', '
+                  : ''}${title || ''}${title ? ' ' : ''}${firstName || ''}`;
 
                 return {
                   ...ps,
@@ -294,7 +280,7 @@ export class AddPersonName extends React.Component<
                   person: {
                     ...newPersonState,
                     externalIds: (newPersonState.externalIds || [])
-                      .concat([{ database: "", uuid: "" }])
+                      .concat([{ database: '', uuid: '' }])
                   }
                 };
               });
@@ -308,8 +294,7 @@ export class AddPersonName extends React.Component<
                     person: {
                       ...pn,
                       synonymes:
-                        newPersonName &&
-                        (pn.synonymes || []).concat([newPersonName]),
+                        newPersonName && (pn.synonymes || []).concat([newPersonName]),
                       newPerson: undefined
                     }
                   };
@@ -321,7 +306,7 @@ export class AddPersonName extends React.Component<
                 console.log(ps, v);
                 const person = {
                   ...ps.person,
-                  collections: ps.collections ? ps.collections + "," + v : v
+                  collections: ps.collections ? ps.collections + ',' + v : v
                 };
                 return {
                   ...ps,
@@ -329,14 +314,11 @@ export class AddPersonName extends React.Component<
                 };
               });
             }}
-            onChangeExternalIds={(index: number) => (fn: string) => (
-              value: string
-            ) => {
+            onChangeExternalIds={(index: number) => (fn: string) => (value: string) => {
               this.setState((ps: AddPersonNameState) => {
                 const newPersonState = ps.person;
                 const newExternalIDItem: ExternalId =
-                  newPersonState.externalIds &&
-                  newPersonState.externalIds[index]
+                  newPersonState.externalIds && newPersonState.externalIds[index]
                     ? { ...newPersonState.externalIds[index], [fn]: value }
                     : { [fn]: value };
 

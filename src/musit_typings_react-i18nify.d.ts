@@ -1,1 +1,1 @@
-declare module 'react-i18nify'
+declare module 'react-i18nify';

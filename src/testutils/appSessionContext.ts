@@ -1,9 +1,9 @@
 // @flow
 
-import PropTypes from 'prop-types';
+import * as PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
 
-import type { AppSession } from 'types/appSession';
+import { AppSession } from '../types/appSession';
 
 export const createAppSessionContext = (appSession: AppSession) => ({
   context: {

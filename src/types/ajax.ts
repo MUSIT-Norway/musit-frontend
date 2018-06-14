@@ -1,6 +1,6 @@
 // @flow
-import { Observable } from "rxjs";
-import { mixed, Maybe } from "./common";
+import { Observable } from 'rxjs';
+import { mixed, Maybe } from './common';
 
 export type Callback<R> = {
   onComplete?: (r: Maybe<R>) => mixed;
@@ -21,6 +21,14 @@ export type AjaxPut<R> = (
   callback?: Callback<R>
 ) => Observable<R>;
 
-export type AjaxDel<R> = (url: string, token: string, callback?: Callback<R>) => Observable<R>;
+export type AjaxDel<R> = (
+  url: string,
+  token: string,
+  callback?: Callback<R>
+) => Observable<R>;
 
-export type AjaxGet<R> = (url: string, token: string, callback?: Callback<R>) => Observable<R>;
+export type AjaxGet<R> = (
+  url: string,
+  token: string,
+  callback?: Callback<R>
+) => Observable<R>;

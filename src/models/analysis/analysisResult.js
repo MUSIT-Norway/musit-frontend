@@ -59,10 +59,12 @@ export type SavedFile = {
   owner: { ownerId: string, ownerType: string },
   collection: string,
   path: string,
+  size: string,
   version: number,
   published: boolean,
   createdStamp: { date: string, by: string },
-  documentDetails: { number: number }
+  documentDetails: { number: number },
+  type: string //TODO: I added this in order to get sampleDataForTest.ts to compile
 };
 
 export type ErrorSaving = {

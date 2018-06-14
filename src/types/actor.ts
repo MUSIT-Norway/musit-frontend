@@ -1,7 +1,7 @@
 // @flow
 
-import { ActorId } from "./ids";
-import { Maybe } from "./common";
+import { ActorId } from './ids';
+import { Maybe } from './common';
 
 export type Actor = {
   dataportenId?: Maybe<string>;

@@ -757,4 +757,3 @@ export default class ClassificationComponent extends React.Component<
     );
   }
 }
-

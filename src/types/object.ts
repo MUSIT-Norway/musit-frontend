@@ -1,5 +1,5 @@
 // @flow
-import { Maybe, Star } from "./common";
+import { Maybe, Star } from './common';
 
 export type NatLocation = {
   natCountry: Maybe<string>;
@@ -77,7 +77,7 @@ export type MusitObject = {
   materials?: Maybe<Array<Star>>;
   locations?: Maybe<Array<Star>>;
   coordinates?: Maybe<Array<ArkCoordinate>>;
-  objectType: "sample" | "collection";
+  objectType: 'sample' | 'collection';
 };
 
 export type ObjectData = {

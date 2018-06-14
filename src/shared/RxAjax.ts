@@ -4,7 +4,7 @@ import { ajax } from 'rxjs/observable/dom/ajax';
 import { emitError } from './errors';
 import { closeModal } from './modal';
 import { setAccessToken$ } from '../stores/appSession';
-import  { Callback, AjaxGet, AjaxPost, AjaxPut, AjaxDel } from '../types/ajax';
+import { Callback, AjaxGet, AjaxPost, AjaxPut, AjaxDel } from '../types/ajax';
 import { Star, Maybe, MUSTFIX } from '../types/common';
 
 export function onComplete<R>(callback: Maybe<Callback<R>>) {
@@ -19,7 +19,9 @@ const shouldLog = function() {
   return process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
 };
 
-export function onFailure<R>(callback: Maybe<Callback<R>>): (error: Star) => Observable<Star> {
+export function onFailure<R>(
+  callback: Maybe<Callback<R>>
+): (error: Star) => Observable<Star> {
   return (error: Star) => {
     switch (error.status) {
       case 401:
@@ -75,7 +77,10 @@ export function ajaxHelper<R, B>(
   }) as MUSTFIX;
 }
 
-function simpleAjax<R>(ajax$: Observable<R>, callback: Maybe<Callback<R>>): Observable<R> {
+function simpleAjax<R>(
+  ajax$: Observable<R>,
+  callback: Maybe<Callback<R>>
+): Observable<R> {
   return ajax$.do(onComplete(callback)).catch(onFailure(callback));
 }
 

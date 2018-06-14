@@ -1,4 +1,4 @@
-import { TODO } from "../types/common";
+import { TODO } from '../types/common';
 
 function makeRequest(opts: TODO) {
   return new Promise(function(resolve, reject) {
