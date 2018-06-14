@@ -1,7 +1,7 @@
 import * as React from "react";
 import { TaxonSuggest } from "../../../components/suggest/TaxonSuggest";
 import { AppSession } from "../../../types/appSession";
-import appSession$ from "../../../stores/appSession";
+//import appSession$ from "../../../stores/appSession";
 type TaxonNameState = {
   taxonName: string;
   presicionType?: "C" | "A";
@@ -11,6 +11,8 @@ type TaxonNameState = {
 type TaxonEditingState = {
   selectedGenus?: number;
 };
+
+const appSession = { museumId: 99 };
 
 type TaxonState = {
   editingIndex: number;
@@ -22,6 +24,7 @@ type TaxonState = {
 
 type TaxonProps = TaxonState & {
   onChangeNoteField: (value: string) => void;
+  onChangeSuggests: (v: any) => void;
   onAddTaxon: () => void;
   setEditingIndex: (i: number) => void;
   taxonEditingState?: TaxonEditingState;
@@ -419,7 +422,11 @@ export class TaxonComponent extends React.Component<TaxonProps> {
           </div>
           <div className="col-md-4">
             <label htmlFor="taxonSuggest">Taxon name</label>
-            <TaxonSuggest id="taxonSuggest" />
+            <TaxonSuggest
+              id="taxonSuggest"
+              appSession={appSession}
+              onChange={this.props.onChangeSuggests}
+            />
           </div>
         </div>
 
@@ -631,6 +638,11 @@ export default class ClassificationComponent extends React.Component<
                     };
                   });
                 }}
+                onChangeSuggests={(nv: any) =>
+                  this.setState((ps: ClassificationHistoryState) => ({
+                    ...ps,
+                    nv
+                  }))}
                 onAddTaxon={() => {
                   this.setState((ps: ClassificationHistoryState) => {
                     const newTaxonNames = [

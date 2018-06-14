@@ -24,7 +24,7 @@
     "react-autosuggest": "3.7.4",
     "react-bootstrap": "^0.31.0",
     "react-bootstrap-date-picker": "^5.0.1",
-    "react-dom": "^15.4.4",
+    "react-dom": "^15.6.2",
     "react-fontawesome": "^1.6.1",
     "react-i18nify": "^1.8.7",
     "react-loader": "^2.4.2",
@@ -45,9 +45,11 @@
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
     "codacy": "cat coverage/lcov.info",
-    "coverage": "npm test a -- --coverage --collectCoverageFrom='src/!(_poc*)**/*.{js,jsx}'",
+    "coverage":
+      "npm test a -- --coverage --collectCoverageFrom='src/!(_poc*)**/*.{js,jsx}'",
     "flow": "./node_modules/.bin/flow check --show-all-errors",
-    "formatcode": "./node_modules/.bin/prettier --single-quote --trailing-comma none --print-width 90 --write \"{src,__{tests,mocks}__}/**/*.{js,jsx,ts,tsx}\""
+    "formatcode":
+      "./node_modules/.bin/prettier --single-quote --trailing-comma none --print-width 90 --write \"{src,__{tests,mocks}__}/**/*.{js,jsx,ts,tsx}\""
   },
   "devDependencies": {
     "@types/deep-diff": "0.0.31",

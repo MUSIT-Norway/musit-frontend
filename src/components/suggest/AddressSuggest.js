@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Autosuggest from 'react-autosuggest';
-import suggest$Fn, { update$, clear$ } from './suggestStore';
-import Config from '../../config';
-import { RxInjectLegacy as inject } from 'react-rxjs';
+import React from "react";
+import PropTypes from "prop-types";
+import Autosuggest from "react-autosuggest";
+import suggest$Fn, { update$, clear$ } from "./suggestStore";
+import Config from "../../config";
+import { RxInjectLegacy as inject } from "react-rxjs";
 
 export class AddressSuggest extends React.Component {
   static propTypes = {
@@ -18,9 +18,9 @@ export class AddressSuggest extends React.Component {
   };
 
   static defaultProps = {
-    id: 'addressField',
+    id: "addressField",
     disabled: false,
-    value: ''
+    value: ""
   };
 
   constructor(props) {
@@ -58,14 +58,14 @@ export class AddressSuggest extends React.Component {
   doneByProps = {
     id: this.props.id,
     placeholder: this.props.placeHolder,
-    type: 'search',
+    type: "search",
     onChange: this.onChange.bind(this),
     onBlur: this.props.clear
   };
 
   renderAddressSuggestion(suggestion) {
     const suggestionText = `${suggestion.street} ${suggestion.streetNo}, ${suggestion.zip} ${suggestion.place}`;
-    return <span className={'suggestion-content'}>{suggestionText}</span>;
+    return <span className={"suggestion-content"}>{suggestionText}</span>;
   }
 
   requestSuggestionUpdate(update) {
@@ -84,7 +84,7 @@ export class AddressSuggest extends React.Component {
         getSuggestionValue={this.getAddressSuggestionValue}
         renderSuggestion={this.renderAddressSuggestion}
         inputProps={{ ...this.doneByProps, value: this.state.value }}
-        shouldRenderSuggestions={v => v !== 'undefined'}
+        shouldRenderSuggestions={v => v !== "undefined"}
         onSuggestionSelected={this.onSuggestionSelected}
       />
     );
@@ -93,7 +93,10 @@ export class AddressSuggest extends React.Component {
 
 const data = {
   appSession$: { type: PropTypes.object.isRequired },
-  suggest$: suggest$Fn('addressSuggest', Config.magasin.urls.api.geolocation.searchUrl)
+  suggest$: suggest$Fn(
+    "addressSuggest",
+    Config.magasin.urls.api.geolocation.searchUrl
+  )
 };
 
 const commands = { update$, clear$ };

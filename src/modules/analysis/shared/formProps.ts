@@ -1,33 +1,33 @@
 // @flow
-import { getObjects, getAnalysisCollection, getResult } from '../shared/submit';
-import { saveAnalysis$ } from '../analysisStore';
-import { Location } from '../shared/submit';
-import { simplePost, simplePut } from '../../../shared/RxAjax';
-import { History } from 'history';
-import { AppSession } from '../../../types/appSession';
-import { FormData } from '../shared/formType';
-import { Predefined } from '../../../types/predefined';
-import { Store } from '../shared/storeType';
-import { DomEvent } from '../../../types/dom';
-import { toArray } from 'lodash';
-import { isMultipleSelectAttribute } from '../../../types/analysis';
-import { Restriction, AnalysisEvent } from '../../../types/analysis';
+import { getObjects, getAnalysisCollection, getResult } from "../shared/submit";
+import { saveAnalysis$ } from "../analysisStore";
+import { Location } from "../shared/submit";
+import { simplePost, simplePut } from "../../../shared/RxAjax";
+import { History } from "history";
+import { AppSession } from "../../../types/appSession";
+import { FormData } from "../shared/formType";
+import { Predefined } from "../../../types/predefined";
+import { Store } from "../shared/storeType";
+import { DomEvent } from "../../../types/dom";
+import { toArray } from "lodash";
+import { isMultipleSelectAttribute } from "../../../types/analysis";
+import { Restriction, AnalysisEvent } from "../../../types/analysis";
 import {
   getAnalysisTypeTerm,
   getAnalysisType,
   getExtraDescriptionAttributes,
   getExtraResultAttributes
-} from './getters';
-import { isFormValid } from '../../../forms/validators';
+} from "./getters";
+import { isFormValid } from "../../../forms/validators";
 import {
   AnalysisType,
   Size,
   ExtraResultAttribute,
   ExtraResultAttributeValues
-} from '../../../types/analysis';
-import { emitError } from '../../../shared/errors';
-import Config from '../../../config';
-import { Exact, Maybe, MUSTFIX, TODO } from '../../../types/common';
+} from "../../../types/analysis";
+import { emitError } from "../../../shared/errors";
+import Config from "../../../config";
+import { Exact, Maybe, MUSTFIX, TODO } from "../../../types/common";
 
 type FormProps = Exact<{
   updateForm: Function;
@@ -72,7 +72,8 @@ export default function formProps(
   return {
     ...props,
     isFormValid:
-      isFormValid(props.form) && isResultValid(analysisType, extraResultAttributes),
+      isFormValid(props.form) &&
+      isResultValid(analysisType, extraResultAttributes),
     isRestrictionValidForCancellation: isRestrictionValidForCancellation(
       props.form.restriction.value
     ),
@@ -88,7 +89,9 @@ export default function formProps(
       props.predefined.analysisTypes,
       props.appSession.language
     ),
-    updateExtraDescriptionAttribute: (name: string, type: string) => (evt: DomEvent) => {
+    updateExtraDescriptionAttribute: (name: string, type: string) => (
+      evt: DomEvent
+    ) => {
       props.updateExtraDescriptionAttribute({
         name,
         value: getExtraAttributeValue(evt, type)
@@ -151,18 +154,18 @@ function updateArrayField(updateForm: TODO) {
   return (name: string) => (evt: DomEvent) =>
     updateForm({
       name,
-      rawValue: evt.target.value.split(',').map(v => v.trim())
+      rawValue: evt.target.value.split(",").map(v => v.trim())
     });
 }
 
 function updateAnalysisCategory(updateForm: TODO) {
   return (evt: DomEvent) => {
     updateForm({
-      name: 'analysisTypeCategory',
+      name: "analysisTypeCategory",
       rawValue: evt.target.value
     });
     updateForm({
-      name: 'analysisTypeId',
+      name: "analysisTypeId",
       rawValue: null
     });
   };
@@ -171,7 +174,7 @@ function updateAnalysisCategory(updateForm: TODO) {
 function updateAnalysisTypeId(updateForm: TODO) {
   return (evt: DomEvent) => {
     updateForm({
-      name: 'analysisTypeId',
+      name: "analysisTypeId",
       rawValue: evt.target.value
     });
   };
@@ -180,8 +183,8 @@ function updateAnalysisTypeId(updateForm: TODO) {
 function parseOption(type: TODO) {
   return (option: TODO) => {
     switch (type) {
-      case 'Array[Int]':
-      case 'Int':
+      case "Array[Int]":
+      case "Int":
         return parseInt(option.value, 10);
       default:
         return option.value;
@@ -228,17 +231,20 @@ function clickSave(
             .filter((res: TODO) => res.error)
             .concat(props.badFiles)
             .map((res: TODO) => res.error.xhr.response.message)
-            .join('\n')
+            .join("\n")
             .trim();
           if (maybeErrorMessage.length > 0) {
             emitError({
-              type: 'errorOnSave',
-              message: maybeErrorMessage.replace('in None', '')
+              type: "errorOnSave",
+              message: maybeErrorMessage.replace("in None", "")
             });
           }
           const id = props.id;
           history.replace(
-            Config.magasin.urls.client.analysis.viewAnalysis(appSession, parseInt(id, 10))
+            Config.magasin.urls.client.analysis.viewAnalysis(
+              appSession,
+              parseInt(id, 10)
+            )
           );
         }
       }
@@ -297,15 +303,16 @@ function isResultAttributeValid(
   if (!attr || !(attr as MUSTFIX).value) {
     return true;
   }
-  if (type === 'String') {
+  if (type === "String") {
     return (
-      typeof (attr as MUSTFIX).value === 'string' && (attr as MUSTFIX).value.length > 0
+      typeof (attr as MUSTFIX).value === "string" &&
+      (attr as MUSTFIX).value.length > 0
     );
   }
-  if (type === 'Int') {
-    return typeof (attr as MUSTFIX).value === 'number';
+  if (type === "Int") {
+    return typeof (attr as MUSTFIX).value === "number";
   }
-  if (type === 'Size') {
+  if (type === "Size") {
     if (!attr) {
       return false;
     }

@@ -170,9 +170,9 @@ export default {
           getSynonymsFromLatinNameId: (scientificNameId: number) =>
             `/Api/Taxon/ScientificName/${scientificNameId}`,
           getLatinNamesMatch: (scientificName: string, mid: string) =>
-            `https://artsdatabanken.no/Api/Taxon/ScientificName?ScientificName=${scientificName}*`,
+            `/Api/Taxon/ScientificName?ScientificName=${scientificName}*`,
           getLatinNamesExact: (scientificName: string, mid: string) =>
-            `https://artsdatabanken.no/Api/Taxon/ScientificName?ScientificName=${scientificName}`
+            `/Api/Taxon/ScientificName?ScientificName=${scientificName}`
         },
         conservation: {
           getConditionCodeList: `/api/management/conservation/conditionCodes`,
