@@ -16,29 +16,29 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Grid, Row, Col, FormControl } from 'react-bootstrap';
-import PairedToogleButtons from './ToggleButtons';
-import DatePicker from '../../components/DatePicker';
-import SaveCancel from '../../components/formfields/saveCancel/SaveCancel';
+import React from "react";
+import PropTypes from "prop-types";
+import { Grid, Row, Col, FormControl } from "react-bootstrap";
+import PairedToogleButtons from "./ToggleButtons";
+import DatePicker from "../../components/DatePicker";
+import SaveCancel from "../../components/formfields/saveCancel/SaveCancel";
 import {
   flatten,
   DATE_FORMAT_DISPLAY,
   hasProp,
   isDateBiggerThanToday,
   formatISOString
-} from '../../shared/util';
-import { ActorSuggest } from '../../components/suggest/ActorSuggest';
-import Layout from '../../components/layout';
-import Breadcrumb from '../../components/layout/Breadcrumb';
-import { emitError, emitSuccess } from '../../shared/errors';
-import { I18n } from 'react-i18nify';
-import { RxInjectLegacy as inject } from 'react-rxjs';
-import Control from '../../models/control';
-import store$, { loadRootNode$ } from './controlStore';
-import Loader from 'react-loader';
-import Config from '../../config';
+} from "../../shared/util";
+import { ActorSuggest } from "../../components/suggest/ActorSuggest";
+import Layout from "../../components/layout";
+import Breadcrumb from "../../components/layout/Breadcrumb";
+import { emitError, emitSuccess } from "../../shared/errors";
+import { I18n } from "react-i18nify";
+import { RxInjectLegacy as inject } from "react-rxjs";
+import Control from "../../models/control";
+import store$, { loadRootNode$ } from "./controlStore";
+import Loader from "react-loader";
+import Config from "../../config";
 
 export class ControlAddContainer extends React.Component {
   static propTypes = {
@@ -79,16 +79,22 @@ export class ControlAddContainer extends React.Component {
 
   setStateBasedOnRootNode(rootNode) {
     const requirement = rootNode.environmentRequirement;
-    this.setState(ps => ({
-      temperature: requirement ? requirement.temperature : ' ',
-      temperatureTolerance: requirement ? requirement.temperatureTolerance : ' ',
-      relativeHumidity: requirement ? requirement.relativeHumidity : ' ',
-      relativeHumidityInterval: requirement ? requirement.relativeHumidityTolerance : ' ',
-      inertAir: requirement ? requirement.hypoxicAir : ' ',
-      inertAirInterval: requirement ? requirement.hypoxicAirTolerance : ' ',
-      light: requirement ? requirement.lightingCondition : ' ',
-      cleaning: requirement ? requirement.cleaning : ' ',
-      doneDate: this.props.doneDate ? this.props.doneDate : formatISOString(new Date()),
+    this.setState(() => ({
+      temperature: requirement ? requirement.temperature : " ",
+      temperatureTolerance: requirement
+        ? requirement.temperatureTolerance
+        : " ",
+      relativeHumidity: requirement ? requirement.relativeHumidity : " ",
+      relativeHumidityInterval: requirement
+        ? requirement.relativeHumidityTolerance
+        : " ",
+      inertAir: requirement ? requirement.hypoxicAir : " ",
+      inertAirInterval: requirement ? requirement.hypoxicAirTolerance : " ",
+      light: requirement ? requirement.lightingCondition : " ",
+      cleaning: requirement ? requirement.cleaning : " ",
+      doneDate: this.props.doneDate
+        ? this.props.doneDate
+        : formatISOString(new Date()),
       doneBy: this.props.appSession.actor
     }));
   }
@@ -113,8 +119,9 @@ export class ControlAddContainer extends React.Component {
 
   oneStateIsNotOK() {
     return (
-      Object.keys(this.state).filter(k => k.endsWith('OK') && this.state[k] === false)
-        .length > 0
+      Object.keys(this.state).filter(
+        k => k.endsWith("OK") && this.state[k] === false
+      ).length > 0
     );
   }
 
@@ -123,9 +130,9 @@ export class ControlAddContainer extends React.Component {
     const controls = Object.keys(this.state)
       .filter(
         k =>
-          k.endsWith('OK') &&
+          k.endsWith("OK") &&
           this.state[k] !== null &&
-          typeof this.state[k] !== 'undefined'
+          typeof this.state[k] !== "undefined"
       )
       .map(k => ({
         [k]: this.state[k]
@@ -149,11 +156,11 @@ export class ControlAddContainer extends React.Component {
             onComplete: () => {
               this.props.goBack();
               emitSuccess({
-                type: 'saveSuccess',
-                message: I18n.t('musit.newControl.saveControlSuccess')
+                type: "saveSuccess",
+                message: I18n.t("musit.newControl.saveControlSuccess")
               });
             },
-            onFailure: e => emitError({ ...e, type: 'network' })
+            onFailure: e => emitError({ ...e, type: "network" })
           }
         })
         .toPromise();
@@ -164,8 +171,8 @@ export class ControlAddContainer extends React.Component {
     if (newValue) {
       if (isDateBiggerThanToday(newValue)) {
         emitError({
-          type: 'dateValidationError',
-          message: I18n.t('musit.newControl.dateValidation')
+          type: "dateValidationError",
+          message: I18n.t("musit.newControl.dateValidation")
         });
         this.setState(ps => ({ ...ps, doneDate: formatISOString(new Date()) }));
       } else {
@@ -178,16 +185,16 @@ export class ControlAddContainer extends React.Component {
     event.preventDefault();
     const errors = [];
     const controls = Object.keys(this.state).filter(
-      k => k.endsWith('OK') && this.state[k] !== null
+      k => k.endsWith("OK") && this.state[k] !== null
     );
     if (controls.length === 0) {
-      errors.push(I18n.t('musit.newControl.controlsRequired'));
+      errors.push(I18n.t("musit.newControl.controlsRequired"));
     }
     if (!this.state.doneBy) {
-      errors.push(I18n.t('musit.newControl.doneByRequired'));
+      errors.push(I18n.t("musit.newControl.doneByRequired"));
     }
     if (!this.state.doneDate) {
-      errors.push(I18n.t('musit.newControl.dateRequired'));
+      errors.push(I18n.t("musit.newControl.dateRequired"));
     }
     if (errors.length === 0) {
       this.onClickSave();
@@ -205,40 +212,44 @@ export class ControlAddContainer extends React.Component {
 
     const fields = [
       {
-        key: 'temperature',
+        key: "temperature",
         leftValue: this.state.temperature,
         rightValue: this.state.temperatureTolerance
       },
       {
-        key: 'relativeHumidity',
+        key: "relativeHumidity",
         leftValue: this.state.relativeHumidity,
         rightValue: this.state.relativeHumidityInterval
       },
       {
-        key: 'hypoxicAir',
+        key: "hypoxicAir",
         leftValue: this.state.inertAir,
         rightValue: this.state.inertAirInterval
       },
       {
-        key: 'lightCondition',
+        key: "lightCondition",
         leftValue: this.state.light
       },
       {
-        key: 'cleaning',
+        key: "cleaning",
         leftValue: this.state.cleaning
       },
-      { key: 'gas' },
-      { key: 'alcohol' },
-      { key: 'mold' },
-      { key: 'pest' }
+      { key: "gas" },
+      { key: "alcohol" },
+      { key: "mold" },
+      { key: "pest" }
     ];
 
     const renderReadOnly = e => {
       const make = v => (
-        <FormControl style={{ backgroundColor: '#f2f2f2' }} readOnly value={v} />
+        <FormControl
+          style={{ backgroundColor: "#f2f2f2" }}
+          readOnly
+          value={v}
+        />
       );
 
-      if (hasProp(e, 'leftValue') && hasProp(e, 'rightValue')) {
+      if (hasProp(e, "leftValue") && hasProp(e, "rightValue")) {
         return (
           <div>
             <Col xs={5}>{make(e.leftValue)}</Col>
@@ -247,7 +258,7 @@ export class ControlAddContainer extends React.Component {
         );
       }
 
-      if (hasProp(e, 'leftValue')) {
+      if (hasProp(e, "leftValue")) {
         return <Col md={9}>{make(e.leftValue)}</Col>;
       }
 
@@ -256,12 +267,12 @@ export class ControlAddContainer extends React.Component {
 
     return (
       <Layout
-        title={I18n.t('musit.storageUnits.title')}
+        title={I18n.t("musit.storageUnits.title")}
         breadcrumb={breadcrumb}
         content={
           <form onSubmit={this.handleSubmit}>
-            <h4 style={{ textAlign: 'center' }}>
-              {I18n.t('musit.newControl.title', false)}
+            <h4 style={{ textAlign: "center" }}>
+              {I18n.t("musit.newControl.title", false)}
             </h4>
             <Grid>
               <Row>
@@ -270,7 +281,7 @@ export class ControlAddContainer extends React.Component {
                   <Col xs={10}>
                     <Row>
                       <Col xs={12}>
-                        <label>{translate('musit.newControl.date')}</label>
+                        <label>{translate("musit.newControl.date")}</label>
                       </Col>
                     </Row>
                     <Row>
@@ -294,7 +305,7 @@ export class ControlAddContainer extends React.Component {
                 <Col xs={9}>
                   <Row>
                     <Col xs={5}>
-                      <label>{translate('musit.newControl.doneBy')}</label>
+                      <label>{translate("musit.newControl.doneBy")}</label>
                     </Col>
                   </Row>
                   <Row>
@@ -302,7 +313,7 @@ export class ControlAddContainer extends React.Component {
                       <ActorSuggest
                         appSession={this.props.appSession}
                         id="doneByField"
-                        value={this.state.doneBy ? this.state.doneBy.fn : ''}
+                        value={this.state.doneBy ? this.state.doneBy.fn : ""}
                         placeHolder="Find actor"
                         onChange={newValue => {
                           this.setState(ps => ({
@@ -331,10 +342,12 @@ export class ControlAddContainer extends React.Component {
                     <Col xs={9}>
                       <Row>
                         <Col xs={5}>
-                          {hasProp(e, 'leftValue') ? (
-                            <label>{translate('musit.newControl.envdata')}</label>
+                          {hasProp(e, "leftValue") ? (
+                            <label>
+                              {translate("musit.newControl.envdata")}
+                            </label>
                           ) : (
-                            ''
+                            ""
                           )}
                         </Col>
                       </Row>
@@ -348,7 +361,7 @@ export class ControlAddContainer extends React.Component {
                 this.state.errors.map((e, i) => {
                   return (
                     <center>
-                      <span key={i} style={{ color: 'red' }}>
+                      <span key={i} style={{ color: "red" }}>
                         {e}
                       </span>
                     </center>
@@ -358,10 +371,12 @@ export class ControlAddContainer extends React.Component {
               <SaveCancel
                 saveLabel={translate(
                   this.oneStateIsNotOK()
-                    ? 'musit.newControl.registerObservations'
-                    : 'musit.texts.save'
+                    ? "musit.newControl.registerObservations"
+                    : "musit.texts.save"
                 )}
-                saveDisabled={!this.props.appSession.rolesForModules.storageFacilityWrite}
+                saveDisabled={
+                  !this.props.appSession.rolesForModules.storageFacilityWrite
+                }
                 translate={translate}
                 onClickSave={e => this.handleSubmit(e)}
                 onClickCancel={() => this.props.goBack()}

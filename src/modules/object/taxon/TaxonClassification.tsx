@@ -1,18 +1,62 @@
 import * as React from "react";
-import { TaxonSuggest } from "../../../components/suggest/TaxonSuggest";
-import { AppSession } from "../../../types/appSession";
+import { uniqBy } from "lodash";
+
+//import { TaxonSuggest } from "../../../components/suggest/TaxonSuggest";
+//import { AppSession } from "../../../types/appSession";
 //import appSession$ from "../../../stores/appSession";
+import scientificNames from "./scientificNames.json";
+
 type TaxonNameState = {
   taxonName: string;
   presicionType?: "C" | "A";
   taxonCathegory?: "VA" | "SS" | "SP" | "GE";
 };
 
+const names: ScientificName[] = scientificNames.filter(
+  (s: ScientificName) => s.taxonRank === "species"
+);
+
 type TaxonEditingState = {
   selectedGenus?: number;
 };
 
-const appSession = { museumId: 99 };
+type Property = {
+  Name: string;
+  Value: string;
+  Properties: Property[];
+};
+
+type DynamicProperty = {
+  Name: string;
+  Value: string;
+  Properties: Property[];
+};
+
+type ScientificName = {
+  Id: string | null;
+
+  scientificNameID: number;
+
+  taxonID: number;
+
+  scientificName: string;
+
+  scientificNameAuthorship: string;
+
+  taxonRank: string;
+
+  taxonomicStatus: string | null;
+
+  acceptedNameUsage: ScientificName | null;
+
+  higherClassification: ScientificName[];
+
+  nameAccordingTo: string | null;
+
+  dynamicProperties: DynamicProperty[] | null;
+};
+
+//const appSession = { museumId: 99 };
 
 type TaxonState = {
   editingIndex: number;
@@ -63,38 +107,37 @@ type ClassificationHistoryState = {
   sexAndStage: SexAndLifeStageState;
 };
 
-type ClassificationHistoryProps = ClassificationHistoryState & {
-  appSession: AppSession;
-};
+type ClassificationHistoryProps = ClassificationHistoryState;
 
 type Genus = {
   id: number;
   name: string;
 };
 
-const genusSelect: Genus[] = [
-  { id: 1, name: "Carex" },
-  { id: 2, name: "Salix" },
-  { id: 3, name: "Betula" },
-  { id: 4, name: "Picea" },
-  { id: 5, name: "Pinus" }
-];
-
 type TaxonName = {
   genus: number;
+  genusName: string;
   name: string;
 };
-const speciesSelect: TaxonName[] = [
-  { genus: 1, name: "Carex saxatilis" },
-  { genus: 1, name: "Carex saxatilis ssp. saxatilis" },
-  { genus: 1, name: "Carex rigida" },
-  { genus: 2, name: "Salix repens" },
-  { genus: 3, name: "Betula nana" },
-  { genus: 3, name: "Betua pendula" },
-  { genus: 3, name: "Beula pubescens" },
-  { genus: 4, name: "Picea abies" },
-  { genus: 5, name: "Pinus sylvestris" }
-];
+const speciesSelect: TaxonName[] = names.map((s: ScientificName) => {
+  const g: ScientificName | undefined = s.higherClassification.find(
+    (g: ScientificName) => g.taxonRank === "genus"
+  );
+  const name: string = s.scientificName;
+  return {
+    genus: g ? g.scientificNameID : 0,
+    name,
+    genusName: g ? g.scientificName : "G"
+  };
+});
+
+const genusSelect = uniqBy(
+  speciesSelect.map(m => ({
+    id: m.genus,
+    name: m.genusName
+  })),
+  s => s.name
+);
 
 class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
   render() {
@@ -329,7 +372,7 @@ class TaxonTable extends React.Component<TaxonProps> {
               </select>
             </div>
           </div>
-          <div className="col-md-2">
+          <div className="col-md-3">
             <div className="form-group">
               <label htmlFor="presicionType">Precision</label>
 
@@ -353,7 +396,7 @@ class TaxonTable extends React.Component<TaxonProps> {
               </select>
             </div>
           </div>
-          <div className="col-md-4">
+          <div className="col-md-3">
             <div className="form-group">
               <label htmlFor="taxonCathegory">Taxon cathegory</label>
 
@@ -420,33 +463,29 @@ export class TaxonComponent extends React.Component<TaxonProps> {
               id="aggregatedTaxonName"
             />
           </div>
-          <div className="col-md-4">
-            <label htmlFor="taxonSuggest">Taxon name</label>
-            <TaxonSuggest
-              id="taxonSuggest"
-              appSession={appSession}
-              onChange={this.props.onChangeSuggests}
-            />
-          </div>
         </div>
 
         <div className="row">
           <div className="col-md-3">
             <div className="form-group">
+              <label htmlFor="infraspesName">Infraspesific name</label>
+              <input type="text" className="form-control" id="infraspesName" />
+            </div>
+            <div className="form-group">
+              <label htmlFor="infraspesName">Infraspesific name</label>
+              <input type="text" className="form-control" id="infraspesName" />
+            </div>
+          </div>
+          <div className="col-md-3">
+            <div className="form-group">
+              <label htmlFor="infraspesRank">Infraspesific rank</label>
+              <input type="text" className="form-control" id="infraspesRank" />
+            </div>
+          </div>
+          <div className="col-md-3">
+            <div className="form-group">
               <label htmlFor="taxonNote">Note</label>
               <textarea className="form-control" id="taxonNote" rows={5} />
-            </div>
-          </div>
-          <div className="col-md-3">
-            <div className="form-group">
-              <label htmlFor="taxonTest">Taxon</label>
-              <input type="text" className="form-control" id="taxonTest" />
-            </div>
-          </div>
-          <div className="col-md-3">
-            <div className="form-group">
-              <label htmlFor="taxonResults">TaxonResults</label>
-              <textarea className="form-control" id="taxonResults" rows={5} />
             </div>
           </div>
         </div>

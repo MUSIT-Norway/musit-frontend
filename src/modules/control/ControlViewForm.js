@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Panel, FormGroup, Button, Col, Row } from 'react-bootstrap';
-import FontAwesome from 'react-fontawesome';
-import * as ObservationRender from '../observation/render';
-import { formatFloatToString } from './../../shared/util';
-import reduce from 'lodash/reduce';
-import keys from 'lodash/keys';
-import map from 'lodash/map';
-import { I18n } from 'react-i18nify';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Panel, FormGroup, Button, Col, Row } from "react-bootstrap";
+import FontAwesome from "react-fontawesome";
+import * as ObservationRender from "../observation/render";
+import { formatFloatToString } from "./../../shared/util";
+import reduce from "lodash/reduce";
+import keys from "lodash/keys";
+import map from "lodash/map";
+import { I18n } from "react-i18nify";
 
 export default class ControlView extends Component {
   static propTypes = {
@@ -16,27 +16,27 @@ export default class ControlView extends Component {
   };
 
   static iconMap = {
-    alcohol: 'musitalcoholicon',
-    cleaning: 'musitcleaningicon',
-    gas: 'musitgasicon',
-    hypoxicAir: 'musithypoxicairicon',
-    lightingCondition: 'musitlightingcondicon',
-    mold: 'musitmoldicon',
-    pest: 'musitpesticon',
-    relativeHumidity: 'musitrelhumidityicon',
-    temperature: 'musittemperatureicon'
+    alcohol: "musitalcoholicon",
+    cleaning: "musitcleaningicon",
+    gas: "musitgasicon",
+    hypoxicAir: "musithypoxicairicon",
+    lightingCondition: "musitlightingcondicon",
+    mold: "musitmoldicon",
+    pest: "musitpesticon",
+    relativeHumidity: "musitrelhumidityicon",
+    temperature: "musittemperatureicon"
   };
 
   static typeMap = {
-    alcohol: 'controlAlcohol',
-    cleaning: 'controlCleaning',
-    gas: 'controlGas',
-    hypoxicAir: 'controlHypoxicAir',
-    lightingCondition: 'controlLightingCondition',
-    mold: 'controlMold',
-    pest: 'controlPest',
-    relativeHumidity: 'controlRelativeHumidity',
-    temperature: 'controlTemperature'
+    alcohol: "controlAlcohol",
+    cleaning: "controlCleaning",
+    gas: "controlGas",
+    hypoxicAir: "controlHypoxicAir",
+    lightingCondition: "controlLightingCondition",
+    mold: "controlMold",
+    pest: "controlPest",
+    relativeHumidity: "controlRelativeHumidity",
+    temperature: "controlTemperature"
   };
 
   constructor(props) {
@@ -80,7 +80,10 @@ export default class ControlView extends Component {
   observation(fontName, observationType) {
     return (
       <Col xs={5} sm={5} md={5}>
-        <span className={`icon icon-${fontName}`} style={{ fontSize: 'x-large' }} />
+        <span
+          className={`icon icon-${fontName}`}
+          style={{ fontSize: "x-large" }}
+        />
         {` ${observationType}`}
       </Col>
     );
@@ -88,15 +91,15 @@ export default class ControlView extends Component {
 
   controlOk = (
     <Col xs={5} sm={5} md={5}>
-      <FontAwesome name="check" style={{ fontSize: 'x-large' }} />
-      {`  ${I18n.t('musit.texts.ok')}`}
+      <FontAwesome name="check" style={{ fontSize: "x-large" }} />
+      {`  ${I18n.t("musit.texts.ok")}`}
     </Col>
   );
 
   controlNotOk = (
     <Col xs={5} sm={5} md={5}>
-      <FontAwesome name="close" style={{ fontSize: 'x-large' }} />
-      {`  ${I18n.t('musit.texts.notOk')}`}
+      <FontAwesome name="close" style={{ fontSize: "x-large" }} />
+      {`  ${I18n.t("musit.texts.notOk")}`}
     </Col>
   );
 
@@ -106,12 +109,14 @@ export default class ControlView extends Component {
         <Button
           id={`${this.props.id}_${observationType}_downButton`}
           onClick={() =>
-            this.setState(ps => ({
+            this.setState(() => ({
               [observationType]: { open: !this.state[observationType].open }
             }))}
           bsStyle="link"
         >
-          {ok ? null : <FontAwesome name="sort-desc" style={{ fontSize: 'x-large' }} />}
+          {ok ? null : (
+            <FontAwesome name="sort-desc" style={{ fontSize: "x-large" }} />
+          )}
         </Button>
       </Col>
     );
@@ -120,7 +125,7 @@ export default class ControlView extends Component {
   oneTableRow(control, eventType, index) {
     return (
       <div key={index}>
-        <Row style={{ top: '0', bottom: '0' }}>
+        <Row style={{ top: "0", bottom: "0" }}>
           {this.observation(
             ControlView.iconMap[eventType],
             I18n.t(`musit.viewControl.${ControlView.typeMap[eventType]}`)
@@ -145,7 +150,9 @@ export default class ControlView extends Component {
       withIndexAndKey,
       (result, withIndex) => {
         if (ControlView.typeMap[withIndex.type]) {
-          result.push(this.oneTableRow(withIndex.item, withIndex.type, withIndex.index));
+          result.push(
+            this.oneTableRow(withIndex.item, withIndex.type, withIndex.index)
+          );
         }
         return result;
       },
@@ -159,7 +166,7 @@ export default class ControlView extends Component {
     if (!ok) {
       const observation = control.observation;
       switch (controlType) {
-        case 'temperature':
+        case "temperature":
           lv = (
             <ObservationRender.RenderFromToNumberComment
               disabled
@@ -178,7 +185,7 @@ export default class ControlView extends Component {
           );
 
           break;
-        case 'alcohol':
+        case "alcohol":
           lv = (
             <ObservationRender.RenderAlcohol
               disabled
@@ -196,7 +203,7 @@ export default class ControlView extends Component {
           );
 
           break;
-        case 'cleaning':
+        case "cleaning":
           lv = (
             <ObservationRender.RenderDoubleTextArea
               disabled
@@ -213,7 +220,7 @@ export default class ControlView extends Component {
           );
 
           break;
-        case 'gas':
+        case "gas":
           lv = (
             <ObservationRender.RenderDoubleTextArea
               disabled
@@ -230,7 +237,7 @@ export default class ControlView extends Component {
           );
 
           break;
-        case 'hypoxicAir':
+        case "hypoxicAir":
           lv = (
             <ObservationRender.RenderFromToNumberComment
               disabled
@@ -249,7 +256,7 @@ export default class ControlView extends Component {
           );
 
           break;
-        case 'lightingCondition':
+        case "lightingCondition":
           lv = (
             <ObservationRender.RenderDoubleTextArea
               disabled
@@ -266,7 +273,7 @@ export default class ControlView extends Component {
           );
 
           break;
-        case 'mold':
+        case "mold":
           lv = (
             <ObservationRender.RenderDoubleTextArea
               disabled
@@ -283,7 +290,7 @@ export default class ControlView extends Component {
           );
 
           break;
-        case 'pest':
+        case "pest":
           lv = (
             <ObservationRender.RenderPest
               disabled
@@ -310,7 +317,7 @@ export default class ControlView extends Component {
           );
 
           break;
-        case 'relativeHumidity':
+        case "relativeHumidity":
           lv = (
             <ObservationRender.RenderFromToNumberComment
               disabled
@@ -330,7 +337,7 @@ export default class ControlView extends Component {
 
           break;
         default:
-          lv = '';
+          lv = "";
           break;
       }
     }
