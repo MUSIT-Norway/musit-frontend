@@ -18,7 +18,7 @@ import {
   setMuseumId$,
   setRolesForModules$
 } from '../../stores/appSession';
-import { RxInjectLegacy as inject } from 'react-rxjs';
+import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
 import {
   clearNodes$ as clearNodePicklist$,
   clearObjects$ as clearObjectPicklist$

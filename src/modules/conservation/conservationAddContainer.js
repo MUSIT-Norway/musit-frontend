@@ -1,7 +1,7 @@
 // @flow
 import ConservationAddComponent from './conservationComponent';
-import inject from 'react-rxjs/dist/RxInject';
-import createStore from 'react-rxjs/dist/RxStore';
+import { inject } from 'react-rxjs';
+import { createStore } from 'react-rxjs';
 import { Observable } from 'rxjs';
 import flowRight from 'lodash/flowRight';
 import conservationForm from './conservationForm';

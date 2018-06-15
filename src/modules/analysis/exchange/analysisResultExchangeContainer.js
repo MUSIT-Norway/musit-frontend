@@ -2,7 +2,7 @@
 
 import PropTypes from 'prop-types';
 import lifeCycle from '../../../shared/lifeCycle';
-import { RxInjectLegacy as inject } from 'react-rxjs';
+import { RxInjectLegacy as inject } from '../../../shared/react-rxjs-patch/';
 import flowRight from 'lodash/flowRight';
 
 import { loadPredefinedTypes } from '../../../stores/predefinedLoader';

@@ -5,7 +5,8 @@ import MusitNode from '../../models/node';
 import type { SearchResult } from '../../models/node';
 import type { NodeStats, Node } from 'types/node';
 import type { ObjectData } from 'types/object';
-import { createStore, createAction } from 'react-rxjs/dist/RxStore';
+import { createStore } from 'react-rxjs';
+import { createAction } from '../../shared/react-rxjs-patch';
 import { simpleGet } from '../../shared/RxAjax';
 
 export const clearRootNode$: Observable<void> = createAction('clearRootNode$');

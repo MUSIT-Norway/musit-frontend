@@ -1,5 +1,5 @@
 import EventsComponent from './EventsComponent';
-import { RxInjectLegacy as inject } from 'react-rxjs';
+import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
 import eventsStore$, {
   loadAnalyses$,
   getCurrentLocation$,

@@ -1,6 +1,7 @@
 import { Observable, Subject } from 'rxjs';
 import MusitObject from '../../models/object';
-import { createStore, createAction } from 'react-rxjs/dist/RxStore';
+import { createStore } from 'react-rxjs';
+import { createAction } from '../../shared/react-rxjs-patch';
 import MusitActor from '../../models/actor';
 import uniq from 'lodash/uniq';
 import { I18n } from 'react-i18nify';

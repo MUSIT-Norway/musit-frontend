@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs';
-import { createAction, createStore } from 'react-rxjs/dist/RxStore';
+import { createStore } from 'react-rxjs';
+import { createAction } from '../../shared/react-rxjs-patch';
 import Template from '../../models/template';
 
 export const clearAll$ = createAction('clearAll$');
@@ -20,7 +21,10 @@ export const reducer$ = actions =>
     actions.clearAll$.map(() => () => initialState),
     actions.setLevel$.map(level => state => ({ ...state, level })),
     actions.clearRendered$.map(() => state => ({ ...state, rendered: null })),
-    actions.setTemplateId$.map(templateId => state => ({ ...state, templateId })),
+    actions.setTemplateId$.map(templateId => state => ({
+      ...state,
+      templateId
+    })),
     actions.loadTemplates$.map(templates => state => ({ ...state, templates })),
     actions.renderTemplate$.map(rendered => state => ({ ...state, rendered }))
   );

@@ -1,7 +1,7 @@
 // @flow
 import { Observable } from 'rxjs';
-import inject from 'react-rxjs/dist/RxInject';
-import createStore from 'react-rxjs/dist/RxStore';
+import { inject } from 'react-rxjs';
+import { createStore } from 'react-rxjs';
 import AnalysisViewComponent from './AnalysisViewComponent';
 import type { Props as AnalysisProps } from './AnalysisViewComponent';
 import predefined$ from '../../stores/predefined';

@@ -1,6 +1,6 @@
 // @flow
 import ConservationEditComponent from './conservationComponent';
-import inject from 'react-rxjs/dist/RxInject';
+import { inject } from 'react-rxjs';
 import { Observable } from 'rxjs';
 import conservationForm, { fieldsArray } from './conservationForm';
 import props, { onUnmount } from './shared/formProps';

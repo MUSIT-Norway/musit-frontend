@@ -1,7 +1,8 @@
 // @flow
 
 import { Observable, Subject } from 'rxjs';
-import { createAction, createStore } from 'react-rxjs/dist/RxStore';
+import { createStore } from 'react-rxjs';
+import { createAction } from '../shared/react-rxjs-patch';
 import range from 'lodash/range';
 import omit from 'lodash/omit';
 
