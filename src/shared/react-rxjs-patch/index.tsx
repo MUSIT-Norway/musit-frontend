@@ -6,6 +6,6 @@ export { default as RxStore } from './RxStore';
 export { default as RxProvide } from './RxProvide';
 */
 
-export { provide } from "./RxProvide";
-export { default as RxInjectLegacy } from "./RxInjectOld";
-export { createAction, createActions } from "./RxActions";
+export { provide } from './RxProvide';
+export { default as RxInjectLegacy } from './RxInjectOld';
+export { createAction, createActions } from './RxActions';
