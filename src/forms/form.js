@@ -1,6 +1,7 @@
 // @flow
 import { Observable, Subject } from 'rxjs';
-import { createStore, createAction } from 'react-rxjs/dist/RxStore';
+import { createStore } from 'react-rxjs';
+import { createAction } from '../shared/react-rxjs-patch';
 import isEmpty from 'lodash/isEmpty';
 import { stringMapper, noMapper, booleanMapper, numberMapper } from './mappers';
 import {

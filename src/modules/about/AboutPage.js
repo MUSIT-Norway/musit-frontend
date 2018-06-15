@@ -5,7 +5,7 @@ import { I18n } from 'react-i18nify';
 import NorwegianTranslation from './AboutPage_no.html.jsx';
 import EnglishTranslation from './AboutPage_en.html.jsx';
 import Logos from '../../components/logos/Logos';
-import { RxInjectLegacy as inject } from 'react-rxjs';
+import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
 
 export const AboutPage = props => {
   const Translated =

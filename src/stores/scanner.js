@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
-import { createStore, createAction } from 'react-rxjs/dist/RxStore';
+import { createStore } from 'react-rxjs';
+import { createAction } from '../shared/react-rxjs-patch';
 import omit from 'lodash/omit';
 import MusitObject from '../models/object';
 import MusitNode from '../models/node';

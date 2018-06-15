@@ -4,7 +4,8 @@ import MusitObject from '../models/object';
 import MusitNode from '../models/node';
 import orderBy from 'lodash/orderBy';
 import toLower from 'lodash/toLower';
-import { createStore, createAction } from 'react-rxjs/dist/RxStore';
+import { createStore } from 'react-rxjs';
+import { createAction } from '../shared/react-rxjs-patch';
 import { KEEP_ALIVE } from './constants';
 
 export const addObject$ = createAction('addObject$');

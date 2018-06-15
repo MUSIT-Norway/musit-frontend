@@ -9,7 +9,7 @@ import predefined$, {
   loadConservationTypes$
 } from './predefined';
 import appSession$ from './appSession';
-import inject from 'react-rxjs/dist/RxInject';
+import { inject } from 'react-rxjs';
 import { Observable } from 'rxjs';
 import type { Predefined } from 'types/predefined';
 import type { AppSession } from 'types/appSession';

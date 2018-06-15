@@ -17,7 +17,7 @@ import FontAwesome from 'react-fontawesome';
 import './index.css';
 import Config from '../../config';
 import Logos from '../../components/logos/Logos';
-import { RxInjectLegacy as inject } from 'react-rxjs';
+import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
 import type { AppSession } from '../../types/appSession';
 
 const reportURL = Config.magasin.urls.client.report.goToReport;

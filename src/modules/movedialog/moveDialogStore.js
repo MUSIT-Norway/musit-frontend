@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 import MusitNode from '../../models/node';
-import { createStore, createAction } from 'react-rxjs/dist/RxStore';
+import { createStore } from 'react-rxjs';
+import { createAction } from '../../shared/react-rxjs-patch';
 
 export const PER_PAGE = 10;
 

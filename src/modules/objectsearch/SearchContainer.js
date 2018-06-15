@@ -1,6 +1,6 @@
 // @flow
 
-import inject from 'react-rxjs/dist/RxInject';
+import { inject } from 'react-rxjs';
 import ObjectSearchComponent from './SearchComponent';
 //import store$, { actions } from './searchStore';
 import { addObjects$, toggleObject$, isItemAdded } from '../../stores/pickList';

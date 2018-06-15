@@ -1,7 +1,7 @@
 // @flow
 
 import { Observable } from 'rxjs';
-import inject from 'react-rxjs/dist/RxInject';
+import { inject } from 'react-rxjs';
 import { analysisSearch } from '../../../models/analysis/analysisSearch';
 import createSearchStore from '../../../search/searchStore';
 import type { ChangePage } from '../../../search/searchStore';

@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs';
-import { createStore, createAction } from 'react-rxjs/dist/RxStore';
+import { createStore } from 'react-rxjs';
+import { createAction } from '../shared/react-rxjs-patch';
 import { simpleGet } from '../shared/RxAjax';
 import Config from '../config';
 import { getAccessToken } from '../shared/token';

@@ -1,4 +1,4 @@
-import { RxInjectLegacy as inject } from 'react-rxjs';
+import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
 import sampleForm from './sampleEditForm';
 import SampleFormComponent from './SampleFormComponent';
 import PropTypes from 'prop-types';

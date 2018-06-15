@@ -9,7 +9,7 @@ import wrapWithScanner, {
 import sinon from 'sinon';
 import { mount } from 'enzyme';
 import { Observable } from 'rxjs';
-import { createStore } from 'react-rxjs/dist/RxStore';
+import { createStore } from 'react-rxjs';
 
 import MusitTestScheduler from '../../testutils/MusitTestScheduler';
 

@@ -35,7 +35,7 @@ import moveDialogStore$, {
   PER_PAGE
 } from './moveDialogStore';
 import Loader from 'react-loader';
-import { RxInjectLegacy as inject } from 'react-rxjs';
+import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
 
 export class MoveDialogComponent extends Component {
   static propTypes = {

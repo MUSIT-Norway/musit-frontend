@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { I18n } from 'react-i18nify';
 import Config from '../../config';
-import { RxInjectLegacy as inject } from 'react-rxjs';
+import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
 import type { AppSession } from 'types/appSession';
 import type { History } from 'types/Routes';
 

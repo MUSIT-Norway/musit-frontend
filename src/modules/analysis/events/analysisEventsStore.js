@@ -1,6 +1,7 @@
 // @flow
 import { Observable } from 'rxjs';
-import { createAction, createStore } from 'react-rxjs/dist/RxStore';
+import { createStore } from 'react-rxjs';
+import { createAction } from '../../../shared/react-rxjs-patch';
 import MusitAnalysis from '../../../models/analysis';
 import MusitActor from '../../../models/actor';
 import { uniq } from 'lodash';
