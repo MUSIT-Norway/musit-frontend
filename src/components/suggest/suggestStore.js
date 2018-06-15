@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { simpleGet } from '../../shared/RxAjax';
-import { createStore, createActions } from 'react-rxjs/dist/RxStore';
-
+import { createStore } from 'react-rxjs';
+import { createActions } from '../../shared/react-rxjs-patch';
 export const { update$, clear$ } = createActions('update$', 'clear$');
 
 const emptyActor = {

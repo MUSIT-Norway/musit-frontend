@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Autosuggest from "react-autosuggest";
-import suggest$Fn, { update$, clear$ } from "./suggestStore";
-import Config from "../../config";
-import { RxInjectLegacy as inject } from "react-rxjs";
+import React from 'react';
+import PropTypes from 'prop-types';
+import Autosuggest from 'react-autosuggest';
+import suggest$Fn, { update$, clear$ } from './suggestStore';
+import Config from '../../config';
+import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 
 export class AddressSuggest extends React.Component {
   static propTypes = {

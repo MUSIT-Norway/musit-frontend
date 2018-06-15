@@ -2,8 +2,9 @@
 import { Observable, Subject } from 'rxjs';
 import Conservation from '../models/conservation';
 import Sample from '../models/sample';
-import { createStore, createAction } from 'react-rxjs/dist/RxStore';
-import type { Reducer } from 'react-rxjs/dist/RxStore';
+import { createStore } from 'react-rxjs';
+import { createAction } from '../shared/react-rxjs-patch';
+import type { Reducer } from 'react-rxjs';
 import { KEEP_ALIVE } from './constants';
 import type { PredefinedConservation } from 'types/predefinedConservation';
 import { simpleGet } from '../shared/RxAjax';

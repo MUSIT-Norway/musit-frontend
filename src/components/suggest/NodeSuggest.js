@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import AutoSuggest from 'react-autosuggest';
 import Config from '../../config';
 import suggest$Fn, { update$, clear$ } from './suggestStore';
-import { RxInjectLegacy as inject } from 'react-rxjs';
+import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
 
 export class NodeSuggest extends React.Component {
   static propTypes = {

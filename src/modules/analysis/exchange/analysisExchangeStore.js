@@ -4,8 +4,9 @@ import analysisStoreInstance$, {
   clearStore$ as clearAnalysisStore$
 } from '../analysisStore';
 import type { AnalysisStoreState } from '../analysisStore';
-import { createAction, createStore } from 'react-rxjs/dist/RxStore';
-import type { Reducer } from 'react-rxjs/dist/RxStore';
+import { createStore } from 'react-rxjs';
+import { createAction } from '../../../shared/react-rxjs-patch';
+import type { Reducer } from 'react-rxjs';
 import {
   getHeadersForType,
   getResultHeadersForType,

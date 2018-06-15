@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Table, PageHeader, Panel, Grid, Row } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
 import Config from '../../config';
-import { RxInjectLegacy as inject } from 'react-rxjs';
+import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
 
 const reports = [
   {

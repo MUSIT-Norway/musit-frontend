@@ -3,7 +3,7 @@
 import React from "react";
 import Modal from "../../../../components/modal/MusitModal";
 import PropTypes from "prop-types";
-import { RxInjectLegacy as inject } from "react-rxjs";
+import { RxInjectLegacy as inject } from "../../../../shared/react-rxjs-patch/";
 import appSession$ from "../../../../stores/appSession";
 import type { AppSession } from "../../../../types/appSession";
 import Config from "../../../../config";

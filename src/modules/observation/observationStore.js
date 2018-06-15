@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs';
-import { createAction, createStore } from 'react-rxjs/dist/RxStore';
+import { createStore } from 'react-rxjs';
+import { createAction } from '../../shared/react-rxjs-patch';
 import Observation from '../../models/observation';
 import MusitNode from '../../models/node';
 

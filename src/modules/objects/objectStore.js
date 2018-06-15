@@ -1,6 +1,7 @@
 // @flow
-import { createStore, createAction } from 'react-rxjs/dist/RxStore';
-import type { Reducer } from 'react-rxjs/dist/RxStore';
+import { createStore } from 'react-rxjs';
+import { createAction } from '../../shared/react-rxjs-patch';
+import type { Reducer } from 'react-rxjs';
 import { Observable, Subject } from 'rxjs';
 import MusitObject from '../../models/object';
 import Sample from '../../models/sample';

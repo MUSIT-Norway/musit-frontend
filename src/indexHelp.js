@@ -1,3 +1,3 @@
-import provide from 'react-rxjs/dist/RxProvide';
+import { provide } from './shared/react-rxjs-patch';
 
 export default provide;

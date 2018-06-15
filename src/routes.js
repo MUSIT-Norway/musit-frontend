@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import flowRight from "lodash/flowRight";
-import { RxInjectLegacy as inject } from "react-rxjs";
+import { RxInjectLegacy as inject } from "./shared/react-rxjs-patch";
 import PropTypes from "prop-types";
 import { makeUrlAware } from "./stores/appSession";
 

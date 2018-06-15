@@ -1,8 +1,9 @@
 // @flow
 import { simpleGet, simplePost, simplePut } from '../../shared/RxAjax';
 import { Observable, Subject } from 'rxjs';
-import { createStore, createAction } from 'react-rxjs/dist/RxStore';
-import type { Reducer } from 'react-rxjs/dist/RxStore';
+import { createStore } from 'react-rxjs';
+import { createAction } from '../../shared/react-rxjs-patch';
+import type { Reducer } from 'react-rxjs';
 import MusitAnalysis from '../../models/analysis';
 import uniq from 'lodash/uniq';
 import MusitActor from '../../models/actor';

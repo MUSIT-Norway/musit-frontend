@@ -4,7 +4,7 @@ import ObservationPage from './ObservationPage';
 import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { I18n } from 'react-i18nify';
-import { RxInjectLegacy as inject } from 'react-rxjs';
+import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
 import { emitError, emitSuccess } from '../../shared/errors';
 import store$, { loadRootNode$ } from './observationStore';
 import Control from '../../models/control';
@@ -37,7 +37,10 @@ export class EditObservationPage extends React.Component {
       .map(o => {
         switch (o) {
           case 'pestOK':
-            return { type: 'pest', data: ObservationPage.createDefaultPestData() };
+            return {
+              type: 'pest',
+              data: ObservationPage.createDefaultPestData()
+            };
           case 'temperatureOK':
             return { type: 'temperature', data: {} };
           case 'moldOK':
