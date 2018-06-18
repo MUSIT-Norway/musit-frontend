@@ -21,7 +21,7 @@
     "prop-types": "^15.5.10",
     "query-string": "^5.0.0",
     "react": "^15.6.2",
-    "react-autosuggest": "3.7.4",
+    "react-autosuggest": "^9.3.4",
     "react-bootstrap": "^0.31.0",
     "react-bootstrap-date-picker": "^5.0.1",
     "react-dom": "^15.4.4",

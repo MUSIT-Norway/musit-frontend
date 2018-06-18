@@ -53,7 +53,7 @@ export class ActorSuggestComponent extends React.Component {
       <Autosuggest
         suggestions={this.props.suggest.data || []}
         disabled={this.props.disabled}
-        onSuggestionsUpdateRequested={this.requestSuggestionUpdate}
+        onSuggestionsFetchRequested={this.requestSuggestionUpdate}
         getSuggestionValue={suggestion => suggestion.fn}
         renderSuggestion={suggestion => (
           <span className={'suggestion-content'}>{`${suggestion.fn}`}</span>

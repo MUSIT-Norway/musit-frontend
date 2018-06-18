@@ -80,7 +80,7 @@ export class AddressSuggest extends React.Component {
       <Autosuggest
         suggestions={this.props.suggest.data || []}
         disabled={this.props.disabled}
-        onSuggestionsUpdateRequested={this.requestSuggestionUpdate}
+        onSuggestionsFetchRequested={this.requestSuggestionUpdate}
         getSuggestionValue={this.getAddressSuggestionValue}
         renderSuggestion={this.renderAddressSuggestion}
         inputProps={{ ...this.doneByProps, value: this.state.value }}
