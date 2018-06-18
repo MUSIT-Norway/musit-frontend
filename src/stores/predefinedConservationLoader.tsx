@@ -1,5 +1,5 @@
 // @flow
-import * as React from "react";
+import * as React from 'react';
 import predefinedConservation$, {
   loadSampleTypes$,
   setLoadingSampleTypes$,
@@ -9,17 +9,17 @@ import predefinedConservation$, {
 import appSession$ from './appSession';
 import { inject } from 'react-rxjs';
 import { Observable } from 'rxjs';
-import  { PredefinedConservation } from '../types/predefinedConservation';
-import { AppSession } from "../types/appSession";
-import { Star, TODO } from "../types/common";
+import { PredefinedConservation } from '../types/predefinedConservation';
+import { AppSession } from '../types/appSession';
+import { Star, TODO } from '../types/common';
 type Props<T> = {
-  appSession: AppSession,
+  appSession: AppSession;
   component: React.ComponentType<T>;
-  setLoadingSampleTypes: Function,
-  loadSampleTypes: Function,
-  predefinedConservation: PredefinedConservation,
-  setLoadingConservationTypes: Function,
-  loadConservationTypes: Function
+  setLoadingSampleTypes: Function;
+  loadSampleTypes: Function;
+  predefinedConservation: PredefinedConservation;
+  setLoadingConservationTypes: Function;
+  loadConservationTypes: Function;
 };
 
 class PredefinedConservationLoader<T> extends React.Component<Props<T>> {
@@ -65,7 +65,8 @@ class PredefinedConservationLoader<T> extends React.Component<Props<T>> {
 }
 
 export function loadPredefinedConservationTypes<P>(
-  Component: React.ComponentType<P>): React.ComponentType<P>  {
+  Component: React.ComponentType<P>
+): React.ComponentType<P> {
   return loadCustomPredefinedConservationTypes(
     predefinedConservation$,
     appSession$ as TODO,
@@ -79,8 +80,8 @@ export function loadCustomPredefinedConservationTypes<P>(
   Component: React.ComponentType<P>
 ): React.ComponentType<P> {
   type DataType = {
-    predefinedConservation: PredefinedConservation,
-    appSession: AppSession
+    predefinedConservation: PredefinedConservation;
+    appSession: AppSession;
   };
   const data$: Observable<DataType> = Observable.combineLatest(
     predefinedConservation$,

@@ -230,14 +230,16 @@ const loadAppSession = (ajaxGet = simpleGet, accessToken: TODO) => {
         storedCollectionId &&
         orderedGroups.some(g =>
           g.collections.some(
-            (c:TODO) => c.uuid === storedCollectionId && g.museumId.toString() === storedMuseumId
+            (c: TODO) =>
+              c.uuid === storedCollectionId && g.museumId.toString() === storedMuseumId
           )
         )
           ? storedCollectionId
           : orderedGroups[0].collections[0].uuid;
 
       !storedMuseumId && localStorage.setItem('museumId', museumId);
-      !storedCollectionId && localStorage.setItem('collectionId', collectionId as MUSTFIX);
+      !storedCollectionId &&
+        localStorage.setItem('collectionId', collectionId as MUSTFIX);
 
       setRolesForModules$.next({
         email: currentUserRes.response.dataportenUser,
@@ -375,22 +377,34 @@ export const refreshSession = (
   });
 };
 
-export const reducer$ = (actions:TODO, onError = emitError) =>
+export const reducer$ = (actions: TODO, onError = emitError) =>
   Observable.merge(
-    actions.setAccessToken$.map((accessToken:TODO) => (state:TODO) => ({ ...state, accessToken })),
+    actions.setAccessToken$.map((accessToken: TODO) => (state: TODO) => ({
+      ...state,
+      accessToken
+    })),
     actions.loadAppSession$
-      .map((session:TODO) => (state:TODO) => ({ ...state, ...session }))
-      .catch((error:TODO) => {
+      .map((session: TODO) => (state: TODO) => ({ ...state, ...session }))
+      .catch((error: TODO) => {
         onError(error);
-        return Observable.of((state:TODO) => ({ ...state, accessToken: null }));
+        return Observable.of((state: TODO) => ({ ...state, accessToken: null }));
       }),
-    actions.setMuseumId$.map((museumId:TODO) => (state:TODO) => ({ ...state, museumId })),
-    actions.setCollectionId$.map((collectionId:TODO) => (state:TODO) => ({ ...state, collectionId })),
+    actions.setMuseumId$.map((museumId: TODO) => (state: TODO) => ({
+      ...state,
+      museumId
+    })),
+    actions.setCollectionId$.map((collectionId: TODO) => (state: TODO) => ({
+      ...state,
+      collectionId
+    })),
     actions.setRolesForModules$
-      .map((rolesForModules:TODO) => (state:TODO) => ({ ...state, rolesForModules: rolesForModules }))
-      .catch((error:TODO) => {
+      .map((rolesForModules: TODO) => (state: TODO) => ({
+        ...state,
+        rolesForModules: rolesForModules
+      }))
+      .catch((error: TODO) => {
         onError(error);
-        return Observable.of((state:TODO) => ({ ...state }));
+        return Observable.of((state: TODO) => ({ ...state }));
       })
   );
 

@@ -6,11 +6,13 @@ import { createStore } from 'react-rxjs';
 import { createAction } from '../shared/react-rxjs-patch';
 import { Reducer } from 'react-rxjs';
 import { KEEP_ALIVE } from './constants';
-import  { PredefinedConservation } from '../types/predefinedConservation';
+import { PredefinedConservation } from '../types/predefinedConservation';
 import { simpleGet } from '../shared/RxAjax';
 import { Star, TODO } from '../types/common';
 
-export const setLoadingSampleTypes$: Subject<Star> = createAction('setLoadingSampleTypes$');
+export const setLoadingSampleTypes$: Subject<Star> = createAction(
+  'setLoadingSampleTypes$'
+);
 export const loadSampleTypes$: Subject<Star> = createAction('loadSampleTypes$');
 const loadSampleTypesAction$: Observable<Star> = loadSampleTypes$.switchMap(
   Sample.loadSampleTypes(simpleGet)
@@ -19,14 +21,16 @@ const loadSampleTypesAction$: Observable<Star> = loadSampleTypes$.switchMap(
 export const setLoadingConservationTypes$: Subject<Star> = createAction(
   'setLoadingConservationTypes$'
 );
-export const loadConservationTypes$: Subject<Star> = createAction('loadConservationTypes$');
+export const loadConservationTypes$: Subject<Star> = createAction(
+  'loadConservationTypes$'
+);
 const loadConservationTypesAction$: Observable<Star> = loadConservationTypes$.switchMap(
   Conservation.loadPredefinedConservationTypes(simpleGet)
 );
 
 type State = PredefinedConservation & {
-  loadingSampleTypes: boolean,
-  loadingConservationTypes: boolean
+  loadingSampleTypes: boolean;
+  loadingConservationTypes: boolean;
 };
 
 export const initialState: State = {
@@ -41,22 +45,24 @@ export const initialState: State = {
   materialDeterminationList: null
 };
 
-export function reducer$(actions: { [key: string]: Observable<Star> }): Observable<Reducer<any>> {
+export function reducer$(actions: {
+  [key: string]: Observable<Star>;
+}): Observable<Reducer<any>> {
   return Observable.merge(
-    actions.setLoadingSampleTypes$.map(() => (state:TODO) => ({
+    actions.setLoadingSampleTypes$.map(() => (state: TODO) => ({
       ...state,
       loadingSampleTypes: true
     })),
-    actions.loadSampleTypes$.map(sampleTypes => (state:TODO) => ({
+    actions.loadSampleTypes$.map(sampleTypes => (state: TODO) => ({
       ...state,
       sampleTypes: sampleTypes,
       loadingSampleTypes: false
     })),
-    actions.setLoadingConservationTypes$.map(() => (state:TODO) => ({
+    actions.setLoadingConservationTypes$.map(() => (state: TODO) => ({
       ...state,
       loadingConservationTypes: true
     })),
-    actions.loadConservationTypes$.map(conservationTypes => (state:TODO) => ({
+    actions.loadConservationTypes$.map(conservationTypes => (state: TODO) => ({
       ...state,
       ...conservationTypes,
       loadingConservationTypes: false

@@ -220,7 +220,7 @@ export const store$ = (
     reducer$(actions$) as TODO,
     { nodes: [], objects: [] },
     KEEP_ALIVE
-  ).map((state:TODO) => ({
+  ).map((state: TODO) => ({
     nodes: orderBy(state.nodes, [
       o => customSortingStorageNodeType(o.value.type),
       o => toLower(o.value.name)

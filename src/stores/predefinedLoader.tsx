@@ -1,5 +1,5 @@
 // @flow
-import * as React from "react";
+import * as React from 'react';
 import predefined$, {
   loadSampleTypes$,
   loadAnalysisTypes$,
@@ -11,21 +11,21 @@ import predefined$, {
 import appSession$ from './appSession';
 import { inject } from 'react-rxjs';
 import { Observable } from 'rxjs';
-import { Predefined } from "../types/predefined";
-import { AppSession } from "../types/appSession";
-import { Star, TODO } from "../types/common";
+import { Predefined } from '../types/predefined';
+import { AppSession } from '../types/appSession';
+import { Star, TODO } from '../types/common';
 
 //TODO: Props or Props<T> here? (Both seems to be syntactially correct here)
-type Props = { 
-  appSession: AppSession,
-  setLoadingAnalysisTypes: Function,
-  loadAnalysisTypes: Function,
-  setLoadingSampleTypes: Function,
-  loadSampleTypes: Function,
+type Props = {
+  appSession: AppSession;
+  setLoadingAnalysisTypes: Function;
+  loadAnalysisTypes: Function;
+  setLoadingSampleTypes: Function;
+  loadSampleTypes: Function;
   component: React.ComponentType<Props>;
-  predefined: Predefined,
-  setLoadingConservationTypes: Function,
-  loadConservationTypes: Function
+  predefined: Predefined;
+  setLoadingConservationTypes: Function;
+  loadConservationTypes: Function;
 };
 
 class PredefinedLoader extends React.Component<Props> {
@@ -94,18 +94,18 @@ export function loadCustomPredefinedTypes<P>(
   appSession$: Observable<Star>,
   Component: React.ComponentType<P>
 ): React.ComponentType<P> {
-  type DataType = { predefined: Predefined, appSession: AppSession };
+  type DataType = { predefined: Predefined; appSession: AppSession };
   const data$: Observable<DataType> = Observable.combineLatest(
     predefined$,
     appSession$
   ).map(([predefined, appSession]) => ({ predefined, appSession }));
   return inject(data$, (predefined: DataType, upstream: P) => ({
     ...predefined,
-    ...(upstream as TODO)
-  }))((initialProps: P & { predefined: Predefined, appSession: AppSession }) => {
+    ...upstream as TODO
+  }))((initialProps: P & { predefined: Predefined; appSession: AppSession }) => {
     return (
       <PredefinedLoader
-        {...(initialProps as TODO)}
+        {...initialProps as TODO}
         component={Component}
         setLoadingAnalysisTypes={setLoadingAnalysisTypes$.next.bind(
           setLoadingAnalysisTypes$
