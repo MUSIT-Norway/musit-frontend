@@ -79,7 +79,7 @@ export class NodeSuggest extends React.Component {
       <AutoSuggest
         suggestions={this.props.suggest.data || []}
         disabled={this.props.disabled}
-        onSuggestionsUpdateRequested={this.requestSuggestionUpdate}
+        onSuggestionsFetchRequested={this.requestSuggestionUpdate}
         getSuggestionValue={this.getNodeSuggestionValue}
         renderSuggestion={this.renderNodeSuggestion}
         inputProps={{ ...this.nodeProps, value: this.state.value }}
