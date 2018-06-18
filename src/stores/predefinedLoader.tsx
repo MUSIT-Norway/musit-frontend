@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import * as React from "react";
 import predefined$, {
   loadSampleTypes$,
   loadAnalysisTypes$,
@@ -11,22 +11,24 @@ import predefined$, {
 import appSession$ from './appSession';
 import { inject } from 'react-rxjs';
 import { Observable } from 'rxjs';
-import type { Predefined } from 'types/predefined';
-import type { AppSession } from 'types/appSession';
+import { Predefined } from "../types/predefined";
+import { AppSession } from "../types/appSession";
+import { Star, TODO } from "../types/common";
 
-type Props = {
+//TODO: Props or Props<T> here? (Both seems to be syntactially correct here)
+type Props = { 
   appSession: AppSession,
   setLoadingAnalysisTypes: Function,
   loadAnalysisTypes: Function,
   setLoadingSampleTypes: Function,
   loadSampleTypes: Function,
-  component: Function,
+  component: React.ComponentType<Props>;
   predefined: Predefined,
   setLoadingConservationTypes: Function,
   loadConservationTypes: Function
 };
 
-class PredefinedLoader extends React.Component<Props, void> {
+class PredefinedLoader extends React.Component<Props> {
   props: Props;
 
   componentWillMount() {
@@ -82,16 +84,16 @@ class PredefinedLoader extends React.Component<Props, void> {
 }
 
 export function loadPredefinedTypes<P>(
-  Component: React$ComponentType<P>
-): React$ComponentType<P> {
+  Component: React.ComponentType<P>
+): React.ComponentType<P> {
   return loadCustomPredefinedTypes(predefined$, appSession$, Component);
 }
 
 export function loadCustomPredefinedTypes<P>(
-  predefined$: Observable<*>,
-  appSession$: Observable<*>,
-  Component: React$ComponentType<P>
-): React$ComponentType<P> {
+  predefined$: Observable<Star>,
+  appSession$: Observable<Star>,
+  Component: React.ComponentType<P>
+): React.ComponentType<P> {
   type DataType = { predefined: Predefined, appSession: AppSession };
   const data$: Observable<DataType> = Observable.combineLatest(
     predefined$,
@@ -99,11 +101,11 @@ export function loadCustomPredefinedTypes<P>(
   ).map(([predefined, appSession]) => ({ predefined, appSession }));
   return inject(data$, (predefined: DataType, upstream: P) => ({
     ...predefined,
-    ...(upstream: any)
+    ...(upstream as TODO)
   }))((initialProps: P & { predefined: Predefined, appSession: AppSession }) => {
     return (
       <PredefinedLoader
-        {...(initialProps: any)}
+        {...(initialProps as TODO)}
         component={Component}
         setLoadingAnalysisTypes={setLoadingAnalysisTypes$.next.bind(
           setLoadingAnalysisTypes$
