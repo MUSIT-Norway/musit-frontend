@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Autosuggest from 'react-autosuggest';
-import Config from '../../config';
-import suggest$Fn, { update$, clear$ } from './suggestStore';
-import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
+import React from "react";
+import PropTypes from "prop-types";
+import Autosuggest from "react-autosuggest";
+import Config from "../../config";
+import suggest$Fn, { update$, clear$ } from "./suggestStore";
+import { RxInjectLegacy as inject } from "../../shared/react-rxjs-patch";
 
 export class ActorSuggestComponent extends React.Component {
   static propTypes = {
@@ -35,9 +35,10 @@ export class ActorSuggestComponent extends React.Component {
   doneByProps = {
     id: this.props.id,
     placeholder: this.props.placeHolder,
-    type: 'search',
+    type: "search",
     onBlur: this.props.clear,
-    onChange: (event, { newValue }) => this.setState(ps => ({ ...ps, value: newValue }))
+    onChange: (event, { newValue }) =>
+      this.setState(ps => ({ ...ps, value: newValue }))
   };
 
   requestSuggestionUpdate(update) {
@@ -56,13 +57,13 @@ export class ActorSuggestComponent extends React.Component {
         onSuggestionsFetchRequested={this.requestSuggestionUpdate}
         getSuggestionValue={suggestion => suggestion.fn}
         renderSuggestion={suggestion => (
-          <span className={'suggestion-content'}>{`${suggestion.fn}`}</span>
+          <span className={"suggestion-content"}>{`${suggestion.fn}`}</span>
         )}
         inputProps={{
           ...this.doneByProps,
           value: this.state.value
         }}
-        shouldRenderSuggestions={v => v !== 'undefined'}
+        shouldRenderSuggestions={v => v !== "undefined"}
         onSuggestionSelected={(event, { suggestion }) => {
           if (event.keyCode === 13) {
             event.preventDefault();
@@ -74,7 +75,10 @@ export class ActorSuggestComponent extends React.Component {
   }
 }
 
-const suggest$ = suggest$Fn('actorSuggest', Config.magasin.urls.api.actor.searchUrl);
+const suggest$ = suggest$Fn(
+  "actorSuggest",
+  Config.magasin.urls.api.actor.searchUrl
+);
 
 const data = {
   appSession$: {
@@ -88,6 +92,8 @@ const data = {
 
 const commands = { update$, clear$ };
 
-export const ActorSuggest = inject({ suggest$ }, commands)(ActorSuggestComponent);
+export const ActorSuggest = inject({ suggest$ }, commands)(
+  ActorSuggestComponent
+);
 
 export default inject(data, commands)(ActorSuggestComponent);

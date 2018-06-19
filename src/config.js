@@ -170,7 +170,7 @@ export default {
           getSynonymsFromLatinNameId: (scientificNameId: number) =>
             `/Api/Taxon/ScientificName/${scientificNameId}`,
           getLatinNamesMatch: (scientificName: string, mid: string) =>
-            `/Api/Taxon/ScientificName?ScientificName=${scientificName}*`,
+            `https://artsdatabanken.no/Api/Taxon/ScientificName?scientificName=${scientificName}*`,
           getLatinNamesExact: (scientificName: string, mid: string) =>
             `/Api/Taxon/ScientificName?ScientificName=${scientificName}`
         },

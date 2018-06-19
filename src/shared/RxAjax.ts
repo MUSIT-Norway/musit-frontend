@@ -73,10 +73,13 @@ export function ajaxHelper<R, B>(
     method,
     body,
     crossDomain: true,
-    headers: {
-      Authorization: "Bearer " + token,
-      ...headers
-    }
+
+    headers: token
+      ? {
+          Authorization: "Bearer " + token,
+          ...headers
+        }
+      : undefined
   }) as MUSTFIX;
 }
 

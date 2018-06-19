@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Autosuggest from "react-autosuggest";
 import Config from "../../config";
 import suggest$Fn, { update$, clear$ } from "./suggestStore";
-import { RxInjectLegacy as inject } from "react-rxjs";
+import { RxInjectLegacy as inject } from "../../shared/react-rxjs-patch";
 
 export class TaxonSuggestComponent extends React.Component {
   static propTypes = {
@@ -32,19 +32,21 @@ export class TaxonSuggestComponent extends React.Component {
     }
   }
 
-  doneByProps = {
+  TaxonProps = {
     id: this.props.id,
     placeholder: this.props.placeHolder,
     type: "search",
     onBlur: this.props.clear,
     onChange: (event, { newValue }) =>
-      this.setState(ps => ({ ...ps, value: newValue }))
+      this.setState(ps => {
+        return { ...ps, value: newValue };
+      })
   };
 
   requestSuggestionUpdate(update) {
-    if (update.value.length > 2) {
+    if (update.value.length > 3) {
       const museumId = this.props.appSession.museumId;
-      const token = this.props.appSession.accessToken;
+      const token = undefined;
       this.props.update({ update, museumId, token });
     }
   }
@@ -52,15 +54,29 @@ export class TaxonSuggestComponent extends React.Component {
   render() {
     return (
       <Autosuggest
-        suggestions={this.props.suggest.data || []}
+        suggestions={(this.props.suggest.data || []).sort((a, b) => {
+          if (a.scientificName <= b.scientificName) {
+            return -1;
+          }
+          return 1;
+        })}
         disabled={this.props.disabled}
-        onSuggestionsUpdateRequested={this.requestSuggestionUpdate}
-        getSuggestionValue={suggestion => suggestion.fn}
+        onSuggestionsFetchRequested={this.requestSuggestionUpdate}
+        onSuggestionsClearRequested={() =>
+          this.setState(() => ({ suggestions: [] }))}
+        getSuggestionValue={suggestion => suggestion.scientificName}
         renderSuggestion={suggestion => (
-          <span className={"suggestion-content"}>{`${suggestion.fn}`}</span>
+          <span
+            className={"suggestion-content"}
+          >{`${suggestion.scientificName} ${suggestion.scientificNameAuthorship !=
+          null
+            ? suggestion.scientificNameAuthorship
+            : ""} ${suggestion.acceptedNameUsage != null
+            ? "[" + suggestion.acceptedNameUsage.scientificName + "]"
+            : ""} `}</span>
         )}
         inputProps={{
-          ...this.doneByProps,
+          ...this.TaxonProps,
           value: this.state.value
         }}
         shouldRenderSuggestions={v => v !== "undefined"}
