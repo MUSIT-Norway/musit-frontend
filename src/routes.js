@@ -84,9 +84,6 @@ const AppPage = props => (
       <Route exact path={rt(props, '/')} component={AboutPage} />
       <Route exact path={rt(props, '/home')} component={HomePage} />
       <Route exact path={rt(props, '/about')} component={AboutPage} />
-      <Route path={rt(props, '/person')} component={PersonPage} />
-      <Route path={rt(props, '/place')} component={PlacePage} />
-      <Route path={rt(props, '/classEvents')} component={ClassEventPage} />
 
       <Route
         path={rt(props, '/museum/:museumId/collections/:collectionIds')}
@@ -111,6 +108,9 @@ const MuseumAndCollectionPage = props => (
     <Route path={rt(props, '/reports')} component={ReportsPage} />
     <Route path={rt(props, '/search')} component={SearchPage} />
     <Route path={rt(props, '/conservation')} component={ConservationPage} />
+    <Route path={rt(props, '/person')} component={PersonPage} />
+    <Route path={rt(props, '/place')} component={PlacePage} />
+    <Route path={rt(props, '/classEvents')} component={ClassEventPage} />
 
     <Route component={NotFoundPage} />
   </Switch>

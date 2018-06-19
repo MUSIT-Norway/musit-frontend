@@ -106,7 +106,7 @@ export default class ControlView extends Component {
         <Button
           id={`${this.props.id}_${observationType}_downButton`}
           onClick={() =>
-            this.setState(ps => ({
+            this.setState(() => ({
               [observationType]: { open: !this.state[observationType].open }
             }))}
           bsStyle="link"

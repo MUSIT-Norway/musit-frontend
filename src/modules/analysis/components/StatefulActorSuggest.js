@@ -32,7 +32,7 @@ export default class StatefulActorSuggest extends React.Component<Props, State> 
         placeHolder={I18n.t('musit.texts.findActor')}
         onChange={(actor: Actor) => {
           this.props.onChange(MusitActor.getActorId(actor));
-          this.setState(ps => ({ name: actor.fn }));
+          this.setState(() => ({ name: actor.fn }));
         }}
       />
     );

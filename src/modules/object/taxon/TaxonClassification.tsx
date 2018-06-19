@@ -1,6 +1,11 @@
 import * as React from 'react';
 
+import { TaxonSuggest } from '../../../components/suggest/TaxonSuggest';
+//import { AppSession } from "../../../types/appSession";
+//import appSession$ from "../../../stores/appSession";
+
 type TaxonNameState = {
+  taxonSuggestion?: ScientificName;
   taxonName: string;
   presicionType?: 'C' | 'A';
   taxonCathegory?: 'VA' | 'SS' | 'SP' | 'GE';
@@ -10,20 +15,52 @@ type TaxonEditingState = {
   selectedGenus?: number;
 };
 
+type Property = {
+  Name: string;
+  Value: string;
+  Properties: Property[];
+};
+
+type DynamicProperty = {
+  Name: string;
+  Value: string;
+  Properties: Property[];
+};
+
+type ScientificName = {
+  Id: string | null;
+  scientificNameID: number;
+  taxonID: number;
+  scientificName: string;
+  scientificNameAuthorship: string;
+  taxonRank: string;
+  taxonomicStatus: string | null;
+  acceptedNameUsage: ScientificName | null;
+  higherClassification: ScientificName[];
+  nameAccordingTo: string | null;
+  dynamicProperties: DynamicProperty[] | null;
+};
+
+const appSession = { museumId: 99 };
+
 type TaxonState = {
   editingIndex: number;
   taxonNames: TaxonNameState[];
   infraspesName?: string;
-  det?: { personName: string }[];
+  det: DetState;
   note?: string;
 };
 
 type TaxonProps = TaxonState & {
   onChangeNoteField: (value: string) => void;
+  onChangeSuggests: (v: any) => void;
   onAddTaxon: () => void;
+  onAddPerson: () => void;
+  onDeletePerson: (i: number) => void;
+  onChangeTaxonSuggest: (suggestion: ScientificName) => void;
+  setDetEditingIndex: (i: number) => void;
+  onChangePerson: (i: number) => (field: string) => (value: string) => void;
   setEditingIndex: (i: number) => void;
-  taxonEditingState?: TaxonEditingState;
-  onChangeTaxonEditingStatus: (field: string) => (value: number) => void;
   onChangeTaxonField: (index: number) => (fieldName: string) => (value: string) => void;
 };
 
@@ -58,34 +95,102 @@ type ClassificationHistoryState = {
 
 type ClassificationHistoryProps = ClassificationHistoryState;
 
-type Genus = {
-  id: number;
-  name: string;
+type Det = {
+  personId?: number;
+  personName?: string;
+};
+type DetState = {
+  editingIndex: number;
+  detTable: Det[];
 };
 
-const genusSelect: Genus[] = [
-  { id: 1, name: 'Carex' },
-  { id: 2, name: 'Salix' },
-  { id: 3, name: 'Betula' },
-  { id: 4, name: 'Picea' },
-  { id: 5, name: 'Pinus' }
-];
-
-type TaxonName = {
-  genus: number;
-  name: string;
+type DetProps = DetState & {
+  onAddPerson: () => void;
+  onDeletePerson: (i: number) => void;
+  setDetEditingIndex: (i: number) => void;
+  onChangePerson: (i: number) => (field: string) => (value: string) => void;
 };
-const speciesSelect: TaxonName[] = [
-  { genus: 1, name: 'Carex saxatilis' },
-  { genus: 1, name: 'Carex saxatilis ssp. saxatilis' },
-  { genus: 1, name: 'Carex rigida' },
-  { genus: 2, name: 'Salix repens' },
-  { genus: 3, name: 'Betula nana' },
-  { genus: 3, name: 'Betua pendula' },
-  { genus: 3, name: 'Beula pubescens' },
-  { genus: 4, name: 'Picea abies' },
-  { genus: 5, name: 'Pinus sylvestris' }
-];
+
+class DetTable extends React.Component<DetProps> {
+  constructor(props: DetProps) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div>
+        {this.props.detTable.length > 1 ? (
+          <div className="row">
+            <div className="col-md-12">
+              <table className="table table-condensed table-hover">
+                <thead>
+                  <tr>
+                    <th>Previous determinators</th>
+                    <th />
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.props.detTable.map((d: Det, i: number) => (
+                    <tr
+                      key={`det-row-${i}`}
+                      className={i === this.props.editingIndex ? 'info' : ''}
+                      onClick={e => {
+                        e.preventDefault();
+                        this.props.setDetEditingIndex(i);
+                      }}
+                    >
+                      <td>{d.personName}</td>
+                      <td>
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.onDeletePerson(i);
+                          }}
+                        >
+                          Delete person
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ) : (
+          ' '
+        )}
+        <div className="row">
+          <div className="col-md-12">
+            {' '}
+            <div className="form-group">
+              <label htmlFor="personName">Det</label>
+              <input
+                type="text"
+                className="form-control"
+                id="personName"
+                value={
+                  this.props.editingIndex >= 0 &&
+                  this.props.detTable[this.props.editingIndex] ? (
+                    this.props.detTable[this.props.editingIndex].personName
+                  ) : (
+                    ''
+                  )
+                }
+                onChange={e => {
+                  e.preventDefault();
+                  this.props.onChangePerson(this.props.editingIndex)('personName')(
+                    e.target.value
+                  );
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
 
 class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
   render() {
@@ -131,7 +236,14 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
                 type="text"
                 className="form-control"
                 id="sex"
-                value={this.props.sexAndStages[this.props.editingIndex].sex || ''}
+                value={
+                  this.props.sexAndStages &&
+                  this.props.sexAndStages[this.props.editingIndex] ? (
+                    this.props.sexAndStages[this.props.editingIndex].sex
+                  ) : (
+                    ''
+                  )
+                }
                 onChange={e => {
                   e.preventDefault();
                   this.props.onChangeSexAndLifeStageField(this.props.editingIndex)('sex')(
@@ -148,7 +260,14 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
               <input
                 id="presicionType"
                 className="form-control"
-                value={this.props.sexAndStages[this.props.editingIndex].stage || ''}
+                value={
+                  this.props.sexAndStages &&
+                  this.props.sexAndStages[this.props.editingIndex] ? (
+                    this.props.sexAndStages[this.props.editingIndex].stage
+                  ) : (
+                    ''
+                  )
+                }
                 onChange={e => {
                   e.preventDefault();
                   this.props.onChangeSexAndLifeStageField(this.props.editingIndex)(
@@ -165,7 +284,14 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
               <input
                 id="taxonCathegory"
                 className="form-control"
-                value={this.props.sexAndStages[this.props.editingIndex].count || ''}
+                value={
+                  this.props.sexAndStages &&
+                  this.props.sexAndStages[this.props.editingIndex] ? (
+                    this.props.sexAndStages[this.props.editingIndex].count
+                  ) : (
+                    ''
+                  )
+                }
                 onChange={e => {
                   e.preventDefault();
                   this.props.onChangeSexAndLifeStageField(this.props.editingIndex)(
@@ -182,7 +308,14 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
                 type="text"
                 className="form-control"
                 id="estimated"
-                value={this.props.sexAndStages[this.props.editingIndex].estimated || ''}
+                value={
+                  this.props.sexAndStages &&
+                  this.props.sexAndStages[this.props.editingIndex] ? (
+                    this.props.sexAndStages[this.props.editingIndex].estimated
+                  ) : (
+                    ''
+                  )
+                }
                 onChange={e => {
                   e.preventDefault();
                   this.props.onChangeSexAndLifeStageField(this.props.editingIndex)(
@@ -200,6 +333,61 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
 
 class TaxonTable extends React.Component<TaxonProps> {
   render() {
+    const sugg = this.props.taxonNames[this.props.editingIndex].taxonSuggestion;
+    const taxonPath =
+      sugg && sugg.higherClassification
+        ? sugg.higherClassification.reduce(
+            (t: string, p: ScientificName) =>
+              t ? `${t + '/' + p.scientificName}` : p.scientificName,
+            ''
+          )
+        : '';
+    const aggVal = this.props.taxonNames.reduce((p: string, c: TaxonNameState) => {
+      const names = (c.taxonSuggestion
+        ? c.taxonSuggestion.scientificName.split(' ')
+        : []).map((s: string, i: number) => {
+        if (i === 0) {
+          return { rank: 'genus', name: s };
+        } else if (i === 1) {
+          return { rank: 'species', name: s };
+        } else {
+          return {
+            rank: c.taxonSuggestion ? c.taxonSuggestion.taxonRank : '',
+            name: s
+          };
+        }
+      });
+
+      const name = names.reduce((pr: string, cur: { rank: string; name: string }) => {
+        const uncert = cur.rank === c.taxonCathegory ? ' ' + c.presicionType + ' ' : ' ';
+        const currRank = c.taxonSuggestion ? c.taxonSuggestion.taxonRank : '';
+        const rankf = (rank: string) => {
+          if (rank === 'subspecies') {
+            return 'ssp. ';
+          }
+          if (rank === 'variety') {
+            return 'var. ';
+          }
+          if (rank === 'form') {
+            return 'form. ';
+          }
+          return '';
+        };
+        console.log('KURR', pr, cur);
+
+        return pr === ''
+          ? uncert + cur.name
+          : pr + uncert + (cur.rank === currRank ? rankf(currRank) : '') + cur.name;
+      }, '');
+      console.log(names);
+      return p === '' ? name : p + ' x ' + name;
+    }, '');
+
+    const value = sugg
+      ? sugg.scientificName +
+        (sugg.scientificNameAuthorship ? ' ' + sugg.scientificNameAuthorship : '')
+      : '';
+
     return (
       <div>
         {this.props.taxonNames &&
@@ -209,7 +397,7 @@ class TaxonTable extends React.Component<TaxonProps> {
               <table className="table table-condensed table-hover">
                 <thead>
                   <tr>
-                    <th>Taxon name</th>
+                    <th> Taxon name</th>
                     <th> Presicion</th>
                     <th> Taxon cathegry</th>
                   </tr>
@@ -225,7 +413,16 @@ class TaxonTable extends React.Component<TaxonProps> {
                           this.props.setEditingIndex(i);
                         }}
                       >
-                        <td>{t.taxonName}</td>
+                        <td>
+                          {t.taxonSuggestion ? (
+                            t.taxonSuggestion.scientificName +
+                            (t.taxonSuggestion.scientificNameAuthorship
+                              ? ' ' + t.taxonSuggestion.scientificNameAuthorship
+                              : '')
+                          ) : (
+                            ''
+                          )}
+                        </td>
                         <td>{t.presicionType}</td>
                         <td>{t.taxonCathegory}</td>
                       </tr>
@@ -236,81 +433,28 @@ class TaxonTable extends React.Component<TaxonProps> {
             </div>
           </div>
         )}
+        {taxonPath && <div className="row">{taxonPath}</div>}
+        {aggVal && (
+          <div className="row">
+            <i>{aggVal}</i>
+          </div>
+        )}
         <div className="row">
-          <div className="col-md-2">
+          <div className="col-md-6">
             <div className="form-group">
-              <label htmlFor="genus">Genus</label>
-              <select
-                className="form-control"
-                id="genus"
-                value={
-                  this.props.taxonEditingState &&
-                  this.props.taxonEditingState.selectedGenus
-                }
-                onChange={e => {
-                  e.preventDefault();
-                  console.log(e.target.value);
-                  this.props.onChangeTaxonEditingStatus('selectedGenus')(
-                    parseInt(e.target.value)
-                  );
+              <label htmlFor="taxonSuggestADB">Taxon</label>
+              <TaxonSuggest
+                id="taxonSuggestADB"
+                value={value}
+                placeHolder="Taxon"
+                appSession={appSession}
+                onChange={(suggestion: ScientificName) => {
+                  this.props.onChangeTaxonSuggest(suggestion);
                 }}
-              >
-                {(genusSelect ? genusSelect : [])
-                  .sort((s, t) => {
-                    if (s.name > t.name) {
-                      return 1;
-                    } else if (s.name < t.name) {
-                      return -1;
-                    } else {
-                      return 0;
-                    }
-                  })
-                  .map((t: Genus, i: number) => (
-                    <option key={`opt-${i}`} value={t.id}>
-                      {t.name}
-                    </option>
-                  ))}
-              </select>
+              />
             </div>
           </div>
-          <div className="col-md-4">
-            <div className="form-group">
-              <label htmlFor="taxonName">Taxon</label>
-              <select
-                className="form-control"
-                id="taxonName"
-                value={
-                  this.props.taxonNames &&
-                  this.props.taxonNames[this.props.editingIndex].taxonName
-                }
-                onChange={e => {
-                  e.preventDefault();
-                  this.props.onChangeTaxonField(this.props.editingIndex)('taxonName')(
-                    e.target.value
-                  );
-                }}
-              >
-                {(speciesSelect ? speciesSelect : [])
-                  .filter(
-                    (t: TaxonName) =>
-                      this.props.taxonEditingState &&
-                      t.genus === this.props.taxonEditingState.selectedGenus
-                  )
-                  .sort((s, t) => {
-                    if (s.name > t.name) {
-                      return 1;
-                    } else if (s.name < t.name) {
-                      return -1;
-                    } else {
-                      return 0;
-                    }
-                  })
-                  .map((t: TaxonName, i: number) => (
-                    <option key={`opt-${i}`}>{t.name}</option>
-                  ))}
-              </select>
-            </div>
-          </div>
+
           <div className="col-md-2">
             <div className="form-group">
               <label htmlFor="presicionType">Precision</label>
@@ -332,7 +476,7 @@ class TaxonTable extends React.Component<TaxonProps> {
               </select>
             </div>
           </div>
-          <div className="col-md-4">
+          <div className="col-md-2">
             <div className="form-group">
               <label htmlFor="taxonCathegory">Taxon cathegory</label>
 
@@ -353,9 +497,9 @@ class TaxonTable extends React.Component<TaxonProps> {
                 <option>Order</option>
                 <option>Family</option>
                 <option>Genus</option>
-                <option>Species</option>
-                <option>Sub species</option>
-                <option>Variety</option>
+                <option>species</option>
+                <option>subspecies</option>
+                <option>variety</option>
               </select>
             </div>
           </div>
@@ -368,55 +512,81 @@ class TaxonTable extends React.Component<TaxonProps> {
 export class TaxonComponent extends React.Component<TaxonProps> {
   render() {
     return (
-      <div className="grid">
+      <div className="container-fluid">
         <div className="row">
-          <div className="col-md-6">
-            <TaxonTable {...this.props} />
-          </div>
-          <div className="col-md-1">
-            <div style={{ textAlign: 'left', verticalAlign: 'bottom' }}>
-              <label htmlFor="btnAddTaxon">Add</label>
-              <button
-                type="button"
-                className="btn btn-default form-control"
-                onClick={e => {
-                  e.preventDefault();
-                  this.props.onAddTaxon();
-                }}
-                id="btnAddTaxon"
-              >
-                Add
-              </button>
+          <div className="col-md-8">
+            <div className="row">
+              <div className="col-md-11">
+                <TaxonTable {...this.props} />
+              </div>
+              <div className="col-md-1">
+                <div style={{ textAlign: 'left', verticalAlign: 'bottom' }}>
+                  <label htmlFor="btnAddTaxon">Add</label>
+                  <button
+                    type="button"
+                    className="btn btn-default form-control"
+                    onClick={e => {
+                      e.preventDefault();
+                      this.props.onAddTaxon();
+                    }}
+                    id="btnAddTaxon"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
             </div>
+            <div className="row">
+              <div className="col-md-2">
+                <div className="form-group">
+                  <label htmlFor="infraspesRank">Infraspesific rank</label>
+                  <input type="text" className="form-control" id="infraspesRank" />
+                </div>
+              </div>
+              <div className="col-md-4">
+                <div className="form-group">
+                  <label htmlFor="infraspesName">Infraspesific name</label>
+                  <input type="text" className="form-control" id="infraspesName" />
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-8">
+                <div className="form-group">
+                  <label htmlFor="taxonNote">Note</label>
+                  <textarea className="form-control" id="taxonNote" rows={5} />
+                </div>
+              </div>
+            </div>
+            <div className="row" />
           </div>
           <div className="col-md-4">
-            <label htmlFor="aggregatedTaxonName">Taxon name</label>
-            <input
-              className="form-control"
-              readOnly
-              value="Hei"
-              id="aggregatedTaxonName"
-            />
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col-md-3">
-            <div className="form-group">
-              <label htmlFor="taxonNote">Note</label>
-              <textarea className="form-control" id="taxonNote" rows={5} />
-            </div>
-          </div>
-          <div className="col-md-3">
-            <div className="form-group">
-              <label htmlFor="taxonTest">Taxon</label>
-              <input type="text" className="form-control" id="taxonTest" />
-            </div>
-          </div>
-          <div className="col-md-3">
-            <div className="form-group">
-              <label htmlFor="taxonResults">TaxonResults</label>
-              <textarea className="form-control" id="taxonResults" rows={5} />
+            <div className="row">
+              <div className="col-md-11">
+                <DetTable
+                  {...this.props.det}
+                  onAddPerson={this.props.onAddPerson}
+                  onDeletePerson={this.props.onDeletePerson}
+                  onChangePerson={this.props.onChangePerson}
+                  setDetEditingIndex={this.props.setDetEditingIndex}
+                />
+              </div>
+              <div className="col-md-1">
+                <div style={{ textAlign: 'left', verticalAlign: 'bottom' }}>
+                  <label htmlFor="btnAddPerson">Add</label>
+                  <button
+                    type="button"
+                    className="btn btn-default form-control"
+                    onClick={e => {
+                      e.preventDefault();
+                      this.props.onAddPerson();
+                    }}
+                    id="btnAddPerson"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -477,10 +647,15 @@ export default class ClassificationComponent extends React.Component<
     super(props);
 
     this.state = {
-      taxonClassifications: [{ taxonNames: [{ taxonName: '' }], editingIndex: 0 }],
-      taxonEditingState: {},
+      taxonClassifications: [
+        {
+          taxonNames: [{ taxonName: '' }],
+          editingIndex: 0,
+          det: { detTable: [{ personName: '' }], editingIndex: 0 }
+        }
+      ],
       currentTaxonClassificationIndex: 0,
-      sexAndStage: { sexAndStages: [{}], editingIndex: 0 }
+      sexAndStage: { sexAndStages: [], editingIndex: -1 }
     };
 
     this.getFullHybridName = this.getFullHybridName.bind(this);
@@ -507,14 +682,44 @@ export default class ClassificationComponent extends React.Component<
                 {...this.state.taxonClassifications[
                   this.state.currentTaxonClassificationIndex
                 ]}
-                taxonEditingState={this.state.taxonEditingState}
-                onChangeTaxonEditingStatus={(field: string) => (value: any) => {
+                onChangeTaxonSuggest={(suggestion: ScientificName) => {
                   this.setState((ps: ClassificationHistoryState) => {
+                    const currentClassification =
+                      ps.taxonClassifications[ps.currentTaxonClassificationIndex];
+                    const currentTaxState =
+                      currentClassification.taxonNames[
+                        currentClassification.editingIndex
+                      ];
+                    const newTaxonName = {
+                      ...currentTaxState,
+                      taxonSuggestion: suggestion
+                    };
+                    const newTaxonNames = [
+                      ...currentClassification.taxonNames.slice(
+                        0,
+                        currentClassification.editingIndex
+                      ),
+                      newTaxonName,
+                      ...currentClassification.taxonNames.slice(
+                        currentClassification.editingIndex + 1
+                      )
+                    ];
+
                     return {
                       ...ps,
-                      taxonEditingState: ps.taxonEditingState
-                        ? { ...ps.taxonEditingState, [field]: value }
-                        : { [field]: value }
+                      taxonClassifications: [
+                        ...ps.taxonClassifications.slice(
+                          0,
+                          ps.currentTaxonClassificationIndex
+                        ),
+                        {
+                          ...ps.taxonClassifications[ps.currentTaxonClassificationIndex],
+                          taxonNames: newTaxonNames
+                        },
+                        ...ps.taxonClassifications.slice(
+                          ps.currentTaxonClassificationIndex + 1
+                        )
+                      ]
                     };
                   });
                 }}
@@ -594,6 +799,138 @@ export default class ClassificationComponent extends React.Component<
                           ps.currentTaxonClassificationIndex + 1
                         )
                       ]
+                    };
+                  });
+                }}
+                onChangeSuggests={(nv: any) =>
+                  this.setState((ps: ClassificationHistoryState) => ({
+                    ...ps,
+                    nv
+                  }))}
+                setDetEditingIndex={(i: number) => {
+                  this.setState((ps: ClassificationHistoryState) => {
+                    const currentClass =
+                      ps.taxonClassifications[ps.currentTaxonClassificationIndex];
+                    const currentDet = currentClass.det;
+                    const newDet = { ...currentDet, editingIndex: i };
+                    const newClass = { ...currentClass, det: newDet };
+
+                    const newTaxonClassifications = [
+                      ...ps.taxonClassifications.slice(
+                        0,
+                        ps.currentTaxonClassificationIndex
+                      ),
+                      newClass,
+                      ...ps.taxonClassifications.slice(
+                        ps.currentTaxonClassificationIndex + 1
+                      )
+                    ];
+
+                    return {
+                      ...ps,
+                      taxonClassifications: newTaxonClassifications
+                    };
+                  });
+                }}
+                onDeletePerson={(i: number) => {
+                  this.setState((ps: ClassificationHistoryState) => {
+                    const currentClass =
+                      ps.taxonClassifications[ps.currentTaxonClassificationIndex];
+                    const currentDet = currentClass.det;
+                    const currentDetTable = currentDet.detTable;
+                    const newDetTable = [
+                      ...currentDetTable.slice(0, i),
+                      ...currentDetTable.slice(i + 1)
+                    ];
+
+                    const newDet = {
+                      ...currentDet,
+                      detTable: newDetTable,
+                      editingIndex:
+                        currentDet.editingIndex > 0 ? currentDet.editingIndex - 1 : 0
+                    };
+                    const newClass = { ...currentClass, det: newDet };
+
+                    const newTaxonClassifications = [
+                      ...ps.taxonClassifications.slice(
+                        0,
+                        ps.currentTaxonClassificationIndex
+                      ),
+                      newClass,
+                      ...ps.taxonClassifications.slice(
+                        ps.currentTaxonClassificationIndex + 1
+                      )
+                    ];
+
+                    return {
+                      ...ps,
+                      taxonClassifications: newTaxonClassifications
+                    };
+                  });
+                }}
+                onAddPerson={() => {
+                  this.setState((ps: ClassificationHistoryState) => {
+                    const currentClass =
+                      ps.taxonClassifications[ps.currentTaxonClassificationIndex];
+                    const currentDet = currentClass.det;
+                    const currentDetTable = currentDet.detTable;
+                    const newDetState = { personName: '' };
+                    const newDetTable = [...currentDetTable, newDetState];
+
+                    const newDet = {
+                      ...currentDet,
+                      detTable: newDetTable,
+                      editingIndex: newDetTable.length - 1
+                    };
+                    const newClass = { ...currentClass, det: newDet };
+
+                    const newTaxonClassifications = [
+                      ...ps.taxonClassifications.slice(
+                        0,
+                        ps.currentTaxonClassificationIndex
+                      ),
+                      newClass,
+                      ...ps.taxonClassifications.slice(
+                        ps.currentTaxonClassificationIndex + 1
+                      )
+                    ];
+
+                    return {
+                      ...ps,
+                      taxonClassifications: newTaxonClassifications
+                    };
+                  });
+                }}
+                onChangePerson={(i: number) => (field: string) => (value: string) => {
+                  this.setState((ps: ClassificationHistoryState) => {
+                    const currentClass =
+                      ps.taxonClassifications[ps.currentTaxonClassificationIndex];
+                    const currentDet = currentClass.det;
+                    const currentDetTable = currentDet.detTable;
+                    const currentDetState = currentDetTable[i];
+                    const newDetState = { ...currentDetState, [field]: value };
+                    const newDetTable = [
+                      ...currentDetTable.slice(0, i),
+                      newDetState,
+                      ...currentDetTable.slice(i + 1)
+                    ];
+                    const newDet = { ...currentDet, detTable: newDetTable };
+                    const newClass = { ...currentClass, det: newDet };
+
+                    const newTaxonClassifications = [
+                      ...ps.taxonClassifications.slice(
+                        0,
+                        ps.currentTaxonClassificationIndex
+                      ),
+                      newClass,
+                      ...ps.taxonClassifications.slice(
+                        ps.currentTaxonClassificationIndex + 1
+                      )
+                    ];
+
+                    return {
+                      ...ps,
+                      taxonClassifications: newTaxonClassifications
                     };
                   });
                 }}
@@ -711,7 +1048,7 @@ export default class ClassificationComponent extends React.Component<
           <div className="col-md-12">
             <div className="well">
               <h3>Revisions</h3>
-              <ClassificationHistoryTable {...this.state} />
+              <ClassificationHistoryTable {...this.props} />
             </div>
           </div>
         </div>

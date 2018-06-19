@@ -24,12 +24,12 @@ export class LoginComponent extends React.Component {
 
   showModal(e) {
     e.preventDefault();
-    this.setState(ps => ({ showModal: true }));
+    this.setState(() => ({ showModal: true }));
   }
 
   hideModal(e) {
     e.preventDefault();
-    this.setState(ps => ({ showModal: false }));
+    this.setState(() => ({ showModal: false }));
   }
 
   render() {

@@ -70,10 +70,14 @@ export function ajaxHelper<R, B>(
     responseType,
     method,
     body,
-    headers: {
-      Authorization: 'Bearer ' + token,
-      ...headers
-    }
+    crossDomain: true,
+
+    headers: token
+      ? {
+          Authorization: 'Bearer ' + token,
+          ...headers
+        }
+      : undefined
   }) as MUSTFIX;
 }
 
@@ -110,7 +114,9 @@ export const simpleDel: AjaxDel<Star> = function<R>(
 };
 
 export function post<B, R>(url: string, body: B, token: string): Observable<R> {
-  return ajaxHelper(url, 'POST', body, token, { 'Content-Type': 'application/json' });
+  return ajaxHelper(url, 'POST', body, token, {
+    'Content-Type': 'application/json'
+  });
 }
 
 export const simplePost: AjaxPost<Star> = function<B, R>(
@@ -123,7 +129,9 @@ export const simplePost: AjaxPost<Star> = function<B, R>(
 };
 
 export function put<B, R>(url: string, data: B, token: string): Observable<R> {
-  return ajaxHelper(url, 'PUT', data, token, { 'Content-Type': 'application/json' });
+  return ajaxHelper(url, 'PUT', data, token, {
+    'Content-Type': 'application/json'
+  });
 }
 
 export const simplePut: AjaxPut<Star> = function<B, R>(

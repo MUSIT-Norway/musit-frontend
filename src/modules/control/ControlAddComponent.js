@@ -79,7 +79,7 @@ export class ControlAddContainer extends React.Component {
 
   setStateBasedOnRootNode(rootNode) {
     const requirement = rootNode.environmentRequirement;
-    this.setState(ps => ({
+    this.setState(() => ({
       temperature: requirement ? requirement.temperature : ' ',
       temperatureTolerance: requirement ? requirement.temperatureTolerance : ' ',
       relativeHumidity: requirement ? requirement.relativeHumidity : ' ',

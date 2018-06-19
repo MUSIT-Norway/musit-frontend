@@ -199,7 +199,7 @@ export class SelectAdditionalObjectsComponent extends React.Component<
   };
 
   changePage = (changedTo: number) => {
-    this.setState(ps => ({ currentPage: changedTo }));
+    this.setState(() => ({ currentPage: changedTo }));
     this.doSearch(false, (changedTo - 1) * objectsPerPage);
   };
 
@@ -219,7 +219,7 @@ export class SelectAdditionalObjectsComponent extends React.Component<
             className="form-control"
             id="q"
             onChange={v => {
-              this.setState(ps => ({ q: v.target.value }));
+              this.setState(() => ({ q: v.target.value }));
             }}
             onKeyPress={this.enterKey}
           />
