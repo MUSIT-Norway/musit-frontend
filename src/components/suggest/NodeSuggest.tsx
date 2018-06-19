@@ -6,7 +6,7 @@ import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
 import { AppSession } from '../../types/appSession';
 import { TODO, MUSTFIX } from '../../types/common';
 
-/* OLD:
+/* Old:
   static propTypes = {
     id: PropTypes.string.isRequired,
     value: PropTypes.string,

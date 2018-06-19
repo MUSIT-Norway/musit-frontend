@@ -22,7 +22,7 @@ interface MusitDropDownFieldProps {
   disabled?: boolean;
 }
 
-/*#OLD
+/* Old
 static propTypes = {
   value: PropTypes.string, // Should be any
   addOnPrefix: PropTypes.string,

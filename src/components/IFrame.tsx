@@ -8,7 +8,7 @@ interface IFrameProps {
   writeToDocument: Function; // PropTypes.func.isRequired
 }
 
-/* OLD:
+/* Old:
 static propTypes = {
   frameProps: PropTypes.object,
   content: PropTypes.string,

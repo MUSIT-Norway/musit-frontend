@@ -65,7 +65,7 @@ export const connectToScanner = (
     document.getElementsByClassName(className).length > 0
 ) => (Component: MUSTFIX) => {
   return class Wrapper extends React.Component<WrapperProps, WrapperState> {
-    /*#OLD 
+    /*Old: 
     static propTypes = {
       appSession: PropTypes.object.isRequired
     };

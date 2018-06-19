@@ -26,7 +26,7 @@ interface AddressSuggestProps {
   appSession: AppSession;
 }
 
-/* OLD 
+/* Old:
   static propTypes = {
     id: PropTypes.string.isRequired,
     value: PropTypes.string,

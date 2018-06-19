@@ -40,7 +40,7 @@ interface MusitFieldProps {
   style?: object;
 }
 
-/*#OLD
+/* Old:
     id: PropTypes.string,
     value: PropTypes.string, // Should be any
     addOnPrefix: PropTypes.string,

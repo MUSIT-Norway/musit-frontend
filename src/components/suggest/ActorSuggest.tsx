@@ -23,7 +23,7 @@ type ActorSuggestState = {
   value: TODO;
 };
 
-/*OLD 
+/* Old:
 
   static propTypes = {
     id: PropTypes.string.isRequired,

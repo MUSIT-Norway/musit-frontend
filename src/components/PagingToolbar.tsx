@@ -9,7 +9,7 @@ interface PagingToolbarProps {
   onClick: Function; //PropTypes.func.isRequired
 }
 
-/* OLD:
+/* Old:
 
 PagingToolbar.propTypes = {
   currentPage: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,

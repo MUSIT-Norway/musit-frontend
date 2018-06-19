@@ -32,7 +32,7 @@ interface WrapperProps {
 
 export const makeUrlAware = (Component: TODO) => {
   class Wrapper extends React.Component<WrapperProps> {
-    /*#OLD
+    /* Old:
     static propTypes = {
       appSession: PropTypes.shape({
         museumId: PropTypes.number.isRequired,

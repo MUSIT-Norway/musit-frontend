@@ -8,7 +8,7 @@ type ScannerButtonProps = {
   enabled: boolean; // bool.isRequired,
   onClick: Function; // func.isRequired
 };
-/* OLD
+/* Old:
 ScannerButton.propTypes = {
   enabled: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired

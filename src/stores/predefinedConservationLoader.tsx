@@ -23,7 +23,7 @@ type Props<T> = {
 };
 
 class PredefinedConservationLoader<T> extends React.Component<Props<T>> {
-  //#OLD props: Props;
+  //Old: props: Props;
 
   componentWillMount() {
     const inputParams = {

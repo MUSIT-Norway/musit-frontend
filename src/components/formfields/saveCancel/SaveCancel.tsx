@@ -12,7 +12,7 @@ interface SaveCancelProps {
   onClickCancel: React.MouseEventHandler<Button>;
   translate?: Function;
 }
-/*#OLD
+/* Old:
 SaveCancel.propTypes = {
   id: PropTypes.string,
   saveLabel: PropTypes.string,

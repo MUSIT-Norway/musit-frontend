@@ -18,7 +18,7 @@ interface MusitDatePickerProps {
   disabled?: boolean; //PropTypes.bool
 }
 
-/* OLD:
+/* Old:
 
 MusitDatePicker.propTypes = {
   dateFormat: PropTypes.string,

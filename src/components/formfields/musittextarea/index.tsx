@@ -34,7 +34,7 @@ interface MusitTextAreaProps {
   disabled?: boolean;
 }
 
-/*OLD
+/* Old:
     value: PropTypes.string, // Should be any
     placeHolder: PropTypes.string,
     tooltip: PropTypes.string,

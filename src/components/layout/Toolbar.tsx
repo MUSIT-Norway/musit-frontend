@@ -22,7 +22,7 @@ interface ToolbarProps {
   hideRight?: boolean;
 }
 
-/* OLD
+/* Old:
   static propTypes = {
     showLeft: PropTypes.bool.isRequired,
     showCenter: PropTypes.bool,
