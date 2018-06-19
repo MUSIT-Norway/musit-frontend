@@ -333,8 +333,6 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
 
 class TaxonTable extends React.Component<TaxonProps> {
   render() {
-    let value = '';
-    console.log(this.props.taxonNames[this.props.editingIndex].taxonSuggestion);
     const sugg = this.props.taxonNames[this.props.editingIndex].taxonSuggestion;
     const taxonPath =
       sugg && sugg.higherClassification
@@ -344,11 +342,51 @@ class TaxonTable extends React.Component<TaxonProps> {
             ''
           )
         : '';
-    if (sugg) {
-      value =
-        sugg.scientificName +
-        (sugg.scientificNameAuthorship ? ' ' + sugg.scientificNameAuthorship : '');
-    }
+    const aggVal = this.props.taxonNames.reduce((p: string, c: TaxonNameState) => {
+      const names = (c.taxonSuggestion
+        ? c.taxonSuggestion.scientificName.split(' ')
+        : []).map((s: string, i: number) => {
+        if (i === 0) {
+          return { rank: 'genus', name: s };
+        } else if (i === 1) {
+          return { rank: 'species', name: s };
+        } else {
+          return {
+            rank: c.taxonSuggestion ? c.taxonSuggestion.taxonRank : '',
+            name: s
+          };
+        }
+      });
+
+      const name = names.reduce((pr: string, cur: { rank: string; name: string }) => {
+        const uncert = cur.rank === c.taxonCathegory ? ' ' + c.presicionType + ' ' : ' ';
+        const currRank = c.taxonSuggestion ? c.taxonSuggestion.taxonRank : '';
+        const rankf = (rank: string) => {
+          if (rank === 'subspecies') {
+            return 'ssp. ';
+          }
+          if (rank === 'variety') {
+            return 'var. ';
+          }
+          if (rank === 'form') {
+            return 'form. ';
+          }
+          return '';
+        };
+        console.log('KURR', pr, cur);
+
+        return pr === ''
+          ? uncert + cur.name
+          : pr + uncert + (cur.rank === currRank ? rankf(currRank) : '') + cur.name;
+      }, '');
+      console.log(names);
+      return p === '' ? name : p + ' x ' + name;
+    }, '');
+
+    const value = sugg
+      ? sugg.scientificName +
+        (sugg.scientificNameAuthorship ? ' ' + sugg.scientificNameAuthorship : '')
+      : '';
 
     return (
       <div>
@@ -375,7 +413,16 @@ class TaxonTable extends React.Component<TaxonProps> {
                           this.props.setEditingIndex(i);
                         }}
                       >
-                        <td>{t.taxonName}</td>
+                        <td>
+                          {t.taxonSuggestion ? (
+                            t.taxonSuggestion.scientificName +
+                            (t.taxonSuggestion.scientificNameAuthorship
+                              ? ' ' + t.taxonSuggestion.scientificNameAuthorship
+                              : '')
+                          ) : (
+                            ''
+                          )}
+                        </td>
                         <td>{t.presicionType}</td>
                         <td>{t.taxonCathegory}</td>
                       </tr>
@@ -387,6 +434,11 @@ class TaxonTable extends React.Component<TaxonProps> {
           </div>
         )}
         {taxonPath && <div className="row">{taxonPath}</div>}
+        {aggVal && (
+          <div className="row">
+            <i>{aggVal}</i>
+          </div>
+        )}
         <div className="row">
           <div className="col-md-6">
             <div className="form-group">
@@ -445,9 +497,9 @@ class TaxonTable extends React.Component<TaxonProps> {
                 <option>Order</option>
                 <option>Family</option>
                 <option>Genus</option>
-                <option>Species</option>
-                <option>Sub species</option>
-                <option>Variety</option>
+                <option>species</option>
+                <option>subspecies</option>
+                <option>variety</option>
               </select>
             </div>
           </div>

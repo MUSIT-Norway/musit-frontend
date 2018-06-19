@@ -44,7 +44,7 @@ export class TaxonSuggestComponent extends React.Component {
   };
 
   requestSuggestionUpdate(update) {
-    if (update.value.length > 3) {
+    if (update.value.length > 2) {
       const museumId = this.props.appSession.museumId;
       const token = undefined;
       this.props.update({ update, museumId, token });
@@ -70,7 +70,7 @@ export class TaxonSuggestComponent extends React.Component {
           >{`${suggestion.scientificName} ${suggestion.scientificNameAuthorship != null
             ? suggestion.scientificNameAuthorship
             : ''} ${suggestion.acceptedNameUsage != null
-            ? '[' + suggestion.acceptedNameUsage.scientificName + ']'
+            ? '[=' + suggestion.acceptedNameUsage.scientificName + ']'
             : ''} `}</span>
         )}
         inputProps={{
