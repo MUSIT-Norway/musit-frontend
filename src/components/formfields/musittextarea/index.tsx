@@ -19,9 +19,7 @@
 
 import * as React from 'react';
 import { Component } from 'react';
-import * as PropTypes from 'prop-types';
 import validate from '../common/validators';
-
 
 
 interface MusitTextAreaProps  {

@@ -11,8 +11,8 @@ const getNow = () => {
 };
 
 interface MusitDatePickerProps  {
-  dateFormat: string, //PropTypes.string,
-  value: string, //PropTypes.string,
+  dateFormat?: string, //PropTypes.string,
+  value?: string, //PropTypes.string,
   onChange: Function, // PropTypes.func.isRequired,
   onClear: Function, //PropTypes.func.isRequired,
   disabled?: boolean //PropTypes.bool

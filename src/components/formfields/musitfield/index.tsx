@@ -18,8 +18,7 @@
  */
 
 import * as React from "react";
-import { Component, EventHandler, FocusEventHandler } from "react";
-import * as PropTypes from "prop-types";
+import { Component, FocusEventHandler } from "react";
 import validate from "../common/validators";
 
 interface MusitFieldProps {

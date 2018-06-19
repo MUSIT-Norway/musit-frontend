@@ -10,7 +10,7 @@ import  { Person } from '../../types/person';
 import MusitActor from '../../models/actor';
 import * as moment from 'moment';
 import { I18n } from 'react-i18nify';
-import { MUSTFIX, TODO } from '../../types/common';
+import {  TODO } from '../../types/common';
 
 const defaultPerson: Person = {
   name: '',

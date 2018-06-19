@@ -210,8 +210,6 @@ export const PersonPage = (props: PersonProps) => {
           <div className="col-md-3">
             <label htmlFor="bornDate"> Født dato</label>
             <DatePicker
-              className="form-control"
-              id="bornDate"
               onClear={props.onClearBornDate}
               onChange={props.onChangeBornDate}
             />
@@ -219,8 +217,6 @@ export const PersonPage = (props: PersonProps) => {
           <div className="col-md-3">
             <label htmlFor="deathDate"> Født dato</label>
             <DatePicker
-              className="form-control"
-              id="deathDate"
               onClear={props.onClearDeathDate}
               onChange={props.onChangeDeathDate}
             />

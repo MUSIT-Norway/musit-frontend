@@ -2,15 +2,18 @@ import { Observable } from 'rxjs';
 import { simpleGet } from '../../shared/RxAjax';
 import { createStore } from 'react-rxjs';
 import { createActions } from '../../shared/react-rxjs-patch';
+import { TODO } from '../../types/common';
 export const { update$, clear$ } = createActions('update$', 'clear$');
 
+/* NOT USED:
 const emptyActor = {
   dataportenId: '',
   dataportenUser: '',
   email: '',
   fn: ''
 };
-export default (name, urlFn) =>
+*/
+export default (name: TODO, urlFn: TODO) =>
   createStore(
     name,
     Observable.empty().merge(
@@ -23,7 +26,6 @@ export default (name, urlFn) =>
             .map(({ response }) => response)
             .catch(() => [])
         )
-        .map(suggestions => state => ({ ...state, data: suggestions }))
-    ),
+        .map(suggestions => (state:TODO) => ({ ...state, data: suggestions }))) as TODO,
     {}
   );

@@ -1,9 +1,9 @@
 import * as React from 'react';
-import Logo1 from './assets/UiS_nor_color_rgb.png';
-import Logo2 from './assets/UiO_SAMARB_rgb_gjennomsiktig.png';
-import Logo3 from './assets/UiT_samarbeidslogo_bokmal_300ppi.png';
-import Logo4 from './assets/UiBmerke_grayscale.png';
-import Logo5 from './assets/ntnu_u-slagord.png';
+import * as Logo1 from './assets/UiS_nor_color_rgb.png';
+import * as Logo2 from './assets/UiO_SAMARB_rgb_gjennomsiktig.png';
+import * as Logo3 from './assets/UiT_samarbeidslogo_bokmal_300ppi.png';
+import * as Logo4 from './assets/UiBmerke_grayscale.png';
+import * as Logo5 from './assets/ntnu_u-slagord.png';
 import './Logos.css';
 import { TODO } from '../../types/common';
 
