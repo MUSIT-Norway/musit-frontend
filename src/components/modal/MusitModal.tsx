@@ -17,10 +17,11 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import React from 'react';
+import * as React from 'react';
 import './MusitModal.css';
+import { TODO } from '../../types/common';
 
-const MusitModal = props => {
+const MusitModal = (props:TODO) => {
   const extraClassName = props.className ? ' ' + props.className : '';
   return (
     <div className={`musit-modal${extraClassName}`} style={{ ...props.style }}>

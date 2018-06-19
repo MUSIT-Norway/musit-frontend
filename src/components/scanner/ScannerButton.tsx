@@ -1,11 +1,22 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import scannerIconGray from './scannerIconGray.png';
 import scannerIconWhite from './scannerIconWhite.png';
 import './scannerButton.css';
 
-const ScannerButton = ({ enabled, onClick }) => (
+
+type ScannerButtonProps = {
+  enabled: boolean // bool.isRequired,
+  onClick: Function // func.isRequired
+};
+/*#OLD
+ScannerButton.propTypes = {
+  enabled: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired
+};
+
+*/
+const ScannerButton:React.SFC<ScannerButtonProps> = ({ enabled, onClick }) => (
   <Button
     active={enabled}
     className={enabled ? 'scannerEnabled' : 'scannerDisabled'}
@@ -15,9 +26,5 @@ const ScannerButton = ({ enabled, onClick }) => (
   </Button>
 );
 
-ScannerButton.propTypes = {
-  enabled: PropTypes.bool.isRequired,
-  onClick: PropTypes.func.isRequired
-};
 
 export default ScannerButton;

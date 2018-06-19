@@ -1,11 +1,28 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Button } from 'react-bootstrap';
-import { MusitField } from '../formfields';
-import FontAwesome from 'react-fontawesome';
-import './Toolbar.css';
+import * as React from "react";
+import { Button } from "react-bootstrap";
+import { MusitField } from "../formfields";
+import * as FontAwesome from "react-fontawesome";
+import "./Toolbar.css";
+import { MouseEventHandler } from "react";
+import { TODO } from "../../types/common";
 
-export default class Toolbar extends React.Component {
+interface ToolbarProps  {
+  showLeft: boolean; // PropTypes.bool.isRequired,
+  showCenter: boolean;
+  showRight?: boolean;
+  clickShowLeft: MouseEventHandler<TODO>; // PropTypes.func.isRequired,
+  clickShowCenter: MouseEventHandler<TODO>; // PropTypes.func.isRequired,
+  clickShowRight?: MouseEventHandler<TODO>; // PropTypes.func,
+  labelLeft: string; // PropTypes.string.isRequired,
+  labelCenter: string; //PropTypes.string.isRequired,
+  labelRight?: string;
+  placeHolderSearch: string;
+  searchValue?: string;
+  onSearchChanged?: Function;
+  hideRight?: boolean;
+};
+
+/* OLD
   static propTypes = {
     showLeft: PropTypes.bool.isRequired,
     showCenter: PropTypes.bool,
@@ -21,6 +38,9 @@ export default class Toolbar extends React.Component {
     onSearchChanged: PropTypes.func,
     hideRight: PropTypes.bool
   };
+*/
+
+export default class Toolbar extends React.Component<ToolbarProps> {
 
   static defaultProps = {
     hideRight: false

@@ -1,13 +1,26 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import { TODO, MUSTFIX } from '../types/common';
 
-class IFrame extends React.Component {
-  static propTypes = {
-    frameProps: PropTypes.object,
-    content: PropTypes.string,
-    writeToDocument: PropTypes.func.isRequired
-  };
+
+interface IFrameProps  {
+  frameProps: object, //PropTypes.object,
+  content: string, // PropTypes.string,
+  writeToDocument: Function // PropTypes.func.isRequired
+};
+
+/* OLD:
+static propTypes = {
+  frameProps: PropTypes.object,
+  content: PropTypes.string,
+  writeToDocument: PropTypes.func.isRequired
+};
+*/
+
+
+class IFrame extends React.Component<IFrameProps> {
+
+  domNode: MUSTFIX;
 
   static defaultProps = {
     frameProps: {

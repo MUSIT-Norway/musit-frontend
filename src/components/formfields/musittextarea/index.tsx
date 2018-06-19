@@ -17,12 +17,27 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import { Component } from 'react';
+import * as PropTypes from 'prop-types';
 import validate from '../common/validators';
 
-export default class MusitTextArea extends Component {
-  static propTypes = {
+
+
+interface MusitTextAreaProps  {
+  value: string;
+  placeHolder?: string;
+  tooltip?: string;
+  onChange: Function;
+  validate?: string;
+  minimumLength?: number;
+  maximumLength?: number;
+  precision?: number;
+  numberOfRows?: number;
+  disabled?: boolean;
+};
+
+/*OLD
     value: PropTypes.string, // Should be any
     placeHolder: PropTypes.string,
     tooltip: PropTypes.string,
@@ -33,8 +48,11 @@ export default class MusitTextArea extends Component {
     precision: PropTypes.number,
     numberOfRows: PropTypes.number,
     disabled: PropTypes.bool
-  };
 
+*/
+
+export default class MusitTextArea extends Component<MusitTextAreaProps> {
+  
   classNameOnlyWithInput() {
     let lvString = '';
     if (validate(this.props) === 'error') {

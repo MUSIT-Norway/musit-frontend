@@ -1,10 +1,31 @@
-import React from 'react';
-import FontAwesome from 'react-fontawesome';
-import takeRight from 'lodash/takeRight';
-import map from 'lodash/map';
-import { OverlayTrigger, Popover } from 'react-bootstrap';
+import * as React from "react";
+import * as FontAwesome from "react-fontawesome";
+import { takeRight } from "lodash";
+import { map } from "lodash";
+import { OverlayTrigger, Popover } from "react-bootstrap";
+import { TODO } from "../../types/common";
 
-const tooltip = (tipText, child) => (
+
+interface BreadcrumbItemProps {
+  
+  displayName?: string;
+  name?: string;
+  url?: string;
+  icon?: TODO;
+  style?: TODO;
+  onClick: TODO;
+  delimiter?: string;
+}
+
+interface BreadcrumbProps {
+  onClickCrumb: Function;
+  node: TODO;
+  disabled?: boolean;
+  allActive?: boolean;
+}
+
+
+const tooltip = (tipText:TODO, child:TODO) => (
   <OverlayTrigger
     placement="top"
     overlay={<Popover id="breadcrumb tooltip">{tipText}</Popover>}
@@ -13,7 +34,8 @@ const tooltip = (tipText, child) => (
   </OverlayTrigger>
 );
 
-const CrumbItem = props => {
+
+const CrumbItem: React.SFC<BreadcrumbItemProps>  = props => {
   const name =
     props.displayName ||
     (props.name && props.name.length > 20 + 2
@@ -43,9 +65,12 @@ const CrumbItem = props => {
 
 const crumbLimit: number = 3;
 
-class Breadcrumb extends React.Component {
+
+
+
+class Breadcrumb extends React.Component<BreadcrumbProps> {
   render() {
-    const clickCrumb = node => evt => {
+    const clickCrumb = (node:TODO) => (evt:TODO) => {
       evt.preventDefault();
       this.props.onClickCrumb(node);
       evt.stopPropagation();
@@ -68,13 +93,13 @@ class Breadcrumb extends React.Component {
     return (
       <div>
         {CrumbItem({
-          url: itemsWithIndex.length > 0 && !this.props.disabled ? '/magasin' : null,
+          url: itemsWithIndex.length > 0 && !this.props.disabled ? '/magasin' : undefined,
           onClick: clickCrumb({ url: '/magasin' }),
           name: 'Magasin',
           displayName: ' ',
           icon: 'home',
           style: { fontSize: '1.5em' },
-          delimiter: itemsWithIndex.length > 0 ? ' / ' : null
+          delimiter: itemsWithIndex.length > 0 ? ' / ' : undefined
         })}
         {itemsWithIndex > itemsCropped &&
           CrumbItem({
@@ -91,11 +116,11 @@ class Breadcrumb extends React.Component {
           return (
             <span key={i}>
               {CrumbItem({
-                url: enableLink ? item.url : null,
+                url: enableLink ? item.url : undefined,
                 name: item.name,
                 onClick: clickCrumb(item),
                 icon: 'folder',
-                delimiter: notLast ? ' / ' : null
+                delimiter: notLast ? ' / ' : undefined
               })}
             </span>
           );

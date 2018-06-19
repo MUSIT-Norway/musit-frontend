@@ -1,12 +1,13 @@
 //@flow
-import React from 'react';
+import * as React from 'react';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
+import { Maybe } from '../types/common';
 
 type FieldDropDownProps = {
   id: string,
   onChange: Function,
   items: Array<string>,
-  displayItems: ?Array<string>,
+  displayItems: Maybe<Array<string>>,
   title: string
 };
 

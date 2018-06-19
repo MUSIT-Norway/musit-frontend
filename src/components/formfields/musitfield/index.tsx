@@ -17,12 +17,31 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import validate from '../common/validators';
+import * as React from "react";
+import { Component, EventHandler, FocusEventHandler } from "react";
+import * as PropTypes from "prop-types";
+import validate from "../common/validators";
 
-export default class MusitField extends Component {
-  static propTypes = {
+interface MusitFieldProps {
+  id?: string;
+  value?: string;
+  addOnPrefix?: string;
+  help?: string; // always ? on add on after
+  placeHolder?: string;
+  tooltip?: string;
+  onChange: Function; // PropTypes.func.isRequired,
+  onBlur?: FocusEventHandler<any>;
+  onFocus?: FocusEventHandler<any>;
+  validate?: string;
+  validator?: Function;
+  minimumLength?: number;
+  maximumLength?: number;
+  precision?: number;
+  disabled?: boolean;
+  style?: object;
+}
+
+/*#OLD
     id: PropTypes.string,
     value: PropTypes.string, // Should be any
     addOnPrefix: PropTypes.string,
@@ -39,36 +58,34 @@ export default class MusitField extends Component {
     precision: PropTypes.number,
     disabled: PropTypes.bool,
     style: PropTypes.object
-  };
 
+*/
+
+export default class MusitField extends Component<MusitFieldProps> {
   static defaultProps = {
-    value: ''
+    value: ""
   };
 
   classNameWithSpan() {
-    let lvString = ' ';
+    let lvString = " ";
     if (
-      this.props.validator
-        ? this.props.validator(this.props)
-        : validate(this.props) === 'error'
+      this.props.validator ? this.props.validator(this.props) : validate(this.props) === "error"
     ) {
-      lvString = 'input-group has-error';
+      lvString = "input-group has-error";
     } else {
-      lvString = 'input-group';
+      lvString = "input-group";
     }
     return lvString;
   }
 
   classNameOnlyWithInput() {
-    let lvString = '';
+    let lvString = "";
     if (
-      this.props.validator
-        ? this.props.validator(this.props)
-        : validate(this.props) === 'error'
+      this.props.validator ? this.props.validator(this.props) : validate(this.props) === "error"
     ) {
-      lvString = 'has-error';
+      lvString = "has-error";
     } else {
-      lvString = '';
+      lvString = "";
     }
     return lvString;
   }

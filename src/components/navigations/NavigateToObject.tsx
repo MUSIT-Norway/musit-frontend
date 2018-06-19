@@ -1,9 +1,9 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
 import Config from '../../config';
-import type { AppSession } from '../../types/appSession';
-import type { History } from '../../types/Routes';
+import  { AppSession } from '../../types/appSession';
+import  { History } from 'history';
 
 type Props = {
   appSession: AppSession,

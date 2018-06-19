@@ -1,16 +1,17 @@
 // @flow
-import React from 'react';
-import FontAwesome from 'react-fontawesome';
-import moment from 'moment';
-import { I18n } from 'react-i18nify';
+import * as React from "react";
+import * as FontAwesome from "react-fontawesome";
+import * as moment from "moment";
+import { I18n } from "react-i18nify";
+import { Maybe } from "../../types/common";
 
 type Props = {
-  onClickEdit?: (e: { preventDefault: Function }) => void,
-  updatedBy?: ?string,
-  updatedDate?: ?number | ?string,
-  registeredBy: ?string,
-  registeredDate: ?number | ?string,
-  aligned?: boolean
+  onClickEdit?: (e: { preventDefault: Function }) => void;
+  updatedBy?: Maybe<string>;
+  updatedDate?: Maybe<number> | Maybe<string>;
+  registeredBy: Maybe<string>;
+  registeredDate: Maybe<number> | Maybe<string>;
+  aligned?: boolean;
 };
 
 const DateFormat = 'DD.MM.YYYY HH:mm';

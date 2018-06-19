@@ -1,11 +1,34 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Autosuggest from 'react-autosuggest';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
+import * as Autosuggest from 'react-autosuggest';
 import suggest$Fn, { update$, clear$ } from './suggestStore';
 import Config from '../../config';
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
+import { AppSession } from '../../types/appSession';
+import { TODO } from '../../types/common';
 
-export class AddressSuggest extends React.Component {
+
+
+interface AddressSuggestion {
+  street: TODO;
+  streetNo: TODO;
+  zip: TODO;
+  place: TODO;
+}
+
+interface AddressSuggestProps {
+  id: string; //PropTypes.string.isRequired,
+  value: string; // PropTypes.string,
+  placeHolder: string; // PropTypes.string,
+  suggest: TODO; // PropTypes.object,
+  onChange: Function; // PropTypes.func.isRequired,
+  update: Function; // PropTypes.func,
+  disabled: boolean; // PropTypes.bool,
+  clear: Function; // PropTypes.func,
+  appSession: AppSession;
+}
+
+/* OLD 
   static propTypes = {
     id: PropTypes.string.isRequired,
     value: PropTypes.string,
@@ -17,13 +40,19 @@ export class AddressSuggest extends React.Component {
     clear: PropTypes.func
   };
 
+*/
+
+type AddressSuggestState = {
+  value: TODO;
+}
+export class AddressSuggest extends React.Component<AddressSuggestProps, AddressSuggestState> {
   static defaultProps = {
     id: 'addressField',
     disabled: false,
     value: ''
   };
 
-  constructor(props) {
+  constructor(props: AddressSuggestProps) {
     super(props);
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
     this.requestSuggestionUpdate = this.requestSuggestionUpdate.bind(this);
@@ -32,18 +61,18 @@ export class AddressSuggest extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: AddressSuggestProps) {
     if (nextProps.value !== this.props.value) {
       this.setState(ps => ({ ...ps, value: nextProps.value }));
     }
   }
 
-  onChange(event, { newValue }) {
+  onChange(event: TODO, { newValue }: TODO) {
     this.setState(ps => ({ ...ps, value: newValue }));
     this.props.onChange(newValue);
   }
 
-  onSuggestionSelected(event, { suggestion }) {
+  onSuggestionSelected(event: TODO, { suggestion }: TODO) {
     if (event.keyCode === 13) {
       event.preventDefault();
     }
@@ -51,7 +80,7 @@ export class AddressSuggest extends React.Component {
     this.props.onChange(value);
   }
 
-  getAddressSuggestionValue(suggestion) {
+  getAddressSuggestionValue(suggestion: AddressSuggestion) {
     return `${suggestion.street} ${suggestion.streetNo}, ${suggestion.zip} ${suggestion.place}`;
   }
 
@@ -63,12 +92,12 @@ export class AddressSuggest extends React.Component {
     onBlur: this.props.clear
   };
 
-  renderAddressSuggestion(suggestion) {
+  renderAddressSuggestion(suggestion: AddressSuggestion) {
     const suggestionText = `${suggestion.street} ${suggestion.streetNo}, ${suggestion.zip} ${suggestion.place}`;
     return <span className={'suggestion-content'}>{suggestionText}</span>;
   }
 
-  requestSuggestionUpdate(update) {
+  requestSuggestionUpdate(update: TODO) {
     if (update.value.length > 2) {
       const token = this.props.appSession.accessToken;
       this.props.update({ update, token });
@@ -79,11 +108,10 @@ export class AddressSuggest extends React.Component {
     return (
       <Autosuggest
         suggestions={this.props.suggest.data || []}
-        disabled={this.props.disabled}
         onSuggestionsFetchRequested={this.requestSuggestionUpdate}
         getSuggestionValue={this.getAddressSuggestionValue}
         renderSuggestion={this.renderAddressSuggestion}
-        inputProps={{ ...this.doneByProps, value: this.state.value }}
+        inputProps={{ ...this.doneByProps as TODO, value: this.state.value}}
         shouldRenderSuggestions={v => v !== 'undefined'}
         onSuggestionSelected={this.onSuggestionSelected}
       />

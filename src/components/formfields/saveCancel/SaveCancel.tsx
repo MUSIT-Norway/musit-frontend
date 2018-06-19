@@ -1,10 +1,31 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from "react";
 import { Button, Row, Col } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
 
-const SaveCancel = props => (
-  <Row>
+
+interface SaveCancelProps {
+  id?: string;
+  saveLabel?: string;
+  saveDisabled?: boolean;
+  onClickSave: React.MouseEventHandler<Button>;
+  cancelLabel?: string;
+  cancelDisabled?: boolean;
+  onClickCancel: React.MouseEventHandler<Button>;
+  translate?: Function;
+}
+/*#OLD
+SaveCancel.propTypes = {
+  id: PropTypes.string,
+  saveLabel: PropTypes.string,
+  saveDisabled: PropTypes.bool,
+  onClickSave: PropTypes.func,
+  cancelLabel: PropTypes.string,
+  cancelDisabled: PropTypes.bool,
+  onClickCancel: PropTypes.func
+};
+*/
+
+const SaveCancel: React.SFC<SaveCancelProps> = props => (  <Row>
     <Col
       xs={6}
       sm={5}
@@ -36,15 +57,6 @@ const SaveCancel = props => (
   </Row>
 );
 
-SaveCancel.propTypes = {
-  id: PropTypes.string,
-  saveLabel: PropTypes.string,
-  saveDisabled: PropTypes.bool,
-  onClickSave: PropTypes.func,
-  cancelLabel: PropTypes.string,
-  cancelDisabled: PropTypes.bool,
-  onClickCancel: PropTypes.func
-};
 
 SaveCancel.displayName = 'SaveCancel';
 

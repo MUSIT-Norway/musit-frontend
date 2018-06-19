@@ -16,11 +16,21 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Grid, Row, Col, PageHeader } from 'react-bootstrap';
+import * as React from "react";
+import { Grid, Row, Col, PageHeader } from "react-bootstrap";
+import { TODO } from "../../types/common";
 
-export default class Layout extends React.Component {
+interface LayoutProps  {
+  title: any; // any.isRequired,
+  leftMenu?: object; // PropTypes.object,
+  content: object; //object.isRequired,
+  breadcrumb: JSX.Element; // Breadcrumb; // PropTypes.element,
+  toolbar?: TODO; // PropTypes.element
+};
+
+/*
+
+
   static propTypes = {
     title: PropTypes.any.isRequired,
     leftMenu: PropTypes.object,
@@ -29,6 +39,9 @@ export default class Layout extends React.Component {
     toolbar: PropTypes.element
   };
 
+*/
+
+export default class Layout extends React.Component<LayoutProps> {
   static defaultProps = {
     leftMenu: (
       <div
@@ -53,14 +66,14 @@ export default class Layout extends React.Component {
                 md={6}
                 mdOffset={2}
                 style={{
-                  display: 'inline-block',
-                  lineHeight: '30px',
-                  verticalAlign: 'center'
+                  display: "inline-block",
+                  lineHeight: "30px",
+                  verticalAlign: "center"
                 }}
               >
                 {this.props.breadcrumb}
               </Col>
-              <Col md={3} mdOffset={0} style={{ marginLeft: '20px' }}>
+              <Col md={3} mdOffset={0} style={{ marginLeft: "20px" }}>
                 {this.props.toolbar}
               </Col>
             </Row>
@@ -70,8 +83,8 @@ export default class Layout extends React.Component {
                   <div
                     className="col-md-2 sidenav"
                     style={{
-                      borderTop: '#cdcdcd 1px solid',
-                      borderRight: '#cdcdcd 1px solid'
+                      borderTop: "#cdcdcd 1px solid",
+                      borderRight: "#cdcdcd 1px solid"
                     }}
                   >
                     {this.props.leftMenu}
@@ -79,9 +92,9 @@ export default class Layout extends React.Component {
                   <div
                     className="col-md-10"
                     style={{
-                      borderTop: '#cdcdcd 1px solid',
+                      borderTop: "#cdcdcd 1px solid",
                       minHeight: 100,
-                      borderLeft: '#cdcdcd 1px solid'
+                      borderLeft: "#cdcdcd 1px solid"
                     }}
                   >
                     {this.props.content}
@@ -95,3 +108,5 @@ export default class Layout extends React.Component {
     );
   }
 }
+
+

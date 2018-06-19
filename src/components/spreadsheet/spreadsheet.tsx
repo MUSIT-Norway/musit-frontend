@@ -1,6 +1,6 @@
 // @flow
 
-import xlsx from 'xlsx';
+import * as xlsx from 'xlsx';
 
 export function jsonToWorksheetBinary(jsonContent: Array<any>): string {
   const sheet = xlsx.utils.json_to_sheet(jsonContent);

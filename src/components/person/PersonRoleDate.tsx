@@ -1,15 +1,16 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { ActorSuggest } from '../../components/suggest/ActorSuggest';
 import { Row, Col } from 'react-bootstrap';
 import DropdownButton from '../../components/DropdownButton';
 import DatePicker from '../DatePicker';
 import { DATE_FORMAT_DISPLAY } from '../../shared/util';
-import type { AppSession } from '../../types/appSession';
-import type { Person } from '../../types/person';
+import  { AppSession } from '../../types/appSession';
+import  { Person } from '../../types/person';
 import MusitActor from '../../models/actor';
-import moment from 'moment';
+import * as moment from 'moment';
 import { I18n } from 'react-i18nify';
+import { MUSTFIX, TODO } from '../../types/common';
 
 const defaultPerson: Person = {
   name: '',
@@ -67,7 +68,7 @@ export const PersonRoleDate = ({
                     id={`id_${i}`}
                     value={v.name || ''}
                     placeHolder={I18n.t('musit.analysis.restrictions.findActor')}
-                    onChange={newValue => {
+                    onChange={(newValue:TODO) => {
                       updateForm({
                         name: fieldName,
                         rawValue: updatePerson(
@@ -90,8 +91,8 @@ export const PersonRoleDate = ({
                     displayItems={roles.map(
                       r => (getDisplayNameForRole && getDisplayNameForRole(r)) || r
                     )}
-                    index={i}
-                    onChange={r =>
+                    //Originally had this assignment, but this property doesn't seem to exist: index={i}
+                    onChange={(r:TODO) =>
                       updateForm({
                         name: fieldName,
                         rawValue: updateRole(i, r, pArr)
@@ -112,12 +113,12 @@ export const PersonRoleDate = ({
                     <DatePicker
                       dateFormat={DATE_FORMAT_DISPLAY}
                       value={v.date}
-                      onClear={newValue =>
+                      onClear={(newValue:TODO) =>
                         updateForm({
                           name: fieldName,
                           rawValue: updateDate(i, newValue, pArr)
                         })}
-                      onChange={newValue => {
+                      onChange={(newValue:TODO) => {
                         updateForm({
                           name: fieldName,
                           rawValue: updateDate(i, newValue, pArr)
@@ -173,15 +174,15 @@ function deletePerson(i: number, persons: Array<Person>): Array<Person> {
   return [...persons.slice(0, i), ...persons.slice(i + 1)];
 }
 
-function updateRole(i, role: string | number, persons: Array<Person>) {
+function updateRole(i:number, role: string | number, persons: Array<Person>) {
   return updatePerson(i, { ...persons[i], role }, persons);
 }
 
-function updateDate(i, date: string, persons: Array<Person>) {
+function updateDate(i:number, date: string, persons: Array<Person>) {
   return updatePerson(i, { ...persons[i], date }, persons);
 }
 
-function updatePerson(i, person: Person, persons: Array<Person>) {
+function updatePerson(i:number, person: Person, persons: Array<Person>) {
   return [...persons.slice(0, i), person, ...persons.slice(i + 1)];
 }
 

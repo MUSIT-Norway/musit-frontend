@@ -1,8 +1,8 @@
 // @flow
 
-import React from 'react';
+import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import FontAwesome from 'react-fontawesome';
+import * as FontAwesome from 'react-fontawesome';
 
 type Props = {
   label: string

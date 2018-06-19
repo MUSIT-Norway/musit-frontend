@@ -1,9 +1,9 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { DATE_FORMAT_DISPLAY } from '../../shared/util';
-import moment from 'moment';
+import * as moment from 'moment';
 import { I18n } from 'react-i18nify';
-import type { Person } from '../../types/person';
+import  { Person } from '../../types/person';
 
 type Props = {
   personData: Array<Person>,

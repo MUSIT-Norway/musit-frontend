@@ -1,11 +1,28 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import { range } from 'lodash';
+import { TODO, MUSTFIX } from '../types/common';
 
-class PagingToolbar extends React.Component {
+interface PagingToolbarProps {
+  currentPage: string | number; // PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  numItems: number; //PropTypes.number.isRequired,
+  perPage: number; // PropTypes.number,
+  onClick: Function; //PropTypes.func.isRequired
+}
+
+/* OLD:
+
+PagingToolbar.propTypes = {
+  currentPage: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  numItems: PropTypes.number.isRequired,
+  perPage: PropTypes.number,
+  onClick: PropTypes.func.isRequired
+};
+*/
+
+class PagingToolbar extends React.Component<PagingToolbarProps> {
   render() {
     const numPages = Math.ceil(this.props.numItems / this.props.perPage);
-    const currentPage = parseInt(this.props.currentPage, 10);
+    const currentPage = parseInt(this.props.currentPage as TODO, 10);
     const maxPages = 10;
     const min = currentPage - maxPages + 1 > 1 ? currentPage : 1;
     const max = min + maxPages - 1 >= numPages ? numPages : min + maxPages - 1;
@@ -105,14 +122,7 @@ class PagingToolbar extends React.Component {
   }
 }
 
-PagingToolbar.propTypes = {
-  currentPage: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  numItems: PropTypes.number.isRequired,
-  perPage: PropTypes.number,
-  onClick: PropTypes.func.isRequired
-};
-
-PagingToolbar.defaultProps = {
+(PagingToolbar as MUSTFIX).defaultProps = {
   perPage: 50
 };
 

@@ -1,10 +1,9 @@
-import React from 'react';
-
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { RxInjectLegacy as inject } from '../shared/react-rxjs-patch/';
-import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
 
-import type { AppSession } from 'types/appSession';
+import { AppSession } from '../types/appSession';
 
 export type Props = { en: string, no: string, appSession: AppSession };
 

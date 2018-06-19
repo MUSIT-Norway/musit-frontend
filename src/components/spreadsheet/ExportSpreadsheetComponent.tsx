@@ -1,7 +1,7 @@
 // @flow
 
-import React from 'react';
-import FileSaver from 'file-saver';
+import * as React from 'react';
+import * as FileSaver from 'file-saver';
 import { jsonToWorksheetBinary } from './spreadsheet';
 import { stringToArrayBuffer } from './arrayBufferHelper';
 
