@@ -1,11 +1,11 @@
 // @flow
-import { Observable } from "rxjs";
-import { ajax } from "rxjs/observable/dom/ajax";
-import { emitError } from "./errors";
-import { closeModal } from "./modal";
-import { setAccessToken$ } from "../stores/appSession";
-import { Callback, AjaxGet, AjaxPost, AjaxPut, AjaxDel } from "../types/ajax";
-import { Star, Maybe, MUSTFIX } from "../types/common";
+import { Observable } from 'rxjs';
+import { ajax } from 'rxjs/observable/dom/ajax';
+import { emitError } from './errors';
+import { closeModal } from './modal';
+import { setAccessToken$ } from '../stores/appSession';
+import { Callback, AjaxGet, AjaxPost, AjaxPut, AjaxDel } from '../types/ajax';
+import { Star, Maybe, MUSTFIX } from '../types/common';
 
 export function onComplete<R>(callback: Maybe<Callback<R>>) {
   return (response: R) => {
@@ -16,9 +16,7 @@ export function onComplete<R>(callback: Maybe<Callback<R>>) {
 }
 
 const shouldLog = function() {
-  return (
-    process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test"
-  );
+  return process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
 };
 
 export function onFailure<R>(
@@ -28,19 +26,19 @@ export function onFailure<R>(
     switch (error.status) {
       case 401:
         if (shouldLog()) {
-          console.error("Unauthorized", error); // eslint-disable-line no-console
+          console.error('Unauthorized', error); // eslint-disable-line no-console
         }
-        if (localStorage.getItem("accessToken")) {
-          localStorage.removeItem("accessToken");
+        if (localStorage.getItem('accessToken')) {
+          localStorage.removeItem('accessToken');
           setAccessToken$.next(null);
-          window.location.replace("/");
-          emitError({ ...error, type: "network" });
+          window.location.replace('/');
+          emitError({ ...error, type: 'network' });
         }
         closeModal();
         return Observable.empty();
       case 403:
         if (shouldLog()) {
-          console.error("Not access to collection", error); // eslint-disable-line no-console
+          console.error('Not access to collection', error); // eslint-disable-line no-console
         }
         break;
       default:
@@ -65,7 +63,7 @@ export function ajaxHelper<R, B>(
   body: B,
   token: string,
   headers?: { [key: string]: string } | null,
-  responseType: string = "json"
+  responseType: string = 'json'
 ): Observable<R> {
   return ajax({
     url,
@@ -76,7 +74,7 @@ export function ajaxHelper<R, B>(
 
     headers: token
       ? {
-          Authorization: "Bearer " + token,
+          Authorization: 'Bearer ' + token,
           ...headers
         }
       : undefined
@@ -91,7 +89,7 @@ function simpleAjax<R>(
 }
 
 export function get<R>(url: string, token: string): Observable<R> {
-  return ajaxHelper(url, "GET", null, token);
+  return ajaxHelper(url, 'GET', null, token);
 }
 
 export const simpleGet: AjaxGet<Star> = function simpleGet<R>(
@@ -99,12 +97,12 @@ export const simpleGet: AjaxGet<Star> = function simpleGet<R>(
   token: string,
   callback: Maybe<Callback<R>>
 ): Observable<R> {
-  console.log("SIMPLEGET " + url);
+  console.log('SIMPLEGET ' + url);
   return simpleAjax(get(url, token), callback);
 };
 
 export function del<R>(url: string, token: string): Observable<R> {
-  return ajaxHelper(url, "DELETE", null, token);
+  return ajaxHelper(url, 'DELETE', null, token);
 }
 
 export const simpleDel: AjaxDel<Star> = function<R>(
@@ -116,8 +114,8 @@ export const simpleDel: AjaxDel<Star> = function<R>(
 };
 
 export function post<B, R>(url: string, body: B, token: string): Observable<R> {
-  return ajaxHelper(url, "POST", body, token, {
-    "Content-Type": "application/json"
+  return ajaxHelper(url, 'POST', body, token, {
+    'Content-Type': 'application/json'
   });
 }
 
@@ -131,8 +129,8 @@ export const simplePost: AjaxPost<Star> = function<B, R>(
 };
 
 export function put<B, R>(url: string, data: B, token: string): Observable<R> {
-  return ajaxHelper(url, "PUT", data, token, {
-    "Content-Type": "application/json"
+  return ajaxHelper(url, 'PUT', data, token, {
+    'Content-Type': 'application/json'
   });
 }
 

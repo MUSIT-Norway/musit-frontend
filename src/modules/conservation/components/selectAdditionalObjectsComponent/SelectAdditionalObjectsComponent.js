@@ -1,25 +1,25 @@
 // @flow
 
-import React from "react";
-import Modal from "../../../../components/modal/MusitModal";
-import PropTypes from "prop-types";
-import { RxInjectLegacy as inject } from "../../../../shared/react-rxjs-patch/";
-import appSession$ from "../../../../stores/appSession";
-import type { AppSession } from "../../../../types/appSession";
-import Config from "../../../../config";
-import type { SearchResult } from "types/search";
-import { ajaxGetRequest } from "../../../../shared/ajaxPromise";
-import type { CollectionId } from "types/ids";
+import React from 'react';
+import Modal from '../../../../components/modal/MusitModal';
+import PropTypes from 'prop-types';
+import { RxInjectLegacy as inject } from '../../../../shared/react-rxjs-patch/';
+import appSession$ from '../../../../stores/appSession';
+import type { AppSession } from '../../../../types/appSession';
+import Config from '../../../../config';
+import type { SearchResult } from 'types/search';
+import { ajaxGetRequest } from '../../../../shared/ajaxPromise';
+import type { CollectionId } from 'types/ids';
 
-import range from "lodash/range";
+import range from 'lodash/range';
 /* import {
   actions as searchActions,
   store$ as searchStore$
 } from '../../../objectsearch/searchStore'; */
-import { I18n } from "react-i18nify";
+import { I18n } from 'react-i18nify';
 
-import pullRight from "../../../../shared/pullRight";
-import cx from "classnames";
+import pullRight from '../../../../shared/pullRight';
+import cx from 'classnames';
 
 const data = {
   appSession$
@@ -42,10 +42,7 @@ class Pagination extends React.Component<PaginationProps> {
   };
 
   firstVisiblePage = () =>
-    Math.max(
-      1,
-      this.props.currentPage - Math.floor(this.props.visiblePageCount / 2)
-    );
+    Math.max(1, this.props.currentPage - Math.floor(this.props.visiblePageCount / 2));
 
   gotoPage = (newCurrentPage: number) => {
     this.props.onChangePage(newCurrentPage);
@@ -58,10 +55,7 @@ class Pagination extends React.Component<PaginationProps> {
       this.totalPageCount()
     );
 
-    firstVisible = Math.min(
-      firstVisible,
-      lastVisible - this.props.visiblePageCount + 1
-    );
+    firstVisible = Math.min(firstVisible, lastVisible - this.props.visiblePageCount + 1);
     firstVisible = Math.max(1, firstVisible);
     const visiblePages = range(firstVisible, lastVisible + 1);
     if (this.props.totalObjectCount <= this.props.objectsPerPage) {
@@ -152,7 +146,7 @@ export class SelectAdditionalObjectsComponent extends React.Component<
     this.state = {
       currentPageObjects: [],
       selectedObjects: new Map(),
-      q: "",
+      q: '',
       esFrom: 0,
       currentPage: 1,
       totalObjectCount: 0
@@ -176,7 +170,7 @@ export class SelectAdditionalObjectsComponent extends React.Component<
   doSearch = async (newSearch: boolean, from?: number = 0) => {
     const soek = `*${this.state.q}*`;
     const esQuery = `museumNo:${soek} OR subNo:${soek} OR term:${soek}`;
-    (document.body: any).style.cursor = "wait";
+    (document.body: any).style.cursor = 'wait';
     try {
       const result = await executeSearch(
         esQuery,
@@ -200,7 +194,7 @@ export class SelectAdditionalObjectsComponent extends React.Component<
         selectedObjects: newSearch ? new Map() : this.state.selectedObjects
       }));
     } finally {
-      (document.body: any).style.cursor = "default";
+      (document.body: any).style.cursor = 'default';
     }
   };
 
@@ -210,7 +204,7 @@ export class SelectAdditionalObjectsComponent extends React.Component<
   };
 
   enterKey = (key: KeyboardEvent) => {
-    if (key.key === "Enter") {
+    if (key.key === 'Enter') {
       this.doSearch(true);
     }
   };
@@ -219,7 +213,7 @@ export class SelectAdditionalObjectsComponent extends React.Component<
     const body = (
       <div>
         <div className="form-group">
-          <label htmlFor="query"> {I18n.t("musit.texts.searchData")}</label>
+          <label htmlFor="query"> {I18n.t('musit.texts.searchData')}</label>
           <input
             type="text"
             className="form-control"
@@ -235,23 +229,21 @@ export class SelectAdditionalObjectsComponent extends React.Component<
             this.doSearch(true);
           }}
         >
-          {I18n.t("musit.texts.search")}
+          {I18n.t('musit.texts.search')}
         </button>
         <span>&nbsp;&nbsp;&nbsp;</span>
         <button
           onClick={() => {
-            this.props.addObjects(
-              Array.from(this.state.selectedObjects.values())
-            );
+            this.props.addObjects(Array.from(this.state.selectedObjects.values()));
             this.context.closeModal();
           }}
         >
-          {I18n.t("musit.texts.select")}
-        </button>{" "}
+          {I18n.t('musit.texts.select')}
+        </button>{' '}
         <span>&nbsp;&nbsp;&nbsp;</span>
         <span>
-          {" "}
-          {I18n.t("musit.texts.count")}:{this.state.totalObjectCount}
+          {' '}
+          {I18n.t('musit.texts.count')}:{this.state.totalObjectCount}
           &nbsp;&nbsp;&nbsp; Antall valgte: {this.state.selectedObjects.size}
         </span>
         <RightAlignedPagination
@@ -263,11 +255,11 @@ export class SelectAdditionalObjectsComponent extends React.Component<
         />
         <table className="table">
           <thead>
-            <tr key={"resultat"}>
-              <th> {I18n.t("musit.objectsearch.museumNo.label")}</th>
-              <th> {I18n.t("musit.objectsearch.subNo.label")}</th>
-              <th> {I18n.t("musit.objectsearch.term.label")}</th>
-              <th> {I18n.t("musit.texts.select")}</th>
+            <tr key={'resultat'}>
+              <th> {I18n.t('musit.objectsearch.museumNo.label')}</th>
+              <th> {I18n.t('musit.objectsearch.subNo.label')}</th>
+              <th> {I18n.t('musit.objectsearch.term.label')}</th>
+              <th> {I18n.t('musit.texts.select')}</th>
             </tr>
           </thead>
           <tbody>
@@ -282,9 +274,9 @@ export class SelectAdditionalObjectsComponent extends React.Component<
                   }}
                 >
                   {this.state.selectedObjects.has(o.id) ? (
-                    I18n.t("musit.texts.selected")
+                    I18n.t('musit.texts.selected')
                   ) : (
-                    I18n.t("musit.texts.notSelected")
+                    I18n.t('musit.texts.notSelected')
                   )}
                 </td>
               </tr>

@@ -1,10 +1,10 @@
 // @flow
-import React from "react";
-import { ActorSuggest } from "../../../components/suggest/ActorSuggest";
-import MusitActor from "../../../models/actor";
-import type { AppSession } from "../../../types/appSession";
-import type { Actor } from "types/actor";
-import { I18n } from "react-i18nify";
+import React from 'react';
+import { ActorSuggest } from '../../../components/suggest/ActorSuggest';
+import MusitActor from '../../../models/actor';
+import type { AppSession } from '../../../types/appSession';
+import type { Actor } from 'types/actor';
+import { I18n } from 'react-i18nify';
 
 export type Props = {
   id: string,
@@ -17,10 +17,7 @@ export type State = {
   name: ?string
 };
 
-export default class StatefulActorSuggest extends React.Component<
-  Props,
-  State
-> {
+export default class StatefulActorSuggest extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { name: null };
@@ -31,8 +28,8 @@ export default class StatefulActorSuggest extends React.Component<
       <ActorSuggest
         appSession={this.props.appSession}
         id={this.props.id}
-        value={this.state.name || this.props.value || ""}
-        placeHolder={I18n.t("musit.texts.findActor")}
+        value={this.state.name || this.props.value || ''}
+        placeHolder={I18n.t('musit.texts.findActor')}
         onChange={(actor: Actor) => {
           this.props.onChange(MusitActor.getActorId(actor));
           this.setState(() => ({ name: actor.fn }));

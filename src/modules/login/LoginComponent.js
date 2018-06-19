@@ -1,14 +1,14 @@
-import "./LoginComponent.css";
-import React from "react";
-import PropTypes from "prop-types";
-import { Grid, Row } from "react-bootstrap";
-import { I18n } from "react-i18nify";
-import NorwegianTranslation from "./LoginComponent_no.html.jsx";
-import EnglishTranslation from "./LoginComponent_en.html.jsx";
-import Logos from "../../components/logos/Logos";
-import LoginButton from "./LoginButton";
-import TermsAndConditions from "./TermsAndConditions";
-import { RxInjectLegacy as inject } from "../../shared/react-rxjs-patch/";
+import './LoginComponent.css';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Grid, Row } from 'react-bootstrap';
+import { I18n } from 'react-i18nify';
+import NorwegianTranslation from './LoginComponent_no.html.jsx';
+import EnglishTranslation from './LoginComponent_en.html.jsx';
+import Logos from '../../components/logos/Logos';
+import LoginButton from './LoginButton';
+import TermsAndConditions from './TermsAndConditions';
+import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
 
 export class LoginComponent extends React.Component {
   static propTypes = {
@@ -34,7 +34,7 @@ export class LoginComponent extends React.Component {
 
   render() {
     const Translated =
-      this.props.locale() === "no" ? NorwegianTranslation : EnglishTranslation;
+      this.props.locale() === 'no' ? NorwegianTranslation : EnglishTranslation;
     return (
       <div>
         <main>
@@ -44,9 +44,7 @@ export class LoginComponent extends React.Component {
                 <div>
                   {!this.props.user && (
                     <LoginButton>
-                      <span className="buttonText">
-                        {I18n.t("musit.login")}
-                      </span>
+                      <span className="buttonText">{I18n.t('musit.login')}</span>
                     </LoginButton>
                   )}
                   <div className="title">
@@ -58,10 +56,7 @@ export class LoginComponent extends React.Component {
             </Row>
           </Grid>
         </main>
-        <TermsAndConditions
-          isVisible={this.state.showModal}
-          hideModal={this.hideModal}
-        />
+        <TermsAndConditions isVisible={this.state.showModal} hideModal={this.hideModal} />
       </div>
     );
   }

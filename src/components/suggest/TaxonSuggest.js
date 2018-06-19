@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Autosuggest from "react-autosuggest";
-import Config from "../../config";
-import suggest$Fn, { update$, clear$ } from "./suggestStore";
-import { RxInjectLegacy as inject } from "../../shared/react-rxjs-patch";
+import React from 'react';
+import PropTypes from 'prop-types';
+import Autosuggest from 'react-autosuggest';
+import Config from '../../config';
+import suggest$Fn, { update$, clear$ } from './suggestStore';
+import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 
 export class TaxonSuggestComponent extends React.Component {
   static propTypes = {
@@ -35,7 +35,7 @@ export class TaxonSuggestComponent extends React.Component {
   TaxonProps = {
     id: this.props.id,
     placeholder: this.props.placeHolder,
-    type: "search",
+    type: 'search',
     onBlur: this.props.clear,
     onChange: (event, { newValue }) =>
       this.setState(ps => {
@@ -62,24 +62,22 @@ export class TaxonSuggestComponent extends React.Component {
         })}
         disabled={this.props.disabled}
         onSuggestionsFetchRequested={this.requestSuggestionUpdate}
-        onSuggestionsClearRequested={() =>
-          this.setState(() => ({ suggestions: [] }))}
+        onSuggestionsClearRequested={() => this.setState(() => ({ suggestions: [] }))}
         getSuggestionValue={suggestion => suggestion.scientificName}
         renderSuggestion={suggestion => (
           <span
-            className={"suggestion-content"}
-          >{`${suggestion.scientificName} ${suggestion.scientificNameAuthorship !=
-          null
+            className={'suggestion-content'}
+          >{`${suggestion.scientificName} ${suggestion.scientificNameAuthorship != null
             ? suggestion.scientificNameAuthorship
-            : ""} ${suggestion.acceptedNameUsage != null
-            ? "[" + suggestion.acceptedNameUsage.scientificName + "]"
-            : ""} `}</span>
+            : ''} ${suggestion.acceptedNameUsage != null
+            ? '[' + suggestion.acceptedNameUsage.scientificName + ']'
+            : ''} `}</span>
         )}
         inputProps={{
           ...this.TaxonProps,
           value: this.state.value
         }}
-        shouldRenderSuggestions={v => v !== "undefined"}
+        shouldRenderSuggestions={v => v !== 'undefined'}
         onSuggestionSelected={(event, { suggestion }) => {
           if (event.keyCode === 13) {
             event.preventDefault();
@@ -92,7 +90,7 @@ export class TaxonSuggestComponent extends React.Component {
 }
 
 const suggest$ = suggest$Fn(
-  "taxonSuggest",
+  'taxonSuggest',
   Config.magasin.urls.api.taxon.getLatinNamesMatch
 );
 
@@ -108,8 +106,6 @@ const data = {
 
 const commands = { update$, clear$ };
 
-export const TaxonSuggest = inject({ suggest$ }, commands)(
-  TaxonSuggestComponent
-);
+export const TaxonSuggest = inject({ suggest$ }, commands)(TaxonSuggestComponent);
 
 export default inject(data, commands)(TaxonSuggestComponent);

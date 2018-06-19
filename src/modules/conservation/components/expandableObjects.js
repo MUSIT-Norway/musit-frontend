@@ -1,8 +1,8 @@
 // @flow
-import React from "react";
-import ObjectResultTable from "./ObjectResultTable";
-import type { AppSession } from "../../../types/appSession";
-import type { History } from "../../../types/Routes";
+import React from 'react';
+import ObjectResultTable from './ObjectResultTable';
+import type { AppSession } from '../../../types/appSession';
+import type { History } from '../../../types/Routes';
 
 type Props = {
   data: Array<any>,
@@ -16,10 +16,7 @@ type State = {
   expandedRowIds: Array<string>
 };
 
-export default class ExpandableObjectTable extends React.Component<
-  Props,
-  State
-> {
+export default class ExpandableObjectTable extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -42,10 +39,7 @@ export default class ExpandableObjectTable extends React.Component<
     this.setState(() => ({ expandedRowIds: newExpandedRows }));
   }
 
-  static isRowIdExpanded(
-    currentExpandedRows: Array<string>,
-    rowId: string
-  ): boolean {
+  static isRowIdExpanded(currentExpandedRows: Array<string>, rowId: string): boolean {
     return !!currentExpandedRows.find(er => er === rowId);
   }
 
