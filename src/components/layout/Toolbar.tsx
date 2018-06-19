@@ -1,12 +1,12 @@
-import * as React from "react";
-import { Button } from "react-bootstrap";
-import { MusitField } from "../formfields";
-import * as FontAwesome from "react-fontawesome";
-import "./Toolbar.css";
-import { MouseEventHandler } from "react";
-import { TODO } from "../../types/common";
+import * as React from 'react';
+import { Button } from 'react-bootstrap';
+import { MusitField } from '../formfields';
+import * as FontAwesome from 'react-fontawesome';
+import './Toolbar.css';
+import { MouseEventHandler } from 'react';
+import { TODO } from '../../types/common';
 
-interface ToolbarProps  {
+interface ToolbarProps {
   showLeft: boolean; // PropTypes.bool.isRequired,
   showCenter: boolean;
   showRight?: boolean;
@@ -20,7 +20,7 @@ interface ToolbarProps  {
   searchValue?: string;
   onSearchChanged?: Function;
   hideRight?: boolean;
-};
+}
 
 /* OLD
   static propTypes = {
@@ -41,7 +41,6 @@ interface ToolbarProps  {
 */
 
 export default class Toolbar extends React.Component<ToolbarProps> {
-
   static defaultProps = {
     hideRight: false
   };

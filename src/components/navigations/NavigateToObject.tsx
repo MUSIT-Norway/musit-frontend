@@ -2,14 +2,14 @@
 import * as React from 'react';
 import { I18n } from 'react-i18nify';
 import Config from '../../config';
-import  { AppSession } from '../../types/appSession';
-import  { History } from 'history';
+import { AppSession } from '../../types/appSession';
+import { History } from 'history';
 
 type Props = {
-  appSession: AppSession,
-  objectId: string,
-  history: History,
-  className?: string
+  appSession: AppSession;
+  objectId: string;
+  history: History;
+  className?: string;
 };
 
 const NavigateToObject = (props: Props) => {

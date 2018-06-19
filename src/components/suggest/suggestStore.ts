@@ -26,6 +26,7 @@ export default (name: TODO, urlFn: TODO) =>
             .map(({ response }) => response)
             .catch(() => [])
         )
-        .map(suggestions => (state:TODO) => ({ ...state, data: suggestions }))) as TODO,
+        .map(suggestions => (state: TODO) => ({ ...state, data: suggestions }))
+    ) as TODO,
     {}
   );

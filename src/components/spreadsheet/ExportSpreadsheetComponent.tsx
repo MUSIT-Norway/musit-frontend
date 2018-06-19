@@ -6,10 +6,10 @@ import { jsonToWorksheetBinary } from './spreadsheet';
 import { stringToArrayBuffer } from './arrayBufferHelper';
 
 type Props = {
-  content: Array<any>,
-  displayName: string,
-  fileName: string,
-  styles?: Array<string>
+  content: Array<any>;
+  displayName: string;
+  fileName: string;
+  styles?: Array<string>;
 };
 
 const downloadExcelSheet = (jsonContent: Array<any>, name: string) => {

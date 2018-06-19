@@ -7,8 +7,6 @@ import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 import { AppSession } from '../../types/appSession';
 import { TODO } from '../../types/common';
 
-
-
 interface AddressSuggestion {
   street: TODO;
   streetNo: TODO;
@@ -44,8 +42,11 @@ interface AddressSuggestProps {
 
 type AddressSuggestState = {
   value: TODO;
-}
-export class AddressSuggest extends React.Component<AddressSuggestProps, AddressSuggestState> {
+};
+export class AddressSuggest extends React.Component<
+  AddressSuggestProps,
+  AddressSuggestState
+> {
   static defaultProps = {
     id: 'addressField',
     disabled: false,
@@ -111,7 +112,7 @@ export class AddressSuggest extends React.Component<AddressSuggestProps, Address
         onSuggestionsFetchRequested={this.requestSuggestionUpdate}
         getSuggestionValue={this.getAddressSuggestionValue}
         renderSuggestion={this.renderAddressSuggestion}
-        inputProps={{ ...this.doneByProps as TODO, value: this.state.value}}
+        inputProps={{ ...this.doneByProps as TODO, value: this.state.value }}
         shouldRenderSuggestions={v => v !== 'undefined'}
         onSuggestionSelected={this.onSuggestionSelected}
       />

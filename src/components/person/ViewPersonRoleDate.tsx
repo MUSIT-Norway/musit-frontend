@@ -3,11 +3,11 @@ import * as React from 'react';
 import { DATE_FORMAT_DISPLAY } from '../../shared/util';
 import * as moment from 'moment';
 import { I18n } from 'react-i18nify';
-import  { Person } from '../../types/person';
+import { Person } from '../../types/person';
 
 type Props = {
-  personData: Array<Person>,
-  getDisplayNameForRole?: Function
+  personData: Array<Person>;
+  getDisplayNameForRole?: Function;
 };
 
 export const ViewPersonRoleDate = ({ personData, getDisplayNameForRole }: Props) => (

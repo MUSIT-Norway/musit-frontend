@@ -21,8 +21,7 @@ import * as React from 'react';
 import { Component } from 'react';
 import validate from '../common/validators';
 
-
-interface MusitTextAreaProps  {
+interface MusitTextAreaProps {
   value: string;
   placeHolder?: string;
   tooltip?: string;
@@ -33,7 +32,7 @@ interface MusitTextAreaProps  {
   precision?: number;
   numberOfRows?: number;
   disabled?: boolean;
-};
+}
 
 /*OLD
     value: PropTypes.string, // Should be any
@@ -50,7 +49,6 @@ interface MusitTextAreaProps  {
 */
 
 export default class MusitTextArea extends Component<MusitTextAreaProps> {
-  
   classNameOnlyWithInput() {
     let lvString = '';
     if (validate(this.props) === 'error') {

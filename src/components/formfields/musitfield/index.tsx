@@ -17,9 +17,9 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import * as React from "react";
-import { Component, FocusEventHandler } from "react";
-import validate from "../common/validators";
+import * as React from 'react';
+import { Component, FocusEventHandler } from 'react';
+import validate from '../common/validators';
 
 interface MusitFieldProps {
   id?: string;
@@ -62,29 +62,33 @@ interface MusitFieldProps {
 
 export default class MusitField extends Component<MusitFieldProps> {
   static defaultProps = {
-    value: ""
+    value: ''
   };
 
   classNameWithSpan() {
-    let lvString = " ";
+    let lvString = ' ';
     if (
-      this.props.validator ? this.props.validator(this.props) : validate(this.props) === "error"
+      this.props.validator
+        ? this.props.validator(this.props)
+        : validate(this.props) === 'error'
     ) {
-      lvString = "input-group has-error";
+      lvString = 'input-group has-error';
     } else {
-      lvString = "input-group";
+      lvString = 'input-group';
     }
     return lvString;
   }
 
   classNameOnlyWithInput() {
-    let lvString = "";
+    let lvString = '';
     if (
-      this.props.validator ? this.props.validator(this.props) : validate(this.props) === "error"
+      this.props.validator
+        ? this.props.validator(this.props)
+        : validate(this.props) === 'error'
     ) {
-      lvString = "has-error";
+      lvString = 'has-error';
     } else {
-      lvString = "";
+      lvString = '';
     }
     return lvString;
   }

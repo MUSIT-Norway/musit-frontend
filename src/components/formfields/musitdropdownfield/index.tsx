@@ -1,18 +1,18 @@
-import * as React from "react";
-import Select from "react-select";
-import validate from "../common/validators";
-import { I18n } from "react-i18nify";
-import { Component } from "react";
-import { TODO } from "../../../types/common";
+import * as React from 'react';
+import Select from 'react-select';
+import validate from '../common/validators';
+import { I18n } from 'react-i18nify';
+import { Component } from 'react';
+import { TODO } from '../../../types/common';
 
-interface MusitDropDownFieldProps  {
+interface MusitDropDownFieldProps {
   value?: string; // Should be any
   addOnPrefix?: string;
   help?: string; // always ? on add on after
   placeHolder?: string;
   tooltip?: string;
   onChange: Function; // func.isRequired,
-  validate?: string;  // PropTypes.string,
+  validate?: string; // PropTypes.string,
   minimumLength?: number;
   maximumLength?: number;
   validator?: Function;
@@ -20,7 +20,7 @@ interface MusitDropDownFieldProps  {
   items: Array<any>; // PropTypes.array.isRequired,
   translateKeyPrefix?: string;
   disabled?: boolean;
-};
+}
 
 /*#OLD
 static propTypes = {
@@ -43,38 +43,44 @@ static propTypes = {
 
 export default class MusitDropDownField extends Component<MusitDropDownFieldProps> {
   static defaultProps = {
-    validate: "text",
-    value: "",
-    placeHolder: "Choose ..."
+    validate: 'text',
+    value: '',
+    placeHolder: 'Choose ...'
   };
 
   getOptions() {
     return this.props.items.map(el => ({
       value: el,
-      label: this.props.translateKeyPrefix ? I18n.t(this.props.translateKeyPrefix.concat(el)) : el
+      label: this.props.translateKeyPrefix
+        ? I18n.t(this.props.translateKeyPrefix.concat(el))
+        : el
     }));
   }
 
   classNameOnlyWithInput() {
-    let lvString = "";
+    let lvString = '';
     if (
-      this.props.validator ? this.props.validator(this.props) : validate(this.props) === "error"
+      this.props.validator
+        ? this.props.validator(this.props)
+        : validate(this.props) === 'error'
     ) {
-      lvString = "has-error";
+      lvString = 'has-error';
     } else {
-      lvString = "";
+      lvString = '';
     }
     return lvString;
   }
 
   classNameWithSpan() {
-    let lvString = " ";
+    let lvString = ' ';
     if (
-      this.props.validator ? this.props.validator(this.props) : validate(this.props) === "error"
+      this.props.validator
+        ? this.props.validator(this.props)
+        : validate(this.props) === 'error'
     ) {
-      lvString = "input-group has-error";
+      lvString = 'input-group has-error';
     } else {
-      lvString = "input-group";
+      lvString = 'input-group';
     }
     return lvString;
   }
@@ -86,13 +92,13 @@ export default class MusitDropDownField extends Component<MusitDropDownFieldProp
     const lcPlaceholder = (
       <Select
         placeholder={this.props.placeHolder}
-        style={this.props.disabled ? { backgroundColor: "#eee" } : undefined}
+        style={this.props.disabled ? { backgroundColor: '#eee' } : undefined}
         disabled={this.props.disabled}
         value={this.props.value}
         options={this.getOptions()}
         onChange={el => this.props.onChange((el as TODO).value)}
         data-toggle="tooltip"
-      //  title={this.props.tooltip}
+        //  title={this.props.tooltip}
         clearable={false}
       />
     );
@@ -110,5 +116,3 @@ export default class MusitDropDownField extends Component<MusitDropDownFieldProp
     );
   }
 }
-
-

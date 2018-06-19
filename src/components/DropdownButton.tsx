@@ -4,11 +4,11 @@ import { DropdownButton, MenuItem } from 'react-bootstrap';
 import { Maybe } from '../types/common';
 
 type FieldDropDownProps = {
-  id: string,
-  onChange: Function,
-  items: Array<string>,
-  displayItems: Maybe<Array<string>>,
-  title: string
+  id: string;
+  onChange: Function;
+  items: Array<string>;
+  displayItems: Maybe<Array<string>>;
+  title: string;
 };
 
 export default function({

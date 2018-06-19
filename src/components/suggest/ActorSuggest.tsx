@@ -4,9 +4,8 @@ import * as Autosuggest from 'react-autosuggest';
 import Config from '../../config';
 import suggest$Fn, { update$, clear$ } from './suggestStore';
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
-import { AppSession } from "../../types/appSession";
-import { TODO, MUSTFIX } from "../../types/common";
-
+import { AppSession } from '../../types/appSession';
+import { TODO, MUSTFIX } from '../../types/common';
 
 type ActorSuggestProps = {
   id: string; // PropTypes.string.isRequired,
@@ -39,7 +38,10 @@ type ActorSuggestState = {
   };
 */
 
-export class ActorSuggestComponent extends React.Component<ActorSuggestProps, ActorSuggestState> {
+export class ActorSuggestComponent extends React.Component<
+  ActorSuggestProps,
+  ActorSuggestState
+> {
   constructor(props: ActorSuggestProps) {
     super(props);
     this.requestSuggestionUpdate = this.requestSuggestionUpdate.bind(this);
@@ -59,10 +61,11 @@ export class ActorSuggestComponent extends React.Component<ActorSuggestProps, Ac
     placeholder: this.props.placeHolder,
     type: 'search',
     onBlur: this.props.clear,
-    onChange: (event:TODO, { newValue }:TODO) => this.setState(ps => ({ ...ps, value: newValue }))
+    onChange: (event: TODO, { newValue }: TODO) =>
+      this.setState(ps => ({ ...ps, value: newValue }))
   };
 
-  requestSuggestionUpdate(update:TODO) {
+  requestSuggestionUpdate(update: TODO) {
     if (update.value.length > 2) {
       const museumId = this.props.appSession.museumId;
       const token = this.props.appSession.accessToken;
@@ -74,8 +77,7 @@ export class ActorSuggestComponent extends React.Component<ActorSuggestProps, Ac
     return (
       <Autosuggest
         suggestions={(this.props.suggest as MUSTFIX).data || []}
-        
-        onSuggestionsFetchRequested={this.requestSuggestionUpdate} 
+        onSuggestionsFetchRequested={this.requestSuggestionUpdate}
         //TODO: Is this needed?: onSuggestionsUpdateRequested={this.requestSuggestionUpdate as TODO}
 
         /*TODO: disable doesn't exist in AutoSuggest, so I had to remove this: 
@@ -87,12 +89,14 @@ export class ActorSuggestComponent extends React.Component<ActorSuggestProps, Ac
         renderSuggestion={suggestion => (
           <span className={'suggestion-content'}>{`${suggestion.fn}`}</span>
         )}
-        inputProps={{
-          ...this.doneByProps,
-          value: this.state.value
-        } as TODO}
+        inputProps={
+          {
+            ...this.doneByProps,
+            value: this.state.value
+          } as TODO
+        }
         shouldRenderSuggestions={v => v !== 'undefined'}
-        onSuggestionSelected={(event:TODO, { suggestion }) => {
+        onSuggestionSelected={(event: TODO, { suggestion }) => {
           if (event.keyCode === 13) {
             event.preventDefault();
           }

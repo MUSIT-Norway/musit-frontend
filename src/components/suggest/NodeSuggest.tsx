@@ -1,10 +1,10 @@
-import * as React from "react";
-import * as AutoSuggest from "react-autosuggest";
+import * as React from 'react';
+import * as AutoSuggest from 'react-autosuggest';
 import Config from '../../config';
 import suggest$Fn, { update$, clear$ } from './suggestStore';
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
-import { AppSession } from "../../types/appSession";
-import { TODO, MUSTFIX } from "../../types/common";
+import { AppSession } from '../../types/appSession';
+import { TODO, MUSTFIX } from '../../types/common';
 
 /* OLD:
   static propTypes = {
@@ -38,8 +38,7 @@ interface NodeSuggestion {
   name: string;
 }
 
-export class NodeSuggest extends React.Component <NodeSuggestProps, NodeSuggestState> {
-
+export class NodeSuggest extends React.Component<NodeSuggestProps, NodeSuggestState> {
   static defaultProps = {
     id: 'nodeField',
     disabled: false,
@@ -76,7 +75,6 @@ export class NodeSuggest extends React.Component <NodeSuggestProps, NodeSuggestS
     return suggestion.name;
   }
 
-  
   nodeProps = {
     id: this.props.id,
     placeholder: this.props.placeHolder,

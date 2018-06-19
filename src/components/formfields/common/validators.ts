@@ -1,6 +1,6 @@
-import { TODO } from "../../../types/common";
+import { TODO } from '../../../types/common';
 
-export const validateString = (inValue:TODO, minimumLength = 0, maximumLength = 20) => {
+export const validateString = (inValue: TODO, minimumLength = 0, maximumLength = 20) => {
   const value = inValue ? inValue.trim() : '';
   return value.length < minimumLength || value.length > maximumLength
     ? 'error'
@@ -30,8 +30,8 @@ export const validateNumber = (
   return matches ? 'success' : 'error';
 };
 
-const validate = (source:TODO) => {
-  let lValue:string | null = ''; //TODO: Use undefined instead of null?
+const validate = (source: TODO) => {
+  let lValue: string | null = ''; //TODO: Use undefined instead of null?
   if (source.validator) {
     lValue = source.validator;
   } else {

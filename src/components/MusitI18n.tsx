@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 import { AppSession } from '../types/appSession';
 
-export type Props = { en: string, no: string, appSession: AppSession };
+export type Props = { en: string; no: string; appSession: AppSession };
 
 export const MusitI18n = (props: Props) => {
   if (props.appSession.language.isEn) {

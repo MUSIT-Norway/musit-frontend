@@ -1,9 +1,9 @@
 // @flow
-import * as React from "react";
-import * as FontAwesome from "react-fontawesome";
-import * as moment from "moment";
-import { I18n } from "react-i18nify";
-import { Maybe } from "../../types/common";
+import * as React from 'react';
+import * as FontAwesome from 'react-fontawesome';
+import * as moment from 'moment';
+import { I18n } from 'react-i18nify';
+import { Maybe } from '../../types/common';
 
 type Props = {
   onClickEdit?: (e: { preventDefault: Function }) => void;

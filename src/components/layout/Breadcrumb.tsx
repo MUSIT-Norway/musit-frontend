@@ -1,13 +1,11 @@
-import * as React from "react";
-import * as FontAwesome from "react-fontawesome";
-import { takeRight } from "lodash";
-import { map } from "lodash";
-import { OverlayTrigger, Popover } from "react-bootstrap";
-import { TODO } from "../../types/common";
-
+import * as React from 'react';
+import * as FontAwesome from 'react-fontawesome';
+import { takeRight } from 'lodash';
+import { map } from 'lodash';
+import { OverlayTrigger, Popover } from 'react-bootstrap';
+import { TODO } from '../../types/common';
 
 interface BreadcrumbItemProps {
-  
   displayName?: string;
   name?: string;
   url?: string;
@@ -24,8 +22,7 @@ interface BreadcrumbProps {
   allActive?: boolean;
 }
 
-
-const tooltip = (tipText:TODO, child:TODO) => (
+const tooltip = (tipText: TODO, child: TODO) => (
   <OverlayTrigger
     placement="top"
     overlay={<Popover id="breadcrumb tooltip">{tipText}</Popover>}
@@ -34,8 +31,7 @@ const tooltip = (tipText:TODO, child:TODO) => (
   </OverlayTrigger>
 );
 
-
-const CrumbItem: React.SFC<BreadcrumbItemProps>  = props => {
+const CrumbItem: React.SFC<BreadcrumbItemProps> = props => {
   const name =
     props.displayName ||
     (props.name && props.name.length > 20 + 2
@@ -65,12 +61,9 @@ const CrumbItem: React.SFC<BreadcrumbItemProps>  = props => {
 
 const crumbLimit: number = 3;
 
-
-
-
 class Breadcrumb extends React.Component<BreadcrumbProps> {
   render() {
-    const clickCrumb = (node:TODO) => (evt:TODO) => {
+    const clickCrumb = (node: TODO) => (evt: TODO) => {
       evt.preventDefault();
       this.props.onClickCrumb(node);
       evt.stopPropagation();

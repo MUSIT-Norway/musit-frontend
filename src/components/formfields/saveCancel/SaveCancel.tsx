@@ -1,7 +1,6 @@
-import * as React from "react";
+import * as React from 'react';
 import { Button, Row, Col } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
-
 
 interface SaveCancelProps {
   id?: string;
@@ -25,7 +24,8 @@ SaveCancel.propTypes = {
 };
 */
 
-const SaveCancel: React.SFC<SaveCancelProps> = props => (  <Row>
+const SaveCancel: React.SFC<SaveCancelProps> = props => (
+  <Row>
     <Col
       xs={6}
       sm={5}
@@ -56,7 +56,6 @@ const SaveCancel: React.SFC<SaveCancelProps> = props => (  <Row>
     </Col>
   </Row>
 );
-
 
 SaveCancel.displayName = 'SaveCancel';
 

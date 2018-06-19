@@ -7,15 +7,15 @@ import { eventTargetResult, TODO } from '../../types/common';
 
 declare var FileReader: any;
 type Props = {
-  loadContent: (content: Array<any>) => void,
-  header?: Array<string>
+  loadContent: (content: Array<any>) => void;
+  header?: Array<string>;
 };
 
 /**
  * IE doesn't have the `FileRead.readAsBinaryString` function so we have to do
  * some extra job to get the right types.. Thank you IE!!
  */
-const handleFile = (loadContent: TODO, header: TODO) => (e:TODO) => {
+const handleFile = (loadContent: TODO, header: TODO) => (e: TODO) => {
   const files = e.target.files;
   if (files.length === 1) {
     const reader: FileReader = new FileReader();

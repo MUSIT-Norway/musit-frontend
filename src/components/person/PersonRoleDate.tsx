@@ -5,12 +5,12 @@ import { Row, Col } from 'react-bootstrap';
 import DropdownButton from '../../components/DropdownButton';
 import DatePicker from '../DatePicker';
 import { DATE_FORMAT_DISPLAY } from '../../shared/util';
-import  { AppSession } from '../../types/appSession';
-import  { Person } from '../../types/person';
+import { AppSession } from '../../types/appSession';
+import { Person } from '../../types/person';
 import MusitActor from '../../models/actor';
 import * as moment from 'moment';
 import { I18n } from 'react-i18nify';
-import {  TODO } from '../../types/common';
+import { TODO } from '../../types/common';
 
 const defaultPerson: Person = {
   name: '',
@@ -22,13 +22,13 @@ const defaultPerson: Person = {
 const defaultPersons: Array<Person> = [defaultPerson];
 
 type Props = {
-  personData: Array<Person>,
-  updateForm: Function,
-  fieldName: string,
-  appSession: AppSession,
-  roles: Array<string>,
-  showDateForRole?: Function,
-  getDisplayNameForRole?: Function
+  personData: Array<Person>;
+  updateForm: Function;
+  fieldName: string;
+  appSession: AppSession;
+  roles: Array<string>;
+  showDateForRole?: Function;
+  getDisplayNameForRole?: Function;
 };
 
 export const PersonRoleDate = ({
@@ -68,7 +68,7 @@ export const PersonRoleDate = ({
                     id={`id_${i}`}
                     value={v.name || ''}
                     placeHolder={I18n.t('musit.analysis.restrictions.findActor')}
-                    onChange={(newValue:TODO) => {
+                    onChange={(newValue: TODO) => {
                       updateForm({
                         name: fieldName,
                         rawValue: updatePerson(
@@ -92,7 +92,7 @@ export const PersonRoleDate = ({
                       r => (getDisplayNameForRole && getDisplayNameForRole(r)) || r
                     )}
                     //Originally had this assignment, but this property doesn't seem to exist: index={i}
-                    onChange={(r:TODO) =>
+                    onChange={(r: TODO) =>
                       updateForm({
                         name: fieldName,
                         rawValue: updateRole(i, r, pArr)
@@ -113,12 +113,12 @@ export const PersonRoleDate = ({
                     <DatePicker
                       dateFormat={DATE_FORMAT_DISPLAY}
                       value={v.date}
-                      onClear={(newValue:TODO) =>
+                      onClear={(newValue: TODO) =>
                         updateForm({
                           name: fieldName,
                           rawValue: updateDate(i, newValue, pArr)
                         })}
-                      onChange={(newValue:TODO) => {
+                      onChange={(newValue: TODO) => {
                         updateForm({
                           name: fieldName,
                           rawValue: updateDate(i, newValue, pArr)
@@ -174,15 +174,15 @@ function deletePerson(i: number, persons: Array<Person>): Array<Person> {
   return [...persons.slice(0, i), ...persons.slice(i + 1)];
 }
 
-function updateRole(i:number, role: string | number, persons: Array<Person>) {
+function updateRole(i: number, role: string | number, persons: Array<Person>) {
   return updatePerson(i, { ...persons[i], role }, persons);
 }
 
-function updateDate(i:number, date: string, persons: Array<Person>) {
+function updateDate(i: number, date: string, persons: Array<Person>) {
   return updatePerson(i, { ...persons[i], date }, persons);
 }
 
-function updatePerson(i:number, person: Person, persons: Array<Person>) {
+function updatePerson(i: number, person: Person, persons: Array<Person>) {
   return [...persons.slice(0, i), person, ...persons.slice(i + 1)];
 }
 

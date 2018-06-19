@@ -7,7 +7,7 @@ import * as Logo5 from './assets/ntnu_u-slagord.png';
 import './Logos.css';
 import { TODO } from '../../types/common';
 
-export default (props:TODO) => (
+export default (props: TODO) => (
   <div className="logos" style={props.style}>
     <img style={{ height: '60px' }} alt="logo" src={Logo1} />
     <img style={{ height: '60px' }} alt="logo" src={Logo2} />

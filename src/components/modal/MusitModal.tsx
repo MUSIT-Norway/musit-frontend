@@ -21,7 +21,7 @@ import * as React from 'react';
 import './MusitModal.css';
 import { TODO } from '../../types/common';
 
-const MusitModal = (props:TODO) => {
+const MusitModal = (props: TODO) => {
   const extraClassName = props.className ? ' ' + props.className : '';
   return (
     <div className={`musit-modal${extraClassName}`} style={{ ...props.style }}>
