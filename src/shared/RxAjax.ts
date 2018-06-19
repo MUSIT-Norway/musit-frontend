@@ -30,7 +30,7 @@ export function onFailure<R>(
         }
         if (localStorage.getItem('accessToken')) {
           localStorage.removeItem('accessToken');
-          setAccessToken$.next(null);
+          setAccessToken$.next(undefined);
           window.location.replace('/');
           emitError({ ...error, type: 'network' });
         }

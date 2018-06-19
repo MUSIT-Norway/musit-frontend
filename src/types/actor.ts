@@ -1,11 +1,11 @@
 // @flow
 
 import { ActorId } from './ids';
-import { Maybe } from './common';
 
 export type Actor = {
-  dataportenId?: Maybe<string>;
-  applicationId?: Maybe<string>;
+  dataportenId?: string;
+  applicationId?: string;
+  dataportenUser?: string;
   fn: string;
 };
 

@@ -37,7 +37,7 @@ class MusitObject {
     ajaxPut: AjaxPut<*>
   ) => void;
   static getObjectLocations: (
-    ajaxPost: AjaxPost<*>
+    ajaxPost?: AjaxPost<*>
   ) => (props: {
     movableObjects: Array<MovableObject>,
     museumId: MuseumId,
@@ -112,7 +112,7 @@ class MusitObject {
     callback?: Callback<*>
   }) => Observable<*>;
   static findByBarcode: (
-    ajaxGet: AjaxGet<*>
+    ajaxGet?: AjaxGet<*>
   ) => (props: {
     barcode: number,
     museumId: number,

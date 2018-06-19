@@ -42,4 +42,5 @@ export interface AppSession {
   };
   buildInfo?: BuildInfo;
   groups?: Array<Group>;
+  isGod?: boolean;
 }

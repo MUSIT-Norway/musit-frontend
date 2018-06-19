@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { createStore } from 'react-rxjs';
 import { createAction } from '../shared/react-rxjs-patch';
 import { simpleGet } from '../shared/RxAjax';
@@ -7,16 +7,32 @@ import { getAccessToken } from '../shared/token';
 import { emitError } from '../shared/errors';
 import { getDisplayName } from '../shared/util';
 import { I18n } from 'react-i18nify';
-import orderBy from 'lodash/orderBy';
-import React from 'react';
-import PropTypes from 'prop-types';
-import isEqualWith from 'lodash/isEqualWith';
+import { orderBy } from 'lodash';
+import * as React from 'react';
+import { isEqualWith } from 'lodash';
 import { getLanguage } from '../shared/language';
 import { KEEP_ALIVE } from './constants';
 import { sortBy } from 'lodash';
+import { AppSession } from '../types/appSession';
+import { TODO, MUSTFIX } from '../types/common';
 
-export const makeUrlAware = Component => {
-  class Wrapper extends React.Component {
+export interface MusitMatch {
+  params: {
+    museumId?: string;
+    collectionIds?: string;
+    id?: string;
+  };
+}
+
+interface WrapperProps {
+  appSession: AppSession;
+  match: MusitMatch;
+  refreshSession: Function; // (newParams, newProps.appSession);
+}
+
+export const makeUrlAware = (Component: TODO) => {
+  class Wrapper extends React.Component<WrapperProps> {
+    /*#OLD
     static propTypes = {
       appSession: PropTypes.shape({
         museumId: PropTypes.number.isRequired,
@@ -28,7 +44,7 @@ export const makeUrlAware = Component => {
           collectionIds: PropTypes.string
         })
       })
-    };
+    };*/
 
     static defaultProps = {
       refreshSession: refreshSession()
@@ -38,11 +54,11 @@ export const makeUrlAware = Component => {
       this.diffPropsAndRefresh(this.props);
     }
 
-    componentWillReceiveProps(newProps) {
+    componentWillReceiveProps(newProps: WrapperProps) {
       this.diffPropsAndRefresh(newProps);
     }
 
-    diffPropsAndRefresh(newProps) {
+    diffPropsAndRefresh(newProps: WrapperProps) {
       const newParams = this.getParams(newProps);
       const routerMatchDiffFromSession = this.isRouterMatchDifferentFromSession(
         newParams,
@@ -53,11 +69,11 @@ export const makeUrlAware = Component => {
       }
     }
 
-    getParams(newProps) {
+    getParams(newProps: WrapperProps) {
       return (newProps.match && newProps.match.params) || {};
     }
 
-    isRouterMatchDifferentFromSession(newParams, appSession) {
+    isRouterMatchDifferentFromSession(newParams: TODO, appSession: AppSession) {
       return !isEqualWith(
         newParams,
         appSession,
@@ -79,7 +95,7 @@ export const makeUrlAware = Component => {
       return <Component {...this.props} />;
     }
   }
-  Wrapper.displayName = `UrlAware(${getDisplayName(Component)})`;
+  (Wrapper as TODO).displayName = `UrlAware(${getDisplayName(Component)})`;
   return Wrapper;
 };
 
@@ -98,7 +114,7 @@ const initialState = {
   rolesForModules: rolesForModules
 };
 
-const loadAppSession = (ajaxGet = simpleGet, accessToken) => {
+const loadAppSession = (ajaxGet = simpleGet, accessToken: TODO) => {
   accessToken = accessToken || getAccessToken();
   if (!accessToken) {
     return Observable.empty();
@@ -115,12 +131,12 @@ const loadAppSession = (ajaxGet = simpleGet, accessToken) => {
       if (!response) {
         throw new Error(I18n.t('musit.errorMainMessages.noGroups'));
       }
-      const isGod = !!response.find(group => 10000 === group.permission);
+      const isGod = !!response.find((group: TODO) => 10000 === group.permission);
       let groups;
       if (isGod) {
         groups = museumsRes.response
-          .filter(museum => 10000 !== museum.id)
-          .map(museum => ({
+          .filter((museum: TODO) => 10000 !== museum.id)
+          .map((museum: TODO) => ({
             ...museum,
             museumId: museum.id,
             museumName: museum.shortName,
@@ -195,9 +211,10 @@ const loadAppSession = (ajaxGet = simpleGet, accessToken) => {
             ]
           }));
       } else {
-        groups = response.map(group => ({
+        groups = response.map((group: TODO) => ({
           ...group,
-          museumName: museumsRes.response.find(m => m.id === group.museumId).shortName
+          museumName: museumsRes.response.find((m: TODO) => m.id === group.museumId)
+            .shortName
         }));
       }
 
@@ -213,14 +230,16 @@ const loadAppSession = (ajaxGet = simpleGet, accessToken) => {
         storedCollectionId &&
         orderedGroups.some(g =>
           g.collections.some(
-            c => c.uuid === storedCollectionId && g.museumId.toString() === storedMuseumId
+            (c: TODO) =>
+              c.uuid === storedCollectionId && g.museumId.toString() === storedMuseumId
           )
         )
           ? storedCollectionId
           : orderedGroups[0].collections[0].uuid;
 
       !storedMuseumId && localStorage.setItem('museumId', museumId);
-      !storedCollectionId && localStorage.setItem('collectionId', collectionId);
+      !storedCollectionId &&
+        localStorage.setItem('collectionId', collectionId as MUSTFIX);
 
       setRolesForModules$.next({
         email: currentUserRes.response.dataportenUser,
@@ -246,10 +265,10 @@ const loadAppSession = (ajaxGet = simpleGet, accessToken) => {
 };
 
 const getRolesForModules = (props: {
-  email: string,
-  museumId: number,
-  collectionId: string,
-  isGod: boolean
+  email: string;
+  museumId: number;
+  collectionId: string;
+  isGod: boolean;
 }) => {
   const accessToken = getAccessToken();
   if (!accessToken) {
@@ -334,12 +353,12 @@ export const setCollectionId$ = createAction('setCollectionId$');
 export const setAccessToken$ = createAction('setAccessToken$');
 export const setRolesForModules$ = createAction('setRolesForModules$').switchMap(
   getRolesForModules
-);
+) as Subject<{}>; //TODO: Make this less ugly!
 
 export const refreshSession = (
-  setMuseum = id => setMuseumId$.next(id),
-  setCollection = id => setCollectionId$.next(id)
-) => (params, appSession) => {
+  setMuseum = (id: TODO) => setMuseumId$.next(id),
+  setCollection = (id: TODO) => setCollectionId$.next(id)
+) => (params: TODO, appSession: AppSession) => {
   const museumId = appSession.museumId;
   const museumIdFromParam = parseInt(params.museumId, 10);
   if (museumIdFromParam && museumIdFromParam !== museumId) {
@@ -358,22 +377,34 @@ export const refreshSession = (
   });
 };
 
-export const reducer$ = (actions, onError = emitError) =>
+export const reducer$ = (actions: TODO, onError = emitError) =>
   Observable.merge(
-    actions.setAccessToken$.map(accessToken => state => ({ ...state, accessToken })),
+    actions.setAccessToken$.map((accessToken: TODO) => (state: TODO) => ({
+      ...state,
+      accessToken
+    })),
     actions.loadAppSession$
-      .map(session => state => ({ ...state, ...session }))
-      .catch(error => {
+      .map((session: TODO) => (state: TODO) => ({ ...state, ...session }))
+      .catch((error: TODO) => {
         onError(error);
-        return Observable.of(state => ({ ...state, accessToken: null }));
+        return Observable.of((state: TODO) => ({ ...state, accessToken: null }));
       }),
-    actions.setMuseumId$.map(museumId => state => ({ ...state, museumId })),
-    actions.setCollectionId$.map(collectionId => state => ({ ...state, collectionId })),
+    actions.setMuseumId$.map((museumId: TODO) => (state: TODO) => ({
+      ...state,
+      museumId
+    })),
+    actions.setCollectionId$.map((collectionId: TODO) => (state: TODO) => ({
+      ...state,
+      collectionId
+    })),
     actions.setRolesForModules$
-      .map(rolesForModules => state => ({ ...state, rolesForModules: rolesForModules }))
-      .catch(error => {
+      .map((rolesForModules: TODO) => (state: TODO) => ({
+        ...state,
+        rolesForModules: rolesForModules
+      }))
+      .catch((error: TODO) => {
         onError(error);
-        return Observable.of(state => ({ ...state }));
+        return Observable.of((state: TODO) => ({ ...state }));
       })
   );
 
@@ -385,7 +416,7 @@ const session$ = (
     loadAppSession$,
     setRolesForModules$
   }
-) => createStore('appSession', reducer$(actions$), initialState, KEEP_ALIVE);
+) => createStore('appSession', reducer$(actions$) as MUSTFIX, initialState, KEEP_ALIVE);
 
 const store$ = session$();
 

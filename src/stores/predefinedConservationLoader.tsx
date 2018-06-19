@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import predefinedConservation$, {
   loadSampleTypes$,
   setLoadingSampleTypes$,
@@ -9,21 +9,21 @@ import predefinedConservation$, {
 import appSession$ from './appSession';
 import { inject } from 'react-rxjs';
 import { Observable } from 'rxjs';
-import type { PredefinedConservation } from 'types/predefinedConservation';
-import type { AppSession } from 'types/appSession';
-
-type Props = {
-  appSession: AppSession,
-  component: Function,
-  setLoadingSampleTypes: Function,
-  loadSampleTypes: Function,
-  predefinedConservation: PredefinedConservation,
-  setLoadingConservationTypes: Function,
-  loadConservationTypes: Function
+import { PredefinedConservation } from '../types/predefinedConservation';
+import { AppSession } from '../types/appSession';
+import { Star, TODO } from '../types/common';
+type Props<T> = {
+  appSession: AppSession;
+  component: React.ComponentType<T>;
+  setLoadingSampleTypes: Function;
+  loadSampleTypes: Function;
+  predefinedConservation: PredefinedConservation;
+  setLoadingConservationTypes: Function;
+  loadConservationTypes: Function;
 };
 
-class PredefinedConservationLoader extends React.Component<Props, void> {
-  props: Props;
+class PredefinedConservationLoader<T> extends React.Component<Props<T>> {
+  //#OLD props: Props;
 
   componentWillMount() {
     const inputParams = {
@@ -65,23 +65,23 @@ class PredefinedConservationLoader extends React.Component<Props, void> {
 }
 
 export function loadPredefinedConservationTypes<P>(
-  Component: React$ComponentType<P>
-): React$ComponentType<P> {
+  Component: React.ComponentType<P>
+): React.ComponentType<P> {
   return loadCustomPredefinedConservationTypes(
     predefinedConservation$,
-    appSession$,
+    appSession$ as TODO,
     Component
   );
 }
 
 export function loadCustomPredefinedConservationTypes<P>(
-  predefinedConservation$: Observable<*>,
-  appSession$: Observable<*>,
-  Component: React$ComponentType<P>
-): React$ComponentType<P> {
+  predefinedConservation$: Observable<Star>,
+  appSession$: Observable<AppSession>,
+  Component: React.ComponentType<P>
+): React.ComponentType<P> {
   type DataType = {
-    predefinedConservation: PredefinedConservation,
-    appSession: AppSession
+    predefinedConservation: PredefinedConservation;
+    appSession: AppSession;
   };
   const data$: Observable<DataType> = Observable.combineLatest(
     predefinedConservation$,
@@ -92,17 +92,17 @@ export function loadCustomPredefinedConservationTypes<P>(
   }));
   return inject(data$, (predefinedConservation: DataType, upstream: P) => ({
     ...predefinedConservation,
-    ...(upstream: any)
+    ...upstream as TODO
   }))(
     (
       initialProps: P & {
-        predefinedConservation: PredefinedConservation,
-        appSession: AppSession
+        predefinedConservation: PredefinedConservation;
+        appSession: AppSession;
       }
     ) => {
       return (
         <PredefinedConservationLoader
-          {...(initialProps: any)}
+          {...initialProps}
           component={Component}
           setLoadingSampleTypes={setLoadingSampleTypes$.next.bind(setLoadingSampleTypes$)}
           loadSampleTypes={loadSampleTypes$.next.bind(loadSampleTypes$)}

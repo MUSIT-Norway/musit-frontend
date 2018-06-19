@@ -5,36 +5,41 @@ import Sample from '../models/sample';
 import Conservation from '../models/conservation';
 import { createStore } from 'react-rxjs';
 import { createAction } from '../shared/react-rxjs-patch';
-import type { Reducer } from 'react-rxjs';
+import { Reducer } from 'react-rxjs';
 import { KEEP_ALIVE } from './constants';
-import type { Predefined } from 'types/predefined';
+import { Predefined } from '../types/predefined';
 import { simpleGet } from '../shared/RxAjax';
+import { Star, TODO } from '../types/common';
 
-export const setLoadingSampleTypes$: Subject<*> = createAction('setLoadingSampleTypes$');
-export const loadSampleTypes$: Subject<*> = createAction('loadSampleTypes$');
-const loadSampleTypesAction$: Observable<*> = loadSampleTypes$.switchMap(
+export const setLoadingSampleTypes$: Subject<Star> = createAction(
+  'setLoadingSampleTypes$'
+);
+export const loadSampleTypes$: Subject<Star> = createAction('loadSampleTypes$');
+const loadSampleTypesAction$: Observable<Star> = loadSampleTypes$.switchMap(
   Sample.loadPredefinedTypes(simpleGet)
 );
-export const setLoadingAnalysisTypes$: Subject<*> = createAction(
+export const setLoadingAnalysisTypes$: Subject<Star> = createAction(
   'setLoadingAnalysisTypes$'
 );
-export const loadAnalysisTypes$: Subject<*> = createAction('loadAnalysisTypes$');
-const loadAnalysisTypesAction$: Observable<*> = loadAnalysisTypes$.switchMap(
+export const loadAnalysisTypes$: Subject<Star> = createAction('loadAnalysisTypes$');
+const loadAnalysisTypesAction$: Observable<Star> = loadAnalysisTypes$.switchMap(
   Analysis.loadPredefinedTypes(simpleGet)
 );
 
-export const setLoadingConservationTypes$: Subject<*> = createAction(
+export const setLoadingConservationTypes$: Subject<Star> = createAction(
   'setLoadingConservationTypes$'
 );
-export const loadConservationTypes$: Subject<*> = createAction('loadConservationTypes$');
-const loadConservationTypesAction$: Observable<*> = loadConservationTypes$.switchMap(
+export const loadConservationTypes$: Subject<Star> = createAction(
+  'loadConservationTypes$'
+);
+const loadConservationTypesAction$: Observable<Star> = loadConservationTypes$.switchMap(
   Conservation.getConservationTypes(simpleGet)
 );
 
 type State = Predefined & {
-  loadingSampleTypes: boolean,
-  loadingAnalysisTypes: boolean,
-  loadingConservationTypes: boolean
+  loadingSampleTypes: boolean;
+  loadingAnalysisTypes: boolean;
+  loadingConservationTypes: boolean;
 };
 
 export const initialState: State = {
@@ -52,31 +57,33 @@ export const initialState: State = {
   loadingConservationTypes: false
 };
 
-export function reducer$(actions: { [string]: Observable<*> }): Observable<Reducer<any>> {
+export function reducer$(actions: {
+  [key: string]: Observable<Star>;
+}): Observable<Reducer<any>> {
   return Observable.merge(
-    actions.setLoadingSampleTypes$.map(() => state => ({
+    actions.setLoadingSampleTypes$.map(() => (state: TODO) => ({
       ...state,
       loadingSampleTypes: true
     })),
-    actions.loadSampleTypes$.map(sampleTypes => state => ({
+    actions.loadSampleTypes$.map((sampleTypes: TODO) => (state: TODO) => ({
       ...state,
       ...sampleTypes,
       loadingSampleTypes: false
     })),
-    actions.setLoadingAnalysisTypes$.map(() => state => ({
+    actions.setLoadingAnalysisTypes$.map(() => (state: TODO) => ({
       ...state,
       loadingAnalysisTypes: true
     })),
-    actions.loadAnalysisTypes$.map(analysisTypes => state => ({
+    actions.loadAnalysisTypes$.map(analysisTypes => (state: TODO) => ({
       ...state,
       ...analysisTypes,
       loadingAnalysisTypes: false
     })),
-    actions.setLoadingConservationTypes$.map(() => state => ({
+    actions.setLoadingConservationTypes$.map(() => (state: TODO) => ({
       ...state,
       loadingConservationTypes: true
     })),
-    actions.loadConservationTypes$.map(conservationTypes => state => ({
+    actions.loadConservationTypes$.map(conservationTypes => (state: TODO) => ({
       ...state,
       conservationTypes,
       loadingConservationTypes: false
@@ -84,7 +91,7 @@ export function reducer$(actions: { [string]: Observable<*> }): Observable<Reduc
   );
 }
 
-export const store$ = (actions: { [string]: Observable<*> }) =>
+export const store$ = (actions: { [key: string]: Observable<Star> }) =>
   createStore('predefined', reducer$(actions), initialState, KEEP_ALIVE);
 
 const predefined$ = store$({

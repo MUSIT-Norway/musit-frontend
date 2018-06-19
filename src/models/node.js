@@ -24,7 +24,7 @@ export type SearchResult = { totalMatches?: number, matches?: Array<*>, error?: 
 class MusitNode {
   static isRootNode: (node: Node) => boolean;
   static getNode: (
-    ajaxGet: AjaxGet<*>
+    ajaxGet?: AjaxGet<*>
   ) => (props: {
     id: string,
     museumId: number,
@@ -99,14 +99,14 @@ class MusitNode {
     breadcrumb: Breadcrumb
   }) => void;
   static findByBarcode: (
-    ajaxGet: AjaxGet<*>
+    ajaxGet?: AjaxGet<*>
   ) => (props: {
     barcode: number,
     museumId: number,
     token: string
   }) => Observable<*>;
   static findNodeOrObjectByBarcode: (
-    ajaxGet: AjaxGet<*>
+    ajaxGet?: AjaxGet<*>
   ) => (props: {
     barcode: number,
     museumId: number,
@@ -114,7 +114,7 @@ class MusitNode {
     token: string
   }) => Observable<*>;
   static findByUUID: (
-    ajaxGet: AjaxGet<*>
+    ajaxGet?: AjaxGet<*>
   ) => (props: {
     uuid: string,
     museumId: number,
