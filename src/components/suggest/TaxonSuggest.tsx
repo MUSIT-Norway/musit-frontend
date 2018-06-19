@@ -1,11 +1,25 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Autosuggest from 'react-autosuggest';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
+import * as Autosuggest from 'react-autosuggest';
 import Config from '../../config';
 import suggest$Fn, { update$, clear$ } from './suggestStore';
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
+import { AppSession } from '../../types/appSession';
+import { TODO } from '../../types/common';
 
-export class TaxonSuggestComponent extends React.Component {
+interface TaxonSuggestComponentProps {
+  id: string;
+  value?: string;
+  placeHolder?: string;
+  suggest?: TODO;
+  onChange: Function;
+  update: Function;
+  disabled?: boolean;
+  clear?: Function;
+  appSession: AppSession;
+}
+
+/* Old:
   static propTypes = {
     id: PropTypes.string.isRequired,
     value: PropTypes.string,
@@ -17,8 +31,24 @@ export class TaxonSuggestComponent extends React.Component {
     clear: PropTypes.func,
     appSession: PropTypes.object.isRequired
   };
+  */
 
-  constructor(props) {
+interface TaxonSuggestComponentState {
+  value?: string;
+  suggestions?: TaxonSuggestion[];
+}
+
+interface TaxonSuggestion {
+  scientificName: string;
+  scientificNameAuthorship: string;
+  acceptedNameUsage: TaxonSuggestion | null;
+}
+
+export class TaxonSuggestComponent extends React.Component<
+  TaxonSuggestComponentProps,
+  TaxonSuggestComponentState
+> {
+  constructor(props: TaxonSuggestComponentProps) {
     super(props);
     this.requestSuggestionUpdate = this.requestSuggestionUpdate.bind(this);
     this.state = {
@@ -26,7 +56,7 @@ export class TaxonSuggestComponent extends React.Component {
     };
   }
 
-  componentWillReceiveProps(next) {
+  componentWillReceiveProps(next: TaxonSuggestComponentProps) {
     if (next.value !== this.props.value) {
       this.setState(ps => ({ ...ps, value: next.value }));
     }
@@ -37,13 +67,13 @@ export class TaxonSuggestComponent extends React.Component {
     placeholder: this.props.placeHolder,
     type: 'search',
     onBlur: this.props.clear,
-    onChange: (event, { newValue }) =>
+    onChange: (event: TODO, { newValue }: TODO) =>
       this.setState(ps => {
         return { ...ps, value: newValue };
       })
   };
 
-  requestSuggestionUpdate(update) {
+  requestSuggestionUpdate(update: TODO) {
     if (update.value.length > 2) {
       const museumId = this.props.appSession.museumId;
       const token = undefined;
@@ -54,17 +84,18 @@ export class TaxonSuggestComponent extends React.Component {
   render() {
     return (
       <Autosuggest
-        suggestions={(this.props.suggest.data || []).sort((a, b) => {
-          if (a.scientificName <= b.scientificName) {
-            return -1;
-          }
-          return 1;
-        })}
-        disabled={this.props.disabled}
+        suggestions={(this.props.suggest.data || [])
+          .sort((a: TaxonSuggestion, b: TaxonSuggestion) => {
+            if (a.scientificName <= b.scientificName) {
+              return -1;
+            }
+            return 1;
+          })}
+        //TODO? disabled={this.props.disabled}
         onSuggestionsFetchRequested={this.requestSuggestionUpdate}
         onSuggestionsClearRequested={() => this.setState(() => ({ suggestions: [] }))}
-        getSuggestionValue={suggestion => suggestion.scientificName}
-        renderSuggestion={suggestion => (
+        getSuggestionValue={(suggestion: TaxonSuggestion) => suggestion.scientificName}
+        renderSuggestion={(suggestion: TaxonSuggestion) => (
           <span
             className={'suggestion-content'}
           >{`${suggestion.scientificName} ${suggestion.scientificNameAuthorship != null
@@ -74,12 +105,12 @@ export class TaxonSuggestComponent extends React.Component {
             : ''} `}</span>
         )}
         inputProps={{
-          ...this.TaxonProps,
+          ...this.TaxonProps as TODO,
           value: this.state.value
         }}
         shouldRenderSuggestions={v => v !== 'undefined'}
         onSuggestionSelected={(event, { suggestion }) => {
-          if (event.keyCode === 13) {
+          if ((event as React.KeyboardEvent<HTMLFormElement>).keyCode === 13) {
             event.preventDefault();
           }
           this.props.onChange(suggestion);

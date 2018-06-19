@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import * as FontAwesome from 'react-fontawesome';
-q
+
 type Props = {
   label: string;
 };
