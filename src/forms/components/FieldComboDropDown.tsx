@@ -38,13 +38,14 @@ export default function FieldComboDropDown<T>(props: FieldComboDropDownProps<T>)
       <div className="col-md-3">
         <input
           {...props.inputProps}
-          className={`form-control ${props.inputProps
-            ? props.inputProps.className || ''
-            : ''}`}
+          className={`form-control ${
+            props.inputProps ? props.inputProps.className || '' : ''
+          }`}
           value={props.field.value || ''}
           id={props.field.name}
           onChange={e =>
-            props.onChange({ name: props.field.name, rawValue: e.target.value })}
+            props.onChange({ name: props.field.name, rawValue: e.target.value })
+          }
           list={`${props.field.name}-list`}
         />
         <datalist id={`${props.field.name}-list`}>

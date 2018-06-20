@@ -16,17 +16,17 @@ export const removeObject$ = createAction('removeObject$');
 export const markObject$ = createAction('markObject$');
 export const markMainObject$ = createAction('markMainObject$');
 export const clearObjects$ = createAction('clearObjects$');
-export const refreshObjects$ = createAction(
-  'refreshObject$'
-).flatMap(MusitObject.getObjectLocations() as MUSTFIX);
+export const refreshObjects$ = createAction('refreshObject$').flatMap(
+  MusitObject.getObjectLocations() as MUSTFIX
+);
 export const addNode$ = createAction('addNode$');
 export const toggleNode$ = createAction('toggleNode$');
 export const removeNode$ = createAction('removeNode$');
 export const markNode$ = createAction('markNode$');
 export const clearNodes$ = createAction('clearNodes$');
-export const refreshNode$ = createAction(
-  'refreshNode$'
-).flatMap(MusitNode.getNode() as MUSTFIX);
+export const refreshNode$ = createAction('refreshNode$').flatMap(
+  MusitNode.getNode() as MUSTFIX
+);
 
 export const isItemAdded = (item: TODO, items = []) => {
   return (

@@ -189,9 +189,9 @@ export default (props: Props) =>
             appSession={props.appSession}
             history={props.history}
             parentObjectId={
-              props.objects && props.objects.length === 1 ? (
-                getParentObjectId(props.objects[0])
-              ) : null
+              props.objects && props.objects.length === 1
+                ? getParentObjectId(props.objects[0])
+                : null
             }
           />
           <div className="form-group">
@@ -200,11 +200,9 @@ export default (props: Props) =>
             </label>
             <div className="col-md-10">
               <p className="form-control-static" id="restrictions">
-                {props.hasRestrictions ? (
-                  I18n.t('musit.texts.yes')
-                ) : (
-                  I18n.t('musit.texts.no')
-                )}
+                {props.hasRestrictions
+                  ? I18n.t('musit.texts.yes')
+                  : I18n.t('musit.texts.no')}
               </p>
             </div>
           </div>

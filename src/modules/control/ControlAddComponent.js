@@ -282,7 +282,8 @@ export class ControlAddContainer extends React.Component {
                             this.setState(ps => ({
                               ...ps,
                               doneDate: newValue
-                            }))}
+                            }))
+                          }
                           onChange={newValue => {
                             this.setDate(newValue);
                           }}

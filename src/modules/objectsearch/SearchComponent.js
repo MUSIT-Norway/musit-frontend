@@ -90,13 +90,11 @@ const CollectionResultHit = (props: ResultHitProps) => {
           </div>
           <div className="col-md-3">
             {collObject.collection &&
-            collObject.collection.uuid === archaeologyCollectionUuid ? (
-              I18n.t('musit.objects.objectsView.findingNo') +
-              ':' +
-              (collObject.arkFindingNo ? collObject.arkFindingNo : '')
-            ) : (
-              ''
-            )}
+            collObject.collection.uuid === archaeologyCollectionUuid
+              ? I18n.t('musit.objects.objectsView.findingNo') +
+                ':' +
+                (collObject.arkFindingNo ? collObject.arkFindingNo : '')
+              : ''}
           </div>
           <div className="col-md-3">
             {(collObject: ObjectData).currentLocation &&
@@ -168,13 +166,11 @@ const SampleResultHit = (props: ResultHitProps) => {
           <div className="col-md-3">
             {object &&
             object.collection &&
-            object.collection.uuid === archaeologyCollectionUuid ? (
-              I18n.t('musit.objects.objectsView.findingNo') +
-              ':' +
-              (object.arkFindingNo ? object.arkFindingNo : '')
-            ) : (
-              ''
-            )}
+            object.collection.uuid === archaeologyCollectionUuid
+              ? I18n.t('musit.objects.objectsView.findingNo') +
+                ':' +
+                (object.arkFindingNo ? object.arkFindingNo : '')
+              : ''}
           </div>
           <div className="col-md-3">
             {sample.currentLocation &&
@@ -270,11 +266,9 @@ const toggleAll = (
         hits && onClickAddAllToShoppingCart(hits);
       }}
       style={
-        hits && hits.every(isObjectAdded) ? (
-          { fontSize: '1.5em', color: 'Gray' }
-        ) : (
-          { fontSize: '1.5em', color: '#337ab7' }
-        )
+        hits && hits.every(isObjectAdded)
+          ? { fontSize: '1.5em', color: 'Gray' }
+          : { fontSize: '1.5em', color: '#337ab7' }
       }
       name="shopping-cart"
       className="link"

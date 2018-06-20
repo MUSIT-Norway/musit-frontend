@@ -119,7 +119,7 @@ export function getExtraDescriptionAttributes(
   const existingAttributesFromBackend = analysis && analysis.extraAttributes;
 
   return extraDescriptionAttributesType &&
-  containsAttributes(extraDescriptionAttributes, existingAttributesFromBackend)
+    containsAttributes(extraDescriptionAttributes, existingAttributesFromBackend)
     ? {
         ...initialExtraDescriptionAttributes,
         ...existingAttributesFromBackend,
@@ -168,7 +168,9 @@ export function getExtraResultAttributes(
         const value =
           extraResultAttributes && extraResultAttributes[field]
             ? extraResultAttributes[field]
-            : analysis ? getApiResult(field, type, analysis.result) : null;
+            : analysis
+              ? getApiResult(field, type, analysis.result)
+              : null;
         const allowedValues = getAnalysisResultFieldAllowedValues(
           extraResultType as MUSTFIX,
           field,
@@ -203,7 +205,7 @@ export function getApiResult(
   ) {
     if ((value as TODO).value) {
       return {
-        ...value as TODO,
+        ...(value as TODO),
         rawValue: (value as TODO).value.toString().replace('.', ',')
       };
     }
@@ -234,5 +236,7 @@ export const getExtraDescriptionAttributesWithValue = (
 export function getParentObjectId(analysisEvent: AnalysisEvent): Maybe<string> {
   return analysisEvent.sampleData && analysisEvent.sampleData.originatedObjectUuid
     ? analysisEvent.sampleData.originatedObjectUuid
-    : analysisEvent.objectData ? analysisEvent.objectData.uuid : null;
+    : analysisEvent.objectData
+      ? analysisEvent.objectData.uuid
+      : null;
 }

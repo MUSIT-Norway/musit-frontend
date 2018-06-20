@@ -35,13 +35,11 @@ export default function Result(props: Props) {
                 labelWidth={2}
                 elementWidth={5}
                 value={
-                  attribute && attribute.type && attribute.type === 'Size' ? (
-                    attribute.value &&
-                    attribute.value.rawValue &&
-                    attribute.value.rawValue + ' ' + attribute.value.unit
-                  ) : (
-                    attribute.value && attribute.value
-                  )
+                  attribute && attribute.type && attribute.type === 'Size'
+                    ? attribute.value &&
+                      attribute.value.rawValue &&
+                      attribute.value.rawValue + ' ' + attribute.value.unit
+                    : attribute.value && attribute.value
                 }
               />
             );

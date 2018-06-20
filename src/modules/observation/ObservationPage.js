@@ -370,7 +370,8 @@ export default class ObservationPage extends React.Component {
                   <DatePicker
                     dateFormat={DATE_FORMAT_DISPLAY}
                     onClear={newValue =>
-                      this.setState(ps => ({ ...ps, doneDate: newValue }))}
+                      this.setState(ps => ({ ...ps, doneDate: newValue }))
+                    }
                     value={this.state.doneDate}
                     onChange={newValue => this.setDate(newValue)}
                     disabled={this.props.mode === 'VIEW'}
@@ -383,11 +384,9 @@ export default class ObservationPage extends React.Component {
                   <FormControl
                     componentClass="input"
                     value={
-                      this.state.doneBy && this.state.doneBy.fn ? (
-                        this.state.doneBy.fn
-                      ) : (
-                        this.state.doneBy || ''
-                      )
+                      this.state.doneBy && this.state.doneBy.fn
+                        ? this.state.doneBy.fn
+                        : this.state.doneBy || ''
                     }
                     disabled
                   />
@@ -396,11 +395,9 @@ export default class ObservationPage extends React.Component {
                     appSession={this.props.appSession}
                     id="doneByField"
                     value={
-                      this.state.doneBy && this.state.doneBy.fn ? (
-                        this.state.doneBy.fn
-                      ) : (
-                        this.state.doneBy || ''
-                      )
+                      this.state.doneBy && this.state.doneBy.fn
+                        ? this.state.doneBy.fn
+                        : this.state.doneBy || ''
                     }
                     placeHolder="Find actor"
                     onChange={newValue => {
@@ -455,8 +452,9 @@ export default class ObservationPage extends React.Component {
                           return (
                             <option key={index} value={type}>
                               {I18n.t(
-                                `musit.observation.page.${this.typeDefinitions[type]
-                                  .label}`
+                                `musit.observation.page.${
+                                  this.typeDefinitions[type].label
+                                }`
                               )}
                             </option>
                           );

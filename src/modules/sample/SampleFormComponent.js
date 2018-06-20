@@ -96,11 +96,9 @@ export default function SampleFormComponent(props: Props) {
           {objectData &&
           objectData.length === 1 &&
           objectData[0].derivedFrom &&
-          objectData[0].derivedFrom.sampleNum ? (
-            I18n.t('musit.sample.derivedFromObjectAndSample')
-          ) : (
-            I18n.t('musit.sample.derivedFromObject')
-          )}
+          objectData[0].derivedFrom.sampleNum
+            ? I18n.t('musit.sample.derivedFromObjectAndSample')
+            : I18n.t('musit.sample.derivedFromObject')}
         </h4>
         {objectData.map((od, i) => (
           <ObjectAndSampleDetails
@@ -120,7 +118,8 @@ export default function SampleFormComponent(props: Props) {
           roles={['responsible', 'creator']}
           showDateForRole={(roleName: string) => roleName !== 'responsible'}
           getDisplayNameForRole={(roleName: string) =>
-            I18n.t(`musit.sample.roles.${roleName}`)}
+            I18n.t(`musit.sample.roles.${roleName}`)
+          }
         />
         <br />
         <div className="well">
@@ -174,12 +173,9 @@ export default function SampleFormComponent(props: Props) {
                   appSession={props.appSession}
                   onChange={props.updateForm}
                   selectItems={
-                    predefined.sampleTypes &&
-                    typeof form.sampleType.rawValue === 'string' ? (
-                      predefined.sampleTypes[form.sampleType.rawValue]
-                    ) : (
-                      []
-                    )
+                    predefined.sampleTypes && typeof form.sampleType.rawValue === 'string'
+                      ? predefined.sampleTypes[form.sampleType.rawValue]
+                      : []
                   }
                 />
               )}
@@ -206,7 +202,8 @@ export default function SampleFormComponent(props: Props) {
               defaultOption={I18n.t('musit.sample.chooseStatus')}
               valueFn={(v: any) => (v.id ? v.id.toString() : '')}
               displayFn={(v: any) =>
-                props.appSession.language.isEn ? v.enStatus : v.noStatus}
+                props.appSession.language.isEn ? v.enStatus : v.noStatus
+              }
               onChange={props.updateForm}
               selectItems={Sample.sampleStatuses}
             />
@@ -233,16 +230,14 @@ export default function SampleFormComponent(props: Props) {
               defaultOption={I18n.t('musit.sample.chooseStorageContainer')}
               onChange={props.updateForm}
               selectItems={
-                predefined.storageContainers ? (
-                  predefined.storageContainers.map(
-                    c =>
-                      props.appSession.language.isEn
-                        ? c.enStorageContainer
-                        : c.noStorageContainer
-                  )
-                ) : (
-                  []
-                )
+                predefined.storageContainers
+                  ? predefined.storageContainers.map(
+                      c =>
+                        props.appSession.language.isEn
+                          ? c.enStorageContainer
+                          : c.noStorageContainer
+                    )
+                  : []
               }
             />
           </ValidatedFormGroup>
@@ -253,16 +248,14 @@ export default function SampleFormComponent(props: Props) {
               defaultOption={I18n.t('musit.sample.chooseStorageMedium')}
               onChange={props.updateForm}
               selectItems={
-                predefined.storageMediums ? (
-                  predefined.storageMediums.map(
-                    m =>
-                      props.appSession.language.isEn
-                        ? m.enStorageMedium
-                        : m.noStorageMedium
-                  )
-                ) : (
-                  []
-                )
+                predefined.storageMediums
+                  ? predefined.storageMediums.map(
+                      m =>
+                        props.appSession.language.isEn
+                          ? m.enStorageMedium
+                          : m.noStorageMedium
+                    )
+                  : []
               }
             />
           </ValidatedFormGroup>
@@ -273,13 +266,12 @@ export default function SampleFormComponent(props: Props) {
               defaultOption={I18n.t('musit.sample.chooseTreatment')}
               onChange={props.updateForm}
               selectItems={
-                predefined.treatments ? (
-                  predefined.treatments.map(
-                    t => (props.appSession.language.isEn ? t.enTreatment : t.noTreatment)
-                  )
-                ) : (
-                  []
-                )
+                predefined.treatments
+                  ? predefined.treatments.map(
+                      t =>
+                        props.appSession.language.isEn ? t.enTreatment : t.noTreatment
+                    )
+                  : []
               }
             />
           </ValidatedFormGroup>

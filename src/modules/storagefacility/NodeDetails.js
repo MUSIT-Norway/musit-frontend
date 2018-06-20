@@ -134,7 +134,8 @@ export default class NodeDetails extends Component {
         <Checkbox
           checked={!!this.props.unit.securityAssessment[field]}
           onChange={event =>
-            this.updateSecAssessments(this.props.unit, field, event.target.checked)}
+            this.updateSecAssessments(this.props.unit, field, event.target.checked)
+          }
         >
           {I18n.t(`musit.storageUnits.securityAssessment.${field}`)}
         </Checkbox>
@@ -148,7 +149,8 @@ export default class NodeDetails extends Component {
         <Checkbox
           checked={!!this.props.unit.environmentAssessment[field]}
           onChange={event =>
-            this.updateEnvAssessments(this.props.unit, field, event.target.checked)}
+            this.updateEnvAssessments(this.props.unit, field, event.target.checked)
+          }
         >
           {I18n.t(`musit.storageUnits.environmentalAssessment.${field}`)}
         </Checkbox>
@@ -204,11 +206,9 @@ export default class NodeDetails extends Component {
                   >
                     <div>
                       <h4 style={{ textAlign: 'center' }}>
-                        {this.props.isAdd ? (
-                          `${I18n.t('musit.storageUnits.newNode')} - `
-                        ) : (
-                          ''
-                        )}
+                        {this.props.isAdd
+                          ? `${I18n.t('musit.storageUnits.newNode')} - `
+                          : ''}
                         {I18n.t('musit.storageUnits.header')}
                       </h4>
                       <Grid>
@@ -244,7 +244,8 @@ export default class NodeDetails extends Component {
                                         this.props.unit,
                                         'type',
                                         storageType
-                                      )}
+                                      )
+                                    }
                                     value={this.props.unit.type}
                                     disabled={!this.props.isAdd}
                                   />
@@ -274,7 +275,8 @@ export default class NodeDetails extends Component {
                                         this.props.unit,
                                         'name',
                                         storageUnitName
-                                      )}
+                                      )
+                                    }
                                     maximumLength={100}
                                     value={this.props.unit.name || ''}
                                   />

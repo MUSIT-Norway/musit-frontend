@@ -96,36 +96,36 @@ export const PersonRoleDate = ({
                       updateForm({
                         name: fieldName,
                         rawValue: updateRole(i, r, pArr)
-                      })}
+                      })
+                    }
                     title={
-                      v.role ? (
-                        (getDisplayNameForRole && getDisplayNameForRole(v.role)) ||
-                        v.role.toString()
-                      ) : (
-                        I18n.t('musit.texts.chooseRole')
-                      )
+                      v.role
+                        ? (getDisplayNameForRole && getDisplayNameForRole(v.role)) ||
+                          v.role.toString()
+                        : I18n.t('musit.texts.chooseRole')
                     }
                   />
                 </td>
                 <td>
                   {showDateForRole &&
-                  showDateForRole(v.role) && (
-                    <DatePicker
-                      dateFormat={DATE_FORMAT_DISPLAY}
-                      value={v.date}
-                      onClear={(newValue: TODO) =>
-                        updateForm({
-                          name: fieldName,
-                          rawValue: updateDate(i, newValue, pArr)
-                        })}
-                      onChange={(newValue: TODO) => {
-                        updateForm({
-                          name: fieldName,
-                          rawValue: updateDate(i, newValue, pArr)
-                        });
-                      }}
-                    />
-                  )}
+                    showDateForRole(v.role) && (
+                      <DatePicker
+                        dateFormat={DATE_FORMAT_DISPLAY}
+                        value={v.date}
+                        onClear={(newValue: TODO) =>
+                          updateForm({
+                            name: fieldName,
+                            rawValue: updateDate(i, newValue, pArr)
+                          })
+                        }
+                        onChange={(newValue: TODO) => {
+                          updateForm({
+                            name: fieldName,
+                            rawValue: updateDate(i, newValue, pArr)
+                          });
+                        }}
+                      />
+                    )}
                 </td>
                 <td>
                   <a

@@ -84,28 +84,31 @@ export class TaxonSuggestComponent extends React.Component<
   render() {
     return (
       <Autosuggest
-        suggestions={(this.props.suggest.data || [])
-          .sort((a: TaxonSuggestion, b: TaxonSuggestion) => {
+        suggestions={(this.props.suggest.data || []).sort(
+          (a: TaxonSuggestion, b: TaxonSuggestion) => {
             if (a.scientificName <= b.scientificName) {
               return -1;
             }
             return 1;
-          })}
+          }
+        )}
         //TODO? disabled={this.props.disabled}
         onSuggestionsFetchRequested={this.requestSuggestionUpdate}
         onSuggestionsClearRequested={() => this.setState(() => ({ suggestions: [] }))}
         getSuggestionValue={(suggestion: TaxonSuggestion) => suggestion.scientificName}
         renderSuggestion={(suggestion: TaxonSuggestion) => (
-          <span
-            className={'suggestion-content'}
-          >{`${suggestion.scientificName} ${suggestion.scientificNameAuthorship != null
-            ? suggestion.scientificNameAuthorship
-            : ''} ${suggestion.acceptedNameUsage != null
-            ? '[=' + suggestion.acceptedNameUsage.scientificName + ']'
-            : ''} `}</span>
+          <span className={'suggestion-content'}>{`${suggestion.scientificName} ${
+            suggestion.scientificNameAuthorship != null
+              ? suggestion.scientificNameAuthorship
+              : ''
+          } ${
+            suggestion.acceptedNameUsage != null
+              ? '[=' + suggestion.acceptedNameUsage.scientificName + ']'
+              : ''
+          } `}</span>
         )}
         inputProps={{
-          ...this.TaxonProps as TODO,
+          ...(this.TaxonProps as TODO),
           value: this.state.value
         }}
         shouldRenderSuggestions={v => v !== 'undefined'}

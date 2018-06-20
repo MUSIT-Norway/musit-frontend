@@ -30,12 +30,13 @@ function combineLatestObj(obj: TODO) {
 export default <Props extends {}>(data = {}, commands = {}, props = {}) => (
   Component: TODO
 ) => {
-  const callbacks = entries(
-    commands
-  ).reduce((acc: TODO, [key, observer]: [TODO, TODO]) => {
-    acc[key.replace(/\$$/, '')] = (value: TODO) => observer.next(value);
-    return acc;
-  }, {});
+  const callbacks = entries(commands).reduce(
+    (acc: TODO, [key, observer]: [TODO, TODO]) => {
+      acc[key.replace(/\$$/, '')] = (value: TODO) => observer.next(value);
+      return acc;
+    },
+    {}
+  );
 
   const contextTypes = entries({
     ...data
@@ -52,34 +53,36 @@ export default <Props extends {}>(data = {}, commands = {}, props = {}) => (
     constructor(p: TODO, c: TODO) {
       super(p, c);
 
-      const observablesFromValue = entries(
-        data
-      ).reduce((acc: TODO, [k, v]: [TODO, TODO]) => {
-        if (v.subscribe) {
-          acc[k] = v;
-        }
-        return acc;
-      }, {});
+      const observablesFromValue = entries(data).reduce(
+        (acc: TODO, [k, v]: [TODO, TODO]) => {
+          if (v.subscribe) {
+            acc[k] = v;
+          }
+          return acc;
+        },
+        {}
+      );
 
-      const observablesFromContext = entries(
-        data
-      ).reduce((acc: TODO, [k, v]: [TODO, TODO]) => {
-        const contextVal = this.context[k];
-        if (v.type && contextVal) {
-          if (v.mapToProps) {
+      const observablesFromContext = entries(data).reduce(
+        (acc: TODO, [k, v]: [TODO, TODO]) => {
+          const contextVal = this.context[k];
+          if (v.type && contextVal) {
+            if (v.mapToProps) {
+              return {
+                ...acc,
+                [k]: contextVal,
+                ...v.mapToProps(contextVal)
+              };
+            }
             return {
               ...acc,
-              [k]: contextVal,
-              ...v.mapToProps(contextVal)
+              [k]: contextVal
             };
           }
-          return {
-            ...acc,
-            [k]: contextVal
-          };
-        }
-        return acc;
-      }, {});
+          return acc;
+        },
+        {}
+      );
 
       const allObservables = {
         ...observablesFromValue,

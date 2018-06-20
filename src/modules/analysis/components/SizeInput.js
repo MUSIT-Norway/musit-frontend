@@ -49,7 +49,8 @@ const Size = (props: Props) => {
             props.onChange({
               ...props.attribute,
               unit: e.target.value
-            })}
+            })
+          }
           defaultValue={unit}
         >
           <option value="">{I18n.t('musit.sample.chooseUnit')}</option>

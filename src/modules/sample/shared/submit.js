@@ -217,12 +217,12 @@ function getSampleTypeId(
     return null;
   }
   if (sampleSubType) {
-    const sampleTypeFound: ?any = flatten(
-      Object.values(sampleTypes)
-    ).find((subType: any) => {
-      const subTypeName = sampleTypeDisplayName(subType, appSession);
-      return subTypeName === sampleSubType;
-    });
+    const sampleTypeFound: ?any = flatten(Object.values(sampleTypes)).find(
+      (subType: any) => {
+        const subTypeName = sampleTypeDisplayName(subType, appSession);
+        return subTypeName === sampleSubType;
+      }
+    );
     return sampleTypeFound ? sampleTypeFound.sampleTypeId : null;
   } else {
     return sampleType && sampleTypes && sampleTypes

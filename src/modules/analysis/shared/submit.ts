@@ -106,6 +106,8 @@ export function getObjectsWithType(
     objectType:
       obj.sampleData && obj.sampleData.sampleNum
         ? 'sample'
-        : obj.objectData ? obj.objectData.objectType : null
+        : obj.objectData
+          ? obj.objectData.objectType
+          : null
   }));
 }

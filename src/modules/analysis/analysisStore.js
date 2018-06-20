@@ -273,112 +273,111 @@ const saveAnalysis = (ajaxPost, ajaxPut) => ({
   const token = appSession.accessToken;
   const museumId = appSession.museumId;
   const collectionId = appSession.collectionId;
-  return getAnalysisUpsert(
-    id,
-    ajaxPut,
-    museumId,
-    data,
-    token,
-    ajaxPost
-  ).flatMap((analysis?: AnalysisCollection) => {
-    if (!analysis) {
-      return Observable.empty();
-    }
+  return getAnalysisUpsert(id, ajaxPut, museumId, data, token, ajaxPost).flatMap(
+    (analysis?: AnalysisCollection) => {
+      if (!analysis) {
+        return Observable.empty();
+      }
 
-    const analysisId = analysis.id;
-    const analysisEvents = analysis.events;
+      const analysisId = analysis.id;
+      const analysisEvents = analysis.events;
 
-    const eventsResultUploads$ =
-      events && events.length > 0
-        ? Observable.forkJoin(
-            // $FlowFixMe | We are passing an array to forkJoin which is not supported by flow-typed definition for rxjs.
-            events.map(ae => {
-              const files = (ae.result && ae.result.files) || [];
-              if (files.length === 0) {
-                return Observable.of(ae);
-              }
-              return Observable.forkJoin(
-                // $FlowFixMe | We are passing an array to forkJoin which is not supported by flow-typed definition for rxjs.
-                files.map(file =>
-                  addResultFile({
-                    analysisId: ae.id,
-                    museumId: museumId,
-                    collectionId: collectionId,
-                    token: token,
-                    file: file
-                  })
-                )
-              ).map(files => {
-                return {
-                  ...ae,
-                  result: {
-                    ...ae.result,
-                    files,
-                    attachments: files
-                      ? files
-                          .map(e => e.fid)
-                          .concat((ae.result && ae.result.attachments) || [])
-                      : []
-                  }
-                };
-              });
-            })
-          )
-        : Observable.of([]);
-
-    const files = result ? result.files || [] : [];
-    const files$ =
-      files.length > 0
-        ? Observable.forkJoin(
-            // $FlowFixMe | We are passing an array to forkJoin which is not supported by flow-typed definition for rxjs.
-            files.map(file =>
-              addResultFile({
-                analysisId: analysisId,
-                museumId: museumId,
-                collectionId: collectionId,
-                token: token,
-                file: file
+      const eventsResultUploads$ =
+        events && events.length > 0
+          ? Observable.forkJoin(
+              // $FlowFixMe | We are passing an array to forkJoin which is not supported by flow-typed definition for rxjs.
+              events.map(ae => {
+                const files = (ae.result && ae.result.files) || [];
+                if (files.length === 0) {
+                  return Observable.of(ae);
+                }
+                return Observable.forkJoin(
+                  // $FlowFixMe | We are passing an array to forkJoin which is not supported by flow-typed definition for rxjs.
+                  files.map(file =>
+                    addResultFile({
+                      analysisId: ae.id,
+                      museumId: museumId,
+                      collectionId: collectionId,
+                      token: token,
+                      file: file
+                    })
+                  )
+                ).map(files => {
+                  return {
+                    ...ae,
+                    result: {
+                      ...ae.result,
+                      files,
+                      attachments: files
+                        ? files
+                            .map(e => e.fid)
+                            .concat((ae.result && ae.result.attachments) || [])
+                        : []
+                    }
+                  };
+                });
               })
             )
-          )
-        : Observable.of([]);
+          : Observable.of([]);
 
-    return files$.flatMap(files => {
-      const newFids = files.reduce((acc, f) => {
-        if (f.fid) {
-          return [...acc, f.fid];
-        }
-        return acc;
-      }, []);
-      const badFiles = files.filter(f => !f.fid);
-      const existingFids = result && result.attachments ? result.attachments : [];
-      return eventsResultUploads$.flatMap(updatedEvents => {
-        return Observable.forkJoin(
-          // $FlowFixMe | We are passing an array to forkJoin which is not supported by flow-typed definition for rxjs.
-          getArrayOfResultsToSave(
-            updatedEvents,
-            analysisId,
-            analysisEvents,
-            ajaxPost,
-            token,
-            museumId,
-            { ...result, files: null, attachments: [...newFids, ...existingFids] }
+      const files = result ? result.files || [] : [];
+      const files$ =
+        files.length > 0
+          ? Observable.forkJoin(
+              // $FlowFixMe | We are passing an array to forkJoin which is not supported by flow-typed definition for rxjs.
+              files.map(file =>
+                addResultFile({
+                  analysisId: analysisId,
+                  museumId: museumId,
+                  collectionId: collectionId,
+                  token: token,
+                  file: file
+                })
+              )
+            )
+          : Observable.of([]);
+
+      return files$.flatMap(files => {
+        const newFids = files.reduce((acc, f) => {
+          if (f.fid) {
+            return [...acc, f.fid];
+          }
+          return acc;
+        }, []);
+        const badFiles = files.filter(f => !f.fid);
+        const existingFids = result && result.attachments ? result.attachments : [];
+        return eventsResultUploads$.flatMap(updatedEvents => {
+          return Observable.forkJoin(
+            // $FlowFixMe | We are passing an array to forkJoin which is not supported by flow-typed definition for rxjs.
+            getArrayOfResultsToSave(
+              updatedEvents,
+              analysisId,
+              analysisEvents,
+              ajaxPost,
+              token,
+              museumId,
+              { ...result, files: null, attachments: [...newFids, ...existingFids] }
+            )
           )
-        )
-          .map(results => ({
-            analysis,
-            files,
-            events: updatedEvents,
-            results
-          }))
-          .do(results => {
-            if (callback && callback.onComplete) {
-              callback.onComplete({ id: analysisId, results: results.results, badFiles });
-            }
-          });
+            .map(results => ({
+              analysis,
+              files,
+              events: updatedEvents,
+              results
+            }))
+            .do(results => {
+              if (callback && callback.onComplete) {
+                callback.onComplete({
+                  id: analysisId,
+                  results: results.results,
+                  badFiles
+                });
+              }
+            });
+        });
       });
-    });
-  });
+    }
+  );
 };
 
 export function getAnalysisDetails(
@@ -457,8 +456,8 @@ export function getAnalysisDetails(
               .flatMap(analysis => {
                 const fetchFileOperations = analysis.events.map(event => {
                   return event.result &&
-                  event.result.attachments &&
-                  event.result.attachments.length > 0
+                    event.result.attachments &&
+                    event.result.attachments.length > 0
                     ? getFiles({
                         files: event.result.attachments,
                         museumId: props.museumId,

@@ -64,12 +64,14 @@ export class EventsComponent extends React.Component {
           this.setState(ps => ({
             ...ps,
             showControls: !this.state.showControls
-          }))}
+          }))
+        }
         clickShowLeft={() =>
           this.setState(ps => ({
             ...ps,
             showObservations: !this.state.showObservations
-          }))}
+          }))
+        }
       />
     );
   }
@@ -90,11 +92,13 @@ export class EventsComponent extends React.Component {
                   nodeId,
                   appSession
                 )
-              )}
+              )
+            }
             onClickNewControl={() =>
               historyPush(
                 Config.magasin.urls.client.storagefacility.addControl(nodeId, appSession)
-              )}
+              )
+            }
           />
         )}
       </div>
@@ -134,7 +138,8 @@ export class EventsComponent extends React.Component {
               ctl.id,
               appSession
             )
-          )}
+          )
+        }
         showObservation={obs =>
           historyPush(
             Config.magasin.urls.client.storagefacility.viewObservation(
@@ -142,7 +147,8 @@ export class EventsComponent extends React.Component {
               obs.id,
               appSession
             )
-          )}
+          )
+        }
         tableData={filtered}
       />
     );

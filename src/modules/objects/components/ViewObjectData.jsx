@@ -88,9 +88,9 @@ const writeEtnoMaterials = (materials: Array<EtnoMaterial>) =>
   materials
     .filter((m: EtnoMaterial) => m.material !== '')
     .map(
-      (m: EtnoMaterial) => `${m.material}${m.materialType && m.materialType !== ''
-        ? m.materialType
-        : ''}
+      (m: EtnoMaterial) => `${m.material}${
+        m.materialType && m.materialType !== '' ? m.materialType : ''
+      }
     ${m.materialElement && m.materialElement !== '' ? ` ${m.materialElement}` : ''}`
     )
     .join(', ');
@@ -175,11 +175,9 @@ const viewNatHistObject = ({
           md={12}
           label="musit.objects.objectsView.location"
           value={
-            currentLocation && currentLocation.pathNames ? (
-              currentMagasinLocation(currentLocation.pathNames)
-            ) : (
-              ''
-            )
+            currentLocation && currentLocation.pathNames
+              ? currentMagasinLocation(currentLocation.pathNames)
+              : ''
           }
         />
       </Row>
@@ -248,20 +246,18 @@ const viewArcheologyObject = ({
       <Col md={5}>
         {coordinates &&
           coordinates.map((c: ArkCoordinate, i: number) => (
-            <Row key={`${i}-ID`}>{`${c.north ? c.north : ''} ${c.east
-              ? c.east
-              : ''}`}</Row>
+            <Row key={`${i}-ID`}>{`${c.north ? c.north : ''} ${
+              c.east ? c.east : ''
+            }`}</Row>
           ))}
       </Col>
     </Row>
     <Row>
       <Col md={12}>
         <b>{I18n.t('musit.objects.objectsView.location')}: </b>
-        {currentLocation && currentLocation.pathNames ? (
-          currentMagasinLocation(currentLocation.pathNames)
-        ) : (
-          ''
-        )}
+        {currentLocation && currentLocation.pathNames
+          ? currentMagasinLocation(currentLocation.pathNames)
+          : ''}
       </Col>
     </Row>
   </div>
@@ -299,11 +295,9 @@ const viewEtnographyObject = ({
         md={12}
         label="musit.objects.objectsView.location"
         value={
-          currentLocation && currentLocation.pathNames ? (
-            currentMagasinLocation(currentLocation.pathNames)
-          ) : (
-            ''
-          )
+          currentLocation && currentLocation.pathNames
+            ? currentMagasinLocation(currentLocation.pathNames)
+            : ''
         }
       />
     </Row>

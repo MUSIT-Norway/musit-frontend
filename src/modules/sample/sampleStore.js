@@ -35,9 +35,7 @@ export type CreateSamplesResponse = { response: Array<SampleResponse>, error: ?E
 
 export const createSamplesForObjects$: Observable<
   Array<CreateSamplesResponse>
-> = createAction(
-  'createSamplesForObjects$'
-).switchMap(
+> = createAction('createSamplesForObjects$').switchMap(
   (props: {
     objectData: Array<ObjectData>,
     form: FormDetails,

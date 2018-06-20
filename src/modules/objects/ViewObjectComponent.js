@@ -74,7 +74,8 @@ export const ViewObjectComponent = ({
                   history.push({
                     pathname: Config.magasin.urls.client.analysis.addAnalysis(appSession),
                     state: [{ objectData }]
-                  })}
+                  })
+                }
               >
                 {I18n.t('musit.objects.objectsView.newAnalysis')}
               </MenuItem>
@@ -91,7 +92,8 @@ export const ViewObjectComponent = ({
                         appSession,
                         objectData.uuid
                       )
-                    })}
+                    })
+                  }
                 >
                   {I18n.t('musit.objects.objectsView.newSample')}
                 </MenuItem>
@@ -104,7 +106,8 @@ export const ViewObjectComponent = ({
                       appSession
                     ),
                     state: [objectData]
-                  })}
+                  })
+                }
               >
                 {I18n.t('musit.conservation.newConservation')}
               </MenuItem>
@@ -120,11 +123,9 @@ export const ViewObjectComponent = ({
             analysisTypes={analysisTypes}
             sampleTypes={sampleTypes}
             conservationTypes={
-              predefinedConservation && predefinedConservation.conservationTypes ? (
-                predefinedConservation.conservationTypes
-              ) : (
-                []
-              )
+              predefinedConservation && predefinedConservation.conservationTypes
+                ? predefinedConservation.conservationTypes
+                : []
             }
             appSession={appSession}
             onClick={event => {

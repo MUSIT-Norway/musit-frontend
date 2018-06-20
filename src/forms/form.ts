@@ -121,7 +121,7 @@ export const getArrField = (
   validator: {
     rawValidator: required
       ? customValidator
-        ? composeValidators(isNonEmptyArray, customValidator as TODO) as TODO
+        ? (composeValidators(isNonEmptyArray, customValidator as TODO) as TODO)
         : isNonEmptyArray
       : customValidator
   }

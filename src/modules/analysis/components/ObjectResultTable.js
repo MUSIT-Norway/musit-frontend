@@ -120,28 +120,24 @@ export default function ObjectResultTable({
                           row.result
                         )}
                         externalSource={
-                          row.result && row.result.extRef ? (
-                            row.result.extRef.join(',')
-                          ) : (
-                            ''
-                          )
+                          row.result && row.result.extRef
+                            ? row.result.extRef.join(',')
+                            : ''
                         }
                         comments={row.result ? row.result.comment : ''}
                         files={
-                          row.files && Array.isArray(row.files) ? (
-                            (row.files: Array<any>)
-                          ) : (
-                            []
-                          )
+                          row.files && Array.isArray(row.files)
+                            ? (row.files: Array<any>)
+                            : []
                         }
                         appSession={appSession}
                         history={history}
                         parentObjectId={
-                          sampleData && sampleData.originatedObjectUuid ? (
-                            sampleData.originatedObjectUuid
-                          ) : row.objectData ? (
-                            row.objectData.uuid
-                          ) : null
+                          sampleData && sampleData.originatedObjectUuid
+                            ? sampleData.originatedObjectUuid
+                            : row.objectData
+                              ? row.objectData.uuid
+                              : null
                         }
                       />
                     ) : (
@@ -159,11 +155,9 @@ export default function ObjectResultTable({
                           updateForm && updateForm({ name: 'events', rawValue: newData });
                         }}
                         externalSource={
-                          row.result && row.result.extRef ? (
-                            row.result.extRef.join(',')
-                          ) : (
-                            ''
-                          )
+                          row.result && row.result.extRef
+                            ? row.result.extRef.join(',')
+                            : ''
                         }
                         updateExternalSource={extRef => {
                           const newData = [...data];
@@ -199,11 +193,11 @@ export default function ObjectResultTable({
                         appSession={appSession}
                         history={history}
                         parentObjectId={
-                          sampleData && sampleData.originatedObjectUuid ? (
-                            sampleData.originatedObjectUuid
-                          ) : row.objectData ? (
-                            row.objectData.uuid
-                          ) : null
+                          sampleData && sampleData.originatedObjectUuid
+                            ? sampleData.originatedObjectUuid
+                            : row.objectData
+                              ? row.objectData.uuid
+                              : null
                         }
                       />
                     )}

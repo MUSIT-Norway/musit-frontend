@@ -166,25 +166,26 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
         I18n.t(
           'musit.conservation.events.measurementDetermination.measurementDetermination'
         ) &&
-      props.eventName !==
-        I18n.t(
-          'musit.conservation.events.materialDetermination.materialDetermination'
-        ) && (
-        <button
-          key="btn-addObject"
-          className="btn btn-primary"
-          disabled={props.viewMode}
-          onClick={objects => addObjects(objects)}
-          style={{ float: 'left', marginRight: 110 }}
-        >
-          {I18n.t('musit.texts.addObjects')}
-        </button>
-      )}
+        props.eventName !==
+          I18n.t(
+            'musit.conservation.events.materialDetermination.materialDetermination'
+          ) && (
+          <button
+            key="btn-addObject"
+            className="btn btn-primary"
+            disabled={props.viewMode}
+            onClick={objects => addObjects(objects)}
+            style={{ float: 'left', marginRight: 110 }}
+          >
+            {I18n.t('musit.texts.addObjects')}
+          </button>
+        )}
       <ObjectSelection
         affectedThingsWithDetailsMainEvent={props.affectedThingsWithDetailsMainEvent}
         affectedThingsSubEvent={props.subEvent.affectedThings}
         affectedThingsSubEventOnChange={t =>
-          props.onChange('affectedThings')(t.map(s => s) || [])}
+          props.onChange('affectedThings')(t.map(s => s) || [])
+        }
         viewMode={props.viewMode || props.objectsReadOnly}
       />
 
@@ -193,11 +194,11 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
       <div
         rel="tooltip"
         title={
-          props.isFormValid ? null : (
-            `${I18n.t(
-              'musit.errorMainMessages.saveDisabled'
-            )}: ${props.getStatusTextFromErrors}`
-          )
+          props.isFormValid
+            ? null
+            : `${I18n.t('musit.errorMainMessages.saveDisabled')}: ${
+                props.getStatusTextFromErrors
+              }`
         }
         className="wrap poptooltip"
       >

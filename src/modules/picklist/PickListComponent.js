@@ -83,8 +83,9 @@ export class PickListComponent extends React.Component {
     return (
       <div>
         {!isNode && pick.value.sampleNum ? (
-          <span style={{ paddingLeft: '1em' }}>{`${pick.value.sampleNum} ${pick.value
-            .sampleTypeAndSubType}`}</span>
+          <span style={{ paddingLeft: '1em' }}>{`${pick.value.sampleNum} ${
+            pick.value.sampleTypeAndSubType
+          }`}</span>
         ) : null}
         {!isNode ? (
           <span style={{ paddingLeft: '1em' }}>{pick.value.museumNo}</span>
@@ -204,7 +205,8 @@ export class PickListComponent extends React.Component {
                       type="checkbox"
                       checked={marked.length === pickList.length && pickList.length !== 0}
                       onChange={e =>
-                        this.toggle(pickList.map(p => p.value), e.target.checked)}
+                        this.toggle(pickList.map(p => p.value), e.target.checked)
+                      }
                       title={I18n.t('musit.pickList.tooltip.checkBoxMarkAll')}
                     />
                   </th>
@@ -245,11 +247,9 @@ export class PickListComponent extends React.Component {
                           }
                         }}
                         title={
-                          marked.length < 1 || isAllowed ? (
-                            I18n.t('musit.analysis.createSample')
-                          ) : (
-                            I18n.t('musit.pickList.tooltip.doNotHaveSufficientRole')
-                          )
+                          marked.length < 1 || isAllowed
+                            ? I18n.t('musit.analysis.createSample')
+                            : I18n.t('musit.pickList.tooltip.doNotHaveSufficientRole')
                         }
                       />
                     )}
@@ -271,11 +271,9 @@ export class PickListComponent extends React.Component {
                             }
                           }}
                           title={
-                            marked.length < 1 || isAllowed ? (
-                              I18n.t('musit.analysis.createAnalysis')
-                            ) : (
-                              I18n.t('musit.pickList.tooltip.doNotHaveSufficientRole')
-                            )
+                            marked.length < 1 || isAllowed
+                              ? I18n.t('musit.analysis.createAnalysis')
+                              : I18n.t('musit.pickList.tooltip.doNotHaveSufficientRole')
                           }
                         />
                         {this.selectedCount(isNode, marked.length)}
@@ -294,15 +292,13 @@ export class PickListComponent extends React.Component {
                         }
                       }}
                       title={
-                        marked.length < 1 || isMoveAllowed ? (
-                          I18n.t(
-                            `musit.pickList.tooltip.${isNode
-                              ? 'moveSelectedNodes'
-                              : 'moveSelectedObjects'}`
-                          )
-                        ) : (
-                          I18n.t('musit.pickList.tooltip.moveNotAllowed')
-                        )
+                        marked.length < 1 || isMoveAllowed
+                          ? I18n.t(
+                              `musit.pickList.tooltip.${
+                                isNode ? 'moveSelectedNodes' : 'moveSelectedObjects'
+                              }`
+                            )
+                          : I18n.t('musit.pickList.tooltip.moveNotAllowed')
                       }
                     />
                     {this.selectedCount(isNode, marked.length)}
@@ -323,16 +319,13 @@ export class PickListComponent extends React.Component {
                           }
                         }}
                         title={
-                          markedSamples.length === 0 ? marked.length < 1 ||
-                          conservationEnabled ? (
-                            I18n.t('musit.conservation.createConservation')
-                          ) : (
-                            I18n.t('musit.pickList.tooltip.doNotHaveSufficientRole')
-                          ) : (
-                            I18n.t(
-                              'musit.conservation.errorMessages.cannotCreateConservationBecauseOfSamples'
-                            )
-                          )
+                          markedSamples.length === 0
+                            ? marked.length < 1 || conservationEnabled
+                              ? I18n.t('musit.conservation.createConservation')
+                              : I18n.t('musit.pickList.tooltip.doNotHaveSufficientRole')
+                            : I18n.t(
+                                'musit.conservation.errorMessages.cannotCreateConservationBecauseOfSamples'
+                              )
                         }
                       />
                     )}
@@ -351,9 +344,11 @@ export class PickListComponent extends React.Component {
                         }
                       }}
                       title={I18n.t(
-                        `musit.pickList.tooltip.${isNode
-                          ? 'removeSelectedNodesFromList'
-                          : 'removeSelectedObjectsFromList'}`
+                        `musit.pickList.tooltip.${
+                          isNode
+                            ? 'removeSelectedNodesFromList'
+                            : 'removeSelectedObjectsFromList'
+                        }`
                       )}
                     />
                     {this.selectedCount(isNode, marked.length)}
@@ -411,11 +406,9 @@ export class PickListComponent extends React.Component {
             </Table>
             <div style={{ textAlign: 'left' }}>
               {marked.length}/{pickList.length} &nbsp;
-              {isNode ? (
-                I18n.t('musit.pickList.footer.nodeSelected')
-              ) : (
-                I18n.t('musit.pickList.footer.objectSelected')
-              )}
+              {isNode
+                ? I18n.t('musit.pickList.footer.nodeSelected')
+                : I18n.t('musit.pickList.footer.objectSelected')}
             </div>
           </Grid>
         </main>

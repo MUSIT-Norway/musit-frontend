@@ -203,7 +203,8 @@ export const PersonPage = (props: PersonProps) => {
             className="form-control"
             id="displayName"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              props.onChange('displayName')(e.target.value)}
+              props.onChange('displayName')(e.target.value)
+            }
           />
         </div>
         <div className="row form-group">
@@ -233,7 +234,8 @@ export const PersonPage = (props: PersonProps) => {
             className="form-control"
             id="url"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              props.onChange('url')(e.target.value)}
+              props.onChange('url')(e.target.value)
+            }
           />
         </div>
 
@@ -245,14 +247,14 @@ export const PersonPage = (props: PersonProps) => {
         />
 
         {props.synonymes &&
-        props.synonymes.length > 0 && (
-          <PersonNames
-            synonymes={props.synonymes}
-            newPerson={props.newPerson}
-            onChange={props.onChange}
-            onClickAdd={props.onClickAdd}
-          />
-        )}
+          props.synonymes.length > 0 && (
+            <PersonNames
+              synonymes={props.synonymes}
+              newPerson={props.newPerson}
+              onChange={props.onChange}
+              onClickAdd={props.onClickAdd}
+            />
+          )}
 
         <AddPersonName newPerson={props.newPerson} onChange={props.onChangePersonName} />
 
@@ -334,7 +336,8 @@ export class Person extends React.Component<PersonProps, PersonState> {
             this.setState((p: PersonState) => {
               const newExteralIDItem = (p.externalIds
                 ? p.externalIds.slice(0, index)
-                : []).concat(p.externalIds ? p.externalIds.slice(index + 1) : []);
+                : []
+              ).concat(p.externalIds ? p.externalIds.slice(index + 1) : []);
               return {
                 ...p,
                 externalIds: newExteralIDItem
@@ -363,9 +366,9 @@ export class Person extends React.Component<PersonProps, PersonState> {
                 fieldName === 'firstName'
                   ? value
                   : ps.newPerson && ps.newPerson.firstName;
-              const nameString = `${lastName || ''}${title || firstName
-                ? ', '
-                : ''}${title || ''}${title ? ' ' : ''}${firstName || ''}`;
+              const nameString = `${lastName || ''}${
+                title || firstName ? ', ' : ''
+              }${title || ''}${title ? ' ' : ''}${firstName || ''}`;
 
               return {
                 ...ps,

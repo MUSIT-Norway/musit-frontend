@@ -80,7 +80,9 @@ const props = (storeProps, upstream: { history: History }) => {
         storeProps.predefined.analysisTypes &&
         storeProps.predefined.analysisTypes.find(at => at.id === id);
       return type
-        ? storeProps.appSession.language.isEn ? type.enName : type.noName
+        ? storeProps.appSession.language.isEn
+          ? type.enName
+          : type.noName
         : null;
     },
     searchStore: storeProps.searchStore,

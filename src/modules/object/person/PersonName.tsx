@@ -194,7 +194,8 @@ export class AddPersonName extends React.Component<
             this.setState((prev: any, props: PersonNameProps) => ({
               ...prev,
               visPersonForm: true
-            }))}
+            }))
+          }
         />
         {this.state.visPersonForm && (
           <PersonPage
@@ -215,7 +216,8 @@ export class AddPersonName extends React.Component<
                 const personState = p.person;
                 const newExteralIDItem = (personState.externalIds
                   ? personState.externalIds.slice(0, index)
-                  : []).concat(
+                  : []
+                ).concat(
                   personState.externalIds ? personState.externalIds.slice(index + 1) : []
                 );
                 return {
@@ -255,9 +257,9 @@ export class AddPersonName extends React.Component<
                   fieldName === 'firstName'
                     ? value
                     : newPersonState.newPerson && newPersonState.newPerson.firstName;
-                const nameString = `${lastName || ''}${title || firstName
-                  ? ', '
-                  : ''}${title || ''}${title ? ' ' : ''}${firstName || ''}`;
+                const nameString = `${lastName || ''}${
+                  title || firstName ? ', ' : ''
+                }${title || ''}${title ? ' ' : ''}${firstName || ''}`;
 
                 return {
                   ...ps,
@@ -279,8 +281,9 @@ export class AddPersonName extends React.Component<
                   ...ps,
                   person: {
                     ...newPersonState,
-                    externalIds: (newPersonState.externalIds || [])
-                      .concat([{ database: '', uuid: '' }])
+                    externalIds: (newPersonState.externalIds || []).concat([
+                      { database: '', uuid: '' }
+                    ])
                   }
                 };
               });

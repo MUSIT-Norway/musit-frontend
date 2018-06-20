@@ -32,7 +32,8 @@ export default function CancelRestriction(props: Props) {
             props.updateRestriction({
               ...props.restriction,
               cancelledBy: actorId
-            })}
+            })
+          }
         />
       </FormElement>
       <FormElement
@@ -50,7 +51,8 @@ export default function CancelRestriction(props: Props) {
             props.updateRestriction({
               ...props.restriction,
               cancelledReason: e.target.value
-            })}
+            })
+          }
         />
         {!props.restriction.cancelledStamp && (
           <button

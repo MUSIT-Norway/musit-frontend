@@ -511,13 +511,12 @@ export default function ConservationComponent(
           disabled={!props.appSession.rolesForModules.collectionManagementRead}
           onClick={e =>
             props.downloadConservationReport &&
-            props.downloadConservationReport(props.appSession, props.form.id.value)}
+            props.downloadConservationReport(props.appSession, props.form.id.value)
+          }
           title={
-            !props.appSession.rolesForModules.collectionManagementRead ? (
-              I18n.t('musit.texts.doNotHaveSufficientRole')
-            ) : (
-              I18n.t('musit.texts.conservationReport')
-            )
+            !props.appSession.rolesForModules.collectionManagementRead
+              ? I18n.t('musit.texts.doNotHaveSufficientRole')
+              : I18n.t('musit.texts.conservationReport')
           }
           style={{ float: 'right', marginRight: 12 }}
         >
@@ -549,11 +548,9 @@ export default function ConservationComponent(
         }
         onClick={props.onEdit(props.form, -1)}
         title={
-          !props.appSession.rolesForModules.collectionManagementWrite ? (
-            I18n.t('musit.texts.doNotHaveSufficientRole')
-          ) : (
-            I18n.t('musit.texts.edit')
-          )
+          !props.appSession.rolesForModules.collectionManagementWrite
+            ? I18n.t('musit.texts.doNotHaveSufficientRole')
+            : I18n.t('musit.texts.edit')
         }
         style={{ float: 'right', marginRight: 12 }}
       >
@@ -593,14 +590,14 @@ export default function ConservationComponent(
               style={{ color: 'black', float: 'right' }}
             />
           </h2>
-          {`${I18n.t('musit.conservation.numOfObjects')} ${props.objects
-            ? props.objects.length
-            : 0}`}
+          {`${I18n.t('musit.conservation.numOfObjects')} ${
+            props.objects ? props.objects.length : 0
+          }`}
         </div>
         <div
-          className={`panel-body ${props.form.objectsExpanded.value
-            ? 'collapse in'
-            : 'collapse'}`}
+          className={`panel-body ${
+            props.form.objectsExpanded.value ? 'collapse in' : 'collapse'
+          }`}
         >
           <ObjectTable
             data={props.objects || []}
@@ -613,41 +610,39 @@ export default function ConservationComponent(
       <div style={{ borderBottom: '#cdcdcd 3px solid' }} />
       <br />
       {props.form.events &&
-      props.form.events.value &&
-      props.form.events.value.length > 0 && (
-        <div className="form-group">
-          <div className="row">
-            <div className="col-md-2">
-              <div
-                key="btn-toggleExpanded"
-                type="button"
-                className="btn btn-default btn-md"
-                disabled={!editModeForLookup}
-                onClick={
-                  editModeForLookup &&
-                  props.toggleExpanded(!expanded(props.form), props.form.events.value)
-                }
-              >
-                {expanded(props.form) ? (
-                  I18n.t('musit.conservation.doCollapse')
-                ) : (
-                  I18n.t('musit.conservation.doExpand')
-                )}
+        props.form.events.value &&
+        props.form.events.value.length > 0 && (
+          <div className="form-group">
+            <div className="row">
+              <div className="col-md-2">
+                <div
+                  key="btn-toggleExpanded"
+                  type="button"
+                  className="btn btn-default btn-md"
+                  disabled={!editModeForLookup}
+                  onClick={
+                    editModeForLookup &&
+                    props.toggleExpanded(!expanded(props.form), props.form.events.value)
+                  }
+                >
+                  {expanded(props.form)
+                    ? I18n.t('musit.conservation.doCollapse')
+                    : I18n.t('musit.conservation.doExpand')}
+                </div>
+              </div>
+            </div>
+            <div>
+              <h2>{I18n.t('musit.conservation.subEvents')}</h2>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                {props.form.events.rawValue.map((v, i) => {
+                  return renderSubEvent(props.appSession, i, v.eventTypeId, props);
+                })}
               </div>
             </div>
           </div>
-          <div>
-            <h2>{I18n.t('musit.conservation.subEvents')}</h2>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-              {props.form.events.rawValue.map((v, i) => {
-                return renderSubEvent(props.appSession, i, v.eventTypeId, props);
-              })}
-            </div>
-          </div>
-        </div>
-      )}
+        )}
       <FieldMultiSelect
         title={I18n.t('musit.conservation.choseNewSubEvents') + suffix}
         titleSize="h4"

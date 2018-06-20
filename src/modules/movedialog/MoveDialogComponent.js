@@ -127,7 +127,8 @@ export class MoveDialogComponent extends Component {
               currentPage={page}
               perPage={PER_PAGE}
               onClick={currentPage =>
-                this.loadNode(selectedNode && selectedNode.nodeId, currentPage)}
+                this.loadNode(selectedNode && selectedNode.nodeId, currentPage)
+              }
             />
           )}
         </div>

@@ -31,7 +31,8 @@ export default function AddRestriction(props: Props) {
             props.updateRestriction({
               ...props.restriction,
               requester: actorId
-            })}
+            })
+          }
         />
       </FormElement>
       <FormInput
@@ -44,7 +45,8 @@ export default function AddRestriction(props: Props) {
           props.updateRestriction({
             ...props.restriction,
             reason: e.target.value
-          })}
+          })
+        }
       />
       <FormInput
         id="restrictionCaseNumbers"
@@ -63,7 +65,8 @@ export default function AddRestriction(props: Props) {
               .split(',')
               .map(v => v.trim())
               .filter(v => v)
-          })}
+          })
+        }
       />
       <FormElement
         id="restrictionExpirationEndDate"
@@ -78,7 +81,8 @@ export default function AddRestriction(props: Props) {
             props.updateRestriction({
               ...props.restriction,
               expirationDate: null
-            })}
+            })
+          }
           onChange={selectedDate => {
             if (selectedDate !== 'Invalid date') {
               props.updateRestriction({

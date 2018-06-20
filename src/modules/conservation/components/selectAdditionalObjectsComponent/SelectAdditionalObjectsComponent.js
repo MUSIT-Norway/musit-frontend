@@ -273,11 +273,9 @@ export class SelectAdditionalObjectsComponent extends React.Component<
                     this.toggleObject(this.state.currentPageObjects[i], i);
                   }}
                 >
-                  {this.state.selectedObjects.has(o.id) ? (
-                    I18n.t('musit.texts.selected')
-                  ) : (
-                    I18n.t('musit.texts.notSelected')
-                  )}
+                  {this.state.selectedObjects.has(o.id)
+                    ? I18n.t('musit.texts.selected')
+                    : I18n.t('musit.texts.notSelected')}
                 </td>
               </tr>
             ))}

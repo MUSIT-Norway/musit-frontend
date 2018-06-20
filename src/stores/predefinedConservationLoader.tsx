@@ -92,7 +92,7 @@ export function loadCustomPredefinedConservationTypes<P>(
   }));
   return inject(data$, (predefinedConservation: DataType, upstream: P) => ({
     ...predefinedConservation,
-    ...upstream as TODO
+    ...(upstream as TODO)
   }))(
     (
       initialProps: P & {

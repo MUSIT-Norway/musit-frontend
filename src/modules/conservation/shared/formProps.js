@@ -706,8 +706,8 @@ function onSave(
               rawValue: appSession.actor.fn
             });
           }
-          /** check if it's cp to be udated, then do nothing. If it's a measurementDetermination and 
-           * the user removes value from the field quantity, we also remove the value(if it exists) from quantitySymbol before 
+          /** check if it's cp to be udated, then do nothing. If it's a measurementDetermination and
+           * the user removes value from the field quantity, we also remove the value(if it exists) from quantitySymbol before
            * saving/summit. We check if the attribute quantitySymbol has value in form.event.rawvalue but has no value from prop.response.
            * If so, we set quantitySymbol to "" in form.event.rawValue. We do this to show right value in quantitySymbol without having
            * to refresh the whole form.

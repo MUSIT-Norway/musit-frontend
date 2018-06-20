@@ -171,11 +171,9 @@ class DetTable extends React.Component<DetProps> {
                 id="personName"
                 value={
                   this.props.editingIndex >= 0 &&
-                  this.props.detTable[this.props.editingIndex] ? (
-                    this.props.detTable[this.props.editingIndex].personName
-                  ) : (
-                    ''
-                  )
+                  this.props.detTable[this.props.editingIndex]
+                    ? this.props.detTable[this.props.editingIndex].personName
+                    : ''
                 }
                 onChange={e => {
                   e.preventDefault();
@@ -197,37 +195,37 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
     return (
       <div>
         {this.props.sexAndStages &&
-        this.props.sexAndStages.length > 1 && (
-          <table className="table table-condensed table-hover">
-            <thead>
-              <tr>
-                <th>Sex</th>
-                <th> Stage</th>
-                <th> Count</th>
-                <th> Estimated count</th>{' '}
-              </tr>
-            </thead>
-            <tbody>
-              {this.props.sexAndStages.map((t: SexAndLifeStage, i: number) => {
-                return (
-                  <tr
-                    key={`tr-row${i}`}
-                    className={i === this.props.editingIndex ? 'info' : ''}
-                    onClick={e => {
-                      e.preventDefault();
-                      this.props.setEditingIndex(i);
-                    }}
-                  >
-                    <td>{t.sex}</td>
-                    <td>{t.stage}</td>
-                    <td>{t.count}</td>
-                    <td>{t.estimated}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        )}
+          this.props.sexAndStages.length > 1 && (
+            <table className="table table-condensed table-hover">
+              <thead>
+                <tr>
+                  <th>Sex</th>
+                  <th> Stage</th>
+                  <th> Count</th>
+                  <th> Estimated count</th>{' '}
+                </tr>
+              </thead>
+              <tbody>
+                {this.props.sexAndStages.map((t: SexAndLifeStage, i: number) => {
+                  return (
+                    <tr
+                      key={`tr-row${i}`}
+                      className={i === this.props.editingIndex ? 'info' : ''}
+                      onClick={e => {
+                        e.preventDefault();
+                        this.props.setEditingIndex(i);
+                      }}
+                    >
+                      <td>{t.sex}</td>
+                      <td>{t.stage}</td>
+                      <td>{t.count}</td>
+                      <td>{t.estimated}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          )}
         <div className="row">
           <div className="col-md-3">
             <div className="form-group">
@@ -238,11 +236,9 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
                 id="sex"
                 value={
                   this.props.sexAndStages &&
-                  this.props.sexAndStages[this.props.editingIndex] ? (
-                    this.props.sexAndStages[this.props.editingIndex].sex
-                  ) : (
-                    ''
-                  )
+                  this.props.sexAndStages[this.props.editingIndex]
+                    ? this.props.sexAndStages[this.props.editingIndex].sex
+                    : ''
                 }
                 onChange={e => {
                   e.preventDefault();
@@ -262,11 +258,9 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
                 className="form-control"
                 value={
                   this.props.sexAndStages &&
-                  this.props.sexAndStages[this.props.editingIndex] ? (
-                    this.props.sexAndStages[this.props.editingIndex].stage
-                  ) : (
-                    ''
-                  )
+                  this.props.sexAndStages[this.props.editingIndex]
+                    ? this.props.sexAndStages[this.props.editingIndex].stage
+                    : ''
                 }
                 onChange={e => {
                   e.preventDefault();
@@ -286,11 +280,9 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
                 className="form-control"
                 value={
                   this.props.sexAndStages &&
-                  this.props.sexAndStages[this.props.editingIndex] ? (
-                    this.props.sexAndStages[this.props.editingIndex].count
-                  ) : (
-                    ''
-                  )
+                  this.props.sexAndStages[this.props.editingIndex]
+                    ? this.props.sexAndStages[this.props.editingIndex].count
+                    : ''
                 }
                 onChange={e => {
                   e.preventDefault();
@@ -310,11 +302,9 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
                 id="estimated"
                 value={
                   this.props.sexAndStages &&
-                  this.props.sexAndStages[this.props.editingIndex] ? (
-                    this.props.sexAndStages[this.props.editingIndex].estimated
-                  ) : (
-                    ''
-                  )
+                  this.props.sexAndStages[this.props.editingIndex]
+                    ? this.props.sexAndStages[this.props.editingIndex].estimated
+                    : ''
                 }
                 onChange={e => {
                   e.preventDefault();
@@ -345,7 +335,8 @@ class TaxonTable extends React.Component<TaxonProps> {
     const aggVal = this.props.taxonNames.reduce((p: string, c: TaxonNameState) => {
       const names = (c.taxonSuggestion
         ? c.taxonSuggestion.scientificName.split(' ')
-        : []).map((s: string, i: number) => {
+        : []
+      ).map((s: string, i: number) => {
         if (i === 0) {
           return { rank: 'genus', name: s };
         } else if (i === 1) {
@@ -391,48 +382,46 @@ class TaxonTable extends React.Component<TaxonProps> {
     return (
       <div>
         {this.props.taxonNames &&
-        this.props.taxonNames.length > 1 && (
-          <div className="row">
-            <div className="col-md-12">
-              <table className="table table-condensed table-hover">
-                <thead>
-                  <tr>
-                    <th> Taxon name</th>
-                    <th> Presicion</th>
-                    <th> Taxon cathegry</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.props.taxonNames.map((t: TaxonNameState, i: number) => {
-                    return (
-                      <tr
-                        key={`tr-row${i}`}
-                        className={i === this.props.editingIndex ? 'info' : ''}
-                        onClick={e => {
-                          e.preventDefault();
-                          this.props.setEditingIndex(i);
-                        }}
-                      >
-                        <td>
-                          {t.taxonSuggestion ? (
-                            t.taxonSuggestion.scientificName +
-                            (t.taxonSuggestion.scientificNameAuthorship
-                              ? ' ' + t.taxonSuggestion.scientificNameAuthorship
-                              : '')
-                          ) : (
-                            ''
-                          )}
-                        </td>
-                        <td>{t.presicionType}</td>
-                        <td>{t.taxonCathegory}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+          this.props.taxonNames.length > 1 && (
+            <div className="row">
+              <div className="col-md-12">
+                <table className="table table-condensed table-hover">
+                  <thead>
+                    <tr>
+                      <th> Taxon name</th>
+                      <th> Presicion</th>
+                      <th> Taxon cathegry</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.props.taxonNames.map((t: TaxonNameState, i: number) => {
+                      return (
+                        <tr
+                          key={`tr-row${i}`}
+                          className={i === this.props.editingIndex ? 'info' : ''}
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.setEditingIndex(i);
+                          }}
+                        >
+                          <td>
+                            {t.taxonSuggestion
+                              ? t.taxonSuggestion.scientificName +
+                                (t.taxonSuggestion.scientificNameAuthorship
+                                  ? ' ' + t.taxonSuggestion.scientificNameAuthorship
+                                  : '')
+                              : ''}
+                          </td>
+                          <td>{t.presicionType}</td>
+                          <td>{t.taxonCathegory}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
-        )}
+          )}
         {taxonPath && <div className="row">{taxonPath}</div>}
         {aggVal && (
           <div className="row">
@@ -806,7 +795,8 @@ export default class ClassificationComponent extends React.Component<
                   this.setState((ps: ClassificationHistoryState) => ({
                     ...ps,
                     nv
-                  }))}
+                  }))
+                }
                 setDetEditingIndex={(i: number) => {
                   this.setState((ps: ClassificationHistoryState) => {
                     const currentClass =

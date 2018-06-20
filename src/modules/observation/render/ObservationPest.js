@@ -119,7 +119,8 @@ export default class ObservationPest extends Component {
                     disabled={this.props.disabled}
                     value={observation.lifeCycle}
                     onChange={lifeCycleValue =>
-                      this.props.lifeCycleOnChange(index, lifeCycleValue)}
+                      this.props.lifeCycleOnChange(index, lifeCycleValue)
+                    }
                   />
                 </span>
               </Col>

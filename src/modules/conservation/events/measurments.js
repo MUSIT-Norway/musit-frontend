@@ -18,13 +18,14 @@ export default function MeasurmentEvent(props: MeasurmentEventProps) {
             <p className="form-control-static" id={`materiale_${props.index}`}>
               {props.materialDetermination.materialInfo &&
               props.materialDetermination.materialInfo.length > 0 &&
-              props.materialDeterminationList ? (
-                props.materialDetermination.materialInfo.map(m => (
-                  <div> {m.materialId + '  ' + m.materialExtra + '  ' + m.sorting} </div>
-                ))
-              ) : (
-                ''
-              )}
+              props.materialDeterminationList
+                ? props.materialDetermination.materialInfo.map(m => (
+                    <div>
+                      {' '}
+                      {m.materialId + '  ' + m.materialExtra + '  ' + m.sorting}{' '}
+                    </div>
+                  ))
+                : ''}
             </p>
           ) : (
             'Add component for materialInfo'

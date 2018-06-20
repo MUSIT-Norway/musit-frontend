@@ -86,16 +86,16 @@ export default function AnalysisFormComponent(props: Props) {
             elementWidth={6}
             hasError={!isValid({ fields: [props.form.analysisTypeId] })}
             category={
-              props.form.analysisTypeCategory.rawValue ? (
-                props.form.analysisTypeCategory.rawValue.toString()
-              ) : null
+              props.form.analysisTypeCategory.rawValue
+                ? props.form.analysisTypeCategory.rawValue.toString()
+                : null
             }
             categories={props.predefined.categories}
             onChangeCategory={props.updateAnalysisCategory}
             type={
-              props.form.analysisTypeId.rawValue ? (
-                props.form.analysisTypeId.rawValue.toString()
-              ) : null
+              props.form.analysisTypeId.rawValue
+                ? props.form.analysisTypeId.rawValue.toString()
+                : null
             }
             types={props.predefined.analysisTypes}
             onChangeType={props.updateAnalysisTypeId}
@@ -134,14 +134,12 @@ export default function AnalysisFormComponent(props: Props) {
           onChange={props.updateStringField(props.form.reason.name)}
           chooseLabel={I18n.t('musit.analysis.chooseReason')}
           values={
-            props.predefined.purposes ? (
-              props.predefined.purposes.map(p => ({
-                id: p.id,
-                value: props.appSession.language.isEn ? p.enPurpose : p.noPurpose
-              }))
-            ) : (
-              []
-            )
+            props.predefined.purposes
+              ? props.predefined.purposes.map(p => ({
+                  id: p.id,
+                  value: props.appSession.language.isEn ? p.enPurpose : p.noPurpose
+                }))
+              : []
           }
         />
         <ValidatedFormGroup fields={[props.form.status]}>
@@ -172,14 +170,12 @@ export default function AnalysisFormComponent(props: Props) {
           onChange={props.updateStringField(props.form.orgId.name)}
           chooseLabel={I18n.t('musit.analysis.choosePlace')}
           values={
-            props.predefined.analysisLabList ? (
-              props.predefined.analysisLabList.map(p => ({
-                id: p.id,
-                value: p.fullName
-              }))
-            ) : (
-              []
-            )
+            props.predefined.analysisLabList
+              ? props.predefined.analysisLabList.map(p => ({
+                  id: p.id,
+                  value: p.fullName
+                }))
+              : []
           }
         />
         <FormInput
@@ -217,7 +213,8 @@ export default function AnalysisFormComponent(props: Props) {
           getDisplayNameForRole={(r: string) => I18n.t(`musit.analysis.roles.${r}`)}
           roles={['responsible', 'doneBy', 'administrator', 'completedBy']}
           showDateForRole={(roleName: string) =>
-            ['completedBy', 'doneBy'].some(e => e === roleName)}
+            ['completedBy', 'doneBy'].some(e => e === roleName)
+          }
         />
         <hr />
         <div className="well">
@@ -246,19 +243,22 @@ export default function AnalysisFormComponent(props: Props) {
               props.updateForm({
                 name: props.form.externalSource.name,
                 rawValue: rawValue.split(',').map(v => v.trim())
-              })}
+              })
+            }
             comments={toString(props.form.comments.rawValue)}
             updateComments={rawValue =>
-              props.updateForm({ name: props.form.comments.name, rawValue })}
+              props.updateForm({ name: props.form.comments.name, rawValue })
+            }
             resultFiles={props.form.resultFiles.value}
             updateResultFiles={files =>
-              props.updateForm({ name: props.form.resultFiles.name, rawValue: files })}
+              props.updateForm({ name: props.form.resultFiles.name, rawValue: files })
+            }
             appSession={props.appSession}
             history={props.history}
             parentObjectId={
-              props.objects && props.objects.length === 1 ? (
-                getParentObjectId(props.objects[0])
-              ) : null
+              props.objects && props.objects.length === 1
+                ? getParentObjectId(props.objects[0])
+                : null
             }
             files={props.store.analysis ? props.store.analysis.files : []}
           />
@@ -286,9 +286,9 @@ export default function AnalysisFormComponent(props: Props) {
                 )) && (
                 <div className="btn-group" data-toggle="buttons">
                   <label
-                    className={`btn btn-default ${props.form.restrictions.value
-                      ? 'active'
-                      : ''}`}
+                    className={`btn btn-default ${
+                      props.form.restrictions.value ? 'active' : ''
+                    }`}
                   >
                     <input
                       type="radio"
@@ -302,9 +302,9 @@ export default function AnalysisFormComponent(props: Props) {
                   </label>
 
                   <label
-                    className={`btn btn-default ${!props.form.restrictions.value
-                      ? 'active'
-                      : ''}`}
+                    className={`btn btn-default ${
+                      !props.form.restrictions.value ? 'active' : ''
+                    }`}
                   >
                     <input
                       type="radio"

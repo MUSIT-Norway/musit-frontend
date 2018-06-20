@@ -699,9 +699,9 @@ const AdmPlaceComponent = (props: AdmPlace) => (
         <select className="form-control" id="admPlaceName">
           {admPlaces.map((a: AdmPlace) => (
             <option key={`optionRow_${a.admPlaceId || 0}`}>{`${a.name ||
-              ''} Type: ${a.type || ''} (${a.kommune ? a.kommune + ':' : ''} ${a.fylke
-              ? a.fylke + ':'
-              : ''} : ${a.land ? a.land : ''})`}</option>
+              ''} Type: ${a.type || ''} (${a.kommune ? a.kommune + ':' : ''} ${
+              a.fylke ? a.fylke + ':' : ''
+            } : ${a.land ? a.land : ''})`}</option>
           ))}
         </select>
       </div>

@@ -54,11 +54,13 @@ export const combineDataSources = (
   const findAnalysisType = (analysisTypeId: number) =>
     analysisTypes.find(analysisType => analysisType.id === analysisTypeId);
 
-  return events.map((event: AnalysisCollection): AnalysisCollectionExtended => ({
-    ...event,
-    registeredByName: findActorName(event.registeredBy),
-    analysisType: findAnalysisType(event.analysisTypeId)
-  }));
+  return events.map(
+    (event: AnalysisCollection): AnalysisCollectionExtended => ({
+      ...event,
+      registeredByName: findActorName(event.registeredBy),
+      analysisType: findAnalysisType(event.analysisTypeId)
+    })
+  );
 };
 
 export const filterAnalysisEvents = (

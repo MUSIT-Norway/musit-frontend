@@ -66,16 +66,19 @@ export const RenderPest = props => {
       lifeCyclePlaceHolder={I18n.t('musit.texts.makeChoice')}
       lifeCycleTooltip={I18n.t('musit.observation.page.pest.lifeCycleTooltip')}
       lifeCycleOnChange={(lifeCycleIndex, value) =>
-        props.onChangePestObservation(lifeCycleIndex, 'lifeCycle', value, props.index)}
+        props.onChangePestObservation(lifeCycleIndex, 'lifeCycle', value, props.index)
+      }
       lifeCycleOnRemove={lifeCycleIndex =>
-        props.onRemovePestObservation(lifeCycleIndex, props.index)}
+        props.onRemovePestObservation(lifeCycleIndex, props.index)
+      }
       lifeCycleItems={['puppe', 'adult', 'puppeskin', 'larva', 'egg']}
       lifeCycleItemsTranslateKeyPrefix="musit.observation.page.pest.lifeCycleLabelMenu."
       countLabel={I18n.t('musit.observation.page.pest.countLabel')}
       countTooltip={I18n.t('musit.observation.page.pest.countTooltip')}
       countPlaceHolder={I18n.t('musit.observation.page.pest.countPlaceHolder')}
       countOnChange={(countIndex, value) =>
-        props.onChangePestObservation(countIndex, 'count', value, props.index)}
+        props.onChangePestObservation(countIndex, 'count', value, props.index)
+      }
       commentsLeftValue={props.valueProps.identificationValue}
       commentsLeftLabel={I18n.t('musit.observation.page.pest.identificationLabel')}
       commentsLeftTooltip={I18n.t('musit.observation.page.pest.identificationTooltip')}
@@ -83,13 +86,15 @@ export const RenderPest = props => {
         'musit.observation.page.pest.identificationPlaceHolder'
       )}
       commentsOnChangeLeft={value =>
-        props.onChangeField('identificationValue', value, props.index)}
+        props.onChangeField('identificationValue', value, props.index)
+      }
       commentsRightValue={props.valueProps.commentValue}
       commentsRightLabel={I18n.t('musit.observation.page.pest.commentsLabel')}
       commentsRightTooltip={I18n.t('musit.observation.page.pest.commentsTooltip')}
       commentsRightPlaceHolder={I18n.t('musit.observation.page.pest.commentsPlaceHolder')}
       commentsOnChangeRight={value =>
-        props.onChangeField('commentValue', value, props.index)}
+        props.onChangeField('commentValue', value, props.index)
+      }
       newButtonLabel={I18n.t('musit.observation.page.newButtonLabel')}
       newButtonOnClick={() => props.onClickAddObservation(props.index)}
     />

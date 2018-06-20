@@ -107,7 +107,8 @@ export default class MusitUserAccount extends Component {
                     key={'museum-' + i}
                     eventKey={museumId}
                     onClick={() =>
-                      this.props.handleMuseumId(museumId, defaultCollectionId)}
+                      this.props.handleMuseumId(museumId, defaultCollectionId)
+                    }
                   >
                     {menuText(
                       selectedMuseumId === museumId ? <FontAwesome name="check" /> : '',

@@ -63,11 +63,9 @@ export default function ObjectSelection({
       >
         <caption>
           <h4>
-            {viewMode ? (
-              I18n.t('musit.objects.objectsView.messageToViewObjects')
-            ) : (
-              I18n.t('musit.objects.objectsView.messageToSelectObjects')
-            )}
+            {viewMode
+              ? I18n.t('musit.objects.objectsView.messageToViewObjects')
+              : I18n.t('musit.objects.objectsView.messageToSelectObjects')}
           </h4>
         </caption>
         <thead>
@@ -89,7 +87,8 @@ export default function ObjectSelection({
                         affectedThingsWithDetailsMainEvent || [],
                         affectedThingsSubEvent || []
                       )
-                    )}
+                    )
+                  }
                 />
               )}
             </th>
@@ -112,7 +111,8 @@ export default function ObjectSelection({
                       affectedThingsSubEventOnChange &&
                       affectedThingsSubEventOnChange(
                         toggleSelection(row.uuid || null, affectedThingsSubEvent || [])
-                      )}
+                      )
+                    }
                   >
                     <td name="type" width={10}>
                       {!viewMode && (

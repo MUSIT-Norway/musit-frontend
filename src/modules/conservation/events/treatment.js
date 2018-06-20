@@ -22,9 +22,8 @@ export default function Treatment(props: TreatmentProps) {
         labelAbove={true}
         options={optionsKeywords}
         onChange={v =>
-          props.onChange('keywords')(
-            v ? v.split(',').map(i => Number.parseFloat(i)) : []
-          )}
+          props.onChange('keywords')(v ? v.split(',').map(i => Number.parseFloat(i)) : [])
+        }
         title={I18n.t('musit.conservation.events.treatment.keyword') + suffix}
         titleSize="h4"
         viewMode={props.viewMode}
@@ -37,7 +36,8 @@ export default function Treatment(props: TreatmentProps) {
         onChange={v =>
           props.onChange('materials')(
             v ? v.split(',').map(i => Number.parseFloat(i)) : []
-          )}
+          )
+        }
         title={I18n.t('musit.conservation.events.treatment.materialUsage') + suffix}
         titleSize="h4"
         viewMode={props.viewMode}

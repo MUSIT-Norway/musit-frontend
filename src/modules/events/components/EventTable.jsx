@@ -119,25 +119,19 @@ export const EventTableComponent = ({
           events.map((event, i) => (
             <Tr key={i} onClick={() => onClick(event)}>
               <Td column="doneDate">
-                {event.type && event.type === 'MoveObject' ? (
-                  event.doneDate
-                ) : (
-                  event.registeredDate
-                )}
+                {event.type && event.type === 'MoveObject'
+                  ? event.doneDate
+                  : event.registeredDate}
               </Td>
               <Td column="type">
-                {event.type ? (
-                  I18n.t(`musit.objects.objectsView.eventTypes.${event.type}`)
-                ) : (
-                  ''
-                )}
+                {event.type
+                  ? I18n.t(`musit.objects.objectsView.eventTypes.${event.type}`)
+                  : ''}
               </Td>
               <Td column="doneBy">
-                {event.type && event.type === 'MoveObject' ? (
-                  event.doneBy
-                ) : (
-                  event.registeredBy
-                )}
+                {event.type && event.type === 'MoveObject'
+                  ? event.doneBy
+                  : event.registeredBy}
               </Td>
               <Td column="keyData">
                 {getKeyData(
@@ -149,13 +143,11 @@ export const EventTableComponent = ({
                 )}
               </Td>
               <Td column="caseNumber">
-                {event.caseNumbers ? (
-                  event.caseNumbers.join('; ')
-                ) : event.caseNumber ? (
-                  event.caseNumber
-                ) : (
-                  ''
-                )}
+                {event.caseNumbers
+                  ? event.caseNumbers.join('; ')
+                  : event.caseNumber
+                    ? event.caseNumber
+                    : ''}
               </Td>
             </Tr>
           ))}

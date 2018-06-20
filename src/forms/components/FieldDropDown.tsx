@@ -32,35 +32,32 @@ export default function FieldDropDown(props: FieldDropDownProps) {
       <div className="col-md-3">
         <select
           {...props.inputProps}
-          className={`form-control ${props.inputProps
-            ? props.inputProps.className || ''
-            : ''}`}
+          className={`form-control ${
+            props.inputProps ? props.inputProps.className || '' : ''
+          }`}
           value={props.field.value || ''}
           id={props.field.name}
           onChange={e =>
-            props.onChange({ name: props.field.name, rawValue: e.target.value })}
+            props.onChange({ name: props.field.name, rawValue: e.target.value })
+          }
         >
           {props.defaultOption && <option>{props.defaultOption}</option>}
           {props.selectItems.map((v: any, i) => (
             <option
               key={i}
               value={
-                props.valueFn ? props.appSession ? (
-                  props.valueFn(v, props.appSession)
-                ) : (
-                  props.valueFn(v)
-                ) : (
-                  v
-                )
+                props.valueFn
+                  ? props.appSession
+                    ? props.valueFn(v, props.appSession)
+                    : props.valueFn(v)
+                  : v
               }
             >
-              {props.displayFn ? props.appSession ? (
-                props.displayFn(v, props.appSession)
-              ) : (
-                props.displayFn(v)
-              ) : (
-                v
-              )}
+              {props.displayFn
+                ? props.appSession
+                  ? props.displayFn(v, props.appSession)
+                  : props.displayFn(v)
+                : v}
             </option>
           ))}
         </select>

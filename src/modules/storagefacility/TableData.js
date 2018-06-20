@@ -48,15 +48,13 @@ export default function TableData(props: TableDataProps) {
       {props.sampleView && <td>{rowData.sampleNum ? rowData.sampleNum : ''}</td>}
       {props.sampleView && (
         <td>
-          {rowData.sampleTypeId && props.appSession && props.sampleTypes ? (
-            getSampleTypeAndSubType(
-              props.sampleTypes,
-              rowData.sampleTypeId,
-              props.appSession
-            )
-          ) : (
-            ''
-          )}
+          {rowData.sampleTypeId && props.appSession && props.sampleTypes
+            ? getSampleTypeAndSubType(
+                props.sampleTypes,
+                rowData.sampleTypeId,
+                props.appSession
+              )
+            : ''}
         </td>
       )}
       <td>

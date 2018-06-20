@@ -10,7 +10,9 @@ export default function ConditionAssessment(props: ConditionAssessmentProps) {
     const conditionCodeObj = conditionCodes.find(c => c.conditionCode === v);
     return appSession.language.isEn && conditionCodeObj
       ? conditionCodeObj.enCondition
-      : conditionCodeObj ? conditionCodeObj.noCondition : '';
+      : conditionCodeObj
+        ? conditionCodeObj.noCondition
+        : '';
   };
 
   const extraAttributes = (
@@ -23,32 +25,31 @@ export default function ConditionAssessment(props: ConditionAssessmentProps) {
           {I18n.t('musit.conservation.events.conditionAssessment.conditionCode') + suffix}
         </label>
         <div className="col-md-9">
-          {props.viewMode ? (props.conditionAssessment.conditionCode === null) |
-          undefined ? (
-            ''
-          ) : (
-            <div style={{ paddingTop: '8px' }}>
-              {getDisplayNameForConditionCode(
-                props.conditionAssessment.conditionCode,
-                props.conditionCodes,
-                props.appSession
-              )}
-            </div>
+          {props.viewMode ? (
+            (props.conditionAssessment.conditionCode === null) | undefined ? (
+              ''
+            ) : (
+              <div style={{ paddingTop: '8px' }}>
+                {getDisplayNameForConditionCode(
+                  props.conditionAssessment.conditionCode,
+                  props.conditionCodes,
+                  props.appSession
+                )}
+              </div>
+            )
           ) : (
             <DropdownButton
               bsStyle="default"
               title={
-                (props.conditionAssessment.conditionCode === null) | undefined ? (
-                  I18n.t(
-                    'musit.conservation.events.conditionAssessment.chooseConditionAssessment'
-                  )
-                ) : (
-                  getDisplayNameForConditionCode(
-                    props.conditionAssessment.conditionCode,
-                    props.conditionCodes,
-                    props.appSession
-                  )
-                )
+                (props.conditionAssessment.conditionCode === null) | undefined
+                  ? I18n.t(
+                      'musit.conservation.events.conditionAssessment.chooseConditionAssessment'
+                    )
+                  : getDisplayNameForConditionCode(
+                      props.conditionAssessment.conditionCode,
+                      props.conditionCodes,
+                      props.appSession
+                    )
               }
               id="conditionCode"
             >

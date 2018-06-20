@@ -369,7 +369,8 @@ export default class TableComponent extends React.Component {
         placeHolderSearch={I18n.t('musit.grid.search.placeHolder')}
         searchValue={searchPattern}
         onSearchChanged={newPattern =>
-          this.setState(ps => ({ ...ps, searchPattern: newPattern }))}
+          this.setState(ps => ({ ...ps, searchPattern: newPattern }))
+        }
         clickShowCenter={() => {
           this.showObjects();
           blur();
@@ -407,7 +408,8 @@ export default class TableComponent extends React.Component {
                 rootNode.nodeId,
                 this.props.appSession
               )
-            )}
+            )
+          }
           stats={stats}
           onClickProperties={() => {
             this.props.goTo({
@@ -424,7 +426,8 @@ export default class TableComponent extends React.Component {
                 rootNode.nodeId,
                 this.props.appSession
               )
-            )}
+            )
+          }
           onClickMoveNode={() => moveNode(rootNode)}
           onClickDelete={() => {
             const message = I18n.t(
@@ -520,7 +523,8 @@ export default class TableComponent extends React.Component {
                 museumId,
                 collectionId,
                 token
-              })}
+              })
+            }
             goToObject={(uuid, objectType) =>
               this.props.history.push(
                 objectType === 'sample'
@@ -532,9 +536,11 @@ export default class TableComponent extends React.Component {
                       this.props.appSession,
                       uuid
                     )
-              )}
+              )
+            }
             isObjectAdded={object =>
-              this.props.isItemAdded(object, this.props.pickList.objects)}
+              this.props.isItemAdded(object, this.props.pickList.objects)
+            }
             onMove={moveObject}
             sampleStore={showSamples ? this.props.sampleStore : {}}
             appSession={this.props.appSession}
@@ -569,17 +575,20 @@ export default class TableComponent extends React.Component {
                 node.nodeId,
                 this.props.appSession
               )
-            )}
+            )
+          }
           onMove={moveNode}
           pickNode={node =>
-            this.props.pickNode({ node, breadcrumb: rootNode.breadcrumb })}
+            this.props.pickNode({ node, breadcrumb: rootNode.breadcrumb })
+          }
           onClick={node =>
             this.props.goTo(
               Config.magasin.urls.client.storagefacility.goToNode(
                 node.nodeId,
                 this.props.appSession
               )
-            )}
+            )
+          }
           isNodeAdded={node => this.props.isItemAdded(node, this.props.pickList.nodes)}
         />
         {showPaging && (

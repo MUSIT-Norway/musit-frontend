@@ -22,24 +22,23 @@ const SearchParam = props => (
       // style={{ ...style }}
       type="text"
       value={
-        props && props.searchStore && props.searchStore.queryParam ? props.id ===
-        'museumNoAsANumber' ? (
-          removeInvalidKeysForNumberRangeString(
-            props.searchStore.queryParam.museumNoAsANumber
-              ? props.searchStore.queryParam.museumNoAsANumber
-              : localStorage.getItem(props.id) ? localStorage.getItem(props.id) : ''
-          )
-        ) : props.searchStore.queryParam[props.id] ? (
-          props.searchStore.queryParam[props.id]
-        ) : localStorage.getItem(props.id) ? (
-          localStorage.getItem(props.id)
-        ) : (
-          ''
-        ) : localStorage.getItem(props.id) ? (
-          localStorage.getItem(props.id)
-        ) : (
-          ''
-        )
+        props && props.searchStore && props.searchStore.queryParam
+          ? props.id === 'museumNoAsANumber'
+            ? removeInvalidKeysForNumberRangeString(
+                props.searchStore.queryParam.museumNoAsANumber
+                  ? props.searchStore.queryParam.museumNoAsANumber
+                  : localStorage.getItem(props.id)
+                    ? localStorage.getItem(props.id)
+                    : ''
+              )
+            : props.searchStore.queryParam[props.id]
+              ? props.searchStore.queryParam[props.id]
+              : localStorage.getItem(props.id)
+                ? localStorage.getItem(props.id)
+                : ''
+          : localStorage.getItem(props.id)
+            ? localStorage.getItem(props.id)
+            : ''
       }
       placeholder={I18n.t(`musit.objectsearch.${props.id}.placeHolder`)}
       onChange={e => {

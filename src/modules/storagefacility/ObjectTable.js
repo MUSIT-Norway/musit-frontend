@@ -74,16 +74,14 @@ export default class ObjectGrid extends Component {
                     <TableData
                       key={i}
                       rowData={
-                        data.sampleObject ? (
-                          flattenSample(
-                            this.props.appSession,
-                            this.props.sampleStore.sampleTypes,
-                            omit(data, 'sampleObject'),
-                            data.sampleObject
-                          )
-                        ) : (
-                          { ...data, objectData: data }
-                        )
+                        data.sampleObject
+                          ? flattenSample(
+                              this.props.appSession,
+                              this.props.sampleStore.sampleTypes,
+                              omit(data, 'sampleObject'),
+                              data.sampleObject
+                            )
+                          : { ...data, objectData: data }
                       }
                       appSession={this.props.appSession}
                       sampleTypes={this.props.sampleStore.sampleTypes}

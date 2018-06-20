@@ -110,13 +110,13 @@ export default {
           editNode: (nodeId: number, appSession: AppSession) =>
             `${clientContextUrl(appSession)}/magasin/${nodeId}/view`,
           goToObjects: (nodeId: string, appSession: AppSession, page?: ?number) =>
-            `${clientContextUrl(appSession)}/magasin/${nodeId}/objects${page
-              ? `/${page}`
-              : ''}`,
+            `${clientContextUrl(appSession)}/magasin/${nodeId}/objects${
+              page ? `/${page}` : ''
+            }`,
           goToSamples: (nodeId: string, appSession: AppSession, page?: ?number) =>
-            `${clientContextUrl(appSession)}/magasin/${nodeId}/samples${page
-              ? `/${page}`
-              : ''}`,
+            `${clientContextUrl(appSession)}/magasin/${nodeId}/samples${
+              page ? `/${page}` : ''
+            }`,
           addObservation: (nodeId: number, appSession: AppSession) =>
             `${clientContextUrl(appSession)}/magasin/${nodeId}/observation/add`,
           editObservation: (nodeId: number, appSession: AppSession) =>

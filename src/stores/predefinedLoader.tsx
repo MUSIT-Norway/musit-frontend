@@ -101,7 +101,7 @@ export function loadCustomPredefinedTypes<P>(
   ).map(([predefined, appSession]) => ({ predefined, appSession }));
   return inject(data$, (predefined: DataType, upstream: P) => ({
     ...predefined,
-    ...upstream as TODO
+    ...(upstream as TODO)
   }))((initialProps: P & { predefined: Predefined; appSession: AppSession }) => {
     return (
       <PredefinedLoader

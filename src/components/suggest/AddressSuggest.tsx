@@ -82,7 +82,9 @@ export class AddressSuggest extends React.Component<
   }
 
   getAddressSuggestionValue(suggestion: AddressSuggestion) {
-    return `${suggestion.street} ${suggestion.streetNo}, ${suggestion.zip} ${suggestion.place}`;
+    return `${suggestion.street} ${suggestion.streetNo}, ${suggestion.zip} ${
+      suggestion.place
+    }`;
   }
 
   doneByProps = {
@@ -94,7 +96,9 @@ export class AddressSuggest extends React.Component<
   };
 
   renderAddressSuggestion(suggestion: AddressSuggestion) {
-    const suggestionText = `${suggestion.street} ${suggestion.streetNo}, ${suggestion.zip} ${suggestion.place}`;
+    const suggestionText = `${suggestion.street} ${suggestion.streetNo}, ${
+      suggestion.zip
+    } ${suggestion.place}`;
     return <span className={'suggestion-content'}>{suggestionText}</span>;
   }
 
@@ -112,7 +116,7 @@ export class AddressSuggest extends React.Component<
         onSuggestionsFetchRequested={this.requestSuggestionUpdate}
         getSuggestionValue={this.getAddressSuggestionValue}
         renderSuggestion={this.renderAddressSuggestion}
-        inputProps={{ ...this.doneByProps as TODO, value: this.state.value }}
+        inputProps={{ ...(this.doneByProps as TODO), value: this.state.value }}
         shouldRenderSuggestions={v => v !== 'undefined'}
         onSuggestionSelected={this.onSuggestionSelected}
       />

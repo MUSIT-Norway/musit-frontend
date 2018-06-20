@@ -88,11 +88,9 @@ export default function SampleViewComponent(props: Props & SampleProps) {
           <hr />
         </div>
         <h4>
-          {derivedFrom.sampleNum ? (
-            I18n.t('musit.sample.derivedFromObjectAndSample')
-          ) : (
-            I18n.t('musit.sample.derivedFromObject')
-          )}
+          {derivedFrom.sampleNum
+            ? I18n.t('musit.sample.derivedFromObjectAndSample')
+            : I18n.t('musit.sample.derivedFromObject')}
         </h4>
         <ObjectAndSampleDetails
           appSession={props.appSession}
@@ -104,7 +102,8 @@ export default function SampleViewComponent(props: Props & SampleProps) {
         <ViewPersonRoleDate
           personData={props.persons}
           getDisplayNameForRole={(roleName: string) =>
-            I18n.t(`musit.sample.roles.${roleName}`)}
+            I18n.t(`musit.sample.roles.${roleName}`)
+          }
         />
         <hr />
         <div className="form-group">
