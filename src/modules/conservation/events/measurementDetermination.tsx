@@ -68,7 +68,8 @@ export default function MeasurementDetermination(props: MeasurementDetermination
                 props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   length: musitParseFloat(t.target.value)
-                })}
+                })
+              }
               disabled={props.viewMode}
             />
           )}
@@ -99,7 +100,8 @@ export default function MeasurementDetermination(props: MeasurementDetermination
                 props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   width: musitParseFloat(t.target.value)
-                })}
+                })
+              }
               disabled={props.viewMode}
             />
           )}
@@ -130,7 +132,8 @@ export default function MeasurementDetermination(props: MeasurementDetermination
                 props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   thickness: musitParseFloat(t.target.value)
-                })}
+                })
+              }
               disabled={props.viewMode}
             />
           )}
@@ -161,7 +164,8 @@ export default function MeasurementDetermination(props: MeasurementDetermination
                 props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   height: musitParseFloat(t.target.value)
-                })}
+                })
+              }
               disabled={props.viewMode}
             />
           )}
@@ -198,7 +202,8 @@ export default function MeasurementDetermination(props: MeasurementDetermination
                 props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   largestLength: musitParseFloat(t.target.value)
-                })}
+                })
+              }
               disabled={props.viewMode}
             />
           )}
@@ -235,7 +240,8 @@ export default function MeasurementDetermination(props: MeasurementDetermination
                 props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   largestWidth: musitParseFloat(t.target.value)
-                })}
+                })
+              }
               disabled={props.viewMode}
             />
           )}
@@ -272,7 +278,8 @@ export default function MeasurementDetermination(props: MeasurementDetermination
                 props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   largestThickness: musitParseFloat(t.target.value)
-                })}
+                })
+              }
               disabled={props.viewMode}
             />
           )}
@@ -309,7 +316,8 @@ export default function MeasurementDetermination(props: MeasurementDetermination
                 props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   largestHeight: musitParseFloat(t.target.value)
-                })}
+                })
+              }
               disabled={props.viewMode}
             />
           )}
@@ -340,7 +348,8 @@ export default function MeasurementDetermination(props: MeasurementDetermination
                 props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   diameter: musitParseFloat(t.target.value)
-                })}
+                })
+              }
               disabled={props.viewMode}
             />
           )}
@@ -371,7 +380,8 @@ export default function MeasurementDetermination(props: MeasurementDetermination
                 props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   tverrmaal: musitParseFloat(t.target.value)
-                })}
+                })
+              }
               disabled={props.viewMode}
             />
           )}
@@ -408,7 +418,8 @@ export default function MeasurementDetermination(props: MeasurementDetermination
                 props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   largestMeasurement: musitParseFloat(t.target.value)
-                })}
+                })
+              }
               disabled={props.viewMode}
             />
           )}
@@ -437,7 +448,8 @@ export default function MeasurementDetermination(props: MeasurementDetermination
                 props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   measurement: t.target.value
-                })}
+                })
+              }
               disabled={props.viewMode}
             />
           )}
@@ -471,7 +483,8 @@ export default function MeasurementDetermination(props: MeasurementDetermination
                 props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   quantity: musitParseInt(t.target.value)
-                })}
+                })
+              }
               disabled={props.viewMode}
             />
           )}
@@ -498,16 +511,15 @@ export default function MeasurementDetermination(props: MeasurementDetermination
                 props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   quantitySymbol: r
-                })}
+                })
+              }
               items={['>', '<', '?', '=']}
               displayItems={['>', '<', '?', '=']}
               title={
                 props.measurementDetermination.measurementData &&
-                props.measurementDetermination.measurementData.quantitySymbol ? (
-                  props.measurementDetermination.measurementData.quantitySymbol
-                ) : (
-                  ' '
-                )
+                props.measurementDetermination.measurementData.quantitySymbol
+                  ? props.measurementDetermination.measurementData.quantitySymbol
+                  : ' '
               }
             />
           )}
@@ -542,7 +554,8 @@ export default function MeasurementDetermination(props: MeasurementDetermination
                 props.onChange('measurementData')({
                   ...props.measurementDetermination.measurementData,
                   fragmentQuantity: musitParseInt(t.target.value)
-                })}
+                })
+              }
               disabled={props.viewMode}
             />
           )}
