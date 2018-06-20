@@ -502,7 +502,6 @@ export default function MeasurementDetermination(props: MeasurementDetermination
               items={['>', '<', '?', '=']}
               displayItems={['>', '<', '?', '=']}
               title={
-                props.measurementDetermination &&
                 props.measurementDetermination.measurementData &&
                 props.measurementDetermination.measurementData.quantitySymbol ? (
                   props.measurementDetermination.measurementData.quantitySymbol
