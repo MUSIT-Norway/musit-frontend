@@ -1,10 +1,11 @@
 // @flow
-import React from 'react';
-import type { Field } from 'forms/form';
+import * as React from 'react';
+import { Field } from '../../forms/form';
+import { Star } from '../../types/common';
 
 type VFGProps = {
-  fields?: Array<Field<*>>,
-  field?: Field<*>
+  fields?: Array<Field<Star>>,
+  field?: Field<Star>
 };
 
 export function isValid({ fields, field }: VFGProps) {
@@ -22,7 +23,7 @@ export function isValid({ fields, field }: VFGProps) {
 /**
  * @deprecated use FormElement component in ../components.js and pass in the hasError boolean property
  */
-export default function ValidatedFormGroup(props: VFGProps & { children?: React$Node }) {
+export default function ValidatedFormGroup(props: VFGProps & { children?: React.ReactNode }) {
   return (
     <div className={`form-group${!isValid(props) ? ' has-error' : ''}`}>
       {props.children}

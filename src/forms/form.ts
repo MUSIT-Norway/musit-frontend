@@ -2,7 +2,7 @@
 import { Observable, Subject } from 'rxjs';
 import { createStore } from 'react-rxjs';
 import { createAction } from '../shared/react-rxjs-patch';
-import isEmpty from 'lodash/isEmpty';
+import {isEmpty} from "lodash";
 import { stringMapper, noMapper, booleanMapper, numberMapper } from './mappers';
 import {
   noValidation,
@@ -13,36 +13,37 @@ import {
   composeValidators
 } from './validators';
 import { KEEP_ALIVE } from '../stores/constants';
+import { Maybe, RemoveMaybe, Star, TODO, MUSTFIX } from '../types/common';
 
-export type ValueType = string | number | boolean | Array<*>;
-export type RawValue = ValueType | { [string]: ValueType };
+export type ValueType = string | number | boolean | Array<Star>;
+export type RawValue = ValueType | { [key:string]: ValueType };
 
 export type Field<T> = {
   name: string,
-  rawValue?: ?RawValue,
-  defaultValue: ?T,
-  value?: ?T,
+  rawValue?: Maybe<RawValue>,
+  defaultValue: Maybe<T>,
+  value?: Maybe<T>,
   status?: {
     valid: boolean,
-    error?: ?string
+    error?: Maybe<string>
   },
   mapper: {
-    fromRaw: (s: ?RawValue) => ?T,
-    toRaw: (t: ?T) => ?RawValue
+    fromRaw: (s: Maybe<RawValue>) => Maybe<T>,
+    toRaw: (t: Maybe<T>) => Maybe<RawValue>
   },
   validator: {
-    rawValidator?: ?(field: string) => (s: ?RawValue) => ?string,
-    valueValidator?: ?(field: string) => (t: ?T) => ?string
+    rawValidator?: RemoveMaybe<(field: string) => (s: Maybe<RawValue>) => Maybe<string>>,
+    valueValidator?: RemoveMaybe<(field: string) => (t: Maybe<T>) => Maybe<string>>
   }
 };
 
 export type Update<T> = {
   name: string,
-  rawValue: ?string,
-  defaultValue?: ?T
+  rawValue: Maybe<string>,
+  defaultValue?: Maybe<T>
 };
 
-const updateField = (field: Field<*>, data: Update<*>): Field<*> => {
+const updateField = (field: Field<Star>, data: Update<Star>): Field<Star> => {
   const defaultValue = data.defaultValue || field.defaultValue;
   const rawValue =
     typeof data.rawValue !== 'undefined'
@@ -70,8 +71,8 @@ const updateField = (field: Field<*>, data: Update<*>): Field<*> => {
 
 export const getStrField = (
   field: string,
-  defaultValue?: ?string = null,
-  required?: boolean = false
+  defaultValue: Maybe<string> = null,
+  required: boolean = false
 ): Field<string> => ({
   name: field,
   defaultValue: defaultValue,
@@ -83,7 +84,7 @@ export const getStrField = (
   }
 });
 
-export function getCompositeField<T>(field: string, defaultValue?: ?T): Field<T> {
+export function getCompositeField<T>(field: string, defaultValue?: Maybe<T>): Field<T> {
   return {
     name: field,
     defaultValue: defaultValue,
@@ -96,7 +97,7 @@ export function getCompositeField<T>(field: string, defaultValue?: ?T): Field<T>
 
 export const getBoolField = (
   field: string,
-  defaultValue?: ?boolean = null
+  defaultValue: Maybe<boolean> = null
 ): Field<boolean> => ({
   name: field,
   defaultValue: defaultValue,
@@ -108,10 +109,10 @@ export const getBoolField = (
 
 export const getArrField = (
   field: string,
-  defaultValue?: Array<*> = [],
-  required?: boolean = false,
+  defaultValue: Array<Star> = [],
+  required: boolean = false,
   customValidator?: Function
-): Field<Array<*>> => ({
+): Field<Array<Star>> => ({
   name: field,
   defaultValue: defaultValue,
   value: defaultValue,
@@ -126,13 +127,16 @@ export const getArrField = (
   }
 });
 
+//TODO: Behøver vi Maybe på parametrene som har default verdi? Det var slik (og mer til) i den opprinnelige flow-kodingen...
+//(Men det var ikke konsistent med seg selv, isNumber og isNumberInRange forventer number, ikke number|null|undefined o.l.)
+
 export const getNumberField = (
   field: string,
-  defaultValue?: ?number = null,
-  required?: boolean = false,
-  rangeFrom?: ?number = 0,
-  rangeTo?: ?number = Number.MAX_VALUE,
-  decimalPrecision?: ?number = 2
+  defaultValue: Maybe<number> = null, //Kan være strengere her og sette number | null, undefined blir vel umulig ettersom vi har default verdi?
+  required: boolean = false,
+  rangeFrom: number = 0,
+  rangeTo = Number.MAX_VALUE,
+  decimalPrecision: number = 2
 ): Field<number> => ({
   name: field,
   defaultValue: defaultValue,
@@ -147,8 +151,8 @@ export const getNumberField = (
   }
 });
 
-const updateForm = (state: Field<*>[], data: Update<*>): Field<*>[] => {
-  const fieldIndex: number = state.findIndex((f: Field<*>) => f.name === data.name);
+const updateForm = (state: Field<Star>[], data: Update<Star>): Field<Star>[] => {
+  const fieldIndex: number = state.findIndex((f: Field<Star>) => f.name === data.name);
   if (fieldIndex === -1) {
     return state;
   }
@@ -159,23 +163,23 @@ const updateForm = (state: Field<*>[], data: Update<*>): Field<*>[] => {
     .concat(state.slice(fieldIndex + 1));
 };
 
-const reducer$ = (initialFields, { updateForm$, loadForm$, clearForm$ }) => {
+const reducer$ = (initialFields: TODO, { updateForm$, loadForm$, clearForm$ }: TODO) => {
   return Observable.merge(
     clearForm$.map(() => () => initialFields),
-    loadForm$.map((load: Update<*>[]) => (state: Field<*>[]) =>
+    loadForm$.map((load: Update<Star>[]) => (state: Field<Star>[]) =>
       load.reduce(updateForm, state)
     ),
-    updateForm$.map((update: Update<*>) => (state: Field<*>[]) =>
+    updateForm$.map((update: Update<Star>) => (state: Field<Star>[]) =>
       updateForm(state, update)
     )
   );
 };
 
 export type FormDetails = {
-  updateForm$: Subject<Update<*>>,
-  loadForm$: Subject<Array<Update<*>>>,
+  updateForm$: Subject<Update<Star>>,
+  loadForm$: Subject<Array<Update<Star>>>,
   clearForm$: Subject<void>,
-  form$: Observable<{ [string]: Field<*> }>
+  form$: Observable<{ [key:string]: Field<Star> }>
 };
 
 /**
@@ -201,14 +205,14 @@ export type FormDetails = {
  */
 const createForm$ = (
   name: string,
-  fields: Array<Field<*>>,
-  updateForm$?: Subject<Update<*>>,
-  loadForm$?: Subject<Array<Update<*>>>
+  fields: Array<Field<Star>>,
+  updateForm$?: Subject<Update<Star>>,
+  loadForm$?: Subject<Array<Update<Star>>>
 ): FormDetails => {
   updateForm$ = updateForm$ || createAction(name + ': updateForm$');
   loadForm$ = loadForm$ || createAction(name + ': loadForm$');
   const clearForm$ = createAction(name + ': clearForm$');
-  const initialFields: Array<Field<*>> = fields.reduce(
+  const initialFields: Array<Field<Star>> = fields.reduce(
     (acc, field) => [
       ...acc,
       updateField(
@@ -218,10 +222,10 @@ const createForm$ = (
           validator: field.validator || noValidation,
           mapper: field.mapper || stringMapper
         },
-        { name: field.name, rawValue: (field.rawValue: any) }
+        { name: field.name, rawValue: (field.rawValue as any) }
       )
     ],
-    []
+    [] as Array<MUSTFIX>
   );
   return {
     updateForm$,
@@ -229,7 +233,7 @@ const createForm$ = (
     clearForm$,
     form$: createStore(
       name,
-      reducer$(initialFields, { updateForm$, loadForm$, clearForm$ }),
+      reducer$(initialFields, { updateForm$, loadForm$, clearForm$ }) as MUSTFIX,
       initialFields,
       KEEP_ALIVE
     ).map(form => form.reduce((acc, f) => ({ ...acc, [f.name]: f }), {}))

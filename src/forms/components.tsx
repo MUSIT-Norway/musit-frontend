@@ -1,6 +1,8 @@
 // @flow
-import React from 'react';
-import type { DomEvent } from '../types/dom';
+import * as React from 'react';
+import { DomEvent } from '../types/dom';
+import { Maybe, eventTargetFiles, Star, TODO } from '../types/common';
+
 
 export type ElementProps = {
   id: string,
@@ -9,7 +11,7 @@ export type ElementProps = {
   labelSize?: string,
   labelAbove?: boolean,
   elementWidth: number,
-  children?: React$Node,
+  children?: React.ReactNode,
   hasError?: boolean,
   style?: Object
 };
@@ -41,7 +43,7 @@ export function FormElement(props: ElementProps) {
 }
 
 export type InputProps = {
-  value: ?string | ?Array<string | number>,
+  value: Maybe<string> | Maybe<Array<string> | number>,
   onChange: (e: DomEvent) => void
 } & ElementProps;
 
@@ -69,7 +71,7 @@ export function FormInput(props: InputProps) {
 }
 
 export type FileSelect = {
-  value: ?Array<File>,
+  value: Maybe<Array<File>>,
   onChange: (files: Array<File>) => void,
   multiple?: boolean
 } & ElementProps;
@@ -90,7 +92,7 @@ export function FormFileSelect(props: FileSelect) {
         className="form-control"
         id={props.id}
         onChange={e => {
-          const files = [...e.target.files];
+          const files = [...eventTargetFiles(e)];
           return props.onChange(files);
         }}
       />
@@ -99,7 +101,7 @@ export function FormFileSelect(props: FileSelect) {
 }
 
 export type TextProps = {
-  value: ?string | ?Array<string | number>
+  value: Maybe<string> | Maybe<Array<string> | number>
 } & ElementProps;
 
 export function FormText(props: TextProps) {
@@ -144,7 +146,7 @@ export function FormTextArea(props: TextAreaProps) {
 }
 
 export type SelectProps = {
-  values: ?Array<*>,
+  values: Maybe<Array<Star>>,
   chooseLabel: string
 } & InputProps;
 
@@ -161,8 +163,8 @@ export function FormSelect(props: SelectProps) {
       <select
         id={props.id}
         className="form-control"
-        defaultValue={props.value || ''}
-        onChange={props.onChange}
+        defaultValue={props.value as TODO || ''}
+        onChange={props.onChange as TODO}
       >
         <option value="">{props.chooseLabel}</option>
         {props.values &&

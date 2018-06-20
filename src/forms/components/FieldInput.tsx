@@ -1,9 +1,10 @@
 // @flow
-import React from 'react';
-import type { Field } from 'forms/form';
+import * as React from 'react';
+import  { Field } from '../../forms/form';
+import { Star, TODO } from '../../types/common';
 
 type FieldInputProps = {
-  field: Field<*>,
+  field: Field<Star>,
   title: string,
   onChange: Function,
   inputProps?: {
@@ -41,7 +42,7 @@ export default function FieldInput({
             {...inputProps}
             className={`form-control ${inputProps ? inputProps.className || '' : ''}`}
             id={field.name}
-            value={field.rawValue || ''}
+            value={field.rawValue as TODO || ''}
             onChange={e => onChange({ name: field.name, rawValue: e.target.value })}
           />
         )}

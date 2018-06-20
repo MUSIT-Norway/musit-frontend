@@ -1,10 +1,11 @@
 // @flow
-import React from 'react';
-import type { Field } from 'forms/form';
+import * as React from 'react';
+import { Field } from '../../forms/form';
 import { I18n } from 'react-i18nify';
+import { Star } from '../../types/common';
 
 type FieldInputProps = {
-  field: Field<*>,
+  field: Field<Star>,
   title: string,
   yesValue: string | number,
   noValue: string | number,

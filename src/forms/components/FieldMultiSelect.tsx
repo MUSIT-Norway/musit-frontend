@@ -1,32 +1,34 @@
 //@flow
-import React from 'react';
-import type { AppSession } from '../../types/appSession';
+import * as React from 'react';
+import { AppSession } from '../../types/appSession';
 import Select from 'react-select';
 import { I18n } from 'react-i18nify';
+import { Maybe, TODO } from '../../types/common';
 
-export type FieldMultiSelectProps = {
+export interface FieldMultiSelectProps  {
   stringValue?: any,
-  options: ?Array<any>,
-  title: ?string,
+  options: Maybe<Array<any>>,
+  title: Maybe<string>,
   titleSize?: string,
   onChange: Function,
   labelAbove?: boolean,
   inputProps?: { className?: string, style?: {} },
-  appSession?: ?AppSession,
-  viewMode?: ?boolean,
-  singleSelect?: ?boolean,
-  style?: any
+  appSession?: Maybe<AppSession>,
+  viewMode?: Maybe<boolean>,
+  singleSelect?: Maybe<boolean>,
+  style?: any,
+  name?: string //TODO: Jeg måtte legge til denne, sjekk om den brukes noe sted, hvis ikke bør den (og bruken av den nedenfor) fjenres
 };
 
 export default function FieldMultiSelect(props: FieldMultiSelectProps) {
   const placeholder = I18n.t('musit.texts.makeChoice');
   const name = props.name ? props.name : '';
-  const values: ?string = props.stringValue ? props.stringValue : '';
+  const values: Maybe<string> = props.stringValue ? props.stringValue : '';
   const options = props.options ? props.options : [];
 
-  const label = opt => (opt ? opt.label : '');
-  const filterOptions = v => options && options.filter(f => f.value === v);
-  const viewOptions: ?Array<string> =
+  const label = (opt:TODO) => (opt ? opt.label : '');
+  const filterOptions = (v:TODO) => options && options.filter(f => f.value === v);
+  const viewOptions: Maybe<Array<string>> =
     values && options
       ? values
           .split(',')
@@ -57,7 +59,7 @@ export default function FieldMultiSelect(props: FieldMultiSelectProps) {
               removeSelected={false}
               simpleValue
               id={name}
-              value={values}
+              value={values as TODO}
               options={options}
               onChange={v => props.onChange(v)}
               style={props.style}
@@ -88,7 +90,7 @@ export default function FieldMultiSelect(props: FieldMultiSelectProps) {
             removeSelected={false}
             simpleValue
             id={name}
-            value={values}
+            value={values as TODO}
             options={options}
             onChange={v => props.onChange(v)}
           />
