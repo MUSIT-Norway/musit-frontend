@@ -1,11 +1,12 @@
 import * as revalidate from 'revalidate';
+import { TODO } from '../types/common';
 
 export const isNumberInRange = (from: number, to: number) =>
   revalidate.createValidator(
     (message: string) => (value: number) => {
       if (!(value >= from && value <= to)) {
         return message;
-      }
+      } else return undefined;
     },
     (field: string) => field + ' must be a number in range ' + from + ' / ' + to
   );
@@ -46,9 +47,9 @@ export const noValidation = {
   valueValidator: () => () => null
 };
 
-export const isFormValid = f =>
+export const isFormValid = (f: TODO) =>
   Object.keys(f).reduce((acc, k) => {
-    const field: Object = f[k];
+    const field: TODO = f[k];
     return acc && field.status && field.status.valid;
   }, true);
 

@@ -2,7 +2,7 @@
 import { Observable, Subject } from 'rxjs';
 import { createStore } from 'react-rxjs';
 import { createAction } from '../shared/react-rxjs-patch';
-import {isEmpty} from "lodash";
+import { isEmpty } from 'lodash';
 import { stringMapper, noMapper, booleanMapper, numberMapper } from './mappers';
 import {
   noValidation,
@@ -16,31 +16,31 @@ import { KEEP_ALIVE } from '../stores/constants';
 import { Maybe, RemoveMaybe, Star, TODO, MUSTFIX } from '../types/common';
 
 export type ValueType = string | number | boolean | Array<Star>;
-export type RawValue = ValueType | { [key:string]: ValueType };
+export type RawValue = ValueType | { [key: string]: ValueType };
 
 export type Field<T> = {
-  name: string,
-  rawValue?: Maybe<RawValue>,
-  defaultValue: Maybe<T>,
-  value?: Maybe<T>,
+  name: string;
+  rawValue?: Maybe<RawValue>;
+  defaultValue: Maybe<T>;
+  value?: Maybe<T>;
   status?: {
-    valid: boolean,
-    error?: Maybe<string>
-  },
+    valid: boolean;
+    error?: Maybe<string>;
+  };
   mapper: {
-    fromRaw: (s: Maybe<RawValue>) => Maybe<T>,
-    toRaw: (t: Maybe<T>) => Maybe<RawValue>
-  },
+    fromRaw: (s: Maybe<RawValue>) => Maybe<T>;
+    toRaw: (t: Maybe<T>) => Maybe<RawValue>;
+  };
   validator: {
-    rawValidator?: RemoveMaybe<(field: string) => (s: Maybe<RawValue>) => Maybe<string>>,
-    valueValidator?: RemoveMaybe<(field: string) => (t: Maybe<T>) => Maybe<string>>
-  }
+    rawValidator?: RemoveMaybe<(field: string) => (s: Maybe<RawValue>) => Maybe<string>>;
+    valueValidator?: RemoveMaybe<(field: string) => (t: Maybe<T>) => Maybe<string>>;
+  };
 };
 
 export type Update<T> = {
-  name: string,
-  rawValue: Maybe<string>,
-  defaultValue?: Maybe<T>
+  name: string;
+  rawValue: Maybe<string>;
+  defaultValue?: Maybe<T>;
 };
 
 const updateField = (field: Field<Star>, data: Update<Star>): Field<Star> => {
@@ -121,7 +121,7 @@ export const getArrField = (
   validator: {
     rawValidator: required
       ? customValidator
-        ? composeValidators(isNonEmptyArray, customValidator)
+        ? composeValidators(isNonEmptyArray, customValidator as TODO) as TODO
         : isNonEmptyArray
       : customValidator
   }
@@ -176,10 +176,10 @@ const reducer$ = (initialFields: TODO, { updateForm$, loadForm$, clearForm$ }: T
 };
 
 export type FormDetails = {
-  updateForm$: Subject<Update<Star>>,
-  loadForm$: Subject<Array<Update<Star>>>,
-  clearForm$: Subject<void>,
-  form$: Observable<{ [key:string]: Field<Star> }>
+  updateForm$: Subject<Update<Star>>;
+  loadForm$: Subject<Array<Update<Star>>>;
+  clearForm$: Subject<void>;
+  form$: Observable<{ [key: string]: Field<Star> }>;
 };
 
 /**
@@ -211,7 +211,7 @@ const createForm$ = (
 ): FormDetails => {
   updateForm$ = updateForm$ || createAction(name + ': updateForm$');
   loadForm$ = loadForm$ || createAction(name + ': loadForm$');
-  const clearForm$ = createAction(name + ': clearForm$');
+  const clearForm$ = createAction<void>(name + ': clearForm$');
   const initialFields: Array<Field<Star>> = fields.reduce(
     (acc, field) => [
       ...acc,
@@ -222,7 +222,7 @@ const createForm$ = (
           validator: field.validator || noValidation,
           mapper: field.mapper || stringMapper
         },
-        { name: field.name, rawValue: (field.rawValue as any) }
+        { name: field.name, rawValue: field.rawValue as any }
       )
     ],
     [] as Array<MUSTFIX>

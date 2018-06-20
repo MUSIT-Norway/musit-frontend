@@ -1,26 +1,28 @@
+import { Maybe, Star, TODO } from '../types/common';
+
 export const booleanMapper = {
-  fromRaw: (s: ?boolean) => s,
-  toRaw: (s: ?*) => !!s
+  fromRaw: (s: Maybe<boolean>) => s,
+  toRaw: (s: Maybe<Star>) => !!s
 };
 
 export const stringMapper = {
-  fromRaw: (s: ?string) => s,
-  toRaw: (s: ?*) => (s ? '' + s : null)
+  fromRaw: (s: Maybe<string>) => s,
+  toRaw: (s: Maybe<Star>) => (s ? '' + s : null)
 };
 
 export const noMapper = {
-  fromRaw: (s: ?*) => s,
-  toRaw: (s: ?*) => s
+  fromRaw: (s: Maybe<TODO>) => s,
+  toRaw: (s: Maybe<TODO>) => s
 };
 
 export const numberMapper = {
-  fromRaw: (s: ?string) => {
+  fromRaw: (s: Maybe<string>) => {
     if (!s) {
       return null;
     }
     return parseFloat(s.replace(/,/g, '.'));
   },
-  toRaw: (s: ?number) => {
+  toRaw: (s: Maybe<number>) => {
     if (!s) {
       return null;
     }

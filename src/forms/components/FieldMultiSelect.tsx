@@ -5,20 +5,20 @@ import Select from 'react-select';
 import { I18n } from 'react-i18nify';
 import { Maybe, TODO } from '../../types/common';
 
-export interface FieldMultiSelectProps  {
-  stringValue?: any,
-  options: Maybe<Array<any>>,
-  title: Maybe<string>,
-  titleSize?: string,
-  onChange: Function,
-  labelAbove?: boolean,
-  inputProps?: { className?: string, style?: {} },
-  appSession?: Maybe<AppSession>,
-  viewMode?: Maybe<boolean>,
-  singleSelect?: Maybe<boolean>,
-  style?: any,
-  name?: string //TODO: Jeg måtte legge til denne, sjekk om den brukes noe sted, hvis ikke bør den (og bruken av den nedenfor) fjenres
-};
+export interface FieldMultiSelectProps {
+  stringValue?: any;
+  options: Maybe<Array<any>>;
+  title: Maybe<string>;
+  titleSize?: string;
+  onChange: Function;
+  labelAbove?: boolean;
+  inputProps?: { className?: string; style?: {} };
+  appSession?: Maybe<AppSession>;
+  viewMode?: Maybe<boolean>;
+  singleSelect?: Maybe<boolean>;
+  style?: any;
+  name?: string; //TODO: Jeg måtte legge til denne, sjekk om den brukes noe sted, hvis ikke bør den (og bruken av den nedenfor) fjenres
+}
 
 export default function FieldMultiSelect(props: FieldMultiSelectProps) {
   const placeholder = I18n.t('musit.texts.makeChoice');
@@ -26,8 +26,8 @@ export default function FieldMultiSelect(props: FieldMultiSelectProps) {
   const values: Maybe<string> = props.stringValue ? props.stringValue : '';
   const options = props.options ? props.options : [];
 
-  const label = (opt:TODO) => (opt ? opt.label : '');
-  const filterOptions = (v:TODO) => options && options.filter(f => f.value === v);
+  const label = (opt: TODO) => (opt ? opt.label : '');
+  const filterOptions = (v: TODO) => options && options.filter(f => f.value === v);
   const viewOptions: Maybe<Array<string>> =
     values && options
       ? values

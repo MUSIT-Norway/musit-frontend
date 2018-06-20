@@ -3,17 +3,16 @@ import * as React from 'react';
 import { DomEvent } from '../types/dom';
 import { Maybe, eventTargetFiles, Star, TODO } from '../types/common';
 
-
 export type ElementProps = {
-  id: string,
-  label: string,
-  labelWidth?: number,
-  labelSize?: string,
-  labelAbove?: boolean,
-  elementWidth: number,
-  children?: React.ReactNode,
-  hasError?: boolean,
-  style?: Object
+  id: string;
+  label: string;
+  labelWidth?: number;
+  labelSize?: string;
+  labelAbove?: boolean;
+  elementWidth: number;
+  children?: React.ReactNode;
+  hasError?: boolean;
+  style?: Object;
 };
 
 export function FormElement(props: ElementProps) {
@@ -43,8 +42,8 @@ export function FormElement(props: ElementProps) {
 }
 
 export type InputProps = {
-  value: Maybe<string> | Maybe<Array<string> | number>,
-  onChange: (e: DomEvent) => void
+  value: Maybe<string> | Maybe<Array<string> | number>;
+  onChange: (e: DomEvent) => void;
 } & ElementProps;
 
 export function FormInput(props: InputProps) {
@@ -71,9 +70,9 @@ export function FormInput(props: InputProps) {
 }
 
 export type FileSelect = {
-  value: Maybe<Array<File>>,
-  onChange: (files: Array<File>) => void,
-  multiple?: boolean
+  value: Maybe<Array<File>>;
+  onChange: (files: Array<File>) => void;
+  multiple?: boolean;
 } & ElementProps;
 
 export function FormFileSelect(props: FileSelect) {
@@ -101,7 +100,7 @@ export function FormFileSelect(props: FileSelect) {
 }
 
 export type TextProps = {
-  value: Maybe<string> | Maybe<Array<string> | number>
+  value: Maybe<string> | Maybe<Array<string> | number>;
 } & ElementProps;
 
 export function FormText(props: TextProps) {
@@ -121,7 +120,7 @@ export function FormText(props: TextProps) {
 }
 
 export type TextAreaProps = {
-  rows: number
+  rows: number;
 } & InputProps;
 
 export function FormTextArea(props: TextAreaProps) {
@@ -146,8 +145,8 @@ export function FormTextArea(props: TextAreaProps) {
 }
 
 export type SelectProps = {
-  values: Maybe<Array<Star>>,
-  chooseLabel: string
+  values: Maybe<Array<Star>>;
+  chooseLabel: string;
 } & InputProps;
 
 export function FormSelect(props: SelectProps) {
@@ -163,7 +162,7 @@ export function FormSelect(props: SelectProps) {
       <select
         id={props.id}
         className="form-control"
-        defaultValue={props.value as TODO || ''}
+        defaultValue={(props.value as TODO) || ''}
         onChange={props.onChange as TODO}
       >
         <option value="">{props.chooseLabel}</option>

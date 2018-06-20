@@ -5,15 +5,15 @@ import { I18n } from 'react-i18nify';
 import { Star } from '../../types/common';
 
 type FieldInputProps = {
-  field: Field<Star>,
-  title: string,
-  yesValue: string | number,
-  noValue: string | number,
-  onChange: Function,
+  field: Field<Star>;
+  title: string;
+  yesValue: string | number;
+  noValue: string | number;
+  onChange: Function;
   inputProps?: {
-    className?: string,
-    style?: {}
-  }
+    className?: string;
+    style?: {};
+  };
 };
 
 export default function CheckBoxInput({
