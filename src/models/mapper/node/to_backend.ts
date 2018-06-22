@@ -1,7 +1,7 @@
 import { parseFloatFromString } from '../../../shared/util';
 import { TODO } from '../../../types/common';
 
-export const toBackend = (data: TODO, parentId: TODO) => {
+export const toBackend = (data: TODO, parentId?: TODO) => {
   return {
     ...data,
     groupRead: 'foo', //TODO: Must be removed

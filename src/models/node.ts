@@ -5,121 +5,150 @@ import { mapToBackend, mapToFrontend } from './mapper/node';
 import MusitActor from './actor';
 import MusitObject from './object';
 import { Observable, Subject } from 'rxjs';
-import type { Callback, AjaxGet, AjaxPost, AjaxPut, AjaxDel } from '../types/ajax';
-import type { Breadcrumb } from './types/breadcrumb';
-import type { Node, NodeStats } from 'types/node';
+import { Callback, AjaxGet, AjaxPost, AjaxPut, AjaxDel } from '../types/ajax';
+import { Breadcrumb } from './types/breadcrumb';
+import { Node, NodeStats } from '../types/node';
+import { Star, mixed, Maybe, MUSTFIX } from '../types/common';
 
 export type Paging = {
-  page: number,
-  limit: number
+  page: number;
+  limit: number;
 };
 
 export type MoveResult = {
-  moved: number,
-  failed: number
+  moved: number;
+  failed: number;
 };
 
-export type SearchResult = { totalMatches?: number, matches?: Array<*>, error?: string };
+export type SearchResult = {
+  totalMatches?: number;
+  matches?: Array<Star>;
+  error?: string;
+};
 
 class MusitNode {
   static isRootNode: (node: Node) => boolean;
   static getNode: (
-    ajaxGet?: AjaxGet<*>
-  ) => (props: {
-    id: string,
-    museumId: number,
-    token: string,
-    callback?: Callback<*>
-  }) => Observable<Node>;
+    ajaxGet?: AjaxGet<Star>
+  ) => (
+    props: {
+      id: string;
+      museumId: number;
+      token: string;
+      callback?: Callback<Star>;
+    }
+  ) => Observable<Node>;
   static getNodeWithUpdatedBy: (
-    ajaxGet: AjaxGet<*>
-  ) => (props: {
-    id: string,
-    museumId: number,
-    token: string,
-    callback?: Callback<*>
-  }) => Observable<Node & { updatedByName: ?string }>;
+    ajaxGet: AjaxGet<Star>
+  ) => (
+    props: {
+      id: string;
+      museumId: number;
+      token: string;
+      callback?: Callback<Star>;
+    }
+  ) => Observable<Node & { updatedByName: Maybe<string> }>;
   static addNode: (
-    ajaxPost: AjaxPost<*>
-  ) => (props: {
-    id: string,
-    museumId: number,
-    token: string,
-    data: mixed,
-    callback?: Callback<*>
-  }) => Observable<Node>;
+    ajaxPost?: AjaxPost<Star>
+  ) => (
+    props: {
+      id: string;
+      museumId: number;
+      token: string;
+      data: mixed;
+      callback?: Callback<Star>;
+    }
+  ) => Observable<Node>;
   static editNode: (
-    ajaxPut: AjaxPut<*>
-  ) => (props: {
-    id: string,
-    museumId: number,
-    token: string,
-    data: mixed,
-    callback?: Callback<*>
-  }) => Observable<Node>;
+    ajaxPut?: AjaxPut<Star>
+  ) => (
+    props: {
+      id: string;
+      museumId: number;
+      token: string;
+      data: mixed;
+      callback?: Callback<Star>;
+    }
+  ) => Observable<Node>;
   static getNodes: (
-    ajaxGet: AjaxGet<*>
-  ) => (props: {
-    id: string,
-    page?: Paging,
-    museumId: number,
-    token: string,
-    callback?: Callback<*>
-  }) => Observable<SearchResult>;
+    ajaxGet?: AjaxGet<Star>
+  ) => (
+    props: {
+      id: string;
+      page?: Paging;
+      museumId: number;
+      token: string;
+      callback?: Callback<Star>;
+    }
+  ) => Observable<SearchResult>;
   static getStats: (
-    ajaxGet: AjaxGet<*>
-  ) => (props: {
-    id: string,
-    museumId: number,
-    token: string,
-    callback?: Callback<*>
-  }) => Observable<NodeStats>;
+    ajaxGet: AjaxGet<Star>
+  ) => (
+    props: {
+      id: string;
+      museumId: number;
+      token: string;
+      callback?: Callback<Star>;
+    }
+  ) => Observable<NodeStats>;
   static deleteNode: (
-    ajaxDel: AjaxDel<*>
-  ) => (props: {
-    id: string,
-    museumId: number,
-    token: string,
-    callback?: Callback<*>
-  }) => Observable<string>;
+    ajaxDel?: AjaxDel<Star>
+  ) => (
+    props: {
+      id: string;
+      museumId: number;
+      token: string;
+      callback?: Callback<Star>;
+    }
+  ) => Observable<string>;
   static moveNode: (
-    ajaxPut: AjaxPut<*>
-  ) => (props: {
-    id: string,
-    destination: string,
-    doneBy: string,
-    museumId: number,
-    token: string,
-    callback?: Callback<*>
-  }) => Observable<MoveResult>;
+    ajaxPut?: AjaxPut<Star>
+  ) => (
+    props: {
+      id: string;
+      destination: string;
+      doneBy: string;
+      museumId: number;
+      token: string;
+      callback?: Callback<Star>;
+    }
+  ) => Observable<MoveResult>;
   static pickNode: (
-    pickNode$: Subject<*>
-  ) => (props: {
-    node: mixed,
-    breadcrumb: Breadcrumb
-  }) => void;
+    pickNode$: Subject<Star>
+  ) => (
+    props: {
+      node: mixed;
+      breadcrumb: Breadcrumb;
+    }
+  ) => void;
   static findByBarcode: (
-    ajaxGet?: AjaxGet<*>
-  ) => (props: {
-    barcode: number,
-    museumId: number,
-    token: string
-  }) => Observable<*>;
+    ajaxGet?: AjaxGet<Star>
+  ) => (
+    props: {
+      barcode: number;
+      museumId: number;
+      token: string;
+    }
+  ) => Observable<Star>;
   static findNodeOrObjectByBarcode: (
-    ajaxGet?: AjaxGet<*>
-  ) => (props: {
-    barcode: number,
-    museumId: number,
-    collectionId: string,
-    token: string
-  }) => Observable<*>;
+    ajaxGet?: AjaxGet<Star>
+  ) => (
+    props: {
+      barcode: number;
+      museumId: number;
+      collectionId: string;
+      token: string;
+    }
+  ) => Observable<Star>;
   static findByUUID: (
-    ajaxGet?: AjaxGet<*>
-  ) => (props: {
-    uuid: string,
-    museumId: number,
-    token: string
-  }) => Observable<*>;
+    ajaxGet?: AjaxGet<Star>
+  ) => (
+    props: {
+      uuid: string;
+      museumId: number;
+      token: string;
+    }
+  ) => Observable<Star>;
 }
 
 MusitNode.isRootNode = node => node.type === 'Root' || node.type === 'RootLoan';
@@ -153,7 +182,7 @@ MusitNode.addNode = (ajaxPost = simplePost) => ({
   const url = id
     ? Config.magasin.urls.api.storagefacility.baseUrl(museumId)
     : Config.magasin.urls.api.storagefacility.rootNodeUrl(museumId);
-  const dataToPost = mapToBackend(data, id);
+  const dataToPost = mapToBackend(data, id as MUSTFIX);
   return ajaxPost(url, dataToPost, token, callback).map(({ response }) => response);
 };
 
@@ -227,7 +256,7 @@ MusitNode.moveNode = (ajaxPut = simplePut) => ({
   token,
   callback
 }) => {
-  const data = { doneBy, destination, items: [].concat(id) };
+  const data = { doneBy, destination, items: [].concat(id as MUSTFIX) };
   return ajaxPut(
     Config.magasin.urls.api.storagefacility.moveNodeUrl(museumId),
     data,

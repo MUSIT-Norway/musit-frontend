@@ -1,21 +1,24 @@
 // @flow
 import { simpleGet, ajaxHelper } from '../shared/RxAjax';
 import Config from '../config';
-import type { AjaxGet } from '../types/ajax';
+import { AjaxGet } from '../types/ajax';
 import { Observable } from 'rxjs';
+import { Star, TODO } from '../types/common';
 
 class Template {
   static loadTemplates: (
-    ajaxGet: AjaxGet<*>
-  ) => (props: { token: string }) => Observable<*>;
+    ajaxGet?: AjaxGet<Star>
+  ) => (props: { token: string }) => Observable<Star>;
   static renderTemplate: (
-    ajaxFn: Function
-  ) => (props: {
-    templateId: number,
-    codeFormat: number,
-    nodes: Array<{ uuid: string, name: string }>,
-    token: string
-  }) => Observable<*>;
+    ajaxFn?: Function
+  ) => (
+    props: {
+      templateId: number;
+      codeFormat: number;
+      nodes: Array<{ uuid: string; name: string }>;
+      token: string;
+    }
+  ) => Observable<Star>;
 }
 
 Template.loadTemplates = (ajaxGet = simpleGet) => ({ token }) =>
@@ -41,7 +44,7 @@ Template.renderTemplate = (ajaxFn = ajaxHelper) => ({
     token,
     { 'Content-Type': 'application/json' },
     'text/html'
-  ).map(({ response }) => response);
+  ).map(({ response }: TODO) => response);
 };
 
 export default Template;

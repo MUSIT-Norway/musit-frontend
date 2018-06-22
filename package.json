@@ -18,6 +18,7 @@
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "object.entries": "^1.0.4",
+    "object.values": "^1.0.4",
     "prop-types": "^15.5.10",
     "query-string": "^5.0.0",
     "react": "^15.6.2",
@@ -45,11 +46,9 @@
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
     "codacy": "cat coverage/lcov.info",
-    "coverage":
-      "npm test a -- --coverage --collectCoverageFrom='src/!(_poc*)**/*.{js,jsx}'",
+    "coverage": "npm test a -- --coverage --collectCoverageFrom='src/!(_poc*)**/*.{js,jsx}'",
     "flow": "./node_modules/.bin/flow check --show-all-errors",
-    "formatcode":
-      "./node_modules/.bin/prettier --single-quote --trailing-comma none --print-width 90 --write \"{src,__{tests,mocks}__}/**/*.{js,jsx,ts,tsx}\""
+    "formatcode": "./node_modules/.bin/prettier --single-quote --trailing-comma none --print-width 90 --write \"{src,__{tests,mocks}__}/**/*.{js,jsx,ts,tsx}\""
   },
   "devDependencies": {
     "@types/deep-diff": "0.0.31",

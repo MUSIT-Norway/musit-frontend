@@ -30,7 +30,7 @@ export function parseRangeObservation(el: TODO) {
   return re;
 }
 
-export function parseAlcohol(el:TODO) {
+export function parseAlcohol(el: TODO) {
   const re = {} as TODO;
   re.note = el.commentValue || el.comment;
   re.condition = el.statusValue || el.status;
@@ -38,67 +38,67 @@ export function parseAlcohol(el:TODO) {
   return re;
 }
 
-export function parseWaterDamageAssessment(el:TODO) {
+export function parseWaterDamageAssessment(el: TODO) {
   const re = {} as TODO;
   re.waterDamageAssessment = el.leftValue;
   re.note = el.rightValue;
   return re;
 }
 
-export function parseFireProtection(el:TODO) {
+export function parseFireProtection(el: TODO) {
   const re = {} as TODO;
   re.fireProtection = el.leftValue;
   re.note = el.rightValue;
   return re;
 }
 
-export function parseTheftProtection(el:TODO) {
+export function parseTheftProtection(el: TODO) {
   const re = {} as TODO;
   re.theftProtection = el.leftValue;
   re.note = el.rightValue;
   return re;
 }
 
-export function parsePerimeterSecurity(el:TODO) {
+export function parsePerimeterSecurity(el: TODO) {
   const re = {} as TODO;
   re.perimeterSecurity = el.leftValue;
   re.note = el.rightValue;
   return re;
 }
 
-export function parseMold(el:TODO) {
+export function parseMold(el: TODO) {
   const re = {} as TODO;
   re.mold = el.leftValue;
   re.note = el.rightValue;
   return re;
 }
 
-export function parseCleaning(el:TODO) {
+export function parseCleaning(el: TODO) {
   const re = {} as TODO;
   re.cleaning = el.leftValue;
   re.note = el.rightValue;
   return re;
 }
 
-export function parseGas(el:TODO) {
+export function parseGas(el: TODO) {
   const re = {} as TODO;
   re.gas = el.leftValue;
   re.note = el.rightValue;
   return re;
 }
 
-export function parseLightCondition(el:TODO) {
+export function parseLightCondition(el: TODO) {
   const re = {} as TODO;
   re.lightingCondition = el.leftValue;
   re.note = el.rightValue;
   return re;
 }
 
-export function parsePest(el:TODO) {
+export function parsePest(el: TODO) {
   const re = {} as TODO;
   re.identification = el.identificationValue;
   re.note = el.commentValue;
-  re.lifecycles = el.observations.map((o:TODO) => {
+  re.lifecycles = el.observations.map((o: TODO) => {
     const ret = {} as TODO;
     ret.stage = o.lifeCycle;
     ret.quantity = parseFloatFromString(o.count);
@@ -107,8 +107,8 @@ export function parsePest(el:TODO) {
   return re;
 }
 
-function getData(observations:TODO, field:TODO) {
-  return (observations.find((f:TODO) => f.type === field) || {} as TODO).data;
+function getData(observations: TODO, field: TODO) {
+  return (observations.find((f: TODO) => f.type === field) || ({} as TODO)).data;
 }
 
 export default (state: Star, nodeId: string | number) => {
@@ -116,7 +116,7 @@ export default (state: Star, nodeId: string | number) => {
   r.eventType = 'Observation';
   r.doneBy = Actor.getActorId(state.doneBy);
   r.doneDate = state.doneDate;
-  r.affectedThing = (nodeId as MUSTFIX) * 1 ;
+  r.affectedThing = (nodeId as MUSTFIX) * 1;
   r.temperature = new Option(getData(state.observations, 'temperature')).map(
     parseRangeObservation
   );

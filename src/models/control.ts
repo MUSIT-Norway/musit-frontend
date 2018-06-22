@@ -3,51 +3,60 @@ import Config from '../config';
 import { mapToBackend } from './mapper/control/to_backend';
 import { simplePost, simpleGet } from '../shared/RxAjax';
 import MusitActor from './actor';
-import uniq from 'lodash/uniq';
-import type { Callback, AjaxGet, AjaxPost } from '../types/ajax';
+import { uniq } from 'lodash';
+import { Callback, AjaxGet, AjaxPost } from '../types/ajax';
 import { Observable } from 'rxjs';
+import { Star, Maybe } from '../types/common';
 
 type ControlType = {
-  id: number,
-  registeredBy: string
+  id: number;
+  registeredBy: string;
+  doneBy?: string;
   // TODO fill in more fields here
 };
 
 type ObservationType = {
-  id: number,
-  registeredBy: string
+  id: number;
+  registeredBy: string;
+  doneBy: string;
   // TODO fill in more fields here
 };
 
 class Control {
   static loadControls: (
-    ajaxGet: AjaxGet<*>
-  ) => (props: {
-    nodeId: number,
-    museumId: number,
-    token: string,
-    callback?: Callback<*>
-  }) => Observable<Array<ControlType>>;
+    ajaxGet: AjaxGet<Star>
+  ) => (
+    props: {
+      nodeId: number;
+      museumId: number;
+      token: string;
+      callback?: Callback<Star>;
+    }
+  ) => Observable<Array<ControlType>>;
   static addControl: (
-    ajaxPost: AjaxPost<*>
-  ) => (props: {
-    nodeId: number,
-    controlData: ControlType,
-    observations?: ?ObservationType,
-    museumId: number,
-    token: string,
-    callback?: Callback<*>
-  }) => Observable<ControlType>;
+    ajaxPost?: AjaxPost<Star>
+  ) => (
+    props: {
+      nodeId: number;
+      controlData: ControlType;
+      observations?: Maybe<ObservationType>;
+      museumId: number;
+      token: string;
+      callback?: Callback<Star>;
+    }
+  ) => Observable<ControlType>;
   static getControl: (
-    ajaxGet: AjaxGet<*>,
-    ajaxPost: AjaxPost<*>
-  ) => (props: {
-    nodeId: number,
-    controlId: number,
-    museumId: number,
-    token: string,
-    callback?: Callback<*>
-  }) => Observable<ControlType>;
+    ajaxGet?: AjaxGet<Star>,
+    ajaxPost?: AjaxPost<Star>
+  ) => (
+    props: {
+      nodeId: number;
+      controlId: number;
+      museumId: number;
+      token: string;
+      callback?: Callback<Star>;
+    }
+  ) => Observable<ControlType>;
 }
 
 Control.loadControls = (ajaxGet = simpleGet) => ({ nodeId, museumId, token, callback }) =>

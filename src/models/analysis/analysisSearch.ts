@@ -3,22 +3,21 @@
 import { Observable } from 'rxjs';
 import Config from '../../config';
 import { simpleGet } from '../../shared/RxAjax';
-import { AjaxGet } from "../../types/ajax";
-import { SearchResult } from "../../types/search";
-import { Maybe, Star } from "../../types/common";
-
+import { AjaxGet } from '../../types/ajax';
+import { SearchResult } from '../../types/search';
+import { Maybe, Star } from '../../types/common';
 
 type SearchQuery = {
-  q: string | null //Was Maybe<string> in original js (flow) code.
+  q: string | null; //Was Maybe<string> in original js (flow) code.
 };
 
 export type AnalysisSearchProps = {
-  queryParam: SearchQuery,
-  from: number,
-  limit: number,
-  museumId: number,
-  collectionIds: string,
-  token: string
+  queryParam: SearchQuery;
+  from: number;
+  limit: number;
+  museumId: number;
+  collectionIds: string;
+  token: string;
 };
 
 export const analysisSearch: (

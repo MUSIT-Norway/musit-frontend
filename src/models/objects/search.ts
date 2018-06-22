@@ -5,27 +5,27 @@ import Config from '../../config';
 import { Observable } from 'rxjs';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 
-import  { AjaxGet } from '../../types/ajax';
-import  { SearchResult } from '../../types/search';
-import  { MuseumId } from '../../types/ids';
+import { AjaxGet } from '../../types/ajax';
+import { SearchResult } from '../../types/search';
+import { MuseumId } from '../../types/ids';
 import MusitObject from '../object';
 import { Maybe, Star, TODO } from '../../types/common';
 
 type SearchProps = {
   queryParam: {
-    museumNo: Maybe<string>,
-    museumNoAsANumber: Maybe<string>,
-    subNo: Maybe<string>,
-    term: Maybe<string>,
-    q: Maybe<string>
-  },
-  limit: number,
-  from: number,
-  museumId: MuseumId,
-  collectionIds: string,
-  token: string,
-  storageFacilityReadRole?: boolean,
-  databaseSearch?: boolean
+    museumNo: Maybe<string>;
+    museumNoAsANumber: Maybe<string>;
+    subNo: Maybe<string>;
+    term: Maybe<string>;
+    q: Maybe<string>;
+  };
+  limit: number;
+  from: number;
+  museumId: MuseumId;
+  collectionIds: string;
+  token: string;
+  storageFacilityReadRole?: boolean;
+  databaseSearch?: boolean;
 };
 
 const hentPlassering = (
@@ -96,7 +96,7 @@ export function objectSearch(ajaxGet: AjaxGet<Star> = simpleGet) {
       }
     };
 
-    const mapDbToESResponse = (r:TODO) => ({
+    const mapDbToESResponse = (r: TODO) => ({
       timed_out: false,
       took: 0,
       hits: {
@@ -107,11 +107,11 @@ export function objectSearch(ajaxGet: AjaxGet<Star> = simpleGet) {
     });
 
     const mapDbHitsToESHist = (d: {
-      uuid: string,
-      museumId: number,
-      museumNo: string,
-      term: string,
-      type?: string
+      uuid: string;
+      museumId: number;
+      museumNo: string;
+      term: string;
+      type?: string;
     }) => ({
       _type: d.type ? d.type : 'collection',
       _id: d.uuid,
@@ -156,7 +156,7 @@ export function objectSearch(ajaxGet: AjaxGet<Star> = simpleGet) {
       }
       const response = dbSearch ? mapDbToESResponse(r) : r;
       console.log('Inner response after transform--------------------------- ', response);
-      const newObjects: Array<Observable<any>> = response.hits.hits.map((d:TODO) => {
+      const newObjects: Array<Observable<any>> = response.hits.hits.map((d: TODO) => {
         const a = dbSearch ? mapDbHitsToESHist(d) : d;
         const currentLocation = hentPlassering(
           a._source.id || a._source.objectId,

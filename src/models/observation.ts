@@ -3,38 +3,45 @@ import Config from '../config';
 import mapToBackEnd from './mapper/observation/to_backend';
 import mapToFrontEnd from './mapper/observation/to_frontend';
 import MusitActor from './actor';
-import uniq from 'lodash/uniq';
+import { uniq } from 'lodash';
 import { simplePost, simpleGet } from '../shared/RxAjax';
-import type { Callback, AjaxGet, AjaxPost } from '../types/ajax';
+import { Callback, AjaxGet, AjaxPost } from '../types/ajax';
 import { Observable } from 'rxjs';
+import { Star, mixed } from '../types/common';
 
 class Observation {
   static loadObservations: (
-    ajaxGet: AjaxGet<*>
-  ) => (props: {
-    nodeId: number,
-    museumId: number,
-    token: string,
-    callback?: Callback<*>
-  }) => Observable<*>;
+    ajaxGet: AjaxGet<Star>
+  ) => (
+    props: {
+      nodeId: number;
+      museumId: number;
+      token: string;
+      callback?: Callback<Star>;
+    }
+  ) => Observable<Star>;
   static addObservation: (
-    ajaxPost: AjaxPost<*>
-  ) => (props: {
-    nodeId: number,
-    museumId: number,
-    data: mixed,
-    token: string,
-    callback?: Callback<*>
-  }) => Observable<*>;
+    ajaxPost?: AjaxPost<Star>
+  ) => (
+    props: {
+      nodeId: number;
+      museumId: number;
+      data: mixed;
+      token: string;
+      callback?: Callback<Star>;
+    }
+  ) => Observable<Star>;
   static getObservation: (
-    ajaxGet: AjaxGet<*>,
-    ajaxPost: AjaxPost<*>
-  ) => (props: {
-    nodeId: number,
-    observationId: number,
-    museumId: number,
-    token: string
-  }) => Observable<*>;
+    ajaxGet?: AjaxGet<Star>,
+    ajaxPost?: AjaxPost<Star>
+  ) => (
+    props: {
+      nodeId: number;
+      observationId: number;
+      museumId: number;
+      token: string;
+    }
+  ) => Observable<Star>;
 }
 
 Observation.loadObservations = (ajaxGet = simpleGet) => ({

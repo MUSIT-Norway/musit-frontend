@@ -4,21 +4,21 @@ import { Observable } from 'rxjs';
 import Config from '../../config';
 import { simpleGet } from '../../shared/RxAjax';
 
-import  { AjaxGet } from '../../types/ajax';
-import  { SearchResult } from '../../types/search';
+import { AjaxGet } from '../../types/ajax';
+import { SearchResult } from '../../types/search';
 import { Maybe, Star, MUSTFIX } from '../../types/common';
 
 type SearchQuery = {
-  q: Maybe<string>
+  q: Maybe<string>;
 };
 
 export type ConservationSearchProps = {
-  queryParam: SearchQuery,
-  from: number,
-  limit: number,
-  museumId: number,
-  collectionIds: string,
-  token: string
+  queryParam: SearchQuery;
+  from: number;
+  limit: number;
+  museumId: number;
+  collectionIds: string;
+  token: string;
 };
 
 export const conservationSearch: (

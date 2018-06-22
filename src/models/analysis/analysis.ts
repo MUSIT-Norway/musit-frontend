@@ -2,32 +2,34 @@
 import { Observable } from 'rxjs';
 import Config from '../../config';
 import { simplePost, simpleGet, simplePut } from '../../shared/RxAjax';
-import  { Callback, AjaxPost, AjaxGet, AjaxPut } from '../../types/ajax';
-import  { AnalysisCollection } from '../../types/analysis';
-import  { Result, Restriction } from '../../types/analysis';
-import  { CollectionId } from '../../types/ids';
+import { Callback, AjaxPost, AjaxGet, AjaxPut } from '../../types/ajax';
+import { AnalysisCollection } from '../../types/analysis';
+import { Result, Restriction } from '../../types/analysis';
+import { CollectionId } from '../../types/ids';
 import { Maybe, Star } from '../../types/common';
 
 export type AnalysisSavePayload = {
-  doneBy?: Maybe<string>,
-  doneDate?: Maybe<string>,
-  responsible?: Maybe<string>,
-  administrator?: Maybe<string>,
-  completedBy?: Maybe<string>,
-  completedDate?: Maybe<string>,
-  caseNumbers?: Maybe<string>,
-  restriction?: Maybe<Restriction>,
-  result?: Maybe<Result>
+  doneBy?: Maybe<string>;
+  doneDate?: Maybe<string>;
+  responsible?: Maybe<string>;
+  administrator?: Maybe<string>;
+  completedBy?: Maybe<string>;
+  completedDate?: Maybe<string>;
+  caseNumbers?: Maybe<string>;
+  restriction?: Maybe<Restriction>;
+  result?: Maybe<Result>;
 };
 
 export const saveAnalysisEvent: (
   ajaxPost: AjaxPost<Star>
-) => (props: {
-  museumId: number,
-  data: AnalysisSavePayload,
-  token: string,
-  callback?: Callback<Star>
-}) => Observable<AnalysisCollection> = (ajaxPost = simplePost) => ({
+) => (
+  props: {
+    museumId: number;
+    data: AnalysisSavePayload;
+    token: string;
+    callback?: Callback<Star>;
+  }
+) => Observable<AnalysisCollection> = (ajaxPost = simplePost) => ({
   museumId,
   data,
   token,
@@ -39,13 +41,15 @@ export const saveAnalysisEvent: (
 
 export const editAnalysisEvent: (
   ajaxPut: AjaxPut<Star>
-) => (props: {
-  id: number,
-  museumId: number,
-  data: AnalysisSavePayload,
-  token: string,
-  callback?: Callback<Star>
-}) => Observable<AnalysisCollection> = (ajaxPut = simplePut) => ({
+) => (
+  props: {
+    id: number;
+    museumId: number;
+    data: AnalysisSavePayload;
+    token: string;
+    callback?: Callback<Star>;
+  }
+) => Observable<AnalysisCollection> = (ajaxPut = simplePut) => ({
   id,
   museumId,
   data,
@@ -58,12 +62,14 @@ export const editAnalysisEvent: (
 
 export const getAnalysesForObject: (
   ajaxGet: AjaxGet<Star>
-) => (props: {
-  id: number,
-  museumId: number,
-  token: string,
-  callback?: Callback<Star>
-}) => Observable<Array<AnalysisCollection>> = (ajaxGet = simpleGet) => ({
+) => (
+  props: {
+    id: number;
+    museumId: number;
+    token: string;
+    callback?: Callback<Star>;
+  }
+) => Observable<Array<AnalysisCollection>> = (ajaxGet = simpleGet) => ({
   museumId,
   token,
   id,
@@ -80,12 +86,14 @@ export const getAnalysesForObject: (
 
 export const getAnalysisById: (
   ajaxGet: AjaxGet<Star>
-) => (props: {
-  id: number,
-  museumId: number,
-  token: string,
-  callback?: Callback<Star>
-}) => Observable<AnalysisCollection> = (ajaxGet = simpleGet) => ({
+) => (
+  props: {
+    id: number;
+    museumId: number;
+    token: string;
+    callback?: Callback<Star>;
+  }
+) => Observable<AnalysisCollection> = (ajaxGet = simpleGet) => ({
   museumId,
   id,
   token,
@@ -97,11 +105,13 @@ export const getAnalysisById: (
 
 export const getAnalysisEvents: (
   ajaxGet: AjaxGet<Star>
-) => (props: {
-  museumId: number,
-  token: string,
-  collectionId: CollectionId
-}) => Observable<Array<AnalysisCollection>> = (ajaxGet = simpleGet) => ({
+) => (
+  props: {
+    museumId: number;
+    token: string;
+    collectionId: CollectionId;
+  }
+) => Observable<Array<AnalysisCollection>> = (ajaxGet = simpleGet) => ({
   museumId,
   token,
   collectionId

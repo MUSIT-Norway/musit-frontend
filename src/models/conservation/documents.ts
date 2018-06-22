@@ -4,31 +4,33 @@ import Config from '../../config';
 import { ajaxHelper } from '../../shared/RxAjax';
 
 export type SavedFile = {
-  id: string,
-  fid: string,
-  title: string,
-  fileType: string,
-  owner: { ownerId: string, ownerType: string },
-  collection: string,
-  path: string,
-  version: number,
-  published: boolean,
-  createdStamp: { date: string, by: string },
-  documentDetails: { number: number }
+  id: string;
+  fid: string;
+  title: string;
+  fileType: string;
+  owner: { ownerId: string; ownerType: string };
+  collection: string;
+  path: string;
+  version: number;
+  published: boolean;
+  createdStamp: { date: string; by: string };
+  documentDetails: { number: number };
 };
 
 export type ErrorSaving = {
-  error: { status: number, response?: any },
-  file: File
+  error: { status: number; response?: any };
+  file: File;
 };
 
-export const uploadFile: (props: {
-  eventId: number,
-  museumId: number,
-  collectionId: string,
-  token: string,
-  file: File
-}) => Observable<SavedFile | ErrorSaving> = props => {
+export const uploadFile: (
+  props: {
+    eventId: number;
+    museumId: number;
+    collectionId: string;
+    token: string;
+    file: File;
+  }
+) => Observable<SavedFile | ErrorSaving> = props => {
   const formData: FormData = new FormData();
   formData.append('upload', props.file, props.file.name);
   const url = Config.magasin.urls.api.conservation.addFileUrl(
@@ -37,7 +39,7 @@ export const uploadFile: (props: {
     props.eventId
   );
   return ajaxHelper(url, 'POST', formData, props.token)
-    .map((res: { status: number, response: any }) => {
+    .map((res: { status: number; response: any }) => {
       if (res.status >= 200 && res.status < 300) {
         return res.response;
       }
@@ -55,15 +57,15 @@ export const uploadFile: (props: {
 };
 
 export type ErrorLoading = {
-  error: { status: number, response?: any },
-  files: Array<string>
+  error: { status: number; response?: any };
+  files: Array<string>;
 };
 
 export const getFiles = (props: {
-  files: Array<string>,
-  museumId: number,
-  token: string,
-  eventId: number
+  files: Array<string>;
+  museumId: number;
+  token: string;
+  eventId: number;
 }): Observable<Array<SavedFile | ErrorLoading>> => {
   if (props.files.length === 0) {
     return Observable.of([]);
@@ -82,7 +84,7 @@ export const getFiles = (props: {
           null,
           props.token
         )
-          .map((res: { status: number, response: any }) => {
+          .map((res: { status: number; response: any }) => {
             if (res.status >= 200 && res.status < 300) {
               return res.response ? res.response[0] : res.response;
             }
@@ -106,7 +108,7 @@ export const getFiles = (props: {
     props.eventId
   );
   return ajaxHelper(url, 'GET', null, props.token)
-    .map((res: { status: number, response: any }) => {
+    .map((res: { status: number; response: any }) => {
       if (res.status >= 200 && res.status < 300) {
         return res.response ? res.response[0] : res.response;
       }
@@ -125,8 +127,8 @@ export const getFiles = (props: {
 };
 
 export type ErrorDownloading = {
-  error: { status: number, response?: any },
-  fileId: string
+  error: { status: number; response?: any };
+  fileId: string;
 };
 
 export const getFileAsBlob = (
@@ -142,7 +144,7 @@ export const getFileAsBlob = (
     null,
     'blob'
   )
-    .map((res: { status: number, response: any }) => {
+    .map((res: { status: number; response: any }) => {
       if (res.status >= 200 && res.status < 300) {
         return res.response;
       }

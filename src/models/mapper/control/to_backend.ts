@@ -1,4 +1,4 @@
-import {find} from 'lodash';
+import { find } from 'lodash';
 import {
   parseAlcohol,
   parseCleaning,
@@ -12,15 +12,15 @@ import { Option } from './../../../shared/util';
 import Actor from '../../../models/actor';
 import { TODO } from '../../../types/common';
 
-function getDoneDate(observations: TODO, state:TODO) {
+function getDoneDate(observations: TODO, state: TODO) {
   return observations && observations.doneDate ? observations.doneDate : state.doneDate;
 }
 
-function getDoneBy(observations:TODO, state:TODO) {
+function getDoneBy(observations: TODO, state: TODO) {
   return observations && observations.doneBy ? observations.doneBy : state.doneBy;
 }
 
-function getObservation(observations:TODO, field:TODO): Option {
+function getObservation(observations: TODO, field: TODO): Option {
   return new Option(
     observations &&
       observations.observations &&
@@ -28,18 +28,18 @@ function getObservation(observations:TODO, field:TODO): Option {
   );
 }
 
-function parseObservation(observations:TODO, field:TODO, parseFn:TODO) {
+function parseObservation(observations: TODO, field: TODO, parseFn: TODO) {
   return getObservation(observations, field).map(obs => parseFn(obs.data));
 }
 
-function getControl(ok:TODO, observations:TODO, field:TODO, parseFn:TODO) {
+function getControl(ok: TODO, observations: TODO, field: TODO, parseFn: TODO) {
   return {
     ok,
     observation: parseObservation(observations, field, parseFn)
   };
 }
 
-export const mapToBackend = (state:TODO, observations:TODO, nodeId:TODO) => {
+export const mapToBackend = (state: TODO, observations: TODO, nodeId: TODO) => {
   const r = {} as TODO;
   r.eventType = 'Control';
   r.doneBy = Actor.getActorId(getDoneBy(observations, state));

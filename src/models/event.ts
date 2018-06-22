@@ -5,26 +5,27 @@ import Sample from './sample';
 import MusitObject from './object';
 import { parseISODate, DATE_FORMAT_DISPLAY } from '../shared/util';
 import MusitActor from './actor';
-import uniq from 'lodash/uniq';
-import flatMap from 'lodash/flatMap';
+import { uniq, flatMap, concat } from 'lodash';
 import { I18n } from 'react-i18nify';
-import concat from 'lodash/concat';
 import { Observable } from 'rxjs';
-import type { Callback, AjaxGet, AjaxPost } from '../types/ajax';
+import { Callback, AjaxGet, AjaxPost } from '../types/ajax';
 import Conservation from './conservation';
+import { Star, MUSTFIX, TODO } from '../types/common';
 
 class Event {
   static getAnalysesAndMoves: (
-    ajaxGet: AjaxGet<*>,
-    ajaxPost: AjaxPost<*>
-  ) => (props: {
-    id: number, // FIXME the same as objectId
-    objectId: number, // FIXME The same as id
-    museumId: number,
-    collectionId: string,
-    token: string,
-    callback?: Callback<*>
-  }) => Observable<*>;
+    ajaxGet: AjaxGet<Star>,
+    ajaxPost: AjaxPost<Star>
+  ) => (
+    props: {
+      id: number; // FIXME the same as objectId
+      objectId: number; // FIXME The same as id
+      museumId: number;
+      collectionId: string;
+      token: string;
+      callback?: Callback<Star>;
+    }
+  ) => Observable<Star>;
 }
 
 Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) => props =>
@@ -36,13 +37,13 @@ Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) => prop
     .map(([analyses, moves, conservation]) =>
       concat(
         conservation.map(c => ({ ...c, type: 'Conservation' })),
-        analyses,
-        moves.map(m => ({ ...m, type: 'MoveObject' }))
+        analyses as MUSTFIX,
+        moves.map((m: TODO) => ({ ...m, type: 'MoveObject' }))
       ).map(m => ({
         ...m,
-        eventDate: parseISODate(m.eventDate || m.registeredDate || '').format(
-          DATE_FORMAT_DISPLAY
-        )
+        eventDate: parseISODate(
+          (m as MUSTFIX).eventDate || m.registeredDate || ''
+        ).format(DATE_FORMAT_DISPLAY)
       }))
     )
     .flatMap(events => {
@@ -63,13 +64,15 @@ Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) => prop
             const registeredBy = actors.find(a =>
               MusitActor.hasActorId(a, data.registeredBy)
             );
-            const doneBy = actors.find(a => MusitActor.hasActorId(a, data.doneBy));
+            const doneBy = actors.find(a =>
+              MusitActor.hasActorId(a, (data as MUSTFIX).doneBy)
+            );
             return {
               ...data,
               registeredBy: registeredBy ? registeredBy.fn : I18n.t('musit.unknown'),
               doneBy: doneBy ? doneBy.fn : I18n.t('musit.unknown'),
-              doneDate: data.doneDate
-                ? parseISODate(data.doneDate).format(DATE_FORMAT_DISPLAY)
+              doneDate: (data as MUSTFIX).doneDate
+                ? parseISODate((data as MUSTFIX).doneDate).format(DATE_FORMAT_DISPLAY)
                 : I18n.t('musit.unknown'),
               registeredDate: data.registeredDate
                 ? parseISODate(data.registeredDate).format(DATE_FORMAT_DISPLAY)
@@ -86,7 +89,7 @@ Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) => prop
       }
       // $FlowFixMe | We are passing an array to forkJoin which is not supported by flow-typed definition for rxjs.
       return Observable.forkJoin(
-        events.map(e => {
+        (events as TODO).map((e: TODO) => {
           if (e.type === 'SampleCreated') {
             return Sample.loadSample(ajaxGet)({
               id: e.sampleObjectId,

@@ -3,8 +3,8 @@
 export type ObjectType = 'collection' | 'sample' | 'node';
 
 export type MovableObject = {
-  id: string,
-  objectType: ObjectType
+  id: string;
+  objectType: ObjectType;
 };
 
 export const COLLECTION_TYPE: ObjectType = 'collection';

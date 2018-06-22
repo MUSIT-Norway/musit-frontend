@@ -2,16 +2,19 @@
 import Config from '../config';
 import { apiUrl } from '../shared/util';
 import { simpleGet } from '../shared/RxAjax';
-import type { AjaxGet } from '../types/ajax';
+import { AjaxGet } from '../types/ajax';
 import { Observable } from 'rxjs';
+import { Star } from '../types/common';
 
 class Report {
   static getKDReport: (
-    ajaxGet: AjaxGet<*>
-  ) => (props: {
-    token: string,
-    museumId: number
-  }) => Observable<*>;
+    ajaxGet?: AjaxGet<Star>
+  ) => (
+    props: {
+      token: string;
+      museumId: number;
+    }
+  ) => Observable<Star>;
 }
 
 Report.getKDReport = (ajaxGet = simpleGet) => ({ token, museumId }) => {

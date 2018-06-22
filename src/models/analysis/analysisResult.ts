@@ -2,24 +2,26 @@
 import { Observable } from 'rxjs';
 import Config from '../../config';
 import { simplePost, simplePut, ajaxHelper } from '../../shared/RxAjax';
-import  { Callback, AjaxPut, AjaxPost } from '../../types/ajax';
-import  { ImportAnalysisResult } from '../../types/analysisResult';
+import { Callback, AjaxPut, AjaxPost } from '../../types/ajax';
+import { ImportAnalysisResult } from '../../types/analysisResult';
 import { Maybe, Star } from '../../types/common';
 
 type AnalysisResultSavePayload = {
-  extRef?: Maybe<Array<string>>,
-  comment?: Maybe<string>
+  extRef?: Maybe<Array<string>>;
+  comment?: Maybe<string>;
 };
 
 export const addResult: (
   ajaxPost: AjaxPost<Star>
-) => (props: {
-  analysisId: number,
-  museumId: number,
-  token: string,
-  result: Maybe<AnalysisResultSavePayload>,
-  callback?: Callback<Star>
-}) => Observable<{ response: number }> = (ajaxPost = simplePost) => ({
+) => (
+  props: {
+    analysisId: number;
+    museumId: number;
+    token: string;
+    result: Maybe<AnalysisResultSavePayload>;
+    callback?: Callback<Star>;
+  }
+) => Observable<{ response: number }> = (ajaxPost = simplePost) => ({
   analysisId,
   museumId,
   token,
@@ -35,12 +37,14 @@ export const addResult: (
 
 export const importResult: (
   ajaxPut: AjaxPut<Star>
-) => (props: {
-  analysisId: number,
-  museumId: number,
-  token: string,
-  result: ImportAnalysisResult
-}) => Observable<Star> = (ajaxPut = simplePut) => ({
+) => (
+  props: {
+    analysisId: number;
+    museumId: number;
+    token: string;
+    result: ImportAnalysisResult;
+  }
+) => Observable<Star> = (ajaxPut = simplePut) => ({
   analysisId,
   museumId,
   token,
@@ -53,33 +57,35 @@ export const importResult: (
   );
 
 export type SavedFile = {
-  id: string,
-  fid: string,
-  title: string,
-  fileType: string,
-  owner: { ownerId: string, ownerType: string },
-  collection: string,
-  path: string,
-  size: string,
-  version: number,
-  published: boolean,
-  createdStamp: { date: string, by: string },
-  documentDetails: { number: number },
-  type: string //TODO: I added this in order to get sampleDataForTest.ts to compile
+  id: string;
+  fid: string;
+  title: string;
+  fileType: string;
+  owner: { ownerId: string; ownerType: string };
+  collection: string;
+  path: string;
+  size: string;
+  version: number;
+  published: boolean;
+  createdStamp: { date: string; by: string };
+  documentDetails: { number: number };
+  type: string; //TODO: I added this in order to get sampleDataForTest.ts to compile
 };
 
 export type ErrorSaving = {
-  error: { status: number, response?: any },
-  file: File
+  error: { status: number; response?: any };
+  file: File;
 };
 
-export const addResultFile: (props: {
-  analysisId: number,
-  museumId: number,
-  collectionId: string,
-  token: string,
-  file: File
-}) => Observable<SavedFile | ErrorSaving> = props => {
+export const addResultFile: (
+  props: {
+    analysisId: number;
+    museumId: number;
+    collectionId: string;
+    token: string;
+    file: File;
+  }
+) => Observable<SavedFile | ErrorSaving> = props => {
   const formData: FormData = new FormData();
   formData.append('upload', props.file, props.file.name);
   return ajaxHelper(
@@ -92,7 +98,7 @@ export const addResultFile: (props: {
     formData,
     props.token
   )
-    .map((res: { status: number, response: any }) => {
+    .map((res: { status: number; response: any }) => {
       if (res.status >= 200 && res.status < 300) {
         return res.response;
       }
@@ -110,15 +116,15 @@ export const addResultFile: (props: {
 };
 
 export type ErrorLoading = {
-  error: { status: number, response?: any },
-  files: Array<string>
+  error: { status: number; response?: any };
+  files: Array<string>;
 };
 
 export const getFiles = (props: {
-  files: Array<string>,
-  museumId: number,
-  token: string,
-  analysisId: number
+  files: Array<string>;
+  museumId: number;
+  token: string;
+  analysisId: number;
 }): Observable<Array<SavedFile | ErrorLoading>> => {
   if (props.files.length === 0) {
     return Observable.of([]);
@@ -137,7 +143,7 @@ export const getFiles = (props: {
           null,
           props.token
         )
-          .map((res: { status: number, response: any }) => {
+          .map((res: { status: number; response: any }) => {
             if (res.status >= 200 && res.status < 300) {
               return res.response ? res.response[0] : res.response;
             }
@@ -165,7 +171,7 @@ export const getFiles = (props: {
     null,
     props.token
   )
-    .map((res: { status: number, response: any }) => {
+    .map((res: { status: number; response: any }) => {
       if (res.status >= 200 && res.status < 300) {
         return res.response ? res.response[0] : res.response;
       }
@@ -184,8 +190,8 @@ export const getFiles = (props: {
 };
 
 export type ErrorDownloading = {
-  error: { status: number, response?: any },
-  fileId: string
+  error: { status: number; response?: any };
+  fileId: string;
 };
 
 export const getFileAsBlob = (
@@ -201,7 +207,7 @@ export const getFileAsBlob = (
     null,
     'blob'
   )
-    .map((res: { status: number, response: any }) => {
+    .map((res: { status: number; response: any }) => {
       if (res.status >= 200 && res.status < 300) {
         return res.response;
       }

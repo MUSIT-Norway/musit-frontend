@@ -1,8 +1,8 @@
 // @flow
-import { Field } from "../../forms/form";
-import { AnalysisCollection } from "../../types/analysis";
-import { Maybe, Star, MUSTFIX, BUG } from "../../types/common";
-import { Person } from "../../types/person";
+import { Field } from '../../forms/form';
+import { AnalysisCollection } from '../../types/analysis';
+import { Maybe, Star, MUSTFIX, BUG } from '../../types/common';
+import { Person } from '../../types/person';
 
 export type FormValue = {
   name: string;
@@ -33,7 +33,7 @@ export const fromJsonToForm: (
       {
         name: json.doneByName as MUSTFIX,
         uuid: json.doneBy as MUSTFIX,
-        role: "doneBy",
+        role: 'doneBy',
         date: json.doneDate as MUSTFIX
       }
     ]);
@@ -44,7 +44,7 @@ export const fromJsonToForm: (
       {
         name: json.responsibleName as MUSTFIX,
         uuid: json.responsible as MUSTFIX,
-        role: "responsible",
+        role: 'responsible',
         date: null as BUG
       }
     ]);
@@ -55,7 +55,7 @@ export const fromJsonToForm: (
       {
         name: json.administratorName as MUSTFIX,
         uuid: json.administrator as MUSTFIX,
-        role: "administrator",
+        role: 'administrator',
         date: null as BUG
       }
     ]);
@@ -66,21 +66,21 @@ export const fromJsonToForm: (
       {
         name: json.completedByName as MUSTFIX,
         uuid: json.completedBy as MUSTFIX,
-        role: "completedBy",
+        role: 'completedBy',
         date: json.completedDate as MUSTFIX
       }
     ]);
   }
-  formValues.persons = toField("persons", persons);
+  formValues.persons = toField('persons', persons);
 
   const restriction = json.restriction;
   const hasRestriction = !!restriction && !restriction.cancelledStamp;
-  formValues.restrictions = toField("restrictions", hasRestriction);
-  formValues.restriction = toField("restriction", hasRestriction ? restriction : null);
+  formValues.restrictions = toField('restrictions', hasRestriction);
+  formValues.restriction = toField('restriction', hasRestriction ? restriction : null);
   const result = json.result;
   if (result) {
-    formValues.comments = toField("comments", result.comment);
-    formValues.externalSource = toField("externalSource", result.extRef);
+    formValues.comments = toField('comments', result.comment);
+    formValues.externalSource = toField('externalSource', result.extRef);
   }
 
   return Object.keys(formValues).map(key => formValues[key]);

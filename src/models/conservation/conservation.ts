@@ -238,16 +238,14 @@ export const loadPredefinedConservationTypes: (
     getMaterialList(ajaxGet)({ museumId, collectionId, token })
   )
     .map(
-      (
-        [
-          conservationTypes,
-          materialList,
-          keywordList,
-          roleList,
-          conditionCodeList,
-          materialDeterminationList
-        ]
-      ) => ({
+      ([
+        conservationTypes,
+        materialList,
+        keywordList,
+        roleList,
+        conditionCodeList,
+        materialDeterminationList
+      ]) => ({
         conservationTypes: conservationTypes || [],
         materialList: materialList || [],
         keywordList: keywordList || [],

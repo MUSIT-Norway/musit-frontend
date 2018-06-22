@@ -1,21 +1,22 @@
 // @flow
-import find from 'lodash/find';
+import { find } from 'lodash';
 import Config from '../config';
 import { simpleGet, simplePost } from '../shared/RxAjax';
 import { Observable } from 'rxjs';
-import type { Callback, AjaxGet, AjaxPost } from '../types/ajax';
-import type { Actor } from 'types/actor';
-import type { Restriction } from 'types/analysis';
+import { Callback, AjaxGet, AjaxPost } from '../types/ajax';
+import { Actor } from '../types/actor';
+import { Restriction } from '../types/analysis';
+import { Maybe, Star, MUSTFIX } from '../types/common';
 
 type ActorMetaData = {
-  doneBy?: ?string,
-  registeredBy?: ?string,
-  registeredByName?: ?string,
-  completedBy?: ?string,
-  administrator?: ?string,
-  updatedBy?: ?string,
-  updatedByName?: ?string,
-  restriction?: Restriction
+  doneBy?: Maybe<string>;
+  registeredBy?: Maybe<string>;
+  registeredByName?: Maybe<string>;
+  completedBy?: Maybe<string>;
+  administrator?: Maybe<string>;
+  updatedBy?: Maybe<string>;
+  updatedByName?: Maybe<string>;
+  restriction?: Restriction;
 };
 
 type ActorFieldName =
@@ -37,34 +38,36 @@ type ActorFieldName =
   | 'restriction_cancelledByName';
 
 type ActorField = {
-  id: string,
-  fieldName: ActorFieldName
+  id: string;
+  fieldName: ActorFieldName;
 };
 
 class MusitActor {
-  static getActorId: (actor: Actor) => ?string;
-  static hasActorId: (actor: Actor, actorId: ?string) => boolean;
+  static getActorId: (actor: Actor) => Maybe<string>;
+  static hasActorId: (actor: Actor, actorId: Maybe<string>) => boolean;
   static getActorNames: (
     actors: Array<Actor>,
-    doneById: ?string,
-    registeredBy: ?string
+    doneById: Maybe<string>,
+    registeredBy: Maybe<string>
   ) => ActorMetaData;
   static getMultipleActorNames: (
     actors: Array<Actor>,
     fields: Array<ActorField>
   ) => ActorMetaData;
   static getActors: (
-    ajaxPost: AjaxPost<*>
-  ) => (props: {
-    actorIds: Array<string>,
-    token: string,
-    callback?: Callback<*>
-  }) => Observable<Array<Actor>>;
+    ajaxPost: AjaxPost<Star>
+  ) => (
+    props: {
+      actorIds: Array<string>;
+      token: string;
+      callback?: Callback<Star>;
+    }
+  ) => Observable<Array<Actor>>;
   static getActor: (
-    ajaxGet: AjaxGet<*>
-  ) => (props: { actorId: string, token: string, callback?: Callback<*> }) => Observable<
-    Actor
-  >;
+    ajaxGet: AjaxGet<Star>
+  ) => (
+    props: { actorId: string; token: string; callback?: Callback<Star> }
+  ) => Observable<Actor>;
 }
 
 /**
@@ -74,7 +77,7 @@ class MusitActor {
  */
 MusitActor.getActorId = (actor: Actor) => actor.dataportenId || actor.applicationId;
 
-MusitActor.hasActorId = (actor: Actor, actorId: ?string) => {
+MusitActor.hasActorId = (actor: Actor, actorId: Maybe<string>) => {
   if (!actorId) {
     return false;
   }
@@ -95,10 +98,10 @@ MusitActor.hasActorId = (actor: Actor, actorId: ?string) => {
  */
 MusitActor.getActorNames = (
   actorsJson: Array<Actor>,
-  doneById: ?string,
-  registeredById: ?string
+  doneById: Maybe<string>,
+  registeredById: Maybe<string>
 ) => {
-  const actors = [].concat(actorsJson);
+  const actors = ([] as Array<Actor>).concat(actorsJson);
   const doneBy = find(actors, a => MusitActor.hasActorId(a, doneById));
   const registeredBy = find(actors, a => MusitActor.hasActorId(a, registeredById));
   return { doneBy: doneBy && doneBy.fn, registeredBy: registeredBy && registeredBy.fn };
@@ -108,17 +111,23 @@ MusitActor.getMultipleActorNames = (
   actorsJson: Array<Actor>,
   actorFields: Array<ActorField>
 ) => {
-  const actors = [].concat(actorsJson);
-  return actorFields.reduce((acc, next: { id: string, fieldName: ActorFieldName }) => {
+  const actors = ([] as Array<Actor>).concat(actorsJson);
+  return actorFields.reduce((acc, next: { id: string; fieldName: ActorFieldName }) => {
     const actor = find(actors, a => MusitActor.hasActorId(a, next.id));
     if (!actor) {
       return acc;
     }
     if (next.fieldName === 'restriction_requesterName') {
-      return { ...acc, restriction: { ...acc.restriction, requesterName: actor.fn } };
+      return {
+        ...acc,
+        restriction: { ...(acc as MUSTFIX).restriction, requesterName: actor.fn }
+      };
     }
     if (next.fieldName === 'restriction_cancelledByName') {
-      return { ...acc, restriction: { ...acc.restriction, cancelledByName: actor.fn } };
+      return {
+        ...acc,
+        restriction: { ...(acc as MUSTFIX).restriction, cancelledByName: actor.fn }
+      };
     }
     return { ...acc, [next.fieldName]: actor.fn };
   }, {});

@@ -3,113 +3,141 @@ import { simplePost, simpleGet, simplePut } from '../shared/RxAjax';
 import Config from '../config';
 import { Observable } from 'rxjs';
 import { DATE_FORMAT_DISPLAY } from '../shared/util';
-import type { Callback, AjaxGet, AjaxPost, AjaxPut } from '../types/ajax';
-import type { SampleData } from '../types/samples';
-import type { SampleTypes } from '../types/predefined';
-import { omit } from 'lodash';
-import uniq from 'lodash/uniq';
-import uniqBy from 'lodash/uniqBy';
+import { Callback, AjaxGet, AjaxPost, AjaxPut } from '../types/ajax';
+import { SampleData } from '../types/samples';
+import { omit, uniq, uniqBy, flatten } from 'lodash';
 import MusitActor from '../models/actor';
 import MusitObject from '../models/object';
-import moment from 'moment';
-import flatten from 'lodash/flatten';
+import * as moment from 'moment';
+import { Star, mixed, Maybe, MUSTFIX, TODO } from '../types/common';
+import { SampleType, SampleTypes } from '../types/sample';
+import { Actor } from '../types/actor';
 
 export type SampleStatus = {
-  id: number,
-  noStatus?: string,
-  enStatus?: string
+  id: number;
+  noStatus?: string;
+  enStatus?: string;
 };
 
 class Sample {
   static addSample: (
-    ajaxPost: AjaxPost<*>
-  ) => (props: {
-    museumId: number,
-    token: string,
-    data: mixed,
-    callback?: ?Callback<*>
-  }) => Observable<*>;
+    ajaxPost: AjaxPost<Star>
+  ) => (
+    props: {
+      museumId: number;
+      token: string;
+      data: mixed;
+      callback?: Callback<Star>;
+    }
+  ) => Observable<Star>;
   static editSample: (
-    ajaxPut: AjaxPut<*>
-  ) => (props: {
-    id: string,
-    museumId: number,
-    token: string,
-    data: mixed,
-    callback?: ?Callback<*>
-  }) => Observable<*>;
+    ajaxPut: AjaxPut<Star>
+  ) => (
+    props: {
+      id: string;
+      museumId: number;
+      token: string;
+      data: mixed;
+      callback?: Callback<Star>;
+    }
+  ) => Observable<Star>;
   static loadSample: (
-    ajaxGet: AjaxGet<*>
-  ) => (props: {
-    id: string,
-    museumId: number,
-    collectionId: string,
-    token: string,
-    callback?: ?Callback<*>
-  }) => Observable<SampleData>;
+    ajaxGet: AjaxGet<Star>
+  ) => (
+    props: {
+      id: string;
+      museumId: number;
+      collectionId: string;
+      token: string;
+      callback?: Callback<Star>;
+    }
+  ) => Observable<SampleData>;
   static loadSampleDataForObject: (
-    ajaxGet: AjaxGet<*>
-  ) => (props: {
-    id: string,
-    museumId: number,
-    token: string,
-    callback?: ?Callback<*>
-  }) => Observable<*>;
-  static prepareForSubmit: (tmpData: {
-    [string]: ?string | ?number | ?{ user: ?string, date: string },
-    size?: { value: number, unit: string },
-    parentObject: { objectId: string, objectType: string, sampleOrObjectData?: any },
-    sizeUnit: ?string,
-    externalId: ?string,
-    externalIdSource: ?string
-  }) => mixed;
+    ajaxGet: AjaxGet<Star>
+  ) => (
+    props: {
+      id: string;
+      museumId: number;
+      token: string;
+      callback?: Callback<Star>;
+    }
+  ) => Observable<Star>;
+  static prepareForSubmit: (
+    tmpData: {
+      [key: string]:
+        | Maybe<string>
+        | Maybe<number>
+        | Maybe<{ user: Maybe<string>; date: string }>
+        | { value: number; unit: string }
+        | { objectId: string; objectType: string; sampleOrObjectData?: any };
+      size?: { value: number; unit: string };
+      parentObject: { objectId: string; objectType: string; sampleOrObjectData?: any };
+      sizeUnit: Maybe<string>;
+      externalId: Maybe<string>;
+      externalIdSource: Maybe<string>;
+    }
+  ) => mixed;
   static loadSampleTypes: (
-    ajaxGet: AjaxGet<*>
-  ) => (props: {
-    token: string,
-    isEn: string
-  }) => Observable<*>;
+    ajaxGet: AjaxGet<Star>
+  ) => (
+    props: {
+      token: string;
+      isEn: string;
+    }
+  ) => Observable<Star>;
   static loadAllSampleTypes: (
-    ajaxGet: AjaxGet<*>
-  ) => (props: {
-    token: string
-  }) => Observable<*>;
+    ajaxGet: AjaxGet<Star>
+  ) => (
+    props: {
+      token: string;
+    }
+  ) => Observable<Star>;
   static loadTreatments: (
-    ajaxGet: AjaxGet<*>
-  ) => (props: {
-    token: string
-  }) => Observable<*>;
+    ajaxGet: AjaxGet<Star>
+  ) => (
+    props: {
+      token: string;
+    }
+  ) => Observable<Star>;
   static loadStorageContainer: (
-    ajaxGet: AjaxGet<*>
-  ) => (props: {
-    token: string
-  }) => Observable<*>;
+    ajaxGet: AjaxGet<Star>
+  ) => (
+    props: {
+      token: string;
+    }
+  ) => Observable<Star>;
   static loadStorageMediums: (
-    ajaxGet: AjaxGet<*>
-  ) => (props: {
-    token: string
-  }) => Observable<*>;
+    ajaxGet: AjaxGet<Star>
+  ) => (
+    props: {
+      token: string;
+    }
+  ) => Observable<Star>;
   static loadPredefinedTypes: (
-    ajaxGet: AjaxGet<*>
-  ) => (props: {
-    token: string,
-    isEn: string,
-    onComplete: (predefinedTypes: mixed) => void
-  }) => Observable<*>;
+    ajaxGet: AjaxGet<Star>
+  ) => (
+    props: {
+      token: string;
+      isEn: string;
+      onComplete: (predefinedTypes: mixed) => void;
+    }
+  ) => Observable<Star>;
   static sampleStatuses: Array<SampleStatus>;
   static sampleSizeUnits: Array<string>;
   static loadSamplesForNode: (
-    ajaxGet: AjaxGet<*>
-  ) => (props: {
-    nodeId: string,
-    museumId: number,
-    token: string,
-    collectionId: string,
-    callback?: ?Callback<*>
-  }) => Observable<*>;
+    ajaxGet: AjaxGet<Star>
+  ) => (
+    props: {
+      nodeId: string;
+      museumId: number;
+      token: string;
+      collectionId: string;
+      callback?: Callback<Star>;
+    }
+  ) => Observable<Star>;
 }
 
-Sample.loadPredefinedTypes = (ajaxGet = simpleGet) => props => {
+Sample.loadPredefinedTypes = (ajaxGet: AjaxGet<TODO> = simpleGet) => props => {
   return Observable.forkJoin(
     Sample.loadStorageContainer(ajaxGet)(props),
     Sample.loadStorageMediums(ajaxGet)(props),
@@ -125,16 +153,19 @@ Sample.loadPredefinedTypes = (ajaxGet = simpleGet) => props => {
     .do(props.onComplete);
 };
 
-Sample.loadSampleTypes = (ajaxGet = simpleGet) => ({ token, isEn }) => {
+(Sample.loadSampleTypes as TODO) = (ajaxGet: AjaxGet<SampleType[]> = simpleGet) => ({
+  token,
+  isEn
+}: TODO) => {
   const url = Config.magasin.urls.api.samples.sampleTypes;
-  return ajaxGet(url, token).map(({ response }) => {
+  return ajaxGet(url, token).map(({ response }: TODO) => {
     if (isEn) {
       return {
         ...uniqBy(response, 'enSampleType').reduce(
           (acc, sampleType) => ({
             ...acc,
-            [sampleType.enSampleType]: response.filter(
-              v => v.enSampleType === sampleType.enSampleType
+            [(sampleType as MUSTFIX).enSampleType]: response.filter(
+              (v: TODO) => v.enSampleType === (sampleType as MUSTFIX).enSampleType
             )
           }),
           {}
@@ -146,8 +177,8 @@ Sample.loadSampleTypes = (ajaxGet = simpleGet) => ({ token, isEn }) => {
       ...uniqBy(response, 'noSampleType').reduce(
         (acc, sampleType) => ({
           ...acc,
-          [sampleType.noSampleType]: response.filter(
-            v => v.noSampleType === sampleType.noSampleType
+          [(sampleType as TODO).noSampleType]: response.filter(
+            (v: TODO) => v.noSampleType === (sampleType as TODO).noSampleType
           )
         }),
         {}
@@ -156,22 +187,24 @@ Sample.loadSampleTypes = (ajaxGet = simpleGet) => ({ token, isEn }) => {
     };
   });
 };
-Sample.loadAllSampleTypes = (ajaxGet = simpleGet) => ({ token }) => {
+Sample.loadAllSampleTypes = (ajaxGet: AjaxGet<SampleType[]> = simpleGet) => ({
+  token
+}) => {
   const url = Config.magasin.urls.api.samples.sampleTypes;
-  return ajaxGet(url, token).map(({ response }) => response);
+  return ajaxGet(url, token).map(({ response }: TODO) => response);
 };
 
-Sample.loadTreatments = (ajaxGet = simpleGet) => ({ token }) => {
+Sample.loadTreatments = (ajaxGet: AjaxGet<TODO> = simpleGet) => ({ token }) => {
   const url = Config.magasin.urls.api.samples.treatments;
   return ajaxGet(url, token).map(({ response }) => response);
 };
 
-Sample.loadStorageContainer = (ajaxGet = simpleGet) => ({ token }) => {
+Sample.loadStorageContainer = (ajaxGet: AjaxGet<TODO> = simpleGet) => ({ token }) => {
   const url = Config.magasin.urls.api.samples.storagecontainer;
   return ajaxGet(url, token).map(({ response }) => response);
 };
 
-Sample.loadStorageMediums = (ajaxGet = simpleGet) => ({ token }) => {
+Sample.loadStorageMediums = (ajaxGet: AjaxGet<TODO> = simpleGet) => ({ token }) => {
   const url = Config.magasin.urls.api.samples.storagemediums;
   return ajaxGet(url, token).map(({ response }) => response);
 };
@@ -223,7 +256,8 @@ Sample.loadSample = (ajaxGet = simpleGet, ajaxPost = simplePost) => ({
   token,
   callback
 }) => {
-  const url = sampleId => Config.magasin.urls.api.samples.getSample(museumId, sampleId);
+  const url = (sampleId: TODO) =>
+    Config.magasin.urls.api.samples.getSample(museumId, sampleId);
   return ajaxGet(url(id), token, callback)
     .map(({ response }) => response)
     .flatMap(sampleJson => {
@@ -303,7 +337,7 @@ export function getSampleType(sampleTypeId: number, sampleTypesMap: SampleTypes)
   );
 }
 
-function getActorName(actors, actorId) {
+function getActorName(actors: Actor[], actorId: Maybe<string>) {
   const actor = actors.find(a => MusitActor.hasActorId(a, actorId));
   if (actor) {
     return actor.fn;
@@ -321,7 +355,7 @@ Sample.loadSampleDataForObject = (ajaxGet = simpleGet) => ({
   return ajaxGet(url, token, callback).map(
     ({ response }) =>
       (response &&
-        response.map(r => ({
+        response.map((r: TODO) => ({
           ...r,
           doneDate: r.doneDate
             ? moment(r.doneByStamp.date).format(DATE_FORMAT_DISPLAY)
