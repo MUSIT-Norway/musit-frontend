@@ -17,8 +17,9 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 import { formatFloatToString, Option } from './../../../shared/util';
+import { TODO } from '../../../types/common';
 
-const wrapAlcoholState = s => {
+const wrapAlcoholState = (s: string) => {
   switch (s) {
     case 'Uttørket':
       return 'Uttørket';
@@ -35,72 +36,72 @@ const wrapAlcoholState = s => {
   }
 };
 
-function parseLightingCondition(o) {
-  const retobs = {};
+function parseLightingCondition(o: TODO) {
+  const retobs = {} as TODO;
   retobs.type = 'lightCondition';
   retobs.data = {};
   retobs.data.leftValue = o.lightingCondition;
   retobs.data.rightValue = o.note;
   return retobs;
 }
-function parseGas(o) {
-  const retobs = {};
+function parseGas(o: TODO) {
+  const retobs = {} as TODO;
   retobs.type = 'gas';
   retobs.data = {};
   retobs.data.leftValue = o.gas;
   retobs.data.rightValue = o.note;
   return retobs;
 }
-function parseMold(o) {
-  const retobs = {};
+function parseMold(o: TODO) {
+  const retobs = {} as TODO;
   retobs.type = 'mold';
   retobs.data = {};
   retobs.data.leftValue = o.mold;
   retobs.data.rightValue = o.note;
   return retobs;
 }
-function parseCleaning(o) {
-  const retobs = {};
+function parseCleaning(o: TODO) {
+  const retobs = {} as TODO;
   retobs.type = 'cleaning';
   retobs.data = {};
   retobs.data.leftValue = o.cleaning;
   retobs.data.rightValue = o.note;
   return retobs;
 }
-function parsePerimeterSecurity(o) {
-  const retobs = {};
+function parsePerimeterSecurity(o: TODO) {
+  const retobs = {} as TODO;
   retobs.type = 'skallsikring';
   retobs.data = {};
   retobs.data.leftValue = o.perimeterSecurity;
   retobs.data.rightValue = o.note;
   return retobs;
 }
-function parseFireProtection(o) {
-  const retobs = {};
+function parseFireProtection(o: TODO) {
+  const retobs = {} as TODO;
   retobs.type = 'brannsikring';
   retobs.data = {};
   retobs.data.leftValue = o.fireProtection;
   retobs.data.rightValue = o.note;
   return retobs;
 }
-function parseTheftProtection(o) {
-  const retobs = {};
+function parseTheftProtection(o: TODO) {
+  const retobs = {} as TODO;
   retobs.type = 'tyverisikring';
   retobs.data = {};
   retobs.data.leftValue = o.theftProtection;
   retobs.data.rightValue = o.note;
   return retobs;
 }
-function parseWaterDamageAssessment(o) {
-  const retobs = {};
+function parseWaterDamageAssessment(o: TODO) {
+  const retobs = {} as TODO;
   retobs.type = 'vannskaderisiko';
   retobs.data = {};
   retobs.data.leftValue = o.waterDamageAssessment;
   retobs.data.rightValue = o.note;
   return retobs;
 }
-function parseHypoxicAir(o) {
-  const retobs = {};
+function parseHypoxicAir(o: TODO) {
+  const retobs = {} as TODO;
   retobs.type = 'hypoxicAir';
   retobs.data = {};
   retobs.data.fromValue = formatFloatToString(o.range.from);
@@ -108,8 +109,8 @@ function parseHypoxicAir(o) {
   retobs.data.commentValue = o.note;
   return retobs;
 }
-function parseTemperature(o) {
-  const retobs = {};
+function parseTemperature(o: TODO) {
+  const retobs = {} as TODO;
   retobs.type = 'temperature';
   retobs.data = {};
   retobs.data.fromValue = formatFloatToString(o.range.from);
@@ -117,8 +118,8 @@ function parseTemperature(o) {
   retobs.data.commentValue = o.note;
   return retobs;
 }
-function parseRelativeHumidity(o) {
-  const retobs = {};
+function parseRelativeHumidity(o: TODO) {
+  const retobs = {} as TODO;
   retobs.type = 'relativeHumidity';
   retobs.data = {};
   retobs.data.fromValue = formatFloatToString(o.range.from);
@@ -126,22 +127,22 @@ function parseRelativeHumidity(o) {
   retobs.data.commentValue = o.note;
   return retobs;
 }
-function parsePest(o) {
-  const retobs = {};
+function parsePest(o: TODO) {
+  const retobs = {} as TODO;
   retobs.type = 'pest';
   retobs.data = {};
   retobs.data.identificationValue = o.identification;
   retobs.data.commentValue = o.note;
-  retobs.data.observations = [].concat(o.lifecycles).map(l => {
-    const obs = {};
+  retobs.data.observations = [].concat(o.lifecycles).map((l: TODO) => {
+    const obs = {} as TODO;
     obs.lifeCycle = l.stage;
     obs.count = formatFloatToString(l.quantity);
     return obs;
   });
   return retobs;
 }
-function parseAlcohol(o) {
-  const retobs = {};
+function parseAlcohol(o: TODO) {
+  const retobs = {} as TODO;
   retobs.type = 'alcohol';
   retobs.data = {};
   retobs.data.statusValue = wrapAlcoholState(o.condition);
@@ -150,8 +151,8 @@ function parseAlcohol(o) {
   return retobs;
 }
 
-const wrap = be => {
-  const ret = {};
+const wrap = (be: TODO) => {
+  const ret = {} as TODO;
   ret.doneBy = be.doneBy;
   ret.doneDate = be.doneDate;
   ret.registeredDate = be.registeredDate;
@@ -174,7 +175,7 @@ const wrap = be => {
   return ret;
 };
 
-const toFrontEnd = be => {
+const toFrontEnd = (be: TODO) => {
   return wrap(be);
 };
 

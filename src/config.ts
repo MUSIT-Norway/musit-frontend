@@ -1,14 +1,19 @@
 // @flow
 
-import type { MuseumId, CollectionId, NodeId, ObjectId } from 'types/ids';
+//import  { MuseumId, CollectionId, NodeId, ObjectId } from '../../types/ids';
 import queryParams from './shared/queryParams';
+import { AppSession } from './types/appSession';
+import { Maybe } from './types/common';
+import { MuseumId, CollectionId, NodeId, ObjectId } from './types/ids';
 
+/* Old:
 type AppSession = {
   museumId: number,
   collectionId: string,
   accessToken: string
 };
 
+*/
 const clientContextUrl = (appSession: AppSession) =>
   `/museum/${appSession.museumId}/collections/${appSession.collectionId}`;
 
@@ -103,17 +108,17 @@ export default {
         },
         storagefacility: {
           goToRoot: (appSession: AppSession) => `${clientContextUrl(appSession)}/magasin`,
-          goToNode: (nodeId: number, appSession: AppSession, page?: ?number) =>
+          goToNode: (nodeId: number, appSession: AppSession, page?: Maybe<number>) =>
             `${clientContextUrl(appSession)}/magasin/${nodeId}${page ? `/${page}` : ''}`,
           addNode: (nodeId: number, appSession: AppSession) =>
             `${clientContextUrl(appSession)}/magasin/${nodeId}/add`,
           editNode: (nodeId: number, appSession: AppSession) =>
             `${clientContextUrl(appSession)}/magasin/${nodeId}/view`,
-          goToObjects: (nodeId: string, appSession: AppSession, page?: ?number) =>
+          goToObjects: (nodeId: string, appSession: AppSession, page?: Maybe<number>) =>
             `${clientContextUrl(appSession)}/magasin/${nodeId}/objects${
               page ? `/${page}` : ''
             }`,
-          goToSamples: (nodeId: string, appSession: AppSession, page?: ?number) =>
+          goToSamples: (nodeId: string, appSession: AppSession, page?: Maybe<number>) =>
             `${clientContextUrl(appSession)}/magasin/${nodeId}/samples${
               page ? `/${page}` : ''
             }`,
@@ -182,7 +187,7 @@ export default {
             collectionIds: string,
             from: number,
             limit: number,
-            q: ?string
+            q: Maybe<string>
           ) =>
             `/api/management/${mid}/conservation/search` +
             queryParams({
@@ -239,7 +244,7 @@ export default {
             collectionIds: string,
             from: number,
             limit: number,
-            q: ?string
+            q: Maybe<string>
           ) =>
             `/api/management/${mid}/analyses/search` +
             queryParams({
@@ -289,15 +294,15 @@ export default {
           childrenNodesUrl: (
             mid: MuseumId,
             uuid: string,
-            pageNum: ?number,
-            limit: ?number
+            pageNum: Maybe<number>,
+            limit: Maybe<number>
           ): string =>
             `/api/storagefacility/museum/${mid}/storagenodes/${uuid}/children?page=${pageNum ||
               1}&limit=${limit || 25}`,
           currentLocation: (
             mid: MuseumId,
             objectId: string,
-            objectType?: ?string
+            objectType?: Maybe<string>
           ): string =>
             `/api/storagefacility/museum/${mid}/storagenodes/objects/${objectId}/currentlocation?objectType=${objectType ||
               'collection'}`,
@@ -317,11 +322,11 @@ export default {
           nodeStatsUrl: (mid: MuseumId, uuid: string): string =>
             `/api/thingaggregate/museum/${mid}/storagenodes/${uuid}/stats`,
           searchObjectUrl: (
-            museumNo: ?string,
-            museumNoAsANumber: ?string,
-            subNo: ?string,
-            term: ?string,
-            q: ?string,
+            museumNo: Maybe<string>,
+            museumNoAsANumber: Maybe<string>,
+            subNo: Maybe<string>,
+            term: Maybe<string>,
+            q: Maybe<string>,
             limit: number,
             from: number,
             collectionId: CollectionId,
@@ -343,11 +348,11 @@ export default {
             return baseUrl + qs;
           },
           searchDatabaseObjectUrl: (
-            museumNo: ?string,
-            museumNoAsANumber: ?string,
-            subNo: ?string,
-            term: ?string,
-            q: ?string,
+            museumNo: Maybe<string>,
+            museumNoAsANumber: Maybe<string>,
+            subNo: Maybe<string>,
+            term: Maybe<string>,
+            q: Maybe<string>,
             limit: number,
             from: number,
             collectionId: CollectionId,

@@ -2,22 +2,23 @@
 import { Observable } from 'rxjs';
 import Config from '../../config';
 import { simplePost, simplePut, ajaxHelper } from '../../shared/RxAjax';
-import type { Callback, AjaxPut, AjaxPost } from '../../types/ajax';
-import type { ImportAnalysisResult } from 'types/analysisResult';
+import  { Callback, AjaxPut, AjaxPost } from '../../types/ajax';
+import  { ImportAnalysisResult } from '../../types/analysisResult';
+import { Maybe, Star } from '../../types/common';
 
 type AnalysisResultSavePayload = {
-  extRef?: ?Array<string>,
-  comment?: ?string
+  extRef?: Maybe<Array<string>>,
+  comment?: Maybe<string>
 };
 
 export const addResult: (
-  ajaxPost: AjaxPost<*>
+  ajaxPost: AjaxPost<Star>
 ) => (props: {
   analysisId: number,
   museumId: number,
   token: string,
-  result: ?AnalysisResultSavePayload,
-  callback?: Callback<*>
+  result: Maybe<AnalysisResultSavePayload>,
+  callback?: Callback<Star>
 }) => Observable<{ response: number }> = (ajaxPost = simplePost) => ({
   analysisId,
   museumId,
@@ -33,13 +34,13 @@ export const addResult: (
   );
 
 export const importResult: (
-  ajaxPut: AjaxPut<*>
+  ajaxPut: AjaxPut<Star>
 ) => (props: {
   analysisId: number,
   museumId: number,
   token: string,
   result: ImportAnalysisResult
-}) => Observable<*> = (ajaxPut = simplePut) => ({
+}) => Observable<Star> = (ajaxPut = simplePut) => ({
   analysisId,
   museumId,
   token,

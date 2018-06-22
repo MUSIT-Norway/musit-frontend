@@ -1,9 +1,10 @@
 import { parseFloatFromString } from '../../../shared/util';
+import { TODO } from '../../../types/common';
 
-export const toBackend = (data, parentId) => {
+export const toBackend = (data: TODO, parentId: TODO) => {
   return {
     ...data,
-    groupRead: 'foo', // Must be removed
+    groupRead: 'foo', //TODO: Must be removed
     isPartOf: parentId ? parentId * 1 : data.isPartOf,
     area: parseFloatFromString(data.area),
     areaTo: parseFloatFromString(data.areaTo),

@@ -5,18 +5,19 @@ import Config from '../../config';
 import { Observable } from 'rxjs';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 
-import type { AjaxGet } from 'types/ajax';
-import type { SearchResult } from 'types/search';
-import type { MuseumId } from 'types/ids';
+import  { AjaxGet } from '../../types/ajax';
+import  { SearchResult } from '../../types/search';
+import  { MuseumId } from '../../types/ids';
 import MusitObject from '../object';
+import { Maybe, Star, TODO } from '../../types/common';
 
 type SearchProps = {
   queryParam: {
-    museumNo: ?string,
-    museumNoAsANumber: ?string,
-    subNo: ?string,
-    term: ?string,
-    q: ?string
+    museumNo: Maybe<string>,
+    museumNoAsANumber: Maybe<string>,
+    subNo: Maybe<string>,
+    term: Maybe<string>,
+    q: Maybe<string>
   },
   limit: number,
   from: number,
@@ -40,7 +41,7 @@ const hentPlassering = (
     token: token
   }).map(path => path);
 
-export function objectSearch(ajaxGet: AjaxGet<*> = simpleGet) {
+export function objectSearch(ajaxGet: AjaxGet<Star> = simpleGet) {
   return (props: SearchProps): Observable<SearchResult> => {
     const dbSearch =
       props.databaseSearch ||
@@ -95,7 +96,7 @@ export function objectSearch(ajaxGet: AjaxGet<*> = simpleGet) {
       }
     };
 
-    const mapDbToESResponse = r => ({
+    const mapDbToESResponse = (r:TODO) => ({
       timed_out: false,
       took: 0,
       hits: {
@@ -155,7 +156,7 @@ export function objectSearch(ajaxGet: AjaxGet<*> = simpleGet) {
       }
       const response = dbSearch ? mapDbToESResponse(r) : r;
       console.log('Inner response after transform--------------------------- ', response);
-      const newObjects: Array<Observable<any>> = response.hits.hits.map(d => {
+      const newObjects: Array<Observable<any>> = response.hits.hits.map((d:TODO) => {
         const a = dbSearch ? mapDbHitsToESHist(d) : d;
         const currentLocation = hentPlassering(
           a._source.id || a._source.objectId,

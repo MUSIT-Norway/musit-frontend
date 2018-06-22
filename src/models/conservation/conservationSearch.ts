@@ -4,11 +4,12 @@ import { Observable } from 'rxjs';
 import Config from '../../config';
 import { simpleGet } from '../../shared/RxAjax';
 
-import type { AjaxGet } from 'types/ajax';
-import type { SearchResult } from 'types/search';
+import  { AjaxGet } from '../../types/ajax';
+import  { SearchResult } from '../../types/search';
+import { Maybe, Star, MUSTFIX } from '../../types/common';
 
 type SearchQuery = {
-  q: ?string
+  q: Maybe<string>
 };
 
 export type ConservationSearchProps = {
@@ -21,7 +22,7 @@ export type ConservationSearchProps = {
 };
 
 export const conservationSearch: (
-  ajaxGet: AjaxGet<*>
+  ajaxGet: AjaxGet<Star>
 ) => (props: ConservationSearchProps) => Observable<SearchResult> = (
   ajaxGet = simpleGet
 ) => ({ queryParam, museumId, collectionIds, token, from, limit }) => {
@@ -30,7 +31,7 @@ export const conservationSearch: (
     collectionIds,
     from,
     limit,
-    queryParam.q
+    queryParam.q as MUSTFIX
   );
   const nullOutputForSearch = {
     timed_out: false,

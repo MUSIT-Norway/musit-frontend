@@ -1,6 +1,7 @@
 import { formatFloatToString, getPath } from '../../../shared/util';
+import { TODO } from '../../../types/common';
 
-const mapRequirement = (envReq, field) => {
+const mapRequirement = (envReq:TODO, field:TODO) => {
   if (envReq[field] && (envReq[field].base || envReq[field].tolerance)) {
     return {
       [field]: formatFloatToString(envReq[field].base),
@@ -16,7 +17,7 @@ const mapRequirement = (envReq, field) => {
   return null;
 };
 
-export const toFrontend = data => {
+export const toFrontend = (data:TODO) => {
   return {
     ...data,
     breadcrumb: getPath(data),

@@ -2,24 +2,27 @@
 import { Observable } from 'rxjs';
 import Config from '../../config';
 import { simpleGet, simplePut, simplePost, simpleDel } from '../../shared/RxAjax';
-import type { Callback, AjaxGet, AjaxPut, AjaxPost, AjaxDel } from '../../types/ajax';
-import type {
+import { Callback, AjaxGet, AjaxPut, AjaxPost, AjaxDel } from '../../types/ajax';
+import {
   ConservationCollection,
   ConservationType,
   ConservationSave,
   ConservatonSubType
-} from 'types/conservation';
+} from '../../types/conservation';
 
 import { ajaxGetRequest } from '../../shared/ajaxPromise';
+import { Star, Maybe, mixed, MUSTFIX } from '../../types/common';
 
 export const getConservationForObject: (
-  ajaxGet: AjaxGet<*>
-) => (props: {
-  id: number,
-  museumId: number,
-  token: string,
-  callback?: Callback<*>
-}) => Observable<Array<ConservationCollection>> = (ajaxGet = simpleGet) => ({
+  ajaxGet: AjaxGet<Star>
+) => (
+  props: {
+    id: number;
+    museumId: number;
+    token: string;
+    callback?: Callback<Star>;
+  }
+) => Observable<Array<ConservationCollection>> = (ajaxGet = simpleGet) => ({
   museumId,
   token,
   id,
@@ -38,13 +41,15 @@ export const getConservationForObject: (
 };
 
 export const getConservationById: (
-  ajaxGet: AjaxGet<*>
-) => (props: {
-  id: number,
-  museumId: number,
-  token: string,
-  callback?: Callback<*>
-}) => Observable<ConservationCollection> = (ajaxGet = simpleGet) => ({
+  ajaxGet: AjaxGet<Star>
+) => (
+  props: {
+    id: number;
+    museumId: number;
+    token: string;
+    callback?: Callback<Star>;
+  }
+) => Observable<ConservationCollection> = (ajaxGet = simpleGet) => ({
   museumId,
   id,
   token,
@@ -55,13 +60,15 @@ export const getConservationById: (
 };
 
 export const saveConservationEvent: (
-  ajaxPost: AjaxPost<*>
-) => (props: {
-  museumId: number,
-  data: ConservationSave,
-  token: string,
-  callback?: Callback<*>
-}) => Observable<ConservationCollection> = (ajaxPost = simplePost) => ({
+  ajaxPost: AjaxPost<Star>
+) => (
+  props: {
+    museumId: number;
+    data: ConservationSave;
+    token: string;
+    callback?: Callback<Star>;
+  }
+) => Observable<ConservationCollection> = (ajaxPost = simplePost) => ({
   museumId,
   data,
   token,
@@ -72,14 +79,16 @@ export const saveConservationEvent: (
 };
 
 export const editConservationEvent: (
-  ajaxPut: AjaxPut<*>
-) => (props: {
-  id: number,
-  museumId: number,
-  data: ConservationSave,
-  token: string,
-  callback?: Callback<*>
-}) => Observable<ConservationCollection> = (ajaxPut = simplePut) => ({
+  ajaxPut: AjaxPut<Star>
+) => (
+  props: {
+    id: number;
+    museumId: number;
+    data: ConservationSave;
+    token: string;
+    callback?: Callback<Star>;
+  }
+) => Observable<ConservationCollection> = (ajaxPut = simplePut) => ({
   id,
   museumId,
   data,
@@ -93,92 +102,106 @@ export const editConservationEvent: (
 };
 
 export const deleteConservationEvent: (
-  ajaxDel: AjaxDel<*>
-) => (props: {
-  id: number,
-  museumId: number,
-  token: string,
-  callback?: Callback<*>
-}) => Observable<any> = (ajaxDel = simpleDel) => ({ id, museumId, token, callback }) => {
+  ajaxDel: AjaxDel<Star>
+) => (
+  props: {
+    id: number;
+    museumId: number;
+    token: string;
+    callback?: Callback<Star>;
+  }
+) => Observable<any> = (ajaxDel = simpleDel) => ({ id, museumId, token, callback }) => {
   const url = Config.magasin.urls.api.conservation.getDeleteSubEventUrl(museumId, id);
   return ajaxDel(url, token, callback).map(({ response }) => response);
 };
 
 export const getConservationTypes: (
-  ajaxGet: AjaxGet<*>
-) => (props: {
-  museumId: number,
-  token: string,
-  callback?: ?Callback<*>
-}) => Observable<Array<ConservationType>> = (ajaxGet = simpleGet) => ({
+  ajaxGet: AjaxGet<Star>
+) => (
+  props: {
+    museumId: number;
+    token: string;
+    callback?: Maybe<Callback<Star>>;
+  }
+) => Observable<Array<ConservationType>> = (ajaxGet = simpleGet) => ({
   museumId,
   token,
   callback
 }) => {
   const url = Config.magasin.urls.api.conservation.getAllConservationTypes(museumId);
-  return ajaxGet(url, token, callback).map(r => r.response);
+  return ajaxGet(url, token, callback as MUSTFIX).map(r => r.response);
 };
 
 export const getRoleList: (
-  ajaxGet: AjaxGet<*>
-) => (props: {
-  token: string,
-  callback?: ?Callback<*>
-}) => Observable<Array<ConservatonSubType>> = (ajaxGet = simpleGet) => ({
+  ajaxGet: AjaxGet<Star>
+) => (
+  props: {
+    token: string;
+    callback?: Maybe<Callback<Star>>;
+  }
+) => Observable<Array<ConservatonSubType>> = (ajaxGet = simpleGet) => ({
   token,
   callback
 }) => {
   const url = Config.magasin.urls.api.conservation.getRoleList;
-  return ajaxGet(url, token, callback).map(r => r.response);
+  return ajaxGet(url, token, callback as MUSTFIX).map(r => r.response);
 };
 
 export const getTreatmentMaterialList: (
-  ajaxGet: AjaxGet<*>
-) => (props: {
-  token: string,
-  callback?: ?Callback<*>
-}) => Observable<Array<ConservatonSubType>> = (ajaxGet = simpleGet) => ({
+  ajaxGet: AjaxGet<Star>
+) => (
+  props: {
+    token: string;
+    callback?: Maybe<Callback<Star>>;
+  }
+) => Observable<Array<ConservatonSubType>> = (ajaxGet = simpleGet) => ({
   token,
   callback
 }) => {
   const url = Config.magasin.urls.api.conservation.getTreatmentMaterialList;
-  return ajaxGet(url, token, callback).map(r => r.response);
+  return ajaxGet(url, token, callback as MUSTFIX).map(r => r.response);
 };
 
 export const getKeywordList: (
-  ajaxGet: AjaxGet<*>
-) => (props: {
-  token: string,
-  callback?: ?Callback<*>
-}) => Observable<Array<ConservatonSubType>> = (ajaxGet = simpleGet) => ({
+  ajaxGet: AjaxGet<Star>
+) => (
+  props: {
+    token: string;
+    callback?: Maybe<Callback<Star>>;
+  }
+) => Observable<Array<ConservatonSubType>> = (ajaxGet = simpleGet) => ({
   token,
   callback
 }) => {
   const url = Config.magasin.urls.api.conservation.getKeywordList;
-  return ajaxGet(url, token, callback).map(r => r.response);
+  return ajaxGet(url, token, callback as MUSTFIX).map(r => r.response);
 };
 
 export const getConditionCodeList: (
-  ajaxGet: AjaxGet<*>
-) => (props: {
-  token: string,
-  callback?: ?Callback<*>
-}) => Observable<Array<ConservatonSubType>> = (ajaxGet = simpleGet) => ({
+  ajaxGet: AjaxGet<Star>
+) => (
+  props: {
+    token: string;
+    callback?: Maybe<Callback<Star>>;
+  }
+) => Observable<Array<ConservatonSubType>> = (ajaxGet = simpleGet) => ({
   token,
   callback
 }) => {
   const url = Config.magasin.urls.api.conservation.getConditionCodeList;
-  return ajaxGet(url, token, callback).map(r => r.response);
+  return ajaxGet(url, token, callback as MUSTFIX).map(r => r.response);
 };
 
 export const getMaterialList: (
-  ajaxGet: AjaxGet<*>
-) => (props: {
-  museumId: number,
-  collectionId: string,
-  token: string,
-  callback?: ?Callback<*>
-}) => Observable<Array<ConservatonSubType>> = (ajaxGet = simpleGet) => ({
+  ajaxGet: AjaxGet<Star>
+) => (
+  props: {
+    museumId: number;
+    collectionId: string;
+    token: string;
+    callback?: Maybe<Callback<Star>>;
+  }
+) => Observable<Array<ConservatonSubType>> = (ajaxGet = simpleGet) => ({
   museumId,
   collectionId,
   token,
@@ -188,17 +211,19 @@ export const getMaterialList: (
     museumId,
     collectionId
   );
-  return ajaxGet(url, token, callback).map(r => r.response);
+  return ajaxGet(url, token, callback as MUSTFIX).map(r => r.response);
 };
 
 export const loadPredefinedConservationTypes: (
-  ajaxGet: AjaxGet<*>
-) => (props: {
-  museumId: number,
-  collectionId: string,
-  token: string,
-  onComplete: (predefinedTypes: mixed) => void
-}) => Observable<*> = (ajaxGet = simpleGet) => ({
+  ajaxGet: AjaxGet<Star>
+) => (
+  props: {
+    museumId: number;
+    collectionId: string;
+    token: string;
+    onComplete: (predefinedTypes: mixed) => void;
+  }
+) => Observable<Star> = (ajaxGet = simpleGet) => ({
   museumId,
   collectionId,
   token,
@@ -213,14 +238,16 @@ export const loadPredefinedConservationTypes: (
     getMaterialList(ajaxGet)({ museumId, collectionId, token })
   )
     .map(
-      ([
-        conservationTypes,
-        materialList,
-        keywordList,
-        roleList,
-        conditionCodeList,
-        materialDeterminationList
-      ]) => ({
+      (
+        [
+          conservationTypes,
+          materialList,
+          keywordList,
+          roleList,
+          conditionCodeList,
+          materialDeterminationList
+        ]
+      ) => ({
         conservationTypes: conservationTypes || [],
         materialList: materialList || [],
         keywordList: keywordList || [],
