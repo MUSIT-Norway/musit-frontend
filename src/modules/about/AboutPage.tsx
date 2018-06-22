@@ -1,13 +1,14 @@
-import React from 'react';
+import * as React from 'react';
 import { Grid, Row } from 'react-bootstrap';
 import './AboutPage.css';
 import { I18n } from 'react-i18nify';
-import NorwegianTranslation from './AboutPage_no.html.jsx';
-import EnglishTranslation from './AboutPage_en.html.jsx';
+import NorwegianTranslation from './AboutPage_no.html';
+import EnglishTranslation from './AboutPage_en.html';
 import Logos from '../../components/logos/Logos';
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
+import { TODO } from '../../types/common';
 
-export const AboutPage = props => {
+export const AboutPage = (props:TODO) => {
   const Translated =
     props.getLocale() === 'no' ? NorwegianTranslation : EnglishTranslation;
   return (

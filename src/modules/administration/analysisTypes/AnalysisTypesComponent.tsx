@@ -1,17 +1,19 @@
 // @flow
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
-import FontAwesome from 'react-fontawesome';
+import * as FontAwesome from 'react-fontawesome';
+import { TODO } from '../../../types/common';
 
-export type AnalysisType = { id: number, noName: string, collections: Array<string> };
+export type AnalysisType = { id: number; noName: string; collections: Array<string> };
 
 type Store = {
-  analysisTypes: Array<AnalysisType>
+  analysisTypes: Array<AnalysisType>;
 };
+/*Unused?
 type Props = {
-  store: Store
+  store: Store;
 };
+*/
 const collections = [
   '1d8dd4e6-1527-439c-ac86-fc315e0ce852',
   '2e4f2455-1b3b-4a04-80a1-ba92715ff613',
@@ -25,10 +27,10 @@ const collections = [
   '23ca0166-5f9e-44c2-ab0d-b4cdd704af07'
 ];
 
-const getCollectionName = n => I18n.t(`musit.userProfile.collections.${n}`);
+const getCollectionName = (n: TODO) => I18n.t(`musit.userProfile.collections.${n}`);
 
-const CheckBoxShow = (v, c) => (
-  <td key={c} value={c} style={{ textAlign: 'center' }}>
+const CheckBoxShow = (v: TODO, c: TODO) => (
+  <td key={c} style={{ textAlign: 'center' }}>
     <input type="checkbox" value="" checked={v} />
   </td>
 );
@@ -40,9 +42,9 @@ const CheckBoxShow = (v, c) => (
  * @param index
  * @returns {XML}
  */
-const getTableRow = (row, index) => {
+const getTableRow = (row: TODO, index: TODO) => {
   return (
-    <tr value={row.id} key={index}>
+    <tr key={index}>
       <td>{row.noName}</td>
       {collections.map(
         c => (row.collections.includes(c) ? CheckBoxShow(1, c) : CheckBoxShow(0, c))
@@ -62,7 +64,12 @@ const getObjectsValue = (store: Store) => {
     : [];
 };
 
-const AnalysisTypesComponent = (props: Props) => (
+interface AnalysisTypesComponentProps {
+  store: Store;
+  saveAnalysisType?: Function;
+}
+
+const AnalysisTypesComponent = (props: AnalysisTypesComponentProps) => (
   <div className="container">
     <div className="page-header">
       <h1>{I18n.t('musit.administration.analysisTypes.analysisTypes')}</h1>
@@ -96,10 +103,5 @@ const AnalysisTypesComponent = (props: Props) => (
     </table>
   </div>
 );
-
-AnalysisTypesComponent.propTypes = {
-  store: PropTypes.object.isRequired,
-  saveAnalysisType: PropTypes.func
-};
 
 export default AnalysisTypesComponent;

@@ -1,14 +1,14 @@
 // @flow
 import { RxInjectLegacy as inject } from '../../../shared/react-rxjs-patch/';
-import PropTypes from 'prop-types';
+import * as PropTypes from 'prop-types';
 import analysisTypesForm from './analysisTypesForm';
 import AnalysisTypesComponent from './AnalysisTypesComponent';
 import store$, { getAnalysisTypes$ } from './analysisTypesStore';
 import Analysis from '../../../models/analysis';
-import flowRight from 'lodash/flowRight';
+import {flowRight} from 'lodash';
 import lifeCycle from '../../../shared/lifeCycle';
 import { toPromise } from '../../../shared/util';
-import type { AppSession } from '../../../types/appSession';
+import { AppSession } from '../../../types/appSession';
 import { simplePost } from '../../../shared/RxAjax';
 
 const { form$, updateForm$, loadForm$ } = analysisTypesForm;

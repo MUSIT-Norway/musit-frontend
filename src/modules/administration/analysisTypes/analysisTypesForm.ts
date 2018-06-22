@@ -1,8 +1,9 @@
 // @flow
-import type { Field } from '../../../forms/form';
+import { Field } from '../../../forms/form';
 import createForm from '../../../forms/form';
 import { isNonEmptyArray, isRequired } from '../../../forms/validators';
 import { stringMapper, booleanMapper, noMapper } from '../../../forms/mappers';
+import { Star, MUSTFIX } from '../../../types/common';
 
 export const getStrField = (field: string, value: string = ''): Field<string> => ({
   name: field,
@@ -11,16 +12,16 @@ export const getStrField = (field: string, value: string = ''): Field<string> =>
   validator: {
     rawValidator: isRequired
   }
-});
+} as MUSTFIX);
 
 export const getBoolField = (field: string, value: boolean = false): Field<boolean> => ({
   name: field,
   defaultValue: value,
   mapper: booleanMapper,
   validator: {}
-});
+} as MUSTFIX);
 
-export const getArrField = (field: string, value: Array<*> = []): Field<Array<*>> => ({
+export const getArrField = (field: string, value: Array<Star> = []): Field<Array<Star>> => ({
   name: field,
   defaultValue: value,
   mapper: noMapper,
