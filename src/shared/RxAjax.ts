@@ -70,7 +70,7 @@ export function ajaxHelper<R, B>(
     responseType,
     method,
     body,
-    crossDomain: true,
+    crossDomain: token ? false : true,
 
     headers: token
       ? {
