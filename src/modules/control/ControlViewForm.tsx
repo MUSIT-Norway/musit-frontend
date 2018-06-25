@@ -1,20 +1,26 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from "react";
+import { Component } from "react";
+import * as PropTypes from "prop-types";
 import { Panel, FormGroup, Button, Col, Row } from 'react-bootstrap';
-import FontAwesome from 'react-fontawesome';
+import * as FontAwesome from 'react-fontawesome';
 import * as ObservationRender from '../observation/render';
 import { formatFloatToString } from './../../shared/util';
-import reduce from 'lodash/reduce';
-import keys from 'lodash/keys';
-import map from 'lodash/map';
+import { reduce, keys, map } from "lodash";
 import { I18n } from 'react-i18nify';
+import { TODO } from "../../types/common";
 
-export default class ControlView extends Component {
-  static propTypes = {
-    id: PropTypes.string.isRequired,
-    controlsJson: PropTypes.object
-  };
 
+interface ControlViewProps {
+  id: string;
+  controlsJson?: object;
+}
+/* Old:
+  id: PropTypes.string.isRequired,
+  controlsJson: PropTypes.object
+*/
+
+export default class ControlView extends Component<ControlViewProps> {
+  
   static iconMap = {
     alcohol: 'musitalcoholicon',
     cleaning: 'musitcleaningicon',
@@ -39,7 +45,7 @@ export default class ControlView extends Component {
     temperature: 'controlTemperature'
   };
 
-  constructor(props) {
+  constructor(props: ControlViewProps) {
     super(props);
     this.state = {
       alcohol: {
@@ -77,7 +83,7 @@ export default class ControlView extends Component {
     this.showObservation = this.showObservation.bind(this);
   }
 
-  observation(fontName, observationType) {
+  observation(fontName:string, observationType:string) {
     return (
       <Col xs={5} sm={5} md={5}>
         <span className={`icon icon-${fontName}`} style={{ fontSize: 'x-large' }} />
@@ -100,7 +106,7 @@ export default class ControlView extends Component {
     </Col>
   );
 
-  downButton(observationType, ok) {
+  downButton(observationType:string, ok:TODO) {
     return (
       <Col xs={1} sm={1}>
         <Button
@@ -118,7 +124,7 @@ export default class ControlView extends Component {
     );
   }
 
-  oneTableRow(control, eventType, index) {
+  oneTableRow(control:TODO, eventType:TODO, index:TODO) {
     return (
       <div key={index}>
         <Row style={{ top: '0', bottom: '0' }}>
@@ -138,13 +144,13 @@ export default class ControlView extends Component {
     );
   }
 
-  getControls(controls) {
+  getControls(controls:TODO) {
     const withIndexAndKey = map(keys({ ...controls }), (type, index) => {
       return { index, item: controls[type], type };
     });
     return reduce(
       withIndexAndKey,
-      (result, withIndex) => {
+      (result:TODO, withIndex) => {
         if (ControlView.typeMap[withIndex.type]) {
           result.push(this.oneTableRow(withIndex.item, withIndex.type, withIndex.index));
         }
@@ -154,7 +160,7 @@ export default class ControlView extends Component {
     );
   }
 
-  showObservation(control, controlType) {
+  showObservation(control:TODO, controlType:string) {
     let lv;
     const { ok } = control;
     if (!ok) {
@@ -290,7 +296,7 @@ export default class ControlView extends Component {
               disabled
               canEdit={false}
               valueProps={{
-                observations: observation.lifecycles.map(lc => {
+                observations: observation.lifecycles.map((lc:TODO) => {
                   return {
                     lifeCycle: lc.stage,
                     count: formatFloatToString(lc.quantity)

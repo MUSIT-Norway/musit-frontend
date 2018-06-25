@@ -16,7 +16,7 @@ interface BreadcrumbItemProps {
 }
 
 interface BreadcrumbProps {
-  onClickCrumb: Function;
+  onClickCrumb?: Function;
   node: TODO;
   disabled?: boolean;
   allActive?: boolean;
@@ -65,7 +65,9 @@ class Breadcrumb extends React.Component<BreadcrumbProps> {
   render() {
     const clickCrumb = (node: TODO) => (evt: TODO) => {
       evt.preventDefault();
-      this.props.onClickCrumb(node);
+      if (this.props.onClickCrumb) {
+        this.props.onClickCrumb(node);
+      }
       evt.stopPropagation();
     };
 

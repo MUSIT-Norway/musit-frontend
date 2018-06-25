@@ -1,6 +1,7 @@
-import React from 'react';
+import * as React from 'react';
+import { TODO } from '../../types/common';
 
-export default props => (
+export default (props: TODO) => (
   <div>
     <p>MUSIT - The University museums IT-organisation</p>
     <br />

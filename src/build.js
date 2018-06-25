@@ -17,7 +17,7 @@ type BackendInfo = {
   commitSha: string
 };
 
-function getBackendCommitSha(buildInfo: BackendInfo) {
+function getBackendCommitSha(buildInfo?: BackendInfo) {
   if (buildInfo && buildInfo.commitSha) {
     return buildInfo.commitSha;
   }
@@ -32,7 +32,7 @@ export function frontendVersion(): VersionInfo {
   return { sha: clientCommitSha };
 }
 
-export function backendVersion(buildInfo: BackendInfo): VersionInfo {
+export function backendVersion(buildInfo?: BackendInfo): VersionInfo {
   const sha = getBackendCommitSha(buildInfo);
   if (sha.length === 40) {
     const url = backendRepoUrl + '/commit/' + sha;

@@ -1,13 +1,27 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from "react";
+import { Component } from "react";
 import { Table, FormGroup } from 'react-bootstrap';
 import { parseISODate, DATE_FORMAT_DISPLAY } from '../../shared/util';
 import { I18n } from 'react-i18nify';
-import reduce from 'lodash/reduce';
-import keys from 'lodash/keys';
-import map from 'lodash/map';
+import { reduce, keys, map } from "lodash";
+import { TODO } from "../../types/common";
 
-export default class ObservationControlGrid extends Component {
+
+interface ObservationControlGridProps {
+  id: string;
+  showControl: Function;
+  showObservation: Function;
+  tableData: Array<{
+    id: string;
+    eventType: string;
+    doneDate: string;
+    doneBy: number | string;
+    registeredDate: string;
+    registeredBy: string;
+  }>;
+}
+
+/* Old:
   static propTypes = {
     id: PropTypes.string.isRequired,
     showControl: PropTypes.func.isRequired,
@@ -24,12 +38,16 @@ export default class ObservationControlGrid extends Component {
     )
   };
 
-  constructor(props) {
+*/
+
+export default class ObservationControlGrid extends Component<ObservationControlGridProps> {
+
+  constructor(props: ObservationControlGridProps) {
     super(props);
     this.getIcon = this.getIcon.bind(this);
   }
 
-  getIcon(ok, type, index) {
+  getIcon(ok:TODO, type:string, index: TODO) {
     switch (type) {
       case 'lightingCondition':
         return this.icon(ok, 'musitlightingcondicon', 'lightCondition', index);
@@ -61,7 +79,7 @@ export default class ObservationControlGrid extends Component {
     }
   }
 
-  icon(ok, name, tooltip, index) {
+  icon(ok:TODO, name:string, tooltip:string, index: TODO) {
     return (
       <span
         key={index}
@@ -97,7 +115,7 @@ export default class ObservationControlGrid extends Component {
                 );
                 const icons = reduce(
                   withIndexAndKey,
-                  (result, withIndex) => {
+                  (result:TODO[], withIndex) => {
                     if (withIndex.item) {
                       result.push(
                         this.getIcon(withIndex.item.ok, withIndex.type, withIndex.index)

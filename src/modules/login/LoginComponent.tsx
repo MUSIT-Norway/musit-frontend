@@ -1,6 +1,6 @@
 import './LoginComponent.css';
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { Grid, Row } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
 import NorwegianTranslation from './LoginComponent_no.html.jsx';
@@ -10,24 +10,38 @@ import LoginButton from './LoginButton';
 import TermsAndConditions from './TermsAndConditions';
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
 
-export class LoginComponent extends React.Component {
-  static propTypes = {
-    user: PropTypes.object
-  };
+interface LoginComponentProps {
+  user: object;
+  locale: () => 'no' | 'en';
+}
 
-  constructor(props) {
+interface LoginComponentState {
+  showModal: boolean;
+}
+
+/* Old:
+static propTypes = {
+  user: PropTypes.object
+};
+*/
+
+export class LoginComponent extends React.Component<
+  LoginComponentProps,
+  LoginComponentState
+> {
+  constructor(props: LoginComponentProps) {
     super(props);
     this.state = { showModal: false };
     this.showModal = this.showModal.bind(this);
     this.hideModal = this.hideModal.bind(this);
   }
 
-  showModal(e) {
+  showModal(e: Event) {
     e.preventDefault();
     this.setState(() => ({ showModal: true }));
   }
 
-  hideModal(e) {
+  hideModal(e: Event) {
     e.preventDefault();
     this.setState(() => ({ showModal: false }));
   }

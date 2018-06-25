@@ -16,8 +16,8 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { Grid, Row, Col, ControlLabel, Button } from 'react-bootstrap';
 import ControlView from './ControlViewForm';
 import { MusitField } from '../../components/formfields';
@@ -27,10 +27,28 @@ import { parseISODate, DATE_FORMAT_DISPLAY } from '../../shared/util';
 import { I18n } from 'react-i18nify';
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
 import store$, { getControl$, loadRootNode$ } from './controlStore';
-import Loader from 'react-loader';
+import * as Loader from 'react-loader';
+import { Match } from '../../types/Routes';
+import { TODO } from '../../types/common';
+import { AppSession } from '../../types/appSession';
 
-export class ControlViewContainer extends React.Component {
-  static propTypes = {
+
+
+interface ControlViewContainerProps {
+  controls: object;
+  getControl: Function;
+  match: Match<TODO>;
+  rootNode: object;
+  goBack: Function;
+
+  //Lagt til ved overgangen til TS
+  store: TODO;
+  appSession: AppSession;
+  loadRootNode: Function;
+}
+
+/* Old:
+ static propTypes = {
     controls: PropTypes.object,
     getControl: PropTypes.func.isRequired,
     match: PropTypes.object,
@@ -38,6 +56,10 @@ export class ControlViewContainer extends React.Component {
     goBack: PropTypes.func.isRequired
   };
 
+*/
+
+export class ControlViewContainer extends React.Component<ControlViewContainerProps> {
+ 
   componentWillMount() {
     const params = this.props.match.params || {};
     if (params.controlId) {
@@ -57,7 +79,7 @@ export class ControlViewContainer extends React.Component {
     }
   }
 
-  getDate(data, field) {
+  getDate(data: TODO[], field: TODO) {
     return data && data[field]
       ? parseISODate(data[field]).format(DATE_FORMAT_DISPLAY)
       : '';
@@ -129,7 +151,7 @@ export class ControlViewContainer extends React.Component {
                 style={{ textAlign: 'center', border: '12px', borderColor: 'red' }}
               >
                 <Col xs={10}>
-                  <Button onClick={this.props.goBack}>
+                  <Button onClick={this.props.goBack as TODO}>
                     {I18n.t('musit.texts.close')}
                   </Button>
                 </Col>
@@ -152,7 +174,7 @@ const commands = {
   loadRootNode$
 };
 
-const props = props => ({
+const props = (props:TODO)  => ({
   ...props,
   goBack: props.history.goBack
 });

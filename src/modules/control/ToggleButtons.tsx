@@ -1,18 +1,27 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import FontAwesome from 'react-fontawesome';
+import * as React from 'react';
+import * as FontAwesome from 'react-fontawesome';
 import { Button, Row, Col } from 'react-bootstrap';
 import './ToggleButtons.css';
 import { I18n } from 'react-i18nify';
+import { MUSTFIX } from '../../types/common';
 
-export default class ToogleButtons extends Component {
-  static propTypes = {
+interface ToggleButtonsProps {
+  label: string;
+  value: boolean;
+  updatevalueOK: Function;
+  updatevalueNotOK: Function;
+}
+
+/* Old:
     label: PropTypes.string.isRequired,
     value: PropTypes.bool,
     updatevalueOK: PropTypes.func.isRequired,
     updatevalueNotOK: PropTypes.func.isRequired
-  };
 
+
+*/
+
+export default class ToogleButtons extends React.Component<ToggleButtonsProps> {
   render() {
     const { label, value } = this.props;
 
@@ -36,7 +45,7 @@ export default class ToogleButtons extends Component {
           <Col xs={10}>
             <Button
               className={value ? 'buttonpaddingtrue' : 'buttonpaddingfalse'}
-              onClick={this.props.updatevalueOK}
+              onClick={this.props.updatevalueOK as MUSTFIX}
             >
               <FontAwesome name="check" />
               <span>&nbsp;</span>
@@ -46,7 +55,7 @@ export default class ToogleButtons extends Component {
               className={
                 value != null && !value ? 'buttonpaddingtrue' : 'buttonpaddingfalse'
               }
-              onClick={this.props.updatevalueNotOK}
+              onClick={this.props.updatevalueNotOK as MUSTFIX}
             >
               <FontAwesome name="times" />
               <span>&nbsp;</span>

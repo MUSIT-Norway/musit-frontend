@@ -1,11 +1,10 @@
 // @flow
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import {
   Grid,
   Row,
   Button,
-  form,
   FormGroup,
   FormControl,
   InputGroup,
@@ -13,12 +12,13 @@ import {
   Col
 } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
-import FontAwesome from 'react-fontawesome';
+import * as FontAwesome from 'react-fontawesome';
 import './index.css';
 import Config from '../../config';
 import Logos from '../../components/logos/Logos';
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
-import type { AppSession } from '../../types/appSession';
+import { AppSession } from '../../types/appSession';
+import { TODO } from '../../types/common';
 
 const reportURL = Config.magasin.urls.client.report.goToReport;
 const magasinURL = Config.magasin.urls.client.magasin.goToMagasin;
@@ -33,7 +33,7 @@ type Props = {
   goTo: (url: string) => void
 };
 
-const buttonAdd = (t, onClick) => (
+const buttonAdd = (t:TODO, onClick: TODO) => (
   <Button style={{ fontSize: '3.2em' }} className="button" onClick={onClick}>
     {t} <FontAwesome name="chevron-right" />
   </Button>
@@ -107,11 +107,11 @@ const data = {
   appSession$: { type: PropTypes.object.isRequired }
 };
 
-const props = props => ({
+const props = (props:TODO) => ({
   ...props,
   goToNotFound: () => props.history.push(notFoundURL),
   goToAbout: () => props.history.push(aboutURL),
-  goTo: url => () => props.history.push(url)
+  goTo: (url:string) => () => props.history.push(url)
 });
 
 export default inject(data, {}, props)(HomePage);

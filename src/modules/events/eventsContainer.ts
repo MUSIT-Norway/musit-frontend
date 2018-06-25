@@ -1,22 +1,24 @@
 import EventsComponent from './EventsComponent';
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
 import eventsStore$, {
-  loadAnalyses$,
+  //loadAnalyses$,
   getCurrentLocation$,
   setObject$,
-  clearStore$
+  //clearStore$
 } from './eventsStore.js';
-import flowRight from 'lodash/flowRight';
+import {flowRight} from 'lodash';
 import lifeCycle from '../../shared/lifeCycle';
-import PropTypes from 'prop-types';
+import * as PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
+import { TODO } from '../../types/common';
 
 const data = {
   appSession$: { type: PropTypes.instanceOf(Observable).isRequired },
   eventsStore$
 };
+const commands = { getCurrentLocation$, setObject$ };
 
-const commands = { loadAnalyses$, getCurrentLocation$, setObject$, clearStore$ };
+//#OLD const commands = { loadAnalyses$, getCurrentLocation$, setObject$, clearStore$ };
 
 export const onMount = ({
   appSession,
@@ -24,7 +26,7 @@ export const onMount = ({
   loadAnalyses,
   getCurrentLocation,
   setObject
-}) => {
+}:TODO) => {
   const museumId = appSession.museumId;
   const token = appSession.accessToken;
   const objectId = state.id;
@@ -33,7 +35,7 @@ export const onMount = ({
   getCurrentLocation({ museumId, token, objectId });
 };
 
-const onUnmount = props => {
+const onUnmount = (props:TODO) => {
   props.clearStore();
 };
 

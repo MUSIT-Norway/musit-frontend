@@ -1,10 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 import { Table, Tr, Td } from 'reactable';
 import { Row, Col } from 'react-bootstrap';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { I18n } from 'react-i18nify';
+import { TODO } from '../../types/common';
 
-export const EventsComponent = ({ eventsStore: { object, data, currentLocation } }) => (
+export const EventsComponent = ({ eventsStore: { object, data, currentLocation } }: TODO) => (
   <div>
     <h1>Hendelser</h1>
     <hr />
@@ -50,7 +51,7 @@ export const EventsComponent = ({ eventsStore: { object, data, currentLocation }
         defaultSort={{ column: 'eventDate', direction: 'desc' }}
         noDataText={I18n.t('musit.events.noDataForObject')}
       >
-        {data.map((event, i) => (
+        {data.map((event:TODO, i:TODO) => (
           <Tr key={i}>
             <Td column="id">{event.id}</Td>
             <Td column="eventDate">{event.eventDate}</Td>

@@ -1,22 +1,24 @@
 import { I18n } from 'react-i18nify';
 import 'react-select/dist/react-select.css';
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import { Component } from 'react';
+import * as PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Nav, Navbar, NavItem } from 'react-bootstrap';
-import FontAwesome from 'react-fontawesome';
+import * as FontAwesome from 'react-fontawesome';
 import MusitUserAccount from './components/UserAccount';
 import './AppComponent.css';
-import Logo from './musitLogo.png';
+import * as Logo from './musitLogo.png';
 import LoginComponent from '../login/LoginComponent';
 import { emitError } from '../../shared/errors';
-import Loader from 'react-loader';
+import * as Loader from 'react-loader';
 import {
   loadAppSession$,
   setCollectionId$,
   setMuseumId$,
-  setRolesForModules$
+  setRolesForModules$,
+  MusitMatch
 } from '../../stores/appSession';
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
 import {
@@ -25,14 +27,36 @@ import {
 } from '../../stores/pickList';
 import Config from '../../config';
 import { backendVersion, frontendVersion, VersionInfo } from '../../build';
-import featureToggles from '../../featureToggles';
-import classnames from 'classnames';
+import featureToggles, { FeatureToggles } from '../../featureToggles';
+import * as classnames from 'classnames';
 import env from '../../shared/environment';
 import { clear$ as clearSearchStore$ } from '../../search/searchStore';
+import { AppSession } from '../../types/appSession';
+import { PicklistData } from '../../types/picklist';
+import { TODO } from '../../types/common';
 
 const about = '/about';
-export class AppComponent extends Component {
-  static propTypes = {
+
+interface AppComponentProps {
+  children: object;
+  appSession: AppSession;
+  setMuseumId: Function;
+  setCollectionId: Function;
+  loadAppSession: Function;
+  setRolesForModules: Function;
+  pickList: PicklistData;
+  goTo: Function;
+  clearObjectPicklist: Function;
+  clearNodePicklist: Function;
+  featureToggles: FeatureToggles;
+  clearSearchStore: Function;
+  match: MusitMatch;
+
+  rootNode?: TODO;
+}
+
+/* Old:
+ static propTypes = {
     children: PropTypes.object.isRequired,
     appSession: PropTypes.object.isRequired,
     setMuseumId: PropTypes.func.isRequired,
@@ -47,7 +71,9 @@ export class AppComponent extends Component {
     clearSearchStore: PropTypes.func.isRequired
   };
 
-  constructor(props, context) {
+*/
+export class AppComponent extends Component<AppComponentProps> {
+  constructor(props: AppComponentProps, context: TODO) {
     super(props, context);
     this.handleLanguage = this.handleLanguage.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
@@ -75,17 +101,17 @@ export class AppComponent extends Component {
       .catch(error => emitError({ type: 'network', error }));
   }
 
-  handleLanguage(l) {
+  handleLanguage(l: TODO) {
     localStorage.setItem('language', l);
     window.location.reload(true);
   }
 
-  setMuseumCollectionId(museumId, collectionId) {
+  setMuseumCollectionId(museumId: TODO, collectionId: TODO) {
     localStorage.setItem('museumId', museumId);
     localStorage.setItem('collectionId', collectionId);
   }
 
-  handleMuseumId(museumId, collectionId) {
+  handleMuseumId(museumId: TODO, collectionId: TODO) {
     this.props.setMuseumId(museumId);
     this.props.setCollectionId(collectionId);
     this.props.setRolesForModules({
@@ -101,7 +127,7 @@ export class AppComponent extends Component {
     this.props.goTo(about);
   }
 
-  handleCollectionId(collectionId) {
+  handleCollectionId(collectionId: TODO) {
     this.props.setCollectionId(collectionId);
     this.props.setRolesForModules({
       email: this.props.appSession.actor.dataportenUser,
@@ -248,7 +274,10 @@ export class AppComponent extends Component {
   }
 }
 
-const props = props => ({ ...props, featureToggles: featureToggles });
+const props = (props: AppComponentProps) => ({
+  ...props,
+  featureToggles: featureToggles
+});
 
 const data = {
   appSession$: { type: PropTypes.object.isRequired },

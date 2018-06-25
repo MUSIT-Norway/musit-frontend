@@ -1,7 +1,8 @@
-import React from 'react';
+import * as React from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import { TODO } from '../../types/common';
 
-export default props => (
+export default (props:TODO) => (
   <Modal show={props.isVisible} onHide={props.hideModal}>
     <Modal.Header closeButton>
       <Modal.Title>Use of personal information in MUSITbasen</Modal.Title>

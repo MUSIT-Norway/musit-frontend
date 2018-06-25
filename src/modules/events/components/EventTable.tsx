@@ -1,37 +1,38 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { Table, Tr, Td } from 'reactable';
 import { I18n } from 'react-i18nify';
-import type { Event, Events } from '../../../types/events';
+import { Event, Events } from '../../../types/events';
 
-import type {
+import {
   AnalysisTypesObject,
   AnalysisTypes,
   AnalysisType
 } from '../../../types/analysis';
-import type { SampleTypesObject } from '../../../types/sample';
-import type { AppSession } from '../../../types/appSession';
+import { SampleTypesObject } from '../../../types/sample';
+import { AppSession } from '../../../types/appSession';
 import { getSampleType, getSampleSubType } from '../../sample/shared/types';
-import type { ConservationTypes } from '../../../types/conservation';
+import { ConservationTypes } from '../../../types/conservation';
+import { TODO, Maybe } from '../../../types/common';
 
 type EventTypeProps = {
-  events: Events,
-  onClick: Function,
-  analysisTypes: AnalysisTypesObject,
-  sampleTypes: SampleTypesObject,
-  conservationTypes?: ConservationTypes,
-  appSession: AppSession
+  events: Events;
+  onClick: Function;
+  analysisTypes: AnalysisTypesObject;
+  sampleTypes: SampleTypesObject;
+  conservationTypes?: ConservationTypes;
+  appSession: AppSession;
 };
 
 //TODO move it to utils
-function toPathStr(pathArr, crumb = 0) {
+function toPathStr(pathArr: TODO[], crumb = 0) {
   return pathArr
     .slice(crumb)
     .map(o => o.name)
     .join('  /  ');
 }
 
-function getPathDotsAndToolTip(pathArr) {
+function getPathDotsAndToolTip(pathArr: TODO[]) {
   return pathArr.length > 2 ? (
     <div title={toPathStr(pathArr)} data-toggle="popover" data-trigger="hover">
       {'.../' + toPathStr(pathArr, -3)}
@@ -45,7 +46,7 @@ function getKeyData(
   event: Event,
   analysisTypes: AnalysisTypes,
   sampleTypes: SampleTypesObject,
-  conservationTypes?: ConservationTypes,
+  //  conservationTypes?: ConservationTypes,
   appSession: AppSession
 ) {
   if (event.type) {
@@ -58,8 +59,8 @@ function getKeyData(
       (event.type === 'AnalysisCollection' || event.type === 'Analysis') &&
       analysisTypes
     ) {
-      const analysisTypeFound: ?AnalysisType = analysisTypes.find(
-        f => f.id && f.id === event.analysisTypeId
+      const analysisTypeFound = analysisTypes.find(
+        f => !!(f.id && f.id === event.analysisTypeId)
       );
       if (analysisTypeFound) {
         return appSession.language.isEn
@@ -92,7 +93,7 @@ export const EventTableComponent = ({
   onClick,
   analysisTypes,
   sampleTypes,
-  conservationTypes,
+  //conservationTypes,
   appSession
 }: EventTypeProps) => {
   return (
@@ -119,35 +120,43 @@ export const EventTableComponent = ({
           events.map((event, i) => (
             <Tr key={i} onClick={() => onClick(event)}>
               <Td column="doneDate">
-                {event.type && event.type === 'MoveObject'
-                  ? event.doneDate
-                  : event.registeredDate}
+                {event.type && event.type === 'MoveObject' ? (
+                  event.doneDate
+                ) : (
+                  event.registeredDate
+                )}
               </Td>
               <Td column="type">
-                {event.type
-                  ? I18n.t(`musit.objects.objectsView.eventTypes.${event.type}`)
-                  : ''}
+                {event.type ? (
+                  I18n.t(`musit.objects.objectsView.eventTypes.${event.type}`)
+                ) : (
+                  ''
+                )}
               </Td>
               <Td column="doneBy">
-                {event.type && event.type === 'MoveObject'
-                  ? event.doneBy
-                  : event.registeredBy}
+                {event.type && event.type === 'MoveObject' ? (
+                  event.doneBy
+                ) : (
+                  event.registeredBy
+                )}
               </Td>
               <Td column="keyData">
                 {getKeyData(
                   event,
                   analysisTypes.analysisTypes,
                   sampleTypes,
-                  conservationTypes,
+                  //                  conservationTypes,
                   appSession
                 )}
               </Td>
               <Td column="caseNumber">
-                {event.caseNumbers
-                  ? event.caseNumbers.join('; ')
-                  : event.caseNumber
-                    ? event.caseNumber
-                    : ''}
+                {event.caseNumbers ? (
+                  event.caseNumbers.join('; ')
+                ) : event.caseNumber ? (
+                  event.caseNumber
+                ) : (
+                  ''
+                )}
               </Td>
             </Tr>
           ))}
@@ -155,5 +164,5 @@ export const EventTableComponent = ({
     </div>
   );
 };
-EventTableComponent.displayName = 'EventTableComponent';
+(EventTableComponent as TODO).displayName = 'EventTableComponent';
 export default EventTableComponent;

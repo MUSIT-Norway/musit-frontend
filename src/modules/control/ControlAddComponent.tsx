@@ -16,8 +16,8 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { Grid, Row, Col, FormControl } from 'react-bootstrap';
 import PairedToogleButtons from './ToggleButtons';
 import DatePicker from '../../components/DatePicker';
@@ -37,11 +37,44 @@ import { I18n } from 'react-i18nify';
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
 import Control from '../../models/control';
 import store$, { loadRootNode$ } from './controlStore';
-import Loader from 'react-loader';
+import * as Loader from 'react-loader';
 import Config from '../../config';
+import { Actor } from '../../types/actor';
+import { TODO, MUSTFIX } from '../../types/common';
+import { AppSession } from '../../types/appSession';
+import { Match } from '../../types/Routes';
 
-export class ControlAddContainer extends React.Component {
-  static propTypes = {
+interface ControlAddContainerProps {
+  addControl: Function;
+  match: Match<TODO>;//Originally not required, but the code below assumed it present.
+  appSession: AppSession; //Originally not required, but the code below assumed it present.
+  envReqData?: object;
+  rootNode?: object;
+  goBack: Function; // PropTypes.func.isRequired
+  store: MUSTFIX;
+  loadRootNode: TODO;
+
+  editObservation: Function;
+
+  doneDate?: string; //?
+}
+interface ControlAddContainerState {
+  temperature?: string;
+  temperatureTolerance?: string;
+  relativeHumidity?: string;
+  relativeHumidityInterval?: string;
+  inertAir?: string;
+  inertAirInterval?: string;
+  light?: string;
+  cleaning?: string;
+  doneDate?: string;
+  doneBy?: Actor;
+
+  errors?: TODO;
+}
+
+/* Old:
+static propTypes = {
     addControl: PropTypes.func.isRequired,
     match: PropTypes.object,
     appSession: PropTypes.object,
@@ -50,7 +83,12 @@ export class ControlAddContainer extends React.Component {
     goBack: PropTypes.func.isRequired
   };
 
-  constructor(props) {
+*/
+export class ControlAddContainer extends React.Component<
+  ControlAddContainerProps,
+  ControlAddContainerState
+> {
+  constructor(props: ControlAddContainerProps) {
     super(props);
     this.onControlClick = this.onControlClick.bind(this);
     this.onControlClickOK = this.onControlClickOK.bind(this);
@@ -71,13 +109,13 @@ export class ControlAddContainer extends React.Component {
     }
   }
 
-  componentWillReceiveProps(next) {
+  componentWillReceiveProps(next: ControlAddContainerProps) {
     if (next.store.rootNode && !this.props.store.rootNode) {
       this.setStateBasedOnRootNode(next.store.rootNode);
     }
   }
 
-  setStateBasedOnRootNode(rootNode) {
+  setStateBasedOnRootNode(rootNode: TODO) {
     const requirement = rootNode.environmentRequirement;
     this.setState(() => ({
       temperature: requirement ? requirement.temperature : ' ',
@@ -93,7 +131,7 @@ export class ControlAddContainer extends React.Component {
     }));
   }
 
-  onControlClick(key, bool) {
+  onControlClick(key: TODO, bool: Boolean) {
     return () => {
       if (this.state[key] != null && this.state[key] === bool) {
         this.setState(ps => ({ ...ps, [key]: null }));
@@ -103,11 +141,11 @@ export class ControlAddContainer extends React.Component {
     };
   }
 
-  onControlClickOK(key) {
+  onControlClickOK(key: TODO) {
     return this.onControlClick(key, true);
   }
 
-  onControlClickNOK(key) {
+  onControlClickNOK(key: TODO) {
     return this.onControlClick(key, false);
   }
 
@@ -153,14 +191,14 @@ export class ControlAddContainer extends React.Component {
                 message: I18n.t('musit.newControl.saveControlSuccess')
               });
             },
-            onFailure: e => emitError({ ...e, type: 'network' })
+            onFailure: (e:TODO) => emitError({ ...e, type: 'network' })
           }
         })
         .toPromise();
     }
   }
 
-  setDate = newValue => {
+  setDate = (newValue?:string) => {
     if (newValue) {
       if (isDateBiggerThanToday(newValue)) {
         emitError({
@@ -174,9 +212,9 @@ export class ControlAddContainer extends React.Component {
     }
   };
 
-  handleSubmit(event) {
+  handleSubmit(event:TODO) {
     event.preventDefault();
-    const errors = [];
+    const errors:TODO[] = [];
     const controls = Object.keys(this.state).filter(
       k => k.endsWith('OK') && this.state[k] !== null
     );
@@ -201,7 +239,7 @@ export class ControlAddContainer extends React.Component {
       return <Loader loaded={false} />;
     }
     const breadcrumb = <Breadcrumb node={this.props.store.rootNode} disabled />;
-    const translate = k => I18n.t(k);
+    const translate = (k:TODO) => I18n.t(k);
 
     const fields = [
       {
@@ -233,8 +271,8 @@ export class ControlAddContainer extends React.Component {
       { key: 'pest' }
     ];
 
-    const renderReadOnly = e => {
-      const make = v => (
+    const renderReadOnly = (e:TODO) => {
+      const make = (v:TODO) => (
         <FormControl style={{ backgroundColor: '#f2f2f2' }} readOnly value={v} />
       );
 
@@ -278,13 +316,12 @@ export class ControlAddContainer extends React.Component {
                         <DatePicker
                           dateFormat={DATE_FORMAT_DISPLAY}
                           value={this.state.doneDate}
-                          onClear={newValue =>
+                          onClear={(newValue:TODO) =>
                             this.setState(ps => ({
                               ...ps,
                               doneDate: newValue
-                            }))
-                          }
-                          onChange={newValue => {
+                            }))}
+                          onChange={(newValue:TODO) => {
                             this.setDate(newValue);
                           }}
                         />
@@ -305,7 +342,7 @@ export class ControlAddContainer extends React.Component {
                         id="doneByField"
                         value={this.state.doneBy ? this.state.doneBy.fn : ''}
                         placeHolder="Find actor"
-                        onChange={newValue => {
+                        onChange={(newValue:TODO) => {
                           this.setState(ps => ({
                             ...ps,
                             doneBy: newValue
@@ -346,7 +383,7 @@ export class ControlAddContainer extends React.Component {
               })}
               <hr />
               {this.state.errors &&
-                this.state.errors.map((e, i) => {
+                this.state.errors.map((e:TODO, i:TODO) => {
                   return (
                     <center>
                       <span key={i} style={{ color: 'red' }}>
@@ -384,11 +421,11 @@ const commands = {
   loadRootNode$
 };
 
-const props = props => ({
+const props = (props:TODO) => ({
   ...props,
   addControl: Control.addControl(),
   goBack: props.history.goBack,
-  editObservation: (appSession, controlState) =>
+  editObservation: (appSession:AppSession, controlState:TODO) =>
     props.history.replace({
       pathname: Config.magasin.urls.client.storagefacility.editObservation(
         props.match.params.id,
