@@ -5,7 +5,7 @@ import eventsStore$, {
   getCurrentLocation$,
   setObject$,
   //clearStore$
-} from './eventsStore.js';
+} from './eventsStore';
 import {flowRight} from 'lodash';
 import lifeCycle from '../../shared/lifeCycle';
 import * as PropTypes from 'prop-types';

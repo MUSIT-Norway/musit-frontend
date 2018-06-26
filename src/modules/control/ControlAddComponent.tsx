@@ -46,7 +46,7 @@ import { Match } from '../../types/Routes';
 
 interface ControlAddContainerProps {
   addControl: Function;
-  match: Match<TODO>;//Originally not required, but the code below assumed it present.
+  match: Match<TODO>; //Originally not required, but the code below assumed it present.
   appSession: AppSession; //Originally not required, but the code below assumed it present.
   envReqData?: object;
   rootNode?: object;
@@ -191,14 +191,14 @@ export class ControlAddContainer extends React.Component<
                 message: I18n.t('musit.newControl.saveControlSuccess')
               });
             },
-            onFailure: (e:TODO) => emitError({ ...e, type: 'network' })
+            onFailure: (e: TODO) => emitError({ ...e, type: 'network' })
           }
         })
         .toPromise();
     }
   }
 
-  setDate = (newValue?:string) => {
+  setDate = (newValue?: string) => {
     if (newValue) {
       if (isDateBiggerThanToday(newValue)) {
         emitError({
@@ -212,9 +212,9 @@ export class ControlAddContainer extends React.Component<
     }
   };
 
-  handleSubmit(event:TODO) {
+  handleSubmit(event: TODO) {
     event.preventDefault();
-    const errors:TODO[] = [];
+    const errors: TODO[] = [];
     const controls = Object.keys(this.state).filter(
       k => k.endsWith('OK') && this.state[k] !== null
     );
@@ -239,7 +239,7 @@ export class ControlAddContainer extends React.Component<
       return <Loader loaded={false} />;
     }
     const breadcrumb = <Breadcrumb node={this.props.store.rootNode} disabled />;
-    const translate = (k:TODO) => I18n.t(k);
+    const translate = (k: TODO) => I18n.t(k);
 
     const fields = [
       {
@@ -271,8 +271,8 @@ export class ControlAddContainer extends React.Component<
       { key: 'pest' }
     ];
 
-    const renderReadOnly = (e:TODO) => {
-      const make = (v:TODO) => (
+    const renderReadOnly = (e: TODO) => {
+      const make = (v: TODO) => (
         <FormControl style={{ backgroundColor: '#f2f2f2' }} readOnly value={v} />
       );
 
@@ -316,12 +316,12 @@ export class ControlAddContainer extends React.Component<
                         <DatePicker
                           dateFormat={DATE_FORMAT_DISPLAY}
                           value={this.state.doneDate}
-                          onClear={(newValue:TODO) =>
+                          onClear={(newValue: TODO) =>
                             this.setState(ps => ({
                               ...ps,
                               doneDate: newValue
                             }))}
-                          onChange={(newValue:TODO) => {
+                          onChange={(newValue: TODO) => {
                             this.setDate(newValue);
                           }}
                         />
@@ -342,7 +342,7 @@ export class ControlAddContainer extends React.Component<
                         id="doneByField"
                         value={this.state.doneBy ? this.state.doneBy.fn : ''}
                         placeHolder="Find actor"
-                        onChange={(newValue:TODO) => {
+                        onChange={(newValue: TODO) => {
                           this.setState(ps => ({
                             ...ps,
                             doneBy: newValue
@@ -383,13 +383,13 @@ export class ControlAddContainer extends React.Component<
               })}
               <hr />
               {this.state.errors &&
-                this.state.errors.map((e:TODO, i:TODO) => {
+                this.state.errors.map((e: TODO, i: TODO) => {
                   return (
-                    <center>
+                    <div>
                       <span key={i} style={{ color: 'red' }}>
                         {e}
                       </span>
-                    </center>
+                    </div>
                   );
                 })}
               <hr />
@@ -421,11 +421,11 @@ const commands = {
   loadRootNode$
 };
 
-const props = (props:TODO) => ({
+const props = (props: TODO) => ({
   ...props,
   addControl: Control.addControl(),
   goBack: props.history.goBack,
-  editObservation: (appSession:AppSession, controlState:TODO) =>
+  editObservation: (appSession: AppSession, controlState: TODO) =>
     props.history.replace({
       pathname: Config.magasin.urls.client.storagefacility.editObservation(
         props.match.params.id,

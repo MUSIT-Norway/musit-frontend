@@ -1,14 +1,12 @@
-import * as React from "react";
-import { Component } from "react";
-import * as PropTypes from "prop-types";
+import * as React from 'react';
+import { Component } from 'react';
 import { Panel, FormGroup, Button, Col, Row } from 'react-bootstrap';
 import * as FontAwesome from 'react-fontawesome';
 import * as ObservationRender from '../observation/render';
 import { formatFloatToString } from './../../shared/util';
-import { reduce, keys, map } from "lodash";
+import { reduce, keys, map } from 'lodash';
 import { I18n } from 'react-i18nify';
-import { TODO } from "../../types/common";
-
+import { TODO } from '../../types/common';
 
 interface ControlViewProps {
   id: string;
@@ -20,7 +18,6 @@ interface ControlViewProps {
 */
 
 export default class ControlView extends Component<ControlViewProps> {
-  
   static iconMap = {
     alcohol: 'musitalcoholicon',
     cleaning: 'musitcleaningicon',
@@ -83,7 +80,7 @@ export default class ControlView extends Component<ControlViewProps> {
     this.showObservation = this.showObservation.bind(this);
   }
 
-  observation(fontName:string, observationType:string) {
+  observation(fontName: string, observationType: string) {
     return (
       <Col xs={5} sm={5} md={5}>
         <span className={`icon icon-${fontName}`} style={{ fontSize: 'x-large' }} />
@@ -106,7 +103,7 @@ export default class ControlView extends Component<ControlViewProps> {
     </Col>
   );
 
-  downButton(observationType:string, ok:TODO) {
+  downButton(observationType: string, ok: TODO) {
     return (
       <Col xs={1} sm={1}>
         <Button
@@ -114,8 +111,7 @@ export default class ControlView extends Component<ControlViewProps> {
           onClick={() =>
             this.setState(() => ({
               [observationType]: { open: !this.state[observationType].open }
-            }))
-          }
+            }))}
           bsStyle="link"
         >
           {ok ? null : <FontAwesome name="sort-desc" style={{ fontSize: 'x-large' }} />}
@@ -124,7 +120,7 @@ export default class ControlView extends Component<ControlViewProps> {
     );
   }
 
-  oneTableRow(control:TODO, eventType:TODO, index:TODO) {
+  oneTableRow(control: TODO, eventType: TODO, index: TODO) {
     return (
       <div key={index}>
         <Row style={{ top: '0', bottom: '0' }}>
@@ -144,13 +140,13 @@ export default class ControlView extends Component<ControlViewProps> {
     );
   }
 
-  getControls(controls:TODO) {
+  getControls(controls: TODO) {
     const withIndexAndKey = map(keys({ ...controls }), (type, index) => {
       return { index, item: controls[type], type };
     });
     return reduce(
       withIndexAndKey,
-      (result:TODO, withIndex) => {
+      (result: TODO, withIndex) => {
         if (ControlView.typeMap[withIndex.type]) {
           result.push(this.oneTableRow(withIndex.item, withIndex.type, withIndex.index));
         }
@@ -160,7 +156,7 @@ export default class ControlView extends Component<ControlViewProps> {
     );
   }
 
-  showObservation(control:TODO, controlType:string) {
+  showObservation(control: TODO, controlType: string) {
     let lv;
     const { ok } = control;
     if (!ok) {
@@ -296,7 +292,7 @@ export default class ControlView extends Component<ControlViewProps> {
               disabled
               canEdit={false}
               valueProps={{
-                observations: observation.lifecycles.map((lc:TODO) => {
+                observations: observation.lifecycles.map((lc: TODO) => {
                   return {
                     lifeCycle: lc.stage,
                     count: formatFloatToString(lc.quantity)

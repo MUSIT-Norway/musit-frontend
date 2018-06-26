@@ -1,10 +1,9 @@
 import './LoginComponent.css';
 import * as React from 'react';
-import * as PropTypes from 'prop-types';
 import { Grid, Row } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
-import NorwegianTranslation from './LoginComponent_no.html.jsx';
-import EnglishTranslation from './LoginComponent_en.html.jsx';
+import NorwegianTranslation from './LoginComponent_no.html';
+import EnglishTranslation from './LoginComponent_en.html';
 import Logos from '../../components/logos/Logos';
 import LoginButton from './LoginButton';
 import TermsAndConditions from './TermsAndConditions';

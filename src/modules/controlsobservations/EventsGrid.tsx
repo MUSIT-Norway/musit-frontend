@@ -76,6 +76,7 @@ export default class ObservationControlGrid extends Component<ObservationControl
       case 'perimeterSecurity':
         return this.icon(ok, 'musitperimetersecurityicon', 'skallsikring', index);
       default:
+        return undefined;
     }
   }
 

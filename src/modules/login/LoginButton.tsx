@@ -1,6 +1,5 @@
-import * as React from "react";
-import * as PropTypes from "prop-types";
-import { Button } from "react-bootstrap";
+import * as React from 'react';
+import { Button } from 'react-bootstrap';
 
 interface LoginButtonProps {
   children?: JSX.Element;
@@ -15,9 +14,8 @@ interface LoginButtonProps {
 */
 
 export default class LoginButton extends React.Component<LoginButtonProps> {
-  
   static defaultProps = {
-    navigate: (url:string) => (window.location.href = url)
+    navigate: (url: string) => (window.location.href = url)
   };
 
   render() {
@@ -25,9 +23,11 @@ export default class LoginButton extends React.Component<LoginButtonProps> {
       <Button
         className="loginButton"
         bsStyle="default"
-        style={{ marginTop: "1em" }}
+        style={{ marginTop: '1em' }}
         height="20"
-        onClick={() => this.props.navigate && this.props.navigate("/api/auth/rest/authenticate")}
+        onClick={() =>
+          this.props.navigate && this.props.navigate('/api/auth/rest/authenticate')
+        }
       >
         {this.props.children}
       </Button>

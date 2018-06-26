@@ -9,8 +9,6 @@ describe('LeftMenu', () => {
       <LeftMenu
         id="1"
         translate={key => key}
-        selectObservation={key => key}
-        selectControl={key => key}
         onClickNewObservation={key => key}
         onClickNewControl={key => key}
         onClickSelectObservation={key => key}

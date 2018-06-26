@@ -1,19 +1,14 @@
 // @flow
 import * as React from 'react';
-import { Table, Tr, Td } from 'reactable';
 import { I18n } from 'react-i18nify';
 import { Event, Events } from '../../../types/events';
-
-import {
-  AnalysisTypesObject,
-  AnalysisTypes,
-  AnalysisType
-} from '../../../types/analysis';
+import { AnalysisTypesObject, AnalysisTypes } from '../../../types/analysis';
 import { SampleTypesObject } from '../../../types/sample';
 import { AppSession } from '../../../types/appSession';
 import { getSampleType, getSampleSubType } from '../../sample/shared/types';
 import { ConservationTypes } from '../../../types/conservation';
-import { TODO, Maybe } from '../../../types/common';
+import { TODO, MUSTFIX } from '../../../types/common';
+import { Table, Tr, Td } from 'reactable';
 
 type EventTypeProps = {
   events: Events;
@@ -120,25 +115,19 @@ export const EventTableComponent = ({
           events.map((event, i) => (
             <Tr key={i} onClick={() => onClick(event)}>
               <Td column="doneDate">
-                {event.type && event.type === 'MoveObject' ? (
-                  event.doneDate
-                ) : (
-                  event.registeredDate
-                )}
+                {event.type && event.type === 'MoveObject'
+                  ? event.doneDate
+                  : event.registeredDate}
               </Td>
               <Td column="type">
-                {event.type ? (
-                  I18n.t(`musit.objects.objectsView.eventTypes.${event.type}`)
-                ) : (
-                  ''
-                )}
+                {event.type
+                  ? I18n.t(`musit.objects.objectsView.eventTypes.${event.type}`)
+                  : ''}
               </Td>
               <Td column="doneBy">
-                {event.type && event.type === 'MoveObject' ? (
-                  event.doneBy
-                ) : (
-                  event.registeredBy
-                )}
+                {event.type && event.type === 'MoveObject'
+                  ? event.doneBy
+                  : event.registeredBy}
               </Td>
               <Td column="keyData">
                 {getKeyData(
@@ -150,13 +139,11 @@ export const EventTableComponent = ({
                 )}
               </Td>
               <Td column="caseNumber">
-                {event.caseNumbers ? (
-                  event.caseNumbers.join('; ')
-                ) : event.caseNumber ? (
-                  event.caseNumber
-                ) : (
-                  ''
-                )}
+                {event.caseNumbers
+                  ? event.caseNumbers.join('; ')
+                  : (event as MUSTFIX).caseNumber
+                    ? (event as MUSTFIX).caseNumber
+                    : ''}
               </Td>
             </Tr>
           ))}
