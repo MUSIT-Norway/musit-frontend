@@ -320,7 +320,8 @@ export class ControlAddContainer extends React.Component<
                             this.setState(ps => ({
                               ...ps,
                               doneDate: newValue
-                            }))}
+                            }))
+                          }
                           onChange={(newValue: TODO) => {
                             this.setDate(newValue);
                           }}

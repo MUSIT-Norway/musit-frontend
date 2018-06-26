@@ -14,6 +14,3 @@ interface ObjectConstructor {
   values<T>(o: { [s: string]: T }): T[];
   values(o: any): any[];
 }
-
-
-

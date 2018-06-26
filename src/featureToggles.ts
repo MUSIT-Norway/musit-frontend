@@ -1,9 +1,9 @@
 // @flow
 
-import {pick} from 'lodash';
+import { pick } from 'lodash';
 
 export type FeatureToggles = {
-  administrationPage: boolean
+  administrationPage: boolean;
 };
 
 const featureToggles: FeatureToggles = {

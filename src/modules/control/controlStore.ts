@@ -11,11 +11,14 @@ export const getControl$ = createAction('getControl$').switchMap(Control.getCont
 
 export const initialState = {};
 
-export const reducer$ = (actions:TODO) =>
+export const reducer$ = (actions: TODO) =>
   Observable.merge(
     actions.clear$.map(() => () => initialState),
-    actions.loadRootNode$.map((rootNode:TODO) => (state:TODO) => ({ ...state, rootNode })),
-    actions.getControl$.map((data:TODO) => (state:TODO) => ({ ...state, data }))
+    actions.loadRootNode$.map((rootNode: TODO) => (state: TODO) => ({
+      ...state,
+      rootNode
+    })),
+    actions.getControl$.map((data: TODO) => (state: TODO) => ({ ...state, data }))
   );
 
 export const store$ = (actions$ = { clear$, loadRootNode$, getControl$ }) =>

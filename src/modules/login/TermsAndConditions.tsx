@@ -4,13 +4,12 @@ import NorwegianTranslation from './TermsAndConditions_no.html';
 import EnglishTranslation from './TermsAndConditions_en.html';
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
 
-
 interface TermsAndConditionsProps {
   isVisible: boolean;
   hideModal: boolean;
-  locale: () => "no" |"en";
+  locale: () => 'no' | 'en';
 }
-export const TermsAndConditions = (props:TermsAndConditionsProps) => {
+export const TermsAndConditions = (props: TermsAndConditionsProps) => {
   const Translated = props.locale() === 'no' ? NorwegianTranslation : EnglishTranslation;
   return <Translated {...props} />;
 };

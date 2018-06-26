@@ -8,7 +8,7 @@ import Logos from '../../components/logos/Logos';
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
 import { TODO } from '../../types/common';
 
-export const AboutPage = (props:TODO) => {
+export const AboutPage = (props: TODO) => {
   const Translated =
     props.getLocale() === 'no' ? NorwegianTranslation : EnglishTranslation;
   return (

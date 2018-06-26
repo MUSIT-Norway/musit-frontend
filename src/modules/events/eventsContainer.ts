@@ -1,12 +1,12 @@
 import EventsComponent from './EventsComponent';
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
 import eventsStore$, {
-  //loadAnalyses$,
+//loadAnalyses$,
   getCurrentLocation$,
-  setObject$,
+  setObject$
   //clearStore$
 } from './eventsStore';
-import {flowRight} from 'lodash';
+import { flowRight } from 'lodash';
 import lifeCycle from '../../shared/lifeCycle';
 import * as PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
@@ -26,7 +26,7 @@ export const onMount = ({
   loadAnalyses,
   getCurrentLocation,
   setObject
-}:TODO) => {
+}: TODO) => {
   const museumId = appSession.museumId;
   const token = appSession.accessToken;
   const objectId = state.id;
@@ -35,7 +35,7 @@ export const onMount = ({
   getCurrentLocation({ museumId, token, objectId });
 };
 
-const onUnmount = (props:TODO) => {
+const onUnmount = (props: TODO) => {
   props.clearStore();
 };
 

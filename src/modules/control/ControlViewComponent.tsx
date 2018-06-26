@@ -32,8 +32,6 @@ import { Match } from '../../types/Routes';
 import { TODO } from '../../types/common';
 import { AppSession } from '../../types/appSession';
 
-
-
 interface ControlViewContainerProps {
   controls: object;
   getControl: Function;
@@ -59,7 +57,6 @@ interface ControlViewContainerProps {
 */
 
 export class ControlViewContainer extends React.Component<ControlViewContainerProps> {
- 
   componentWillMount() {
     const params = this.props.match.params || {};
     if (params.controlId) {
@@ -174,7 +171,7 @@ const commands = {
   loadRootNode$
 };
 
-const props = (props:TODO)  => ({
+const props = (props: TODO) => ({
   ...props,
   goBack: props.history.goBack
 });

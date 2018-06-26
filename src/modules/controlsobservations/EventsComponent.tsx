@@ -13,8 +13,7 @@ import Config from '../../config';
 import { AppSession } from '../../types/appSession';
 import { TODO } from '../../types/common';
 import { Match } from '../../types/Routes';
-import { History } from "history";
-
+import { History } from 'history';
 
 interface EventsComponentProps {
   appSession: AppSession;
@@ -95,12 +94,14 @@ export class EventsComponent extends React.Component<
           this.setState(ps => ({
             ...ps,
             showControls: !this.state.showControls
-          }))}
+          }))
+        }
         clickShowLeft={() =>
           this.setState(ps => ({
             ...ps,
             showObservations: !this.state.showObservations
-          }))}
+          }))
+        }
       />
     );
   }
@@ -112,7 +113,7 @@ export class EventsComponent extends React.Component<
       <div style={{ paddingTop: 10 }}>
         {appSession.rolesForModules.storageFacilityWrite && (
           <EventsLeftMenu
-             id={nodeId} 
+            id={nodeId}
             //??? selectObservation
             //??? selectControl
             onClickNewObservation={() =>
@@ -121,11 +122,13 @@ export class EventsComponent extends React.Component<
                   nodeId,
                   appSession
                 )
-              )}
+              )
+            }
             onClickNewControl={() =>
               historyPush(
                 Config.magasin.urls.client.storagefacility.addControl(nodeId, appSession)
-              )}
+              )
+            }
           />
         )}
       </div>
@@ -165,7 +168,8 @@ export class EventsComponent extends React.Component<
               ctl.id,
               appSession
             )
-          )}
+          )
+        }
         showObservation={(obs: TODO) =>
           historyPush(
             Config.magasin.urls.client.storagefacility.viewObservation(
@@ -173,7 +177,8 @@ export class EventsComponent extends React.Component<
               obs.id,
               appSession
             )
-          )}
+          )
+        }
         tableData={filtered}
       />
     );

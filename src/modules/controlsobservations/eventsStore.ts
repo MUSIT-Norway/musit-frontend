@@ -12,28 +12,27 @@ import { TODO } from '../../types/common';
 export const loadEvents = ({ simpleGet, simplePost }: TODO) => (props: TODO) => {
   const controls$ = Control.loadControls(simpleGet)(props);
   const observations$ = Observation.loadObservations(simpleGet)(props);
-  return Observable.forkJoin(
-    controls$,
-    observations$
-  ).flatMap(([controls, observations]) => {
-    const events = orderBy(
-      concat(controls, observations),
-      ['doneDate', 'id'],
-      ['desc', 'desc']
-    );
-    const actorIds = uniq(flatten(events.map(r => [r.doneBy, r.registeredBy]))).filter(
-      p => p
-    );
-    return MusitActor.getActors(simplePost)({
-      actorIds,
-      token: props.token
-    } as TODO).map(actors =>
-      events.map(data => ({
-        ...data,
-        ...MusitActor.getActorNames(actors || [], data.doneBy, data.registeredBy)
-      }))
-    );
-  });
+  return Observable.forkJoin(controls$, observations$).flatMap(
+    ([controls, observations]) => {
+      const events = orderBy(
+        concat(controls, observations),
+        ['doneDate', 'id'],
+        ['desc', 'desc']
+      );
+      const actorIds = uniq(flatten(events.map(r => [r.doneBy, r.registeredBy]))).filter(
+        p => p
+      );
+      return MusitActor.getActors(simplePost)({
+        actorIds,
+        token: props.token
+      } as TODO).map(actors =>
+        events.map(data => ({
+          ...data,
+          ...MusitActor.getActorNames(actors || [], data.doneBy, data.registeredBy)
+        }))
+      );
+    }
+  );
 };
 
 export const clearEvents$ = createAction('clearEvents$');

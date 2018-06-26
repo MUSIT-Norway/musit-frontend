@@ -1,11 +1,10 @@
-import * as React from "react";
-import { Component } from "react";
+import * as React from 'react';
+import { Component } from 'react';
 import { Table, FormGroup } from 'react-bootstrap';
 import { parseISODate, DATE_FORMAT_DISPLAY } from '../../shared/util';
 import { I18n } from 'react-i18nify';
-import { reduce, keys, map } from "lodash";
-import { TODO } from "../../types/common";
-
+import { reduce, keys, map } from 'lodash';
+import { TODO } from '../../types/common';
 
 interface ObservationControlGridProps {
   id: string;
@@ -40,14 +39,15 @@ interface ObservationControlGridProps {
 
 */
 
-export default class ObservationControlGrid extends Component<ObservationControlGridProps> {
-
+export default class ObservationControlGrid extends Component<
+  ObservationControlGridProps
+> {
   constructor(props: ObservationControlGridProps) {
     super(props);
     this.getIcon = this.getIcon.bind(this);
   }
 
-  getIcon(ok:TODO, type:string, index: TODO) {
+  getIcon(ok: TODO, type: string, index: TODO) {
     switch (type) {
       case 'lightingCondition':
         return this.icon(ok, 'musitlightingcondicon', 'lightCondition', index);
@@ -80,7 +80,7 @@ export default class ObservationControlGrid extends Component<ObservationControl
     }
   }
 
-  icon(ok:TODO, name:string, tooltip:string, index: TODO) {
+  icon(ok: TODO, name: string, tooltip: string, index: TODO) {
     return (
       <span
         key={index}
@@ -116,7 +116,7 @@ export default class ObservationControlGrid extends Component<ObservationControl
                 );
                 const icons = reduce(
                   withIndexAndKey,
-                  (result:TODO[], withIndex) => {
+                  (result: TODO[], withIndex) => {
                     if (withIndex.item) {
                       result.push(
                         this.getIcon(withIndex.item.ok, withIndex.type, withIndex.index)

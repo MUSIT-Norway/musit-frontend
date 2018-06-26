@@ -5,7 +5,9 @@ import Breadcrumb from '../../components/layout/Breadcrumb';
 import { I18n } from 'react-i18nify';
 import { TODO } from '../../types/common';
 
-export const EventsComponent = ({ eventsStore: { object, data, currentLocation } }: TODO) => (
+export const EventsComponent = ({
+  eventsStore: { object, data, currentLocation }
+}: TODO) => (
   <div>
     <h1>Hendelser</h1>
     <hr />
@@ -51,7 +53,7 @@ export const EventsComponent = ({ eventsStore: { object, data, currentLocation }
         defaultSort={{ column: 'eventDate', direction: 'desc' }}
         noDataText={I18n.t('musit.events.noDataForObject')}
       >
-        {data.map((event:TODO, i:TODO) => (
+        {data.map((event: TODO, i: TODO) => (
           <Tr key={i}>
             <Td column="id">{event.id}</Td>
             <Td column="eventDate">{event.eventDate}</Td>

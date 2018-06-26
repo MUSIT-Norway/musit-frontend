@@ -1,15 +1,15 @@
 // @flow
-import * as React from "react";
-import * as PropTypes from "prop-types";
-import { I18n } from "react-i18nify";
-import Config from "../../config";
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
+import { I18n } from 'react-i18nify';
+import Config from '../../config';
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
-import { AppSession } from "../../types/appSession";
-import { History } from "history";
+import { AppSession } from '../../types/appSession';
+import { History } from 'history';
 
 type Props = {
-  appSession: AppSession,
-  history: History
+  appSession: AppSession;
+  history: History;
 };
 
 const administrations = [

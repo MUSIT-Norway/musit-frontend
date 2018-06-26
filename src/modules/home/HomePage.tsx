@@ -27,13 +27,13 @@ const aboutURL = '/about';
 const notFoundURL = '/notfound';
 
 type Props = {
-  appSession: AppSession,
-  goToNotFound: () => void,
-  goToAbout: () => void,
-  goTo: (url: string) => void
+  appSession: AppSession;
+  goToNotFound: () => void;
+  goToAbout: () => void;
+  goTo: (url: string) => void;
 };
 
-const buttonAdd = (t:TODO, onClick: TODO) => (
+const buttonAdd = (t: TODO, onClick: TODO) => (
   <Button style={{ fontSize: '3.2em' }} className="button" onClick={onClick}>
     {t} <FontAwesome name="chevron-right" />
   </Button>
@@ -107,11 +107,11 @@ const data = {
   appSession$: { type: PropTypes.object.isRequired }
 };
 
-const props = (props:TODO) => ({
+const props = (props: TODO) => ({
   ...props,
   goToNotFound: () => props.history.push(notFoundURL),
   goToAbout: () => props.history.push(aboutURL),
-  goTo: (url:string) => () => props.history.push(url)
+  goTo: (url: string) => () => props.history.push(url)
 });
 
 export default inject(data, {}, props)(HomePage);
