@@ -8,7 +8,7 @@ type TaxonNameState = {
   taxonSuggestion?: ScientificName;
   taxonName: string;
   presicionType?: 'C' | 'A';
-  taxonCathegory?: 'VA' | 'SS' | 'SP' | 'GE';
+  taxonCategory?: 'VA' | 'SS' | 'SP' | 'GE';
 };
 
 type TaxonEditingState = {
@@ -273,10 +273,10 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
           </div>
           <div className="col-md-3">
             <div className="form-group">
-              <label htmlFor="taxonCathegory">Count</label>
+              <label htmlFor="taxonCategory">Count</label>
 
               <input
-                id="taxonCathegory"
+                id="taxonCategory"
                 className="form-control"
                 value={
                   this.props.sexAndStages &&
@@ -350,7 +350,7 @@ class TaxonTable extends React.Component<TaxonProps> {
       });
 
       const name = names.reduce((pr: string, cur: { rank: string; name: string }) => {
-        const uncert = cur.rank === c.taxonCathegory ? ' ' + c.presicionType + ' ' : ' ';
+        const uncert = cur.rank === c.taxonCategory ? ' ' + c.presicionType + ' ' : ' ';
         const currRank = c.taxonSuggestion ? c.taxonSuggestion.taxonRank : '';
         const rankf = (rank: string) => {
           if (rank === 'subspecies') {
@@ -413,7 +413,7 @@ class TaxonTable extends React.Component<TaxonProps> {
                               : ''}
                           </td>
                           <td>{t.presicionType}</td>
-                          <td>{t.taxonCathegory}</td>
+                          <td>{t.taxonCategory}</td>
                         </tr>
                       );
                     })}
@@ -467,19 +467,17 @@ class TaxonTable extends React.Component<TaxonProps> {
           </div>
           <div className="col-md-2">
             <div className="form-group">
-              <label htmlFor="taxonCathegory">Taxon cathegory</label>
+              <label htmlFor="taxonCategory">Taxon Category</label>
 
               <select
-                id="taxonCathegory"
+                id="taxonCategory"
                 className="form-control"
-                value={
-                  this.props.taxonNames[this.props.editingIndex].taxonCathegory || ''
-                }
+                value={this.props.taxonNames[this.props.editingIndex].taxonCategory || ''}
                 onChange={e => {
                   e.preventDefault();
-                  this.props.onChangeTaxonField(this.props.editingIndex)(
-                    'taxonCathegory'
-                  )(e.target.value);
+                  this.props.onChangeTaxonField(this.props.editingIndex)('taxonCategory')(
+                    e.target.value
+                  );
                 }}
               >
                 <option>Velg type</option>
@@ -932,7 +930,7 @@ export default class ClassificationComponent extends React.Component<
                       {
                         taxonName: '',
                         presicionType: undefined,
-                        taxonCathegory: undefined,
+                        taxonCategory: undefined,
                         infraspesName: undefined
                       }
                     ];
