@@ -17,6 +17,7 @@ interface TaxonSuggestComponentProps {
   disabled?: boolean;
   clear?: Function;
   appSession: AppSession;
+  renderFunc: Function;
 }
 
 /* Old:
@@ -97,15 +98,14 @@ export class TaxonSuggestComponent extends React.Component<
         onSuggestionsClearRequested={() => this.setState(() => ({ suggestions: [] }))}
         getSuggestionValue={(suggestion: TaxonSuggestion) => suggestion.scientificName}
         renderSuggestion={(suggestion: TaxonSuggestion) => (
-          <span className={'suggestion-content'}>{`${suggestion.scientificName} ${
-            suggestion.scientificNameAuthorship != null
-              ? suggestion.scientificNameAuthorship
-              : ''
+          <span className={'suggestion-content'}>
+            {`${this.props.renderFunc(suggestion)}
           } ${
             suggestion.acceptedNameUsage != null
-              ? '[=' + suggestion.acceptedNameUsage.scientificName + ']'
+              ? '[=' + this.props.renderFunc(suggestion.acceptedNameUsage) + ']'
               : ''
-          } `}</span>
+          } `}
+          </span>
         )}
         inputProps={{
           ...(this.TaxonProps as TODO),

@@ -81,6 +81,7 @@ type SexAndLifeStageProps = SexAndLifeStageState & {
   onChangeNoteField: (value: string) => void;
   onAddSexAndLifeStage: () => void;
   setEditingIndex: (i: number) => void;
+  onDelete: (i: number) => void;
   onChangeSexAndLifeStageField: (
     index: number
   ) => (fieldName: string) => (value: string) => void;
@@ -202,7 +203,8 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
                   <th>Sex</th>
                   <th> Stage</th>
                   <th> Count</th>
-                  <th> Estimated count</th>{' '}
+                  <th> Estimated count</th>
+                  <th />
                 </tr>
               </thead>
               <tbody>
@@ -220,6 +222,17 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
                       <td>{t.stage}</td>
                       <td>{t.count}</td>
                       <td>{t.estimated}</td>
+                      <td>
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.onDelete(i);
+                          }}
+                        >
+                          Delete
+                        </a>
+                      </td>
                     </tr>
                   );
                 })}
@@ -236,7 +249,8 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
                 id="sex"
                 value={
                   this.props.sexAndStages &&
-                  this.props.sexAndStages[this.props.editingIndex]
+                  this.props.sexAndStages[this.props.editingIndex] &&
+                  this.props.sexAndStages[this.props.editingIndex].sex
                     ? this.props.sexAndStages[this.props.editingIndex].sex
                     : ''
                 }
@@ -251,14 +265,15 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
           </div>
           <div className="col-md-3">
             <div className="form-group">
-              <label htmlFor="presicionType">Stage</label>
+              <label htmlFor="stage">Stage</label>
 
               <input
-                id="presicionType"
+                id="stage"
                 className="form-control"
                 value={
                   this.props.sexAndStages &&
-                  this.props.sexAndStages[this.props.editingIndex]
+                  this.props.sexAndStages[this.props.editingIndex] &&
+                  this.props.sexAndStages[this.props.editingIndex].stage
                     ? this.props.sexAndStages[this.props.editingIndex].stage
                     : ''
                 }
@@ -273,14 +288,15 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
           </div>
           <div className="col-md-3">
             <div className="form-group">
-              <label htmlFor="taxonCategory">Count</label>
+              <label htmlFor="count">Count</label>
 
               <input
-                id="taxonCategory"
+                id="count"
                 className="form-control"
                 value={
                   this.props.sexAndStages &&
-                  this.props.sexAndStages[this.props.editingIndex]
+                  this.props.sexAndStages[this.props.editingIndex] &&
+                  this.props.sexAndStages[this.props.editingIndex].count
                     ? this.props.sexAndStages[this.props.editingIndex].count
                     : ''
                 }
@@ -302,7 +318,8 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
                 id="estimated"
                 value={
                   this.props.sexAndStages &&
-                  this.props.sexAndStages[this.props.editingIndex]
+                  this.props.sexAndStages[this.props.editingIndex] &&
+                  this.props.sexAndStages[this.props.editingIndex].estimated
                     ? this.props.sexAndStages[this.props.editingIndex].estimated
                     : ''
                 }
@@ -324,6 +341,68 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
 class TaxonTable extends React.Component<TaxonProps> {
   render() {
     const sugg = this.props.taxonNames[this.props.editingIndex].taxonSuggestion;
+
+    const scentificNameAsString = (n: ScientificName) => {
+      const parentArr = n.higherClassification
+        ? n.higherClassification[n.higherClassification.length - 1].scientificName.split(
+            ' '
+          )
+        : [];
+
+      const tmp = n.scientificName.split(' ');
+      const nameArr = parentArr.length <= 1 ? tmp : [...parentArr, tmp[tmp.length - 1]];
+      const author = n.scientificNameAuthorship ? ' ' + n.scientificNameAuthorship : '';
+
+      const ret = nameArr.reduce((p: string, t: string, ind: number, a: string[]) => {
+        if (ind === 0) {
+          if (
+            !(
+              n.taxonRank === 'subspecies' ||
+              n.taxonRank === 'species' ||
+              n.taxonRank === 'variety'
+            )
+          ) {
+            return t + author;
+          }
+          return t;
+        }
+        if (ind === 1) {
+          if (ind + 1 === a.length) {
+            return p + ' ' + t + author;
+          } else {
+            return p + ' ' + t;
+          }
+        }
+
+        if (ind === 2) {
+          const inf =
+            ind === a.length + 1
+              ? n.taxonRank === 'subspecies'
+                ? 'ssp.'
+                : 'var.'
+              : 'ssp.';
+          if (ind + 1 === a.length) {
+            return p + ' ' + inf + ' ' + t + author;
+          } else {
+            return p + ' ' + inf + ' ' + t;
+          }
+        }
+
+        if (ind === 3) {
+          const inf =
+            n.taxonRank === 'subspecies'
+              ? 'ssp.'
+              : n.taxonRank === 'variety'
+                ? 'var.'
+                : 'form';
+          return p + ' ' + inf + ' ' + t + author;
+        }
+
+        return '';
+      }, '');
+      return ret;
+    };
+
     const taxonPath =
       sugg && sugg.higherClassification
         ? sugg.higherClassification.reduce(
@@ -364,14 +443,12 @@ class TaxonTable extends React.Component<TaxonProps> {
           }
           return '';
         };
-        console.log('KURR', pr, cur);
 
         return pr === ''
           ? uncert + cur.name
           : pr + uncert + (cur.rank === currRank ? rankf(currRank) : '') + cur.name;
       }, '');
-      console.log(names);
-      return p === '' ? name : p + ' x ' + name;
+      return p === '' ? name : p + ' × ' + name;
     }, '');
 
     const value = sugg
@@ -435,6 +512,7 @@ class TaxonTable extends React.Component<TaxonProps> {
               <TaxonSuggest
                 id="taxonSuggestADB"
                 value={value}
+                renderFunc={scentificNameAsString}
                 placeHolder="Taxon"
                 appSession={appSession}
                 onChange={(suggestion: ScientificName) => {
@@ -642,7 +720,7 @@ export default class ClassificationComponent extends React.Component<
         }
       ],
       currentTaxonClassificationIndex: 0,
-      sexAndStage: { sexAndStages: [], editingIndex: -1 }
+      sexAndStage: { sexAndStages: [{}], editingIndex: 0 }
     };
 
     this.getFullHybridName = this.getFullHybridName.bind(this);
@@ -1005,6 +1083,21 @@ export default class ClassificationComponent extends React.Component<
                     };
                   });
                 }}
+                onDelete={i => {
+                  this.setState((ps: ClassificationHistoryState) => {
+                    const sexAndLifeStage = ps.sexAndStage;
+                    const sexAndLifeArray = sexAndLifeStage.sexAndStages;
+                    const newSexAndLifeStage = {
+                      ...sexAndLifeStage,
+                      sexAndStages: [
+                        ...sexAndLifeArray.slice(0, i),
+                        ...sexAndLifeArray.slice(i + 1)
+                      ]
+                    };
+
+                    return { ...ps, sexAndStage: newSexAndLifeStage };
+                  });
+                }}
                 onAddSexAndLifeStage={() => {
                   this.setState((ps: ClassificationHistoryState) => {
                     const currSexAndStage = ps.sexAndStage || {
@@ -1023,7 +1116,8 @@ export default class ClassificationComponent extends React.Component<
                       ...ps,
                       sexAndStage: {
                         ...ps.sexAndStage,
-                        sexAndStages: newSexAndStage
+                        sexAndStages: newSexAndStage,
+                        editingIndex: newSexAndStage.length - 1
                       }
                     };
                   });
