@@ -1,6 +1,7 @@
 import React from 'react';
 import FontAwesome from 'react-fontawesome';
 import moment from 'moment';
+import GoogleMapReact from 'google-map-react';
 
 type AdmPlace = {
   admPlaceId?: number,
@@ -9,7 +10,10 @@ type AdmPlace = {
   overordnet?: string,
   kommune?: string,
   fylke?: string,
-  land?: string
+  land?: string,
+  lat?: number,
+  long?: number,
+  zoom?: number
 };
 
 type Coordinate = {
@@ -96,7 +100,10 @@ const admPlaces: Array<AdmPlace> = [
     overordnet: 'Oslo fylke',
     kommune: 'Oslo',
     fylke: 'Oslo fylke',
-    land: 'Norge'
+    land: 'Norge',
+    lat: 59.8939224,
+    long: 10.7149059,
+    zoom: 12
   },
   {
     admPlaceId: 2,
@@ -105,7 +112,10 @@ const admPlaces: Array<AdmPlace> = [
     overordnet: 'Hordaland',
     kommune: 'Bergen',
     fylke: 'Hordaland',
-    land: 'Norge'
+    land: 'Norge',
+    lat: 60.3651115,
+    long: 5.2887477,
+    zoom: 11
   },
   {
     admPlaceId: 3,
@@ -114,7 +124,10 @@ const admPlaces: Array<AdmPlace> = [
     overordnet: 'Trøndelag',
     kommune: 'Trondheim',
     fylke: 'Trøndelag',
-    land: 'Norge'
+    land: 'Norge',
+    lat: 63.418719,
+    long: 10.3685518,
+    zoom: 12
   },
   {
     admPlaceId: 4,
@@ -123,7 +136,10 @@ const admPlaces: Array<AdmPlace> = [
     overordnet: 'Aust-Agder',
     kommune: 'Kristiansand',
     fylke: 'Aust-Agder',
-    land: 'Norge'
+    land: 'Norge',
+    lat: 58.1529583,
+    long: 7.9390013,
+    zoom: 12
   },
   {
     admPlaceId: 5,
@@ -132,7 +148,10 @@ const admPlaces: Array<AdmPlace> = [
     overordnet: 'Buskerud',
     kommune: 'Drammen',
     fylke: 'Buskerud',
-    land: 'Norge'
+    land: 'Norge',
+    lat: 59.734017,
+    long: 10.1489475,
+    zoom: 12
   }
 ];
 const coordinateTypes = ['MGRS', 'Lat/Long', 'UTM'];
@@ -718,7 +737,10 @@ const AdmPlaceComponent = (props: PlaceState & { onChange: (value: string) => vo
                 admPlace: {
                   kommune: e.target.value.split(';')[0],
                   fylke: e.target.value.split(';')[1],
-                  land: e.target.value.split(';')[2]
+                  land: e.target.value.split(';')[2],
+                  lat: Number(e.target.value.split(';')[3]),
+                  long: Number(e.target.value.split(';')[4]),
+                  zoom: Number(e.target.value.split(';')[5])
                 }
               });
             }}
@@ -726,7 +748,19 @@ const AdmPlaceComponent = (props: PlaceState & { onChange: (value: string) => vo
             {admPlaces.map((a: AdmPlace) => (
               <option
                 key={`optionRow_${a.admPlaceId || 0}`}
-                value={a.kommune + ';' + a.fylke + ';' + a.land}
+                value={
+                  a.kommune +
+                  ';' +
+                  a.fylke +
+                  ';' +
+                  a.land +
+                  ';' +
+                  a.lat +
+                  ';' +
+                  a.long +
+                  ';' +
+                  a.zoom
+                }
                 label={`${a.name || ''} Type: ${a.type || ''} (${
                   a.kommune ? a.kommune + ':' : ''
                 } ${a.fylke ? a.fylke + ':' : ''} : ${a.land ? a.land : ''})`}
@@ -767,6 +801,67 @@ const OtherComponent = (props: AdmPlace) => (
       {InputText({ value: props.sample, label: 'Sample' })}
       {InputText({ value: props.ship, label: 'Ship' })}
     </div>
+  </div>
+);
+
+const AnyReactComponent = ({ text }) => (
+  <div>
+    <FontAwesome name={'map-pin'} />
+    {text}
+  </div>
+);
+
+const GetLetLong = (props: PlaceState) => {
+  const latLong =
+    props.editingCoordinate &&
+    props.editingCoordinate.coordinateType &&
+    props.editingCoordinate.coordinateType === 'Lat/Long' &&
+    props.editingCoordinate.coordinateString
+      ? {
+          lat: Number(props.editingCoordinate.coordinateString.split(' ')[0]),
+          lng: Number(props.editingCoordinate.coordinateString.split(' ')[1])
+        }
+      : {
+          lat: props.admPlace && props.admPlace.lat ? props.admPlace.lat : 0,
+          lng: props.admPlace && props.admPlace.long ? props.admPlace.long : 0
+        };
+  console.log('LatLong for Map', latLong);
+  return latLong && latLong.lat && latLong.lng ? latLong : undefined;
+};
+
+const MapComponent = (props: PlaceState) => (
+  <div className="well">
+    {GetLetLong(props) && (
+      <div
+        key={
+          props.admPlace && props.admPlace.admPlaceId
+            ? props.admPlace.admPlaceId
+            : 'mapDiv'
+        }
+        style={{ height: '40vh', width: '100%' }}
+      >
+        {console.log('Map Props', props)}
+        <GoogleMapReact
+          key={Date()}
+          // TODO change to ENV.KEY variable and change key too
+          bootstrapURLKeys={{ key: 'AIzaSyD_eIPYgmzLr_FsDLVf47fJ2mOP5wvPnG4' }}
+          defaultCenter={GetLetLong(props)}
+          defaultZoom={
+            GetLetLong(props)
+              ? 8
+              : props.admPlace && props.admPlace.zoom
+                ? props.admPlace.zoom
+                : 3
+          }
+        >
+          <AnyReactComponent
+            lat={GetLetLong(props).lat}
+            lng={GetLetLong(props).lng}
+            text={'Test Object info.'}
+          />
+        </GoogleMapReact>
+      </div>
+    )}
   </div>
 );
 
@@ -826,7 +921,18 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
   constructor(props: PlaceProps) {
     super(props);
     this.state = {
-      admPlace: {},
+      admPlace: {
+        admPlaceId: 1,
+        name: 'Oslo',
+        type: 'Kommune',
+        overordnet: 'Oslo fylke',
+        kommune: 'Oslo',
+        fylke: 'Oslo fylke',
+        land: 'Norge',
+        lat: 59.8939224,
+        long: 10.7149059,
+        zoom: 12
+      },
       editingCoordinate: {
         coordinateType: 'MGRS',
         altitudeUnit: 'Meters',
@@ -847,6 +953,7 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
               {...this.state}
               onChange={t => this.setState(s => ({ ...s, ...t }))}
             />
+            <MapComponent {...this.state} />
           </div>
 
           {console.log('Pleace state', this.state)}
