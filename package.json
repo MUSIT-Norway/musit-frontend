@@ -51,6 +51,7 @@
     "formatcode": "./node_modules/.bin/prettier --single-quote --trailing-comma none --print-width 90 --write \"{src,__{tests,mocks}__}/**/*.{js,jsx,ts,tsx}\""
   },
   "devDependencies": {
+    "@types/classnames": "^2.2.4",
     "@types/deep-diff": "0.0.31",
     "@types/file-saver": "^1.3.0",
     "@types/history": "^4.6.2",
@@ -61,11 +62,14 @@
     "@types/query-string": "^5.1.0",
     "@types/react": "^16.3.14",
     "@types/react-autosuggest": "^9.3.4",
-    "@types/react-bootstrap": "^0.32.10",
+    "@types/react-bootstrap": "^0.31.0",
     "@types/react-bootstrap-date-picker": "^4.0.5",
     "@types/react-dom": "^16.0.5",
     "@types/react-fontawesome": "^1.6.3",
+    "@types/react-loader": "^2.4.2",
     "@types/react-notification-system": "^0.2.37",
+    "@types/react-router-bootstrap": "^0.24.5",
+    "@types/react-router-dom": "^4.2.7",
     "@types/react-select": "^1.2.7",
     "@types/revalidate": "^1.1.2",
     "chai": "^4.1.2",
