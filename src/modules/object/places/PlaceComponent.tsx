@@ -1,44 +1,44 @@
-import React from 'react';
-import FontAwesome from 'react-fontawesome';
-import moment from 'moment';
+import * as React from 'react';
+import * as FontAwesome from 'react-fontawesome';
+import * as moment from 'moment';
 import GoogleMapReact from 'google-map-react';
 
 type AdmPlace = {
-  admPlaceId?: number,
-  name?: string,
-  type?: string,
-  overordnet?: string,
-  kommune?: string,
-  fylke?: string,
-  land?: string,
-  lat?: number,
-  long?: number,
-  zoom?: number
+  admPlaceId: number;
+  name?: string;
+  type?: string;
+  overordnet?: string;
+  kommune?: string;
+  fylke?: string;
+  land?: string;
+  lat?: number;
+  long?: number;
+  zoom?: number;
 };
 
 type Coordinate = {
-  coordinateSource?: string,
-  coordinateType?: string,
-  coordinateGeomertry?: string,
-  coordinatePrecision?: number,
-  caAltitude?: boolean,
-  gpsAccuracy?: number,
-  datum?: string,
-  utmZone?: number,
-  mgrsBand?: string,
-  utmNorthSouth?: string,
-  coordinateString?: string,
-  caCoordinate?: boolean,
-  coordinateAddedLater?: boolean,
-  coordinateNote?: string,
-  altitudeLow?: number,
-  altitudeHigh?: number,
-  altitudeAggregated?: string,
-  altitudeUnit?: string,
-  depthLow?: number,
-  depthAggregated?: string,
-  depthHigh?: number,
-  depthUnit?: string
+  coordinateSource?: string;
+  coordinateType?: string;
+  coordinateGeomertry?: string;
+  coordinatePrecision?: number;
+  caAltitude?: boolean;
+  gpsAccuracy?: number;
+  datum?: string;
+  utmZone?: number;
+  mgrsBand?: string;
+  utmNorthSouth?: string;
+  coordinateString?: string;
+  caCoordinate?: boolean;
+  coordinateAddedLater?: boolean;
+  coordinateNote?: string;
+  altitudeLow?: number;
+  altitudeHigh?: number;
+  altitudeAggregated?: string;
+  altitudeUnit?: string;
+  depthLow?: number;
+  depthAggregated?: string;
+  depthHigh?: number;
+  depthUnit?: string;
 };
 
 export type CoordinateRevisionType =
@@ -48,48 +48,50 @@ export type CoordinateRevisionType =
   | 'deleteCoordinate';
 
 export type CoordinateHistoryItem = {
-  coordinateId?: number,
-  registeredBy?: string,
-  registeredDate?: string,
-  note?: string,
-  coordinate: Coordinate,
-  coordinateRevisionType?: CoordinateRevisionType
+  coordinateId?: number;
+  registeredBy?: string;
+  registeredDate?: string;
+  note?: string;
+  coordinate: Coordinate;
+  coordinateRevisionType?: CoordinateRevisionType;
 };
 export type CoordinateHistory = Array<CoordinateHistoryItem>;
 
 export type PlaceState = {
-  admPlace: AdmPlace,
-  coordinateHistory: CoordinateHistory,
-  editingCoordinate: Coordinate,
-  locality?: string,
-  ecology?: string,
-  station?: string,
-  sample?: string,
-  ship?: string,
-  method?: string,
-  methodDescription?: string,
-  coordinateCollapsed?: boolean,
-  altitudeCollapsed?: boolean,
-  coordinateHistoryIndeks: number
+  coordinateHistory: CoordinateHistory;
+  editingCoordinate: Coordinate;
+  coordinateHistoryIndeks: number;
+  admPlace?: AdmPlace;
+  locality?: string;
+  ecology?: string;
+  station?: string;
+  sample?: string;
+  ship?: string;
+  method?: string;
+  methodDescription?: string;
+  coordinateCollapsed?: boolean;
+  altitudeCollapsed?: boolean;
 };
 
 export type PlaceProps = PlaceState & {
-  onChangeTextField: (fieldName: string) => (value: string) => void,
-  onChangeNumberField: (fieldName: string) => (value: number) => void
+  onChangeTextField: (fieldName: string) => (value: string) => void;
+  onChangeNumberField: (fieldName: string) => (value: number) => void;
 };
 
 export type CoordinateProps = {
-  coordinateHistory: CoordinateHistory,
-  editingCoordinate: Coordinate,
-  coordinateHistoryIndeks: number,
-  onChangeCoordinateNumber: (fieldName: string) => (value: number) => void,
-  onChangeCoordinateText: (fieldName: string) => (value: string) => void,
-  onChangeHistoryItem: (fieldName: string) => (value: string) => void,
-  getCurrentCoordinate: (ind: number) => Coordinate,
-  getCurrentHistoryItem: (ind: number) => CoordinateHistoryItem,
-  onClickSaveRevision: () => void,
-  onClickSaveEdit: () => void,
-  onToggleCollapse: () => void
+  coordinateHistory: CoordinateHistory;
+  editingCoordinate: Coordinate;
+  coordinateHistoryIndeks: number;
+  coordinateCollapsed: boolean;
+  coordinateType: string;
+  onChangeCoordinateNumber: (fieldName: string) => (value: number) => void;
+  onChangeCoordinateText: (fieldName: string) => (value: string) => void;
+  onChangeHistoryItem: (fieldName: string) => (value: string) => void;
+  getCurrentCoordinate: (ind: number) => Coordinate;
+  getCurrentHistoryItem: (ind: number) => CoordinateHistoryItem;
+  onClickSaveRevision: () => void;
+  onClickSaveEdit: () => void;
+  onToggleCollapse: () => void;
 };
 
 const admPlaces: Array<AdmPlace> = [
@@ -160,12 +162,6 @@ const datumValues = ['WGS84', 'ED50', 'EUREF-89'];
 const geometryTypes = ['Point', 'Reactangle', 'Polygone', 'Line'];
 const coordinateSources = ['Original label', 'GPS', 'Map', 'Other'];
 const altDepthUnits = ['Meters', 'Feet'];
-const coordinateRevisionTypes = [
-  { displayValue: 'New coordinate', value: 'newCoordinate' },
-  { displayValue: 'Coordinate revision', value: 'coordinateRevision' },
-  { displayValue: 'Edit coordinate', value: 'coordinateEdit' },
-  { displayValue: 'Delete coordinate', value: 'deleteCoordinate' }
-];
 
 const CoordinateHistoryComponent = (props: { coordinateHistory: CoordinateHistory }) => {
   const unitConv = (a?: string, u?: string) => {
@@ -177,6 +173,7 @@ const CoordinateHistoryComponent = (props: { coordinateHistory: CoordinateHistor
       }
       return '';
     }
+    return '';
   };
 
   return (
@@ -589,7 +586,15 @@ const AltitudeDepthData = (props: CoordinateProps) => (
           <label>
             <input
               type="checkbox"
-              value={props.getCurrentCoordinate(props.coordinateHistoryIndeks).caAltitude}
+              checked={
+                props.getCurrentCoordinate(props.coordinateHistoryIndeks).caAltitude
+              }
+              value={
+                props.getCurrentCoordinate(props.coordinateHistoryIndeks) &&
+                props.getCurrentCoordinate(props.coordinateHistoryIndeks).caAltitude
+                  ? '1'
+                  : '0'
+              }
             />{' '}
             Ca depth
           </label>
@@ -634,9 +639,15 @@ const CoordinateMetaData = (props: CoordinateProps) => {
             <label>
               <input
                 type="checkbox"
+                checked={
+                  props.getCurrentCoordinate(props.coordinateHistoryIndeks)
+                    .coordinateAddedLater
+                }
                 value={
                   props.getCurrentCoordinate(props.coordinateHistoryIndeks)
                     .coordinateAddedLater
+                    ? '1'
+                    : '0'
                 }
               />{' '}
               Added later{' '}
@@ -646,8 +657,13 @@ const CoordinateMetaData = (props: CoordinateProps) => {
             <label>
               <input
                 type="checkbox"
+                checked={
+                  props.getCurrentCoordinate(props.coordinateHistoryIndeks).caCoordinate
+                }
                 value={
                   props.getCurrentCoordinate(props.coordinateHistoryIndeks).caCoordinate
+                    ? '1'
+                    : '0'
                 }
               />{' '}
               Ca coordinate
@@ -709,20 +725,35 @@ const CoordinateComponent = (
     </div>
   );
 };
-const InputText = (props: { value: string, label: string, readOnly?: boolean }) => (
+const InputText = (props: {
+  value: string;
+  label: string;
+  readOnly?: boolean;
+  onChange?: (v: string) => void;
+}) => (
   <div className="col-md-4">
     <label htmlFor={props.label}>{props.label}</label>
     <input
       type="text"
       className="form-control"
       readOnly={props.readOnly}
+      onChange={e => {
+        if (!props.readOnly) {
+          props.onChange && props.onChange(e.target.value);
+        }
+      }}
       id={props.label}
       value={props.value}
     />
   </div>
 );
 
-const AdmPlaceComponent = (props: PlaceState & { onChange: (value: string) => void }) => (
+const AdmPlaceComponent = (
+  props: PlaceState & {
+    onChange: (value: string) => void;
+    onChangeOthers: (field: string) => (value: string) => void;
+  }
+) => (
   <div>
     <div className="well">
       <div className="row form-group">
@@ -732,35 +763,13 @@ const AdmPlaceComponent = (props: PlaceState & { onChange: (value: string) => vo
             className="form-control"
             id="admPlaceName"
             onChange={e => {
-              console.log('e', e);
-              props.onChange({
-                admPlace: {
-                  kommune: e.target.value.split(';')[0],
-                  fylke: e.target.value.split(';')[1],
-                  land: e.target.value.split(';')[2],
-                  lat: Number(e.target.value.split(';')[3]),
-                  long: Number(e.target.value.split(';')[4]),
-                  zoom: Number(e.target.value.split(';')[5])
-                }
-              });
+              props.onChange(e.target.value);
             }}
           >
             {admPlaces.map((a: AdmPlace) => (
               <option
                 key={`optionRow_${a.admPlaceId || 0}`}
-                value={
-                  a.kommune +
-                  ';' +
-                  a.fylke +
-                  ';' +
-                  a.land +
-                  ';' +
-                  a.lat +
-                  ';' +
-                  a.long +
-                  ';' +
-                  a.zoom
-                }
+                value={a.admPlaceId}
                 label={`${a.name || ''} Type: ${a.type || ''} (${
                   a.kommune ? a.kommune + ':' : ''
                 } ${a.fylke ? a.fylke + ':' : ''} : ${a.land ? a.land : ''})`}
@@ -780,38 +789,53 @@ const AdmPlaceComponent = (props: PlaceState & { onChange: (value: string) => vo
         </div>
       </div>
       <div className="row form-group">
-        {InputText({ value: props.admPlace.kommune, label: 'Kommune', readOnly: true })}
-        {InputText({ value: props.admPlace.fylke, label: 'Fylke', readOnly: true })}
-        {InputText({ value: props.admPlace.land, label: 'Land', readOnly: true })}
+        {InputText({
+          value: props.admPlace && props.admPlace.kommune ? props.admPlace.kommune : '',
+          label: 'Kommune',
+          readOnly: true
+        })}
+        {InputText({
+          value: props.admPlace && props.admPlace.fylke ? props.admPlace.fylke : '',
+          label: 'Fylke',
+          readOnly: true
+        })}
+        {InputText({
+          value: props.admPlace && props.admPlace.land ? props.admPlace.land : '',
+          label: 'Land',
+          readOnly: true
+        })}
       </div>
     </div>
     <div className="well">
       <div className="row form-group">
-        {InputText({ value: props.station, label: 'Station' })}
-        {InputText({ value: props.sample, label: 'Sample' })}
-        {InputText({ value: props.ship, label: 'Ship' })}
+        {InputText({
+          value: props.station ? props.station : '',
+          label: 'Station',
+          onChange: v => props.onChangeOthers('station')(v)
+        })}
+        {InputText({
+          value: props.sample ? props.sample : '',
+          label: 'Sample',
+          onChange: v => props.onChangeOthers('sample')(v)
+        })}
+        {InputText({
+          value: props.ship ? props.ship : '',
+          label: 'Ship',
+          onChange: v => props.onChangeOthers('ship')(v)
+        })}
       </div>
     </div>
   </div>
 );
-const OtherComponent = (props: AdmPlace) => (
-  <div className="well">
-    <div className="row form-group">
-      {InputText({ value: props.station, label: 'Station' })}
-      {InputText({ value: props.sample, label: 'Sample' })}
-      {InputText({ value: props.ship, label: 'Ship' })}
-    </div>
-  </div>
-);
 
-const AnyReactComponent = ({ text }) => (
+const AnyReactComponent = ({ text }: { text: string }) => (
   <div>
     <FontAwesome name={'map-pin'} />
     {text}
   </div>
 );
 
-const GetLetLong = (props: PlaceState) => {
+const getLatLong = (props: PlaceState) => {
   const latLong =
     props.editingCoordinate &&
     props.editingCoordinate.coordinateType &&
@@ -825,13 +849,13 @@ const GetLetLong = (props: PlaceState) => {
           lat: props.admPlace && props.admPlace.lat ? props.admPlace.lat : 0,
           lng: props.admPlace && props.admPlace.long ? props.admPlace.long : 0
         };
-  console.log('LatLong for Map', latLong);
+
   return latLong && latLong.lat && latLong.lng ? latLong : undefined;
 };
 
 const MapComponent = (props: PlaceState) => (
   <div className="well">
-    {GetLetLong(props) && (
+    {getLatLong(props) && (
       <div
         key={
           props.admPlace && props.admPlace.admPlaceId
@@ -840,25 +864,20 @@ const MapComponent = (props: PlaceState) => (
         }
         style={{ height: '40vh', width: '100%' }}
       >
-        {console.log('Map Props', props)}
         <GoogleMapReact
           key={Date()}
           // TODO change to ENV.KEY variable and change key too
           bootstrapURLKeys={{ key: 'AIzaSyD_eIPYgmzLr_FsDLVf47fJ2mOP5wvPnG4' }}
-          defaultCenter={GetLetLong(props)}
+          defaultCenter={getLatLong(props)}
           defaultZoom={
-            GetLetLong(props)
+            getLatLong(props)
               ? 8
               : props.admPlace && props.admPlace.zoom
                 ? props.admPlace.zoom
                 : 3
           }
         >
-          <AnyReactComponent
-            lat={GetLetLong(props).lat}
-            lng={GetLetLong(props).lng}
-            text={'Test Object info.'}
-          />
+          <AnyReactComponent text={'Test Object info.'} />
         </GoogleMapReact>
       </div>
     )}
@@ -951,12 +970,34 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
           <div className="col-md-4">
             <AdmPlaceComponent
               {...this.state}
-              onChange={t => this.setState(s => ({ ...s, ...t }))}
+              onChangeOthers={(field: string) => (value: string) => {
+                this.setState((ps: PlaceState) => ({
+                  ...ps,
+                  [field]: value
+                }));
+              }}
+              onChange={(t: string) => {
+                const admPlace = admPlaces.find(
+                  (a: AdmPlace) => a.admPlaceId === parseInt(t)
+                );
+                console.log(admPlace);
+                this.setState((s: PlaceState) => ({
+                  ...s,
+                  admPlace: admPlace,
+                  kommune: (admPlace && admPlace.kommune) || '',
+                  fylke: (admPlace && admPlace.fylke) || '',
+                  land: admPlace && admPlace.land,
+                  lat: admPlace && admPlace.lat,
+                  long: admPlace && admPlace.long,
+                  overordnet: admPlace && admPlace.overordnet,
+                  type: admPlace && admPlace.type,
+                  name: admPlace && admPlace.name
+                }));
+              }}
             />
             <MapComponent {...this.state} />
           </div>
 
-          {console.log('Pleace state', this.state)}
           <div className="col-md-8">
             <CoordinateComp
               {...this.state.coordinateHistory[this.state.coordinateHistoryIndeks]
@@ -968,7 +1009,7 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
                 this.state.coordinateHistory[this.state.coordinateHistoryIndeks]
                   .coordinate.coordinateType || 'MGRS'
               }
-              coordinateCollapsed={this.state.coordinateCollapsed}
+              coordinateCollapsed={this.state.coordinateCollapsed || false}
               onChangeCoordinateNumber={(fieldName: string) => (value: number) => {
                 this.setState((ps: PlaceState) => {
                   return {
@@ -1014,7 +1055,7 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
               }}
               onClickSaveEdit={() => {
                 this.setState((ps: PlaceState) => {
-                  const ret = {
+                  return {
                     ...ps,
                     coordinateHistoryIndeks: ps.coordinateHistory[
                       ps.coordinateHistoryIndeks
@@ -1034,14 +1075,13 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
                           }
                         ]
                       : [
-                          ...ps.coordinateHistory.slice(0, ps.coordinateHistoryIndeks),
+                          ...ps.coordinateHistory,
                           {
                             coordinate: ps.editingCoordinate,
                             coordinateRevisionType: 'newCoordinate'
                           }
                         ]
                   };
-                  return ret;
                 });
               }}
               getCurrentHistoryItem={(ind: number) => {

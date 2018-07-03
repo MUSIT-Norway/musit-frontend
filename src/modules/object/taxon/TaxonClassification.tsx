@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import * as FontAwesome from 'react-fontawesome';
 import { TaxonSuggest } from '../../../components/suggest/TaxonSuggest';
 //import { AppSession } from "../../../types/appSession";
 //import appSession$ from "../../../stores/appSession";
@@ -9,10 +9,6 @@ type TaxonNameState = {
   taxonName: string;
   presicionType?: 'C' | 'A';
   taxonCategory?: 'VA' | 'SS' | 'SP' | 'GE';
-};
-
-type TaxonEditingState = {
-  selectedGenus?: number;
 };
 
 type Property = {
@@ -46,7 +42,6 @@ const appSession = { museumId: 99 };
 type TaxonState = {
   editingIndex: number;
   taxonNames: TaxonNameState[];
-  infraspesName?: string;
   det: DetState;
   note?: string;
 };
@@ -57,6 +52,7 @@ type TaxonProps = TaxonState & {
   onAddTaxon: () => void;
   onAddPerson: () => void;
   onDeletePerson: (i: number) => void;
+  onDeleteTaxon: (i: number) => void;
   onChangeTaxonSuggest: (suggestion: ScientificName) => void;
   setDetEditingIndex: (i: number) => void;
   onChangePerson: (i: number) => (field: string) => (value: string) => void;
@@ -66,7 +62,7 @@ type TaxonProps = TaxonState & {
 
 type SexAndLifeStage = {
   count?: number;
-  estimated?: number;
+  estimated: string;
   sex?: string;
   stage?: string;
 };
@@ -88,7 +84,6 @@ type SexAndLifeStageProps = SexAndLifeStageState & {
 };
 
 type ClassificationHistoryState = {
-  taxonEditingState?: TaxonEditingState;
   taxonClassifications: TaxonState[];
   currentTaxonClassificationIndex: number;
   sexAndStage: SexAndLifeStageState;
@@ -110,6 +105,90 @@ type DetProps = DetState & {
   onDeletePerson: (i: number) => void;
   setDetEditingIndex: (i: number) => void;
   onChangePerson: (i: number) => (field: string) => (value: string) => void;
+};
+
+const stadiumList = [
+  {
+    code: '',
+    term: '--select--'
+  },
+  {
+    code: 'e',
+    term: 'egg'
+  },
+  {
+    code: 'l',
+    term: 'larvae'
+  },
+  {
+    code: 'p',
+    term: 'pupae'
+  },
+  {
+    code: 'x',
+    term: 'pupae exuviae'
+  },
+  {
+    code: 'i',
+    term: 'imago'
+  },
+  {
+    code: 's',
+    term: 'subimago'
+  },
+  {
+    code: 'j',
+    term: 'juvenile'
+  },
+  {
+    code: 'n',
+    term: 'nymph'
+  },
+  {
+    code: 'a',
+    term: 'adult'
+  },
+  {
+    code: 'u',
+    term: 'unknown'
+  }
+];
+
+const sexList = [
+  {
+    code: '',
+    term: '--select--'
+  },
+  {
+    code: 'm',
+    term: 'male'
+  },
+  {
+    code: 'f',
+    term: 'female'
+  },
+  {
+    code: 'h',
+    term: 'hermaphrodite'
+  },
+  {
+    code: 'd',
+    term: 'doubtful gender'
+  },
+  {
+    code: 'u',
+    term: 'unknown'
+  }
+];
+
+const getSexTerm = (i_code?: string) => {
+  const r = sexList.find(s => s.code === i_code);
+  return r ? r.term : '';
+};
+
+const getStageTerm = (i_code?: string) => {
+  const r = stadiumList.find(s => s.code === i_code);
+  return r ? r.term : '';
 };
 
 class DetTable extends React.Component<DetProps> {
@@ -218,10 +297,10 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
                         this.props.setEditingIndex(i);
                       }}
                     >
-                      <td>{t.sex}</td>
-                      <td>{t.stage}</td>
+                      <td>{getSexTerm(t.sex)}</td>
+                      <td>{getStageTerm(t.stage)}</td>
                       <td>{t.count}</td>
-                      <td>{t.estimated}</td>
+                      <td>{t.estimated === '1' ? 'Yes' : 'No'}</td>
                       <td>
                         <a
                           href=""
@@ -243,10 +322,14 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
           <div className="col-md-3">
             <div className="form-group">
               <label htmlFor="sex">Sex</label>
-              <input
-                type="text"
+              <select
                 className="form-control"
-                id="sex"
+                onChange={e => {
+                  e.preventDefault();
+                  this.props.onChangeSexAndLifeStageField(this.props.editingIndex)('sex')(
+                    e.target.value
+                  );
+                }}
                 value={
                   this.props.sexAndStages &&
                   this.props.sexAndStages[this.props.editingIndex] &&
@@ -254,22 +337,27 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
                     ? this.props.sexAndStages[this.props.editingIndex].sex
                     : ''
                 }
-                onChange={e => {
-                  e.preventDefault();
-                  this.props.onChangeSexAndLifeStageField(this.props.editingIndex)('sex')(
-                    e.target.value
-                  );
-                }}
-              />
+              >
+                {sexList.map((t, i) => (
+                  <option key={i + 'term-option'} value={t.code}>
+                    {t.term}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
           <div className="col-md-3">
             <div className="form-group">
               <label htmlFor="stage">Stage</label>
 
-              <input
-                id="stage"
+              <select
                 className="form-control"
+                onChange={e => {
+                  e.preventDefault();
+                  this.props.onChangeSexAndLifeStageField(this.props.editingIndex)(
+                    'stage'
+                  )(e.target.value);
+                }}
                 value={
                   this.props.sexAndStages &&
                   this.props.sexAndStages[this.props.editingIndex] &&
@@ -277,19 +365,18 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
                     ? this.props.sexAndStages[this.props.editingIndex].stage
                     : ''
                 }
-                onChange={e => {
-                  e.preventDefault();
-                  this.props.onChangeSexAndLifeStageField(this.props.editingIndex)(
-                    'stage'
-                  )(e.target.value);
-                }}
-              />
+              >
+                {stadiumList.map((t, i) => (
+                  <option key={i + 'key'} value={t.code}>
+                    {t.term}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
-          <div className="col-md-3">
+          <div className="col-md-2">
             <div className="form-group">
               <label htmlFor="count">Count</label>
-
               <input
                 id="count"
                 className="form-control"
@@ -309,27 +396,48 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
               />
             </div>
           </div>
-          <div className="col-md-3">
+          <div className="col-md-1">
             <div className="form-group">
               <label htmlFor="estimated">Estimated count</label>
               <input
-                type="text"
+                type="checkbox"
                 className="form-control"
                 id="estimated"
                 value={
                   this.props.sexAndStages &&
-                  this.props.sexAndStages[this.props.editingIndex] &&
-                  this.props.sexAndStages[this.props.editingIndex].estimated
+                  this.props.sexAndStages[this.props.editingIndex]
                     ? this.props.sexAndStages[this.props.editingIndex].estimated
-                    : ''
+                    : '0'
+                }
+                checked={
+                  this.props.sexAndStages &&
+                  this.props.sexAndStages[this.props.editingIndex] &&
+                  this.props.sexAndStages[this.props.editingIndex].estimated === '1'
                 }
                 onChange={e => {
-                  e.preventDefault();
+                  const newValue = e.target.value === '0' ? '1' : '0';
                   this.props.onChangeSexAndLifeStageField(this.props.editingIndex)(
                     'estimated'
-                  )(e.target.value);
+                  )(newValue);
                 }}
               />
+            </div>
+          </div>
+          <div className="col-md-1">
+            <div className="form-group">
+              <label htmlFor="btnAddSexAndStage">Add new</label>
+
+              <button
+                type="button"
+                className="btn btn-default btn-sm form-control"
+                id="btnAddSexAndStage"
+                onClick={e => {
+                  e.preventDefault();
+                  this.props.onAddSexAndLifeStage();
+                }}
+              >
+                Add
+              </button>
             </div>
           </div>
         </div>
@@ -340,6 +448,7 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
 
 class TaxonTable extends React.Component<TaxonProps> {
   render() {
+    console.log('EditingIndex', this.props.editingIndex);
     const sugg = this.props.taxonNames[this.props.editingIndex].taxonSuggestion;
 
     const scentificNameAsString = (n: ScientificName) => {
@@ -351,7 +460,7 @@ class TaxonTable extends React.Component<TaxonProps> {
 
       const tmp = n.scientificName.split(' ');
       const nameArr = parentArr.length <= 1 ? tmp : [...parentArr, tmp[tmp.length - 1]];
-      const author = n.scientificNameAuthorship ? ' ' + n.scientificNameAuthorship : '';
+      const author = n.scientificNameAuthorship ? n.scientificNameAuthorship : '';
 
       const ret = nameArr.reduce((p: string, t: string, ind: number, a: string[]) => {
         if (ind === 0) {
@@ -362,13 +471,13 @@ class TaxonTable extends React.Component<TaxonProps> {
               n.taxonRank === 'variety'
             )
           ) {
-            return t + author;
+            return t;
           }
           return t;
         }
         if (ind === 1) {
           if (ind + 1 === a.length) {
-            return p + ' ' + t + author;
+            return p + ' ' + t;
           } else {
             return p + ' ' + t;
           }
@@ -382,7 +491,7 @@ class TaxonTable extends React.Component<TaxonProps> {
                 : 'var.'
               : 'ssp.';
           if (ind + 1 === a.length) {
-            return p + ' ' + inf + ' ' + t + author;
+            return p + ' ' + inf + ' ' + t;
           } else {
             return p + ' ' + inf + ' ' + t;
           }
@@ -395,12 +504,19 @@ class TaxonTable extends React.Component<TaxonProps> {
               : n.taxonRank === 'variety'
                 ? 'var.'
                 : 'form';
-          return p + ' ' + inf + ' ' + t + author;
+          return p + ' ' + inf + ' ' + t;
         }
 
         return '';
       }, '');
-      return ret;
+      return (
+        <span className="suggestion-content">
+          {ret + (author ? '  ' : '')} &nbsp; <i>{author}</i> &nbsp;{' '}
+          {' [' + n.taxonRank + ']'}&nbsp;{n.acceptedNameUsage
+            ? '[=' + n.acceptedNameUsage.scientificName + ']'
+            : ''}
+        </span>
+      );
     };
 
     const taxonPath =
@@ -468,6 +584,8 @@ class TaxonTable extends React.Component<TaxonProps> {
                       <th> Taxon name</th>
                       <th> Presicion</th>
                       <th> Taxon cathegry</th>
+                      <th />
+                      <th />>
                     </tr>
                   </thead>
                   <tbody>
@@ -476,10 +594,6 @@ class TaxonTable extends React.Component<TaxonProps> {
                         <tr
                           key={`tr-row${i}`}
                           className={i === this.props.editingIndex ? 'info' : ''}
-                          onClick={e => {
-                            e.preventDefault();
-                            this.props.setEditingIndex(i);
-                          }}
                         >
                           <td>
                             {t.taxonSuggestion
@@ -491,6 +605,28 @@ class TaxonTable extends React.Component<TaxonProps> {
                           </td>
                           <td>{t.presicionType}</td>
                           <td>{t.taxonCategory}</td>
+                          <td>
+                            <button
+                              className="btn btn-link"
+                              onClick={e => {
+                                e.preventDefault();
+                                this.props.onDeleteTaxon(i);
+                              }}
+                            >
+                              Delete
+                            </button>
+                          </td>
+                          <td>
+                            <button
+                              className="btn btn-link"
+                              onClick={e => {
+                                e.preventDefault();
+                                this.props.setDetEditingIndex(i);
+                              }}
+                            >
+                              <FontAwesome name="edit" />
+                            </button>
+                          </td>
                         </tr>
                       );
                     })}
@@ -559,13 +695,29 @@ class TaxonTable extends React.Component<TaxonProps> {
                 }}
               >
                 <option>Velg type</option>
-                <option>Order</option>
-                <option>Family</option>
-                <option>Genus</option>
-                <option>species</option>
-                <option>subspecies</option>
-                <option>variety</option>
+                <option value="order">Order</option>
+                <option value="family">Family</option>
+                <option value="genus">Genus</option>
+                <option value="species">Species</option>
+                <option value="subspecies">Subspecies</option>
+                <option value="variety">Variety</option>
               </select>
+            </div>
+          </div>
+          <div className="col-md-1">
+            <div style={{ textAlign: 'left', verticalAlign: 'bottom' }}>
+              <label htmlFor="btnAddTaxon">Hybrid</label>
+              <button
+                type="button"
+                className="btn btn-default form-control"
+                onClick={e => {
+                  e.preventDefault();
+                  this.props.onAddTaxon();
+                }}
+                id="btnAddTaxon"
+              >
+                Add ×
+              </button>
             </div>
           </div>
         </div>
@@ -581,31 +733,23 @@ export class TaxonComponent extends React.Component<TaxonProps> {
         <div className="row">
           <div className="col-md-8">
             <div className="row">
-              <div className="col-md-11">
+              <div className="col-md-12">
                 <TaxonTable {...this.props} />
-              </div>
-              <div className="col-md-1">
-                <div style={{ textAlign: 'left', verticalAlign: 'bottom' }}>
-                  <label htmlFor="btnAddTaxon">Add</label>
-                  <button
-                    type="button"
-                    className="btn btn-default form-control"
-                    onClick={e => {
-                      e.preventDefault();
-                      this.props.onAddTaxon();
-                    }}
-                    id="btnAddTaxon"
-                  >
-                    +
-                  </button>
-                </div>
               </div>
             </div>
             <div className="row">
               <div className="col-md-2">
                 <div className="form-group">
                   <label htmlFor="infraspesRank">Infraspesific rank</label>
-                  <input type="text" className="form-control" id="infraspesRank" />
+                  <select className="form-control" id="infraspesRank">
+                    <option value="">--select--</option>
+                    <option value="ssp.">Subspecies</option>
+                    <option value="var.">Variety</option>
+                    <option value="form.">Form</option>
+                    <option value="sensu">Sensu</option>
+                    <option value="s.lat.">Sensu.lat.</option>
+                    <option value="s.str">Sensu str.</option>
+                  </select>
                 </div>
               </div>
               <div className="col-md-4">
@@ -627,7 +771,7 @@ export class TaxonComponent extends React.Component<TaxonProps> {
           </div>
           <div className="col-md-4">
             <div className="row">
-              <div className="col-md-11">
+              <div className="col-md-10">
                 <DetTable
                   {...this.props.det}
                   onAddPerson={this.props.onAddPerson}
@@ -636,9 +780,9 @@ export class TaxonComponent extends React.Component<TaxonProps> {
                   setDetEditingIndex={this.props.setDetEditingIndex}
                 />
               </div>
-              <div className="col-md-1">
+              <div className="col-md-2">
                 <div style={{ textAlign: 'left', verticalAlign: 'bottom' }}>
-                  <label htmlFor="btnAddPerson">Add</label>
+                  <label htmlFor="btnAddPerson">Add det</label>
                   <button
                     type="button"
                     className="btn btn-default form-control"
@@ -666,23 +810,6 @@ export class SexAndStages extends React.Component<SexAndLifeStageProps> {
         <div className="row">
           <div className="col-md-12">
             <SexAndLifeStageTable {...this.props} />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div style={{ textAlign: 'right' }}>
-              <button
-                type="button"
-                className="btn btn-default"
-                id="btnAddSexAndStage"
-                onClick={e => {
-                  e.preventDefault();
-                  this.props.onAddSexAndLifeStage();
-                }}
-              >
-                Add
-              </button>
-            </div>
           </div>
         </div>
         <div className="row">
@@ -720,7 +847,7 @@ export default class ClassificationComponent extends React.Component<
         }
       ],
       currentTaxonClassificationIndex: 0,
-      sexAndStage: { sexAndStages: [{}], editingIndex: 0 }
+      sexAndStage: { sexAndStages: [{ estimated: '0' }], editingIndex: 0 }
     };
 
     this.getFullHybridName = this.getFullHybridName.bind(this);
@@ -1000,6 +1127,39 @@ export default class ClassificationComponent extends React.Component<
                     };
                   });
                 }}
+                onDeleteTaxon={(i: number) => {
+                  this.setState((ps: ClassificationHistoryState) => {
+                    const currentClassification =
+                      ps.taxonClassifications[ps.currentTaxonClassificationIndex];
+
+                    console.log('I', i);
+                    const currentTaxList = currentClassification.taxonNames;
+                    const newTaxList = [
+                      ...currentTaxList.slice(0, i),
+                      ...currentTaxList.slice(i + 1)
+                    ];
+                    const newI = i === newTaxList.length ? i - 1 : i;
+
+                    const newClassList = [
+                      ...ps.taxonClassifications.slice(
+                        0,
+                        ps.currentTaxonClassificationIndex
+                      ),
+                      {
+                        ...currentClassification,
+                        taxonNames: newTaxList,
+                        editingIndex: newI
+                      },
+                      ...ps.taxonClassifications.slice(
+                        ps.currentTaxonClassificationIndex + 1
+                      )
+                    ];
+                    return {
+                      ...ps,
+                      taxonClassifications: newClassList
+                    };
+                  });
+                }}
                 onAddTaxon={() => {
                   this.setState((ps: ClassificationHistoryState) => {
                     const newTaxonNames = [
@@ -1023,7 +1183,7 @@ export default class ClassificationComponent extends React.Component<
                         ),
                         {
                           ...currentClassification,
-                          editingIndex: currentClassification.editingIndex + 1,
+                          editingIndex: currentClassification.taxonNames.length,
                           taxonNames: newTaxonNames
                         },
                         ...ps.taxonClassifications.slice(
@@ -1060,7 +1220,7 @@ export default class ClassificationComponent extends React.Component<
                   });
                 }}
                 onChangeSexAndLifeStageField={(index: number) => (fieldName: string) => (
-                  value: any
+                  value: string | number
                 ) => {
                   this.setState((ps: ClassificationHistoryState) => {
                     const currentSexAndStage = ps.sexAndStage.sexAndStages[index];
@@ -1100,25 +1260,17 @@ export default class ClassificationComponent extends React.Component<
                 }}
                 onAddSexAndLifeStage={() => {
                   this.setState((ps: ClassificationHistoryState) => {
-                    const currSexAndStage = ps.sexAndStage || {
-                      sexAndStages: []
+                    const sexAndLifeStage: SexAndLifeStageState = ps.sexAndStage;
+                    const sexAndLifeArray = sexAndLifeStage.sexAndStages;
+                    const newSexAndLifeStage = {
+                      ...sexAndLifeStage,
+                      sexAndStages: [...sexAndLifeArray, { estimated: '0' }],
+                      editingIndex: sexAndLifeArray.length
                     };
-                    const newSexAndStage = [
-                      ...currSexAndStage.sexAndStages,
-                      {
-                        sex: undefined,
-                        stage: undefined,
-                        count: undefined,
-                        estimated: undefined
-                      }
-                    ];
+
                     return {
                       ...ps,
-                      sexAndStage: {
-                        ...ps.sexAndStage,
-                        sexAndStages: newSexAndStage,
-                        editingIndex: newSexAndStage.length - 1
-                      }
+                      sexAndStage: newSexAndLifeStage
                     };
                   });
                 }}
