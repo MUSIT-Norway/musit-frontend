@@ -42,6 +42,7 @@ interface TaxonSuggestComponentState {
 interface TaxonSuggestion {
   scientificName: string;
   scientificNameAuthorship: string;
+  taxonRank: string;
   acceptedNameUsage: TaxonSuggestion | null;
 }
 
@@ -97,16 +98,9 @@ export class TaxonSuggestComponent extends React.Component<
         onSuggestionsFetchRequested={this.requestSuggestionUpdate}
         onSuggestionsClearRequested={() => this.setState(() => ({ suggestions: [] }))}
         getSuggestionValue={(suggestion: TaxonSuggestion) => suggestion.scientificName}
-        renderSuggestion={(suggestion: TaxonSuggestion) => (
-          <span className={'suggestion-content'}>
-            {`${this.props.renderFunc(suggestion)}
-          } ${
-            suggestion.acceptedNameUsage != null
-              ? '[=' + this.props.renderFunc(suggestion.acceptedNameUsage) + ']'
-              : ''
-          } `}
-          </span>
-        )}
+        renderSuggestion={(suggestion: TaxonSuggestion) =>
+          this.props.renderFunc(suggestion)
+        }
         inputProps={{
           ...(this.TaxonProps as TODO),
           value: this.state.value

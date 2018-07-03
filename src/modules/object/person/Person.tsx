@@ -260,7 +260,7 @@ const AddPersonName = (props: {
   standAlone?: boolean;
 }) => (
   <div>
-    <h4> Add person name</h4>
+    <h4> Add one or more synonymes</h4>
     {props.standAlone ||
       (props.heading && <h5 style={{ color: 'red' }}>{props.heading}</h5>)}
     <div className="row">
@@ -333,148 +333,172 @@ const PersonNames = (props: {
 export const PersonPage = (props: PersonProps) => {
   return (
     <div className="container">
-      <form>
-        <div className="well">
-          <div className="row">
-            <div className="col-md-2">
+      <div className="panel panel-default">
+        <div className="panel-body">
+          <form>
+            <div className="well">
+              <div className="row">
+                <div className="col-md-2">
+                  <div className="form-group">
+                    <label htmlFor="legalEntityType">Legal entity type</label>
+                    <select className="form-control" id="legalEntityType">
+                      <option>Person</option>
+                      <option>Group</option>
+                      <option>Organisasion</option>
+                      <option>Institution</option>
+                      <option>Business</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="col-md-8">
+                  <FieldMultiSelect
+                    stringValue={props.collections}
+                    labelAbove
+                    options={[
+                      { label: 'Lav', value: 'L' },
+                      { label: 'Karplanter', value: 'V' },
+                      { label: 'Mose', value: 'M' },
+                      { label: 'Alger', value: 'A' },
+                      { label: 'Sopp', value: 'F' },
+                      { label: 'Terristiske evertebrater', value: 'TI' },
+                      { label: 'Terristiske evertebrater', value: 'MI' }
+                    ]}
+                    onChange={(event: string) => {
+                      props.onChangeCollections(event);
+                    }}
+                    title="Samlinger for person"
+                  />
+                </div>
+              </div>
+              <div className="well well-sm">
+                <h4>Full name</h4>
+                <div className="row">
+                  <div className="col-sm-3 form-group">
+                    <label htmlFor="title"> Tittel </label>
+                    <input
+                      id="title"
+                      className="form-control"
+                      type="text"
+                      value={(props.fullName && props.fullName.title) || ''}
+                      onChange={e => props.onChangeFullName('title')(e.target.value)}
+                    />
+                  </div>{' '}
+                  <div className="col-sm-3 form-group">
+                    <label htmlFor="firstName"> Fornavn </label>
+                    <input
+                      id="firstName"
+                      className="form-control"
+                      type="text"
+                      value={(props.fullName && props.fullName.firstName) || ''}
+                      onChange={e => props.onChangeFullName('firstName')(e.target.value)}
+                    />
+                  </div>{' '}
+                  <div className="col-sm-3 form-group">
+                    <label htmlFor="lastName"> Etternavn </label>
+                    <input
+                      id="lastName"
+                      className="form-control"
+                      type="text"
+                      value={(props.fullName && props.fullName.lastName) || ''}
+                      onChange={e => props.onChangeFullName('lastName')(e.target.value)}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="row form-group">
+                <div className="col-md-3">
+                  <label htmlFor="bornDate"> Født dato</label>
+                  <DatePicker
+                    onClear={props.onClearBornDate}
+                    onChange={props.onChangeBornDate}
+                  />
+                </div>
+                <div className="col-md-3">
+                  <label htmlFor="deathDate"> Død dato</label>
+                  <DatePicker
+                    onClear={props.onClearDeathDate}
+                    onChange={props.onChangeDeathDate}
+                  />
+                </div>
+                <div className="col-md-3">
+                  <label htmlFor="verbatimDate"> Verbatim dato</label>
+                  <input className="form-control" type="text" id="verbatimDate" />
+                </div>
+              </div>
               <div className="form-group">
-                <label htmlFor="legalEntityType">Legal entity type</label>
-                <select className="form-control" id="legalEntityType">
-                  <option>Person</option>
-                  <option>Group</option>
-                  <option>Organisasion</option>
-                  <option>Institution</option>
-                  <option>Business</option>
-                </select>
-              </div>
-            </div>
-            <div className="col-md-8">
-              <FieldMultiSelect
-                stringValue={props.collections}
-                labelAbove
-                options={[
-                  { label: 'Lav', value: 'L' },
-                  { label: 'Karplanter', value: 'V' },
-                  { label: 'Mose', value: 'M' },
-                  { label: 'Alger', value: 'A' },
-                  { label: 'Sopp', value: 'F' },
-                  { label: 'Terristiske evertebrater', value: 'TI' },
-                  { label: 'Terristiske evertebrater', value: 'MI' }
-                ]}
-                onChange={(event: string) => {
-                  props.onChangeCollections(event);
-                }}
-                title="Samlinger for person"
-              />
-            </div>
-          </div>
-          <div className="well well-sm">
-            <h4>Full name</h4>
-            <div className="row">
-              <div className="col-sm-3 form-group">
-                <label htmlFor="title"> Tittel </label>
+                <label htmlFor="url">URL</label>
                 <input
-                  id="title"
+                  type="url"
                   className="form-control"
-                  type="text"
-                  value={(props.fullName && props.fullName.title) || ''}
-                  onChange={e => props.onChangeFullName('title')(e.target.value)}
-                />
-              </div>{' '}
-              <div className="col-sm-3 form-group">
-                <label htmlFor="firstName"> Fornavn </label>
-                <input
-                  id="firstName"
-                  className="form-control"
-                  type="text"
-                  value={(props.fullName && props.fullName.firstName) || ''}
-                  onChange={e => props.onChangeFullName('firstName')(e.target.value)}
-                />
-              </div>{' '}
-              <div className="col-sm-3 form-group">
-                <label htmlFor="lastName"> Etternavn </label>
-                <input
-                  id="lastName"
-                  className="form-control"
-                  type="text"
-                  value={(props.fullName && props.fullName.lastName) || ''}
-                  onChange={e => props.onChangeFullName('lastName')(e.target.value)}
+                  id="url"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    props.onChange('url')(e.target.value)
+                  }
                 />
               </div>
             </div>
-          </div>
-          <div className="row form-group">
-            <div className="col-md-3">
-              <label htmlFor="bornDate"> Født dato</label>
-              <DatePicker
-                onClear={props.onClearBornDate}
-                onChange={props.onChangeBornDate}
-              />
-            </div>
-            <div className="col-md-3">
-              <label htmlFor="deathDate"> Død dato</label>
-              <DatePicker
-                onClear={props.onClearDeathDate}
-                onChange={props.onChangeDeathDate}
-              />
-            </div>
-            <div className="col-md-3">
-              <label htmlFor="verbatimDate"> Verbatim dato</label>
-              <input className="form-control" type="text" id="verbatimDate" />
-            </div>
-          </div>
-          <div className="form-group">
-            <label htmlFor="url">URL</label>
-            <input
-              type="url"
-              className="form-control"
-              id="url"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                props.onChange('url')(e.target.value)
-              }
-            />
-          </div>
-        </div>
-        <div className="well well-sm">
-          <ExternalIDStrings
-            externalIds={props.externalIds}
-            onAdd={props.onAddExternalId}
-            onChange={props.onChangeExternalIds}
-            onDelete={props.onDeleteExternalId}
-          />
-        </div>
-        <Synonymizer
-          state={props.synState}
-          onClickNext={props.onClickNext}
-          synPersons={[]}
-        />
-        <div className="well well-sm">
-          {props.synonymes &&
-            props.synonymes.length > 0 && (
-              <PersonNames
-                synonymes={props.synonymes}
+            <div className="well well-sm">
+              {props.synonymes &&
+                props.synonymes.length > 0 && (
+                  <PersonNames
+                    synonymes={props.synonymes}
+                    newPerson={props.newPerson}
+                    onChange={props.onChange}
+                    onClickAdd={props.onClickAdd}
+                  />
+                )}
+
+              <AddPersonName
                 newPerson={props.newPerson}
-                onChange={props.onChange}
-                onClickAdd={props.onClickAdd}
+                onChange={props.onChangePersonName}
+                standAlone={props.standAlone}
+                heading="Skal denne vises når man kommer fra person name?"
+              />
+
+              <button
+                type="button"
+                className="btn btn-default"
+                onClick={() => props.onClickAdd(props.newPerson)}
+              >
+                Add person name
+              </button>
+            </div>
+            <div className="well well-sm">
+              <ExternalIDStrings
+                externalIds={props.externalIds}
+                onAdd={props.onAddExternalId}
+                onChange={props.onChangeExternalIds}
+                onDelete={props.onDeleteExternalId}
+              />
+            </div>
+            {props.standAlone && (
+              <Synonymizer
+                state={props.synState}
+                onClickNext={props.onClickNext}
+                synPersons={[]}
               />
             )}
-
-          <AddPersonName
-            newPerson={props.newPerson}
-            onChange={props.onChangePersonName}
-            standAlone={props.standAlone}
-            heading="Skal denne vises når man kommer fra person name?"
-          />
-
-          <button
-            type="button"
-            className="btn btn-default"
-            onClick={() => props.onClickAdd(props.newPerson)}
-          >
-            Add person name
-          </button>
+          </form>
         </div>
-      </form>
+        <div className="panel-footer">
+          <div className="row">
+            <div className="col-md-12" style={{ textAlign: 'right' }}>
+              {' '}
+              <a
+                href="#"
+                onClick={e => {
+                  e.preventDefault();
+                }}
+              >
+                Cancel{' '}
+              </a>
+              <button type="button" className="btn btn-primary">
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
