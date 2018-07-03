@@ -1,12 +1,10 @@
 //@flow
-import React from 'react';
-import isNull from 'lodash/isNull';
-import isUndefined from 'lodash/isUndefined';
+import * as React from 'react';
+import { isNull, isUndefined, compact } from 'lodash';
 import { Row, Col } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
-import compact from 'lodash/compact';
 
-import type {
+import {
   ObjectData,
   ArkCoordinate,
   ArkMaterial,
@@ -16,56 +14,64 @@ import type {
   NatLocation
 } from '../../../types/object';
 import './ViewObjectData.css';
-import type { NamedPathElement } from 'types/object';
+import { NamedPathElement } from '../../../types/object';
+import { Maybe, MUSTFIX, TODO } from '../../../types/common';
+
+/*Many of the props below originally had the Flow "maybe" type, but they are used in situations which require value | undefined (not null),
+so I've removed null as an acceptable value for many of these
+Like subNo, natGender, natState, natLegData, arkForm, arkFindingNo, materials
+
+*/
 
 type ViewNatHistComponentProps = {
-  museumNo: string,
-  subNo?: ?string,
-  term: string,
-  natGender?: ?string,
-  natStage?: ?string,
-  natLegDate?: ?string,
-  currentLocation?: { pathNames: ?Array<NamedPathElement> },
-  locations?: ?Array<NatLocation>
+  museumNo: string;
+  subNo?: string;
+  term: string;
+  natGender?: string;
+  natStage?: string;
+  natLegDate?: string;
+  currentLocation?: { pathNames: Maybe<Array<NamedPathElement>> };
+  locations?: Array<NatLocation> | null;
 };
 
 type ViewNatNumisComponentProps = {
-  museumNo: string,
-  subNo?: ?string,
-  term: string,
-  currentLocation?: { pathNames: ?Array<NamedPathElement> }
+  museumNo: string;
+  subNo?: string;
+  term: string;
+  currentLocation?: { pathNames: Maybe<Array<NamedPathElement>> };
 };
 
 type ViewArcheologyComponentProps = {
-  museumNo: string,
-  subNo?: ?string,
-  term: string,
-  arkForm?: ?string,
-  arkFindingNo?: ?string,
-  locations?: ?Array<ArkLocation>,
-  materials?: ?Array<ArkMaterial>,
-  currentLocation?: { pathNames: ?Array<NamedPathElement> },
-  coordinates?: ?Array<ArkCoordinate>
+  museumNo: string;
+  subNo?: string;
+  term: string;
+  arkForm?: string;
+  arkFindingNo?: string;
+  locations?: Array<ArkLocation> | null;
+  materials?: Array<ArkMaterial>;
+  currentLocation?: { pathNames: Maybe<Array<NamedPathElement>> };
+  coordinates?: ArkCoordinate[] | null;
 };
 
 type ViewEntographyComponentProps = {
-  museumNo: string,
-  subNo?: ?string,
-  term: string,
-  currentLocation?: { pathNames: ?Array<NamedPathElement> },
-  locations?: ?Array<EtnoLocation>,
-  materials?: ?Array<EtnoMaterial>
+  museumNo: string;
+  subNo?: string;
+  term: string;
+  currentLocation?: { pathNames: Maybe<Array<NamedPathElement>> };
+  locations?: Array<EtnoLocation> | null;
+  materials?: Array<EtnoMaterial>;
 };
 
 type ViewObjectDataProps = {
-  objectData: ObjectData
+  objectData: ObjectData;
 };
 
-const isNatHistCollection = (collection: ?number): boolean =>
+const isNatHistCollection = (collection: Maybe<number>): boolean =>
   [4, 5, 6, 7, 8, 9].some(x => x === collection);
-const isArcheologyCollection = (collection: ?number): boolean => 1 === collection;
-const isEtnographyHistCollection = (collection: ?number): boolean => 2 === collection;
-const isNumismaticCollection = (collection: ?number): boolean => 3 === collection;
+const isArcheologyCollection = (collection: Maybe<number>): boolean => 1 === collection;
+const isEtnographyHistCollection = (collection: Maybe<number>): boolean =>
+  2 === collection;
+const isNumismaticCollection = (collection: Maybe<number>): boolean => 3 === collection;
 
 const getCommaSeparatedStringFromObj = (obj: any) =>
   compact(Object.values(obj)).join(', ');
@@ -75,7 +81,7 @@ const writeArkMaterials = (materials: Array<ArkMaterial>) =>
     .map((m: ArkMaterial) => `${m.material}${m.spesMaterial ? `/${m.spesMaterial}` : ''}`)
     .join(', ');
 
-const currentMagasinLocation = (pathNames: ?Array<NamedPathElement>) =>
+const currentMagasinLocation = (pathNames: Maybe<Array<NamedPathElement>>) =>
   pathNames
     ? pathNames.reduce(
         (akk: string, o: any, ind: number) =>
@@ -111,7 +117,11 @@ const writeEtnoLocations = (locations: Array<EtnoLocation>) => {
   ));
 };
 
-const LabeledDataCol = (props: { md: number, label: string, value: ?string }) => (
+const LabeledDataCol = (props: {
+  md: number;
+  label: string;
+  value: string | undefined;
+}) => (
   <Col md={props.md}>
     <span className="ViewObjectData_text-overflow">
       <b>{I18n.t(props.label)}:</b> <span title={props.value}>{props.value}</span>
@@ -167,7 +177,7 @@ const viewNatHistObject = ({
         <LabeledDataCol
           md={12}
           label="musit.objects.objectsView.coordinate"
-          value={coordinate}
+          value={coordinate as MUSTFIX}
         />
       </Row>
       <Row>
@@ -310,15 +320,15 @@ export const ViewObjectData = (props: ViewObjectDataProps) => {
     return <div className="loading" />;
   }
   if (isArcheologyCollection(objectData.collection)) {
-    return viewArcheologyObject(objectData);
+    return viewArcheologyObject(objectData as TODO);
   } else if (isEtnographyHistCollection(objectData.collection)) {
-    return viewEtnographyObject(objectData);
+    return viewEtnographyObject(objectData as TODO);
   } else if (isNatHistCollection(objectData.collection)) {
-    return viewNatHistObject(objectData);
+    return viewNatHistObject(objectData as TODO);
   } else if (isNumismaticCollection(objectData.collection)) {
-    return viewNumisObject(objectData);
+    return viewNumisObject(objectData as TODO);
   } else {
-    const pathNames: ?Array<NamedPathElement> =
+    const pathNames: Maybe<Array<NamedPathElement>> =
       props.objectData.currentLocation && props.objectData.currentLocation.pathNames;
     return (
       <div className="unknown">

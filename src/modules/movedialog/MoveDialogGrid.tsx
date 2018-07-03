@@ -1,16 +1,22 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import { Component } from 'react';
 import { Table, FormGroup } from 'react-bootstrap';
-import FontAwesome from 'react-fontawesome';
+import * as FontAwesome from 'react-fontawesome';
 import './MoveDialogGrid.css';
 import { I18n } from 'react-i18nify';
 
-export default class ModalNodeGrid extends Component {
+interface ModalNodeGridProps {
+  tableData: Array<{ name: string; type: string }>;
+  onClick: Function;
+}
+/*#OLD
   static propTypes = {
     tableData: PropTypes.arrayOf(PropTypes.object),
     onClick: PropTypes.func.isRequired
   };
 
+*/
+export default class ModalNodeGrid extends Component<ModalNodeGridProps> {
   render() {
     return (
       <FormGroup>

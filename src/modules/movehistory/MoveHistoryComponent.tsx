@@ -17,17 +17,27 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 import './MoveHistoryComponent.css';
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import { Component } from 'react';
+import * as PropTypes from 'prop-types';
 import ModalMoveHistoryGrid from './ModalMoveHistoryGrid';
 import Modal from '../../components/modal/MusitModal';
 import CancelButton from '../../components/buttons/cancel';
 import { I18n } from 'react-i18nify';
 import moveHistoryStore$, { clear$, loadMoveHistory$ } from './moveHistoryStore';
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
+import { MUSTFIX } from '../../types/common';
+import { AppSession } from '../../types/appSession';
 
-export class MoveHistoryComponent extends Component {
-  static propTypes = {
+interface MoveHistoryProps {
+  moveHistoryStore: MUSTFIX;
+  objectId: string;
+  appSession: AppSession;
+  loadMoveHistory: Function;
+  clear: Function;
+}
+/* Old:
+ static propTypes = {
     moveHistoryStore: PropTypes.object.isRequired,
     objectId: PropTypes.string.isRequired,
     appSession: PropTypes.object.isRequired,
@@ -35,6 +45,8 @@ export class MoveHistoryComponent extends Component {
     clear: PropTypes.func.isRequired
   };
 
+*/
+export class MoveHistoryComponent extends Component<MoveHistoryProps> {
   static contextTypes = {
     closeModal: PropTypes.func
   };

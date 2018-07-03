@@ -16,8 +16,9 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import { Component } from 'react';
+import * as PropTypes from 'prop-types';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import ModalNodeGrid from './MoveDialogGrid';
 import NodeSuggest from '../../components/suggest/NodeSuggest';
@@ -34,11 +35,24 @@ import moveDialogStore$, {
   setPage$,
   PER_PAGE
 } from './moveDialogStore';
-import Loader from 'react-loader';
+import * as Loader from 'react-loader';
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
+import { AppSession } from '../../types/appSession';
+import { TODO } from '../../types/common';
+import { MoveDialogStoreState } from './moveDialogStore';
+interface MoveDialogComponentProps {
+  onMove: Function;
+  loadNode: Function;
+  loadChildren: Function;
+  clear: Function;
+  setLoading: Function;
+  setPage: Function;
+  moveDialogStore: MoveDialogStoreState;
+  appSession: AppSession;
+}
 
-export class MoveDialogComponent extends Component {
-  static propTypes = {
+/* Old:
+ static propTypes = {
     onMove: PropTypes.func.isRequired,
     loadNode: PropTypes.func.isRequired,
     loadChildren: PropTypes.func.isRequired,
@@ -48,7 +62,8 @@ export class MoveDialogComponent extends Component {
     moveDialogStore: PropTypes.object,
     appSession: PropTypes.object.isRequired
   };
-
+*/
+export class MoveDialogComponent extends Component<MoveDialogComponentProps> {
   static contextTypes = {
     closeModal: PropTypes.func.isRequired
   };
@@ -67,7 +82,7 @@ export class MoveDialogComponent extends Component {
     });
   }
 
-  loadNode(id, currentPage = 1) {
+  loadNode(id: TODO, currentPage = 1) {
     this.props.clear();
     this.props.setPage(currentPage);
     this.props.setLoading(true);
@@ -98,7 +113,7 @@ export class MoveDialogComponent extends Component {
           appSession={this.props.appSession}
           label="Search"
           id="nodeSearch"
-          onChange={v => (v ? this.loadNode(v) : null)}
+          onChange={(v: TODO) => (v ? this.loadNode(v) : null)}
           placeHolder={I18n.t('musit.moveModal.nodeSuggestPlaceholder')}
         />
       </div>
@@ -119,14 +134,14 @@ export class MoveDialogComponent extends Component {
         <div>
           <ModalNodeGrid
             tableData={data.matches}
-            onClick={n => this.loadNode(n.nodeId)}
+            onClick={(n: TODO) => this.loadNode(n.nodeId)}
           />
           {data.totalMatches > PER_PAGE && (
             <PagingToolbar
               numItems={data.totalMatches}
               currentPage={page}
               perPage={PER_PAGE}
-              onClick={currentPage =>
+              onClick={(currentPage: number) =>
                 this.loadNode(selectedNode && selectedNode.nodeId, currentPage)
               }
             />
@@ -140,7 +155,7 @@ export class MoveDialogComponent extends Component {
         {I18n.t('musit.moveModal.currentDestination')}
         <Breadcrumb
           node={selectedNode}
-          onClickCrumb={node => {
+          onClickCrumb={(node: TODO) => {
             return node.nodeId === -1 || !node.nodeId
               ? this.loadHome()
               : this.loadNode(node.nodeId);

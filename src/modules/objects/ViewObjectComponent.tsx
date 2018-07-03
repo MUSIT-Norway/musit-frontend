@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import {
   Tabs,
   Tab,
@@ -10,32 +10,34 @@ import {
   Col,
   ControlLabel
 } from 'react-bootstrap';
-import type { ObjectData } from '../../types/object';
-import type { Samples, SampleStatus } from '../../types/samples';
-import type { Events } from '../../types/events';
-import type { AnalysisTypesObject } from '../../types/analysis';
-import type { SampleTypesObject } from '../../types/sample';
+import { ObjectData } from '../../types/object';
+import { Samples, SampleStatus, SampleData } from '../../types/samples';
+import { Events } from '../../types/events';
+import { AnalysisTypesObject } from '../../types/analysis';
+import { SampleTypesObject } from '../../types/sample';
 import EventTable from '../events/components/EventTable';
-import type { PredefinedConservation } from '../../types/predefinedConservation';
+import { PredefinedConservation } from '../../types/predefinedConservation';
 import SampleTable from '../sample/components/SampleTable';
 import ViewObjectData from './components/ViewObjectData';
 import Config from '../../config';
-import type { AppSession } from '../../types/appSession';
-import type { History } from 'types/Routes';
+import { AppSession } from '../../types/appSession';
+//import { History } from 'types/Routes';
+import { History } from 'history';
 import { I18n } from 'react-i18nify';
+import { TODO } from '../../types/common';
 
 type ViewObjectComponentProps = {
-  objectStore: { objectData: ObjectData, events: Events, samples: Samples },
-  appSession: AppSession,
-  analysisTypes: AnalysisTypesObject,
-  sampleTypes: SampleTypesObject,
-  predefinedConservation: PredefinedConservation,
-  pickObject: Function,
-  isItemAdded: Function,
-  pickList: Object,
-  sampleStatus: SampleStatus,
-  history: History,
-  loading: boolean
+  objectStore: { objectData: ObjectData; events: Events; samples: Samples };
+  appSession: AppSession;
+  analysisTypes: AnalysisTypesObject;
+  sampleTypes: SampleTypesObject;
+  predefinedConservation: PredefinedConservation;
+  pickObject: Function;
+  isItemAdded: Function;
+  pickList: Object;
+  sampleStatus: SampleStatus;
+  history: History;
+  loading: boolean;
 };
 
 export const ViewObjectComponent = ({
@@ -128,7 +130,7 @@ export const ViewObjectComponent = ({
                 : []
             }
             appSession={appSession}
-            onClick={event => {
+            onClick={(event: TODO) => {
               if (event.type === 'Analysis' || event.type === 'AnalysisCollection') {
                 history.push({
                   pathname: Config.magasin.urls.client.analysis.viewAnalysis(
@@ -150,7 +152,7 @@ export const ViewObjectComponent = ({
         <Tab title={I18n.t('musit.objects.objectsView.samples.samples')} eventKey={2}>
           <SampleTable
             samples={samples}
-            onClick={sample => {
+            onClick={(sample: SampleData) => {
               history.push({
                 pathname: Config.magasin.urls.client.analysis.gotoSample(
                   appSession,

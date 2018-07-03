@@ -6,16 +6,17 @@ import objectStore$, {
   loadObject$,
   loadMoveAndAnalysisEvents$,
   loadSampleEvents$,
-  clearStore$
+  clearStore$,
+  ObjectStoreState
 } from './objectStore';
 import store$, { getAnalysisTypes$ } from '../analysis/analysisStore';
 import sampleStore$, { getSampleTypes$ } from '../sample/sampleStore';
 import predefinedConservation$, {
   loadConservationTypes$
 } from '../../stores/predefinedConservation';
-import PropTypes from 'prop-types';
+import * as PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
-import flowRight from 'lodash/flowRight';
+import { flowRight } from 'lodash';
 import lifeCycle from '../../shared/lifeCycle';
 import { toggleObject$ } from '../../stores/pickList';
 import { isItemAdded } from '../../stores/pickList';
@@ -23,6 +24,9 @@ import MusitObject from '../../models/object';
 import sample from '../../models/sample';
 import { simpleGet } from '../../shared/RxAjax';
 import { I18n } from 'react-i18nify';
+import { Star, TODO } from '../../types/common';
+import { SampleTypes } from '../../types/predefined';
+import { History } from 'history';
 
 const data: {} = {
   appSession$: { type: PropTypes.instanceOf(Observable).isRequired },
@@ -33,7 +37,13 @@ const data: {} = {
   pickList$: { type: PropTypes.object.isRequired }
 };
 
-const props: {} = props => ({
+type LocalProps = {
+  sampleTypes: SampleTypes; //TODO: Is this correct?
+  objectStore: ObjectStoreState;
+  history: History;
+};
+
+const props: {} = (props: LocalProps) => ({
   ...props,
   loading:
     !(props.sampleTypes.sampleTypes && props.sampleTypes.sampleTypes.find) ||
@@ -65,7 +75,7 @@ export const onMount = ({
   getAnalysisTypes,
   getSampleTypes,
   loadConservationTypes
-}: *) => {
+}: Star) => {
   const uuid: string = match.params.id;
   const museumId: number = appSession.museumId;
   const accessToken: string = appSession.accessToken;
@@ -82,7 +92,7 @@ export const onMount = ({
   loadMoveAndAnalysisEvents({
     ...ajaxProps,
     callback: {
-      onFailure: e => {
+      onFailure: (e: TODO) => {
         if (e.status === 403 && e.request.url.match('/.*analyses.*/')) {
           emitWarning({
             message: I18n.t('musit.errorMainMessages.objects.notAllowedToSeeAnalysis')
@@ -108,7 +118,7 @@ export const onMount = ({
   loadConservationTypes(ajaxProps);
 };
 
-const onUnmount = props => {
+const onUnmount = (props: TODO) => {
   props.clearStore();
 };
 

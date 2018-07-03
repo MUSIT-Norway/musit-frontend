@@ -30,20 +30,22 @@ export type EnvironmentRequirement = {
 
 export interface Node {
   id: number;
-  nodeId: string;
-  name: string;
-  area: Maybe<number>;
-  areaTo: Maybe<number>;
-  isPartOf: Maybe<number>;
-  height: Maybe<number>;
-  heightTo: Maybe<number>;
-  groupRead: Maybe<string>;
-  groupWrite: Maybe<string>;
-  path: string;
-  pathNames: Maybe<Array<PathName>>;
-  environmentRequirement: Maybe<EnvironmentRequirement>;
-  storageType: string;
-  updatedBy: Maybe<string>;
-  updatedDate: Maybe<string>;
+  nodeId?: string;
+  name?: string;
+  area?: number | null;
+  areaTo?: number | null;
+  isPartOf?: number | null;
+  height?: number | null;
+  heightTo?: number | null;
+  groupRead?: string | null;
+  groupWrite?: string | null;
+  path?: string;
+  pathNames?: PathName[] | null;
+  environmentRequirement?: EnvironmentRequirement | null;
+  storageType?: string;
+  updatedBy?: string | null;
+  updatedDate?: string | null;
   type?: string;
+  museumId?: number;
+  token?: string;
 }

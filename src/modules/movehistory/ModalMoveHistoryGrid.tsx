@@ -1,16 +1,23 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import { Component } from 'react';
 import { Table, FormGroup } from 'react-bootstrap';
 import { parseISODate, DATE_FORMAT_DISPLAY } from '../../shared/util';
 import { I18n } from 'react-i18nify';
+import { TODO } from '../../types/common';
 
-export default class ModalMoveHistoryGrid extends Component {
-  static propTypes = {
-    tableData: PropTypes.arrayOf(PropTypes.object)
-  };
+interface ModalMoveHistoryGridProps {
+  tableData: TODO[];
+}
+/* Old:
 
+static propTypes = {
+  tableData: PropTypes.arrayOf(PropTypes.object)
+};
+*/
+
+export default class ModalMoveHistoryGrid extends Component<ModalMoveHistoryGridProps> {
   render() {
-    const toPathStr = pathArr => pathArr.map(o => o.name).join('  /  ');
+    const toPathStr = (pathArr: TODO[]) => pathArr.map(o => o.name).join('  /  ');
     return (
       <FormGroup>
         <div>
@@ -24,7 +31,7 @@ export default class ModalMoveHistoryGrid extends Component {
               </tr>
             </thead>
             <tbody style={{ fontSize: '12px', padding: '10px' }}>
-              {[].concat(this.props.tableData).map((c, i) => (
+              {[].concat(this.props.tableData as TODO).map((c: TODO, i) => (
                 <tr key={i}>
                   <td>{` ${parseISODate(c.doneDate).format(DATE_FORMAT_DISPLAY)}`}</td>
                   <td>{` ${c.doneBy}`}</td>
