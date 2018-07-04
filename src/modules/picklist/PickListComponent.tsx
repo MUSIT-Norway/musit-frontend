@@ -1,7 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import { PageHeader, Grid, Table } from 'react-bootstrap';
-import FontAwesome from 'react-fontawesome';
+import * as FontAwesome from 'react-fontawesome';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { I18n } from 'react-i18nify';
 import MusitModal from '../movedialog/MoveDialogComponent';
@@ -10,10 +9,40 @@ import './PickListComponent.css';
 import Config from '../../config';
 import PrintTemplate from '../print/PrintTemplateContainer';
 import ScannerButton from '../../components/scanner/ScannerButton';
+import { TODO } from '../../types/common';
+import { AppSession } from '../../types/appSession';
+import { History } from 'history';
 
-export class PickListComponent extends React.Component {
-  static propTypes = {
-    pickList: PropTypes.object.isRequired,
+interface PickListComponentProps {
+  pickList: object;
+  markNode: Function;
+  markObject: Function;
+  markMainObject: Function;
+  removeNode: Function;
+  removeObject: Function;
+  appSession: AppSession;
+  refreshNode: Function;
+  refreshObjects: Function;
+  emitError: Function;
+  emitSuccess: Function;
+  toggleScanner: Function;
+  scannerEnabled: boolean;
+  moveItems: Function;
+  createSample: Function;
+  createAnalysis: Function;
+  createConservation: Function;
+
+  // TODO:
+  //Lagt til Feb 2018 for å få den til å kompile, må sjekke om disse faktisk er riktige/behøves
+  isTypeNode: boolean;
+  showModal: Function;
+  history: History;
+  createMultipleSamples: Function;
+  type: TODO;
+}
+
+/*Old: 
+   pickList: PropTypes.object.isRequired,
     markNode: PropTypes.func.isRequired,
     markObject: PropTypes.func.isRequired,
     markMainObject: PropTypes.func.isRequired,
@@ -30,15 +59,15 @@ export class PickListComponent extends React.Component {
     createSample: PropTypes.func.isRequired,
     createAnalysis: PropTypes.func.isRequired,
     createConservation: PropTypes.func.isRequired
-  };
-
-  constructor(props) {
+ */
+export class PickListComponent extends React.Component<PickListComponentProps> {
+  constructor(props: PickListComponentProps) {
     super(props);
     this.print = this.print.bind(this);
     this.showMoveNodes = this.showMoveNodes.bind(this);
   }
 
-  showMoveNodes(items) {
+  showMoveNodes(items: TODO) {
     let title;
     if (this.props.isTypeNode) {
       title = I18n.t('musit.moveModal.moveNodes');
@@ -54,14 +83,14 @@ export class PickListComponent extends React.Component {
     );
   }
 
-  print(nodesToPrint) {
+  print(nodesToPrint: TODO) {
     this.props.showModal(
       I18n.t('musit.template.labelTemplates'),
       <PrintTemplate appSession={this.props.appSession} marked={nodesToPrint} />
     );
   }
 
-  toggleObject({ item, on }) {
+  toggleObject({ item, on }: TODO) {
     if (item.mainObjectId && MusitObject.isMainObject(item)) {
       this.props.markMainObject({ item, on });
     } else {
@@ -69,7 +98,7 @@ export class PickListComponent extends React.Component {
     }
   }
 
-  iconRenderer(pick) {
+  iconRenderer(pick: TODO) {
     if (pick.value.name) {
       return <FontAwesome name="folder" />;
     }
@@ -79,7 +108,7 @@ export class PickListComponent extends React.Component {
     return <span className="icon icon-musitobject" />;
   }
 
-  labelRenderer(isNode, pick, historyPush) {
+  labelRenderer(isNode: boolean, pick: TODO, historyPush: TODO) {
     return (
       <div>
         {!isNode && pick.value.sampleNum ? (
@@ -97,7 +126,7 @@ export class PickListComponent extends React.Component {
         <div className="labelText">
           <Breadcrumb
             node={pick.path}
-            onClickCrumb={node => {
+            onClickCrumb={(node: TODO) => {
               if (node.nodeId) {
                 historyPush(
                   Config.magasin.urls.client.storagefacility.goToNode(
@@ -120,7 +149,7 @@ export class PickListComponent extends React.Component {
     );
   }
 
-  selectedCount(isNode, count) {
+  selectedCount(isNode: boolean, count: number) {
     return (
       <span
         className="normalActionNoPadding"
@@ -137,14 +166,14 @@ export class PickListComponent extends React.Component {
     );
   }
 
-  remove(item) {
+  remove(item: TODO) {
     if (this.props.isTypeNode) {
       this.props.removeNode(item);
     } else {
       this.props.removeObject(item);
     }
   }
-  toggle(item, on) {
+  toggle(item: TODO, on?: TODO) {
     if (this.props.isTypeNode) {
       this.props.markNode({ item, on });
     } else {
@@ -155,9 +184,9 @@ export class PickListComponent extends React.Component {
   render() {
     const type = this.props.type;
     const pickList = this.props.pickList[type] || [];
-    const marked = pickList.filter(p => p.marked);
-    const markedSamples = marked.filter(p => p.value.objectType === 'sample');
-    const markedValues = marked.map(p => p.value);
+    const marked = pickList.filter((p: TODO) => p.marked);
+    const markedSamples = marked.filter((p: TODO) => p.value.objectType === 'sample');
+    const markedValues = marked.map((p: TODO) => p.value);
     const isNode = this.props.isTypeNode;
     const isObject = !isNode;
     const isMoveAllowed = isObject
@@ -205,7 +234,7 @@ export class PickListComponent extends React.Component {
                       type="checkbox"
                       checked={marked.length === pickList.length && pickList.length !== 0}
                       onChange={e =>
-                        this.toggle(pickList.map(p => p.value), e.target.checked)
+                        this.toggle(pickList.map((p: TODO) => p.value), e.target.checked)
                       }
                       title={I18n.t('musit.pickList.tooltip.checkBoxMarkAll')}
                     />
@@ -216,7 +245,7 @@ export class PickListComponent extends React.Component {
                         className="normalActionNoPadding"
                         style={{
                           fontSize: '1.5em',
-                          color: marked.length < 1 ? 'grey' : null
+                          color: marked.length < 1 ? 'grey' : undefined
                         }}
                         name="print"
                         onClick={() => {
@@ -284,7 +313,7 @@ export class PickListComponent extends React.Component {
                       name="truck"
                       style={{
                         fontSize: '1.5em',
-                        color: isMoveAllowed ? null : 'grey'
+                        color: isMoveAllowed ? undefined : 'grey'
                       }}
                       onClick={() => {
                         if (isMoveAllowed) {
@@ -307,7 +336,7 @@ export class PickListComponent extends React.Component {
                         className="normalAction"
                         style={{
                           fontSize: '1.5em',
-                          color: conservationEnabled ? null : 'grey'
+                          color: conservationEnabled ? undefined : 'grey'
                         }}
                         name="bank"
                         onClick={() => {
@@ -335,7 +364,7 @@ export class PickListComponent extends React.Component {
                       className="normalAction"
                       style={{
                         fontSize: '1.5em',
-                        color: marked.length < 1 ? 'grey' : null
+                        color: marked.length < 1 ? 'grey' : undefined
                       }}
                       name="remove"
                       onClick={() => {
@@ -356,7 +385,7 @@ export class PickListComponent extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                {pickList.map((pick, i) => {
+                {pickList.map((pick: TODO, i: number) => {
                   const item = pick.value;
                   const isItemMarked = pick.marked;
                   const isMainObject =
@@ -367,7 +396,11 @@ export class PickListComponent extends React.Component {
                     <tr
                       key={i}
                       className={
-                        isChildObject ? 'childObject' : isMainObject && 'mainObject'
+                        isChildObject
+                          ? 'childObject'
+                          : isMainObject
+                            ? 'mainObject'
+                            : undefined
                       }
                     >
                       <td
@@ -381,15 +414,11 @@ export class PickListComponent extends React.Component {
                           {!item.mainObjectId || isMainObject ? (
                             <input
                               type="checkbox"
-                              checked={isItemMarked ? 'checked' : ''}
+                              checked={isItemMarked}
                               onChange={() => this.toggle(item)}
                             />
                           ) : (
-                            <input
-                              type="checkbox"
-                              checked={isItemMarked ? 'checked' : ''}
-                              disabled
-                            />
+                            <input type="checkbox" checked={isItemMarked} disabled />
                           )}
                         </span>
                       </td>

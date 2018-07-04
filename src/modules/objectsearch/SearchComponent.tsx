@@ -1,32 +1,33 @@
 // @flow
 
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
-import FontAwesome from 'react-fontawesome';
+import * as FontAwesome from 'react-fontawesome';
 import SearchInputFormComponent from './SearchInputFormComponent';
 import './searchComponent.css';
 import Pagination from '../../search/components/pagination';
 import SearchStats from '../../search/components/SearchStats';
 import pullRight from '../../shared/pullRight';
 import Breadcrumb from '../../components/layout/Breadcrumb';
-import type { ObjectData } from '../../types/object';
+import { ObjectData } from '../../types/object';
 
-import type { SearchStoreState, ChangePage } from '../../search/searchStore';
-import type { SearchHit } from '../../types/search';
-import type { SampleData } from '../../types/samples';
+import { SearchStoreState, ChangePage } from '../../search/searchStore';
+import { SearchHit } from '../../types/search';
+import { SampleData } from '../../types/samples';
 
-import type { Node } from '../../types/node';
-import Loader from 'react-loader';
+import { Node } from '../../types/node';
+import * as Loader from 'react-loader';
 import { emitWarning } from '../../shared/errors';
 import { archaeologyCollectionUuid } from '../../shared/util';
 import NavigateSearch from '../../search/NavigateSearch';
-import type { AppSession } from '../../types/appSession';
+import { AppSession } from '../../types/appSession';
+import { Maybe } from '../../types/common';
 
 export type Events = {
-  onClickHeader: (hit: SearchHit) => void,
-  onClickShoppingCart: (hit: SearchHit) => void,
-  isObjectAdded: (hit: SearchHit) => boolean,
-  onClickBreadcrumb: (node: Node, isObject: boolean) => void
+  onClickHeader: (hit: SearchHit) => void;
+  onClickShoppingCart: (hit: SearchHit) => void;
+  isObjectAdded: (hit: SearchHit) => boolean;
+  onClickBreadcrumb: (node: Node, isObject: boolean) => void;
 };
 
 /*
@@ -37,34 +38,34 @@ function CollectionResultHit(props: ResultHitProps) {
 
 */
 export type Getters = {
-  getObject: (hit: SearchHit) => ?ObjectData,
-  getSampleTypeStr: (sample: SampleData) => string
+  getObject: (hit: SearchHit) => ObjectData | undefined;
+  getSampleTypeStr: (sample: SampleData) => string;
 };
 
 export type EventsAndGetters = Events & Getters;
 
 export type SearchComponentProps = {
-  searchStore: SearchStoreState,
-  onChangeQueryParam: (string, string) => void,
-  onChangePage: (change: ChangePage) => void,
-  onSearch: (databaseSearch: boolean) => void,
-  onClearSearch: () => void,
-  history: () => void,
-  appSession: AppSession,
-  onClickAddAllToShoppingCart: (hit: Array<SearchHit>) => void
+  searchStore: SearchStoreState;
+  onChangeQueryParam: (p1: string, p2: string) => void;
+  onChangePage: (change: ChangePage) => void;
+  onSearch: (databaseSearch: boolean) => void;
+  onClearSearch: () => void;
+  history: () => void;
+  appSession: AppSession;
+  onClickAddAllToShoppingCart: (hit: Array<SearchHit>) => void;
 } & EventsAndGetters;
 
 export type ResultHitProps = {
-  hit: SearchHit
+  hit: SearchHit;
 } & EventsAndGetters;
 
 export type RenderResultHitsProps = {
-  hits: Array<SearchHit>
+  hits: Array<SearchHit>;
 } & EventsAndGetters;
 
 const CollectionResultHit = (props: ResultHitProps) => {
   // we know the type due to the index and type from elasticsearch
-  const collObject = (props.hit._source: ?ObjectData);
+  const collObject = props.hit._source as Maybe<ObjectData>;
   if (!collObject) return null;
   return (
     <div className="media musit__media--search">
@@ -97,13 +98,13 @@ const CollectionResultHit = (props: ResultHitProps) => {
               : ''}
           </div>
           <div className="col-md-3">
-            {(collObject: ObjectData).currentLocation &&
-            (collObject: any).currentLocation.breadcrumb &&
-            (collObject: any).currentLocation.breadcrumb.length > 0 ? (
+            {(collObject as ObjectData).currentLocation &&
+            (collObject as any).currentLocation.breadcrumb &&
+            (collObject as any).currentLocation.breadcrumb.length > 0 ? (
               <span className="labelText">
                 <Breadcrumb
                   node={collObject.currentLocation}
-                  onClickCrumb={x => props.onClickBreadcrumb(x, true)}
+                  onClickCrumb={(x: Node) => props.onClickBreadcrumb(x, true)}
                   allActive
                 />
               </span>
@@ -137,8 +138,8 @@ const CollectionResultHit = (props: ResultHitProps) => {
 
 const SampleResultHit = (props: ResultHitProps) => {
   // we know the type due to the index and type from elasticsearch
-  const sample: ?SampleData = props.hit._source;
-  const object: ?ObjectData = props.getObject(props.hit);
+  const sample: Maybe<SampleData> = props.hit._source;
+  const object: Maybe<ObjectData> = props.getObject(props.hit);
   return sample ? (
     <div className="media musit__media--search">
       <div className="media-left">
@@ -179,7 +180,7 @@ const SampleResultHit = (props: ResultHitProps) => {
               <span className="labelText">
                 <Breadcrumb
                   node={sample.currentLocation}
-                  onClickCrumb={x => props.onClickBreadcrumb(x, false)}
+                  onClickCrumb={(x: Node) => props.onClickBreadcrumb(x, false)}
                   allActive
                 />
               </span>
@@ -217,7 +218,7 @@ const UnknownResultHit = (props: ResultHitProps) => (
   </div>
 );
 
-const getResultHitComponent = (hit: SearchHit): React$ComponentType<ResultHitProps> => {
+const getResultHitComponent = (hit: SearchHit): React.ComponentType<ResultHitProps> => {
   let component;
   if (hit._type === 'collection') {
     component = CollectionResultHit;
@@ -277,15 +278,15 @@ const toggleAll = (
 );
 
 const SearchResultItem = (props: {
-  onChangePage: (change: ChangePage) => void,
-  searchStore: SearchStoreState,
-  onClickHeader: (hit: SearchHit) => void,
-  onClickShoppingCart: (hit: SearchHit) => void,
-  getObject: (hit: SearchHit) => ?ObjectData,
-  getSampleTypeStr: (sample: SampleData) => string,
-  isObjectAdded: (hit: SearchHit) => boolean,
-  onClickBreadcrumb: (node: Node, isObject: boolean) => void,
-  onClickAddAllToShoppingCart: (hit: Array<SearchHit>) => void
+  onChangePage: (change: ChangePage) => void;
+  searchStore: SearchStoreState;
+  onClickHeader: (hit: SearchHit) => void;
+  onClickShoppingCart: (hit: SearchHit) => void;
+  getObject: (hit: SearchHit) => ObjectData | undefined;
+  getSampleTypeStr: (sample: SampleData) => string;
+  isObjectAdded: (hit: SearchHit) => boolean;
+  onClickBreadcrumb: (node: Node, isObject: boolean) => void;
+  onClickAddAllToShoppingCart: (hit: Array<SearchHit>) => void;
 }) => {
   console.log('SearchComponent > SearchResultItem > props', props.searchStore);
   const result = props.searchStore.result;

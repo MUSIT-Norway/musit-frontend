@@ -1,17 +1,17 @@
 // @flow
 
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
-import min from 'lodash/min';
+import { min } from 'lodash';
 
-import type { SearchStoreState } from '../searchStore';
+import { SearchStoreState } from '../searchStore';
 
 export type Props = {
-  searchStore: SearchStoreState
+  searchStore: SearchStoreState;
 };
 
 const SearchStats = (props: Props) =>
-  props.searchStore.result && (
+  props.searchStore.result ? (
     <div>
       {I18n.t('musit.search.stats', {
         from: props.searchStore.from + 1,
@@ -23,6 +23,8 @@ const SearchStats = (props: Props) =>
         timeUsed: props.searchStore.result ? props.searchStore.result.took : 0
       })}
     </div>
+  ) : (
+    <div />
   );
 
 export default SearchStats;

@@ -1,16 +1,17 @@
 // @flow
 
-import React from 'react';
-import FontAwesome from 'react-fontawesome';
+import * as React from 'react';
+import * as FontAwesome from 'react-fontawesome';
 import { I18n } from 'react-i18nify';
 import {
   validateNumberRangeField,
   removeInvalidKeysForNumberRangeString
 } from '../../shared/validation';
-import type { SearchStoreState } from '../../search/searchStore';
+import { SearchStoreState } from '../../search/searchStore';
 import { emitWarning } from '../../shared/errors';
+import { TODO } from '../../types/common';
 
-const SearchParam = props => (
+const SearchParam = (props: TODO) => (
   <div className={'form-group col-md-' + (props.md || 3)}>
     {console.log('SearchInputFormComponent > SearchParam > props', props)}
     <label className="control-label" htmlFor={'search-' + props.id}>
@@ -56,10 +57,10 @@ const SearchParam = props => (
 );
 
 export type Props = {
-  onChange: (name: string, value: string) => void,
-  search: (databaseSearch: boolean) => void,
-  searchStore: SearchStoreState,
-  onClearSearch: () => void
+  onChange: (name: string, value: string) => void;
+  search: (databaseSearch: boolean) => void;
+  searchStore: SearchStoreState;
+  onClearSearch: () => void;
 };
 
 const SearchInputFormComponent = (props: Props) => (

@@ -19,30 +19,32 @@ import {
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
 import { showModal } from '../../shared/modal';
 import connectToScanner from '../../stores/scanner';
-import flowRight from 'lodash/flowRight';
+import { flowRight } from 'lodash';
 import { PickListComponent } from './PickListComponent';
 import { I18n } from 'react-i18nify';
-import PropTypes from 'prop-types';
+import * as PropTypes from 'prop-types';
 import MusitNode from '../../models/node';
 import MusitObject from '../../models/object';
 import MusitActor from '../../models/actor';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
-import type { MovableObject } from '../../models/types/movableObject';
+import { MovableObject } from '../../models/types/movableObject';
 import Config from '../../config';
+import { TODO } from '../../types/common';
+import { AppSession } from '../../types/appSession';
 
 export const nodeCallback = (
-  appSession,
-  toName,
-  toMoveLength,
-  name,
-  items,
-  onSuccess,
-  onFailure,
-  refreshNode = refreshNode$.next.bind(refreshNode$)
+  appSession: AppSession,
+  toName: TODO,
+  toMoveLength: TODO,
+  name: TODO,
+  items: TODO,
+  onSuccess: Function,
+  onFailure: Function,
+  refreshNode = (refreshNode$ as TODO).next.bind(refreshNode$)
 ) => {
   return {
     onComplete: () => {
-      items.map(item =>
+      items.map((item: TODO) =>
         refreshNode({
           id: item.nodeId,
           museumId: appSession.museumId,
@@ -68,7 +70,7 @@ export const nodeCallback = (
         });
       }
     },
-    onFailure: error => {
+    onFailure: (error: TODO) => {
       onFailure();
       if (toMoveLength === 1) {
         emitError({
@@ -94,14 +96,14 @@ export const nodeCallback = (
 };
 
 export const objectCallback = (
-  appSession,
-  toName,
-  toMoveLength,
-  name,
+  appSession: AppSession,
+  toName: TODO,
+  toMoveLength: TODO,
+  name: TODO,
   items: Array<MovableObject>,
-  onSuccess,
-  onFailure,
-  refreshObjects = refreshObjects$.next.bind(refreshObjects$)
+  onSuccess: Function,
+  onFailure: Function,
+  refreshObjects = (refreshObjects$ as TODO).next.bind(refreshObjects$)
 ) => {
   return {
     onComplete: () => {
@@ -129,7 +131,7 @@ export const objectCallback = (
         });
       }
     },
-    onFailure: error => {
+    onFailure: (error: TODO) => {
       onFailure();
       if (toMoveLength === 1) {
         emitError({
@@ -155,21 +157,20 @@ export const objectCallback = (
 };
 
 export const moveItems = (
-  appSession,
-  items,
-  isNode,
+  appSession: AppSession,
+  items: TODO,
+  isNode: boolean,
   moveNode = MusitNode.moveNode(),
   moveObject = MusitObject.moveSingleObject()
 ) => {
-  return (to, toName, onSuccess, onFailure = () => true): void => {
-    const moveFunction = isNode ? moveNode : moveObject;
+  return (to: TODO, toName: TODO, onSuccess: Function, onFailure = () => true): void => {
     const idsToMove = items.map(
-      itemToMove => (isNode ? itemToMove.nodeId : itemToMove.uuid)
+      (itemToMove: TODO) => (isNode ? itemToMove.nodeId : itemToMove.uuid)
     );
 
     const objectTypeAndId =
       !isNode && items
-        ? items.map(itemToMove => ({
+        ? items.map((itemToMove: TODO) => ({
             id: itemToMove.uuid,
             objectType: itemToMove.objectType
           }))
@@ -190,7 +191,7 @@ export const moveItems = (
         onFailure
       );
     } else {
-      const movableObject: Array<MovableObject> = items.map(item => ({
+      const movableObject: Array<MovableObject> = items.map((item: TODO) => ({
         id: item.uuid,
         objectType: item.objectType
       }));
@@ -207,11 +208,11 @@ export const moveItems = (
 
     let error = false;
     if (isNode) {
-      const itemsWithError = items.filter(fromNode =>
+      const itemsWithError = items.filter((fromNode: TODO) =>
         checkNodeBranchAndType(fromNode, to)
       );
       const errorMessages = itemsWithError.map(
-        fromNode => `${checkNodeBranchAndType(fromNode, to)} (${fromNode.name})`
+        (fromNode: TODO) => `${checkNodeBranchAndType(fromNode, to)} (${fromNode.name})`
       );
       if (errorMessages.length > 0) {
         error = true;
@@ -225,15 +226,25 @@ export const moveItems = (
     }
 
     if (!error) {
-      moveFunction({
-        id: idsToMove,
-        objectTypeAndId: objectTypeAndId,
-        destination: to.nodeId,
-        doneBy: MusitActor.getActorId(appSession.actor),
-        museumId: appSession.museumId,
-        token: appSession.accessToken,
-        callback
-      }).toPromise();
+      if (isNode) {
+        moveNode({
+          id: idsToMove,
+          destination: to.nodeId,
+          doneBy: MusitActor.getActorId(appSession.actor) as TODO,
+          museumId: appSession.museumId,
+          token: appSession.accessToken,
+          callback
+        }).toPromise();
+      } else {
+        moveObject({
+          objectTypeAndId: objectTypeAndId,
+          destination: to.nodeId,
+          doneBy: MusitActor.getActorId(appSession.actor) as TODO,
+          museumId: appSession.museumId,
+          token: appSession.accessToken,
+          callback
+        }).toPromise();
+      }
     } else {
       onFailure();
     }
@@ -259,7 +270,7 @@ const commands = {
   loadNode$
 };
 
-const customProps = props => ({
+const customProps = (props: TODO) => ({
   ...props,
   updateMoveDialog,
   emitError,
@@ -269,7 +280,7 @@ const customProps = props => ({
   moveObject: MusitObject.moveSingleObject(),
   isTypeNode: 'nodes' === props.type,
   moveItems,
-  createSample: items => {
+  createSample: (items: TODO) => {
     if (items[0].objectType === 'sample') {
       props.history.push({
         pathname: Config.magasin.urls.client.analysis.addFromSample(
@@ -291,13 +302,13 @@ const customProps = props => ({
       pathname: Config.magasin.urls.client.analysis.addMultipleSamples(props.appSession)
     });
   },
-  createAnalysis: (items, appSession) => {
+  createAnalysis: (items: TODO, appSession: AppSession) => {
     props.history.push({
       pathname: Config.magasin.urls.client.analysis.addAnalysis(appSession),
       state: items
     });
   },
-  createConservation: (items, appSession) => {
+  createConservation: (items: TODO[], appSession: AppSession) => {
     props.history.push({
       pathname: Config.magasin.urls.client.conservation.addConservation(appSession),
       state: items
@@ -305,7 +316,7 @@ const customProps = props => ({
   }
 });
 
-export const processBarcode = (barCode, props) => {
+export const processBarcode = (barCode: TODO, props: TODO) => {
   const isMoveDialogActive = props.classExistsOnDom('moveDialog');
   const museumId = props.appSession.museumId;
   const collectionId = props.appSession.collectionId;
@@ -319,7 +330,7 @@ export const processBarcode = (barCode, props) => {
     }
     props
       .findNodeByUUID({ uuid: barCode.code, museumId, token })
-      .do(response => {
+      .do((response: TODO) => {
         if (!response) {
           return props.emitError({
             message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode')
@@ -337,7 +348,7 @@ export const processBarcode = (barCode, props) => {
     if (isMoveDialogActive) {
       props
         .findNodeByBarcode(ajaxProps)
-        .do(response => {
+        .do((response: TODO) => {
           if (!response || !response.nodeId) {
             props.emitError({
               message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode')
@@ -352,7 +363,7 @@ export const processBarcode = (barCode, props) => {
         ? props.findNodeByBarcode
         : props.findObjectByBarcode;
       findByBarcode(ajaxProps)
-        .do(response => {
+        .do((response: TODO) => {
           if (!response) {
             props.emitError({
               message: I18n.t(

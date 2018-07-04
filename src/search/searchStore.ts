@@ -3,57 +3,57 @@
 import { Observable, Subject } from 'rxjs';
 import { createStore } from 'react-rxjs';
 import { createAction } from '../shared/react-rxjs-patch';
-import range from 'lodash/range';
-import omit from 'lodash/omit';
+import { range, omit } from 'lodash';
 
-import type { SearchResult } from 'types/search';
-import type { MuseumId, CollectionId } from 'types/ids';
-import type { AppSession } from '../types/appSession';
+import { SearchResult } from '../types/search';
+import { MuseumId, CollectionId } from '../types/ids';
+import { AppSession } from '../types/appSession';
+import { Maybe, TODO } from '../types/common';
 
 /**
  * Store types
  */
 
 export type QueryParam = {
-  museumNo?: ?string,
-  museumNoAsANumber?: ?string,
-  subNo?: ?string,
-  term?: ?string,
-  q?: ?string
+  museumNo?: Maybe<string>;
+  museumNoAsANumber?: Maybe<string>;
+  subNo?: Maybe<string>;
+  term?: Maybe<string>;
+  q?: Maybe<string>;
 };
 
 export type SearchParam = {
-  queryParam: QueryParam,
-  from: number,
-  limit: number,
-  museumId: MuseumId,
-  collectionIds: CollectionId,
-  token: string,
-  storageFacilityReadRole?: boolean,
-  databaseSearch?: boolean
+  queryParam: QueryParam;
+  from: number;
+  limit: number;
+  museumId: MuseumId;
+  collectionIds: CollectionId;
+  token: string;
+  storageFacilityReadRole?: boolean;
+  databaseSearch?: boolean;
 };
 
 export type ChangePage = number | 'next' | 'previous';
 
-export type SelectPage = { page: ChangePage, appSession: AppSession };
+export type SelectPage = { page: ChangePage; appSession: AppSession };
 
-export type ChangeQuery = { name: string, value: string };
+export type ChangeQuery = { name: string; value: string };
 
 export type Endpoint<E> = (e: E) => Observable<SearchResult>;
 
 export type Paging = {
-  totalPages: number,
-  showPages: Array<number>,
-  currentPage: ?number
+  totalPages: number;
+  showPages: Array<number>;
+  currentPage: Maybe<number>;
 };
 
 export type SearchStoreState = {
-  loading: boolean,
-  from: number,
-  limit: number,
-  pagination: ?Paging,
-  queryParam: QueryParam,
-  result: ?SearchResult
+  loading: boolean;
+  from: number;
+  limit: number;
+  pagination: Maybe<Paging>;
+  queryParam: QueryParam;
+  result: Maybe<SearchResult>;
 };
 
 /**
@@ -62,14 +62,14 @@ export type SearchStoreState = {
  * All the actions are provided trough the store factory.
  */
 type Actions = {
-  clear$: Subject<void>,
-  setLoading$: Subject<void>,
-  setLoadingSelectPage$: Subject<void>,
-  changeQuery$: Subject<ChangeQuery>,
-  selectPage$: Subject<SelectPage>,
-  search$: Subject<SearchParam>,
-  setQueryParam$: Subject<QueryParam>,
-  setStore$: Subject<SearchStoreState>
+  clear$: Subject<void>;
+  setLoading$: Subject<void>;
+  setLoadingSelectPage$: Subject<void>;
+  changeQuery$: Subject<ChangeQuery>;
+  selectPage$: Subject<SelectPage>;
+  search$: Subject<SearchParam>;
+  setQueryParam$: Subject<QueryParam>;
+  setStore$: Subject<SearchStoreState>;
 };
 
 const setLoading$: Subject<void> = createAction('search');
@@ -108,21 +108,21 @@ function reducer$<E>(
 ) {
   return Observable.merge(
     actions.clear$.map(() => () => initStoreState()),
-    actions.setLoading$.map(() => state => ({
+    actions.setLoading$.map(() => (state: TODO) => ({
       ...state,
       loading: true,
       pagination: null,
       from: 0,
       limit: Number(localStorage.getItem('SearchPageSize') || 10)
     })),
-    actions.setLoadingSelectPage$.map(() => state => ({
+    actions.setLoadingSelectPage$.map(() => (state: TODO) => ({
       ...state,
       loading: true
     })),
     actions.search$
       .map(toEndpointParam)
       .switchMap(searchEndpoint)
-      .map(result => state => ({
+      .map(result => (state: TODO) => ({
         ...state,
         loading: false,
         result,
@@ -154,7 +154,7 @@ function reducer$<E>(
       });
       return newState;
     }),
-    actions.changeQuery$.map(param => state => {
+    actions.changeQuery$.map(param => (state: TODO) => {
       const queryParam = { ...state.queryParam };
       if (param.value === '') {
         return { ...state, queryParam: omit(queryParam, param.name) };
@@ -163,10 +163,10 @@ function reducer$<E>(
         return { ...state, queryParam };
       }
     }),
-    actions.setQueryParam$.map(queryParam => state => {
+    actions.setQueryParam$.map(queryParam => (state: TODO) => {
       return { ...state, queryParam };
     }),
-    actions.setStore$.map(store => state => {
+    actions.setStore$.map(store => (state: TODO) => {
       return { ...state, ...store };
     })
   );

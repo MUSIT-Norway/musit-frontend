@@ -1,5 +1,5 @@
 // @flow
-import { Maybe, Star } from './common';
+import { Maybe, Star, TODO } from './common';
 
 export type NatLocation = {
   natCountry: Maybe<string>;
@@ -68,7 +68,7 @@ export type MusitObject = {
   path?: Maybe<string>;
   pathNames?: Maybe<Array<NamedPathElement>>;
   mainObjectId?: Maybe<number>;
-  collection?: Maybe<number>;
+  collection?: Maybe<TODO>; //Seems to be some kind of collection object, having at least an uid property
   arkForm?: Maybe<string>;
   arkFindingNo?: Maybe<string>;
   natStage?: Maybe<string>;

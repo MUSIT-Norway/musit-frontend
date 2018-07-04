@@ -1,13 +1,13 @@
 // @flow
 
-import React from 'react';
-import cx from 'classnames';
+import * as React from 'react';
+import * as cx from 'classnames';
 
-import type { Paging, ChangePage } from '../searchStore';
+import { Paging, ChangePage } from '../searchStore';
 
 export type Props = {
-  paging: Paging,
-  onChangePage: (page: ChangePage) => void
+  paging: Paging;
+  onChangePage: (page: ChangePage) => void;
 };
 
 const Pagination = (props: Props) => {

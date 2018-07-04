@@ -1,16 +1,16 @@
 // @flow
 
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
 import Config from '../config';
-import type { AppSession } from '../types/appSession';
+import { AppSession } from '../types/appSession';
 
 export type Props = {
-  history: (url: string) => void,
-  appSession: AppSession,
-  disableAnalysis?: boolean,
-  disableConservation?: boolean,
-  disableObject?: boolean
+  history: (url: string) => void;
+  appSession: AppSession;
+  disableAnalysis?: boolean;
+  disableConservation?: boolean;
+  disableObject?: boolean;
 };
 
 const NavigateSearch = (props: Props) => (

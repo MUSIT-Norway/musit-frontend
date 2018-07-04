@@ -1,12 +1,29 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import { Component } from 'react';
+import * as PropTypes from 'prop-types';
 import IFrame from '../../components/IFrame';
 import './PrintTemplateComponent.css';
 import Config from '../../config';
 import { I18n } from 'react-i18nify';
-import reduce from 'lodash/reduce';
+import { reduce } from 'lodash';
+import { TODO, MUSTFIX } from '../../types/common';
+import { AppSession } from '../../types/appSession';
 
-export class PrintTemplateComponent extends Component {
+interface PrintTemplateComponentProps {
+  store: TODO;
+  loadTemplates: Function;
+  renderTemplate: Function;
+  setTemplateId: Function;
+  clearAll: Function;
+  clearRendered: Function;
+  writeToDocument: Function;
+  setLevel: Function;
+  marked: Array<TODO>;
+  rendered: string;
+  appSession: AppSession;
+}
+
+/*#OLD
   static propTypes = {
     store: PropTypes.object.isRequired,
     loadTemplates: PropTypes.func.isRequired,
@@ -20,6 +37,9 @@ export class PrintTemplateComponent extends Component {
     rendered: PropTypes.string
   };
 
+*/
+
+export class PrintTemplateComponent extends Component<PrintTemplateComponentProps> {
   static DEFAULT_CODE = 1;
 
   static defaultProps = {
@@ -30,7 +50,7 @@ export class PrintTemplateComponent extends Component {
     closeModal: PropTypes.func
   };
 
-  constructor(props, context) {
+  constructor(props: PrintTemplateComponentProps, context: TODO) {
     super(props, context);
     this.selectTemplate = this.selectTemplate.bind(this);
     this.selectLevel = this.selectLevel.bind(this);
@@ -43,11 +63,15 @@ export class PrintTemplateComponent extends Component {
     });
   }
 
-  canSelectPath(templateId) {
+  canSelectPath(templateId: TODO) {
     return Config.print.labelConfig.canSelectPath[templateId];
   }
 
-  selectTemplate(e, templateId = e.target.value * 1, level = this.props.store.level) {
+  selectTemplate(
+    e: TODO,
+    templateId = e.target.value * 1,
+    level = this.props.store.level
+  ) {
     this.props.setTemplateId(templateId);
     this.props.clearRendered();
     if (templateId) {
@@ -69,17 +93,17 @@ export class PrintTemplateComponent extends Component {
     }
   }
 
-  static getDisplayName(node, skipCount) {
+  static getDisplayName(node: TODO, skipCount: number) {
     const subPath = node.path.slice(skipCount);
     const pathStr = reduce(
       subPath,
-      (acc, p) => (acc !== '' ? acc + ' / ' : '') + p.name,
+      (acc: string, p: TODO) => (acc !== '' ? acc + ' / ' : '') + p.name,
       ''
     );
     return (pathStr ? pathStr + ' / ' : '') + node.value.name;
   }
 
-  selectLevel(e, level = e.target.value * 1) {
+  selectLevel(e: TODO, level = e.target.value * 1) {
     this.props.setLevel(level);
     this.selectTemplate(null, this.props.store.templateId, level);
   }
@@ -92,7 +116,7 @@ export class PrintTemplateComponent extends Component {
           {[]
             .concat(this.props.store.templates)
             .filter(t => t)
-            .map((template, i) => (
+            .map((template: TODO, i: number) => (
               <option key={i} value={template.id}>
                 {template.name}
               </option>
@@ -113,7 +137,7 @@ export class PrintTemplateComponent extends Component {
           <input
             className="printTool"
             onClick={() => {
-              const iFrame = this.previewFrame.domNode.contentWindow;
+              const iFrame = (this as MUSTFIX).domNode.contentWindow;
               const result = iFrame.document.execCommand('print', false, null);
               if (!result) {
                 iFrame.print();
@@ -125,7 +149,7 @@ export class PrintTemplateComponent extends Component {
         )}
         {this.props.store.rendered && (
           <IFrame
-            ref={child => (this.previewFrame = child)}
+            ref={child => ((this as MUSTFIX).previewFrame = child)}
             frameProps={{
               width: '100%',
               height: '95%',

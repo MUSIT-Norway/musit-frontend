@@ -1,9 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import { Table, PageHeader, Panel, Grid, Row } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
 import Config from '../../config';
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
+import { TODO } from '../../types/common';
 
 const reports = [
   {
@@ -13,7 +14,7 @@ const reports = [
   }
 ];
 
-export const ReportsOverview = props => {
+export const ReportsOverview = (props: TODO) => {
   return (
     <div>
       <main>
@@ -32,7 +33,7 @@ export const ReportsOverview = props => {
                   {reports.map((report, index) => {
                     const url = report.url(props.appSession);
                     return (
-                      <tr key={index} id={report.id}>
+                      <tr key={index}>
                         <td>
                           <a
                             href={url}

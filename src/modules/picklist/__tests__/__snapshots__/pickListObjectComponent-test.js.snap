@@ -290,7 +290,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                         onClick={[Function]}
                         style={
                           Object {
-                            "color": null,
+                            "color": undefined,
                             "fontSize": "1.5em",
                           }
                         }
@@ -302,7 +302,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                           onClick={[Function]}
                           style={
                             Object {
-                              "color": null,
+                              "color": undefined,
                               "fontSize": "1.5em",
                             }
                           }
@@ -327,7 +327,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                         onClick={[Function]}
                         style={
                           Object {
-                            "color": null,
+                            "color": undefined,
                             "fontSize": "1.5em",
                           }
                         }
@@ -339,7 +339,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                           onClick={[Function]}
                           style={
                             Object {
-                              "color": null,
+                              "color": undefined,
                               "fontSize": "1.5em",
                             }
                           }
@@ -364,7 +364,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                         onClick={[Function]}
                         style={
                           Object {
-                            "color": null,
+                            "color": undefined,
                             "fontSize": "1.5em",
                           }
                         }
@@ -376,7 +376,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                           onClick={[Function]}
                           style={
                             Object {
-                              "color": null,
+                              "color": undefined,
                               "fontSize": "1.5em",
                             }
                           }
@@ -413,7 +413,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                     >
                       <span>
                         <input
-                          checked="checked"
+                          checked={true}
                           onChange={[Function]}
                           type="checkbox"
                         />
@@ -588,7 +588,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                     >
                       <span>
                         <input
-                          checked="checked"
+                          checked={true}
                           disabled={true}
                           type="checkbox"
                         />
@@ -813,7 +813,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                     >
                       <span>
                         <input
-                          checked=""
+                          checked={false}
                           onChange={[Function]}
                           type="checkbox"
                         />
@@ -1166,7 +1166,7 @@ exports[`PickListComponent for objects should display component (objects) correc
                 onClick={[Function]}
                 style={
                   Object {
-                    "color": null,
+                    "color": undefined,
                     "fontSize": "1.5em",
                   }
                 }
@@ -1190,7 +1190,7 @@ exports[`PickListComponent for objects should display component (objects) correc
                 onClick={[Function]}
                 style={
                   Object {
-                    "color": null,
+                    "color": undefined,
                     "fontSize": "1.5em",
                   }
                 }
@@ -1214,7 +1214,7 @@ exports[`PickListComponent for objects should display component (objects) correc
                 onClick={[Function]}
                 style={
                   Object {
-                    "color": null,
+                    "color": undefined,
                     "fontSize": "1.5em",
                   }
                 }
@@ -1250,7 +1250,7 @@ exports[`PickListComponent for objects should display component (objects) correc
             >
               <span>
                 <input
-                  checked="checked"
+                  checked={true}
                   onChange={[Function]}
                   type="checkbox"
                 />
@@ -1319,7 +1319,7 @@ exports[`PickListComponent for objects should display component (objects) correc
             >
               <span>
                 <input
-                  checked="checked"
+                  checked={true}
                   disabled={true}
                   type="checkbox"
                 />
@@ -1389,7 +1389,7 @@ exports[`PickListComponent for objects should display component (objects) correc
             >
               <span>
                 <input
-                  checked=""
+                  checked={false}
                   onChange={[Function]}
                   type="checkbox"
                 />

@@ -1,13 +1,22 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import { Component } from 'react';
+import * as PropTypes from 'prop-types';
 import { Table, PageHeader, Panel, Grid, Row } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
 import { formatFloatToString } from './../../shared/util';
 import { Observable } from 'rxjs';
 import store$, { loadKDReport$, clear$ } from './reportStore';
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
+import { TODO } from '../../types/common';
+import { AppSession } from '../../types/appSession';
 
-export class KDReport extends Component {
+interface KDReportProps {
+  store: TODO;
+  appSession: AppSession;
+  loadKDReport: Function;
+  clear: Function;
+}
+/* Old:
   static propTypes = {
     store: PropTypes.object.isRequired,
     appSession: PropTypes.object.isRequired,
@@ -15,6 +24,8 @@ export class KDReport extends Component {
     clear: PropTypes.func.isRequired
   };
 
+*/
+export class KDReport extends Component<KDReportProps> {
   componentWillMount() {
     this.loadKDReport();
   }
@@ -27,8 +38,8 @@ export class KDReport extends Component {
     this.props.loadKDReport({ museumId, token });
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.appSession.museumId.id !== this.props.appSession.museumId.id) {
+  componentWillReceiveProps(nextProps: KDReportProps) {
+    if (nextProps.appSession.museumId !== this.props.appSession.museumId) {
       this.loadKDReport(nextProps.appSession.museumId);
     }
   }

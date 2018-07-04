@@ -2,15 +2,15 @@
 
 import { inject } from 'react-rxjs';
 import ObjectSearchComponent from './SearchComponent';
-//import store$, { actions } from './searchStore';
+//? import store$, { actions } from './searchStore';
 import { addObjects$, toggleObject$, isItemAdded } from '../../stores/pickList';
 import pickList$ from '../../stores/pickList';
-import type { ChangePage } from '../../search/searchStore';
-import type { Hit, InnerHits, SearchHit } from '../../types/search';
-import type { History } from '../../types/Routes';
+import { ChangePage } from '../../search/searchStore';
+import { Hit, InnerHits, SearchHit } from '../../types/search';
+import { History } from 'history';
 import Config from '../../config';
-import type { ObjectData } from '../../types/object';
-import type { SampleData } from '../../types/samples';
+import { ObjectData } from '../../types/object';
+import { SampleData } from '../../types/samples';
 import { flattenSample, getSampleTypeAndSubType } from '../sample/shared/types';
 import { loadPredefinedTypes } from '../../stores/predefinedLoader';
 
@@ -20,19 +20,24 @@ import predefined$ from '../../stores/predefined';
 import createSearchStore from '../../search/searchStore';
 import { objectSearch } from '../../models/objects/search';
 import { simpleGet } from '../../shared/RxAjax';
+import { TODO, Maybe } from '../../types/common';
 
 const searchEndpoint = objectSearch(simpleGet);
 
-const { store$, actions } = createSearchStore('object', searchEndpoint, props => ({
-  queryParam: props.queryParam,
-  from: props.from,
-  limit: props.limit,
-  museumId: props.museumId,
-  collectionIds: props.collectionIds,
-  token: props.token,
-  storageFacilityReadRole: props.storageFacilityReadRole,
-  databaseSearch: props.databaseSearch
-}));
+const { store$, actions } = createSearchStore(
+  'object',
+  searchEndpoint,
+  (props: TODO) => ({
+    queryParam: props.queryParam,
+    from: props.from,
+    limit: props.limit,
+    museumId: props.museumId,
+    collectionIds: props.collectionIds,
+    token: props.token,
+    storageFacilityReadRole: props.storageFacilityReadRole,
+    databaseSearch: props.databaseSearch
+  })
+);
 
 const stores = () =>
   Observable.combineLatest(appSession$, store$, predefined$, pickList$, (a, s, p, l) => ({
@@ -42,39 +47,39 @@ const stores = () =>
     pickList: l
   }));
 
-function getObject(hit: SearchHit): ?ObjectData {
+function getObject(hit: SearchHit): Maybe<ObjectData> {
   switch (hit._type) {
     case 'collection':
-      return (hit._source: ?ObjectData);
+      return hit._source as Maybe<ObjectData>;
     case 'sample':
       if (!hit.inner_hits.musit_object) {
         return null;
       }
-      const hits: { total: number, hits: Array<Hit & InnerHits> } =
+      const hits: { total: number; hits: Array<Hit & InnerHits> } =
         hit.inner_hits.musit_object.hits;
       if (hits.total === 0) {
         return null;
       }
-      return (hits.hits[0]._source: ?ObjectData);
+      return hits.hits[0]._source as Maybe<ObjectData>;
     default:
       return null;
   }
 }
 
-function getSource(hit: SearchHit): ?ObjectData | ?SampleData {
+function getSource(hit: SearchHit): Maybe<ObjectData> | Maybe<SampleData> {
   switch (hit._type) {
     case 'collection':
-      return (hit._source: ?ObjectData);
+      return hit._source as Maybe<ObjectData>;
     case 'sample':
-      return (hit._source: ?SampleData);
+      return hit._source as Maybe<SampleData>;
     default:
       return null;
   }
 }
 
-function props(storeProps, upstream: { history: History }) {
+function props(storeProps: TODO, upstream: { history: History }) {
   return {
-    onClickBreadcrumb: (node, isObject) => {
+    onClickBreadcrumb: (node: TODO, isObject: boolean) => {
       if (node.nodeId) {
         upstream.history.push(
           isObject
@@ -124,13 +129,13 @@ function props(storeProps, upstream: { history: History }) {
       if (object) {
         let url;
         if (hit._type === 'collection') {
-          const o: ObjectData = (object: any);
+          const o: ObjectData = object as any;
           url = Config.magasin.urls.client.object.gotoObject(
             storeProps.appSession,
             o.id.toString()
           );
         } else if (hit._type === 'sample') {
-          const s: SampleData = (object: any);
+          const s: SampleData = object as any;
           url = Config.magasin.urls.client.analysis.gotoSample(
             storeProps.appSession,
             s.objectId
@@ -148,7 +153,7 @@ function props(storeProps, upstream: { history: History }) {
         let toAddToPickList;
         if (hit._type === 'collection') {
           // we know that source is an object, and that it most likely is not null
-          const musitObject: ObjectData = (source: any);
+          const musitObject: ObjectData = source as any;
           toAddToPickList = {
             value: {
               ...musitObject,
@@ -159,7 +164,7 @@ function props(storeProps, upstream: { history: History }) {
           };
         } else if (hit._type === 'sample') {
           // we know that source is a sample, and that it most likely is not null
-          const sample: SampleData = (source: any);
+          const sample: SampleData = source as any;
           toAddToPickList = {
             value: flattenSample(
               storeProps.appSession,
@@ -183,7 +188,7 @@ function props(storeProps, upstream: { history: History }) {
         if (source && object) {
           if (h._type === 'collection') {
             // we know that source is an object, and that it most likely is not null
-            const musitObject: ObjectData = (source: any);
+            const musitObject: ObjectData = source as any;
             toAddToPickList = {
               marked: true,
               value: {
@@ -195,7 +200,7 @@ function props(storeProps, upstream: { history: History }) {
             };
           } else if (h._type === 'sample') {
             // we know that source is a sample, and that it most likely is not null
-            const sample: SampleData = (source: any);
+            const sample: SampleData = source as any;
             toAddToPickList = {
               marked: true,
               value: flattenSample(
@@ -234,7 +239,7 @@ function props(storeProps, upstream: { history: History }) {
       actions.setStore$.next(storeProps.searchStore);
       actions.setQueryParam$.next({});
     },
-    history: url => url && upstream.history.push(url),
+    history: (url: string) => url && upstream.history.push(url),
     appSession: storeProps.appSession
   };
 }

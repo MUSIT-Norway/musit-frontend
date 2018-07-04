@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import { createStore } from 'react-rxjs';
 import { createAction } from '../../shared/react-rxjs-patch';
 import Template from '../../models/template';
+import { TODO } from '../../types/common';
 
 export const clearAll$ = createAction('clearAll$');
 export const setLevel$ = createAction('setLevel$');
@@ -16,17 +17,23 @@ export const renderTemplate$ = createAction('renderTemplate$').switchMap(
 
 const initialState = { templates: [], rendered: null, level: 0 };
 
-export const reducer$ = actions =>
+export const reducer$ = (actions: TODO) =>
   Observable.merge(
     actions.clearAll$.map(() => () => initialState),
-    actions.setLevel$.map(level => state => ({ ...state, level })),
-    actions.clearRendered$.map(() => state => ({ ...state, rendered: null })),
-    actions.setTemplateId$.map(templateId => state => ({
+    actions.setLevel$.map((level: TODO) => (state: TODO) => ({ ...state, level })),
+    actions.clearRendered$.map(() => (state: TODO) => ({ ...state, rendered: null })),
+    actions.setTemplateId$.map((templateId: TODO) => (state: TODO) => ({
       ...state,
       templateId
     })),
-    actions.loadTemplates$.map(templates => state => ({ ...state, templates })),
-    actions.renderTemplate$.map(rendered => state => ({ ...state, rendered }))
+    actions.loadTemplates$.map((templates: TODO) => (state: TODO) => ({
+      ...state,
+      templates
+    })),
+    actions.renderTemplate$.map((rendered: TODO) => (state: TODO) => ({
+      ...state,
+      rendered
+    }))
   );
 
 export const store$ = (
@@ -38,6 +45,6 @@ export const store$ = (
     setTemplateId$,
     setLevel$
   }
-) => createStore('print', reducer$(actions), initialState);
+) => createStore('print', reducer$(actions) as TODO, initialState);
 
 export default store$();
