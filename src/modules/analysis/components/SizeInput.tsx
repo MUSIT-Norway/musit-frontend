@@ -1,16 +1,17 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
 import { parseValue } from '../shared/getters';
+import { Maybe, TODO } from '../../../types/common';
 
 type Props = {
   attrKey: string,
   attribute: {
-    value?: ?number,
-    rawValue?: ?string,
-    unit?: ?string
+    value?: Maybe<number>,
+    rawValue?: Maybe<string>,
+    unit?: Maybe<string>
   },
-  allowedValues?: ?Array<string>,
+  allowedValues?: Maybe<Array<string>>,
   onChange: Function
 };
 
@@ -49,9 +50,8 @@ const Size = (props: Props) => {
             props.onChange({
               ...props.attribute,
               unit: e.target.value
-            })
-          }
-          defaultValue={unit}
+            })}
+          defaultValue={unit as TODO}
         >
           <option value="">{I18n.t('musit.sample.chooseUnit')}</option>
           {(props.allowedValues || []).map((unit, i) => <option key={i}>{unit}</option>)}

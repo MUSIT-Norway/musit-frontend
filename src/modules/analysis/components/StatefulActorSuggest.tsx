@@ -1,20 +1,21 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { ActorSuggest } from '../../../components/suggest/ActorSuggest';
 import MusitActor from '../../../models/actor';
-import type { AppSession } from '../../../types/appSession';
-import type { Actor } from 'types/actor';
+import { AppSession } from '../../../types/appSession';
+import { Actor } from '../../../types/actor';
 import { I18n } from 'react-i18nify';
+import { Maybe } from '../../../types/common';
 
 export type Props = {
-  id: string,
-  appSession: AppSession,
-  onChange: (actorId: ?string) => void,
-  value?: ?string
+  id: string;
+  appSession: AppSession;
+  onChange: (actorId: Maybe<string>) => void;
+  value?: Maybe<string>;
 };
 
 export type State = {
-  name: ?string
+  name: Maybe<string>;
 };
 
 export default class StatefulActorSuggest extends React.Component<Props, State> {

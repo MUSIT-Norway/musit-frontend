@@ -1,23 +1,25 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
 import './ObjectResultTable.css';
 import ViewResult from './ViewResult';
 import EditResult from './EditResult';
-import type { AppSession } from '../../../types/appSession';
-import type { History } from '../../../types/Routes';
-import type { AnalysisEvent } from '../../../types/analysis';
-import FontAwesome from 'react-fontawesome';
+import { AppSession } from '../../../types/appSession';
+import { History } from 'history';
+import { AnalysisEvent } from '../../../types/analysis';
+import * as FontAwesome from 'react-fontawesome';
 import MusitI18n from '../../../components/MusitI18n';
+import { Star, Maybe, MUSTFIX, TODO } from '../../../types/common';
+import { styleWidth10 } from '../../../shared/util';
 
 type Props = {
-  data: Array<AnalysisEvent>,
-  handleClickRow: (object: AnalysisEvent) => void,
-  updateForm?: Function,
-  extraAttributes?: *,
-  history: History,
-  appSession: AppSession,
-  viewMode?: ?boolean
+  data: Array<AnalysisEvent>;
+  handleClickRow: (object: AnalysisEvent) => void;
+  updateForm?: Function;
+  extraAttributes?: Star;
+  history: History;
+  appSession: AppSession;
+  viewMode?: Maybe<boolean>;
 };
 
 export default function ObjectResultTable({
@@ -45,7 +47,7 @@ export default function ObjectResultTable({
           <th>{I18n.t('musit.analysis.term')}</th>
           <th>{I18n.t('musit.sample.sampleNumber')}</th>
           <th>{I18n.t('musit.sample.sampleType')}</th>
-          <th width={10}> </th>
+          <th style={styleWidth10}> </th>
         </tr>
       </thead>
       <tbody>
@@ -58,22 +60,20 @@ export default function ObjectResultTable({
                 onClick={() => enableResultForObject && handleClickRow(row)}
                 className={row.expanded ? 'expanded-row' : 'collapsed-row'}
               >
-                <td name="type" width={10}>
+                <td style={styleWidth10}>
                   {sampleData && sampleData.sampleNum ? (
                     <span className="icon icon-musit-testtube" />
                   ) : (
                     <span className="icon icon-musitobject" />
                   )}
                 </td>
-                <td name="museumNo">
-                  {row.objectData ? row.objectData.museumNo || '' : ''}
-                </td>
-                <td name="subNo">{row.objectData ? row.objectData.subNo || '' : ''}</td>
-                <td name="term">{row.objectData ? row.objectData.term || '' : ''}</td>
-                <td name="sampleNum">
+                <td>{row.objectData ? row.objectData.museumNo || '' : ''}</td>
+                <td>{row.objectData ? row.objectData.subNo || '' : ''}</td>
+                <td>{row.objectData ? row.objectData.term || '' : ''}</td>
+                <td>
                   <span>{sampleData ? sampleData.sampleNum || '' : null}</span>
                 </td>
-                <td name="sampleType">
+                <td>
                   {!!(
                     sampleData &&
                     sampleData.sampleType &&
@@ -127,7 +127,7 @@ export default function ObjectResultTable({
                         comments={row.result ? row.result.comment : ''}
                         files={
                           row.files && Array.isArray(row.files)
-                            ? (row.files: Array<any>)
+                            ? (row.files as Array<any>)
                             : []
                         }
                         appSession={appSession}
@@ -146,7 +146,7 @@ export default function ObjectResultTable({
                           extraAttributes,
                           row.result
                         )}
-                        updateExtraResultAttribute={(name, value) => {
+                        updateExtraResultAttribute={(name: string, value: TODO) => {
                           const newData = [...data];
                           newData.splice(i, 1, {
                             ...row,
@@ -180,14 +180,14 @@ export default function ObjectResultTable({
                           updateForm && updateForm({ name: 'events', rawValue: newData });
                         }}
                         resultFiles={
-                          row.result && row.result.files ? (row.result.files: any) : []
+                          row.result && row.result.files ? (row.result.files as any) : []
                         }
                         updateResultFiles={files => {
                           const newData = [...data];
                           newData.splice(i, 1, {
                             ...row,
                             result: { ...row.result, files }
-                          });
+                          } as MUSTFIX);
                           updateForm && updateForm({ name: 'events', rawValue: newData });
                         }}
                         appSession={appSession}
@@ -215,12 +215,12 @@ export default function ObjectResultTable({
   );
 }
 
-const getRawValue = value =>
+const getRawValue = (value: TODO) =>
   value && value.rawValue && value.rawValue.length > 0
     ? value.rawValue
     : value && value.value && value.value.toString().replace('.', ',');
 
-function extraAttributesWithResult(extraAttributes, result) {
+function extraAttributesWithResult(extraAttributes: TODO, result: TODO) {
   return (
     !!extraAttributes &&
     Object.keys(extraAttributes).reduce((acc, eat) => {

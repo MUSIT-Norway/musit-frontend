@@ -1,29 +1,30 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
-import type { AppSession } from '../../../types/appSession';
-import type { History } from '../../../types/Routes';
+import { AppSession } from '../../../types/appSession';
+import { History } from 'history';
 import NavigateToObject from '../../../components/navigations/NavigateToObject';
 import ExtraResultAttribute from './ExtraResultAttribute';
 import { FormInput, FormTextArea, FormFileSelect } from '../../../forms/components';
 import { FormElement } from '../../../forms/components';
 import { saveBlob } from '../../../shared/download';
 import { getFileAsBlob } from '../../../models/analysis/analysisResult';
-import type { ErrorLoading, SavedFile } from '../../../models/analysis/analysisResult';
+import { Maybe, TODO } from '../../../types/common';
+import { ErrorLoading, SavedFile, isErrorLoading } from '../../../types/documentsCommon';
 
 type Props = {
-  externalSource: ?string,
-  updateExternalSource: (value: string) => void,
-  comments: ?string,
-  updateComments: (value: string) => void,
-  extraAttributes: any,
-  updateExtraResultAttribute: Function,
-  resultFiles: ?Array<File>,
-  updateResultFiles: (files: Array<File>) => void,
-  history: History,
-  appSession: AppSession,
-  parentObjectId?: ?string,
-  files?: ?Array<SavedFile | ErrorLoading>
+  externalSource: Maybe<string>;
+  updateExternalSource: (value: string) => void;
+  comments: Maybe<string>;
+  updateComments: (value: string) => void;
+  extraAttributes: any;
+  updateExtraResultAttribute: Function;
+  resultFiles: Maybe<Array<File>>;
+  updateResultFiles: (files: Array<File>) => void;
+  history: History;
+  appSession: AppSession;
+  parentObjectId?: Maybe<string>;
+  files?: Maybe<Array<SavedFile | ErrorLoading>>;
 };
 
 export default function EditResult(props: Props) {
@@ -41,7 +42,9 @@ export default function EditResult(props: Props) {
                 label={I18n.t('musit.analysis.analysisExtraResultAttributes.' + attrKey)}
                 labelWidth={2}
                 elementWidth={5}
-                onChange={value => props.updateExtraResultAttribute(attrKey, value)}
+                onChange={(value: TODO) =>
+                  props.updateExtraResultAttribute(attrKey, value)
+                }
                 value={attribute.value}
                 type={attribute.type}
                 allowedValues={attribute.allowedValues}
@@ -78,7 +81,7 @@ export default function EditResult(props: Props) {
           <p className="form-control-static">
             {Array.isArray(props.files) &&
               props.files.map(file => {
-                if (file.error) {
+                if (isErrorLoading(file)) {
                   return null;
                 }
                 const fid = file.fid;

@@ -1,21 +1,22 @@
 // @flow
-import React from 'react';
-import { I18n } from 'react-i18nify';
-import type { DomEvent } from '../../../types/dom';
-import type { ElementProps } from '../../../forms/components';
-import { FormElement } from '../../../forms/components';
-import type { AnalysisType } from '../../../types/analysis';
-import type { Language } from '../../../types/appSession';
+import * as React from "react";
+import { ChangeEventHandler } from "react";
+import { I18n } from "react-i18nify";
+import { ElementProps } from "../../../forms/components";
+import { FormElement } from "../../../forms/components";
+import { AnalysisType } from "../../../types/analysis";
+import { Language } from "../../../types/appSession";
+import { Maybe, Star } from "../../../types/common";
 
 export type Props = ElementProps & {
-  id: string,
-  categories: ?{ [string]: * },
-  category: ?string,
-  onChangeCategory: (e: DomEvent) => void,
-  types: ?Array<AnalysisType>,
-  type: ?string,
-  onChangeType: (e: DomEvent) => void,
-  language: Language
+  id: string;
+  categories: Maybe<{ [key: string]: Star }>;
+  category: Maybe<string>;
+  onChangeCategory: ChangeEventHandler<HTMLElement>;
+  types: Maybe<Array<AnalysisType>>;
+  type: Maybe<string>;
+  onChangeType: ChangeEventHandler<HTMLElement>;
+  language: Language;
 };
 
 export default function FormAnalysisType(props: Props) {
@@ -39,10 +40,10 @@ function AnalysisTypeSelect(props: Props) {
         <select
           id={props.id}
           className="form-control"
-          value={props.category || ''}
+          value={props.category || ""}
           onChange={props.onChangeCategory}
         >
-          <option value="">{I18n.t('musit.analysis.chooseCategory')}</option>
+          <option value="">{I18n.t("musit.analysis.chooseCategory")}</option>
           {props.categories &&
             Object.keys(props.categories).map(k => (
               <option key={k} value={k}>
@@ -52,26 +53,24 @@ function AnalysisTypeSelect(props: Props) {
         </select>
       </div>
       {props.category &&
-        props.category !== '0' && (
-          <div className="col-md-6">
-            <select
-              id={`sub${props.id}`}
-              className="form-control"
-              value={props.type || ''}
-              onChange={props.onChangeType}
-            >
-              <option value="">{I18n.t('musit.analysis.chooseType')}</option>
-              {props.types &&
-                props.types
-                  .filter(b => b.category.toString() === props.category)
-                  .map(a => (
-                    <option key={a.id} value={a.id}>
-                      {props.language.isEn ? a.enName : a.noName}
-                    </option>
-                  ))}
-            </select>
-          </div>
-        )}
+      props.category !== "0" && (
+        <div className="col-md-6">
+          <select
+            id={`sub${props.id}`}
+            className="form-control"
+            value={props.type || ""}
+            onChange={props.onChangeType}
+          >
+            <option value="">{I18n.t("musit.analysis.chooseType")}</option>
+            {props.types &&
+              props.types.filter(b => b.category.toString() === props.category).map(a => (
+                <option key={a.id} value={a.id}>
+                  {props.language.isEn ? a.enName : a.noName}
+                </option>
+              ))}
+          </select>
+        </div>
+      )}
     </div>
   );
 }

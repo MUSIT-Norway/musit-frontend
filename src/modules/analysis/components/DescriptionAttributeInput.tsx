@@ -1,22 +1,23 @@
 // @flow
-import React from 'react';
-import type { DomEvent } from '../../../types/dom';
-import type { DescriptionAttributeType } from './DescriptionAttributeType';
+import * as React from "react";
+import { ChangeEventHandler } from "react";
+import { DescriptionAttributeType } from "./DescriptionAttributeType";
+import { Maybe } from "../../../types/common";
 
-type Props = {
-  attr: DescriptionAttributeType,
-  onChange: (e: DomEvent) => void,
-  value: ?string | ?Array<string | number>
-};
+interface DescriptionAttributeInputProps {
+  attr: DescriptionAttributeType;
+  onChange: ChangeEventHandler<HTMLElement>;
+  value: Maybe<string> | Maybe<Array<string | number>>;
+}
 
-const DescriptionAttributeInput = (props: Props) => {
+const DescriptionAttributeInput = (props: DescriptionAttributeInputProps) => {
   return (
     <input
       className="form-control"
       type="text"
       name={props.attr.attributeKey}
       onChange={props.onChange}
-      value={props.value ? props.value.toString() : ''}
+      value={props.value ? props.value.toString() : ""}
     />
   );
 };

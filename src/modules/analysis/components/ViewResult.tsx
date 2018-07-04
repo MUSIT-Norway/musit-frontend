@@ -1,22 +1,23 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
-import type { AppSession } from '../../../types/appSession';
-import type { History } from '../../../types/Routes';
+import  { AppSession } from '../../../types/appSession';
+import  { History } from 'history';
 import NavigateToObject from '../../../components/navigations/NavigateToObject';
 import { FormText, FormElement } from '../../../forms/components';
-import type { ErrorLoading, SavedFile } from '../../../models/analysis/analysisResult';
 import { saveBlob } from '../../../shared/download';
 import { getFileAsBlob } from '../../../models/analysis/analysisResult';
+import { Maybe, Star } from '../../../types/common';
+import { SavedFile, ErrorLoading, isErrorLoading } from '../../../types/documentsCommon';
 
 type Props = {
-  files: ?Array<SavedFile | ErrorLoading>,
-  externalSource: ?string,
-  comments: ?string,
-  extraAttributes: *,
+  files: Maybe<Array<SavedFile | ErrorLoading>>,
+  externalSource: Maybe<string>,
+  comments: Maybe<string>,
+  extraAttributes: Star,
   history: History,
   appSession: AppSession,
-  parentObjectId?: ?string
+  parentObjectId?: Maybe<string>
 };
 
 export default function Result(props: Props) {
@@ -63,7 +64,7 @@ export default function Result(props: Props) {
         <p className="form-control-static">
           {Array.isArray(props.files) &&
             props.files.map(file => {
-              if (file.error) {
+              if (isErrorLoading(file)) {
                 return null;
               }
               const fid = file.fid;

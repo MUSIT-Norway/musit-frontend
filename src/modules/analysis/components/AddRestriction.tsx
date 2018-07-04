@@ -1,17 +1,18 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import DatePicker from '../../../components/DatePicker';
 import { DATE_FORMAT_DISPLAY, formatISOString } from '../../../shared/util';
 import { I18n } from 'react-i18nify';
-import type { AppSession } from '../../../types/appSession';
-import type { Restriction } from '../../../types/analysis';
+import { AppSession } from '../../../types/appSession';
+import { Restriction } from '../../../types/analysis';
 import StatefulActorSuggest from './StatefulActorSuggest';
 import { FormElement, FormInput } from '../../../forms/components';
+import { MUSTFIX } from '../../../types/common';
 
 type Props = {
-  appSession: AppSession,
-  restriction: Restriction,
-  updateRestriction: (restriction: Restriction) => void
+  appSession: AppSession;
+  restriction: Restriction;
+  updateRestriction: (restriction: Restriction) => void;
 };
 
 export default function AddRestriction(props: Props) {
@@ -83,8 +84,8 @@ export default function AddRestriction(props: Props) {
               expirationDate: null
             })
           }
-          onChange={selectedDate => {
-            if (selectedDate !== 'Invalid date') {
+          onChange={(selectedDate: MUSTFIX) => {
+            if (selectedDate !== 'Invalid date') { //TODO: Fix this schizophrenic "does it have this string value? use it as a date later in the same function" code.
               props.updateRestriction({
                 ...props.restriction,
                 expirationDate: formatISOString(selectedDate)

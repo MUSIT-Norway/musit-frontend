@@ -1,22 +1,23 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
-import moment from 'moment';
+import * as moment from 'moment';
 import { DATE_FORMAT_DISPLAY } from '../../../shared/util';
-import type { Restriction } from '../../../types/analysis';
-import type { AppSession } from '../../../types/appSession';
+import { Restriction } from '../../../types/analysis';
+import { AppSession } from '../../../types/appSession';
 
 import CancelRestriction from './CancelRestriction';
+import { Maybe, Star } from '../../../types/common';
 
 type ViewRestrictionComponentProps = {
-  appSession: AppSession,
-  restriction: Restriction,
-  updateRestriction: (restriction: Restriction) => void,
-  cancelRestriction: () => void,
-  showCancelDialog?: ?boolean,
-  toggleCancelDialog: () => void,
-  isRestrictionValidForCancellation: boolean,
-  viewMode?: ?boolean
+  appSession: AppSession;
+  restriction: Restriction;
+  updateRestriction: (restriction: Restriction) => void;
+  cancelRestriction: () => void;
+  showCancelDialog?: Maybe<boolean>;
+  toggleCancelDialog: () => void;
+  isRestrictionValidForCancellation: boolean;
+  viewMode?: Maybe<boolean>;
 };
 
 export default function ViewRestrictionComponent(props: ViewRestrictionComponentProps) {
@@ -41,9 +42,9 @@ export default function ViewRestrictionComponent(props: ViewRestrictionComponent
 }
 
 type ViewRestrictionProps = {
-  restriction: Restriction,
-  clickCancel: () => void,
-  viewMode?: ?boolean
+  restriction: Restriction;
+  clickCancel: () => void;
+  viewMode?: Maybe<boolean>;
 };
 
 export function ViewRestriction(props: ViewRestrictionProps) {
@@ -90,7 +91,7 @@ export function ViewRestriction(props: ViewRestrictionProps) {
           {!props.viewMode && (
             <button
               className="btn btn-default"
-              onClick={(e: *) => {
+              onClick={(e: Star) => {
                 e.preventDefault();
                 props.clickCancel();
               }}

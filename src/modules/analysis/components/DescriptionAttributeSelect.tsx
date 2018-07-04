@@ -1,15 +1,16 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
 import { isMultipleSelectAttribute } from '../../../types/analysis';
-import type { DomEvent } from '../../../types/dom';
-import type { DescriptionAttributeType } from './DescriptionAttributeType';
+import  { DescriptionAttributeType } from './DescriptionAttributeType';
 import MusitI18n from '../../../components/MusitI18n';
+import { ChangeEventHandler } from 'react';
+import { Maybe } from '../../../types/common';
 
 type Props = {
   attr: DescriptionAttributeType,
-  onChange: (e: DomEvent) => void,
-  value: ?string | ?Array<string | number>
+  onChange: ChangeEventHandler<HTMLElement>; // (e: DomEvent) => void,
+  value: Maybe<string> | Maybe<Array<string | number>>;
 };
 
 const DescriptionAttributeSelect = (props: Props) => {

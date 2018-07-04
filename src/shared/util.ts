@@ -249,3 +249,6 @@ export const getCultureOrNatureUnit = (appSession?: AppSession) => {
     else return '(mm)';
   } else return '(undefined)';
 };
+
+export const styleWidth = (pixels: number) => ({ width: pixels });
+export const styleWidth10 = styleWidth(10);
