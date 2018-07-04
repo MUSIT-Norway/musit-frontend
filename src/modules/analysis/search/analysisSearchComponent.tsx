@@ -1,42 +1,43 @@
 // @flow
 
-import React from 'react';
+import * as React from 'react';
 import Pagination from '../../../search/components/pagination';
 import SearchStats from '../../../search/components/SearchStats';
 import { I18n } from 'react-i18nify';
 import AnalysisInputFormComponent from './AnalysisInputFormComponent';
-import type { SearchHit } from 'types/search';
-import type { SearchStoreState, ChangePage } from '../../../search/searchStore';
+import { SearchHit } from '../../../types/search';
+import { SearchStoreState, ChangePage } from '../../../search/searchStore';
 import { getStatusText } from '../shared/getters';
 import './analysisSearchComponent.css';
-import moment from 'moment';
+import * as moment from 'moment';
 import pullRight from '../../../shared/pullRight';
-import Loader from 'react-loader';
+import * as Loader from 'react-loader';
 import NavigateSearch from '../../../search/NavigateSearch';
-import type { AppSession } from '../../../types/appSession';
+import { AppSession } from '../../../types/appSession';
+import { Maybe } from '../../../types/common';
 
 const DateFormat = 'DD.MM.YYYY HH:mm';
 
 export type Methods = {
-  getAnalysisTypeText: (id: number) => ?string,
-  goToAnalysis: (id: number) => void,
-  goToObject: (id: string, type: string) => void
+  getAnalysisTypeText: (id: number) => Maybe<string>;
+  goToAnalysis: (id: number) => void;
+  goToObject: (id: string, type: string) => void;
 };
 
 export type AnlysisSearchComoponentProps = {
-  onSearch: () => void,
-  onChangeQueryParam: (name: string, value: string) => void,
-  onChangePage: (page: ChangePage) => void,
-  searchStore: SearchStoreState,
-  history: () => void,
-  appSession: AppSession
+  onSearch: () => void;
+  onChangeQueryParam: (name: string, value: string) => void;
+  onChangePage: (page: ChangePage) => void;
+  searchStore: SearchStoreState;
+  history: () => void;
+  appSession: AppSession;
 } & Methods;
 
 export type ResultHitProps = {
-  icon: string,
-  header: string,
-  metaInfo: Array<string | React$Node>,
-  onClickHeader: () => void
+  icon: string;
+  header: string;
+  metaInfo: Array<string | React.ReactNode>;
+  onClickHeader: () => void;
 };
 
 const AnalysisResultHit = (props: ResultHitProps) => {
@@ -64,7 +65,7 @@ const AnalysisResultHit = (props: ResultHitProps) => {
   );
 };
 
-const getParent = (hit: SearchHit): ?{ id: number, status?: ?number } => {
+const getParent = (hit: SearchHit): Maybe<{ id: number; status?: Maybe<number> }> => {
   if (!hit.inner_hits.analysisCollection) {
     return null;
   }
@@ -77,7 +78,7 @@ const getParent = (hit: SearchHit): ?{ id: number, status?: ?number } => {
 
 const getResultHitProps = (
   props: {
-    hit: SearchHit
+    hit: SearchHit;
   } & Methods
 ): ResultHitProps => {
   if (props.hit._type === 'analysis') {
@@ -129,7 +130,7 @@ const getResultHitProps = (
 
 const SearchHits = (
   props: {
-    hits: Array<SearchHit>
+    hits: Array<SearchHit>;
   } & Methods
 ) => {
   const goToAnalysis = props.goToAnalysis;
@@ -154,8 +155,8 @@ const RightAlignedPagination = pullRight(Pagination);
 
 const SearchResultItem = (
   props: {
-    onChangePage: (page: ChangePage) => void,
-    searchStore: SearchStoreState
+    onChangePage: (page: ChangePage) => void;
+    searchStore: SearchStoreState;
   } & Methods
 ) =>
   props.searchStore.result && props.searchStore.result.hits.total > 0 ? (

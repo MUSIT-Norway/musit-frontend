@@ -4,24 +4,25 @@ import { createStore } from 'react-rxjs';
 import { Observable } from 'rxjs';
 import analysisForm from './analysisForm';
 import AnalysisFormComponent from './AnalysisFormComponent';
-import type { Props } from './AnalysisFormComponent';
+import { Props } from './AnalysisFormComponent';
 import { loadPredefinedTypes } from '../../stores/predefinedLoader';
 import store$, {
   updateExtraDescriptionAttribute$,
   updateExtraResultAttribute$,
   clearStore$
 } from './analysisStore';
-import type { AnalysisStoreState } from './analysisStore';
-import flowRight from 'lodash/flowRight';
+import { AnalysisStoreState } from './analysisStore';
+import { flowRight } from 'lodash';
 import props, { onUnmount } from './shared/formProps';
 import lifeCycle from '../../shared/lifeCycle';
-import type { FormData } from './shared/formType';
+import { FormData } from './shared/formType';
 import predefined$ from '../../stores/predefined';
 import appSession$ from '../../stores/appSession';
-import type { Location } from './shared/submit';
-import type { History } from '../../types/Routes';
-import type { AppSession } from '../../types/appSession';
-import type { Predefined } from '../../types/predefined';
+import { Location } from './shared/submit';
+import { History } from 'history';
+import { AppSession } from '../../types/appSession';
+import { Predefined } from '../../types/predefined';
+import { Star, MUSTFIX } from '../../types/common';
 
 const { form$, updateForm$, clearForm$ } = analysisForm;
 
@@ -43,12 +44,12 @@ const combinedStore$ = createStore(
 
 function addProps(
   storeProps: {
-    appSession: AppSession,
-    predefined: Predefined,
-    store: AnalysisStoreState,
-    form: FormData
+    appSession: AppSession;
+    predefined: Predefined;
+    store: AnalysisStoreState;
+    form: FormData;
   },
-  upstream: { history: History, location: Location<*> }
+  upstream: { history: History; location: Location<Star> }
 ): Props {
   const sharedProps = props({
     ...storeProps,
@@ -60,16 +61,18 @@ function addProps(
       updateExtraResultAttribute$
     ),
     updateForm: updateForm$.next.bind(updateForm$)
-  });
+  } as MUSTFIX);
   return {
     ...sharedProps,
     clearStore: clearStore$.next.bind(clearStore$),
     clearForm: clearForm$.next.bind(clearForm$),
     loadingAnalysis: false
-  };
+  } as MUSTFIX;
 }
 
-const ManagedAnalysisFormComponent = lifeCycle({ onUnmount })(AnalysisFormComponent);
+const ManagedAnalysisFormComponent = lifeCycle({ onUnmount })(
+  AnalysisFormComponent as MUSTFIX
+);
 
 export default flowRight([inject(combinedStore$, addProps), loadPredefinedTypes])(
   ManagedAnalysisFormComponent

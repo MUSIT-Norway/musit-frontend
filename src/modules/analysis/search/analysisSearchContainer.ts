@@ -4,30 +4,35 @@ import { Observable } from 'rxjs';
 import { inject } from 'react-rxjs';
 import { analysisSearch } from '../../../models/analysis/analysisSearch';
 import createSearchStore from '../../../search/searchStore';
-import type { ChangePage } from '../../../search/searchStore';
+import { ChangePage } from '../../../search/searchStore';
 import appSession$ from '../../../stores/appSession';
 import { simpleGet } from '../../../shared/RxAjax';
 import AnalysisSearchComponent from './analysisSearchComponent';
-import type { SearchResult } from 'types/search';
-import type { AnalysisSearchProps } from 'models/analysis/analysisSearch';
-import type { History } from '../../../types/Routes';
+import { SearchResult } from '../../../types/search';
+import { AnalysisSearchProps } from '../../../models/analysis/analysisSearch';
+import { History } from 'history';
 import Config from '../../../config';
 import { loadPredefinedTypes } from '../../../stores/predefinedLoader';
 import predefined$ from '../../../stores/predefined';
-import type { AnalysisType } from '../../../types/analysis';
+import { AnalysisType } from '../../../types/analysis';
+import { TODO, Maybe } from '../../../types/common';
 
 const searchEndpoint: (
   p: AnalysisSearchProps
 ) => Observable<SearchResult> = analysisSearch(simpleGet);
 
-const { store$, actions } = createSearchStore('analysis', searchEndpoint, props => ({
-  queryParam: props.queryParam,
-  from: props.from,
-  limit: props.limit,
-  museumId: props.museumId,
-  collectionIds: props.collectionIds,
-  token: props.token
-}));
+const { store$, actions } = createSearchStore(
+  'analysis',
+  searchEndpoint,
+  (props: TODO) => ({
+    queryParam: props.queryParam,
+    from: props.from,
+    limit: props.limit,
+    museumId: props.museumId,
+    collectionIds: props.collectionIds,
+    token: props.token
+  })
+);
 
 const stores = () =>
   Observable.combineLatest(appSession$, store$, predefined$, (a, s, p) => ({
@@ -36,7 +41,7 @@ const stores = () =>
     predefined: p
   }));
 
-const props = (storeProps, upstream: { history: History }) => {
+const props = (storeProps: TODO, upstream: { history: History }) => {
   return {
     onSearch: () => {
       actions.setLoading$.next();
@@ -75,10 +80,10 @@ const props = (storeProps, upstream: { history: History }) => {
         );
       }
     },
-    getAnalysisTypeText: (id: number): ?string => {
-      const type: ?AnalysisType =
+    getAnalysisTypeText: (id: number): Maybe<string> => {
+      const type: Maybe<AnalysisType> =
         storeProps.predefined.analysisTypes &&
-        storeProps.predefined.analysisTypes.find(at => at.id === id);
+        storeProps.predefined.analysisTypes.find((at: AnalysisType) => at.id === id);
       return type
         ? storeProps.appSession.language.isEn
           ? type.enName
@@ -86,7 +91,7 @@ const props = (storeProps, upstream: { history: History }) => {
         : null;
     },
     searchStore: storeProps.searchStore,
-    history: url => url && upstream.history.push(url),
+    history: (url: TODO) => url && upstream.history.push(url),
     appSession: storeProps.appSession
   };
 };

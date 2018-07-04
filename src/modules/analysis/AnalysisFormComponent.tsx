@@ -1,13 +1,13 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
-import type { AppSession } from '../../types/appSession';
-import type {
+import { AppSession } from '../../types/appSession';
+import {
   ExtraAttribute,
   AnalysisEvent,
   ExtraResultAttributeValues
 } from '../../types/analysis';
-import type { FormData } from './shared/formType';
+import { FormData } from './shared/formType';
 import PersonRoleDate from '../../components/person/PersonRoleDate';
 import MetaInformation from '../../components/metainfo';
 import ObjectResultTable from './components/ExpandableObjectResultTable';
@@ -17,10 +17,9 @@ import EditResult from './components/EditResult';
 import FormDescriptionAttribute from './components/FormDescriptionAttribute';
 import FormAnalysisType from './components/FormAnalysisType';
 import { getStatusText, getParentObjectId } from './shared/getters';
-import type { Predefined } from '../../types/predefined';
-import type { Restriction } from '../../types/analysis';
-import toString from 'lodash/toString';
-import toArray from 'lodash/toArray';
+import { Predefined } from '../../types/predefined';
+import { Restriction } from '../../types/analysis';
+import { toString, toArray } from 'lodash';
 import ValidatedFormGroup, { isValid } from '../../forms/components/ValidatedFormGroup';
 import {
   FormInput,
@@ -29,35 +28,47 @@ import {
   FormText,
   FormInputSelect
 } from '../../forms/components';
-import type { AnalysisCollection } from '../../types/analysis';
-import type { History } from '../../types/Routes';
-import Loader from 'react-loader';
+import { AnalysisCollection } from '../../types/analysis';
+import { History } from 'history';
+import * as Loader from 'react-loader';
+import { mixed, Maybe, TODO, MUSTFIX } from '../../types/common';
+import { EventHandler, ChangeEvent, MouseEventHandler } from 'react';
 
 export type Props = {
-  form: FormData,
-  store: { analysis: ?AnalysisCollection, showRestrictionCancelDialog?: ?boolean },
-  updateForm: Function,
-  updateArrayField: Function,
-  updateBooleanField: Function,
-  updateStringField: Function,
-  updateAnalysisTypeId: Function,
-  updateAnalysisCategory: Function,
-  updateExtraDescriptionAttribute: Function,
-  getExtraDescriptionAttributeValue: (name: string) => ?string | ?Array<string | number>,
-  extraDescriptionAttributes: Array<ExtraAttribute>,
-  extraResultAttributes: ?ExtraResultAttributeValues,
-  updateExtraResultAttribute: (name: string, value: string | number) => mixed,
-  analysisTypeTerm: string,
-  appSession: AppSession,
-  objects: Array<AnalysisEvent>,
-  predefined: Predefined,
-  clickSave: Function,
-  clickCancel: Function,
-  history: History,
-  loadingAnalysis: boolean,
-  toggleCancelDialog?: Function,
-  isFormValid: boolean,
-  isRestrictionValidForCancellation: boolean
+  form: FormData;
+  store: {
+    analysis: Maybe<AnalysisCollection>;
+    showRestrictionCancelDialog?: Maybe<boolean>;
+    loadingAnalysis?: boolean;
+  };
+  updateForm: Function;
+  updateArrayField: Function;
+  updateBooleanField: Function;
+  updateStringField: (whatever: TODO) => EventHandler<ChangeEvent<HTMLElement>>;
+  updateAnalysisTypeId: EventHandler<ChangeEvent<HTMLElement>>;
+  updateAnalysisCategory: EventHandler<ChangeEvent<HTMLElement>>;
+  updateExtraDescriptionAttribute: (
+    name: string,
+    value: TODO
+  ) => EventHandler<ChangeEvent<HTMLElement>>;
+  getExtraDescriptionAttributeValue: (
+    name: string
+  ) => Maybe<string> | Maybe<Array<string | number>>;
+  extraDescriptionAttributes: Array<ExtraAttribute>;
+  extraResultAttributes: Maybe<ExtraResultAttributeValues>;
+  updateExtraResultAttribute: (name: string, value: string | number) => mixed;
+  analysisTypeTerm: string;
+  appSession: AppSession;
+  objects: Array<AnalysisEvent>;
+  predefined: Predefined;
+  clickSave: MouseEventHandler<HTMLElement>;
+  clickCancel: MouseEventHandler<HTMLElement>;
+  history: History;
+  loadingAnalysis: boolean;
+  toggleCancelDialog: () => void;
+  isFormValid: boolean;
+  isRestrictionValidForCancellation: boolean;
+  showCancelDialog: TODO;
 };
 
 export default function AnalysisFormComponent(props: Props) {
@@ -117,11 +128,13 @@ export default function AnalysisFormComponent(props: Props) {
             labelWidth={2}
             elementWidth={3}
             key={i}
-            value={props.getExtraDescriptionAttributeValue(attr.attributeKey)}
-            onChange={props.updateExtraDescriptionAttribute(
-              attr.attributeKey,
-              attr.attributeType
-            )}
+            value={props.getExtraDescriptionAttributeValue(attr.attributeKey) as MUSTFIX}
+            onChange={
+              props.updateExtraDescriptionAttribute(
+                attr.attributeKey,
+                attr.attributeType
+              ) as TODO
+            }
             attr={attr}
           />
         ))}
@@ -131,7 +144,7 @@ export default function AnalysisFormComponent(props: Props) {
           labelWidth={2}
           elementWidth={3}
           value={props.form.reason.rawValue ? props.form.reason.rawValue.toString() : ''}
-          onChange={props.updateStringField(props.form.reason.name)}
+          onChange={props.updateStringField(props.form.reason.name) as TODO}
           chooseLabel={I18n.t('musit.analysis.chooseReason')}
           values={
             props.predefined.purposes
@@ -150,7 +163,7 @@ export default function AnalysisFormComponent(props: Props) {
             <select
               id="status"
               className="form-control"
-              value={props.form.status.rawValue || ''}
+              value={(props.form.status.rawValue || '') as MUSTFIX}
               onChange={props.updateStringField(props.form.status.name)}
             >
               <option value="">{I18n.t('musit.analysis.chooseStatus')}</option>
@@ -167,7 +180,7 @@ export default function AnalysisFormComponent(props: Props) {
           labelWidth={2}
           elementWidth={3}
           value={props.form.orgId.rawValue ? props.form.orgId.rawValue.toString() : ''}
-          onChange={props.updateStringField(props.form.orgId.name)}
+          onChange={props.updateStringField(props.form.orgId.name) as TODO}
           chooseLabel={I18n.t('musit.analysis.choosePlace')}
           values={
             props.predefined.analysisLabList
@@ -197,7 +210,7 @@ export default function AnalysisFormComponent(props: Props) {
           labelWidth={2}
           elementWidth={6}
           value={props.form.note.rawValue ? props.form.note.rawValue.toString() : ''}
-          onChange={props.updateStringField(props.form.note.name)}
+          onChange={props.updateStringField(props.form.note.name) as TODO}
           rows={5}
         />
         <div className="form-group">
@@ -274,14 +287,15 @@ export default function AnalysisFormComponent(props: Props) {
                 !(
                   props.form.restriction &&
                   props.form.restriction.rawValue &&
-                  (props.form.restriction.rawValue.expirationDate ||
-                    props.form.restriction.rawValue.reason ||
-                    (props.form.restriction.rawValue.caseNumbers &&
-                    (props.form.restriction.rawValue.caseNumbers: any).length > 0
+                  ((props.form.restriction.rawValue as MUSTFIX).expirationDate ||
+                    (props.form.restriction.rawValue as MUSTFIX).reason ||
+                    ((props.form.restriction.rawValue as MUSTFIX).caseNumbers &&
+                    ((props.form.restriction.rawValue as MUSTFIX).caseNumbers as any)
+                      .length > 0
                       ? true
                       : false) ||
-                    (props.form.restriction.rawValue.requester
-                      ? props.form.restriction.rawValue.requester
+                    ((props.form.restriction.rawValue as MUSTFIX).requester
+                      ? (props.form.restriction.rawValue as MUSTFIX).requester
                       : false))
                 )) && (
                 <div className="btn-group" data-toggle="buttons">
@@ -335,19 +349,19 @@ export default function AnalysisFormComponent(props: Props) {
         <button
           className="btn btn-primary"
           disabled={
-            !props.isFormValid ||
-            !props.appSession.rolesForModules.collectionManagementWrite ||
-            (props.form.restrictions.value &&
-              !(
-                props.form.restrictions.value &&
-                props.form.restriction &&
-                props.form.restriction.rawValue &&
-                props.form.restriction.rawValue.expirationDate &&
-                props.form.restriction.rawValue.reason &&
-                (props.form.restriction.rawValue.requester
-                  ? props.form.restriction.rawValue.requester
-                  : false)
-              ))
+            (!props.isFormValid ||
+              !props.appSession.rolesForModules.collectionManagementWrite ||
+              (props.form.restrictions.value && //Please someone, clean up this...
+                !(
+                  props.form.restrictions.value &&
+                  props.form.restriction &&
+                  props.form.restriction.rawValue &&
+                  (props.form.restriction.rawValue as MUSTFIX).expirationDate &&
+                  (props.form.restriction.rawValue as MUSTFIX).reason &&
+                  ((props.form.restriction.rawValue as MUSTFIX).requester
+                    ? (props.form.restriction.rawValue as MUSTFIX).requester
+                    : false)
+                ))) as TODO
           }
           onClick={props.clickSave}
         >
@@ -363,9 +377,13 @@ export default function AnalysisFormComponent(props: Props) {
   );
 }
 
-function FormRestriction(props) {
+/*I tried to use Props as type here, but then a lot of properties becomes required on the <FormRestriction> Component,
+I guess that isn't the intention for this component.
+
+*/
+function FormRestriction(props: MUSTFIX) {
   const hasRestriction = props.form.restrictions.value;
-  const restrictionObj: ?Restriction = props.form.restriction.value;
+  const restrictionObj: Maybe<Restriction> = props.form.restriction.value;
   if (!restrictionObj) {
     return null;
   }
@@ -374,7 +392,7 @@ function FormRestriction(props) {
   const restrictionProps = {
     appSession: props.appSession,
     restriction: restrictionObj,
-    updateRestriction: restriction => {
+    updateRestriction: (restriction: Restriction) => {
       console.log('FormRestriction > restriction', restriction);
       return props.updateForm({
         name: props.form.restriction.name,

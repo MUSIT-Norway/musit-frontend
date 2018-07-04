@@ -15,7 +15,7 @@ export type AnalysisSavePayload = {
   administrator?: Maybe<string>;
   completedBy?: Maybe<string>;
   completedDate?: Maybe<string>;
-  caseNumbers?: Maybe<string>;
+  caseNumbers?: Maybe<Array<string>>; //Is it an array or not? hHe code seems a bit confused on this point.
   restriction?: Maybe<Restriction>;
   result?: Maybe<Result>;
 };

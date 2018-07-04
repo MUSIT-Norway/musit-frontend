@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { inject } from 'react-rxjs';
 import { createStore } from 'react-rxjs';
 import AnalysisViewComponent from './AnalysisViewComponent';
-import type { Props as AnalysisProps } from './AnalysisViewComponent';
+import { Props as AnalysisProps } from './AnalysisViewComponent';
 import predefined$ from '../../stores/predefined';
 import { loadCustomPredefinedTypes } from '../../stores/predefinedLoader';
 import appSession$ from '../../stores/appSession';
@@ -28,11 +28,12 @@ import {
   getExtraDescriptionAttributesWithValue
 } from './shared/getters';
 import { onUnmount } from './shared/formProps';
-import type { Field } from '../../forms/form';
-import type { History } from '../../types/Routes';
+import { Field } from '../../forms/form';
+import { History } from 'history';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { I18n } from 'react-i18nify';
 import { isRestrictionValidForCancellation } from './shared/formProps';
+import { Star, TODO } from '../../types/common';
 
 const { form$, loadForm$, clearForm$ } = analysisForm;
 
@@ -53,11 +54,11 @@ const combinedStore$ = createStore(
 );
 
 type UpstreamProps = {
-  match: { params: { analysisId: string } },
-  history: History
+  match: { params: { analysisId: string } };
+  history: History;
 };
 
-export function props(props: *, upstream: UpstreamProps): AnalysisProps {
+export function props(props: Star, upstream: UpstreamProps): AnalysisProps {
   const analysisType = getAnalysisType(
     parseInt(props.store.analysis ? props.store.analysis.analysisTypeId : null, 10),
     props.predefined.analysisTypes
@@ -135,7 +136,7 @@ export function props(props: *, upstream: UpstreamProps): AnalysisProps {
           ...props.store.analysis,
           objects:
             props.store.analysis && props.store.analysis.events
-              ? props.store.analysis.events.map(e => ({
+              ? props.store.analysis.events.map((e: TODO) => ({
                   objectId: e.affectedThing,
                   objectType: e.affectedType
                 }))
@@ -149,7 +150,7 @@ export function props(props: *, upstream: UpstreamProps): AnalysisProps {
               message: I18n.t('musit.analysis.saveAnalysisSuccess')
             });
           },
-          onFailure: e => {
+          onFailure: (e: TODO) => {
             emitError({
               type: 'errorOnSave',
               error: e,
@@ -189,5 +190,5 @@ const MountableAnalysisViewComponent = lifeCycle({
 export default loadCustomPredefinedTypes(
   predefined$,
   appSession$,
-  inject(combinedStore$, props)(MountableAnalysisViewComponent)
+  inject(combinedStore$, props)(MountableAnalysisViewComponent as TODO)
 );

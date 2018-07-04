@@ -13,6 +13,7 @@ type Props = {
   history: History;
   appSession: AppSession;
   viewMode?: Maybe<boolean>;
+  updateForm?: Function; //Perhaps not needed, but it was used/referenced somewhere else, so I added it just in case. Please check whether it can be removed!
 };
 
 type State = {

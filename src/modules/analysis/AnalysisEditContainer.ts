@@ -4,7 +4,7 @@ import { createStore } from 'react-rxjs';
 import { Observable } from 'rxjs';
 import analysisForm, { fieldsArray } from './analysisForm';
 import AnalysisFormComponent from './AnalysisFormComponent';
-import type { Props } from './AnalysisFormComponent';
+import { Props } from './AnalysisFormComponent';
 import store$, {
   getAnalysis$,
   updateExtraDescriptionAttribute$,
@@ -12,19 +12,20 @@ import store$, {
   clearStore$,
   toggleCancelDialog$
 } from './analysisStore';
-import flowRight from 'lodash/flowRight';
+import { flowRight } from 'lodash';
 import lifeCycle from '../../shared/lifeCycle';
 import { onMount, onReceiveProps } from './AnalysisViewContainer';
 import { loadPredefinedTypes } from '../../stores/predefinedLoader';
 import props, { onUnmount } from './shared/formProps';
 import predefined$ from '../../stores/predefined';
 import appSession$ from '../../stores/appSession';
-import type { Location } from './shared/submit';
-import type { History } from '../../types/Routes';
-import type { AppSession } from '../../types/appSession';
-import type { Predefined } from '../../types/predefined';
-import type { AnalysisStoreState } from './analysisStore';
-import type { FormData } from './shared/formType';
+import { Location } from './shared/submit';
+import { History } from 'history';
+import { AppSession } from '../../types/appSession';
+import { Predefined } from '../../types/predefined';
+import { AnalysisStoreState } from './analysisStore';
+import { FormData } from './shared/formType';
+import { TODO, Star } from '../../types/common';
 
 const { form$, updateForm$, clearForm$, loadForm$ } = analysisForm;
 
@@ -46,16 +47,16 @@ const combinedStore$ = createStore(
 
 function editProps(
   storeProps: {
-    appSession: AppSession,
-    predefined: Predefined,
-    store: AnalysisStoreState,
-    form: FormData
+    appSession: AppSession;
+    predefined: Predefined;
+    store: AnalysisStoreState;
+    form: FormData;
   },
-  upstream: { history: History, location: Location<*> }
+  upstream: { history: History; location: Location<Star> }
 ): Props {
   return {
     ...props({
-      ...storeProps,
+      ...(storeProps as TODO),
       ...upstream,
       updateExtraDescriptionAttribute: updateExtraDescriptionAttribute$.next.bind(
         updateExtraDescriptionAttribute$
@@ -71,14 +72,14 @@ function editProps(
     loadForm: loadForm$.next.bind(loadForm$),
     loadingAnalysis: !storeProps.store.analysis,
     toggleCancelDialog: toggleCancelDialog$.next.bind(toggleCancelDialog$)
-  };
+  } as TODO;
 }
 
 const MountableAnalysisFormComponent = lifeCycle({
   onMount,
   onReceiveProps: onReceiveProps(fieldsArray),
   onUnmount
-})(AnalysisFormComponent);
+})(AnalysisFormComponent as TODO);
 
 export default flowRight([inject(combinedStore$, editProps), loadPredefinedTypes])(
   MountableAnalysisFormComponent

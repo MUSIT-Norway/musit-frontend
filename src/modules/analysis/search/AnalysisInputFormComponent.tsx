@@ -1,14 +1,14 @@
 // @flow
 
-import React from 'react';
-import FontAwesome from 'react-fontawesome';
+import * as React from 'react';
+import * as FontAwesome from 'react-fontawesome';
 import { I18n } from 'react-i18nify';
-import type { SearchStoreState } from '../../../search/searchStore';
+import { SearchStoreState } from '../../../search/searchStore';
 
 export type Props = {
-  onChangeQueryParam: (key: string, value: string) => void,
-  onSearch: () => void,
-  searchStore: SearchStoreState
+  onChangeQueryParam: (key: string, value: string) => void;
+  onSearch: () => void;
+  searchStore: SearchStoreState;
 };
 
 const AnalysisInputFormComponent = (props: Props) => (

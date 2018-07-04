@@ -1,48 +1,55 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
 import MetaInformation from '../../components/metainfo';
 import ObjectTable from './components/ExpandableObjectResultTable';
-import toArray from 'lodash/toArray';
+import { toArray } from 'lodash';
 import ViewResult from './components/ViewResult';
 import ViewPersonRoleDate from '../../components/person/ViewPersonRoleDate';
-import type { FormData } from './shared/formType';
+import { FormData } from './shared/formType';
 import { getParentObjectId } from './shared/getters';
-import type { AnalysisStoreState } from './analysisStore';
-import type { AppSession } from '../../types/appSession';
-import type { AnalysisEvent, ExtraResultAttributeValues } from '../../types/analysis';
-import type { History } from '../../types/Routes';
+import { AnalysisStoreState } from './analysisStore';
+import { AppSession } from '../../types/appSession';
+import {
+  AnalysisEvent,
+  ExtraResultAttributeValues,
+  Restriction
+} from '../../types/analysis';
+import { History } from 'history';
 import ViewRestriction from './components/ViewRestriction';
 import MusitI18n from '../../components/MusitI18n';
-import type { Predefined } from '../../types/predefined';
-import Loader from 'react-loader';
+import { Predefined } from '../../types/predefined';
+import * as Loader from 'react-loader';
+import { Maybe, TODO } from '../../types/common';
+import { MouseEventHandler } from 'react';
 
 export type Props = {
-  match: { params: { analysisId: string } },
-  form: FormData,
-  store: AnalysisStoreState,
-  analysisPurpose: string,
-  analysisTypeTerm: string,
-  statusText: string,
-  labPlaceText: string,
-  objects: Array<AnalysisEvent>,
-  clickEdit: Function,
-  extraDescriptionAttributes: any,
-  extraResultAttributes: ?ExtraResultAttributeValues,
-  history: History,
-  appSession: AppSession,
-  cancelRestriction: Function,
-  updateRestriction: Function,
-  updateAnalysis: Function,
-  loadingAnalysis: boolean,
-  hasRestrictions: ?boolean,
-  toggleCancelDialog: Function,
-  isRestrictionValidForCancellation: boolean,
-  predefined: Predefined,
-  clearForm: Function,
-  clearStore: Function,
-  getAnalysis: Function,
-  loadForm: Function
+  match: { params: { analysisId: string } };
+  form: FormData;
+  store: AnalysisStoreState;
+  analysisPurpose: string;
+  analysisTypeTerm: string;
+  statusText: string;
+  labPlaceText: string;
+  objects: Array<AnalysisEvent>;
+  clickEdit: MouseEventHandler<HTMLElement>;
+  extraDescriptionAttributes: any;
+  extraResultAttributes: Maybe<ExtraResultAttributeValues>;
+  history: History;
+  appSession: AppSession;
+  cancelRestriction: () => void;
+  updateRestriction: (restriction: Restriction) => void;
+  updateAnalysis: Function;
+  loadingAnalysis: boolean;
+  hasRestrictions: Maybe<boolean>;
+  toggleCancelDialog: () => void;
+  isRestrictionValidForCancellation: boolean;
+  predefined: Predefined;
+  clearForm: Function;
+  clearStore: Function;
+  getAnalysis: Function;
+  loadForm: Function;
+  analysisTypeId: TODO;
 };
 
 export default (props: Props) =>
@@ -74,18 +81,18 @@ export default (props: Props) =>
             </p>
           </div>
         </div>
-        {props.extraDescriptionAttributes.map((attr, i) => (
+        {props.extraDescriptionAttributes.map((attr: TODO, i: number) => (
           <div className="form-group" key={i}>
             <label className="control-label col-md-2" htmlFor="type">
               {I18n.t('musit.analysis.analysisAttributes.' + attr.attributeKey)}
             </label>
             <div className="col-md-3" id="idExtraDescriptionAttributes">
               {Array.isArray(attr.attributeValue) ? (
-                <ul class="list-unstyled" id="avc--extraDescriptionAttributesTypes">
-                  {attr.attributeValue.map(attrId =>
+                <ul className="list-unstyled" id="avc--extraDescriptionAttributesTypes">
+                  {attr.attributeValue.map((attrId: TODO) =>
                     attr.allowedValues
-                      .filter(allowedValue => allowedValue.id === attrId)
-                      .map(fav => (
+                      .filter((allowedValue: TODO) => allowedValue.id === attrId)
+                      .map((fav: TODO) => (
                         <li>
                           <MusitI18n key={fav.id} en={fav.enLabel} no={fav.noLabel} />
                         </li>
