@@ -5,14 +5,14 @@ import { parseValue } from '../shared/getters';
 import { Maybe, TODO } from '../../../types/common';
 
 type Props = {
-  attrKey: string,
+  attrKey: string;
   attribute: {
-    value?: Maybe<number>,
-    rawValue?: Maybe<string>,
-    unit?: Maybe<string>
-  },
-  allowedValues?: Maybe<Array<string>>,
-  onChange: Function
+    value?: Maybe<number>;
+    rawValue?: Maybe<string>;
+    unit?: Maybe<string>;
+  };
+  allowedValues?: Maybe<Array<string>>;
+  onChange: Function;
 };
 
 const Size = (props: Props) => {
@@ -50,7 +50,8 @@ const Size = (props: Props) => {
             props.onChange({
               ...props.attribute,
               unit: e.target.value
-            })}
+            })
+          }
           defaultValue={unit as TODO}
         >
           <option value="">{I18n.t('musit.sample.chooseUnit')}</option>

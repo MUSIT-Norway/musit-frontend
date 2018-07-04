@@ -1,9 +1,9 @@
 // @flow
 
-import type { AppSession } from 'types/appSession';
+import { AppSession } from '../../../types/appSession';
 
 import Analysis from '../../../models/analysis';
-import type {
+import {
   AnalysisResultTypes,
   ImportAnalysisResult,
   AnalysisResult,
@@ -13,9 +13,9 @@ import type {
   RadioCarbonResult,
   MeasurementResult,
   ExtractionResult
-} from 'types/analysisResult';
-import type { StoreState } from './analysisExchangeStore';
-import type {
+} from '../../../types/analysisResult';
+import { StoreState } from './analysisExchangeStore';
+import {
   ResultExchangeTemplates,
   GenericResultExchangeTemplate,
   AgeResultExchangeTemplate,
@@ -24,6 +24,7 @@ import type {
   ExtractionResultExchangeTemplate
 } from './exchangeTemplate';
 import { simplePut } from '../../../shared/RxAjax';
+import { Maybe, MUSTFIX } from '../../../types/common';
 
 export const uploadAnalysisResultAction = (
   appSession: AppSession,
@@ -87,7 +88,7 @@ const mapToAnalysisEventResult = (
   }
   return {
     objectId: result.sampleObjectId || result.objectId,
-    eventId: parseInt(result.analysisId, 10),
+    eventId: parseInt(result.analysisId as MUSTFIX, 10),
     result: mapToAnalysisResult(type, result)
   };
 };
@@ -99,27 +100,27 @@ export const mapToAnalysisResult = (
   switch (type) {
     case 'GenericResult':
       // Flow find this ok, but not the other path.
-      const gr = (result: GenericResultExchangeTemplate);
-      return ({
+      const gr = result as GenericResultExchangeTemplate;
+      return {
         type: 'GenericResult',
         extRef: gr.resultExternalRef ? [gr.resultExternalRef] : null,
         comment: gr.resultComment ? gr.resultComment : null
-      }: GenericResult);
+      } as GenericResult;
 
     case 'AgeResult':
       // $FlowFixMe | We know this basted on the type
-      const ar = (result: AgeResultExchangeTemplate);
-      return ({
+      const ar = result as AgeResultExchangeTemplate;
+      return {
         type: 'AgeResult',
         extRef: ar.resultExternalRef ? [ar.resultExternalRef] : null,
         comment: ar.resultComment ? ar.resultComment : null,
         age: ar.resultAge ? ar.resultAge : null
-      }: AgeResult);
+      } as AgeResult;
 
     case 'RadioCarbonResult':
       // $FlowFixMe | We know this basted on the type
-      const rcr = (result: RadioCarbonResultExchangeTemplate);
-      return ({
+      const rcr = result as RadioCarbonResultExchangeTemplate;
+      return {
         type: 'RadioCarbonResult',
         extRef: rcr.resultExternalRef ? [rcr.resultExternalRef] : null,
         comment: rcr.resultComment ? rcr.resultComment : null,
@@ -127,12 +128,12 @@ export const mapToAnalysisResult = (
         standardDeviation: rcr.resultStandardDeviation
           ? rcr.resultStandardDeviation
           : null
-      }: RadioCarbonResult);
+      } as RadioCarbonResult;
 
     case 'MeasurementResult':
       // $FlowFixMe | We know this basted on the type
-      const mr = (result: MeasurementResultExchangeTemplate);
-      return ({
+      const mr = result as MeasurementResultExchangeTemplate;
+      return {
         type: 'MeasurementResult',
         extRef: mr.resultExternalRef ? [mr.resultExternalRef] : null,
         comment: mr.resultComment ? mr.resultComment : null,
@@ -141,26 +142,26 @@ export const mapToAnalysisResult = (
         size: toSize(mr.resultSizeUnit, mr.resultSizeValue),
         precision: mr.resultPrecision,
         method: mr.resultMethod
-      }: MeasurementResult);
+      } as MeasurementResult;
 
     case 'ExtractionResult':
       // $FlowFixMe | We know this basted on the type
-      const er = (result: ExtractionResultExchangeTemplate);
-      return ({
+      const er = result as ExtractionResultExchangeTemplate;
+      return {
         type: 'ExtractionResult',
         extRef: er.resultExternalRef ? [er.resultExternalRef] : null,
         comment: er.resultComment ? er.resultComment : null,
         storageMedium: er.resultStorageMedium ? er.resultStorageMedium : null,
         concentration: toSize(er.resultConcentrationUnit, er.resultConcentrationValue),
         volume: toSize(er.resultVolumeUnit, er.resultVolumeValue)
-      }: ExtractionResult);
+      } as ExtractionResult;
 
     default:
       throw new Error('Unsupported result type ' + type);
   }
 };
 
-const toSize = (unit: ?string, value: ?string): ?Size =>
+const toSize = (unit: Maybe<string>, value: Maybe<string>): Maybe<Size> =>
   value && unit
     ? {
         unit: unit,

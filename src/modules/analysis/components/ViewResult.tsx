@@ -1,8 +1,8 @@
 // @flow
 import * as React from 'react';
 import { I18n } from 'react-i18nify';
-import  { AppSession } from '../../../types/appSession';
-import  { History } from 'history';
+import { AppSession } from '../../../types/appSession';
+import { History } from 'history';
 import NavigateToObject from '../../../components/navigations/NavigateToObject';
 import { FormText, FormElement } from '../../../forms/components';
 import { saveBlob } from '../../../shared/download';
@@ -11,13 +11,13 @@ import { Maybe, Star } from '../../../types/common';
 import { SavedFile, ErrorLoading, isErrorLoading } from '../../../types/documentsCommon';
 
 type Props = {
-  files: Maybe<Array<SavedFile | ErrorLoading>>,
-  externalSource: Maybe<string>,
-  comments: Maybe<string>,
-  extraAttributes: Star,
-  history: History,
-  appSession: AppSession,
-  parentObjectId?: Maybe<string>
+  files: Maybe<Array<SavedFile | ErrorLoading>>;
+  externalSource: Maybe<string>;
+  comments: Maybe<string>;
+  extraAttributes: Star;
+  history: History;
+  appSession: AppSession;
+  parentObjectId?: Maybe<string>;
 };
 
 export default function Result(props: Props) {

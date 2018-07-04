@@ -1,9 +1,9 @@
 // @flow
 
-import PropTypes from 'prop-types';
+import * as PropTypes from 'prop-types';
 import lifeCycle from '../../../shared/lifeCycle';
 import { RxInjectLegacy as inject } from '../../../shared/react-rxjs-patch/';
-import flowRight from 'lodash/flowRight';
+import { flowRight } from 'lodash';
 
 import { loadPredefinedTypes } from '../../../stores/predefinedLoader';
 import { getAnalysis$ } from '../analysisStore';
@@ -17,41 +17,45 @@ import { uploadAnalysisResultAction } from './uploadImportResultAction';
 
 import AnalysisResultExchangeComponent from './AnalysisResultExchangeComponent';
 
-import type { AppSession } from 'types/appSession';
-import type { Match, History } from 'types/Routes';
-import type { StoreState } from './analysisExchangeStore';
-import type { Predefined } from 'types/predefined';
-import type { AnalysisType } from 'types/analysis';
+import { AppSession } from '../../../types/appSession';
+import { Match } from '../../../types/Routes';
+import { StoreState } from './analysisExchangeStore';
+import { Predefined } from '../../../types/predefined';
+import { AnalysisType } from '../../../types/analysis';
+import { mixed, Maybe, MUSTFIX } from '../../../types/common';
+import { History } from 'history';
 
 type RouterParams = {
   // should be a string but we're getting conflict with the match. Indicatig that
   // it should have been parsed to an integer...
-  analysisId: number
+  analysisId: number;
 };
 
-type GetAnalysis = (props: {
-  // should have been moved to the store
-  id: number,
-  museumId: number,
-  collectionId: string,
-  token: string,
-  // callback?: Callback,
-  sampleTypes: mixed
-}) => void;
+type GetAnalysis = (
+  props: {
+    // should have been moved to the store
+    id: number;
+    museumId: number;
+    collectionId: string;
+    token: string;
+    // callback?: Callback,
+    sampleTypes: mixed;
+  }
+) => void;
 
 type ParentProps = {
-  history: History
+  history: History;
 };
 
 type MountProps = {
-  clearStore: () => void,
-  uploadResultFailed: (errors: Array<string>) => void,
-  getAnalysis: GetAnalysis,
-  setAnalysisTypes: (types: ?Array<AnalysisType>) => void,
-  appSession: AppSession,
-  predefined: Predefined,
-  match: Match<RouterParams>,
-  analysisExchangeStore: StoreState
+  clearStore: () => void;
+  uploadResultFailed: (errors: Array<string>) => void;
+  getAnalysis: GetAnalysis;
+  setAnalysisTypes: (types: Maybe<Array<AnalysisType>>) => void;
+  appSession: AppSession;
+  predefined: Predefined;
+  match: Match<RouterParams>;
+  analysisExchangeStore: StoreState;
 } & ParentProps;
 
 const data = {
@@ -94,7 +98,7 @@ export const onUnmount = (props: MountProps) => {
 };
 
 const MountedAnalysisResultExchangeComponent = lifeCycle({ onMount, onUnmount })(
-  AnalysisResultExchangeComponent
+  AnalysisResultExchangeComponent as MUSTFIX
 );
 
 export default flowRight([inject(data, commands, props), loadPredefinedTypes])(

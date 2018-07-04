@@ -8,28 +8,29 @@ import { uniq } from 'lodash';
 import { I18n } from 'react-i18nify';
 import { simpleGet, simplePost } from '../../../shared/RxAjax';
 
-import type { AnalysisCollection, AnalysisType } from 'types/analysis';
-import type { Actor } from 'types/actor';
+import { AnalysisCollection, AnalysisType } from '../../../types/analysis';
+import { Actor } from '../../../types/actor';
+import { Star, Maybe, TODO } from '../../../types/common';
 
 type Actions = {
-  setLoading$: Observable<void>,
-  getAnalysisEvents$: Observable<*>,
-  filterEvents$: Observable<*>
+  setLoading$: Observable<void>;
+  getAnalysisEvents$: Observable<Star>;
+  filterEvents$: Observable<Star>;
 };
 
 export type Extension = {
-  registeredByName?: ?string,
-  analysisType?: ?AnalysisType
+  registeredByName?: Maybe<string>;
+  analysisType?: Maybe<AnalysisType>;
 };
 
 export type AnalysisCollectionExtended = AnalysisCollection & Extension;
 
 export const setLoading$: Observable<void> = createAction('setLoading$');
-export const filterEvents$: Observable<*> = createAction('filterEvents$');
-export const getAnalysisEvents$: Observable<*> = createAction(
+export const filterEvents$: Observable<Star> = createAction('filterEvents$');
+export const getAnalysisEvents$: Observable<Star> = createAction(
   'getAnalysisEvent$'
-).switchMap(props =>
-  MusitAnalysis.getAnalysisEvents(simpleGet)(props).flatMap(events =>
+).switchMap((props: TODO) =>
+  MusitAnalysis.getAnalysisEvents(simpleGet)(props).flatMap((events: TODO) =>
     MusitActor.getActors(simplePost)({
       token: props.token,
       actorIds: getUniqueRegisteredByActors(events)
@@ -40,14 +41,14 @@ export const getAnalysisEvents$: Observable<*> = createAction(
 export const getUniqueRegisteredByActors = (
   events: Array<AnalysisCollection>
 ): Array<string> =>
-  (uniq(events.map(event => event.registeredBy)).filter(v => v): Array<any>);
+  uniq(events.map(event => event.registeredBy)).filter(v => v) as Array<any>;
 
 export const combineDataSources = (
   actors: Array<Actor>,
   events: Array<AnalysisCollection>,
   analysisTypes: Array<AnalysisType>
 ): Array<AnalysisCollectionExtended> => {
-  const findActorName = (actorToFind: ?string) => {
+  const findActorName = (actorToFind: Maybe<string>) => {
     const name = actors.find((a: Actor) => MusitActor.hasActorId(a, actorToFind));
     return name && name.fn;
   };
@@ -69,7 +70,7 @@ export const filterAnalysisEvents = (
 ): Array<AnalysisCollectionExtended> => {
   const filterStr = filter.toLowerCase().trim();
   if (filterStr) {
-    const matches = (input: ?string) =>
+    const matches = (input: Maybe<string>) =>
       (input && input.toLowerCase().includes(filterStr)) || false;
 
     return events.filter(
@@ -86,8 +87,8 @@ export const filterAnalysisEvents = (
 
 export const reducer$ = (actions: Actions) =>
   Observable.merge(
-    actions.setLoading$.map(() => state => ({ ...state, loading: true })),
-    actions.getAnalysisEvents$.map(analysisEvents => state => ({
+    actions.setLoading$.map(() => (state: TODO) => ({ ...state, loading: true })),
+    actions.getAnalysisEvents$.map(analysisEvents => (state: TODO) => ({
       ...state,
       analysisEvents,
       analysisEventsFiltered: filterAnalysisEvents(
@@ -96,7 +97,7 @@ export const reducer$ = (actions: Actions) =>
       ),
       loading: false
     })),
-    actions.filterEvents$.map(filterStr => state => ({
+    actions.filterEvents$.map(filterStr => (state: TODO) => ({
       ...state,
       filterEventValue: filterStr,
       analysisEventsFiltered: filterAnalysisEvents(state.analysisEvents, filterStr)

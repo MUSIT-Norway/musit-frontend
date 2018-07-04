@@ -2,13 +2,13 @@
 import * as React from 'react';
 import { I18n } from 'react-i18nify';
 import { isMultipleSelectAttribute } from '../../../types/analysis';
-import  { DescriptionAttributeType } from './DescriptionAttributeType';
+import { DescriptionAttributeType } from './DescriptionAttributeType';
 import MusitI18n from '../../../components/MusitI18n';
 import { ChangeEventHandler } from 'react';
 import { Maybe } from '../../../types/common';
 
 type Props = {
-  attr: DescriptionAttributeType,
+  attr: DescriptionAttributeType;
   onChange: ChangeEventHandler<HTMLElement>; // (e: DomEvent) => void,
   value: Maybe<string> | Maybe<Array<string | number>>;
 };

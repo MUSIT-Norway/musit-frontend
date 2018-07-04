@@ -1,24 +1,24 @@
 // @flow
 
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
 import AnalysisEventsTableComponent from './AnalysisEventsTableComponent';
-import Loader from 'react-loader';
+import * as Loader from 'react-loader';
 import { MusitField } from '../../../components/formfields';
 
-import type { AnalysisCollectionExtended } from './analysisEventsStore';
-import type { AppSession } from 'types/appSession';
+import { AnalysisCollectionExtended } from './analysisEventsStore';
+import { AppSession } from '../../../types/appSession';
 
 type Props = {
   analysisEventsStore: {
-    analysisEvents: Array<AnalysisCollectionExtended>,
-    analysisEventsFiltered: Array<AnalysisCollectionExtended>,
-    loading: boolean,
-    filterEventValue: string
-  },
-  appSession: AppSession,
-  filterEvents: (str: string) => void,
-  goToAnalysis: (appSession: AppSession, analysisId: number) => void
+    analysisEvents: Array<AnalysisCollectionExtended>;
+    analysisEventsFiltered: Array<AnalysisCollectionExtended>;
+    loading: boolean;
+    filterEventValue: string;
+  };
+  appSession: AppSession;
+  filterEvents: (str: string) => void;
+  goToAnalysis: (appSession: AppSession, analysisId: number) => void;
 };
 
 const AnalysisEventsViewComponent = (props: Props) => (

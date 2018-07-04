@@ -3,50 +3,51 @@ import { Observable, Subject } from 'rxjs';
 import analysisStoreInstance$, {
   clearStore$ as clearAnalysisStore$
 } from '../analysisStore';
-import type { AnalysisStoreState } from '../analysisStore';
+import { AnalysisStoreState } from '../analysisStore';
 import { createStore } from 'react-rxjs';
 import { createAction } from '../../../shared/react-rxjs-patch';
-import type { Reducer } from 'react-rxjs';
+import { Reducer } from 'react-rxjs';
 import {
   getHeadersForType,
   getResultHeadersForType,
   createExchangeTemplate
 } from './exchangeTemplate';
 
-import type { AnalysisType } from 'types/analysis';
-import type { AnalysisResultTypes } from 'types/analysisResult';
-import type { ResultExchangeTemplates } from './exchangeTemplate';
+import { AnalysisType } from '../../../types/analysis';
+import { AnalysisResultTypes } from '../../../types/analysisResult';
+import { ResultExchangeTemplates } from './exchangeTemplate';
+import { Star, Maybe, TODO } from '../../../types/common';
 
 type Actions = {
-  importResult$: Observable<*>,
-  uploadResultFailed$: Observable<*>,
-  clearStoreAction$: Observable<*>,
-  setAnalysisTypes$: Observable<*>
+  importResult$: Observable<Star>;
+  uploadResultFailed$: Observable<Star>;
+  clearStoreAction$: Observable<Star>;
+  setAnalysisTypes$: Observable<Star>;
 };
 
 export type StoreState = {
-  exportTemplate: Array<ResultExchangeTemplates>,
-  importHeaders: Array<string>,
-  resultHeaders: Array<string>,
+  exportTemplate: Array<ResultExchangeTemplates>;
+  importHeaders: Array<string>;
+  resultHeaders: Array<string>;
   importResult: {
-    rows: Array<ResultExchangeTemplates>
-  },
-  importErrors: Array<string>,
-  analysisResultType: ?AnalysisResultTypes
+    rows: Array<ResultExchangeTemplates>;
+  };
+  importErrors: Array<string>;
+  analysisResultType: Maybe<AnalysisResultTypes>;
 } & AnalysisStoreState;
 
-export const importResult$: Subject<*> = createAction('importResult');
-export const uploadResultFailed$: Subject<*> = createAction('uploadResultFailed');
-export const clearStore$: Subject<*> = createAction('clearStore');
-export const clearStoreAction$: Observable<*> = clearStore$.do(() =>
+export const importResult$: Subject<Star> = createAction('importResult');
+export const uploadResultFailed$: Subject<Star> = createAction('uploadResultFailed');
+export const clearStore$: Subject<Star> = createAction('clearStore');
+export const clearStoreAction$: Observable<Star> = clearStore$.do(() =>
   clearAnalysisStore$.next()
 );
-export const setAnalysisTypes$: Subject<*> = createAction('setAnalysisTypes');
+export const setAnalysisTypes$: Subject<Star> = createAction('setAnalysisTypes');
 
 const findAnalysisResultType = (
   analysisStore: AnalysisStoreState | StoreState,
   analysisTypes: Array<AnalysisType>
-): ?AnalysisResultTypes => {
+): Maybe<AnalysisResultTypes> => {
   if (analysisStore.analysis) {
     const analysisTypeId = analysisStore.analysis.analysisTypeId;
     const res = analysisTypes.find(t => t.id === analysisTypeId);
@@ -106,19 +107,19 @@ const mapAnalysisTypesToState = (
 
 export const reducer$ = (
   actions: Actions,
-  analysisStore$: Observable<*>
+  analysisStore$: Observable<Star>
 ): Observable<Reducer<StoreState>> =>
   Observable.merge(
-    analysisStore$.map(analysisStore => state =>
+    analysisStore$.map(analysisStore => (state: TODO) =>
       mapAnalysisStoreToState(analysisStore, state)
     ),
     actions.importResult$.map(mapImportResult),
     actions.clearStoreAction$.map(() => () => initStoreState()),
-    actions.uploadResultFailed$.map(importErrors => state => ({
+    actions.uploadResultFailed$.map(importErrors => (state: TODO) => ({
       ...state,
       importErrors
     })),
-    actions.setAnalysisTypes$.map(analysisTypes => state =>
+    actions.setAnalysisTypes$.map(analysisTypes => (state: TODO) =>
       mapAnalysisTypesToState(state, analysisTypes)
     )
   );
@@ -140,7 +141,7 @@ export const analysisExchangeStore$ = (
     clearStoreAction$,
     setAnalysisTypes$
   },
-  analysisStore$: Observable<*> = analysisStoreInstance$
+  analysisStore$: Observable<Star> = analysisStoreInstance$
 ) =>
   createStore(
     'analysisExchangeStore',

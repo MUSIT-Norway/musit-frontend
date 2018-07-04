@@ -1,24 +1,25 @@
 // @flow
 
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
-import moment from 'moment';
-import type { AnalysisCollectionExtended } from './analysisEventsStore';
-import type { Language } from 'types/appSession';
-import type { AnalysisType } from 'types/analysis';
+import * as moment from 'moment';
+import { AnalysisCollectionExtended } from './analysisEventsStore';
+import { Language } from '../../../types/appSession';
+import { AnalysisType } from '../../../types/analysis';
+import { Maybe } from '../../../types/common';
 
 type TableProps = {
-  events: Array<AnalysisCollectionExtended>,
-  onRowClicked: (id: number) => void,
-  language: Language
+  events: Array<AnalysisCollectionExtended>;
+  onRowClicked: (id: number) => void;
+  language: Language;
 };
 
-const formattedDate = (date: ?string) => date && moment(date).format('DD.MM.YYYY');
+const formattedDate = (date: Maybe<string>) => date && moment(date).format('DD.MM.YYYY');
 
-const statusText = (status: ?number) =>
+const statusText = (status: Maybe<number>) =>
   status && I18n.t('musit.analysis.statusType.' + status);
 
-const analysisTypeName = (language: Language, analysisType: ?AnalysisType) => {
+const analysisTypeName = (language: Language, analysisType: Maybe<AnalysisType>) => {
   if (analysisType) {
     return language.isEn ? analysisType.enName : analysisType.noName;
   } else {

@@ -1,19 +1,20 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
 
 import Export from '../../../components/spreadsheet/ExportSpreadsheetComponent';
 import Import from '../../../components/spreadsheet/ImportSpreadsheetComponent';
 import ImportVerificationTable from './ImportVerificationTableComponent';
 
-import type { StoreState } from './analysisExchangeStore';
-type ImportResult = (resultRows: Array<*>) => void;
+import { StoreState } from './analysisExchangeStore';
+import { Star } from '../../../types/common';
+type ImportResult = (resultRows: Array<Star>) => void;
 
 type Props = {
-  analysisExchangeStore: StoreState,
-  importResult: ImportResult,
-  uploadResult: () => void,
-  cancelImport: () => void
+  analysisExchangeStore: StoreState;
+  importResult: ImportResult;
+  uploadResult: () => void;
+  cancelImport: () => void;
 };
 
 const hasImportedResults = (props: Props) =>
@@ -53,7 +54,7 @@ const AnalysisResultExchangeComponent = (props: Props) => (
         <button
           className={'submitButton btn btn-primary center-block '}
           id="importResults"
-          disabled={hasImportedResults(props) ? '' : 'disabled'}
+          disabled={!hasImportedResults(props)} //OLD: {hasImportedResults(props) ? '' : 'disabled'}
           onClick={props.uploadResult}
         >
           {I18n.t('musit.analysis.exchange.importButton')}

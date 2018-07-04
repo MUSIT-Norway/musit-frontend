@@ -1,11 +1,11 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
 
-import type { ResultExchangeTemplates } from './exchangeTemplate';
+import { ResultExchangeTemplates } from './exchangeTemplate';
 type Props = {
-  result: Array<ResultExchangeTemplates>,
-  resultHeaders: Array<string>
+  result: Array<ResultExchangeTemplates>;
+  resultHeaders: Array<string>;
 };
 
 const ImportVerificationTableComponent = (props: Props) => (

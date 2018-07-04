@@ -1,18 +1,18 @@
 // @flow
 import * as React from 'react';
 import { I18n } from 'react-i18nify';
-import  { AppSession } from '../../../types/appSession';
-import  { Restriction } from '../../../types/analysis';
+import { AppSession } from '../../../types/appSession';
+import { Restriction } from '../../../types/analysis';
 import StatefulActorSuggest from './StatefulActorSuggest';
 import { FormElement } from '../../../forms/components';
 
-interface CancelRestrictionProps  {
-  appSession: AppSession,
-  restriction: Restriction,
-  updateRestriction: (restriction: Restriction) => void,
-  clickCancel: () => void,
-  isRestrictionValidForCancellation: boolean
-};
+interface CancelRestrictionProps {
+  appSession: AppSession;
+  restriction: Restriction;
+  updateRestriction: (restriction: Restriction) => void;
+  clickCancel: () => void;
+  isRestrictionValidForCancellation: boolean;
+}
 
 export default function CancelRestriction(props: CancelRestrictionProps) {
   return (
@@ -32,7 +32,8 @@ export default function CancelRestriction(props: CancelRestrictionProps) {
             props.updateRestriction({
               ...props.restriction,
               cancelledBy: actorId
-            })}
+            })
+          }
         />
       </FormElement>
       <FormElement
@@ -50,7 +51,8 @@ export default function CancelRestriction(props: CancelRestrictionProps) {
             props.updateRestriction({
               ...props.restriction,
               cancelledReason: e.target.value
-            })}
+            })
+          }
         />
         {!props.restriction.cancelledStamp && (
           <button

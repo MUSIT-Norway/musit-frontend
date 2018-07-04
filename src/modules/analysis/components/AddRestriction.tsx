@@ -85,7 +85,8 @@ export default function AddRestriction(props: Props) {
             })
           }
           onChange={(selectedDate: MUSTFIX) => {
-            if (selectedDate !== 'Invalid date') { //TODO: Fix this schizophrenic "does it have this string value? use it as a date later in the same function" code.
+            if (selectedDate !== 'Invalid date') {
+              //TODO: Fix this schizophrenic "does it have this string value? use it as a date later in the same function" code.
               props.updateRestriction({
                 ...props.restriction,
                 expirationDate: formatISOString(selectedDate)

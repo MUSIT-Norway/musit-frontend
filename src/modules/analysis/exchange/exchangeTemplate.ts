@@ -1,34 +1,35 @@
 // @flow
 
-import concat from 'lodash/concat';
+import { concat } from 'lodash';
 
-import type { AnalysisResultTypes } from 'types/analysisResult';
-import type { AnalysisCollection } from 'types/analysis';
-import type { SampleType } from 'types/sample';
+import { AnalysisResultTypes } from '../../../types/analysisResult';
+import { AnalysisCollection } from '../../../types/analysis';
+import { SampleType } from '../../../types/sample';
+import { Maybe } from '../../../types/common';
 
 export type ExchangeElementType = 'sample' | 'collection' | 'analysis';
 
 export type BaseExchangeTemplate = {
-  type: ExchangeElementType,
-  analysisId: number,
-  objectId: ?string,
-  museumNo: ?string,
-  subNo: ?string,
-  arkFindingNo: ?string,
-  term: ?string,
+  type: ExchangeElementType;
+  analysisId: number;
+  objectId: Maybe<string>;
+  museumNo: Maybe<string>;
+  subNo: Maybe<string>;
+  arkFindingNo: Maybe<string>;
+  term: Maybe<string>;
   // sample fields
-  sampleObjectId: ?string,
-  sampleNum: ?number,
-  sampleId: ?string,
-  sampleType: ?SampleType
+  sampleObjectId: Maybe<string>;
+  sampleNum: Maybe<number>;
+  sampleId: Maybe<string>;
+  sampleType: Maybe<SampleType>;
 };
 
 /**
  * GenericResult
  */
 export type GenericResultExchangeTemplate = BaseExchangeTemplate & {
-  resultExternalRef: ?string,
-  resultComment: ?string
+  resultExternalRef: Maybe<string>;
+  resultComment: Maybe<string>;
 };
 export const genericResultHeader = ['resultExternalRef', 'resultComment'];
 
@@ -36,9 +37,9 @@ export const genericResultHeader = ['resultExternalRef', 'resultComment'];
  * AgeResult
  */
 export type AgeResultExchangeTemplate = BaseExchangeTemplate & {
-  resultExternalRef: ?string,
-  resultComment: ?string,
-  resultAge: ?string
+  resultExternalRef: Maybe<string>;
+  resultComment: Maybe<string>;
+  resultAge: Maybe<string>;
 };
 export const ageResultHeader = ['resultExternalRef', 'resultComment', 'resultAge'];
 
@@ -46,10 +47,10 @@ export const ageResultHeader = ['resultExternalRef', 'resultComment', 'resultAge
  * RadioCarbonResult
  */
 export type RadioCarbonResultExchangeTemplate = BaseExchangeTemplate & {
-  resultExternalRef: ?string,
-  resultComment: ?string,
-  resultAgeEstimate: ?string,
-  resultStandardDeviation: ?string
+  resultExternalRef: Maybe<string>;
+  resultComment: Maybe<string>;
+  resultAgeEstimate: Maybe<string>;
+  resultStandardDeviation: Maybe<string>;
 };
 export const radioCarbonResultHeader = [
   'resultExternalRef',
@@ -62,14 +63,14 @@ export const radioCarbonResultHeader = [
  * MeasurementResult
  */
 export type MeasurementResultExchangeTemplate = BaseExchangeTemplate & {
-  resultExternalRef: ?string,
-  resultComment: ?string,
-  resultMeasurementId: ?string,
-  resultMeasurementType: ?string,
-  resultSizeUnit: ?string,
-  resultSizeValue: ?string,
-  resultPrecision: ?string,
-  resultMethod: ?string
+  resultExternalRef: Maybe<string>;
+  resultComment: Maybe<string>;
+  resultMeasurementId: Maybe<string>;
+  resultMeasurementType: Maybe<string>;
+  resultSizeUnit: Maybe<string>;
+  resultSizeValue: Maybe<string>;
+  resultPrecision: Maybe<string>;
+  resultMethod: Maybe<string>;
 };
 
 export const measurementResultHeader = [
@@ -87,13 +88,13 @@ export const measurementResultHeader = [
  * ExtractionResult
  */
 export type ExtractionResultExchangeTemplate = BaseExchangeTemplate & {
-  resultExternalRef: ?string,
-  resultComment: ?string,
-  resultStorageMedium: ?string,
-  resultConcentrationUnit: ?string,
-  resultConcentrationValue: ?string,
-  resultVolumeUnit: ?string,
-  resultVolumeValue: ?string
+  resultExternalRef: Maybe<string>;
+  resultComment: Maybe<string>;
+  resultStorageMedium: Maybe<string>;
+  resultConcentrationUnit: Maybe<string>;
+  resultConcentrationValue: Maybe<string>;
+  resultVolumeUnit: Maybe<string>;
+  resultVolumeValue: Maybe<string>;
 };
 export const extractionResultHeader = [
   'resultExternalRef',
@@ -147,8 +148,8 @@ export const getResultHeadersForType = (type: AnalysisResultTypes): Array<string
 };
 
 export const createExchangeTemplate = (
-  analysisCollection: ?AnalysisCollection,
-  type: ?AnalysisResultTypes
+  analysisCollection: Maybe<AnalysisCollection>,
+  type: Maybe<AnalysisResultTypes>
 ): Array<ResultExchangeTemplates> => {
   if (
     analysisCollection &&
@@ -229,28 +230,28 @@ export const appendResultValuesToBase = (
 ): ResultExchangeTemplates => {
   switch (type) {
     case 'GenericResult':
-      return ({
+      return {
         ...base,
         resultExternalRef: null,
         resultComment: null
-      }: GenericResultExchangeTemplate);
+      } as GenericResultExchangeTemplate;
     case 'AgeResult':
-      return ({
+      return {
         ...base,
         resultExternalRef: null,
         resultComment: null,
         resultAge: null
-      }: AgeResultExchangeTemplate);
+      } as AgeResultExchangeTemplate;
     case 'RadioCarbonResult':
-      return ({
+      return {
         ...base,
         resultExternalRef: null,
         resultComment: null,
         resultAgeEstimate: null,
         resultStandardDeviation: null
-      }: RadioCarbonResultExchangeTemplate);
+      } as RadioCarbonResultExchangeTemplate;
     case 'MeasurementResult':
-      return ({
+      return {
         ...base,
         resultExternalRef: null,
         resultComment: null,
@@ -260,9 +261,9 @@ export const appendResultValuesToBase = (
         resultSizeValue: null,
         resultPrecision: null,
         resultMethod: null
-      }: MeasurementResultExchangeTemplate);
+      } as MeasurementResultExchangeTemplate;
     case 'ExtractionResult':
-      return ({
+      return {
         ...base,
         resultExternalRef: null,
         resultComment: null,
@@ -271,7 +272,7 @@ export const appendResultValuesToBase = (
         resultConcentrationValue: null,
         resultVolumeUnit: null,
         resultVolumeValue: null
-      }: ExtractionResultExchangeTemplate);
+      } as ExtractionResultExchangeTemplate;
     default:
       throw new Error('Unsupported result type ' + type);
   }

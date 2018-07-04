@@ -1,8 +1,8 @@
 // @flow
-import * as React from "react";
-import { ChangeEventHandler } from "react";
-import { DescriptionAttributeType } from "./DescriptionAttributeType";
-import { Maybe } from "../../../types/common";
+import * as React from 'react';
+import { ChangeEventHandler } from 'react';
+import { DescriptionAttributeType } from './DescriptionAttributeType';
+import { Maybe } from '../../../types/common';
 
 interface DescriptionAttributeInputProps {
   attr: DescriptionAttributeType;
@@ -17,7 +17,7 @@ const DescriptionAttributeInput = (props: DescriptionAttributeInputProps) => {
       type="text"
       name={props.attr.attributeKey}
       onChange={props.onChange}
-      value={props.value ? props.value.toString() : ""}
+      value={props.value ? props.value.toString() : ''}
     />
   );
 };
