@@ -1,17 +1,23 @@
 import * as React from 'react';
 
 export const CheckBox = (props: {
-        id: string, 
-        checked: boolean,
-        displayValue: string
-        value: string
-        })=> (     
-        <div> 
-            <label> 
-                <input type="checkbox" id={props.id} checked={props.checked}  ></ input>
-                {props.displayValue}
-                </label>
-        </div>
-  
+  id: string;
+  checked: boolean;
+  displayValue: string;
+  onChange: Function;
+  viewMode?: boolean;
+}) => (
+  <div>
+    <label>
+      <input
+        className="normalAction"
+        type="checkbox"
+        id={props.id}
+        checked={props.checked}
+        disabled={props.viewMode}
+        onChange={() => props.onChange()}
+      />
+      {props.displayValue}
+    </label>
+  </div>
 );
-
