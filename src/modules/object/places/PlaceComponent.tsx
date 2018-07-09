@@ -92,7 +92,7 @@ export type CoordinateProps = {
   onChangeHistoryItem: (fieldName: string) => (value: string) => void;
   getCurrentCoordinate: (ind: number) => Coordinate;
   getCurrentHistoryItem: (ind: number) => CoordinateHistoryItem;
-  onChangeCheckBoxBoolean: (fieldName: string) => (value:string | boolean) => void;
+  onChangeCheckBoxBoolean: (fieldName: string) => (value: string | boolean) => void;
   onClickSaveRevision: () => void;
   onClickSaveEdit: () => void;
   onToggleCollapse: () => void;
@@ -593,40 +593,40 @@ const AltitudeDepthData = (props: CoordinateProps) => (
       </div>
       <div className="col-md-1 form-group">
         <div className="checkbox" id="caAltitude">
-            <CheckBox
-              id={'checkBoxCaAltitude'}
-              checked={
-                props.getCurrentCoordinate(props.coordinateHistoryIndeks) &&
-                props.getCurrentCoordinate(props.coordinateHistoryIndeks).caAltitude
-                  ? true
-                  : false
-              }
-              displayValue="Ca altitude"
-              onChange={() => {
-                props.getCurrentCoordinate(props.coordinateHistoryIndeks) &&
-                props.getCurrentCoordinate(props.coordinateHistoryIndeks).caAltitude
-                  ? props.onChangeCheckBoxBoolean('caAltitude')(false)
-                  : props.onChangeCheckBoxBoolean('caAltitude')(true);
-              }}
-            />
+          <CheckBox
+            id={'checkBoxCaAltitude'}
+            checked={
+              props.getCurrentCoordinate(props.coordinateHistoryIndeks) &&
+              props.getCurrentCoordinate(props.coordinateHistoryIndeks).caAltitude
+                ? true
+                : false
+            }
+            displayValue="Ca altitude"
+            onChange={() => {
+              props.getCurrentCoordinate(props.coordinateHistoryIndeks) &&
+              props.getCurrentCoordinate(props.coordinateHistoryIndeks).caAltitude
+                ? props.onChangeCheckBoxBoolean('caAltitude')(false)
+                : props.onChangeCheckBoxBoolean('caAltitude')(true);
+            }}
+          />
         </div>
         <div className="checkbox" id="caDepth">
-            <CheckBox
-              id={'checkBoxCaDepth'}
-              checked={
-                props.getCurrentCoordinate(props.coordinateHistoryIndeks) &&
-                props.getCurrentCoordinate(props.coordinateHistoryIndeks).caDepth
-                  ? true
-                  : false
-              }
-              displayValue="Ca depth"
-              onChange={() => {
-                props.getCurrentCoordinate(props.coordinateHistoryIndeks) &&
-                props.getCurrentCoordinate(props.coordinateHistoryIndeks).caDepth
-                  ? props.onChangeCheckBoxBoolean('caDepth')(false)
-                  : props.onChangeCheckBoxBoolean('caDepth')(true);
-              }}
-            />
+          <CheckBox
+            id={'checkBoxCaDepth'}
+            checked={
+              props.getCurrentCoordinate(props.coordinateHistoryIndeks) &&
+              props.getCurrentCoordinate(props.coordinateHistoryIndeks).caDepth
+                ? true
+                : false
+            }
+            displayValue="Ca depth"
+            onChange={() => {
+              props.getCurrentCoordinate(props.coordinateHistoryIndeks) &&
+              props.getCurrentCoordinate(props.coordinateHistoryIndeks).caDepth
+                ? props.onChangeCheckBoxBoolean('caDepth')(false)
+                : props.onChangeCheckBoxBoolean('caDepth')(true);
+            }}
+          />
         </div>
       </div>
       <div className="col-md-4">
@@ -680,9 +680,9 @@ const CoordinateMetaData = (props: CoordinateProps) => {
                   : props.onChangeCheckBoxBoolean('isAddedLater')(true);
               }}
             />
-        </div>
+          </div>
 
-        <div className="checkbox" id="caCoordinate">
+          <div className="checkbox" id="caCoordinate">
             <CheckBox
               id={'checkBoxcCaCoordinate'}
               checked={
@@ -699,7 +699,7 @@ const CoordinateMetaData = (props: CoordinateProps) => {
                   : props.onChangeCheckBoxBoolean('caCoordinate')(true);
               }}
             />
-        </div>      
+          </div>
         </div>
         <div className="col-md-2">
           <label htmlFor="precision">Precision</label>
@@ -1018,8 +1018,6 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
   }
 
   render() {
-
-
     return (
       <form style={{ padding: '20px' }}>
         <div className="row form-group">
