@@ -88,7 +88,7 @@ export type CoordinateProps = {
   coordinateCollapsed: boolean;
   coordinateType: string;
   onChangeCoordinateNumber: (fieldName: string) => (value: number) => void;
-  onChangeCoordinateText: (fieldName: string) => (value: string | boolean) => void;
+  onChangeCoordinateText: (fieldName: string) => (value: string) => void;
   onChangeHistoryItem: (fieldName: string) => (value: string) => void;
   getCurrentCoordinate: (ind: number) => Coordinate;
   getCurrentHistoryItem: (ind: number) => CoordinateHistoryItem;
@@ -1006,10 +1006,10 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
         coordinateType: 'MGRS',
         altitudeUnit: 'Meters',
         depthUnit: 'Meters',
-        caAltitude: true,
-        caDepth: true,
-        isAddedLater: true,
-        caCoordinate: true
+        caAltitude: false,
+        caDepth: false,
+        isAddedLater: false,
+        caCoordinate: false
       },
       coordinateHistory: [{ coordinate: { coordinateType: 'MGRS' } }],
       coordinateCollapsed: true,
