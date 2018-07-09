@@ -628,13 +628,6 @@ const AltitudeDepthData = (props: CoordinateProps) => (
               }}
             />
         </div>
-        {console.log(
-          '..............',
-          props.coordinateHistoryIndeks,
-          props.getCurrentCoordinate(props.coordinateHistoryIndeks).caAltitude
-        )
-}
-       
       </div>
       <div className="col-md-4">
         <label htmlFor="note">Note</label>
@@ -671,39 +664,42 @@ const CoordinateMetaData = (props: CoordinateProps) => {
         </div>
         <div className="col-md-2 form-group">
           <div className="checkbox" id="coordinateAddedLater">
-            <label>
-              <input
-                type="checkbox"
-                checked={
-                  props.getCurrentCoordinate(props.coordinateHistoryIndeks)
-                    .coordinateAddedLater
-                }
-                value={
-                  props.getCurrentCoordinate(props.coordinateHistoryIndeks)
-                    .coordinateAddedLater
-                    ? '1'
-                    : '0'
-                }
-              />{' '}
-              Added later{' '}
-            </label>
-          </div>
-          <div className="checkbox" id="coordinateAddedLater">
-            <label>
-              <input
-                type="checkbox"
-                checked={
-                  props.getCurrentCoordinate(props.coordinateHistoryIndeks).caCoordinate
-                }
-                value={
-                  props.getCurrentCoordinate(props.coordinateHistoryIndeks).caCoordinate
-                    ? '1'
-                    : '0'
-                }
-              />{' '}
-              Ca coordinate
-            </label>
-          </div>
+            <CheckBox
+              id={'checkBoxCoordinateAddedLater'}
+              checked={
+                props.getCurrentCoordinate(props.coordinateHistoryIndeks) &&
+                props.getCurrentCoordinate(props.coordinateHistoryIndeks).isAddedLater
+                  ? true
+                  : false
+              }
+              displayValue="Added later"
+              onChange={() => {
+                props.getCurrentCoordinate(props.coordinateHistoryIndeks) &&
+                props.getCurrentCoordinate(props.coordinateHistoryIndeks).isAddedLater
+                  ? props.onChangeCheckBoxBoolean('isAddedLater')(false)
+                  : props.onChangeCheckBoxBoolean('isAddedLater')(true);
+              }}
+            />
+        </div>
+
+        <div className="checkbox" id="caCoordinate">
+            <CheckBox
+              id={'checkBoxcCaCoordinate'}
+              checked={
+                props.getCurrentCoordinate(props.coordinateHistoryIndeks) &&
+                props.getCurrentCoordinate(props.coordinateHistoryIndeks).caCoordinate
+                  ? true
+                  : false
+              }
+              displayValue="Ca Coordinate"
+              onChange={() => {
+                props.getCurrentCoordinate(props.coordinateHistoryIndeks) &&
+                props.getCurrentCoordinate(props.coordinateHistoryIndeks).caCoordinate
+                  ? props.onChangeCheckBoxBoolean('caCoordinate')(false)
+                  : props.onChangeCheckBoxBoolean('caCoordinate')(true);
+              }}
+            />
+        </div>      
         </div>
         <div className="col-md-2">
           <label htmlFor="precision">Precision</label>
@@ -1016,7 +1012,7 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
         caCoordinate: true
       },
       coordinateHistory: [{ coordinate: { coordinateType: 'MGRS' } }],
-      coordinateCollapsed: false,
+      coordinateCollapsed: true,
       coordinateHistoryIndeks: 0
     };
   }
