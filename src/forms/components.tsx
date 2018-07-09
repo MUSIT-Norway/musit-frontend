@@ -43,6 +43,8 @@ export function FormElement(props: ElementProps) {
 
 export type InputProps = {
   value: Maybe<string> | Maybe<Array<string> | number>;
+
+  //For onChange, we may want to investigate whether to use something like React.ChangeEvent<HTMLSelectElement> instead.
   onChange: (e: DomEvent) => void;
 } & ElementProps;
 

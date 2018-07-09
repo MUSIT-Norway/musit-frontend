@@ -17,7 +17,7 @@ export const removeInvalidKeysForNumberRangeString = (input: string): Maybe<stri
         .join('')
     : '';
 
-export const validateNumberRangeField = (input: string): boolean => {
+export const validateNumberRangeField = (input: Maybe<string>): boolean => {
   const re = /^(\d*)(\.\.)?(\d*)$/;
   return input ? re.test(input) : true;
 };

@@ -134,7 +134,7 @@ export type AnalysisCollection = {
   extraAttributes?: { type: string; [key: string]: string | number };
   result?: Maybe<Result>;
   files?: Maybe<Array<SavedFile | ErrorLoading>>;
-  events: Maybe<Array<AnalysisEvent>>;
+  events: Array<AnalysisEvent>;
   restriction?: Maybe<Restriction>;
   reason?: Maybe<string>;
   status?: Maybe<number>;

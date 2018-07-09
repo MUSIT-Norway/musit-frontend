@@ -54,7 +54,7 @@ describe('AnalysisResultExchangeComponent', () => {
       />
     );
 
-    expect(Comp.find('#importResults').props()['disabled']).toEqual('disabled');
+    expect(Comp.find('#importResults').props()['disabled']).toEqual(true);
   });
 
   it('should trigger event when import button is clicked', () => {
@@ -91,7 +91,7 @@ describe('AnalysisResultExchangeComponent', () => {
       .first()
       .simulate('click');
 
-    expect(Comp.find('#importResults').props()['disabled']).toEqual('');
+    expect(Comp.find('#importResults').props()['disabled']).toEqual(false);
     expect(uploadResultAction.calledOnce).toBe(true);
   });
 

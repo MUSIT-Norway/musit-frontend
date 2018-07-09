@@ -848,14 +848,19 @@ const AdmPlaceComponent = (
   </div>
 );
 
-const AnyReactComponent = ({ text }: { text: string }) => (
+const AnyReactComponent = (props: {
+  text: string;
+  lat: number | undefined;
+  lng: number | undefined;
+}) => (
   <div>
     <FontAwesome name={'map-pin'} />
-    {text}
+    <div>{props.lat + ',' + props.lng}</div>
+    {props.text}
   </div>
 );
 
-const getLatLong = (props: PlaceState) => {
+const getLatLong = (props: PlaceState): { lat: number; lng: number } => {
   const latLong =
     props.editingCoordinate &&
     props.editingCoordinate.coordinateType &&
@@ -870,22 +875,30 @@ const getLatLong = (props: PlaceState) => {
           lng: props.admPlace && props.admPlace.long ? props.admPlace.long : 0
         };
 
-  return latLong && latLong.lat && latLong.lng ? latLong : undefined;
+  return latLong && latLong.lat && latLong.lng
+    ? latLong
+    : {
+        lat: 0,
+        lng: 0
+      };
 };
 
 const MapComponent = (props: PlaceState) => (
   <div className="well">
-    {getLatLong(props) && (
-      <div
-        key={
-          props.admPlace && props.admPlace.admPlaceId
-            ? props.admPlace.admPlaceId
-            : 'mapDiv'
-        }
-        style={{ height: '40vh', width: '100%' }}
-      >
+    <div style={{ height: '40vh', width: '100%' }}>
+      {getLatLong(props) &&
+      !(getLatLong(props).lat === 0 && getLatLong(props).lng === 0) ? (
         <GoogleMapReact
-          key={Date()}
+          key={
+            props.editingCoordinate &&
+            props.editingCoordinate.coordinateType &&
+            props.editingCoordinate.coordinateType === 'Lat/Long' &&
+            props.editingCoordinate.coordinateString
+              ? props.editingCoordinate.coordinateString
+              : props.admPlace && props.admPlace.lat && props.admPlace.long
+                ? props.admPlace.lat + props.admPlace.long
+                : '0,0'
+          }
           // TODO change to ENV.KEY variable and change key too
           bootstrapURLKeys={{ key: 'AIzaSyD_eIPYgmzLr_FsDLVf47fJ2mOP5wvPnG4' }}
           defaultCenter={getLatLong(props)}
@@ -897,10 +910,16 @@ const MapComponent = (props: PlaceState) => (
                 : 3
           }
         >
-          <AnyReactComponent text={'Test Object info.'} />
+          <AnyReactComponent
+            lat={getLatLong(props).lat}
+            lng={getLatLong(props).lng}
+            text={'Test Object info.'}
+          />
         </GoogleMapReact>
-      </div>
-    )}
+      ) : (
+        'Invalid LatLng!'
+      )}
+    </div>
   </div>
 );
 
