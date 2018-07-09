@@ -1,5 +1,3 @@
-// @flow
-
 import * as React from 'react';
 //import FieldMultiSelect from "../../../forms/components/FieldMultiSelect";
 import { PersonPage } from './Person';

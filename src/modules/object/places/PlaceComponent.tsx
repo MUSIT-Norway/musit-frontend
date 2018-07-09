@@ -2,6 +2,8 @@ import * as React from 'react';
 import * as FontAwesome from 'react-fontawesome';
 import * as moment from 'moment';
 import GoogleMapReact from 'google-map-react';
+import { CheckBox } from '../components/CheckBox';
+
 
 type AdmPlace = {
   admPlaceId: number;
@@ -89,9 +91,17 @@ export type CoordinateProps = {
   onChangeHistoryItem: (fieldName: string) => (value: string) => void;
   getCurrentCoordinate: (ind: number) => Coordinate;
   getCurrentHistoryItem: (ind: number) => CoordinateHistoryItem;
+  onChangeCheckBoxBoolean: (fieldName: string) => void;
   onClickSaveRevision: () => void;
   onClickSaveEdit: () => void;
   onToggleCollapse: () => void;
+};
+
+export type CheckBoxProps = {
+  id: string ;
+  checked: boolean;
+  displayValue: string;
+  onChange: string;
 };
 
 const admPlaces: Array<AdmPlace> = [
@@ -595,13 +605,23 @@ const AltitudeDepthData = (props: CoordinateProps) => (
                   ? '1'
                   : '0'
               }
-            />{' '}
+            />
             Ca depth
           </label>
-        </div>
       </div>
-
-      <div className="col-md-4">
+          <CheckBox 
+              id={"checkBoxCaDepth"} 
+              checked={
+                props.getCurrentCoordinate(props.coordinateHistoryIndeks) &&
+                props.getCurrentCoordinate(props.coordinateHistoryIndeks).caAltitude
+                ? true
+                : false}
+              displayValue="Ca depth"  
+              value={"caAltitude"}
+          />
+      </div>
+      console.log("   " + CoordinateHistory[coordinates].caAltitude ),
+        <div className="col-md-4">
         <label htmlFor="note">Note</label>
         <textarea
           className="form-control"
@@ -957,13 +977,17 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
         altitudeUnit: 'Meters',
         depthUnit: 'Meters'
       },
-      coordinateHistory: [{ coordinate: { coordinateType: 'MGRS' } }],
+      coordinateHistory: [{ coordinate: { coordinateType: 'MGRS', caAltitude: false } }],
       coordinateCollapsed: true,
       coordinateHistoryIndeks: 0
     };
   }
 
   render() {
+
+    console.log("in the render " + this.state.coordinateHistory[this.state.coordinateHistoryIndeks].coordinate.caAltitude);
+    console.log(this.state.coordinateHistoryIndeks)
+    
     return (
       <form style={{ padding: '20px' }}>
         <div className="row form-group">
@@ -1034,6 +1058,24 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
                   return s;
                 });
               }}
+
+              //caAltitudeBool={this.state.coordinateHistory[this.state.coordinateHistoryIndeks].coordinate.caAltitude}
+              
+            // anuradha           
+              onChangeCheckBoxBoolean ={(fieldName: string) => {
+                this.setState((ps: PlaceState) => {       
+                  const s = {
+                    ...ps,
+                    coordinateHistory: {
+                      ...ps.coordinateHistory, 
+                      [fieldName]: ![fieldName]
+                    }
+                  };
+
+                  return s;
+                });
+              }}
+
               getCurrentCoordinate={(ind: number) => {
                 const ret = this.state.editingCoordinate;
                 return ret;
