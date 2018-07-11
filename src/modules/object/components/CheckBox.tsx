@@ -10,7 +10,7 @@ export const CheckBox = (props: {
   <div>
     <label>
       <input
-        className="normalAction"
+        className="checkBoxComponent"
         type="checkbox"
         id={props.id}
         checked={props.checked}
