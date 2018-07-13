@@ -286,7 +286,7 @@ const renderDoubleTextAreaDefaultProps: Partial<RenderDoubleTextAreaProps> = {
 export const RenderFromToNumberComment = (props: RenderFromToNumberCommentProps) => {
   return (
     <ObservationFromToNumberCommentComponent
-      {...props.layoutProps!}  //Todo: Remove ! in TS 3.0, when we get proper support for defaultProps
+      {...props.layoutProps!} //Todo: Remove ! in TS 3.0, when we get proper support for defaultProps
       {...props.valueProps}
       disabled={props.disabled}
       fromLabel={I18n.t(`musit.observation.page.${props.type}.fromValueLabelText`)}

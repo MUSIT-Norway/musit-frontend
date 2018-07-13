@@ -10,7 +10,6 @@ import { Match } from '../../types/Routes';
 import { TODO } from '../../types/common';
 import { AppSession } from '../../types/appSession';
 
-
 interface ViewObservationPageProps {
   match: Match<TODO>;
   setLoading: Function;
@@ -35,7 +34,6 @@ interface ViewObservationPageProps {
 */
 
 export class ViewObservationPage extends React.Component<ViewObservationPageProps> {
-
   componentWillMount() {
     this.props.setLoading();
     this.props.getObservation({

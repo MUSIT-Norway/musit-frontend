@@ -108,7 +108,7 @@ export class EditObservationPage extends React.Component<EditObservationPageProp
               observations={this.getObservationsFromLocationState()}
               doneDate={this.props.location.state.doneDate}
               doneBy={this.getDoneByFromLocationState()}
-              onSaveObservation={(nodeId:TODO, observations:TODO) => {
+              onSaveObservation={(nodeId: TODO, observations: TODO) => {
                 const museumId = this.props.appSession.museumId;
                 const token = this.props.appSession.accessToken;
                 const controlData = this.props.location.state;
@@ -127,7 +127,8 @@ export class EditObservationPage extends React.Component<EditObservationPageProp
                           message: I18n.t('musit.newControl.saveControlSuccess')
                         });
                       },
-                      onFailure: (e:TODO) => this.props.emitError({ ...e, type: 'network' })
+                      onFailure: (e: TODO) =>
+                        this.props.emitError({ ...e, type: 'network' })
                     }
                   })
                   .toPromise();

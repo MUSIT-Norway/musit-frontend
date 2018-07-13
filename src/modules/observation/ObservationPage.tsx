@@ -120,7 +120,7 @@ export default class ObservationPage extends React.Component<
         ...ps,
         doneBy: nextProps.doneBy,
         doneDate: nextProps.doneDate,
-        observations: (nextProps.observations || [])
+        observations: nextProps.observations || []
       }));
     }
     if (

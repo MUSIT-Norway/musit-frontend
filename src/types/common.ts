@@ -8,7 +8,6 @@ export type mixed = any; //rename to 'Mixed' (capital 'M') when we have converte
 
 export type Star = any; //* in Flow. Existential type: https://flow.org/en/docs/types/utilities/
 
-
 //For some stuff which ideally should be removed
 export type TODO_REMOVE = any;
 

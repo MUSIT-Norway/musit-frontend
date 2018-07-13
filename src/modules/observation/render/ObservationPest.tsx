@@ -136,13 +136,13 @@ export default class ObservationPest extends Component<ObservationPestProps> {
     return (
       <div>
         <ObservationDoubleTextAreaComponent
-          leftValue={this.props.commentsLeftValue || ""} //TODO: Check if ok with empty string
+          leftValue={this.props.commentsLeftValue || ''} //TODO: Check if ok with empty string
           leftLabel={this.props.commentsLeftLabel}
           leftTooltip={this.props.commentsLeftTooltip}
           leftPlaceHolder={this.props.commentsLeftPlaceHolder}
           leftWidth={this.props.commentsLeftWidth}
           onChangeLeft={this.props.commentsOnChangeLeft}
-          rightValue={this.props.commentsRightValue || ""} //TODO: Check if ok with empty string
+          rightValue={this.props.commentsRightValue || ''} //TODO: Check if ok with empty string
           rightLabel={this.props.commentsRightLabel}
           rightTooltip={this.props.commentsRightTooltip}
           rightPlaceHolder={this.props.commentsRightPlaceHolder}
