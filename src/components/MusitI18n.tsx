@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import { RxInjectLegacy as inject } from '../shared/react-rxjs-patch/';
+import { RxInjectLegacy as inject } from '../shared/react-rxjs-patch';
 import { Observable } from 'rxjs';
 
 import { AppSession } from '../types/appSession';

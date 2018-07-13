@@ -1,5 +1,5 @@
 // @flow
-import { Subject, Observable } from 'rxjs/Rx';
+import { Subject, Observable } from 'rxjs';
 import { store$, isItemAdded } from '../pickList';
 import MusitObject from '../../models/object';
 import isEqual from 'lodash/isEqual';

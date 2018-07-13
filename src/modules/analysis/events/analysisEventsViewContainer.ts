@@ -1,6 +1,6 @@
 // @flow
 import * as PropTypes from 'prop-types';
-import { RxInjectLegacy as inject } from '../../../shared/react-rxjs-patch/';
+import { RxInjectLegacy as inject } from '../../../shared/react-rxjs-patch';
 import AnalysisEventsViewComponent from './AnalysisEventsViewComponent';
 import lifeCycle from '../../../shared/lifeCycle';
 import Config from '../../../config';

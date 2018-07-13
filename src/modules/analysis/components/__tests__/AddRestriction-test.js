@@ -6,7 +6,7 @@ import sinon from 'sinon';
 import { appSession } from '../../../../testutils/sampleDataForTest';
 import DatePicker from '../../../../components/DatePicker';
 import { formatISOString } from '../../../../shared/util';
-import StatefulActorSuggest from '../../components/StatefulActorSuggest';
+import StatefulActorSuggest from '../StatefulActorSuggest';
 
 describe('AddRestriction', () => {
   describe('reason', () => {

@@ -3,10 +3,10 @@ import { Component } from 'react';
 import * as PropTypes from 'prop-types';
 import { Table, PageHeader, Panel, Grid, Row } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
-import { formatFloatToString } from './../../shared/util';
+import { formatFloatToString } from '../../shared/util';
 import { Observable } from 'rxjs';
 import store$, { loadKDReport$, clear$ } from './reportStore';
-import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
+import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 import { TODO } from '../../types/common';
 import { AppSession } from '../../types/appSession';
 

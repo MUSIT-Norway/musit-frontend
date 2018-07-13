@@ -36,7 +36,7 @@ import moveDialogStore$, {
   PER_PAGE
 } from './moveDialogStore';
 import * as Loader from 'react-loader';
-import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
+import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 import { AppSession } from '../../types/appSession';
 import { TODO } from '../../types/common';
 import { MoveDialogStoreState } from './moveDialogStore';

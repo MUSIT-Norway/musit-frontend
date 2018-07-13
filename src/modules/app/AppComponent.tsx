@@ -20,7 +20,7 @@ import {
   setRolesForModules$,
   MusitMatch
 } from '../../stores/appSession';
-import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
+import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 import {
   clearNodes$ as clearNodePicklist$,
   clearObjects$ as clearObjectPicklist$

@@ -1,7 +1,7 @@
 // @flow
 import { onMount } from '../analysisTypesContainer';
 import sinon from 'sinon';
-import { appSession } from './../../../../testutils/sampleDataForTest';
+import { appSession } from '../../../../testutils/sampleDataForTest';
 
 describe('analysisTypesContainer', () => {
   it('should have working onMount', () => {

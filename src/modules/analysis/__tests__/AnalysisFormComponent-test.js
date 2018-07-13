@@ -4,11 +4,7 @@ import AnalysisFormComponent from '../AnalysisFormComponent';
 import { getAnalysisTypeTerm } from '../shared/getters';
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
-import {
-  appSession,
-  analysisForm,
-  history
-} from './../../../testutils/sampleDataForTest';
+import { appSession, analysisForm, history } from '../../../testutils/sampleDataForTest';
 
 const identity = function<T>(i: T): T {
   return i;

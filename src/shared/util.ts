@@ -3,7 +3,7 @@ import * as React from 'react';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { PathName } from '../types/node';
-import { AppSession } from '..//types/appSession';
+import { AppSession } from '../types/appSession';
 import { Star, Maybe, MUSTFIX } from '../types/common';
 
 export const toPromise = (fn: (val: Star) => Observable<Star>) => (val: Star) =>

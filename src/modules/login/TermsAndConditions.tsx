@@ -2,7 +2,7 @@ import * as React from 'react';
 import { I18n } from 'react-i18nify';
 import NorwegianTranslation from './TermsAndConditions_no.html';
 import EnglishTranslation from './TermsAndConditions_en.html';
-import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
+import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 
 interface TermsAndConditionsProps {
   isVisible: boolean;

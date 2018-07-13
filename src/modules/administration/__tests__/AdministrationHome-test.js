@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import { Administration } from '../Administration';
-import { appSession } from './../../../testutils/sampleDataForTest';
+import { appSession } from '../../../testutils/sampleDataForTest';
 import type { History } from 'types/Routes';
 
 const history: History = {

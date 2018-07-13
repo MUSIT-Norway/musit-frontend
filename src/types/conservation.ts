@@ -1,9 +1,9 @@
 // @flow
 
-import { MusitObject } from '../types/object';
-import { SampleDataExtended } from '../types/samples';
-import { Person } from '../types/person';
-import { AppSession } from '../types/appSession';
+import { MusitObject } from './object';
+import { SampleDataExtended } from './samples';
+import { Person } from './person';
+import { AppSession } from './appSession';
 import { Field } from '../forms/form';
 import { Maybe } from './common';
 import { MouseEventHandler } from 'react';

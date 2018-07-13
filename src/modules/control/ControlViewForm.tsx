@@ -3,7 +3,7 @@ import { Component } from 'react';
 import { Panel, FormGroup, Button, Col, Row } from 'react-bootstrap';
 import * as FontAwesome from 'react-fontawesome';
 import * as ObservationRender from '../observation/render';
-import { formatFloatToString } from './../../shared/util';
+import { formatFloatToString } from '../../shared/util';
 import { reduce, keys, map } from 'lodash';
 import { I18n } from 'react-i18nify';
 import { TODO } from '../../types/common';
