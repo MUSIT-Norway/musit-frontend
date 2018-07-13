@@ -4,12 +4,13 @@ import {
   validateNumber
 } from '../../components/formfields/common/validators';
 import MusitNode from '../../models/node';
+import { TODO } from '../../types/common';
 
-const errorAddMessage = (errors, field) => {
+const errorAddMessage = (errors:TODO, field:TODO) => {
   errors[`${field}`] = I18n.t(`musit.storageUnits.${field}.incorrect`);
 };
 
-const validateStringField = (field, value, maxLength = 100) => {
+const validateStringField = (field:TODO, value:TODO, maxLength = 100) => {
   const errors = {};
   if (validateString(value, 0, maxLength) === 'error') {
     errorAddMessage(errors, field);
@@ -18,7 +19,7 @@ const validateStringField = (field, value, maxLength = 100) => {
 };
 
 const validateNumberField = (
-  field,
+  field:TODO,
   value = '',
   minimumLength = 0,
   maximumLength = 10,
@@ -31,18 +32,18 @@ const validateNumberField = (
   return errors;
 };
 
-const validateEnvReq = (field, min, max, pres, formProps) => {
-  const key = field.split('.').reduce((a, b) => formProps[a][b]);
+const validateEnvReq = (field:TODO, min:number, max:number, pres:TODO, formProps:TODO) => {
+  const key = field.split('.').reduce((a:TODO, b:TODO) => formProps[a][b]);
   return validateNumberField(field, key, min, max, pres);
 };
 
-const getPathLength = formProps => {
-  const { pathNames } = formProps.rootNode || {};
+const getPathLength = (formProps:TODO) => {
+  const { pathNames } = (formProps.rootNode || {}) as TODO;
   return pathNames && pathNames.length;
 };
 
-export default formProps => {
-  let errors = {};
+export default (formProps:TODO) => {
+  let errors = {} as TODO;
   const unit = formProps.unit;
   if (formProps && unit) {
     if (!unit.type || unit.type.trim().length === 0) {

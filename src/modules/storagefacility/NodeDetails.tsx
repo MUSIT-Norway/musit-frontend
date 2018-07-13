@@ -1,12 +1,12 @@
 import { values } from 'lodash';
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from "react";
+import { Component } from "react";
 import { Grid, Row, Col, Checkbox, ControlLabel, Form, FormGroup } from 'react-bootstrap';
 import SaveCancel from '../../components/formfields/saveCancel/SaveCancel';
 import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import AddressSuggest from '../../components/suggest/AddressSuggest';
-import Loader from 'react-loader';
+import * as Loader from 'react-loader';
 import { parseISODate } from '../../shared/util';
 import {
   MusitTextArea as TextArea,
@@ -15,8 +15,25 @@ import {
 } from '../../components/formfields';
 import validateForm from './nodeValidator';
 import { I18n } from 'react-i18nify';
+import { TODO } from '../../types/common';
+import { Match } from '../../types/Routes';
+import { AppSession } from '../../types/appSession';
 
-export default class NodeDetails extends Component {
+interface NodeDetailsProps {
+  unit: TODO;
+  match: Match<TODO>;
+  onLagreClick: Function;
+  isAdd?: boolean;
+  path?: Array<object>;
+  loaded: boolean;
+  updateState: Function;
+  goBack: Function;
+  rootNode: Node;
+  loading?: boolean;
+
+  appSession: AppSession;
+}
+/* Old:
   static propTypes = {
     unit: PropTypes.object.isRequired,
     match: PropTypes.object,
@@ -27,8 +44,11 @@ export default class NodeDetails extends Component {
     updateState: PropTypes.func.isRequired,
     goBack: PropTypes.func
   };
+*/
+export default class NodeDetails extends Component<NodeDetailsProps> {
 
-  constructor(props) {
+
+  constructor(props:NodeDetailsProps) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.translateEnvReqField = this.translateEnvReqField.bind(this);
@@ -36,7 +56,7 @@ export default class NodeDetails extends Component {
     this.renderEnvReqStringFieldBlock = this.renderEnvReqStringFieldBlock.bind(this);
   }
 
-  handleSubmit(e) {
+  handleSubmit(e:TODO) {
     e.preventDefault();
     const errors = validateForm(this.props);
     this.props.updateState({ ...this.props.unit, errors });
@@ -45,35 +65,35 @@ export default class NodeDetails extends Component {
     }
   }
 
-  updateStorageUnit(data, key, value) {
+  updateStorageUnit(data:TODO, key:TODO, value:TODO) {
     const newData = Object.assign({}, data);
     newData[key] = value;
     this.props.updateState(newData);
   }
 
-  updateEnvRequirements(data, key, value) {
+  updateEnvRequirements(data:TODO, key:TODO, value:TODO) {
     const newData = Object.assign({}, data);
     newData.environmentRequirement = { ...newData.environmentRequirement, [key]: value };
     this.props.updateState(newData);
   }
 
-  updateEnvAssessments(data, key, value) {
+  updateEnvAssessments(data:TODO, key:TODO, value:TODO) {
     const newData = Object.assign({}, data);
     newData.environmentAssessment = { ...newData.environmentAssessment, [key]: value };
     this.props.updateState(newData);
   }
 
-  updateSecAssessments(data, key, value) {
+  updateSecAssessments(data:TODO, key:TODO, value:TODO) {
     const newData = Object.assign({}, data);
     newData.securityAssessment = { ...newData.securityAssessment, [key]: value };
     this.props.updateState(newData);
   }
 
-  translateEnvReqField(field) {
+  translateEnvReqField(field:TODO) {
     return I18n.t(`musit.storageUnits.environmentRequirement.${field}`);
   }
 
-  renderEnvReqStringFieldBlock(field) {
+  renderEnvReqStringFieldBlock(field:TODO) {
     return (
       <FormGroup>
         <label className="col-sm-3 control-label" htmlFor={field}>
@@ -85,7 +105,7 @@ export default class NodeDetails extends Component {
             tooltip={this.translateEnvReqField(`${field}.tooltip`)}
             validate="text"
             maximumLength={100}
-            onChange={value => this.updateEnvRequirements(this.props.unit, field, value)}
+            onChange={(value:TODO) => this.updateEnvRequirements(this.props.unit, field, value)}
             value={this.props.unit.environmentRequirement[field] || ''}
           />
         </div>
@@ -93,7 +113,7 @@ export default class NodeDetails extends Component {
     );
   }
 
-  renderEnvReqTextAreaBlock(field) {
+  renderEnvReqTextAreaBlock(field:TODO) {
     return (
       <FormGroup>
         <label className="col-sm-3 control-label" htmlFor={field}>
@@ -106,7 +126,7 @@ export default class NodeDetails extends Component {
             tooltip={this.translateEnvReqField(`${field}.tooltip`)}
             validate="text"
             maximumLength={250}
-            onChange={value => this.updateEnvRequirements(this.props.unit, field, value)}
+            onChange={(value:TODO) => this.updateEnvRequirements(this.props.unit, field, value)}
             value={this.props.unit.environmentRequirement[field] || ''}
           />
         </div>
@@ -114,7 +134,7 @@ export default class NodeDetails extends Component {
     );
   }
 
-  renderEnvReqNumberField(field, unit, precision) {
+  renderEnvReqNumberField(field:TODO, unit:TODO, precision:TODO) {
     return (
       <Field
         id={field}
@@ -122,19 +142,19 @@ export default class NodeDetails extends Component {
         validate="number"
         placeHolder={this.translateEnvReqField(`${field}.placeHolder`)}
         precision={precision}
-        onChange={value => this.updateEnvRequirements(this.props.unit, field, value)}
+        onChange={(value:TODO) => this.updateEnvRequirements(this.props.unit, field, value)}
         value={unit.environmentRequirement[field] || ''}
       />
     );
   }
 
-  renderSecurityAssessmentField(field) {
+  renderSecurityAssessmentField(field:TODO) {
     return (
       <div>
         <Checkbox
           checked={!!this.props.unit.securityAssessment[field]}
           onChange={event =>
-            this.updateSecAssessments(this.props.unit, field, event.target.checked)
+            this.updateSecAssessments(this.props.unit, field, (event.target as TODO).checked)
           }
         >
           {I18n.t(`musit.storageUnits.securityAssessment.${field}`)}
@@ -143,13 +163,13 @@ export default class NodeDetails extends Component {
     );
   }
 
-  renderEnvironmentAssessmentField(field) {
+  renderEnvironmentAssessmentField(field:TODO) {
     return (
       <div>
         <Checkbox
           checked={!!this.props.unit.environmentAssessment[field]}
           onChange={event =>
-            this.updateEnvAssessments(this.props.unit, field, event.target.checked)
+            this.updateEnvAssessments(this.props.unit, field, (event.target as TODO).checked)
           }
         >
           {I18n.t(`musit.storageUnits.environmentalAssessment.${field}`)}
@@ -158,21 +178,21 @@ export default class NodeDetails extends Component {
     );
   }
 
-  renderStorageUnitNumberField(field, unit, precision) {
+  renderStorageUnitNumberField(field:TODO, unit:TODO, precision:TODO) {
     return (
       <Field
         id={field}
         tooltip={I18n.t(`musit.storageUnits.${field}.tooltip`)}
         validate="number"
         placeHolder={I18n.t(`musit.storageUnits.${field}.placeHolder`)}
-        onChange={value => this.updateStorageUnit(this.props.unit, field, value)}
+        onChange={(value:TODO) => this.updateStorageUnit(this.props.unit, field, value)}
         precision={precision}
         value={unit[field]}
       />
     );
   }
 
-  renderLastChangeData(unit) {
+  renderLastChangeData(unit:TODO) {
     const lastUpdateDate = parseISODate(unit.updatedDate).format('DD.MM.YYYY');
     const lastUpdateBy = unit.updatedByName;
     return (
@@ -198,11 +218,11 @@ export default class NodeDetails extends Component {
                 <Col md={9}>
                   <form
                     onKeyDown={e => {
-                      if (e.keyCode === 13 && e.target.type !== 'textarea') {
+                      if (e.keyCode === 13 && (e.target as TODO).type !== 'textarea') {
                         e.preventDefault();
                       }
                     }}
-                    onSubmit={e => this.handleSubmit(e, this.state)}
+                    onSubmit={(e:TODO) => this.handleSubmit(e)}
                   >
                     <div>
                       <h4 style={{ textAlign: 'center' }}>
@@ -239,7 +259,7 @@ export default class NodeDetails extends Component {
                                       'Organisation'
                                     ]}
                                     translateKeyPrefix={'musit.storageUnits.type.items.'}
-                                    onChange={storageType =>
+                                    onChange={(storageType:TODO) =>
                                       this.updateStorageUnit(
                                         this.props.unit,
                                         'type',
@@ -270,7 +290,7 @@ export default class NodeDetails extends Component {
                                     placeHolder={I18n.t(
                                       'musit.storageUnits.name.placeHolder'
                                     )}
-                                    onChange={storageUnitName =>
+                                    onChange={(storageUnitName:string) =>
                                       this.updateStorageUnit(
                                         this.props.unit,
                                         'name',
@@ -300,7 +320,7 @@ export default class NodeDetails extends Component {
                                       id="addressField"
                                       value={this.props.unit.address}
                                       placeHolder="Find address"
-                                      onChange={address => {
+                                      onChange={(address:TODO) => {
                                         this.updateStorageUnit(
                                           this.props.unit,
                                           'address',
@@ -484,7 +504,7 @@ export default class NodeDetails extends Component {
                       {this.props.unit.type === 'Room' && (
                         <Grid>
                           <Row>
-                            <Col lg={5} md={5} sm={5} xs={10} offset={1}>
+                            <Col lg={5} md={5} sm={5} xs={10} /*Doesn't exist?: offset={1}*/>
                               <ControlLabel>
                                 {I18n.t(
                                   'musit.storageUnits.securityAssessment.securityAssessment'
@@ -498,7 +518,7 @@ export default class NodeDetails extends Component {
                                 'routinesAndContingencyPlan'
                               )}
                             </Col>
-                            <Col lg={5} md={5} sm={5} xs={10} offset={1}>
+                            <Col lg={5} md={5} sm={5} xs={10} /*Doesn't exist?: offset={1}*/>
                               <ControlLabel>
                                 {I18n.t(
                                   'musit.storageUnits.environmentalAssessment.environmentalAssessment'

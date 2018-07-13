@@ -6,6 +6,7 @@ import { Component } from 'react';
 import { TODO } from '../../../types/common';
 
 interface MusitDropDownFieldProps {
+  id?: string;
   value?: string; // Should be any
   addOnPrefix?: string;
   help?: string; // always ? on add on after
@@ -91,6 +92,7 @@ export default class MusitDropDownField extends Component<MusitDropDownFieldProp
     ) : null;
     const lcPlaceholder = (
       <Select
+        id={this.props.id}
         placeholder={this.props.placeHolder}
         style={this.props.disabled ? { backgroundColor: '#eee' } : undefined}
         disabled={this.props.disabled}

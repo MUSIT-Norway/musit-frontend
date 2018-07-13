@@ -22,6 +22,7 @@ import { Component } from 'react';
 import validate from '../common/validators';
 
 interface MusitTextAreaProps {
+  id?: string;
   value?: string;
   placeHolder?: string;
   tooltip?: string;
@@ -62,6 +63,7 @@ export default class MusitTextArea extends Component<MusitTextAreaProps> {
   render() {
     const lcPlaceholder = (
       <textarea
+        id={this.props.id}
         className="form-control"
         placeholder={this.props.placeHolder}
         value={this.props.value}

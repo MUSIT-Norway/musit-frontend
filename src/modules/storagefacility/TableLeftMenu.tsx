@@ -1,10 +1,27 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import { Component } from 'react';
 import { ControlLabel, Button } from 'react-bootstrap';
-import FontAwesome from 'react-fontawesome';
+import * as FontAwesome from 'react-fontawesome';
 import { I18n } from 'react-i18nify';
 import { AppSession } from '../../types/appSession';
-export default class NodeLeftMenuComponent extends Component {
+
+
+interface NodeLeftMenuComponentProps {
+  showNewNode?: boolean;
+  onClickNewNode: Function;
+  stats?: {
+    numNodes: number;
+    numObjects: number;
+    totalObjects: number;
+  };
+  onClickProperties: Function;
+  onClickControlObservations: Function;
+  onClickMoveNode: Function;
+  onClickDelete: Function;
+  showButtons?: boolean;
+  appSession: AppSession;
+}
+/* Old:
   static propTypes = {
     showNewNode: PropTypes.bool,
     onClickNewNode: PropTypes.func.isRequired,
@@ -21,6 +38,9 @@ export default class NodeLeftMenuComponent extends Component {
     appSession: AppSession
   };
 
+*/
+
+export default class NodeLeftMenuComponent extends Component<NodeLeftMenuComponentProps> {
   render() {
     const {
       showNewNode,
@@ -32,7 +52,13 @@ export default class NodeLeftMenuComponent extends Component {
       showButtons
     } = this.props;
 
-    const buttonLink = (type, icon, eventType, disabled, useMusitIcon) => (
+    const buttonLink = (
+      type: string,
+      icon: string,
+      eventType: Function,
+      disabled: boolean,
+      useMusitIcon: boolean = false
+    ) => (
       <div style={{ border: 'none', textAlign: 'center' }}>
         <Button
           bsStyle="link"
@@ -51,7 +77,7 @@ export default class NodeLeftMenuComponent extends Component {
       </div>
     );
 
-    const showCount = type => {
+    const showCount = (type: string) => {
       const count = this.props.stats && this.props.stats[type];
       return (
         <div style={{ border: 'none', textAlign: 'center' }}>

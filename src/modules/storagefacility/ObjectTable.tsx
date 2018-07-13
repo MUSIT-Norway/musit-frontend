@@ -1,14 +1,30 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from "react";
+import { Component } from "react";
 import { FormGroup, Table } from 'react-bootstrap';
-import FontAwesome from 'react-fontawesome';
+import * as FontAwesome from 'react-fontawesome';
 import { I18n } from 'react-i18nify';
 import { flattenSample } from '../sample/shared/types';
-import omit from 'lodash/omit';
-import TableData from './TableData';
+import {omit} from 'lodash';
+import TableData, { Data } from './TableData';
+import { AppSession } from "../../types/appSession";
+import { SampleStore } from "../../types/storage";
+import { TODO } from "../../types/common";
 
-export default class ObjectGrid extends Component {
-  static propTypes = {
+interface ObjectGridProps {
+  tableData: Array<object>;
+  pickObject: (data: Data) => void;
+  goToObject: (id: string, type: string) => void;
+  isObjectAdded: (data: Data) => boolean;
+  showMoveHistory: (data: Data) => void;
+  onMove: (data: Data) => void;
+  sampleStore: SampleStore;
+  appSession: AppSession;
+
+  isMainObject?: boolean;
+}
+
+/* Old:
+static propTypes = {
     tableData: PropTypes.arrayOf(PropTypes.object).isRequired,
     pickObject: PropTypes.func.isRequired,
     goToObject: PropTypes.func.isRequired,
@@ -19,6 +35,10 @@ export default class ObjectGrid extends Component {
     appSession: PropTypes.object.isRequired
   };
 
+*/
+
+export default class ObjectGrid extends Component<ObjectGridProps> {
+  
   render() {
     return (
       <div>
@@ -47,7 +67,7 @@ export default class ObjectGrid extends Component {
                         e.preventDefault();
                         this.props.tableData
                           .concat(this.props.sampleStore.nodeSamples || [])
-                          .forEach(data =>
+                          .forEach((data:TODO) =>
                             this.props.pickObject(
                               data.sampleObject
                                 ? flattenSample(
@@ -70,7 +90,7 @@ export default class ObjectGrid extends Component {
               <tbody>
                 {this.props.tableData
                   .concat(this.props.sampleStore.nodeSamples || [])
-                  .map((data, i) => (
+                  .map((data:TODO, i:number) => (
                     <TableData
                       key={i}
                       rowData={
@@ -87,7 +107,7 @@ export default class ObjectGrid extends Component {
                       sampleTypes={this.props.sampleStore.sampleTypes}
                       isObjectAdded={this.props.isObjectAdded}
                       pickObject={this.props.pickObject}
-                      isMainObject={this.props.isMainObject}
+                      //Removed/redundant now? isMainObject={this.props.isMainObject}
                       onMove={this.props.onMove}
                       showMoveHistory={this.props.showMoveHistory}
                       goToObject={this.props.goToObject}

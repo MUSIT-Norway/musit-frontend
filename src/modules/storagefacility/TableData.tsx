@@ -1,16 +1,17 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
-import FontAwesome from 'react-fontawesome';
+import * as FontAwesome from 'react-fontawesome';
 import MusitObject from '../../models/object';
-import type { AppSession } from '../../types/appSession';
-import type { ObjectData } from '../../types/object';
+import  { AppSession } from '../../types/appSession';
+import  { ObjectData } from '../../types/object';
 import { getSampleTypeAndSubType } from '../sample/shared/types';
-import type { SampleType } from '../../types/sample';
+import  { SampleType } from '../../types/sample';
+import { Maybe, MUSTFIX } from '../../types/common';
 
 export type Data = ObjectData & {
-  sampleNum: ?string,
-  sampleTypeId: ?number
+  sampleNum: Maybe<string>,
+  sampleTypeId: Maybe<number>
 };
 
 export type TableDataProps = {
@@ -32,7 +33,7 @@ export default function TableData(props: TableDataProps) {
   return (
     <tr
       key={rowData.id}
-      className={isChildObject ? 'childObject' : isMainObject && 'mainObject'}
+      className={isChildObject ? 'childObject' : (isMainObject && 'mainObject') as MUSTFIX}
       onClick={() => props.goToObject(rowData.uuid, rowData.objectType)}
     >
       <td style={{ width: '20px' }}>
@@ -90,7 +91,7 @@ export default function TableData(props: TableDataProps) {
               style={{
                 fontSize: '1.5em',
                 color: props.appSession.rolesForModules.storageFacilityWrite
-                  ? null
+                  ? undefined
                   : 'grey'
               }}
               name="truck"
