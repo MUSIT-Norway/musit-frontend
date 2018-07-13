@@ -1,14 +1,14 @@
-import * as React from "react";
-import { Component } from "react";
+import * as React from 'react';
+import { Component } from 'react';
 import { FormGroup, Table } from 'react-bootstrap';
 import * as FontAwesome from 'react-fontawesome';
 import { I18n } from 'react-i18nify';
 import { flattenSample } from '../sample/shared/types';
-import {omit} from 'lodash';
+import { omit } from 'lodash';
 import TableData, { Data } from './TableData';
-import { AppSession } from "../../types/appSession";
-import { SampleStore } from "../../types/storage";
-import { TODO } from "../../types/common";
+import { AppSession } from '../../types/appSession';
+import { SampleStore } from '../../types/storage';
+import { TODO } from '../../types/common';
 
 interface ObjectGridProps {
   tableData: Array<object>;
@@ -38,7 +38,6 @@ static propTypes = {
 */
 
 export default class ObjectGrid extends Component<ObjectGridProps> {
-  
   render() {
     return (
       <div>
@@ -67,7 +66,7 @@ export default class ObjectGrid extends Component<ObjectGridProps> {
                         e.preventDefault();
                         this.props.tableData
                           .concat(this.props.sampleStore.nodeSamples || [])
-                          .forEach((data:TODO) =>
+                          .forEach((data: TODO) =>
                             this.props.pickObject(
                               data.sampleObject
                                 ? flattenSample(
@@ -90,7 +89,7 @@ export default class ObjectGrid extends Component<ObjectGridProps> {
               <tbody>
                 {this.props.tableData
                   .concat(this.props.sampleStore.nodeSamples || [])
-                  .map((data:TODO, i:number) => (
+                  .map((data: TODO, i: number) => (
                     <TableData
                       key={i}
                       rowData={

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as PropTypes from 'prop-types';
 import { I18n } from 'react-i18nify';
 import * as Loader from 'react-loader';
 import NodeGrid from './NodeTable';
@@ -9,7 +8,7 @@ import Layout from '../../components/layout';
 import Toolbar from '../../components/layout/Toolbar';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { blur, filter } from '../../shared/util';
-import MusitNode from '../../models/node';
+import MusitNode, { Paging } from '../../models/node';
 import MusitObject from '../../models/object';
 import Actor from '../../models/actor';
 import PagingToolbar from '../../components/PagingToolbar';
@@ -22,7 +21,7 @@ import { TODO, MUSTFIX } from '../../types/common';
 import { AppSession } from '../../types/appSession';
 import { Match } from '../../types/Routes';
 import { PicklistData } from '../../types/picklist';
-import {History} from 'history';
+import { History } from 'history';
 
 interface TableComponentProps {
   appSession: AppSession;
@@ -61,8 +60,6 @@ interface TableComponentProps {
   searchPattern: TODO;
 }
 
-
-
 /* Old:
 static propTypes = {
     appSession: PropTypes.object.isRequired,
@@ -92,12 +89,13 @@ static propTypes = {
 */
 
 interface TableComponentState {
-  searchPattern:TODO;
+  searchPattern: TODO;
 }
 
-export default class TableComponent extends React.Component<TableComponentProps, TableComponentState> {
-  
-
+export default class TableComponent extends React.Component<
+  TableComponentProps,
+  TableComponentState
+> {
   constructor(props: TableComponentProps) {
     super(props);
     this.state = { searchPattern: '' };
@@ -113,7 +111,7 @@ export default class TableComponent extends React.Component<TableComponentProps,
     this.getSamplesForNode = this.getSamplesForNode.bind(this);
   }
 
-  loadRootNode(nodeId:TODO, museumId:number, token:string) {
+  loadRootNode(nodeId: TODO, museumId: number, token: string) {
     this.props.clearRootNode();
     if (!nodeId) {
       return;
@@ -123,7 +121,7 @@ export default class TableComponent extends React.Component<TableComponentProps,
       museumId,
       token,
       callback: {
-        onComplete: (node:TODO) => {
+        onComplete: (node: TODO) => {
           if (node && !MusitNode.isRootNode(node)) {
             this.props.loadStats({ id: nodeId, museumId, token });
           }
@@ -150,7 +148,7 @@ export default class TableComponent extends React.Component<TableComponentProps,
     }
   }
 
-  componentWillReceiveProps(newProps:TableComponentProps) {
+  componentWillReceiveProps(newProps: TableComponentProps) {
     const museumHasChanged =
       newProps.appSession.museumId !== this.props.appSession.museumId;
     const collectionHasChanged =
@@ -220,10 +218,10 @@ export default class TableComponent extends React.Component<TableComponentProps,
   }
 
   loadNodes(
-    id:TODO,
+    id: string,
     museumId = this.props.appSession.museumId,
     token = this.props.appSession.accessToken,
-    page
+    page?: Paging
   ) {
     this.props.setLoading();
     this.props.loadNodes({
@@ -235,11 +233,11 @@ export default class TableComponent extends React.Component<TableComponentProps,
   }
 
   loadObjects(
-    id:TODO,
+    id: TODO,
     museumId = this.props.appSession.museumId,
     collectionId = this.props.appSession.collectionId,
     token = this.props.appSession.accessToken,
-    page:TODO
+    page?: Paging
   ) {
     if (id) {
       this.props.setLoading();
@@ -254,7 +252,7 @@ export default class TableComponent extends React.Component<TableComponentProps,
   }
 
   getSamplesForNode(
-    nodeId:TODO,
+    nodeId: TODO,
     museumId = this.props.appSession.museumId,
     collectionId = this.props.appSession.collectionId,
     token = this.props.appSession.accessToken
@@ -269,7 +267,7 @@ export default class TableComponent extends React.Component<TableComponentProps,
     }
   }
 
-  showMoveNodeModal(nodeToMove:TODO) {
+  showMoveNodeModal(nodeToMove: TODO) {
     const title = I18n.t('musit.moveModal.moveNode', { name: nodeToMove.name });
     this.props.showModal(
       title,
@@ -278,7 +276,7 @@ export default class TableComponent extends React.Component<TableComponentProps,
   }
 
   moveNode = (
-    nodeToMove:TODO,
+    nodeToMove: TODO,
     userId = Actor.getActorId(this.props.appSession.actor),
     museumId = this.props.appSession.museumId,
     token = this.props.appSession.accessToken,
@@ -286,13 +284,13 @@ export default class TableComponent extends React.Component<TableComponentProps,
     moveNode = this.props.moveNode,
     loadNodes = this.loadNodes,
     loadRootNode = this.loadRootNode
-  ) => (toNode:TODO, toName:TODO, onSuccess:Function, onFailure = () => true) => {
+  ) => (toNode: TODO, toName: TODO, onSuccess: Function, onFailure = () => true) => {
     const errorMessage = checkNodeBranchAndType(nodeToMove, toNode);
     if (!errorMessage) {
       MusitNode.moveNode()({
         id: nodeToMove.nodeId,
         destination: toNode.nodeId,
-        doneBy: userId as,
+        doneBy: userId as MUSTFIX,
         museumId,
         token,
         callback: {
@@ -308,7 +306,7 @@ export default class TableComponent extends React.Component<TableComponentProps,
               })
             });
           },
-          onFailure: (e:TODO) => {
+          onFailure: (e: TODO) => {
             onFailure();
             this.props.emitError({
               type: 'errorOnMove',
@@ -330,7 +328,7 @@ export default class TableComponent extends React.Component<TableComponentProps,
     }
   };
 
-  showMoveObjectModal(objectToMove:TODO) {
+  showMoveObjectModal(objectToMove: TODO) {
     const objStr = MusitObject.getObjectDescription(objectToMove);
     const title = I18n.t('musit.moveModal.moveObject', { name: objStr });
     this.props.showModal(
@@ -344,7 +342,7 @@ export default class TableComponent extends React.Component<TableComponentProps,
   }
 
   moveObject = (
-    objectToMove:TODO,
+    objectToMove: TODO,
     userId = Actor.getActorId(this.props.appSession.actor),
     museumId = this.props.appSession.museumId,
     collectionId = this.props.appSession.collectionId,
@@ -352,7 +350,7 @@ export default class TableComponent extends React.Component<TableComponentProps,
     nodeId = this.props.tableStore.rootNode.nodeId,
     loadObjects = this.loadObjects,
     getSamplesForNode = this.getSamplesForNode
-  ) => (toNode:TODO, toName:TODO, onSuccess:Function, onFailure = () => true) => {
+  ) => (toNode: TODO, toName: TODO, onSuccess: Function, onFailure = () => true) => {
     const description = MusitObject.getObjectDescription(objectToMove);
     MusitObject.moveObjects({
       object: objectToMove,
@@ -420,7 +418,7 @@ export default class TableComponent extends React.Component<TableComponentProps,
         labelRight={I18n.t('musit.grid.button.samples')}
         placeHolderSearch={I18n.t('musit.grid.search.placeHolder')}
         searchValue={searchPattern}
-        onSearchChanged={(newPattern:TODO) =>
+        onSearchChanged={(newPattern: TODO) =>
           this.setState(ps => ({ ...ps, searchPattern: newPattern }))
         }
         clickShowCenter={() => {
@@ -499,7 +497,7 @@ export default class TableComponent extends React.Component<TableComponentProps,
                       this.props.history.replace(
                         Config.magasin.urls.client.storagefacility.goToNode(
                           rootNode.pathNames.filter(
-                            (path:TODO) => path.nodeId === rootNode.isPartOf
+                            (path: TODO) => path.nodeId === rootNode.isPartOf
                           )[0].nodeUuid,
                           this.props.appSession
                         )
@@ -513,7 +511,7 @@ export default class TableComponent extends React.Component<TableComponentProps,
                       )
                     });
                   },
-                  onFailure: (e:TODO) => {
+                  onFailure: (e: TODO) => {
                     if (e.status === 403) {
                       this.props.emitError({
                         type: 'deleteError',
@@ -602,7 +600,7 @@ export default class TableComponent extends React.Component<TableComponentProps,
               numItems={totalMatches}
               currentPage={currentPage}
               perPage={Config.magasin.limit}
-              onClick={(cp:TODO) => {
+              onClick={(cp: TODO) => {
                 this.props.history.replace({
                   pathname: Config.magasin.urls.client.storagefacility.goToObjects(
                     rootNode.nodeId,
@@ -621,7 +619,7 @@ export default class TableComponent extends React.Component<TableComponentProps,
         <NodeGrid
           appSession={this.props.appSession}
           tableData={matches ? filter(matches, ['name'], searchPattern) : []}
-          goToEvents={(node:TODO) =>
+          goToEvents={(node: TODO) =>
             this.props.goTo(
               Config.magasin.urls.client.storagefacility.viewControlsObservations(
                 node.nodeId,
@@ -630,10 +628,10 @@ export default class TableComponent extends React.Component<TableComponentProps,
             )
           }
           onMove={moveNode}
-          pickNode={(node:TODO) =>
+          pickNode={(node: TODO) =>
             this.props.pickNode({ node, breadcrumb: rootNode.breadcrumb })
           }
-          onClick={(node:TODO) =>
+          onClick={(node: TODO) =>
             this.props.goTo(
               Config.magasin.urls.client.storagefacility.goToNode(
                 node.nodeId,
@@ -641,14 +639,16 @@ export default class TableComponent extends React.Component<TableComponentProps,
               )
             )
           }
-          isNodeAdded={(node:TODO) => this.props.isItemAdded(node, this.props.pickList.nodes)}
+          isNodeAdded={(node: TODO) =>
+            this.props.isItemAdded(node, this.props.pickList.nodes)
+          }
         />
         {showPaging && (
           <PagingToolbar
             numItems={totalMatches}
             currentPage={currentPage}
             perPage={Config.magasin.limit}
-            onClick={(cp:TODO) => {
+            onClick={(cp: TODO) => {
               this.props.history.replace({
                 pathname: Config.magasin.urls.client.storagefacility.goToNode(
                   rootNode.nodeId,

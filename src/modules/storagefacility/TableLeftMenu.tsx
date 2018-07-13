@@ -5,7 +5,6 @@ import * as FontAwesome from 'react-fontawesome';
 import { I18n } from 'react-i18nify';
 import { AppSession } from '../../types/appSession';
 
-
 interface NodeLeftMenuComponentProps {
   showNewNode?: boolean;
   onClickNewNode: Function;

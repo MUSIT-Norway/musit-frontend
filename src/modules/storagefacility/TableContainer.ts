@@ -9,7 +9,7 @@ import {
 } from '../movedialog/moveDialogStore';
 import { isItemAdded } from '../../stores/pickList';
 import connectToScanner from '../../stores/scanner';
-import {flowRight} from 'lodash';
+import { flowRight } from 'lodash';
 import { emitError, emitSuccess } from '../../shared/errors';
 import TableComponent from './TableComponent';
 import * as PropTypes from 'prop-types';
@@ -48,7 +48,7 @@ const commands = {
   getSampleTypes$
 };
 
-const customProps = (props:TODO) => ({
+const customProps = (props: TODO) => ({
   ...props,
   pickNode: MusitNode.pickNode(toggleNode$),
   pickObject: MusitObject.pickObject(toggleObject$),
@@ -63,7 +63,7 @@ const customProps = (props:TODO) => ({
   emitSuccess
 });
 
-export const processBarcode = (barCode:TODO, props:TODO) => {
+export const processBarcode = (barCode: TODO, props: TODO) => {
   if (props.classExistsOnDom('moveHistory')) {
     return;
   }
@@ -74,7 +74,7 @@ export const processBarcode = (barCode:TODO, props:TODO) => {
   if (barCode.uuid) {
     props
       .findNodeByUUID({ uuid: barCode.code, museumId, token })
-      .do((response:TODO) => {
+      .do((response: TODO) => {
         if (!response || !response.nodeId) {
           props.emitError({
             message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode')
@@ -96,7 +96,7 @@ export const processBarcode = (barCode:TODO, props:TODO) => {
     if (isMoveDialogActive) {
       props
         .findNodeByBarcode(ajaxProps)
-        .do((response:TODO) => {
+        .do((response: TODO) => {
           if (!response || !response.nodeId) {
             props.emitError({
               message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode')
@@ -109,7 +109,7 @@ export const processBarcode = (barCode:TODO, props:TODO) => {
     } else {
       props
         .findNodeOrObjectByBarcode(ajaxProps)
-        .do((response:TODO) => {
+        .do((response: TODO) => {
           if (response && Array.isArray(response)) {
             if (response.length === 1) {
               if (!response[0].currentLocationId) {

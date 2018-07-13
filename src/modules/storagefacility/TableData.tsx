@@ -3,27 +3,27 @@ import * as React from 'react';
 import { I18n } from 'react-i18nify';
 import * as FontAwesome from 'react-fontawesome';
 import MusitObject from '../../models/object';
-import  { AppSession } from '../../types/appSession';
-import  { ObjectData } from '../../types/object';
+import { AppSession } from '../../types/appSession';
+import { ObjectData } from '../../types/object';
 import { getSampleTypeAndSubType } from '../sample/shared/types';
-import  { SampleType } from '../../types/sample';
+import { SampleType } from '../../types/sample';
 import { Maybe, MUSTFIX } from '../../types/common';
 
 export type Data = ObjectData & {
-  sampleNum: Maybe<string>,
-  sampleTypeId: Maybe<number>
+  sampleNum: Maybe<string>;
+  sampleTypeId: Maybe<number>;
 };
 
 export type TableDataProps = {
-  rowData: Data,
-  appSession: AppSession,
-  sampleTypes: Array<SampleType>,
-  goToObject: (id: string, type: string) => void,
-  showMoveHistory: (data: Data) => void,
-  onMove: (data: Data) => void,
-  pickObject: (data: Data) => void,
-  isObjectAdded: (data: Data) => boolean,
-  sampleView: boolean
+  rowData: Data;
+  appSession: AppSession;
+  sampleTypes: Array<SampleType>;
+  goToObject: (id: string, type: string) => void;
+  showMoveHistory: (data: Data) => void;
+  onMove: (data: Data) => void;
+  pickObject: (data: Data) => void;
+  isObjectAdded: (data: Data) => boolean;
+  sampleView: boolean;
 };
 
 export default function TableData(props: TableDataProps) {
@@ -33,7 +33,9 @@ export default function TableData(props: TableDataProps) {
   return (
     <tr
       key={rowData.id}
-      className={isChildObject ? 'childObject' : (isMainObject && 'mainObject') as MUSTFIX}
+      className={
+        isChildObject ? 'childObject' : ((isMainObject && 'mainObject') as MUSTFIX)
+      }
       onClick={() => props.goToObject(rowData.uuid, rowData.objectType)}
     >
       <td style={{ width: '20px' }}>
