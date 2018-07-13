@@ -1,4 +1,4 @@
-import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
+import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 import SampleViewComponent from './SampleViewComponent';
 import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';

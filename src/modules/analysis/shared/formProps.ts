@@ -1,13 +1,13 @@
 // @flow
-import { getObjects, getAnalysisCollection, getResult } from '../shared/submit';
+import { getObjects, getAnalysisCollection, getResult } from './submit';
 import { saveAnalysis$ } from '../analysisStore';
-import { Location } from '../shared/submit';
+import { Location } from './submit';
 import { simplePost, simplePut } from '../../../shared/RxAjax';
 import { History } from 'history';
 import { AppSession } from '../../../types/appSession';
-import { FormData } from '../shared/formType';
+import { FormData } from './formType';
 import { Predefined } from '../../../types/predefined';
-import { Store } from '../shared/storeType';
+import { Store } from './storeType';
 import { DomEvent } from '../../../types/dom';
 import { toArray } from 'lodash';
 import { isMultipleSelectAttribute } from '../../../types/analysis';

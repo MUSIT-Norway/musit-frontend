@@ -7,7 +7,7 @@ import EnglishTranslation from './LoginComponent_en.html';
 import Logos from '../../components/logos/Logos';
 import LoginButton from './LoginButton';
 import TermsAndConditions from './TermsAndConditions';
-import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
+import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 
 interface LoginComponentProps {
   user: object;

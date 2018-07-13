@@ -1,5 +1,5 @@
 // @flow
-import { Subject } from 'rxjs/Rx';
+import { Subject } from 'rxjs';
 import createForm from '../form';
 import { stringMapper } from '../mappers';
 import type { Field, RawValue, Update } from '../form';

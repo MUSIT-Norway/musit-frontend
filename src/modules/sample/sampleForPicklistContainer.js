@@ -1,5 +1,5 @@
 // @flow
-import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
+import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 import sampleForm from './sampleAddForm';
 import SampleFormComponent from './SampleFormComponent';
 import flowRight from 'lodash/flowRight';

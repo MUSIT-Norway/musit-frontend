@@ -2,7 +2,7 @@ import assert from 'assert';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react-dom/test-utils';
-import MusitTextArea from '../index';
+import MusitTextArea from '..';
 
 describe('MusitTextArea', () => {
   it('should render MusitTextArea', () => {

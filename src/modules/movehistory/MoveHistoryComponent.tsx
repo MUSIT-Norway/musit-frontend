@@ -25,7 +25,7 @@ import Modal from '../../components/modal/MusitModal';
 import CancelButton from '../../components/buttons/cancel';
 import { I18n } from 'react-i18nify';
 import moveHistoryStore$, { clear$, loadMoveHistory$ } from './moveHistoryStore';
-import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
+import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 import { MUSTFIX } from '../../types/common';
 import { AppSession } from '../../types/appSession';
 

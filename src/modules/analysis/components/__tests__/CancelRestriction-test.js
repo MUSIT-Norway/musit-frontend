@@ -6,7 +6,7 @@ import { shallowToJson } from 'enzyme-to-json';
 import sinon from 'sinon';
 import { appSession } from '../../../../testutils/sampleDataForTest';
 import { FormElement } from '../../../../forms/components';
-import StatefulActorSuggest from '../../components/StatefulActorSuggest';
+import StatefulActorSuggest from '../StatefulActorSuggest';
 
 const restriction = {
   reason: 'Initial reason',

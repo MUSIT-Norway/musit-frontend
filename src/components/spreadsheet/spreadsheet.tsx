@@ -1,5 +1,3 @@
-// @flow
-
 import * as xlsx from 'xlsx';
 
 export function jsonToWorksheetBinary(jsonContent: Array<any>): string {

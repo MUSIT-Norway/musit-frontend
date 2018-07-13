@@ -16,7 +16,7 @@ import {
   addNode$,
   addObject$
 } from '../../stores/pickList';
-import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
+import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 import { showModal } from '../../shared/modal';
 import connectToScanner from '../../stores/scanner';
 import { flowRight } from 'lodash';

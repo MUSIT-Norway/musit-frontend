@@ -1,4 +1,4 @@
-import { Subject, Observable } from 'rxjs/Rx';
+import { Subject, Observable } from 'rxjs';
 import { store$, loadEvents } from '../eventsStore';
 
 import MusitTestScheduler from '../../../testutils/MusitTestScheduler';

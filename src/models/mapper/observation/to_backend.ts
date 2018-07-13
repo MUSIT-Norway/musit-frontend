@@ -16,8 +16,8 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import { parseFloatFromString, Option } from './../../../shared/util';
-import Actor from '../../../models/actor';
+import { parseFloatFromString, Option } from '../../../shared/util';
+import Actor from '../../actor';
 import { TODO, MUSTFIX, Star } from '../../../types/common';
 
 export function parseRangeObservation(el: TODO) {

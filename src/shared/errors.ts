@@ -1,4 +1,4 @@
-import { Subject, Observable } from 'rxjs/Rx';
+import { Subject, Observable } from 'rxjs';
 import { I18n } from 'react-i18nify';
 import { TODO } from '../types/common';
 
