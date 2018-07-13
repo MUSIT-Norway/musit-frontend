@@ -1,6 +1,6 @@
 import { TODO } from '../types/common';
 
-function makeRequest(opts: TODO) {
+export function makeRequest(opts: TODO) {
   return new Promise(function(resolve, reject) {
     var xhr = new XMLHttpRequest();
     xhr.open(opts.method, opts.url);
