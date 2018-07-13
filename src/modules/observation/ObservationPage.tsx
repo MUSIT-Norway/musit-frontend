@@ -1,6 +1,5 @@
 import { values } from 'lodash';
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import {
   ControlLabel,
   Grid,
@@ -14,7 +13,11 @@ import {
   RenderPest,
   RenderAlcohol,
   RenderDoubleTextArea,
-  RenderFromToNumberComment
+  RenderFromToNumberComment,
+  RenderDoubleTextAreaValueProp,
+  RenderPestValueProps,
+  RenderFromToNumberCommentValueProp,
+  RenderAlcoholValueProps
 } from './render';
 import {
   containsObjectWithField,
@@ -23,16 +26,33 @@ import {
   isDateBiggerThanToday,
   formatISOString
 } from '../../shared/util';
-import FontAwesome from 'react-fontawesome';
+import * as FontAwesome from 'react-fontawesome';
 import SaveCancel from '../../components/formfields/saveCancel/SaveCancel';
 import DatePicker from '../../components/DatePicker';
 import { ActorSuggest } from '../../components/suggest/ActorSuggest';
 import * as validation from './observationValidation';
 import { I18n } from 'react-i18nify';
 import { emitError } from '../../shared/errors';
-import Actor from '../../models/actor';
+import { AppSession } from '../../types/appSession';
+import { TODO } from '../../types/common';
+import { Actor } from '../../types/actor';
+import MusitActor from '../../models/actor';
 
-export default class ObservationPage extends React.Component {
+interface ObservationPageProps {
+  id: string;
+  observations?: Array<TODO>;
+  doneDate?: string;
+  doneBy: Actor | string;
+  registeredDate?: string;
+  registeredBy?: string;
+  onSaveObservation: Function;
+  mode: 'ADD' | 'VIEW' | 'EDIT';
+  saveDisabled?: boolean;
+  cancelDisabled?: boolean;
+  appSession: AppSession;
+  goBack: Function;
+}
+/* Old:
   static propTypes = {
     id: PropTypes.string.isRequired,
     observations: PropTypes.arrayOf(PropTypes.object),
@@ -47,8 +67,25 @@ export default class ObservationPage extends React.Component {
     appSession: PropTypes.object.isRequired,
     goBack: PropTypes.func.isRequired
   };
+*/
 
-  static defaultProps = {
+interface ObservationPageState {
+  observations: Array<TODO>;
+  selectedType: TODO;
+  doneDate: string;
+  doneBy: Actor | string;
+  errors?: Array<TODO>;
+}
+
+function ActorOrStringIsActor(value: Actor | string): value is Actor {
+  return value['fn'] !== undefined;
+}
+
+export default class ObservationPage extends React.Component<
+  ObservationPageProps,
+  ObservationPageState
+> {
+  static defaultProps: Partial<ObservationPageProps> = {
     observations: [],
     saveDisabled: false,
     cancelDisabled: false
@@ -58,11 +95,13 @@ export default class ObservationPage extends React.Component {
     return { observations: [{ lifeCycle: '', count: '' }] };
   }
 
-  constructor(props) {
+  constructor(props: ObservationPageProps) {
     super(props);
     this.state = {
       selectedType: null,
-      observations: props.observations,
+      observations:
+        props.observations ||
+        [] /* TODO: Remove || []  when we get proper support for defaultProps in TS 3.0*/,
       doneDate: props.doneDate || formatISOString(new Date()),
       doneBy: props.doneBy
     };
@@ -75,13 +114,13 @@ export default class ObservationPage extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: ObservationPageProps) {
     if (this.props.mode === 'VIEW') {
-      this.setState(ps => ({
+      this.setState((ps: TODO /*TODO: probably ObservationPageState*/) => ({
         ...ps,
         doneBy: nextProps.doneBy,
         doneDate: nextProps.doneDate,
-        observations: nextProps.observations
+        observations: (nextProps.observations || [])
       }));
     }
     if (
@@ -103,7 +142,7 @@ export default class ObservationPage extends React.Component {
     }
   }
 
-  onChangeField(field, value, index) {
+  onChangeField(field: TODO, value: TODO, index: TODO) {
     const observations = [...this.state.observations];
     observations[index] = {
       ...observations[index],
@@ -112,7 +151,12 @@ export default class ObservationPage extends React.Component {
     this.setState(ps => ({ ...ps, observations }));
   }
 
-  onChangePestObservation(pestObservationIndex, field, value, pestIndex) {
+  onChangePestObservation(
+    pestObservationIndex: TODO,
+    field: TODO,
+    value: TODO,
+    pestIndex: TODO
+  ) {
     const observations = [...this.state.observations];
     const pestObj = observations[pestIndex];
     const pestObservations = pestObj.data.observations;
@@ -120,16 +164,16 @@ export default class ObservationPage extends React.Component {
     this.setState(ps => ({ ...ps, observations }));
   }
 
-  onRemovePestObservation(pestObservationIndex, pestIndex) {
+  onRemovePestObservation(pestObservationIndex: TODO, pestIndex: TODO) {
     const observations = [...this.state.observations];
     const pestObj = observations[pestIndex];
     pestObj.data.observations = pestObj.data.observations.filter(
-      (elm, index) => index !== pestObservationIndex
+      (elm: TODO, index: TODO) => index !== pestObservationIndex
     );
     this.setState(ps => ({ ...ps, observations }));
   }
 
-  onClickAddObservation(pestIndex) {
+  onClickAddObservation(pestIndex: TODO) {
     const observations = [...this.state.observations];
     const pestObj = observations[pestIndex];
     const pestObservations = pestObj.data.observations;
@@ -137,14 +181,14 @@ export default class ObservationPage extends React.Component {
     this.setState(ps => ({ ...ps, observations }));
   }
 
-  onChangeTypeSelect(e) {
+  onChangeTypeSelect(e: TODO) {
     this.setState(ps => ({
       ...ps,
       selectedType: e.target.options[e.target.selectedIndex].value
     }));
   }
 
-  setDate = newValue => {
+  setDate = (newValue: TODO) => {
     if (newValue) {
       if (isDateBiggerThanToday(newValue)) {
         emitError({
@@ -228,7 +272,7 @@ export default class ObservationPage extends React.Component {
     }
   };
 
-  addObservationType(typeToAdd, data = {}) {
+  addObservationType(typeToAdd?: TODO, data = {}) {
     const type = typeToAdd || this.state.selectedType;
     if (!type || type === '') {
       return;
@@ -238,24 +282,24 @@ export default class ObservationPage extends React.Component {
     this.setState(ps => ({ ...ps, observations, selectedType: null }));
   }
 
-  isTypeSelectable(typeStr) {
+  isTypeSelectable(typeStr: string) {
     return !containsObjectWithField(this.state.observations, 'type', typeStr);
   }
 
-  removeObservation(index) {
+  removeObservation(index: number) {
     const observations = this.state.observations;
     this.setState(ps => ({
       ...ps,
-      observations: observations.filter((o, i) => i !== index)
+      observations: observations.filter((o: TODO, i: number) => i !== index)
     }));
   }
 
-  validateForm(formProps) {
-    let errors = {};
+  validateForm(formProps: TODO) {
+    let errors = {} as TODO;
 
     if (
       typeof formProps.doneBy !== 'object' ||
-      (!formProps.doneBy || !Actor.getActorId(formProps.doneBy))
+      (!formProps.doneBy || !MusitActor.getActorId(formProps.doneBy))
     ) {
       errors.doneBy = 'musit.observation.page.doneByRequired';
     }
@@ -264,7 +308,7 @@ export default class ObservationPage extends React.Component {
       errors.doneDate = 'musit.observation.page.dateRequired';
     }
 
-    formProps.observations.forEach((observation, index) => {
+    formProps.observations.forEach((observation: TODO, index: number) => {
       const typeDefinition = this.typeDefinitions[observation.type];
       if (typeDefinition.validate) {
         errors = {
@@ -277,7 +321,7 @@ export default class ObservationPage extends React.Component {
     return errors;
   }
 
-  handleSubmit(e) {
+  handleSubmit(e: TODO) {
     e.preventDefault();
     const errors = this.validateForm(this.state);
     this.setState(ps => ({ ...ps, errors }));
@@ -286,31 +330,31 @@ export default class ObservationPage extends React.Component {
     }
   }
 
-  renderObservation(observation, index) {
+  renderObservation(observation: TODO, index: number) {
     const typeDefinition = this.typeDefinitions[observation.type];
     return typeDefinition.render.bind(this)(observation.type, observation.data, index);
   }
 
-  renderAlcohol(id, valueProps, index) {
+  renderAlcohol(id: TODO, valueProps: RenderAlcoholValueProps, index: number) {
     return (
       <RenderAlcohol
         disabled={this.props.mode === 'VIEW'}
         valueProps={valueProps}
         index={index}
-        mode={this.props.mode}
+        //mode={this.props.mode} //TODO: Is it ok to remove this?
         onChangeField={this.onChangeField}
       />
     );
   }
 
-  renderPest(id, valueProps, index) {
+  renderPest(id: TODO, valueProps: RenderPestValueProps, index: number) {
     return (
       <RenderPest
         disabled={this.props.mode === 'VIEW'}
         canEdit={this.props.mode !== 'VIEW'}
         valueProps={valueProps}
         index={index}
-        mode={this.props.mode}
+        //mode={this.props.mode}  //TODO: Is it ok to remove this?
         onChangeField={this.onChangeField}
         onChangePestObservation={this.onChangePestObservation}
         onRemovePestObservation={this.onRemovePestObservation}
@@ -319,27 +363,35 @@ export default class ObservationPage extends React.Component {
     );
   }
 
-  renderDoubleTextArea(id, valueProps, index) {
+  renderDoubleTextArea(
+    id: TODO,
+    valueProps: RenderDoubleTextAreaValueProp,
+    index: number
+  ) {
     return (
       <RenderDoubleTextArea
         disabled={this.props.mode === 'VIEW'}
         type={id}
         valueProps={valueProps}
         index={index}
-        mode={this.props.mode}
+        //mode={this.props.mode}  //TODO: Is it ok to remove this?
         onChangeField={this.onChangeField}
       />
     );
   }
 
-  renderFromToNumberComment(id, valueProps, index) {
+  renderFromToNumberComment(
+    id: TODO,
+    valueProps: RenderFromToNumberCommentValueProp,
+    index: number
+  ) {
     return (
       <RenderFromToNumberComment
         disabled={this.props.mode === 'VIEW'}
         type={id}
         valueProps={valueProps}
         index={index}
-        mode={this.props.mode}
+        // mode={this.props.mode}  //TODO: Is it ok to remove this?
         onChangeField={this.onChangeField}
       />
     );
@@ -349,7 +401,7 @@ export default class ObservationPage extends React.Component {
     return (
       <form
         onKeyDown={e => {
-          if (e.keyCode === 13 && e.target.type !== 'textarea') {
+          if (e.keyCode === 13 && (e.target as TODO).type !== 'textarea') {
             e.preventDefault();
           }
         }}
@@ -369,12 +421,12 @@ export default class ObservationPage extends React.Component {
                 ) : (
                   <DatePicker
                     dateFormat={DATE_FORMAT_DISPLAY}
-                    onClear={newValue =>
+                    onClear={(newValue: TODO) =>
                       this.setState(ps => ({ ...ps, doneDate: newValue }))
                     }
                     value={this.state.doneDate}
-                    onChange={newValue => this.setDate(newValue)}
-                    disabled={this.props.mode === 'VIEW'}
+                    onChange={(newValue: TODO) => this.setDate(newValue)}
+                    disabled={false} //originally, equivalent to false: {this.props.mode === 'VIEW'}
                   />
                 )}
               </Col>
@@ -384,7 +436,7 @@ export default class ObservationPage extends React.Component {
                   <FormControl
                     componentClass="input"
                     value={
-                      this.state.doneBy && this.state.doneBy.fn
+                      this.state.doneBy && ActorOrStringIsActor(this.state.doneBy)
                         ? this.state.doneBy.fn
                         : this.state.doneBy || ''
                     }
@@ -395,12 +447,12 @@ export default class ObservationPage extends React.Component {
                     appSession={this.props.appSession}
                     id="doneByField"
                     value={
-                      this.state.doneBy && this.state.doneBy.fn
+                      this.state.doneBy && ActorOrStringIsActor(this.state.doneBy)
                         ? this.state.doneBy.fn
                         : this.state.doneBy || ''
                     }
                     placeHolder="Find actor"
-                    onChange={newValue => {
+                    onChange={(newValue: TODO) => {
                       this.setState(ps => ({
                         ...ps,
                         doneBy: newValue
@@ -416,7 +468,7 @@ export default class ObservationPage extends React.Component {
                   <ControlLabel>{I18n.t('musit.texts.dateRegistered')}</ControlLabel>
                   <FormControl
                     componentClass="input"
-                    value={parseISODate(this.props.registeredDate).format(
+                    value={parseISODate(this.props.registeredDate as TODO).format(
                       DATE_FORMAT_DISPLAY
                     )}
                     disabled

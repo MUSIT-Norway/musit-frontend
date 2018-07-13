@@ -22,7 +22,7 @@ import { Component } from 'react';
 import validate from '../common/validators';
 
 interface MusitTextAreaProps {
-  value: string;
+  value?: string;
   placeHolder?: string;
   tooltip?: string;
   onChange: Function;

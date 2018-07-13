@@ -16,18 +16,54 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import { Component } from 'react';
 import {
   MusitField,
   MusitTextArea,
   MusitDropDownField
 } from '../../../components/formfields';
 import { Row, ControlLabel, Col } from 'react-bootstrap';
+import { TODO } from '../../../types/common';
 
-export default class ObervationStatusPercentageComment extends Component {
-  static propTypes = {
+interface ObervationStatusPercentageCommentProps {
+  // Status
+  statusLabel: string;
+  statusPlaceHolder: string;
+  statusValue?: string;
+  statusItems: Array<TODO>;
+  statusItemsTranslateKeyPrefix?: string;
+  statusTooltip?: string;
+  statusOnChange: Function;
+  statusValidate?: string;
+  statusMinimumLength?: number;
+  statusWidth: number;
+  // Volume
+  volumeLabel: string;
+  volumePlaceHolder: string;
+  volumeValue?: string;
+  volumeTooltip: string;
+  volumeOnChange: Function;
+  volumeValidate?: string;
+  volumeMinimumLength?: number;
+  volumePrecision?: number;
+  volumeWidth: number;
+  // Comment
+  commentLabel: string;
+  commentPlaceHolder: string;
+  commentValue?: string;
+  commentTooltip?: string;
+  commentOnChange: Function;
+  commentValidate?: string;
+  commentMaximumLength?: number;
+  commentNumberOfRows?: number;
+  commentWidth: number;
+  // Other
+  disabled?: boolean;
+}
+
+/*#OLD
+static propTypes = {
     // Status
     statusLabel: PropTypes.string.isRequired,
     statusPlaceHolder: PropTypes.string.isRequired,
@@ -62,8 +98,12 @@ export default class ObervationStatusPercentageComment extends Component {
     // Other
     disabled: PropTypes.bool
   };
+  */
 
-  static defaultProps = {
+export default class ObervationStatusPercentageComment extends Component<
+  ObervationStatusPercentageCommentProps
+> {
+  static defaultProps: Partial<ObervationStatusPercentageCommentProps> = {
     // Status
     statusValue: '',
     statusValidate: 'text',

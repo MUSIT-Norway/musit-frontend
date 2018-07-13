@@ -17,13 +17,37 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import { Component } from 'react';
 import { MusitField, MusitTextArea } from '../../../components/formfields';
 import { Row, ControlLabel, Col } from 'react-bootstrap';
 
-export default class ObservationFromToNumberCommentComponent extends Component {
-  static propTypes = {
+interface ObservationFromToNumberCommentComponentProps {
+  fromLabel: string;
+  fromValue: string;
+  fromTooltip: string;
+  fromPlaceHolder?: string;
+  fromWidth: number;
+  onChangeFrom: Function;
+  // To
+  toLabel: string;
+  toValue: string;
+  toTooltip: string;
+  toPlaceHolder?: string;
+  toWidth: number;
+  onChangeTo: Function;
+  // Comment
+  commentLabel: string;
+  commentValue: string;
+  commentTooltip: string;
+  commentPlaceholder?: string;
+  commentWidth: number;
+  onChangeComment: Function;
+  // Other
+  disabled?: boolean;
+}
+/* Old:
+static propTypes = {
     // From
     fromLabel: PropTypes.string.isRequired,
     fromValue: PropTypes.string.isRequired,
@@ -48,8 +72,12 @@ export default class ObservationFromToNumberCommentComponent extends Component {
     // Other
     disabled: PropTypes.bool
   };
+*/
 
-  static defaultProps = {
+export default class ObservationFromToNumberCommentComponent extends Component<
+  ObservationFromToNumberCommentComponentProps
+> {
+  static defaultProps: Partial<ObservationFromToNumberCommentComponentProps> = {
     fromValue: '',
     toValue: '',
     commentValue: ''

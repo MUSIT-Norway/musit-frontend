@@ -292,6 +292,7 @@ export default class ControlView extends Component<ControlViewProps> {
             <ObservationRender.RenderPest
               disabled
               canEdit={false}
+              onChangeField = {()=> true} //Dummy handler (because it made some sense to make this handler required.)
               valueProps={{
                 observations: observation.lifecycles.map((lc: TODO) => {
                   return {

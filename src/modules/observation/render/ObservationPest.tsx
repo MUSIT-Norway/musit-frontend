@@ -17,20 +17,67 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import { Component } from 'react';
 import ObservationDoubleTextAreaComponent from './ObservationDoubleTextAreaComponent';
 import { MusitField, MusitDropDownField } from '../../../components/formfields';
 import { ControlLabel, Row, Col, Button } from 'react-bootstrap';
-import FontAwesome from 'react-fontawesome';
+import * as FontAwesome from 'react-fontawesome';
+import { TODO } from '../../../types/common';
 
-export default class ObservationPest extends Component {
-  static propTypes = {
+interface ObservationPestProps {
+  disabled?: boolean;
+  canEdit?: boolean;
+  observations: Array<{
+    count?: string;
+    lifeCycle?: string;
+  }>;
+  // Lifecycle
+  lifeCycleLabel: string;
+  lifeCyclePlaceHolder: string;
+  lifeCycleTooltip: string;
+  lifeCycleValidate?: string;
+  lifeCycleItems: Array<TODO>;
+  lifeCycleItemsTranslateKeyPrefix?: string;
+  lifeCycleWidth: number;
+  lifeCycleOnChange: Function;
+  lifeCycleOnRemove: Function;
+  // Count
+  countLabel: string;
+  countPlaceHolder: string;
+  countTooltip: string;
+  countValidate?: string;
+  countPrecision?: number;
+  countWidth: number;
+  countOnChange: Function;
+  // Comments
+  commentsLeftValue?: string;
+  commentsLeftLabel: string;
+  commentsLeftTooltip: string;
+  commentsLeftPlaceHolder: string; //Made it required because it is used in a required property.
+  commentsLeftWidth: number;
+  commentsOnChangeLeft: Function;
+  commentsRightValue?: string;
+  commentsRightLabel: string;
+  commentsRightTooltip: string;
+  commentsRightPlaceHolder: string; //Made it required because it is used in a required property.
+  commentsRightWidth: number;
+  commentsOnChangeRight: Function;
+  // New button
+  newButtonLabel: string;
+  newButtonOnClick: React.MouseEventHandler<Button>;
+  // icons:
+  removeIconWidth: number;
+  addIconWidth: number;
+}
+
+/* Old:
+static propTypes = {
     disabled: PropTypes.bool,
     canEdit: PropTypes.bool,
     observations: PropTypes.arrayOf(
       PropTypes.shape({
-        count: PropTypes.string,
+        count?: string;
         lifeCycle: PropTypes.string
       })
     ).isRequired,
@@ -72,8 +119,10 @@ export default class ObservationPest extends Component {
     removeIconWidth: PropTypes.number.isRequired,
     addIconWidth: PropTypes.number.isRequired
   };
+*/
 
-  static defaultProps = {
+export default class ObservationPest extends Component<ObservationPestProps> {
+  static defaultProps: Partial<ObservationPestProps> = {
     disabled: false,
     canEdit: true,
     lifeCycleValidate: 'text',
@@ -87,13 +136,13 @@ export default class ObservationPest extends Component {
     return (
       <div>
         <ObservationDoubleTextAreaComponent
-          leftValue={this.props.commentsLeftValue}
+          leftValue={this.props.commentsLeftValue || ""} //TODO: Check if ok with empty string
           leftLabel={this.props.commentsLeftLabel}
           leftTooltip={this.props.commentsLeftTooltip}
           leftPlaceHolder={this.props.commentsLeftPlaceHolder}
           leftWidth={this.props.commentsLeftWidth}
           onChangeLeft={this.props.commentsOnChangeLeft}
-          rightValue={this.props.commentsRightValue}
+          rightValue={this.props.commentsRightValue || ""} //TODO: Check if ok with empty string
           rightLabel={this.props.commentsRightLabel}
           rightTooltip={this.props.commentsRightTooltip}
           rightPlaceHolder={this.props.commentsRightPlaceHolder}
@@ -118,7 +167,7 @@ export default class ObservationPest extends Component {
                     validate={this.props.lifeCycleValidate}
                     disabled={this.props.disabled}
                     value={observation.lifeCycle}
-                    onChange={lifeCycleValue =>
+                    onChange={(lifeCycleValue: TODO) =>
                       this.props.lifeCycleOnChange(index, lifeCycleValue)
                     }
                   />
@@ -134,7 +183,9 @@ export default class ObservationPest extends Component {
                     precision={this.props.countPrecision}
                     disabled={this.props.disabled}
                     value={observation.count}
-                    onChange={countValue => this.props.countOnChange(index, countValue)}
+                    onChange={(countValue: TODO) =>
+                      this.props.countOnChange(index, countValue)
+                    }
                     style={{ height: 36 }}
                   />
                 </span>
