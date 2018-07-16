@@ -66,8 +66,6 @@ interface ITaxonTerm {
   taxonSuggestion?: ScientificName;
   precisionCode?: 'cf' | 'aff';
   precisionRank?: string;
-  infraspesRank?: string;
-  infraSpesName?: string;
 }
 
 class TaxonTerm implements ITaxonTerm {
@@ -75,15 +73,11 @@ class TaxonTerm implements ITaxonTerm {
   taxonSuggestion?: ScientificName;
   precisionCode?: 'cf' | 'aff';
   precisionRank?: string;
-  infraspesRank?: string;
-  infraSpesName?: string;
   constructor(term: ITaxonTerm) {
     this.scientificName = term.scientificName;
     this.taxonSuggestion = term.taxonSuggestion;
     this.precisionCode = term.precisionCode;
     this.precisionRank = term.precisionRank;
-    this.infraSpesName = term.infraSpesName;
-    this.infraspesRank = term.infraspesRank;
   }
 }
 interface ITaxonClassification {
@@ -91,6 +85,8 @@ interface ITaxonClassification {
   editingName: ITaxonTerm;
   editingIndex: number;
   det: IDet;
+  infraspesRank?: string;
+  infraSpesName?: string;
   note?: string;
   getEventType?: () => string;
   getEventData?: () => string;
@@ -103,12 +99,16 @@ export class TaxonClassification implements ITaxonClassification {
   editingName: ITaxonTerm;
   editingIndex: number;
   det: IDet;
+  infraspesRank?: string;
+  infraSpesName?: string;
   note?: string;
   constructor(taxonClass: ITaxonClassification) {
     this.taxonNames = taxonClass.taxonNames.map((t: ITaxonTerm) => new TaxonTerm(t));
     this.det = new Det(taxonClass.det);
     this.editingIndex = taxonClass.editingIndex;
     this.editingName = taxonClass.editingName;
+    this.infraSpesName = taxonClass.infraSpesName;
+    this.infraspesRank = taxonClass.infraspesRank;
     this.note = taxonClass.note;
   }
 
@@ -237,7 +237,7 @@ type SexAndLifeStageProps = ISexAndStagesClassification & {
 type TaxonTermProps = ITaxonClassification & {
   setEditingIndex: (i: number) => void;
   onChangeTaxonField: (fieldName: string) => (value: string) => void;
-  onChangeNoteField: (value: string) => void;
+  onChangeTaxonClassificationFields: (fieldName: string) => (value: string) => void;
   onChangeSuggests: (v: any) => void;
   onAddTaxon: () => void;
   onAddPerson: () => void;
@@ -874,7 +874,16 @@ export class TaxonComponent extends React.Component<TaxonTermProps> {
               <div className="col-md-2">
                 <div className="form-group">
                   <label htmlFor="infraspesRank">Infraspesific rank</label>
-                  <select className="form-control" id="infraspesRank">
+                  <select
+                    className="form-control"
+                    id="infraspesRank"
+                    onChange={e => {
+                      e.preventDefault();
+                      this.props.onChangeTaxonClassificationFields('infraspesRank')(
+                        e.target.value
+                      );
+                    }}
+                  >
                     <option value="">--select--</option>
                     <option value="ssp.">Subspecies</option>
                     <option value="var.">Variety</option>
@@ -888,7 +897,17 @@ export class TaxonComponent extends React.Component<TaxonTermProps> {
               <div className="col-md-4">
                 <div className="form-group">
                   <label htmlFor="infraspesName">Infraspesific name</label>
-                  <input type="text" className="form-control" id="infraspesName" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="infraspesName"
+                    onChange={e => {
+                      e.preventDefault();
+                      this.props.onChangeTaxonClassificationFields('infraSpesName')(
+                        e.target.value
+                      );
+                    }}
+                  />
                 </div>
               </div>
             </div>
@@ -896,7 +915,17 @@ export class TaxonComponent extends React.Component<TaxonTermProps> {
               <div className="col-md-8">
                 <div className="form-group">
                   <label htmlFor="taxonNote">Note</label>Revison
-                  <textarea className="form-control" id="taxonNote" rows={5} />
+                  <textarea
+                    className="form-control"
+                    id="taxonNote"
+                    rows={5}
+                    onChange={e => {
+                      e.preventDefault();
+                      this.props.onChangeTaxonClassificationFields('note')(
+                        e.target.value
+                      );
+                    }}
+                  />
                 </div>
               </div>
             </div>
@@ -1125,7 +1154,9 @@ export default class ClassificationComponent extends React.Component<Props, ISta
                     };
                   });
                 }}
-                onChangeNoteField={(value: string) => {
+                onChangeTaxonClassificationFields={(fieldName: string) => (
+                  value: any
+                ) => {
                   this.setState((ps: State) => {
                     const currentClassificationIndex =
                       ps.classifications.currentTaxonClassificationIndex;
@@ -1135,14 +1166,13 @@ export default class ClassificationComponent extends React.Component<Props, ISta
                     const currentClassificationArray = ps.classifications.classifications;
                     const newClassification = new TaxonClassification({
                       ...currentClassification,
-                      note: value
+                      [fieldName]: value
                     });
                     const newClassArray = [
                       ...currentClassificationArray.slice(0, currentClassificationIndex),
                       newClassification,
                       ...currentClassificationArray.slice(currentClassificationIndex + 1)
                     ];
-
                     return {
                       ...ps,
                       classifications: new Classifications({
