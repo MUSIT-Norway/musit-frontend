@@ -25,16 +25,19 @@ export function makeRequest(opts: TODO) {
         xhr.setRequestHeader(key, opts.headers[key]);
       });
     }
+    if (opts.method === 'POST') {
+      xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+    }
     var params = opts.params;
     // We'll need to stringify if we've been given an object
     // If we have a string, this is skipped.
-    if (params && typeof params === 'object') {
-      params = Object.keys(params)
-        .map(function(key) {
-          return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
-        })
-        .join('&');
-    }
+    // if (params && typeof params === 'object') {
+    //   params = Object.keys(params)
+    //     .map(function(key) {
+    //       return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+    //     })
+    //     .join('&');
+    // }
     xhr.send(params);
   });
 }
