@@ -3,7 +3,7 @@ import * as React from 'react';
 import { PersonPage } from './Person';
 import { PersonState, PersonProps, PersonName, ExternalId } from './Person';
 import { makeRequest } from '../../../shared/ajaxPromise';
-import { emitError } from '../../../shared/errors';
+import { emitError, emitSuccess } from '../../../shared/errors';
 
 type PersonNameState = {
   title?: string;
@@ -75,6 +75,92 @@ export class ViewPerson extends React.Component<
             ...parsedPerson.personAttribute
           }
         }));
+      } catch (error) {
+        emitError({
+          type: 'error',
+          message: 'Error to get the person.' + JSON.stringify(error)
+        });
+      }
+    }
+  }
+
+  async AddNewPerson() {
+    if (this.props.match.params.id) {
+      try {
+        const url = 'http://localhost:3001/persons/person/';
+        const person: any = this.state.person;
+        const fullName: any = person.fullName;
+        await makeRequest({
+          method: 'POST',
+          url: url,
+          params: JSON.stringify({
+            firstName: fullName.firstName,
+            lastName: fullName.lastName,
+            title: fullName.title,
+            name: fullName.nameString,
+            collections: [{ museum_id: 5, collection_id: 10 }],
+            personAttribute: {
+              legalEntityType: person.legalEntityType,
+              displayName: fullName.lastName + ', ' + fullName.firstName,
+              URL: person.url
+            },
+            synonyms: [
+              {
+                firstName: 'Rituvesh',
+                lastName: 'Kumar',
+                name: 'R. Kumar',
+                title: 'Mr.'
+              }
+            ]
+          })
+        });
+        emitSuccess({
+          type: 'saveSuccess',
+          message: 'Added the person successfully!'
+        });
+      } catch (error) {
+        emitError({
+          type: 'error',
+          message: 'Error to get the person.' + JSON.stringify(error)
+        });
+      }
+    }
+  }
+
+  async EditPerson() {
+    if (this.props.match.params.id) {
+      try {
+        const url = 'http://localhost:3001/persons/person/edit/';
+        const person: any = this.state.person;
+        const fullName: any = person.fullName;
+        await makeRequest({
+          method: 'POST',
+          url: url + this.props.match.params.id,
+          params: JSON.stringify({
+            firstName: fullName.firstName,
+            lastName: fullName.lastName,
+            title: fullName.title,
+            name: fullName.nameString,
+            collections: [{ museum_id: 5, collection_id: 10 }],
+            personAttribute: {
+              legalEntityType: person.legalEntityType,
+              displayName: fullName.lastName + ', ' + fullName.firstName,
+              URL: person.url
+            },
+            synonyms: [
+              {
+                firstName: 'Rituvesh',
+                lastName: 'Kumar',
+                name: 'R. Kumar',
+                title: 'Mr.'
+              }
+            ]
+          })
+        });
+        emitSuccess({
+          type: 'saveSuccess',
+          message: 'Edited the person successfully!'
+        });
       } catch (error) {
         emitError({
           type: 'error',
@@ -278,6 +364,12 @@ export class ViewPerson extends React.Component<
             });
           }}
         />
+        <button style={{ marginLeft: '220px' }} onClick={() => this.AddNewPerson()}>
+          ADD Person
+        </button>
+        <button style={{ marginLeft: '220px' }} onClick={() => this.EditPerson()}>
+          Edit Person
+        </button>
       </div>
     );
   }
