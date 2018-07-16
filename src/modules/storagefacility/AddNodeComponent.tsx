@@ -1,14 +1,31 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import StorageUnitContainer from './NodeDetails';
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 import nodeStore$, { clearNode$, loadNode$, updateState$ } from './nodeStore';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { I18n } from 'react-i18nify';
 import MusitNode from '../../models/node';
+import { TODO_NodeStore, TODO } from '../../types/common';
+import { Match } from '../../types/Routes';
+import { AppSession } from '../../types/appSession';
+import { History } from 'history';
 
-export class AddStorageUnitContainer extends React.Component {
-  static propTypes = {
+interface AddStorageUnitContainerProps {
+  nodeStore: TODO_NodeStore;
+  match: Match<TODO>;
+  updateState: Function;
+  addNode: Function;
+  clearNode: Function;
+  loadNode: Function;
+  appSession: AppSession;
+  goBack: Function;
+  emitSuccess: Function;
+  emitError: Function;
+  history: History;
+}
+/* Old:
+ static propTypes = {
     nodeStore: PropTypes.object.isRequired,
     match: PropTypes.object,
     updateState: PropTypes.func.isRequired,
@@ -19,6 +36,11 @@ export class AddStorageUnitContainer extends React.Component {
     goBack: PropTypes.func
   };
 
+*/
+
+export class AddStorageUnitContainer extends React.Component<
+  AddStorageUnitContainerProps
+> {
   componentWillMount() {
     this.props.clearNode();
     this.props.loadNode({
@@ -34,7 +56,7 @@ export class AddStorageUnitContainer extends React.Component {
         {...this.props}
         rootNode={this.props.nodeStore.rootNode}
         unit={this.props.nodeStore.unit}
-        onLagreClick={data => {
+        onLagreClick={(data: TODO) => {
           const id = this.props.nodeStore.rootNode
             ? this.props.nodeStore.rootNode.id
             : null;
@@ -54,7 +76,7 @@ export class AddStorageUnitContainer extends React.Component {
                     message: I18n.t('musit.storageUnits.messages.saveNodeSuccess')
                   });
                 },
-                onFailure: e => {
+                onFailure: (e: TODO) => {
                   this.props.emitError({ ...e, type: 'network' });
                 }
               }
@@ -80,7 +102,7 @@ const commands = {
   updateState$
 };
 
-const props = props => ({
+const props = (props: AddStorageUnitContainerProps) => ({
   ...props,
   emitError,
   emitSuccess,

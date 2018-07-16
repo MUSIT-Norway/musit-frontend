@@ -1,10 +1,11 @@
 // @flow
 import MusitNode from '../../models/node';
-import type { Node } from 'types/node';
+import { Node } from '../../types/node';
 import { Observable } from 'rxjs';
 import { createStore } from 'react-rxjs';
 import { createAction } from '../../shared/react-rxjs-patch';
 import { simpleGet } from '../../shared/RxAjax';
+import { TODO } from '../../types/common';
 
 const initialState = {
   unit: {
@@ -22,16 +23,20 @@ export const loadNode$: Observable<Node> = createAction('loadRootNode$').switchM
 export const updateState$: Observable<Node> = createAction('updateState$');
 
 type Actions = {
-  loadNode$: Observable<Node>,
-  clearNode$: Observable<void>,
-  updateState$: Observable<Node>
+  loadNode$: Observable<Node>;
+  clearNode$: Observable<void>;
+  updateState$: Observable<Node>;
 };
 
 export const reducer$ = (actions: Actions) =>
   Observable.merge(
-    actions.loadNode$.map(rootNode => state => ({ ...state, rootNode, loaded: true })),
+    actions.loadNode$.map(rootNode => (state: TODO) => ({
+      ...state,
+      rootNode,
+      loaded: true
+    })),
     actions.clearNode$.map(() => () => initialState),
-    actions.updateState$.map(unit => state => ({
+    actions.updateState$.map(unit => (state: TODO) => ({
       ...state,
       unit: { ...initialState.unit, ...unit }
     }))

@@ -107,7 +107,7 @@ exports[`NodeTable should render properly  1`] = `
                   name="truck"
                   style={
                     Object {
-                      "color": null,
+                      "color": undefined,
                       "fontSize": "1.5em",
                     }
                   }
@@ -172,7 +172,7 @@ exports[`NodeTable should render properly  1`] = `
                   name="truck"
                   style={
                     Object {
-                      "color": null,
+                      "color": undefined,
                       "fontSize": "1.5em",
                     }
                   }
@@ -237,7 +237,7 @@ exports[`NodeTable should render properly  1`] = `
                   name="truck"
                   style={
                     Object {
-                      "color": null,
+                      "color": undefined,
                       "fontSize": "1.5em",
                     }
                   }
