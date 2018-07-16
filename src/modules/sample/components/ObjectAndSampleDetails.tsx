@@ -1,17 +1,18 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import NavigateToObject from '../../../components/navigations/NavigateToObject';
 import MusitI18n from '../../../components/MusitI18n';
 import { I18n } from 'react-i18nify';
-import type { SampleDataExtended } from '../../../types/samples';
-import type { ObjectOrSample } from '../types';
-import type { AppSession } from '../../../types/appSession';
-import type { History } from '../../../types/Routes';
+import { SampleDataExtended } from '../../../types/samples';
+import { ObjectOrSample } from '../types';
+import { AppSession } from '../../../types/appSession';
+import { History } from 'history';
+import { Maybe } from '../../../types/common';
 
 export type Props = {
-  objectData: ObjectOrSample & { derivedFrom: ?SampleDataExtended },
-  history: History,
-  appSession: AppSession
+  objectData: ObjectOrSample & { derivedFrom: Maybe<SampleDataExtended> };
+  history: History;
+  appSession: AppSession;
 };
 
 export default function ObjectAndSampleDetails(props: Props) {

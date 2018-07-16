@@ -1,50 +1,51 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
-import type { SampleData } from '../../types/samples';
-import type { AppSession } from '../../types/appSession';
-import type { History } from '../../types/Routes';
-import type { FormDetails } from './types/form';
-import type { ObjectData } from '../../types/object';
+import { SampleData } from '../../types/samples';
+import { AppSession } from '../../types/appSession';
+import { History } from 'history';
+import { FormDetails } from './types/form';
+import { ObjectData } from '../../types/object';
 import MetaInformation from '../../components/metainfo';
 import ReadOnlySampleType from './components/ReadOnlySampleType';
 import ViewPersonRoleDate from '../../components/person/ViewPersonRoleDate';
 import ObjectAndSampleDetails from './components/ObjectAndSampleDetails';
+import { mixed, Maybe, TODO } from '../../types/common';
 
 type Props = {
-  form: FormDetails,
-  appSession: AppSession,
-  objectData: ObjectData & SampleData,
-  sampleStore: { sample: SampleData },
-  objectStore: { objectData: ObjectData }
+  form: FormDetails;
+  appSession: AppSession;
+  objectData: ObjectData & SampleData;
+  sampleStore: { sample: SampleData };
+  objectStore: { objectData: ObjectData };
 };
 
 type ClickEventReturn = (e: { preventDefault: Function }) => void;
 
 export type SampleProps = {
-  statusText: ?string,
-  sampleSubType: ?string,
-  sampleType: ?string,
-  persons: Array<any>,
+  statusText: Maybe<string>;
+  sampleSubType: Maybe<string>;
+  sampleType: Maybe<string>;
+  persons: Array<any>;
   clickEditSample: (
     appSession: AppSession,
     sampleId: string,
     object: ObjectData
-  ) => ClickEventReturn,
+  ) => ClickEventReturn;
   clickCreateAnalysis: (
     appSession: AppSession,
     sample: SampleData,
     form: FormDetails,
     object: mixed
-  ) => ClickEventReturn,
+  ) => ClickEventReturn;
   clickCreateSample: (
     appSession: AppSession,
     sample: SampleData,
     form: FormDetails,
     object: mixed
-  ) => ClickEventReturn,
-  goBack: () => void,
-  history: History
+  ) => ClickEventReturn;
+  goBack: () => void;
+  history: History;
 };
 
 export default function SampleViewComponent(props: Props & SampleProps) {
@@ -61,7 +62,7 @@ export default function SampleViewComponent(props: Props & SampleProps) {
           {props.appSession.rolesForModules.collectionManagementWrite && (
             <button
               className="btn btn-default pull-right"
-              onClick={props.clickEditSample}
+              onClick={props.clickEditSample as TODO}
             >
               {I18n.t('musit.sample.updateSample')}
             </button>
@@ -70,10 +71,13 @@ export default function SampleViewComponent(props: Props & SampleProps) {
         </div>
         {props.appSession.rolesForModules.collectionManagementWrite && (
           <div className="pull-right">
-            <button className="btn btn-default" onClick={props.clickCreateAnalysis}>
+            <button
+              className="btn btn-default"
+              onClick={props.clickCreateAnalysis as TODO}
+            >
               {I18n.t('musit.analysis.createAnalysis')}
             </button>
-            <button className="btn btn-default" onClick={props.clickCreateSample}>
+            <button className="btn btn-default" onClick={props.clickCreateSample as TODO}>
               {` ${I18n.t('musit.analysis.createSample')}`}
             </button>
           </div>

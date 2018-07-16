@@ -1,10 +1,11 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
+import { Maybe } from '../../../types/common';
 
 type Props = {
-  sampleType: ?string,
-  subTypeValue: ?string
+  sampleType: Maybe<string>;
+  subTypeValue: Maybe<string>;
 };
 
 export default function ReadOnlySampleType({ sampleType, subTypeValue }: Props) {

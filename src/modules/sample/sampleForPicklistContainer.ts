@@ -2,8 +2,8 @@
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 import sampleForm from './sampleAddForm';
 import SampleFormComponent from './SampleFormComponent';
-import flowRight from 'lodash/flowRight';
-import PropTypes from 'prop-types';
+import { flowRight } from 'lodash';
+import * as PropTypes from 'prop-types';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';
 import 'rxjs/add/operator/first';
@@ -11,13 +11,15 @@ import lifeCycle from '../../shared/lifeCycle';
 import { sampleProps } from './shared/submit';
 import { loadPredefinedTypes } from '../../stores/predefinedLoader';
 import { addObject$, clearObjects$ } from '../../stores/pickList';
-import type { DomEvent } from '../../types/dom';
+import { DomEvent } from '../../types/dom';
 import sampleStore$, {
   createSamplesForObjects$,
   clearSampleResponses$
 } from './sampleStore';
 import { flattenSample } from './shared/types';
 import Config from '../../config';
+import { TODO } from '../../types/common';
+import { PicklistData } from '../../types/picklist';
 
 const { form$, updateForm$, loadForm$, clearForm$ } = sampleForm;
 
@@ -29,15 +31,17 @@ const data = {
   store$: sampleStore$
 };
 
-const props = props => {
-  const objectData = props.pickList.objects.filter(o => o.marked).map(o => o.value);
+const props = (props: TODO) => {
+  const objectData = (props.pickList as PicklistData).objects
+    .filter(o => o.marked)
+    .map(o => o.value);
   return {
     ...props,
     ...sampleProps(props),
     objectData: objectData,
     putSamplesInPicklist: () => {
       props.clearObjects();
-      props.store.sampleResponses.success.forEach(sr =>
+      props.store.sampleResponses.success.forEach((sr: TODO) =>
         props.addObject({
           value: flattenSample(
             props.appSession,
@@ -74,7 +78,7 @@ const commands = {
   clearObjects$
 };
 
-const onUnmount = props => {
+const onUnmount = (props: TODO) => {
   props.clearForm();
   props.clearSampleResponses();
 };

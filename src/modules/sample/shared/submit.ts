@@ -1,34 +1,36 @@
 // @flow
-import moment from 'moment';
-import flatten from 'lodash/flatten';
+import * as moment from 'moment';
+import { flatten } from 'lodash';
 import Config from '../../../config';
-import type { FormDetails } from '../types/form';
-import type { Predefined, SampleTypes } from '../../../types/predefined';
-import type { DomEvent } from '../../../types/dom';
-import type { ObjectData } from '../../../types/object';
-import type { SampleData } from '../../../types/samples';
-import type { AppSession } from '../../../types/appSession';
-import type { Person } from '../../../types/person';
-import type { SampleType } from '../../../types/sample';
-import type { History, Match } from '../../../types/Routes';
+import { FormDetails } from '../types/form';
+import { Predefined, SampleTypes } from '../../../types/predefined';
+import { DomEvent } from '../../../types/dom';
+import { ObjectData } from '../../../types/object';
+import { SampleData } from '../../../types/samples';
+import { AppSession } from '../../../types/appSession';
+import { Person } from '../../../types/person';
+import { SampleType } from '../../../types/sample';
+import { Match } from '../../../types/Routes';
 import Sample from '../../../models/sample';
 import { isFormValid } from '../../../forms/validators';
 import { I18n } from 'react-i18nify';
 import { emitError, emitSuccess } from '../../../shared/errors';
+import { History } from 'history';
+import { TODO, Maybe, Star, BUG } from '../../../types/common';
 
-function getSampleSubTypes(sampleType, sampleTypes) {
+function getSampleSubTypes(sampleType: TODO, sampleTypes: TODO) {
   return sampleType && sampleTypes && sampleTypes[sampleType];
 }
 
 type Props = {
-  form: FormDetails,
-  predefined: Predefined,
-  appSession: AppSession,
-  updateForm: Function,
-  objectStore: { objectData?: ?ObjectData },
-  history: History,
-  match: Match<{ sampleId: number }>,
-  store: { sample?: ?SampleData }
+  form: FormDetails;
+  predefined: Predefined;
+  appSession: AppSession;
+  updateForm: Function;
+  objectStore: { objectData?: Maybe<ObjectData> };
+  history: History;
+  match: Match<{ sampleId: number }>;
+  store: { sample?: Maybe<SampleData> };
 };
 
 export const sampleProps = (props: Props) => {
@@ -61,7 +63,10 @@ export const sampleProps = (props: Props) => {
  * @param sampleTypes
  * @returns {boolean}
  */
-function showSampleSubType(sampleTypeStr: ?string, sampleTypes: ?any): boolean {
+function showSampleSubType(
+  sampleTypeStr: Maybe<string>,
+  sampleTypes: Maybe<any>
+): boolean {
   return !!(
     sampleTypeStr &&
     sampleTypeStr.trim().length > 0 &&
@@ -72,12 +77,12 @@ function showSampleSubType(sampleTypeStr: ?string, sampleTypes: ?any): boolean {
 }
 
 function updateSampleType(
-  form,
+  form: TODO,
   appSession: AppSession,
-  sampleTypes,
+  sampleTypes: TODO,
   updateForm: Function
 ) {
-  return (obj: { rawValue?: ?string }) => {
+  return (obj: { rawValue?: Maybe<string> }) => {
     const sampleSubTypes = getSampleSubTypes(obj.rawValue, sampleTypes);
     if (sampleSubTypes && sampleSubTypes.length === 1) {
       updateForm({
@@ -93,7 +98,7 @@ function updateSampleType(
 
 function getParentObject(
   isAdd: boolean,
-  sampleData: ?SampleData,
+  sampleData: Maybe<SampleData>,
   objectData: ObjectData
 ) {
   let parentObject;
@@ -135,7 +140,7 @@ export const callback = {
       message: I18n.t('musit.sample.saveSampleSuccess')
     });
   },
-  onFailure: (e: *) => {
+  onFailure: (e: Star) => {
     emitError({
       type: 'errorOnSave',
       error: e,
@@ -145,9 +150,9 @@ export const callback = {
 };
 
 export const onComplete = (history: History, appSession: AppSession) => (value: {
-  response: { objectId?: string } | string
+  response: { objectId?: string } | string;
 }) => {
-  const objectId: ?string =
+  const objectId: Maybe<string> =
     typeof value.response === 'string' ? value.response : value.response.objectId;
   if (objectId) {
     history.push({
@@ -158,7 +163,7 @@ export const onComplete = (history: History, appSession: AppSession) => (value: 
 
 export const getSampleData = function(
   form: FormDetails,
-  sampleData: ?SampleData,
+  sampleData: Maybe<SampleData>,
   objectData: ObjectData,
   sampleTypes: SampleTypes,
   appSession: AppSession
@@ -177,20 +182,20 @@ export const getSampleData = function(
       appSession
     ),
     originatedObjectUuid: objectData.uuid,
-    parentObject: parentObject,
+    parentObject: parentObject as BUG, //getParentObject() may return undefined, but that doesn't seem to be handled properly here
     museumId: appSession.museumId
   });
 };
 
 export const saveSample = (doSaveSample: Function) => (
   form: FormDetails,
-  sampleData: ?SampleData,
+  sampleData: Maybe<SampleData>,
   sampleTypes: SampleTypes,
-  objectData: ?ObjectData,
-  params: { sampleId: ?string },
+  objectData: Maybe<ObjectData>,
+  params: { sampleId: Maybe<string> },
   appSession: AppSession,
   history: History,
-  callback: { onComplete: Function, onFailure: Function },
+  callback: { onComplete: Function; onFailure: Function },
   onComplete: Function
 ) => {
   if (objectData) {
@@ -209,15 +214,15 @@ export const saveSample = (doSaveSample: Function) => (
 
 function getSampleTypeId(
   sampleTypes: SampleTypes,
-  sampleType: ?string,
-  sampleSubType?: ?string,
+  sampleType: Maybe<string>,
+  sampleSubType: Maybe<string>,
   appSession: AppSession
-): ?number {
+): Maybe<number> {
   if (!sampleTypes) {
     return null;
   }
   if (sampleSubType) {
-    const sampleTypeFound: ?any = flatten(Object.values(sampleTypes)).find(
+    const sampleTypeFound: Maybe<any> = flatten(Object.values(sampleTypes)).find(
       (subType: any) => {
         const subTypeName = sampleTypeDisplayName(subType, appSession);
         return subTypeName === sampleSubType;
@@ -237,10 +242,10 @@ function sampleTypeDisplayName(v: SampleType, appSession: AppSession) {
     : v.noSampleSubType || v.noSampleType;
 }
 
-function normalizeForm(frm: FormDetails): { [string]: * } {
+function normalizeForm(frm: FormDetails): { [key: string]: Star } {
   const keys: Array<string> = Object.keys(frm);
   return keys.reduce(
-    (akk: { [string]: * }, key: string) => ({
+    (akk: { [key: string]: Star }, key: string) => ({
       ...akk,
       [key]: frm[key].value || frm[key].defaultValue
     }),
@@ -249,8 +254,8 @@ function normalizeForm(frm: FormDetails): { [string]: * } {
 }
 
 export type ExtraActorInfo = {
-  doneByStamp?: { user: ?string, date: string },
-  responsible?: string
+  doneByStamp?: { user: Maybe<string>; date: string };
+  responsible?: string;
 };
 
 function getActors(persons: Array<Person>): ExtraActorInfo {

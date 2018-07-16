@@ -27,11 +27,11 @@ export type Field<T> = {
     valid: boolean;
     error?: Maybe<string>;
   };
-  mapper: {
+  mapper?: {
     fromRaw: (s: Maybe<RawValue>) => Maybe<T>;
     toRaw: (t: Maybe<T>) => Maybe<RawValue>;
   };
-  validator: {
+  validator?: {
     rawValidator?: RemoveMaybe<(field: string) => (s: Maybe<RawValue>) => Maybe<string>>;
     valueValidator?: RemoveMaybe<(field: string) => (t: Maybe<T>) => Maybe<string>>;
   };
@@ -48,12 +48,17 @@ const updateField = (field: Field<Star>, data: Update<Star>): Field<Star> => {
   const rawValue =
     typeof data.rawValue !== 'undefined'
       ? data.rawValue
-      : field.mapper.toRaw(defaultValue);
+      : field.mapper
+        ? field.mapper.toRaw(defaultValue)
+        : undefined;
   const rawError =
-    field.validator.rawValidator && field.validator.rawValidator(field.name)(rawValue);
-  const value = field.mapper.fromRaw(rawValue);
+    field.validator &&
+    field.validator.rawValidator &&
+    field.validator.rawValidator(field.name)(rawValue);
+  const value = field.mapper ? field.mapper.fromRaw(rawValue) : rawValue; //TODO: We're not sure about this else value.
   const valueError =
     !rawError &&
+    field.validator &&
     field.validator.valueValidator &&
     field.validator.valueValidator(field.name)(value);
   const error = rawError || valueError || null;
@@ -218,7 +223,7 @@ const createForm$ = (
       updateField(
         {
           ...field,
-          rawValue: field.mapper.toRaw(field.defaultValue),
+          rawValue: field.mapper ? field.mapper.toRaw(field.defaultValue) : undefined, //TODO: Not sure about the else value here.
           validator: field.validator || noValidation,
           mapper: field.mapper || stringMapper
         },

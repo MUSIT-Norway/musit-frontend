@@ -1,19 +1,19 @@
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 import SampleViewComponent from './SampleViewComponent';
-import PropTypes from 'prop-types';
+import * as PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
 import lifeCycle from '../../shared/lifeCycle';
-import flowRight from 'lodash/flowRight';
+import { flowRight, values, flatten } from 'lodash';
 import sampleStore$, { getSample$, clear$ } from './sampleStore';
 import objectStore$, { loadObject$, clearStore$ } from '../objects/objectStore';
-import moment from 'moment';
+import * as moment from 'moment';
 import Config from '../../config';
-import type { SampleData } from '../../types/samples';
-import type { SampleTypes } from 'types/predefined';
+import { SampleData } from '../../types/samples';
+import { SampleTypes, SampleType } from '../../types/sample';
 import { loadPredefinedTypes } from '../../stores/predefinedLoader';
-import values from 'lodash/values';
-import flatten from 'lodash/flatten';
 import Sample, { getSampleType } from '../../models/sample';
+import { Language, AppSession } from '../../types/appSession';
+import { TODO } from '../../types/common';
 
 const data = {
   appSession$: { type: PropTypes.instanceOf(Observable).isRequired },
@@ -22,15 +22,15 @@ const data = {
   objectStore$
 };
 
-function getStatusText(sampleData, locale) {
+function getStatusText(sampleData: SampleData, locale: Language) {
   if (!sampleData) {
     return null;
   }
-  const status = Sample.sampleStatuses.find(st => st.id === sampleData.status);
+  const status = Sample.sampleStatuses.find(st => st.id === sampleData.status)!;
   return locale.isEn ? status.enStatus : status.noStatus;
 }
 
-const props = props => {
+const props = (props: TODO) => {
   const sampleData = props.sampleStore.sample;
   const sampleType = flatten(values(props.predefined.sampleTypes)).find(
     st => sampleData && st.sampleTypeId === sampleData.sampleTypeId
@@ -59,7 +59,7 @@ const props = props => {
       props.sampleStore.sample,
       props.history.push
     ),
-    goBack: e => {
+    goBack: (e: Event) => {
       e.preventDefault();
       props.history.goBack();
     }
@@ -73,7 +73,7 @@ const commands = {
   clearObjectStore$: clearStore$
 };
 
-export function onMount(props) {
+export function onMount(props: TODO) {
   const id = props.match.params.sampleId;
   const museumId = props.appSession.museumId;
   const collectionId = props.appSession.collectionId;
@@ -81,7 +81,7 @@ export function onMount(props) {
   retrieveSample(id, token, museumId, collectionId, props.getSample, props.loadObject);
 }
 
-const onUnmount = props => {
+const onUnmount = (props: TODO) => {
   props.clearSampleStore();
   props.clearObjectStore();
 };
@@ -92,8 +92,8 @@ export default flowRight([inject(data, commands, props), loadPredefinedTypes])(
   ManagedSampleViewComponent
 );
 
-export function clickEditSample(appSession, sampleId, goTo) {
-  return e => {
+export function clickEditSample(appSession: AppSession, sampleId: TODO, goTo: TODO) {
+  return (e: Event) => {
     e.preventDefault();
     goTo({
       pathname: Config.magasin.urls.client.analysis.editSample(appSession, sampleId)
@@ -102,28 +102,28 @@ export function clickEditSample(appSession, sampleId, goTo) {
 }
 
 export function clickCreateAnalysis(
-  appSession,
-  sampleData,
-  sampleTypes,
-  objectData,
-  goTo
+  appSession: AppSession,
+  sampleData: SampleData,
+  sampleTypes: TODO,
+  objectData: TODO,
+  goTo: TODO
 ) {
-  return e => {
+  return (e: Event) => {
     e.preventDefault();
     goTo({
       pathname: Config.magasin.urls.client.analysis.addAnalysis(appSession),
       state: [
         {
           objectData,
-          sampleData: addSampleTypeInformation(sampleData, sampleTypes, appSession)
+          sampleData: addSampleTypeInformation(sampleData, sampleTypes /*, appSession*/)
         }
       ]
     });
   };
 }
 
-export function clickCreateSample(appSession, sample, goTo) {
-  return e => {
+export function clickCreateSample(appSession: AppSession, sample: TODO, goTo: TODO) {
+  return (e: Event) => {
     e.preventDefault();
     goTo({
       pathname: Config.magasin.urls.client.analysis.addFromSample(
@@ -134,7 +134,7 @@ export function clickCreateSample(appSession, sample, goTo) {
   };
 }
 
-export function getPersonsFromResponse(response) {
+export function getPersonsFromResponse(response: TODO) {
   let persons = [];
   if (response.doneByStamp && response.doneByStamp.user) {
     persons.push({
@@ -154,14 +154,20 @@ export function getPersonsFromResponse(response) {
   return persons;
 }
 
-export function getSampleTypeWithLanguage(sampleType, appSession) {
+export function getSampleTypeWithLanguage(
+  sampleType: SampleType,
+  appSession: AppSession
+) {
   if (sampleType) {
     return appSession.language.isEn ? sampleType.enSampleType : sampleType.noSampleType;
   }
   return null;
 }
 
-export function getSampleSubTypeWithLanguage(sampleType, appSession) {
+export function getSampleSubTypeWithLanguage(
+  sampleType: SampleType,
+  appSession: AppSession
+) {
   if (sampleType) {
     return appSession.language.isEn
       ? sampleType.enSampleSubType
@@ -180,19 +186,19 @@ function addSampleTypeInformation(sample: SampleData, sampleTypes: SampleTypes) 
 }
 
 export function retrieveSample(
-  sampleId,
-  token,
-  museumId,
-  collectionId,
-  getSample,
-  loadObject
+  sampleId: TODO,
+  token: string,
+  museumId: TODO,
+  collectionId: TODO,
+  getSample: Function,
+  loadObject: Function
 ) {
   getSample({
     token,
     id: sampleId,
     museumId,
     collectionId,
-    onComplete: sample => {
+    onComplete: (sample: TODO) => {
       if (sample) {
         loadObject({
           objectId: sample.originatedObjectUuid,

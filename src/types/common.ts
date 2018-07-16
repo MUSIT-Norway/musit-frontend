@@ -2,6 +2,7 @@ import { ChangeEvent } from 'react';
 
 export type Uuid = string;
 
+//This was used a lot in the "original" code. Please try to remove this type and use T | undefined (or optional T (T?)) instead of all three options.
 export type Maybe<T> = T | null | undefined;
 
 export type mixed = any; //rename to 'Mixed' (capital 'M') when we have converted every file

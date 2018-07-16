@@ -1,24 +1,26 @@
 // @flow
 import { createStore } from 'react-rxjs';
 import { createAction } from '../../shared/react-rxjs-patch';
-import type { Reducer } from 'react-rxjs';
+import { Reducer } from 'react-rxjs';
 import { Observable } from 'rxjs';
 import Sample from '../../models/sample';
 import predefined$ from '../../stores/predefined';
 import { KEEP_ALIVE } from '../../stores/constants';
-import type { Predefined } from 'types/predefined';
-import type { SampleData, SampleDataExtended } from '../../types/samples';
-import type { ObjectData } from '../../types/object';
-import type { SampleType, SampleTypes, PredefinedSampleTypes } from '../../types/sample';
-import type { Callback } from '../../types/ajax';
+import { Predefined } from '../../types/predefined';
+import { SampleData, SampleDataExtended } from '../../types/samples';
+import { ObjectData } from '../../types/object';
+import { SampleType, SampleTypes, PredefinedSampleTypes } from '../../types/sample';
+import { Callback } from '../../types/ajax';
 import { getSampleData } from './shared/submit';
-import type { FormDetails } from './types/form';
-import type { AppSession } from '../../types/appSession';
+import { FormDetails } from './types/form';
+import { AppSession } from '../../types/appSession';
 import { simpleGet, simplePost } from '../../shared/RxAjax';
+import { Maybe, TODO, Star } from '../../types/common';
 
 export type State = {
-  apiSampleTypes?: ?Array<SampleType>,
-  sample?: ?SampleDataExtended
+  apiSampleTypes?: Maybe<Array<SampleType>>;
+  sample?: Maybe<SampleDataExtended>;
+  data: TODO[];
 };
 
 const initialState: State = { data: [] };
@@ -29,19 +31,25 @@ export const clearSampleResponses$: Observable<void> = createAction(
 
 export type SampleId = string;
 
-export type SampleResponse = { response: ?SampleId, status?: number, error: ?Error };
+export type SampleResponse = {
+  response: Maybe<SampleId>;
+  status?: number;
+  error: Maybe<Error>;
+};
 
-export type CreateSamplesResponse = { response: Array<SampleResponse>, error: ?Error };
+//export type CreateSamplesResponse = { response: Array<SampleResponse>, error: Maybe<Error> };
 
-export const createSamplesForObjects$: Observable<
+export const createSamplesForObjects$ /*: Observable<
   Array<CreateSamplesResponse>
-> = createAction('createSamplesForObjects$').switchMap(
+>*/ = createAction(
+  'createSamplesForObjects$'
+).switchMap(
   (props: {
-    objectData: Array<ObjectData>,
-    form: FormDetails,
-    appSession: AppSession,
-    sampleTypes: *,
-    callback: Callback<*>
+    objectData: Array<ObjectData>;
+    form: FormDetails;
+    appSession: AppSession;
+    sampleTypes: Star;
+    callback: Callback<Star>;
   }) => {
     const tasks$ = props.objectData.map(od => {
       return Sample.addSample(simplePost)({
@@ -85,7 +93,7 @@ export const getSampleTypes$: Observable<SampleTypes> = createAction(
 
 export const getSample$: Observable<SampleDataExtended> = createAction(
   'getSample$'
-).switchMap(props => Sample.loadSample(simpleGet)(props).do(props.onComplete));
+).switchMap((props: TODO) => Sample.loadSample(simpleGet)(props).do(props.onComplete));
 
 export const clear$: Observable<void> = createAction('clear$');
 
@@ -95,8 +103,8 @@ export const getSamplesForNode$: Observable<Array<SampleData>> = createAction(
 
 const extendSample = (
   state: State,
-  sample: ?SampleDataExtended,
-  apiSampleTypes: ?Array<SampleType>
+  sample: Maybe<SampleDataExtended>,
+  apiSampleTypes: Maybe<Array<SampleType>>
 ) => {
   if (!sample || !apiSampleTypes) {
     return { ...state, sample, apiSampleTypes };
@@ -117,13 +125,13 @@ const extendSample = (
 };
 
 export type Actions = {
-  getPredefinedTypes$: Observable<*>,
-  clear$: Observable<void>,
-  getSampleTypes$: Observable<*>,
-  getSample$: Observable<*>,
-  getSamplesForNode$: Observable<*>,
-  createSamplesForObjects$: Observable<Array<CreateSamplesResponse>>,
-  clearSampleResponses$: Observable<void>
+  getPredefinedTypes$: Observable<Star>;
+  clear$: Observable<void>;
+  getSampleTypes$: Observable<Star>;
+  getSample$: Observable<Star>;
+  getSamplesForNode$: Observable<Star>;
+  createSamplesForObjects$: Observable<Array<TODO>>;
+  clearSampleResponses$: Observable<void>;
 };
 
 const reducer$ = (
@@ -131,31 +139,34 @@ const reducer$ = (
   predefined: Observable<Predefined>
 ): Observable<Reducer<State>> =>
   Observable.merge(
-    actions.clear$.map(() => state => ({
+    actions.clear$.map(() => (state: TODO) => ({
       ...initialState,
       apiSampleTypes: state.apiSampleTypes
     })),
-    actions.clearSampleResponses$.map(() => state => ({
+    actions.clearSampleResponses$.map(() => (state: TODO) => ({
       ...state,
       sampleResponses: null
     })),
-    actions.createSamplesForObjects$.map(sampleResponses => state => ({
+    actions.createSamplesForObjects$.map(sampleResponses => (state: TODO) => ({
       ...state,
       sampleResponses: {
         success: sampleResponses.filter(sr => !sr.error),
         failure: sampleResponses.filter(sr => sr.error)
       }
     })),
-    actions.getPredefinedTypes$.map(types => state => ({ ...state, ...types })),
-    actions.getSampleTypes$.map(sampleTypes => state => ({ ...state, sampleTypes })),
-    actions.getSample$.map(sample => state =>
+    actions.getPredefinedTypes$.map(types => (state: TODO) => ({ ...state, ...types })),
+    actions.getSampleTypes$.map(sampleTypes => (state: TODO) => ({
+      ...state,
+      sampleTypes
+    })),
+    actions.getSample$.map(sample => (state: TODO) =>
       extendSample(state, sample, state.apiSampleTypes)
     ),
-    actions.getSamplesForNode$.map(nodeSamples => state => ({
+    actions.getSamplesForNode$.map(nodeSamples => (state: TODO) => ({
       ...state,
       nodeSamples
     })),
-    predefined.map(predefined => state =>
+    predefined.map(predefined => (state: TODO) =>
       extendSample(
         state,
         state.sample,

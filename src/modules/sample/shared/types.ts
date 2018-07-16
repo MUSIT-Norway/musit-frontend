@@ -1,9 +1,10 @@
 // @flow
 
-import type { SampleTypesObject, SampleType } from '../../../types/sample';
-import type { SampleData } from '../../../types/samples';
-import type { ObjectData } from '../../../types/object';
-import type { AppSession } from '../../../types/appSession';
+import { SampleTypesObject, SampleType } from '../../../types/sample';
+import { SampleData } from '../../../types/samples';
+import { ObjectData } from '../../../types/object';
+import { AppSession } from '../../../types/appSession';
+import { Maybe } from '../../../types/common';
 
 const findSampleType = (sampleTypes: SampleTypesObject, sampleTypesId: number) =>
   sampleTypes.sampleTypes.find(f => f.sampleTypeId === sampleTypesId);
@@ -13,7 +14,7 @@ export const getSampleTypeObj = (
   sampleTypesId: number
 ) => {
   if (sampleTypes && sampleTypes.sampleTypes && sampleTypesId) {
-    const sampleTypeFound: ?SampleType = findSampleType(sampleTypes, sampleTypesId);
+    const sampleTypeFound: Maybe<SampleType> = findSampleType(sampleTypes, sampleTypesId);
     if (sampleTypeFound) {
       return sampleTypeFound;
     }
@@ -27,7 +28,7 @@ export const getSampleType = (
   appSession: AppSession
 ) => {
   if (sampleTypes && sampleTypes.sampleTypes && sampleTypesId) {
-    const sampleTypeFound: ?SampleType = findSampleType(sampleTypes, sampleTypesId);
+    const sampleTypeFound: Maybe<SampleType> = findSampleType(sampleTypes, sampleTypesId);
     if (sampleTypeFound) {
       return appSession.language.isEn
         ? sampleTypeFound.enSampleType
@@ -43,7 +44,7 @@ export const getSampleSubType = (
   appSession: AppSession
 ): string => {
   if (sampleTypes && sampleTypes.sampleTypes && sampleTypesId) {
-    const sampleTypeFound: ?SampleType = findSampleType(sampleTypes, sampleTypesId);
+    const sampleTypeFound: Maybe<SampleType> = findSampleType(sampleTypes, sampleTypesId);
 
     if (sampleTypeFound) {
       return (

@@ -25,6 +25,7 @@ import { AppSession } from '../../types/appSession';
 import { History } from 'history';
 import { I18n } from 'react-i18nify';
 import { TODO } from '../../types/common';
+import { PicklistData } from '../../types/picklist';
 
 type ViewObjectComponentProps = {
   objectStore: { objectData: ObjectData; events: Events; samples: Samples };
@@ -34,7 +35,7 @@ type ViewObjectComponentProps = {
   predefinedConservation: PredefinedConservation;
   pickObject: Function;
   isItemAdded: Function;
-  pickList: Object;
+  pickList: PicklistData;
   sampleStatus: SampleStatus;
   history: History;
   loading: boolean;

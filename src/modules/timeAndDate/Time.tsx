@@ -1,21 +1,21 @@
 //@flow
-import React from 'react';
+import * as React from 'react';
 import MusitDatePicker from '../../components/DatePicker';
 
 export type TimeProps = {
-  from?: Date,
-  to?: Date,
-  verbatimDate?: string,
-  labelFrom?: string,
-  labelTo?: string,
-  onChange: Function,
-  onClear: Function
+  from?: Date;
+  to?: Date;
+  verbatimDate?: string;
+  labelFrom?: string;
+  labelTo?: string;
+  onChange: Function;
+  onClear: Function;
 };
 
 export type TimeState = {
-  from?: Date,
-  to?: Date,
-  verbatimDate?: string
+  from?: Date;
+  to?: Date;
+  verbatimDate?: string;
 };
 
 export default class TimeAndDate extends React.Component<TimeProps, TimeState> {
@@ -29,7 +29,7 @@ export default class TimeAndDate extends React.Component<TimeProps, TimeState> {
         <div className="col-md-2">
           <label htmlFor="dateFrom">{this.props.labelFrom || 'Date from'}</label>
           <MusitDatePicker
-            className="form-control"
+            //className="form-control"
             onChange={this.props.onChange('dateFrom')}
             onClear={this.props.onClear}
           />
@@ -37,7 +37,7 @@ export default class TimeAndDate extends React.Component<TimeProps, TimeState> {
         <div className="col-md-2">
           <label htmlFor="dateFrom">{this.props.labelTo || 'Date to'}</label>
           <MusitDatePicker
-            className="form-control"
+            //className="form-control"
             onChange={this.props.onChange('dateTo')}
             onClear={this.props.onClear}
           />

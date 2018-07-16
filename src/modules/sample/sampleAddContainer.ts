@@ -1,8 +1,8 @@
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 import sampleForm from './sampleAddForm';
 import SampleFormComponent from './SampleFormComponent';
-import flowRight from 'lodash/flowRight';
-import PropTypes from 'prop-types';
+import { flowRight } from 'lodash';
+import * as PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
 import lifeCycle from '../../shared/lifeCycle';
 import sampleStore$, { getSample$, clear$ } from './sampleStore';
@@ -12,7 +12,8 @@ import { simplePost } from '../../shared/RxAjax';
 import objectStore$, { loadObject$ } from '../objects/objectStore';
 import { retrieveSample } from './sampleViewContainer';
 import { loadPredefinedTypes } from '../../stores/predefinedLoader';
-import type { DomEvent } from '../../types/dom';
+import { DomEvent } from '../../types/dom';
+import { TODO } from '../../types/common';
 
 const { form$, updateForm$, loadForm$, clearForm$ } = sampleForm;
 
@@ -24,7 +25,7 @@ const data = {
   objectStore$: objectStore$
 };
 
-const props = (props, ajaxPost = simplePost) => ({
+const props = (props: TODO, ajaxPost = simplePost) => ({
   ...props,
   ...sampleProps(props),
   objectData: [{ ...props.objectStore.objectData, derivedFrom: props.store.sample }],
@@ -53,7 +54,7 @@ const commands = {
   clearSampleStore$: clear$
 };
 
-const onUnmount = props => {
+const onUnmount = (props: TODO) => {
   props.clearForm();
   props.clearSampleStore();
 };
@@ -64,7 +65,7 @@ export default flowRight([inject(data, commands, props), loadPredefinedTypes])(
   ManagedSampleFormComponent
 );
 
-export function onMount(props) {
+export function onMount(props: TODO) {
   const token = props.appSession.accessToken;
   const museumId = props.appSession.museumId;
   const collectionId = props.appSession.collectionId;

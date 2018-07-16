@@ -1,31 +1,33 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { Table, Tr, Td } from 'reactable';
 import { I18n } from 'react-i18nify';
-import type {
+import {
   Samples,
   SampleData,
   SampleStatus,
   SampleStatusData
 } from '../../../types/samples';
-import type { SampleTypesObject } from '../../../types/sample';
-import FontAwesome from 'react-fontawesome';
-import type { AppSession } from '../../../types/appSession';
-import type { ObjectData } from '../../../types/object';
+import { SampleTypesObject } from '../../../types/sample';
+import * as FontAwesome from 'react-fontawesome';
+import { AppSession } from '../../../types/appSession';
+import { ObjectData } from '../../../types/object';
 import { flattenSample } from '../shared/types';
-import omit from 'lodash/omit';
+import { omit } from 'lodash';
 import { getSampleType, getSampleSubType } from '../shared/types';
+import { Maybe } from '../../../types/common';
+import { PicklistData } from '../../../types/picklist';
 
 type Props = {
-  samples: Samples,
-  onClick: Function,
-  pickObject: Function,
-  isItemAdded: Function,
-  pickList: Object,
-  appSession: AppSession,
-  objectData: ObjectData,
-  sampleTypes: SampleTypesObject,
-  sampleStatus: SampleStatus
+  samples: Samples;
+  onClick: Function;
+  pickObject: Function;
+  isItemAdded: Function;
+  pickList: PicklistData;
+  appSession: AppSession;
+  objectData: ObjectData;
+  sampleTypes: SampleTypesObject;
+  sampleStatus: SampleStatus;
 };
 
 const pickObjectParams = (
@@ -49,7 +51,7 @@ const getSampleStatus = (
   appSession: AppSession
 ) => {
   if (sampleStatus && statusId) {
-    const sampleStatusFound: ?SampleStatusData = sampleStatus.find(
+    const sampleStatusFound: Maybe<SampleStatusData> = sampleStatus.find(
       f => f.id === statusId
     );
     if (sampleStatusFound) {

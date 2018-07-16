@@ -1,12 +1,12 @@
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 import sampleForm from './sampleEditForm';
 import SampleFormComponent from './SampleFormComponent';
-import PropTypes from 'prop-types';
+import * as PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
 import lifeCycle from '../../shared/lifeCycle';
 import { simplePut } from '../../shared/RxAjax';
 import Sample, { getSampleType } from '../../models/sample';
-import flowRight from 'lodash/flowRight';
+import { flowRight } from 'lodash';
 import store$, { getPredefinedTypes$, getSample$ } from './sampleStore';
 import objectStore$, { loadObject$, clearStore$ } from '../objects/objectStore';
 import {
@@ -16,8 +16,11 @@ import {
 } from './sampleViewContainer';
 import { sampleProps, saveSample, callback, onComplete } from './shared/submit';
 import { loadPredefinedTypes } from '../../stores/predefinedLoader';
-import type { SampleData } from '../../types/samples';
-import type { DomEvent } from '../../types/dom';
+import { SampleData } from '../../types/samples';
+import { DomEvent } from '../../types/dom';
+import { TODO } from '../../types/common';
+import { FormDetails } from './types/form';
+import { AppSession } from '../../types/appSession';
 
 const { form$, loadForm$, updateForm$, clearForm$ } = sampleForm;
 
@@ -39,7 +42,7 @@ const commands = {
   clearObjectStore$: clearStore$
 };
 
-const props = (props, ajaxPut = simplePut) => {
+const props = (props: TODO, ajaxPut = simplePut) => {
   return {
     ...props,
     ...sampleProps(props),
@@ -74,13 +77,13 @@ export function onMount({
   match,
   appSession,
   predefined
-}) {
+}: TODO) {
   getSample({
     id: match.params.sampleId,
     museumId: appSession.museumId,
     collectionId: appSession.collectionId,
     token: appSession.accessToken,
-    onComplete: sample => {
+    onComplete: (sample: TODO) => {
       if (sample) {
         loadForm(convertSample(sample, predefined.sampleTypes, appSession));
         loadObject({
@@ -94,7 +97,7 @@ export function onMount({
   });
 }
 
-const onUnmount = props => {
+const onUnmount = (props: TODO) => {
   props.clearForm();
   props.clearObjectStore();
 };
@@ -105,9 +108,13 @@ export default flowRight([inject(data, commands, props), loadPredefinedTypes])(
   ManagedSampleFormComponent
 );
 
-export function convertSample(sample: SampleData, sampleTypes, appSession) {
+export function convertSample(
+  sample: SampleData,
+  sampleTypes: TODO,
+  appSession: AppSession
+) {
   const sampleType = getSampleType(sample.sampleTypeId, sampleTypes);
-  const formData = {};
+  const formData = {} as FormDetails;
   const sampleTypeText = getSampleTypeWithLanguage(sampleType, appSession);
   const sampleSubTypeText = getSampleSubTypeWithLanguage(sampleType, appSession);
   formData.persons = {
@@ -169,7 +176,7 @@ export function convertSample(sample: SampleData, sampleTypes, appSession) {
   return Object.values(data);
 }
 
-function getStatusValue(v, appSession) {
+function getStatusValue(v: TODO, appSession: AppSession) {
   if (v) {
     const statuses = Sample.sampleStatuses;
     const s = statuses.find(e => e.id === v);
@@ -177,5 +184,5 @@ function getStatusValue(v, appSession) {
       return appSession.language.isEn ? s.enStatus : s.noStatus;
     }
     return null;
-  }
+  } else return null;
 }

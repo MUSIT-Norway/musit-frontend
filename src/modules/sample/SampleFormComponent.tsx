@@ -1,15 +1,15 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
-import type { AppSession } from '../../types/appSession';
-import type { History } from '../../types/Routes';
-import type { DomEvent } from '../../types/dom';
-import type { Predefined } from '../../types/predefined';
-import type { ObjectData } from '../../types/object';
-import type { SampleDataExtended } from '../../types/samples';
-import type { FormDetails } from './types/form';
-import type { ObjectOrSample } from './types';
-import type { ValueExtractor } from '../../forms/components/FieldDropDown';
+import { AppSession } from '../../types/appSession';
+import { History } from 'history';
+import { DomEvent } from '../../types/dom';
+import { Predefined } from '../../types/predefined';
+import { ObjectData } from '../../types/object';
+import { SampleDataExtended } from '../../types/samples';
+import { FormDetails } from './types/form';
+import { ObjectOrSample } from './types';
+import { ValueExtractor } from '../../forms/components/FieldDropDown';
 import ValidatedFormGroup from '../../forms/components/ValidatedFormGroup';
 import FieldCheckBox from '../../forms/components/FieldCheckBox';
 import FieldDropDown from '../../forms/components/FieldDropDown';
@@ -22,36 +22,37 @@ import ObjectAndSampleDetails from './components/ObjectAndSampleDetails';
 import PersonRoleDate from '../../components/person/PersonRoleDate';
 import Sample from '../../models/sample';
 import Config from '../../config';
+import { Maybe, TODO } from '../../types/common';
 
 export type SampleResponses = {
   success: Array<{
-    response: string,
-    objectData: ObjectData & { sampleNum?: string, objectId?: string }
-  }>,
+    response: string;
+    objectData: ObjectData & { sampleNum?: string; objectId?: string };
+  }>;
   failure: Array<{
-    error: Error,
-    objectData: ObjectData & { sampleNum?: string, objectId?: string }
-  }>
+    error: Error;
+    objectData: ObjectData & { sampleNum?: string; objectId?: string };
+  }>;
 };
 
 export type Props = {
-  form: FormDetails,
-  updateForm: Function,
-  clickSave: () => void,
-  appSession: AppSession,
-  clickBack: (e: DomEvent) => void,
-  updateSampleType: Function,
-  sampleTypeDisplayName: ValueExtractor,
-  isFormValid: (f: FormDetails) => boolean,
-  predefined: Predefined,
-  history: History,
-  objectData: Array<ObjectOrSample & { derivedFrom: ?SampleDataExtended }>,
-  showSampleSubType: boolean,
-  canEditSampleType: boolean,
-  store: { sampleResponses?: ?SampleResponses },
-  putSamplesInPicklist: () => void,
-  clearForm: () => void,
-  clearSampleResponses: () => void
+  form: FormDetails;
+  updateForm: Function;
+  clickSave: () => void;
+  appSession: AppSession;
+  clickBack: (e: DomEvent) => void;
+  updateSampleType: Function;
+  sampleTypeDisplayName: ValueExtractor;
+  isFormValid: (f: FormDetails) => boolean;
+  predefined: Predefined;
+  history: History;
+  objectData: Array<ObjectOrSample & { derivedFrom: Maybe<SampleDataExtended> }>;
+  showSampleSubType: boolean;
+  canEditSampleType: boolean;
+  store: { sampleResponses?: Maybe<SampleResponses> };
+  putSamplesInPicklist: () => void;
+  clearForm: () => void;
+  clearSampleResponses: () => void;
 };
 
 export default function SampleFormComponent(props: Props) {
@@ -96,7 +97,7 @@ export default function SampleFormComponent(props: Props) {
           {objectData &&
           objectData.length === 1 &&
           objectData[0].derivedFrom &&
-          objectData[0].derivedFrom.sampleNum
+          objectData[0].derivedFrom!.sampleNum
             ? I18n.t('musit.sample.derivedFromObjectAndSample')
             : I18n.t('musit.sample.derivedFromObject')}
         </h4>
@@ -282,7 +283,7 @@ export default function SampleFormComponent(props: Props) {
               yesValue={3}
               noValue={2}
               onChange={props.updateForm}
-              defaultValue="1"
+              //?    defaultValue="1"
             />
           </ValidatedFormGroup>
           <ValidatedFormGroup fields={[form.note]}>
@@ -308,7 +309,7 @@ export default function SampleFormComponent(props: Props) {
         <button
           className="btn btn-link"
           style={{ marginLeft: 20 }}
-          onClick={props.clickBack}
+          onClick={props.clickBack as TODO}
         >
           {I18n.t('musit.texts.cancel')}
         </button>
@@ -317,7 +318,7 @@ export default function SampleFormComponent(props: Props) {
   );
 }
 
-function Link(props) {
+function Link(props: TODO) {
   return (
     <button
       className="btn btn-link"
@@ -332,9 +333,9 @@ function Link(props) {
 }
 
 export function DisplayCreatedSamples(props: {
-  sampleResponses: SampleResponses,
-  appSession: AppSession,
-  putSamplesInPicklist: () => void
+  sampleResponses: SampleResponses;
+  appSession: AppSession;
+  putSamplesInPicklist: () => void;
 }) {
   return (
     <div className="container">
