@@ -1,5 +1,5 @@
 // @flow
-import { RxInjectLegacy as inject } from '../../../shared/react-rxjs-patch/';
+import { RxInjectLegacy as inject } from '../../../shared/react-rxjs-patch';
 import * as PropTypes from 'prop-types';
 import analysisTypesForm from './analysisTypesForm';
 import AnalysisTypesComponent from './AnalysisTypesComponent';

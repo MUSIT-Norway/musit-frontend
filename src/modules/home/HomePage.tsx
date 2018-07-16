@@ -16,7 +16,7 @@ import * as FontAwesome from 'react-fontawesome';
 import './index.css';
 import Config from '../../config';
 import Logos from '../../components/logos/Logos';
-import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
+import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 import { AppSession } from '../../types/appSession';
 import { TODO } from '../../types/common';
 

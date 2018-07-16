@@ -1,15 +1,33 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import ObservationPage from './ObservationPage';
 import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { I18n } from 'react-i18nify';
-import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
+import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 import { emitError, emitSuccess } from '../../shared/errors';
 import store$, { loadRootNode$ } from './observationStore';
 import Observation from '../../models/observation';
+import { AppSession } from '../../types/appSession';
+import { TODO } from '../../types/common';
+import { Match } from '../../types/Routes';
 
-export class AddObservationPage extends React.Component {
+interface AddObservationPageProps {
+  match: Match<TODO>;
+  addObservation: Function;
+  loadRootNode: Function;
+  emitError: Function;
+  emitSuccess: Function;
+  actor?: object;
+  rootNode?: object;
+  appSession: AppSession;
+  goBack: Function;
+
+  store: TODO;
+}
+
+/* Old:
+
   static propTypes = {
     match: PropTypes.object.isRequired,
     addObservation: PropTypes.func.isRequired,
@@ -22,6 +40,9 @@ export class AddObservationPage extends React.Component {
     goBack: PropTypes.func.isRequired
   };
 
+
+*/
+export class AddObservationPage extends React.Component<AddObservationPageProps> {
   componentWillMount() {
     if (!this.props.store.rootNode) {
       this.props.loadRootNode({
@@ -46,7 +67,7 @@ export class AddObservationPage extends React.Component {
               appSession={this.props.appSession}
               goBack={this.props.goBack}
               id={this.props.match.params.id}
-              onSaveObservation={(nodeId, data) => {
+              onSaveObservation={(nodeId: TODO, data: TODO) => {
                 const museumId = this.props.appSession.museumId;
                 const token = this.props.appSession.accessToken;
                 this.props
@@ -63,7 +84,8 @@ export class AddObservationPage extends React.Component {
                           message: I18n.t('musit.observation.page.messages.saveSuccess')
                         });
                       },
-                      onFailure: e => this.props.emitError({ ...e, type: 'network' })
+                      onFailure: (e: TODO) =>
+                        this.props.emitError({ ...e, type: 'network' })
                     }
                   })
                   .toPromise();
@@ -87,7 +109,7 @@ const commands = {
   loadRootNode$
 };
 
-const props = props => ({
+const props = (props: TODO) => ({
   ...props,
   emitError,
   emitSuccess,

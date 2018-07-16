@@ -12,7 +12,7 @@ import { Star, mixed, Maybe, MUSTFIX } from '../types/common';
 
 export type Paging = {
   page: number;
-  limit: number;
+  limit?: number;
 };
 
 export type MoveResult = {

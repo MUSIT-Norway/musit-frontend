@@ -1,7 +1,7 @@
 // @flow
-import { MusitObject } from '../types/object';
-import { SampleDataExtended } from '../types/samples';
-import { AnalysisResultTypes } from '../types/analysisResult';
+import { MusitObject } from './object';
+import { SampleDataExtended } from './samples';
+import { AnalysisResultTypes } from './analysisResult';
 import { ErrorLoading, SavedFile } from '../models/analysis/analysisResult';
 import { Maybe, Star, ArrayAny } from './common';
 

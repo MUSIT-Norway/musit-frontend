@@ -1,13 +1,23 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import { Component } from 'react';
 import { Table, FormGroup } from 'react-bootstrap';
-import FontAwesome from 'react-fontawesome';
+import * as FontAwesome from 'react-fontawesome';
 import { I18n } from 'react-i18nify';
 import MusitNode from '../../models/node';
-import AppSession from '../../types/appSession';
+import { AppSession } from '../../types/appSession';
+import { TODO } from '../../types/common';
 
-export default class NodeGrid extends Component {
-  static propTypes = {
+interface NodeGridProps {
+  tableData: Array<Node>;
+  goToEvents: Function;
+  pickNode: Function;
+  isNodeAdded: Function;
+  appSession: AppSession;
+  onMove: Function;
+  onClick: Function;
+}
+/* Old:
+static propTypes = {
     tableData: PropTypes.arrayOf(PropTypes.object).isRequired,
     goToEvents: PropTypes.func.isRequired,
     pickNode: PropTypes.func.isRequired,
@@ -17,6 +27,9 @@ export default class NodeGrid extends Component {
     appSession: AppSession
   };
 
+*/
+
+export default class NodeGrid extends Component<NodeGridProps> {
   render() {
     return (
       <div>
@@ -33,7 +46,7 @@ export default class NodeGrid extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.props.tableData.map((c, i) => {
+                {this.props.tableData.map((c: TODO, i: number) => {
                   const isRoot = MusitNode.isRootNode(c);
                   return (
                     <tr key={i}>
@@ -85,7 +98,7 @@ export default class NodeGrid extends Component {
                                 fontSize: '1.5em',
                                 color: this.props.appSession.rolesForModules
                                   .storageFacilityAdmin
-                                  ? null
+                                  ? undefined
                                   : 'grey'
                               }}
                               name="truck"

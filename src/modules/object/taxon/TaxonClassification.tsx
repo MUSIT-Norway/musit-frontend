@@ -1,16 +1,10 @@
 import * as React from 'react';
+import { sexList, stadiumList } from './constants';
+import { CheckBox } from '../components/CheckBox';
 import * as FontAwesome from 'react-fontawesome';
 import { TaxonSuggest } from '../../../components/suggest/TaxonSuggest';
-//import { AppSession } from "../../../types/appSession";
-//import appSession$ from "../../../stores/appSession";
 
-type TaxonNameState = {
-  taxonSuggestion?: ScientificName;
-  taxonName: string;
-  presicionType?: 'C' | 'A';
-  taxonCategory?: 'VA' | 'SS' | 'SP' | 'GE';
-};
-
+// Scientificname-types
 type Property = {
   Name: string;
   Value: string;
@@ -23,7 +17,7 @@ type DynamicProperty = {
   Properties: Property[];
 };
 
-type ScientificName = {
+export type ScientificName = {
   Id: string | null;
   scientificNameID: number;
   taxonID: number;
@@ -37,161 +31,316 @@ type ScientificName = {
   dynamicProperties: DynamicProperty[] | null;
 };
 
-const appSession = { museumId: 99 };
+// Datastructure
+interface IPersonName {
+  personNameId?: number;
+  personName?: string;
+}
 
-type TaxonState = {
+interface IDet {
+  personNames: IPersonName[];
+  editingDet: IPersonName;
   editingIndex: number;
-  taxonNames: TaxonNameState[];
-  det: DetState;
-  note?: string;
+}
+
+class Det {
+  personNames: IPersonName[];
+  editingDet: IPersonName;
+  editingIndex: number;
+  constructor(d: IDet) {
+    this.personNames = d.personNames;
+    this.editingDet = d.editingDet;
+    this.editingIndex = d.editingIndex;
+  }
+}
+
+type DetProps = IDet & {
+  onAddPerson: () => void;
+  onDeletePerson: (i: number) => void;
+  setDetEditingIndex: (i: number) => void;
+  onChangePerson: (i: number) => (field: string) => (value: string) => void;
 };
 
-type TaxonProps = TaxonState & {
+interface ITaxonTerm {
+  scientificName?: ScientificName;
+  taxonSuggestion?: ScientificName;
+  precisionCode?: 'cf' | 'aff';
+  precisionRank?: string;
+}
+
+class TaxonTerm implements ITaxonTerm {
+  scientificName?: ScientificName;
+  taxonSuggestion?: ScientificName;
+  precisionCode?: 'cf' | 'aff';
+  precisionRank?: string;
+  constructor(term: ITaxonTerm) {
+    this.scientificName = term.scientificName;
+    this.taxonSuggestion = term.taxonSuggestion;
+    this.precisionCode = term.precisionCode;
+    this.precisionRank = term.precisionRank;
+  }
+}
+interface ITaxonClassification {
+  taxonNames: ITaxonTerm[];
+  editingName: ITaxonTerm;
+  editingIndex: number;
+  det: IDet;
+  infraspesRank?: string;
+  infraSpesName?: string;
+  note?: string;
+  getEventType?: () => string;
+  getEventData?: () => string;
+  getPersonData?: () => string;
+  getDate?: () => string;
+}
+
+export class TaxonClassification implements ITaxonClassification {
+  taxonNames: ITaxonTerm[];
+  editingName: ITaxonTerm;
+  editingIndex: number;
+  det: IDet;
+  infraspesRank?: string;
+  infraSpesName?: string;
+  note?: string;
+  constructor(taxonClass: ITaxonClassification) {
+    this.taxonNames = taxonClass.taxonNames.map((t: ITaxonTerm) => new TaxonTerm(t));
+    this.det = new Det(taxonClass.det);
+    this.editingIndex = taxonClass.editingIndex;
+    this.editingName = taxonClass.editingName;
+    this.infraSpesName = taxonClass.infraSpesName;
+    this.infraspesRank = taxonClass.infraspesRank;
+    this.note = taxonClass.note;
+  }
+
+  getEventType() {
+    return 'Taxon';
+  }
+  getEventData() {
+    return this.taxonNames.reduce((pr: string, curr: ITaxonTerm) => {
+      if (pr === '') {
+        return curr && curr.taxonSuggestion ? curr.taxonSuggestion.scientificName : '';
+      }
+      return pr + ' x ' + curr && curr.taxonSuggestion
+        ? curr.taxonSuggestion.scientificName
+        : '';
+    }, '');
+  }
+  getPersonData() {
+    return 'Pettersen, Per, Olsen, Egil Drillo';
+  }
+  getDate() {
+    return '2017-01-01';
+  }
+}
+
+interface ISexAndStage {
+  sex?: string;
+  stage?: string;
+  count?: number;
+  estimatedCount?: boolean;
+}
+
+class SexAndStage implements ISexAndStage {
+  sex?: string;
+  stage?: string;
+  count?: number;
+  estimatedCount?: boolean;
+  constructor(s: ISexAndStage) {
+    this.sex = s.sex;
+    this.stage = s.stage;
+    this.count = s.count;
+    this.estimatedCount = s.estimatedCount;
+  }
+  getSexTerm() {
+    switch (this.sex) {
+      case 'm': {
+        return 'male';
+      }
+      case 'f': {
+        return 'female';
+      }
+      case 'h': {
+        return 'hermaphrodite';
+      }
+      case 'd': {
+        return 'doubtful gender';
+      }
+      case 'u': {
+        return 'unknown';
+      }
+      default: {
+        return 'unknown';
+      }
+    }
+  }
+  getStageTerm() {
+    switch (this.stage) {
+      case 'e': {
+        return 'egg';
+      }
+      case 'l': {
+        return 'larvae';
+      }
+      case 'p': {
+        return 'pupae';
+      }
+      case 'x': {
+        return 'pupae exuviae';
+      }
+      case 's': {
+        return 'subimago';
+      }
+
+      case 'j': {
+        return 'juvenile';
+      }
+
+      case 'n': {
+        return 'nymph';
+      }
+
+      case 'a': {
+        return 'adult';
+      }
+
+      case 'u': {
+        return 'unknown';
+      }
+      default: {
+        return 'unknown';
+      }
+    }
+  }
+}
+
+interface ISexAndStagesClassification {
+  sexAndStages: ISexAndStage[];
+  editingSexAndStage: ISexAndStage;
+  editingIndex: number;
+  det?: IDet;
+  note?: string;
+  getEventType?: () => string;
+  getEventData?: () => string;
+  getPersonData?: () => string;
+  getDate?: () => string;
+}
+
+type SexAndLifeStageProps = ISexAndStagesClassification & {
   onChangeNoteField: (value: string) => void;
+  onAddSexAndLifeStage: () => void;
+  setEditingIndex: (i: number) => void;
+  onDelete: (i: number) => void;
+  onChangeBooleanValue: (index: number) => (fieldName: string) => void;
+  onChangeSexAndLifeStageField: (fieldName: string) => (value: string | number) => void;
+};
+
+type TaxonTermProps = ITaxonClassification & {
+  setEditingIndex: (i: number) => void;
+  onChangeTaxonField: (fieldName: string) => (value: string) => void;
+  onChangeTaxonClassificationFields: (fieldName: string) => (value: string) => void;
   onChangeSuggests: (v: any) => void;
   onAddTaxon: () => void;
   onAddPerson: () => void;
   onDeletePerson: (i: number) => void;
   onDeleteTaxon: (i: number) => void;
   onChangeTaxonSuggest: (suggestion: ScientificName) => void;
+  onCreateNewTaxonRevision: () => void;
   setDetEditingIndex: (i: number) => void;
   onChangePerson: (i: number) => (field: string) => (value: string) => void;
-  setEditingIndex: (i: number) => void;
-  onChangeTaxonField: (index: number) => (fieldName: string) => (value: string) => void;
 };
 
-type SexAndLifeStage = {
-  count?: number;
-  estimated: string;
-  sex?: string;
-  stage?: string;
-};
+const appSession = { museumId: 99 };
 
-type SexAndLifeStageState = {
-  sexAndStages: SexAndLifeStage[];
+export class SexAndStagesClassification implements ISexAndStagesClassification {
+  sexAndStages: ISexAndStage[];
+  editingSexAndStage: ISexAndStage;
   editingIndex: number;
+  det?: IDet;
   note?: string;
-};
+  constructor(sexAndStagesClass: ISexAndStagesClassification) {
+    this.sexAndStages = sexAndStagesClass.sexAndStages.map(
+      (s: ISexAndStage) => new SexAndStage(s)
+    );
+    this.editingIndex = sexAndStagesClass.editingIndex;
+    this.editingSexAndStage = sexAndStagesClass.editingSexAndStage;
+    this.det = sexAndStagesClass.det ? new Det(sexAndStagesClass.det) : undefined;
+    this.note = sexAndStagesClass.note;
+  }
 
-type SexAndLifeStageProps = SexAndLifeStageState & {
-  onChangeNoteField: (value: string) => void;
-  onAddSexAndLifeStage: () => void;
-  setEditingIndex: (i: number) => void;
-  onDelete: (i: number) => void;
-  onChangeSexAndLifeStageField: (
-    index: number
-  ) => (fieldName: string) => (value: string) => void;
-};
+  getEventType() {
+    return 'SexAndStages';
+  }
+  getEventData() {
+    return '3M, 4J, ?';
+  }
+  getPersonData() {
+    return 'Pettersen, Per, Olsen, Egil Drillo';
+  }
+  getDate() {
+    return '2017-01-01';
+  }
+}
 
-type ClassificationHistoryState = {
-  taxonClassifications: TaxonState[];
+export interface IClassifications {
+  classifications: (ITaxonClassification | ISexAndStagesClassification)[];
   currentTaxonClassificationIndex: number;
-  sexAndStage: SexAndLifeStageState;
-};
+  currentSexAndStagesClassificationIndex: number;
+}
 
-type ClassificationHistoryProps = ClassificationHistoryState;
-
-type Det = {
-  personId?: number;
-  personName?: string;
-};
-type DetState = {
-  editingIndex: number;
-  detTable: Det[];
-};
-
-type DetProps = DetState & {
-  onAddPerson: () => void;
-  onDeletePerson: (i: number) => void;
-  setDetEditingIndex: (i: number) => void;
-  onChangePerson: (i: number) => (field: string) => (value: string) => void;
-};
-
-const stadiumList = [
-  {
-    code: '',
-    term: '--select--'
-  },
-  {
-    code: 'e',
-    term: 'egg'
-  },
-  {
-    code: 'l',
-    term: 'larvae'
-  },
-  {
-    code: 'p',
-    term: 'pupae'
-  },
-  {
-    code: 'x',
-    term: 'pupae exuviae'
-  },
-  {
-    code: 'i',
-    term: 'imago'
-  },
-  {
-    code: 's',
-    term: 'subimago'
-  },
-  {
-    code: 'j',
-    term: 'juvenile'
-  },
-  {
-    code: 'n',
-    term: 'nymph'
-  },
-  {
-    code: 'a',
-    term: 'adult'
-  },
-  {
-    code: 'u',
-    term: 'unknown'
+export class Classifications implements IClassifications {
+  classifications: (ITaxonClassification | ISexAndStagesClassification)[];
+  currentTaxonClassificationIndex: number;
+  currentSexAndStagesClassificationIndex: number;
+  constructor(c: IClassifications) {
+    this.classifications = c.classifications.map(
+      (m: ITaxonClassification | ISexAndStagesClassification) => {
+        if (m instanceof TaxonClassification) {
+          return new TaxonClassification(m);
+        } else if (m instanceof SexAndStagesClassification) {
+          return new SexAndStagesClassification(m);
+        } else {
+          throw new Error('Should never get here');
+        }
+      }
+    );
+    this.currentTaxonClassificationIndex = c.currentTaxonClassificationIndex;
+    this.currentSexAndStagesClassificationIndex =
+      c.currentSexAndStagesClassificationIndex;
   }
-];
-
-const sexList = [
-  {
-    code: '',
-    term: '--select--'
-  },
-  {
-    code: 'm',
-    term: 'male'
-  },
-  {
-    code: 'f',
-    term: 'female'
-  },
-  {
-    code: 'h',
-    term: 'hermaphrodite'
-  },
-  {
-    code: 'd',
-    term: 'doubtful gender'
-  },
-  {
-    code: 'u',
-    term: 'unknown'
+  currentTaxonClassification() {
+    return this.classifications[
+      this.currentTaxonClassificationIndex
+    ] as ITaxonClassification;
   }
-];
+  currentSexAndStagesClassification() {
+    return this.classifications[
+      this.currentSexAndStagesClassificationIndex
+    ] as ISexAndStagesClassification;
+  }
+}
 
-const getSexTerm = (i_code?: string) => {
-  const r = sexList.find(s => s.code === i_code);
-  return r ? r.term : '';
-};
+interface IClassificationsToShow {
+  taxon: boolean;
+  sexAndStages: boolean;
+}
 
-const getStageTerm = (i_code?: string) => {
-  const r = stadiumList.find(s => s.code === i_code);
-  return r ? r.term : '';
-};
+interface IState {
+  classifications: IClassifications;
+  classificationsToShow: IClassificationsToShow;
+}
 
-class DetTable extends React.Component<DetProps> {
+class State implements IState {
+  classifications: Classifications;
+  classificationsToShow: IClassificationsToShow;
+  constructor(s: IState) {
+    this.classifications = new Classifications(s.classifications);
+    this.classificationsToShow = s.classificationsToShow;
+  }
+}
+
+type Props = IState;
+
+export class DetTable extends React.Component<DetProps> {
   constructor(props: DetProps) {
     super(props);
   }
@@ -199,7 +348,7 @@ class DetTable extends React.Component<DetProps> {
   render() {
     return (
       <div>
-        {this.props.detTable.length > 1 ? (
+        {this.props.personNames.length > 1 ? (
           <div className="row">
             <div className="col-md-12">
               <table className="table table-condensed table-hover">
@@ -210,7 +359,7 @@ class DetTable extends React.Component<DetProps> {
                   </tr>
                 </thead>
                 <tbody>
-                  {this.props.detTable.map((d: Det, i: number) => (
+                  {this.props.personNames.map((d: IPersonName, i: number) => (
                     <tr
                       key={`det-row-${i}`}
                       className={i === this.props.editingIndex ? 'info' : ''}
@@ -249,17 +398,13 @@ class DetTable extends React.Component<DetProps> {
                 type="text"
                 className="form-control"
                 id="personName"
-                value={
-                  this.props.editingIndex >= 0 &&
-                  this.props.detTable[this.props.editingIndex]
-                    ? this.props.detTable[this.props.editingIndex].personName
-                    : ''
-                }
+                value={this.props.editingDet ? this.props.editingDet.personName : ''}
                 onChange={e => {
                   e.preventDefault();
-                  this.props.onChangePerson(this.props.editingIndex)('personName')(
-                    e.target.value
-                  );
+                  this.props.editingIndex &&
+                    this.props.onChangePerson(this.props.editingIndex)('personName')(
+                      e.target.value
+                    );
                 }}
               />
             </div>
@@ -270,7 +415,7 @@ class DetTable extends React.Component<DetProps> {
   }
 }
 
-class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
+export class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
   render() {
     return (
       <div>
@@ -284,23 +429,20 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
                   <th> Count</th>
                   <th> Estimated count</th>
                   <th />
+                  <th />
                 </tr>
               </thead>
               <tbody>
-                {this.props.sexAndStages.map((t: SexAndLifeStage, i: number) => {
+                {this.props.sexAndStages.map((t: SexAndStage, i: number) => {
                   return (
                     <tr
                       key={`tr-row${i}`}
                       className={i === this.props.editingIndex ? 'info' : ''}
-                      onClick={e => {
-                        e.preventDefault();
-                        this.props.setEditingIndex(i);
-                      }}
                     >
-                      <td>{getSexTerm(t.sex)}</td>
-                      <td>{getStageTerm(t.stage)}</td>
+                      <td>{t.getSexTerm()}</td>
+                      <td>{t.getStageTerm()}</td>
                       <td>{t.count}</td>
-                      <td>{t.estimated === '1' ? 'Yes' : 'No'}</td>
+                      <td>{t.estimatedCount ? 'Yes' : 'No'}</td>
                       <td>
                         <a
                           href=""
@@ -310,6 +452,17 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
                           }}
                         >
                           Delete
+                        </a>
+                      </td>
+                      <td>
+                        <a
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.setEditingIndex(i);
+                          }}
+                        >
+                          <FontAwesome name="edit" />
                         </a>
                       </td>
                     </tr>
@@ -326,15 +479,11 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
                 className="form-control"
                 onChange={e => {
                   e.preventDefault();
-                  this.props.onChangeSexAndLifeStageField(this.props.editingIndex)('sex')(
-                    e.target.value
-                  );
+                  this.props.onChangeSexAndLifeStageField('sex')(e.target.value);
                 }}
                 value={
-                  this.props.sexAndStages &&
-                  this.props.sexAndStages[this.props.editingIndex] &&
-                  this.props.sexAndStages[this.props.editingIndex].sex
-                    ? this.props.sexAndStages[this.props.editingIndex].sex
+                  this.props.editingSexAndStage && this.props.editingSexAndStage.sex
+                    ? this.props.editingSexAndStage.sex
                     : ''
                 }
               >
@@ -354,15 +503,11 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
                 className="form-control"
                 onChange={e => {
                   e.preventDefault();
-                  this.props.onChangeSexAndLifeStageField(this.props.editingIndex)(
-                    'stage'
-                  )(e.target.value);
+                  this.props.onChangeSexAndLifeStageField('stage')(e.target.value);
                 }}
                 value={
-                  this.props.sexAndStages &&
-                  this.props.sexAndStages[this.props.editingIndex] &&
-                  this.props.sexAndStages[this.props.editingIndex].stage
-                    ? this.props.sexAndStages[this.props.editingIndex].stage
+                  this.props.editingSexAndStage && this.props.editingSexAndStage.stage
+                    ? this.props.editingSexAndStage.stage
                     : ''
                 }
               >
@@ -381,45 +526,34 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
                 id="count"
                 className="form-control"
                 value={
-                  this.props.sexAndStages &&
-                  this.props.sexAndStages[this.props.editingIndex] &&
-                  this.props.sexAndStages[this.props.editingIndex].count
-                    ? this.props.sexAndStages[this.props.editingIndex].count
+                  this.props.editingSexAndStage && this.props.editingSexAndStage.count
+                    ? this.props.editingSexAndStage.count
                     : ''
                 }
                 onChange={e => {
                   e.preventDefault();
-                  this.props.onChangeSexAndLifeStageField(this.props.editingIndex)(
-                    'count'
-                  )(e.target.value);
+                  this.props.onChangeSexAndLifeStageField('count')(e.target.value);
                 }}
               />
             </div>
           </div>
-          <div className="col-md-1">
+          <div className="col-md-2">
             <div className="form-group">
-              <label htmlFor="estimated">Estimated count</label>
-              <input
-                type="checkbox"
-                className="form-control"
-                id="estimated"
-                value={
-                  this.props.sexAndStages &&
-                  this.props.sexAndStages[this.props.editingIndex]
-                    ? this.props.sexAndStages[this.props.editingIndex].estimated
-                    : '0'
-                }
+              <label htmlFor="count" />
+              <CheckBox
+                id="checkbox-estimated"
                 checked={
-                  this.props.sexAndStages &&
-                  this.props.sexAndStages[this.props.editingIndex] &&
-                  this.props.sexAndStages[this.props.editingIndex].estimated === '1'
+                  this.props.editingSexAndStage &&
+                  this.props.editingSexAndStage.estimatedCount
+                    ? true
+                    : false
                 }
-                onChange={e => {
-                  const newValue = e.target.value === '0' ? '1' : '0';
-                  this.props.onChangeSexAndLifeStageField(this.props.editingIndex)(
-                    'estimated'
-                  )(newValue);
-                }}
+                displayValue=" Estimated?"
+                onChange={() =>
+                  this.props.onChangeBooleanValue(this.props.editingIndex)(
+                    'estimatedCount'
+                  )
+                }
               />
             </div>
           </div>
@@ -446,10 +580,9 @@ class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> {
   }
 }
 
-class TaxonTable extends React.Component<TaxonProps> {
+class TaxonTable extends React.Component<TaxonTermProps> {
   render() {
-    console.log('EditingIndex', this.props.editingIndex);
-    const sugg = this.props.taxonNames[this.props.editingIndex].taxonSuggestion;
+    const sugg = this.props.editingName && this.props.editingName.taxonSuggestion;
 
     const scentificNameAsString = (n: ScientificName) => {
       const parentArr = n.higherClassification
@@ -527,7 +660,7 @@ class TaxonTable extends React.Component<TaxonProps> {
             ''
           )
         : '';
-    const aggVal = this.props.taxonNames.reduce((p: string, c: TaxonNameState) => {
+    const aggVal = this.props.taxonNames.reduce((p: string, c: ITaxonTerm) => {
       const names = (c.taxonSuggestion
         ? c.taxonSuggestion.scientificName.split(' ')
         : []
@@ -545,7 +678,7 @@ class TaxonTable extends React.Component<TaxonProps> {
       });
 
       const name = names.reduce((pr: string, cur: { rank: string; name: string }) => {
-        const uncert = cur.rank === c.taxonCategory ? ' ' + c.presicionType + ' ' : ' ';
+        const uncert = cur.rank === c.precisionRank ? ' ' + c.precisionCode + ' ' : ' ';
         const currRank = c.taxonSuggestion ? c.taxonSuggestion.taxonRank : '';
         const rankf = (rank: string) => {
           if (rank === 'subspecies') {
@@ -589,7 +722,7 @@ class TaxonTable extends React.Component<TaxonProps> {
                     </tr>
                   </thead>
                   <tbody>
-                    {this.props.taxonNames.map((t: TaxonNameState, i: number) => {
+                    {this.props.taxonNames.map((t: ITaxonTerm, i: number) => {
                       return (
                         <tr
                           key={`tr-row${i}`}
@@ -603,8 +736,8 @@ class TaxonTable extends React.Component<TaxonProps> {
                                   : '')
                               : ''}
                           </td>
-                          <td>{t.presicionType}</td>
-                          <td>{t.taxonCategory}</td>
+                          <td>{t.precisionCode}</td>
+                          <td>{t.precisionRank}</td>
                           <td>
                             <button
                               className="btn btn-link"
@@ -621,7 +754,7 @@ class TaxonTable extends React.Component<TaxonProps> {
                               className="btn btn-link"
                               onClick={e => {
                                 e.preventDefault();
-                                this.props.setDetEditingIndex(i);
+                                this.props.setEditingIndex(i);
                               }}
                             >
                               <FontAwesome name="edit" />
@@ -665,12 +798,12 @@ class TaxonTable extends React.Component<TaxonProps> {
               <select
                 id="presicionType"
                 className="form-control"
-                value={this.props.taxonNames[this.props.editingIndex].presicionType || ''}
+                value={
+                  (this.props.editingName && this.props.editingName.precisionCode) || ''
+                }
                 onChange={e => {
                   e.preventDefault();
-                  this.props.onChangeTaxonField(this.props.editingIndex)('presicionType')(
-                    e.target.value
-                  );
+                  this.props.onChangeTaxonField('precisionCode')(e.target.value);
                 }}
               >
                 <option>Velg type</option>
@@ -686,12 +819,12 @@ class TaxonTable extends React.Component<TaxonProps> {
               <select
                 id="taxonCategory"
                 className="form-control"
-                value={this.props.taxonNames[this.props.editingIndex].taxonCategory || ''}
+                value={
+                  (this.props.editingName && this.props.editingName.precisionRank) || ''
+                }
                 onChange={e => {
                   e.preventDefault();
-                  this.props.onChangeTaxonField(this.props.editingIndex)('taxonCategory')(
-                    e.target.value
-                  );
+                  this.props.onChangeTaxonField('precisionRank')(e.target.value);
                 }}
               >
                 <option>Velg type</option>
@@ -726,7 +859,7 @@ class TaxonTable extends React.Component<TaxonProps> {
   }
 }
 
-export class TaxonComponent extends React.Component<TaxonProps> {
+export class TaxonComponent extends React.Component<TaxonTermProps> {
   render() {
     return (
       <div className="container-fluid">
@@ -741,7 +874,16 @@ export class TaxonComponent extends React.Component<TaxonProps> {
               <div className="col-md-2">
                 <div className="form-group">
                   <label htmlFor="infraspesRank">Infraspesific rank</label>
-                  <select className="form-control" id="infraspesRank">
+                  <select
+                    className="form-control"
+                    id="infraspesRank"
+                    onChange={e => {
+                      e.preventDefault();
+                      this.props.onChangeTaxonClassificationFields('infraspesRank')(
+                        e.target.value
+                      );
+                    }}
+                  >
                     <option value="">--select--</option>
                     <option value="ssp.">Subspecies</option>
                     <option value="var.">Variety</option>
@@ -755,15 +897,35 @@ export class TaxonComponent extends React.Component<TaxonProps> {
               <div className="col-md-4">
                 <div className="form-group">
                   <label htmlFor="infraspesName">Infraspesific name</label>
-                  <input type="text" className="form-control" id="infraspesName" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="infraspesName"
+                    onChange={e => {
+                      e.preventDefault();
+                      this.props.onChangeTaxonClassificationFields('infraSpesName')(
+                        e.target.value
+                      );
+                    }}
+                  />
                 </div>
               </div>
             </div>
             <div className="row">
               <div className="col-md-8">
                 <div className="form-group">
-                  <label htmlFor="taxonNote">Note</label>
-                  <textarea className="form-control" id="taxonNote" rows={5} />
+                  <label htmlFor="taxonNote">Note</label>Revison
+                  <textarea
+                    className="form-control"
+                    id="taxonNote"
+                    rows={5}
+                    onChange={e => {
+                      e.preventDefault();
+                      this.props.onChangeTaxonClassificationFields('note')(
+                        e.target.value
+                      );
+                    }}
+                  />
                 </div>
               </div>
             </div>
@@ -799,11 +961,23 @@ export class TaxonComponent extends React.Component<TaxonProps> {
             </div>
           </div>
         </div>
+        <div className="row align-items-end">
+          <button
+            type="button"
+            className="btn btn-default"
+            onClick={e => {
+              e.preventDefault();
+              this.props.onCreateNewTaxonRevision();
+            }}
+          >
+            Add new revision
+          </button>
+        </div>
       </div>
     );
   }
 }
-export class SexAndStages extends React.Component<SexAndLifeStageProps> {
+export class SexAndStagesComponent extends React.Component<SexAndLifeStageProps> {
   render() {
     return (
       <div className="grid">
@@ -825,30 +999,68 @@ export class SexAndStages extends React.Component<SexAndLifeStageProps> {
   }
 }
 
-class ClassificationHistoryTable extends React.Component<ClassificationHistoryProps> {
-  render() {
-    return <div />;
-  }
-}
+const ClassificationHistoryTable = (props: IClassifications) => {
+  console.log(props);
+  return (
+    <div>
+      <table className="table table-condensed table-hover">
+        <thead>
+          <tr key="event-heading">
+            <th>Event type</th>
+            <th>Event date</th>
+            <th>Person name (Det)</th>
+            <th>Event data</th>
+          </tr>
+        </thead>
+        <tbody>
+          {props.classifications && props.classifications.length >= 0 ? (
+            props.classifications
+              .filter(t => t.getEventType && t.getEventType() === 'Taxon')
+              .map((t, i) => (
+                <tr key={'eventrow-' + (i + 1)}>
+                  <td>{t.getEventType && t.getEventType()}</td>
+                  <td>{t.getDate && t.getDate()}</td>
+                  <td>{t.getPersonData && t.getPersonData()}</td>
+                  <td>{t.getEventData && t.getEventData()}</td>
+                </tr>
+              ))
+          ) : (
+            <div />
+          )}
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
-export default class ClassificationComponent extends React.Component<
-  ClassificationHistoryProps,
-  ClassificationHistoryState
-> {
-  constructor(props: ClassificationHistoryProps) {
+export default class ClassificationComponent extends React.Component<Props, IState> {
+  constructor(props: Props) {
+    const c = {
+      classifications: {
+        classifications: [
+          new TaxonClassification({
+            taxonNames: [{}],
+            editingIndex: 0,
+            editingName: {},
+            det: { editingIndex: 0, editingDet: {}, personNames: [{}] }
+          }),
+          new SexAndStagesClassification({
+            sexAndStages: [{}],
+            editingIndex: 0,
+            editingSexAndStage: {}
+          })
+        ],
+        currentTaxonClassificationIndex: 0,
+        currentSexAndStagesClassificationIndex: 1
+      },
+      classificationsToShow: {
+        taxon: true,
+        sexAndStages: false
+      }
+    };
     super(props);
 
-    this.state = {
-      taxonClassifications: [
-        {
-          taxonNames: [{ taxonName: '' }],
-          editingIndex: 0,
-          det: { detTable: [{ personName: '' }], editingIndex: 0 }
-        }
-      ],
-      currentTaxonClassificationIndex: 0,
-      sexAndStage: { sexAndStages: [{ estimated: '0' }], editingIndex: 0 }
-    };
+    this.state = new State(c);
 
     this.getFullHybridName = this.getFullHybridName.bind(this);
   }
@@ -871,325 +1083,396 @@ export default class ClassificationComponent extends React.Component<
             <div className="well">
               <h3>Taxon</h3>
               <TaxonComponent
-                {...this.state.taxonClassifications[
-                  this.state.currentTaxonClassificationIndex
-                ]}
-                onChangeTaxonSuggest={(suggestion: ScientificName) => {
-                  this.setState((ps: ClassificationHistoryState) => {
-                    const currentClassification =
-                      ps.taxonClassifications[ps.currentTaxonClassificationIndex];
-                    const currentTaxState =
-                      currentClassification.taxonNames[
-                        currentClassification.editingIndex
-                      ];
-                    const newTaxonName = {
-                      ...currentTaxState,
-                      taxonSuggestion: suggestion
+                {...(this.state
+                  .classifications as Classifications).currentTaxonClassification()}
+                onCreateNewTaxonRevision={() => {
+                  this.setState((ps: State) => {
+                    const emptyTaxonRevision: ITaxonClassification = {
+                      taxonNames: [{}],
+                      editingIndex: 0,
+                      editingName: {},
+                      note: '',
+                      det: new Det({ personNames: [{}], editingDet: {}, editingIndex: 0 })
                     };
-                    const newTaxonNames = [
-                      ...currentClassification.taxonNames.slice(
-                        0,
-                        currentClassification.editingIndex
-                      ),
-                      newTaxonName,
-                      ...currentClassification.taxonNames.slice(
-                        currentClassification.editingIndex + 1
-                      )
+                    const newTaxonRevision = new TaxonClassification(emptyTaxonRevision);
+                    const newClassifications = [
+                      ...ps.classifications.classifications,
+                      newTaxonRevision
+                    ];
+                    const currentTaxonClassificationIndex = newClassifications.length - 1;
+                    const currentSexAndStagesClassificationIndex =
+                      ps.classifications.currentSexAndStagesClassificationIndex;
+
+                    return {
+                      ...ps,
+                      classifications: new Classifications({
+                        classifications: newClassifications,
+                        currentSexAndStagesClassificationIndex,
+                        currentTaxonClassificationIndex
+                      })
+                    };
+                  });
+                }}
+                onChangeTaxonSuggest={(suggestion?: ScientificName) => {
+                  this.setState((ps: State) => {
+                    const currentClassificationIndex =
+                      ps.classifications.currentTaxonClassificationIndex;
+                    const currentClassification = ps.classifications.classifications[
+                      currentClassificationIndex
+                    ] as TaxonClassification;
+                    const currentClassificationArray = ps.classifications.classifications;
+                    const currentTaxnames = (currentClassification as TaxonClassification)
+                      .taxonNames;
+                    const currentTaxName = currentClassification.editingName;
+                    const currentEditingIndex = currentClassification.editingIndex;
+                    const newTaxName = new TaxonTerm({
+                      ...currentTaxName,
+                      taxonSuggestion: suggestion
+                    });
+                    const newTaxnames = [
+                      ...currentTaxnames.slice(0, currentEditingIndex),
+                      newTaxName,
+                      ...currentTaxnames.slice(currentEditingIndex + 1)
+                    ];
+                    const newClassification = new TaxonClassification({
+                      ...currentClassification,
+                      taxonNames: newTaxnames,
+                      editingName: newTaxName
+                    });
+                    const newClassArray = [
+                      ...currentClassificationArray.slice(0, currentClassificationIndex),
+                      newClassification,
+                      ...currentClassificationArray.slice(currentClassificationIndex + 1)
                     ];
 
                     return {
                       ...ps,
-                      taxonClassifications: [
-                        ...ps.taxonClassifications.slice(
-                          0,
-                          ps.currentTaxonClassificationIndex
-                        ),
-                        {
-                          ...ps.taxonClassifications[ps.currentTaxonClassificationIndex],
-                          taxonNames: newTaxonNames
-                        },
-                        ...ps.taxonClassifications.slice(
-                          ps.currentTaxonClassificationIndex + 1
-                        )
-                      ]
+                      classifications: new Classifications({
+                        ...ps.classifications,
+                        classifications: newClassArray
+                      })
                     };
                   });
                 }}
-                onChangeNoteField={(value: string) => {
-                  this.setState((ps: ClassificationHistoryState) => {
-                    const currentClassification =
-                      ps.taxonClassifications[ps.currentTaxonClassificationIndex];
-
+                onChangeTaxonClassificationFields={(fieldName: string) => (
+                  value: any
+                ) => {
+                  this.setState((ps: State) => {
+                    const currentClassificationIndex =
+                      ps.classifications.currentTaxonClassificationIndex;
+                    const currentClassification = ps.classifications.classifications[
+                      currentClassificationIndex
+                    ] as TaxonClassification;
+                    const currentClassificationArray = ps.classifications.classifications;
+                    const newClassification = new TaxonClassification({
+                      ...currentClassification,
+                      [fieldName]: value
+                    });
+                    const newClassArray = [
+                      ...currentClassificationArray.slice(0, currentClassificationIndex),
+                      newClassification,
+                      ...currentClassificationArray.slice(currentClassificationIndex + 1)
+                    ];
                     return {
                       ...ps,
-                      taxonClassifications: [
-                        ...ps.taxonClassifications.slice(
-                          0,
-                          ps.currentTaxonClassificationIndex
-                        ),
-                        {
-                          ...currentClassification,
-                          taxon: {
-                            ...currentClassification,
-                            note: value
-                          }
-                        },
-                        ...ps.taxonClassifications.slice(
-                          ps.currentTaxonClassificationIndex + 1
-                        )
-                      ]
+                      classifications: new Classifications({
+                        ...ps.classifications,
+                        classifications: newClassArray
+                      })
                     };
                   });
                 }}
                 setEditingIndex={(index: number) => {
-                  this.setState((ps: ClassificationHistoryState) => {
+                  this.setState((ps: State) => {
+                    const currentClassificationIndex =
+                      ps.classifications.currentTaxonClassificationIndex;
+                    const currentClassification = ps.classifications.classifications[
+                      currentClassificationIndex
+                    ] as TaxonClassification;
+                    const currentClassificationArray = ps.classifications.classifications;
+                    const editingName = currentClassification.taxonNames[index];
+                    const newClassification = new TaxonClassification({
+                      ...currentClassification,
+                      editingIndex: index,
+                      editingName
+                    });
+                    const newClassArray = [
+                      ...currentClassificationArray.slice(0, currentClassificationIndex),
+                      newClassification,
+                      ...currentClassificationArray.slice(currentClassificationIndex + 1)
+                    ];
+
                     return {
                       ...ps,
-                      taxonClassifications: [
-                        ...ps.taxonClassifications.slice(
-                          0,
-                          ps.currentTaxonClassificationIndex
-                        ),
-                        {
-                          ...ps.taxonClassifications[ps.currentTaxonClassificationIndex],
-                          editingIndex: index
-                        },
-                        ...ps.taxonClassifications.slice(
-                          ps.currentTaxonClassificationIndex + 1
-                        )
-                      ]
+                      classifications: new Classifications({
+                        ...ps.classifications,
+                        classifications: newClassArray
+                      })
                     };
                   });
                 }}
-                onChangeTaxonField={(index: number) => (fieldName: string) => (
-                  value: any
-                ) => {
-                  this.setState((ps: ClassificationHistoryState) => {
-                    const currentClassification =
-                      ps.taxonClassifications[ps.currentTaxonClassificationIndex];
-                    const currentTaxonName = currentClassification.taxonNames[index];
-                    const newTaxon = {
-                      ...currentTaxonName,
+                onChangeTaxonField={(fieldName: string) => (value: any) => {
+                  this.setState((ps: State) => {
+                    const currentClassificationIndex =
+                      ps.classifications.currentTaxonClassificationIndex;
+                    const currentClassification = ps.classifications.classifications[
+                      currentClassificationIndex
+                    ] as TaxonClassification;
+
+                    const currentClassificationArray = ps.classifications.classifications;
+                    const currentTaxonNames = currentClassification.taxonNames;
+                    const currentTaxonTerm = currentClassification.editingName;
+                    const currentEditingIndex = currentClassification.editingIndex;
+                    const newTerm = new TaxonTerm({
+                      ...currentTaxonTerm,
                       [fieldName]: value
-                    };
+                    });
+                    const newTaxonNames = [
+                      ...currentTaxonNames.slice(0, currentEditingIndex),
+                      newTerm,
+                      ...currentTaxonNames.slice(currentEditingIndex + 1)
+                    ];
+
+                    const newClassification = new TaxonClassification({
+                      ...currentClassification,
+                      taxonNames: newTaxonNames,
+                      editingName: newTerm
+                    });
+                    const newClassArray = [
+                      ...currentClassificationArray.slice(0, currentClassificationIndex),
+                      newClassification,
+                      ...currentClassificationArray.slice(currentClassificationIndex + 1)
+                    ];
+
                     return {
                       ...ps,
-                      taxonClassifications: [
-                        ...ps.taxonClassifications.slice(
-                          0,
-                          ps.currentTaxonClassificationIndex
-                        ),
-                        {
-                          ...currentClassification,
-                          taxonNames: [
-                            ...currentClassification.taxonNames.slice(0, index),
-                            newTaxon,
-                            ...currentClassification.taxonNames.slice(index + 1)
-                          ]
-                        },
-                        ...ps.taxonClassifications.slice(
-                          ps.currentTaxonClassificationIndex + 1
-                        )
-                      ]
+                      classifications: new Classifications({
+                        ...ps.classifications,
+                        classifications: newClassArray
+                      })
                     };
                   });
                 }}
                 onChangeSuggests={(nv: any) =>
-                  this.setState((ps: ClassificationHistoryState) => ({
+                  this.setState((ps: State) => ({
                     ...ps,
                     nv
                   }))
                 }
                 setDetEditingIndex={(i: number) => {
-                  this.setState((ps: ClassificationHistoryState) => {
-                    const currentClass =
-                      ps.taxonClassifications[ps.currentTaxonClassificationIndex];
-                    const currentDet = currentClass.det;
-                    const newDet = { ...currentDet, editingIndex: i };
-                    const newClass = { ...currentClass, det: newDet };
-
-                    const newTaxonClassifications = [
-                      ...ps.taxonClassifications.slice(
-                        0,
-                        ps.currentTaxonClassificationIndex
-                      ),
-                      newClass,
-                      ...ps.taxonClassifications.slice(
-                        ps.currentTaxonClassificationIndex + 1
-                      )
+                  this.setState((ps: State) => {
+                    const currentClassificationIndex =
+                      ps.classifications.currentTaxonClassificationIndex;
+                    const currentClassification = ps.classifications.classifications[
+                      currentClassificationIndex
+                    ] as TaxonClassification;
+                    const currentDet = currentClassification.det;
+                    const newEditingDet = currentDet.personNames[i];
+                    const newDet = {
+                      ...currentDet,
+                      editingDetIndex: i,
+                      editingDet: newEditingDet
+                    };
+                    const currentClassificationArray = ps.classifications.classifications;
+                    const newClassification = new TaxonClassification({
+                      ...currentClassification,
+                      det: newDet
+                    });
+                    const newClassArray = [
+                      ...currentClassificationArray.slice(0, currentClassificationIndex),
+                      newClassification,
+                      ...currentClassificationArray.slice(currentClassificationIndex + 1)
                     ];
 
                     return {
                       ...ps,
-                      taxonClassifications: newTaxonClassifications
+                      classifications: new Classifications({
+                        ...ps.classifications,
+                        classifications: newClassArray
+                      })
                     };
                   });
                 }}
                 onDeletePerson={(i: number) => {
-                  this.setState((ps: ClassificationHistoryState) => {
-                    const currentClass =
-                      ps.taxonClassifications[ps.currentTaxonClassificationIndex];
-                    const currentDet = currentClass.det;
-                    const currentDetTable = currentDet.detTable;
-                    const newDetTable = [
-                      ...currentDetTable.slice(0, i),
-                      ...currentDetTable.slice(i + 1)
-                    ];
-
-                    const newDet = {
+                  this.setState((ps: State) => {
+                    const currentClassificationIndex =
+                      ps.classifications.currentTaxonClassificationIndex;
+                    const currentClassification = ps.classifications.classifications[
+                      currentClassificationIndex
+                    ] as TaxonClassification;
+                    const currentDet = currentClassification.det;
+                    const newDet = new Det({
                       ...currentDet,
-                      detTable: newDetTable,
-                      editingIndex:
-                        currentDet.editingIndex > 0 ? currentDet.editingIndex - 1 : 0
-                    };
-                    const newClass = { ...currentClass, det: newDet };
-
-                    const newTaxonClassifications = [
-                      ...ps.taxonClassifications.slice(
-                        0,
-                        ps.currentTaxonClassificationIndex
-                      ),
-                      newClass,
-                      ...ps.taxonClassifications.slice(
-                        ps.currentTaxonClassificationIndex + 1
-                      )
+                      personNames: [
+                        ...currentDet.personNames.slice(i - 1),
+                        ...currentDet.personNames.slice(i + 1)
+                      ],
+                      editingIndex: currentDet.personNames.length === 1 ? -1 : i,
+                      editingDet:
+                        currentDet.personNames.length === 1
+                          ? {}
+                          : currentDet.personNames[i]
+                    });
+                    const currentClassificationArray = ps.classifications.classifications;
+                    const newClassification = new TaxonClassification({
+                      ...currentClassification,
+                      det: newDet
+                    });
+                    const newClassArray = [
+                      ...currentClassificationArray.slice(0, currentClassificationIndex),
+                      newClassification,
+                      ...currentClassificationArray.slice(currentClassificationIndex + 1)
                     ];
 
                     return {
                       ...ps,
-                      taxonClassifications: newTaxonClassifications
+                      classifications: new Classifications({
+                        ...ps.classifications,
+                        classifications: newClassArray
+                      })
                     };
                   });
                 }}
                 onAddPerson={() => {
-                  this.setState((ps: ClassificationHistoryState) => {
-                    const currentClass =
-                      ps.taxonClassifications[ps.currentTaxonClassificationIndex];
-                    const currentDet = currentClass.det;
-                    const currentDetTable = currentDet.detTable;
-                    const newDetState = { personName: '' };
-                    const newDetTable = [...currentDetTable, newDetState];
-
-                    const newDet = {
+                  this.setState((ps: State) => {
+                    const currentClassificationIndex =
+                      ps.classifications.currentTaxonClassificationIndex;
+                    const currentClassification = ps.classifications.classifications[
+                      currentClassificationIndex
+                    ] as TaxonClassification;
+                    const currentDet = currentClassification.det;
+                    const currentEditingIndex = currentClassification.editingIndex;
+                    const newDet = new Det({
                       ...currentDet,
-                      detTable: newDetTable,
-                      editingIndex: newDetTable.length - 1
-                    };
-                    const newClass = { ...currentClass, det: newDet };
-
-                    const newTaxonClassifications = [
-                      ...ps.taxonClassifications.slice(
-                        0,
-                        ps.currentTaxonClassificationIndex
-                      ),
-                      newClass,
-                      ...ps.taxonClassifications.slice(
-                        ps.currentTaxonClassificationIndex + 1
-                      )
+                      personNames: [...currentDet.personNames, {}],
+                      editingIndex: currentEditingIndex + 1,
+                      editingDet: {}
+                    });
+                    const currentClassificationArray = ps.classifications.classifications;
+                    const newClassification = new TaxonClassification({
+                      ...currentClassification,
+                      det: newDet
+                    });
+                    const newClassArray = [
+                      ...currentClassificationArray.slice(0, currentClassificationIndex),
+                      newClassification,
+                      ...currentClassificationArray.slice(currentClassificationIndex + 1)
                     ];
 
                     return {
                       ...ps,
-                      taxonClassifications: newTaxonClassifications
+                      classifications: new Classifications({
+                        ...ps.classifications,
+                        classifications: newClassArray
+                      })
                     };
                   });
                 }}
                 onChangePerson={(i: number) => (field: string) => (value: string) => {
-                  this.setState((ps: ClassificationHistoryState) => {
-                    const currentClass =
-                      ps.taxonClassifications[ps.currentTaxonClassificationIndex];
-                    const currentDet = currentClass.det;
-                    const currentDetTable = currentDet.detTable;
-                    const currentDetState = currentDetTable[i];
-                    const newDetState = { ...currentDetState, [field]: value };
-                    const newDetTable = [
-                      ...currentDetTable.slice(0, i),
-                      newDetState,
-                      ...currentDetTable.slice(i + 1)
-                    ];
-                    const newDet = { ...currentDet, detTable: newDetTable };
-                    const newClass = { ...currentClass, det: newDet };
-
-                    const newTaxonClassifications = [
-                      ...ps.taxonClassifications.slice(
-                        0,
-                        ps.currentTaxonClassificationIndex
-                      ),
-                      newClass,
-                      ...ps.taxonClassifications.slice(
-                        ps.currentTaxonClassificationIndex + 1
-                      )
+                  this.setState((ps: State) => {
+                    const currentClassificationIndex =
+                      ps.classifications.currentTaxonClassificationIndex;
+                    const currentClassification = ps.classifications.classifications[
+                      currentClassificationIndex
+                    ] as TaxonClassification;
+                    const currentDet = currentClassification.det;
+                    const currentPerson = currentDet.personNames[i];
+                    const newPerson = { ...currentPerson, [field]: value };
+                    const newDet = new Det({
+                      ...currentDet,
+                      personNames: [
+                        ...currentDet.personNames.slice(0, i),
+                        newPerson,
+                        ...currentDet.personNames.slice(i + 1)
+                      ],
+                      editingDet: newPerson
+                    });
+                    const currentClassificationArray = ps.classifications.classifications;
+                    const newClassification = new TaxonClassification({
+                      ...currentClassification,
+                      det: newDet
+                    });
+                    const newClassArray = [
+                      ...currentClassificationArray.slice(0, currentClassificationIndex),
+                      newClassification,
+                      ...currentClassificationArray.slice(currentClassificationIndex + 1)
                     ];
 
                     return {
                       ...ps,
-                      taxonClassifications: newTaxonClassifications
+                      classifications: new Classifications({
+                        ...ps.classifications,
+                        classifications: newClassArray
+                      })
                     };
                   });
                 }}
                 onDeleteTaxon={(i: number) => {
-                  this.setState((ps: ClassificationHistoryState) => {
-                    const currentClassification =
-                      ps.taxonClassifications[ps.currentTaxonClassificationIndex];
-
-                    console.log('I', i);
-                    const currentTaxList = currentClassification.taxonNames;
-                    const newTaxList = [
-                      ...currentTaxList.slice(0, i),
-                      ...currentTaxList.slice(i + 1)
+                  this.setState((ps: State) => {
+                    const currentClassificationIndex =
+                      ps.classifications.currentTaxonClassificationIndex;
+                    const currentClassification = ps.classifications.classifications[
+                      currentClassificationIndex
+                    ] as TaxonClassification;
+                    const currentClassificationArray = ps.classifications.classifications;
+                    const currentTaxonNames = currentClassification.taxonNames;
+                    const newTaxonNames = [
+                      ...currentTaxonNames.slice(0, i),
+                      ...currentTaxonNames.slice(i + 1)
                     ];
-                    const newI = i === newTaxList.length ? i - 1 : i;
-
-                    const newClassList = [
-                      ...ps.taxonClassifications.slice(
-                        0,
-                        ps.currentTaxonClassificationIndex
-                      ),
-                      {
-                        ...currentClassification,
-                        taxonNames: newTaxList,
-                        editingIndex: newI
-                      },
-                      ...ps.taxonClassifications.slice(
-                        ps.currentTaxonClassificationIndex + 1
-                      )
+                    const newClassification = new TaxonClassification({
+                      ...currentClassification,
+                      taxonNames: newTaxonNames,
+                      editingIndex: newTaxonNames.length === 1 ? 0 : i - 1,
+                      editingName:
+                        newTaxonNames.length === 1
+                          ? newTaxonNames[0]
+                          : newTaxonNames[i - 1]
+                    });
+                    const newClassArray = [
+                      ...currentClassificationArray.slice(0, currentClassificationIndex),
+                      newClassification,
+                      ...currentClassificationArray.slice(currentClassificationIndex + 1)
                     ];
+
                     return {
                       ...ps,
-                      taxonClassifications: newClassList
+                      classifications: new Classifications({
+                        ...ps.classifications,
+                        classifications: newClassArray
+                      })
                     };
                   });
                 }}
                 onAddTaxon={() => {
-                  this.setState((ps: ClassificationHistoryState) => {
-                    const newTaxonNames = [
-                      ...ps.taxonClassifications[ps.currentTaxonClassificationIndex]
-                        .taxonNames,
-                      {
-                        taxonName: '',
-                        presicionType: undefined,
-                        taxonCategory: undefined,
-                        infraspesName: undefined
-                      }
+                  this.setState((ps: State) => {
+                    const currentClassificationIndex =
+                      ps.classifications.currentTaxonClassificationIndex;
+                    const currentClassification = ps.classifications.classifications[
+                      currentClassificationIndex
+                    ] as ITaxonClassification;
+                    const currentClassificationArray = ps.classifications.classifications;
+                    const currentTaxonNames = currentClassification.taxonNames;
+                    const newTaxonName = new TaxonTerm({});
+                    const newTaxonNames = [...currentTaxonNames, newTaxonName];
+                    const newClassification = new TaxonClassification({
+                      ...currentClassification,
+                      taxonNames: newTaxonNames,
+                      editingIndex: newTaxonNames.length - 1,
+                      editingName: newTaxonName
+                    });
+                    const newClassArray = [
+                      ...currentClassificationArray.slice(0, currentClassificationIndex),
+                      newClassification,
+                      ...currentClassificationArray.slice(currentClassificationIndex + 1)
                     ];
-                    const currentClassification =
-                      ps.taxonClassifications[ps.currentTaxonClassificationIndex];
+
                     return {
                       ...ps,
-                      taxonClassifications: [
-                        ...ps.taxonClassifications.slice(
-                          0,
-                          ps.currentTaxonClassificationIndex
-                        ),
-                        {
-                          ...currentClassification,
-                          editingIndex: currentClassification.taxonNames.length,
-                          taxonNames: newTaxonNames
-                        },
-                        ...ps.taxonClassifications.slice(
-                          ps.currentTaxonClassificationIndex + 1
-                        )
-                      ]
+                      classifications: new Classifications({
+                        ...ps.classifications,
+                        classifications: newClassArray
+                      })
                     };
                   });
                 }}
@@ -1201,76 +1484,256 @@ export default class ClassificationComponent extends React.Component<
           <div className="col-md-12">
             <div className="well">
               <h3>Sex and stages</h3>
-              <SexAndStages
-                {...this.state.sexAndStage}
+              <SexAndStagesComponent
+                {...(this.state
+                  .classifications as Classifications).currentSexAndStagesClassification()}
                 onChangeNoteField={(value: string) => {
-                  this.setState((ps: ClassificationHistoryState) => {
+                  this.setState((ps: State) => {
+                    const currentSexAndStageIndex =
+                      ps.classifications.currentSexAndStagesClassificationIndex;
+                    const currentSexAndStagesClassification = ps.classifications
+                      .classifications[
+                      currentSexAndStageIndex
+                    ] as ISexAndStagesClassification;
+                    const newCurrentSexAndStagesClassification = new SexAndStagesClassification(
+                      {
+                        ...currentSexAndStagesClassification,
+                        note: value
+                      }
+                    );
+                    const newCurrentClassification = new Classifications({
+                      ...ps.classifications,
+                      classifications: [
+                        ...ps.classifications.classifications.slice(
+                          0,
+                          currentSexAndStageIndex
+                        ),
+                        newCurrentSexAndStagesClassification,
+                        ...ps.classifications.classifications.slice(
+                          currentSexAndStageIndex + 1
+                        )
+                      ]
+                    });
+
                     return {
                       ...ps,
-                      sexAndStage: { ...ps.sexAndStage, note: value }
+                      classifications: newCurrentClassification
                     };
                   });
                 }}
                 setEditingIndex={(index: number) => {
-                  this.setState((ps: ClassificationHistoryState) => {
-                    return {
-                      ...ps,
-                      sexAndStage: { ...ps.sexAndStage, editingIndex: index }
-                    };
-                  });
-                }}
-                onChangeSexAndLifeStageField={(index: number) => (fieldName: string) => (
-                  value: string | number
-                ) => {
-                  this.setState((ps: ClassificationHistoryState) => {
-                    const currentSexAndStage = ps.sexAndStage.sexAndStages[index];
-                    const newSexAndStage = {
-                      ...currentSexAndStage,
-                      [fieldName]: value
-                    };
-                    const newSexAndStages = [
-                      ...ps.sexAndStage.sexAndStages.slice(0, index),
-                      newSexAndStage,
-                      ...ps.sexAndStage.sexAndStages.slice(index + 1)
-                    ];
+                  this.setState((ps: State) => {
+                    const currentSexAndStageIndex =
+                      ps.classifications.currentSexAndStagesClassificationIndex;
+                    const currentSexAndStagesClassification = ps.classifications
+                      .classifications[
+                      currentSexAndStageIndex
+                    ] as ISexAndStagesClassification;
+                    const newCurrentSexAndStagesClassification = new SexAndStagesClassification(
+                      {
+                        ...currentSexAndStagesClassification,
+                        editingIndex: index,
+                        editingSexAndStage:
+                          currentSexAndStagesClassification.sexAndStages[index]
+                      }
+                    );
+                    const newCurrentClassifications = new Classifications({
+                      ...ps.classifications,
+                      classifications: [
+                        ...ps.classifications.classifications.slice(
+                          0,
+                          currentSexAndStageIndex
+                        ),
+                        newCurrentSexAndStagesClassification,
+                        ...ps.classifications.classifications.slice(
+                          currentSexAndStageIndex + 1
+                        )
+                      ]
+                    });
 
                     return {
                       ...ps,
-                      sexAndStage: {
-                        ...ps.sexAndStage,
-                        sexAndStages: newSexAndStages
+                      classifications: newCurrentClassifications
+                    };
+                  });
+                }}
+                onChangeBooleanValue={(index: number) => (fieldName: string) => {
+                  this.setState((ps: State) => {
+                    const currentSexAndStageIndex =
+                      ps.classifications.currentSexAndStagesClassificationIndex;
+                    const currentSexAndStagesClassification = ps.classifications
+                      .classifications[
+                      currentSexAndStageIndex
+                    ] as ISexAndStagesClassification;
+                    const newSexAndStage = new SexAndStage({
+                      ...currentSexAndStagesClassification.sexAndStages[index],
+                      [fieldName]: currentSexAndStagesClassification.sexAndStages[index][
+                        fieldName
+                      ]
+                        ? false
+                        : true
+                    });
+                    const newCurrentSexAndStagesClassification = new SexAndStagesClassification(
+                      {
+                        ...currentSexAndStagesClassification,
+                        sexAndStages: [
+                          ...currentSexAndStagesClassification.sexAndStages.slice(
+                            0,
+                            index
+                          ),
+                          newSexAndStage,
+                          ...currentSexAndStagesClassification.sexAndStages.slice(
+                            index + 1
+                          )
+                        ],
+                        editingSexAndStage: newSexAndStage
                       }
+                    );
+                    const newCurrentClassification = new Classifications({
+                      ...ps.classifications,
+                      classifications: [
+                        ...ps.classifications.classifications.slice(
+                          0,
+                          currentSexAndStageIndex
+                        ),
+                        newCurrentSexAndStagesClassification,
+                        ...ps.classifications.classifications.slice(
+                          currentSexAndStageIndex + 1
+                        )
+                      ]
+                    });
+
+                    return {
+                      ...ps,
+                      classifications: newCurrentClassification
+                    };
+                  });
+                }}
+                onChangeSexAndLifeStageField={(fieldName: string) => (
+                  value: string | number
+                ) => {
+                  this.setState((ps: State) => {
+                    const currentSexAndStageIndex =
+                      ps.classifications.currentSexAndStagesClassificationIndex;
+                    const currentSexAndStagesClassification = ps.classifications
+                      .classifications[
+                      currentSexAndStageIndex
+                    ] as ISexAndStagesClassification;
+                    const editingIndex = currentSexAndStagesClassification.editingIndex;
+                    const newSexAndStage = new SexAndStage({
+                      ...currentSexAndStagesClassification.editingSexAndStage,
+                      [fieldName]: value
+                    });
+
+                    const newCurrentSexAndStagesClassification = new SexAndStagesClassification(
+                      {
+                        ...currentSexAndStagesClassification,
+                        editingSexAndStage: newSexAndStage,
+                        sexAndStages: [
+                          ...currentSexAndStagesClassification.sexAndStages.slice(
+                            0,
+                            editingIndex
+                          ),
+                          newSexAndStage,
+                          ...currentSexAndStagesClassification.sexAndStages.slice(
+                            editingIndex + 1
+                          )
+                        ]
+                      }
+                    );
+
+                    const newCurrentClassification = new Classifications({
+                      ...ps.classifications,
+                      classifications: [
+                        ...ps.classifications.classifications.slice(
+                          0,
+                          currentSexAndStageIndex
+                        ),
+                        newCurrentSexAndStagesClassification,
+                        ...ps.classifications.classifications.slice(
+                          currentSexAndStageIndex + 1
+                        )
+                      ]
+                    });
+
+                    return {
+                      ...ps,
+                      classifications: newCurrentClassification
                     };
                   });
                 }}
                 onDelete={i => {
-                  this.setState((ps: ClassificationHistoryState) => {
-                    const sexAndLifeStage = ps.sexAndStage;
-                    const sexAndLifeArray = sexAndLifeStage.sexAndStages;
-                    const newSexAndLifeStage = {
-                      ...sexAndLifeStage,
-                      sexAndStages: [
-                        ...sexAndLifeArray.slice(0, i),
-                        ...sexAndLifeArray.slice(i + 1)
+                  this.setState((ps: State) => {
+                    const currentSexAndStageIndex =
+                      ps.classifications.currentSexAndStagesClassificationIndex;
+                    const currentSexAndStagesClassification = ps.classifications
+                      .classifications[
+                      currentSexAndStageIndex
+                    ] as ISexAndStagesClassification;
+                    const currentSexAndStages =
+                      currentSexAndStagesClassification.sexAndStages;
+                    const newSexAndStages = [
+                      ...currentSexAndStages.slice(0, i),
+                      ...currentSexAndStages.slice(i + 1)
+                    ];
+                    const newSexAndStagesClassification = new SexAndStagesClassification({
+                      ...currentSexAndStagesClassification,
+                      sexAndStages: newSexAndStages
+                    });
+                    const newCurrentClassifications = new Classifications({
+                      ...ps.classifications,
+                      classifications: [
+                        ...ps.classifications.classifications.slice(
+                          0,
+                          currentSexAndStageIndex
+                        ),
+                        newSexAndStagesClassification,
+                        ...ps.classifications.classifications.slice(
+                          currentSexAndStageIndex + 1
+                        )
                       ]
+                    });
+                    return {
+                      ...ps,
+                      classifications: newCurrentClassifications
                     };
-
-                    return { ...ps, sexAndStage: newSexAndLifeStage };
                   });
                 }}
                 onAddSexAndLifeStage={() => {
-                  this.setState((ps: ClassificationHistoryState) => {
-                    const sexAndLifeStage: SexAndLifeStageState = ps.sexAndStage;
-                    const sexAndLifeArray = sexAndLifeStage.sexAndStages;
-                    const newSexAndLifeStage = {
-                      ...sexAndLifeStage,
-                      sexAndStages: [...sexAndLifeArray, { estimated: '0' }],
-                      editingIndex: sexAndLifeArray.length
-                    };
+                  this.setState((ps: State) => {
+                    const currentSexAndStageIndex =
+                      ps.classifications.currentSexAndStagesClassificationIndex;
+                    const currentSexAndStagesClassification = ps.classifications
+                      .classifications[
+                      currentSexAndStageIndex
+                    ] as ISexAndStagesClassification;
+                    const currentSexAndStages =
+                      currentSexAndStagesClassification.sexAndStages;
 
+                    const newSexAndStage = new SexAndStage({});
+                    const newSexAndStages = [...currentSexAndStages, newSexAndStage];
+                    const newSexAndStagesClassification = new SexAndStagesClassification({
+                      ...currentSexAndStagesClassification,
+                      sexAndStages: newSexAndStages,
+                      editingSexAndStage: newSexAndStage,
+                      editingIndex: newSexAndStages.length - 1
+                    });
+                    const newCurrentClassifications = new Classifications({
+                      ...ps.classifications,
+                      classifications: [
+                        ...ps.classifications.classifications.slice(
+                          0,
+                          currentSexAndStageIndex
+                        ),
+                        newSexAndStagesClassification,
+                        ...ps.classifications.classifications.slice(
+                          currentSexAndStageIndex + 1
+                        )
+                      ]
+                    });
                     return {
                       ...ps,
-                      sexAndStage: newSexAndLifeStage
+                      classifications: newCurrentClassifications
                     };
                   });
                 }}
@@ -1281,8 +1744,8 @@ export default class ClassificationComponent extends React.Component<
         <div className="row">
           <div className="col-md-12">
             <div className="well">
-              <h3>Revisions</h3>
-              <ClassificationHistoryTable {...this.props} />
+              <h3>Taxon revisions</h3>
+              <ClassificationHistoryTable {...this.state.classifications} />
             </div>
           </div>
         </div>

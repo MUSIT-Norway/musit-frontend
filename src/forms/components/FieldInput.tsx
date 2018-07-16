@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { Field } from '../../forms/form';
+import { Field } from '../form';
 import { Star, TODO } from '../../types/common';
 
 type FieldInputProps = {

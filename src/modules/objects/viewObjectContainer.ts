@@ -1,6 +1,6 @@
 // @flow
 import ViewObjectComponent from './ViewObjectComponent';
-import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
+import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 import { emitWarning } from '../../shared/errors';
 import objectStore$, {
   loadObject$,

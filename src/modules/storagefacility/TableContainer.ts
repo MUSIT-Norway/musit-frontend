@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
+import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 import { toggleNode$, toggleObject$ } from '../../stores/pickList';
 import { showConfirm, showModal } from '../../shared/modal';
 import {
@@ -9,10 +9,10 @@ import {
 } from '../movedialog/moveDialogStore';
 import { isItemAdded } from '../../stores/pickList';
 import connectToScanner from '../../stores/scanner';
-import flowRight from 'lodash/flowRight';
+import { flowRight } from 'lodash';
 import { emitError, emitSuccess } from '../../shared/errors';
 import TableComponent from './TableComponent';
-import PropTypes from 'prop-types';
+import * as PropTypes from 'prop-types';
 import { I18n } from 'react-i18nify';
 import MusitObject from '../../models/object';
 import MusitNode from '../../models/node';
@@ -26,6 +26,7 @@ import tableStore$, {
   clearRootNode$
 } from './tableStore';
 import sampleStore$, { getSampleTypes$, getSamplesForNode$ } from '../sample/sampleStore';
+import { TODO } from '../../types/common';
 
 const data = {
   appSession$: { type: PropTypes.instanceOf(Observable).isRequired },
@@ -47,7 +48,7 @@ const commands = {
   getSampleTypes$
 };
 
-const customProps = props => ({
+const customProps = (props: TODO) => ({
   ...props,
   pickNode: MusitNode.pickNode(toggleNode$),
   pickObject: MusitObject.pickObject(toggleObject$),
@@ -62,7 +63,7 @@ const customProps = props => ({
   emitSuccess
 });
 
-export const processBarcode = (barCode, props) => {
+export const processBarcode = (barCode: TODO, props: TODO) => {
   if (props.classExistsOnDom('moveHistory')) {
     return;
   }
@@ -73,7 +74,7 @@ export const processBarcode = (barCode, props) => {
   if (barCode.uuid) {
     props
       .findNodeByUUID({ uuid: barCode.code, museumId, token })
-      .do(response => {
+      .do((response: TODO) => {
         if (!response || !response.nodeId) {
           props.emitError({
             message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode')
@@ -95,7 +96,7 @@ export const processBarcode = (barCode, props) => {
     if (isMoveDialogActive) {
       props
         .findNodeByBarcode(ajaxProps)
-        .do(response => {
+        .do((response: TODO) => {
           if (!response || !response.nodeId) {
             props.emitError({
               message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode')
@@ -108,7 +109,7 @@ export const processBarcode = (barCode, props) => {
     } else {
       props
         .findNodeOrObjectByBarcode(ajaxProps)
-        .do(response => {
+        .do((response: TODO) => {
           if (response && Array.isArray(response)) {
             if (response.length === 1) {
               if (!response[0].currentLocationId) {

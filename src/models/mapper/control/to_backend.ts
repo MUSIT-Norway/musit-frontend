@@ -7,9 +7,9 @@ import {
   parseLightCondition,
   parseGas,
   parseMold
-} from '../../../models/mapper/observation/to_backend';
-import { Option } from './../../../shared/util';
-import Actor from '../../../models/actor';
+} from '../observation/to_backend';
+import { Option } from '../../../shared/util';
+import Actor from '../../actor';
 import { TODO } from '../../../types/common';
 
 function getDoneDate(observations: TODO, state: TODO) {

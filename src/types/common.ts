@@ -8,6 +8,9 @@ export type mixed = any; //rename to 'Mixed' (capital 'M') when we have converte
 
 export type Star = any; //* in Flow. Existential type: https://flow.org/en/docs/types/utilities/
 
+//For some stuff which ideally should be removed
+export type TODO_REMOVE = any;
+
 //For situations which I think we definitely shouldn't have Maybe. To mark where we need to fix stuff.
 //(Remove this type when finished)
 export type RemoveMaybe<T> = Maybe<T>;

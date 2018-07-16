@@ -1,4 +1,4 @@
-import { Observable, Subject } from 'rxjs/Rx';
+import { Observable, Subject } from 'rxjs';
 import { initialState, store$ } from '../controlStore';
 import Control from '../../../models/control';
 import MusitTestScheduler from '../../../testutils/MusitTestScheduler';

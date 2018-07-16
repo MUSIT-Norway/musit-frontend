@@ -2,7 +2,7 @@ import assert from 'assert';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react-dom/test-utils';
-import MusitField from '../index';
+import MusitField from '..';
 
 describe('MusitField', () => {
   it('should render MusitField 1', () => {

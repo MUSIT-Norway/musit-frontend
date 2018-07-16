@@ -16,13 +16,28 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import { Component } from 'react';
 import { MusitTextArea } from '../../../components/formfields';
 import { Row, ControlLabel, Col } from 'react-bootstrap';
 
-export default class ObservationDoubleTextAreaComponent extends Component {
-  static propTypes = {
+interface ObservationDoubleTextAreaComponentProps {
+  leftLabel: string;
+  leftValue: string;
+  leftTooltip: string;
+  leftPlaceHolder: string;
+  leftWidth: number;
+  onChangeLeft: Function;
+  rightLabel: string;
+  rightValue: string;
+  rightTooltip: string;
+  rightPlaceHolder: string;
+  rightWidth: number;
+  onChangeRight: Function;
+  disabled?: boolean;
+}
+/*#OLD
+static propTypes = {
     leftLabel: PropTypes.string.isRequired,
     leftValue: PropTypes.string.isRequired,
     leftTooltip: PropTypes.string.isRequired,
@@ -38,7 +53,12 @@ export default class ObservationDoubleTextAreaComponent extends Component {
     disabled: PropTypes.bool
   };
 
-  static defaultProps = {
+*/
+
+export default class ObservationDoubleTextAreaComponent extends Component<
+  ObservationDoubleTextAreaComponentProps
+> {
+  static defaultProps: Partial<ObservationDoubleTextAreaComponentProps> = {
     leftValue: '',
     rightValue: ''
   };

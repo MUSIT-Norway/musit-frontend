@@ -2,7 +2,7 @@
 import { DiffPatcher } from 'jsondiffpatch';
 import { log } from 'jsondiffpatch/src/formatters/console';
 import * as assert from 'assert';
-import { TestScheduler } from 'rxjs/Rx';
+import { TestScheduler } from 'rxjs';
 import * as DeepDiff from 'deep-diff';
 import { TODO } from '../types/common';
 

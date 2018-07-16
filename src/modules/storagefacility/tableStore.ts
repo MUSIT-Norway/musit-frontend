@@ -2,12 +2,13 @@
 import { Observable } from 'rxjs';
 import MusitObject from '../../models/object';
 import MusitNode from '../../models/node';
-import type { SearchResult } from '../../models/node';
-import type { NodeStats, Node } from 'types/node';
-import type { ObjectData } from 'types/object';
+import { SearchResult } from '../../models/node';
+import { NodeStats, Node } from '../../types/node';
+import { ObjectData } from '../../types/object';
 import { createStore } from 'react-rxjs';
 import { createAction } from '../../shared/react-rxjs-patch';
 import { simpleGet } from '../../shared/RxAjax';
+import { TODO } from '../../types/common';
 
 export const clearRootNode$: Observable<void> = createAction('clearRootNode$');
 export const setLoading$: Observable<void> = createAction('setLoading$');
@@ -25,32 +26,32 @@ export const loadRootNode$: Observable<Node> = createAction('loadRootNode$').swi
 );
 
 type Actions = {
-  clearRootNode$: Observable<void>,
-  loadStats$: Observable<NodeStats>,
-  loadRootNode$: Observable<Node>,
-  setLoading$: Observable<void>,
-  loadNodes$: Observable<SearchResult>,
-  loadObjects$: Observable<Array<ObjectData>>
+  clearRootNode$: Observable<void>;
+  loadStats$: Observable<NodeStats>;
+  loadRootNode$: Observable<Node>;
+  setLoading$: Observable<void>;
+  loadNodes$: Observable<SearchResult>;
+  loadObjects$: Observable<Array<ObjectData>>;
 };
 
 export const reducer$ = (actions: Actions) =>
   Observable.merge(
-    actions.clearRootNode$.map(() => state => ({
+    actions.clearRootNode$.map(() => (state: TODO) => ({
       ...state,
       rootNode: null,
       stats: null
     })),
-    actions.loadStats$.map(stats => state => ({ ...state, stats })),
-    actions.loadRootNode$.map(rootNode => state => ({ ...state, rootNode })),
-    actions.setLoading$.map(() => state => ({
+    actions.loadStats$.map(stats => (state: TODO) => ({ ...state, stats })),
+    actions.loadRootNode$.map(rootNode => (state: TODO) => ({ ...state, rootNode })),
+    actions.setLoading$.map(() => (state: TODO) => ({
       ...state,
       children: { data: null, loading: true }
     })),
-    actions.loadNodes$.map(data => state => ({
+    actions.loadNodes$.map(data => (state: TODO) => ({
       ...state,
       children: { data, loading: false }
     })),
-    actions.loadObjects$.map(data => state => ({
+    actions.loadObjects$.map(data => (state: TODO) => ({
       ...state,
       children: { data, loading: false }
     }))

@@ -3,21 +3,27 @@ import {
   validateString,
   validateNumber
 } from '../../components/formfields/common/validators';
+import { TODO } from '../../types/common';
 
-const typeFieldIncorrect = (type, field) => {
+const typeFieldIncorrect = (type: TODO, field: TODO) => {
   return `musit.observation.page.${type}.${field}Incorrect`;
 };
 
-const toSmallerThanFromValue = (type, field) => {
+const toSmallerThanFromValue = (type: TODO, field: TODO) => {
   return `musit.observation.page.${type}.${field}SmallerThanFromValue`;
 };
 
-const typeFieldRequired = (type, field) => {
+const typeFieldRequired = (type: TODO, field: TODO) => {
   return `musit.observation.page.${type}.${field}Required`;
 };
 
-const validateStringField = (type, field, required = false, maxLength = 100) => {
-  return formProps => {
+const validateStringField = (
+  type: TODO,
+  field: TODO,
+  required = false,
+  maxLength = 100
+) => {
+  return (formProps: TODO) => {
     const errors = {};
     if (required && !formProps[field]) {
       errors[`${type}.${field}`] = typeFieldRequired(type, field);
@@ -31,7 +37,7 @@ const validateStringField = (type, field, required = false, maxLength = 100) => 
   };
 };
 
-export const validateDoubleTextArea = (formProps, index, type) => {
+export const validateDoubleTextArea = (formProps: TODO, index: TODO, type: TODO) => {
   let errors = {};
   errors = { ...errors, ...validateStringField(type, 'leftValue', true, 100)(formProps) };
   errors = {
@@ -41,7 +47,7 @@ export const validateDoubleTextArea = (formProps, index, type) => {
   return errors;
 };
 
-export const validatePest = (formProps, index, type) => {
+export const validatePest = (formProps: TODO, index: TODO, type: TODO) => {
   const errors = {};
 
   if (!formProps.identificationValue) {
@@ -59,7 +65,7 @@ export const validatePest = (formProps, index, type) => {
     errors[`${type}.commentValue`] = typeFieldIncorrect(type, 'commentsValue');
   }
 
-  formProps.observations.forEach(observation => {
+  formProps.observations.forEach((observation: TODO) => {
     if (observation.lifeCycle && validateString(observation.lifeCycle, 1) === 'error') {
       errors[
         `${type}.observations[${index}].observations.lifeCycle`
@@ -81,7 +87,7 @@ export const validatePest = (formProps, index, type) => {
   return errors;
 };
 
-export const validateAlcohol = (formProps, index, type) => {
+export const validateAlcohol = (formProps: TODO, index: TODO, type: TODO) => {
   const errors = {};
 
   if (!formProps.statusValue) {
@@ -107,7 +113,7 @@ export const validateAlcohol = (formProps, index, type) => {
   return errors;
 };
 
-export const validateFromTo = (formProps, index, type) => {
+export const validateFromTo = (formProps: TODO, index: TODO, type: TODO) => {
   const errors = {};
 
   if (!formProps.fromValue) {

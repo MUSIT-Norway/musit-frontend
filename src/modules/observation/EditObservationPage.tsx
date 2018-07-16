@@ -1,15 +1,36 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import ObservationPage from './ObservationPage';
 import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { I18n } from 'react-i18nify';
-import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
+import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 import { emitError, emitSuccess } from '../../shared/errors';
 import store$, { loadRootNode$ } from './observationStore';
 import Control from '../../models/control';
+import { TODO, TODO_NodeStore } from '../../types/common';
+import { Match } from '../../types/Routes';
+import { AppSession } from '../../types/appSession';
+import { History } from 'history';
 
-export class EditObservationPage extends React.Component {
+interface EditObservationPageProps {
+  location: TODO;
+  addObservation: Function;
+  emitError: Function;
+  emitSuccess: Function;
+  match: Match<TODO>;
+  rootNode: object;
+  appSession: AppSession;
+  goBack: Function;
+
+  //Nye:
+  loadRootNode: Function;
+
+  store: TODO_NodeStore;
+  history: History;
+}
+
+/* Old:
   static propTypes = {
     location: PropTypes.object.isRequired,
     addObservation: PropTypes.func.isRequired,
@@ -21,6 +42,9 @@ export class EditObservationPage extends React.Component {
     goBack: PropTypes.func.isRequired
   };
 
+*/
+
+export class EditObservationPage extends React.Component<EditObservationPageProps> {
   componentWillMount() {
     if (!this.props.store.rootNode) {
       this.props.loadRootNode({
@@ -84,7 +108,7 @@ export class EditObservationPage extends React.Component {
               observations={this.getObservationsFromLocationState()}
               doneDate={this.props.location.state.doneDate}
               doneBy={this.getDoneByFromLocationState()}
-              onSaveObservation={(nodeId, observations) => {
+              onSaveObservation={(nodeId: TODO, observations: TODO) => {
                 const museumId = this.props.appSession.museumId;
                 const token = this.props.appSession.accessToken;
                 const controlData = this.props.location.state;
@@ -103,7 +127,8 @@ export class EditObservationPage extends React.Component {
                           message: I18n.t('musit.newControl.saveControlSuccess')
                         });
                       },
-                      onFailure: e => this.props.emitError({ ...e, type: 'network' })
+                      onFailure: (e: TODO) =>
+                        this.props.emitError({ ...e, type: 'network' })
                     }
                   })
                   .toPromise();
@@ -126,7 +151,7 @@ const commands = {
   loadRootNode$
 };
 
-const props = props => ({
+const props = (props: EditObservationPageProps) => ({
   ...props,
   emitError,
   emitSuccess,

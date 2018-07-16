@@ -1,13 +1,28 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import ObservationPage from './ObservationPage';
 import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { I18n } from 'react-i18nify';
-import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch/';
+import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 import store$, { setLoading$, loadRootNode$, getObservation$ } from './observationStore';
+import { Match } from '../../types/Routes';
+import { TODO } from '../../types/common';
+import { AppSession } from '../../types/appSession';
 
-export class ViewObservationPage extends React.Component {
+interface ViewObservationPageProps {
+  match: Match<TODO>;
+  setLoading: Function;
+  getObservation: Function;
+  loadRootNode: Function;
+  store: TODO;
+  goBack: Function;
+
+  //NEW:
+  appSession: AppSession;
+}
+
+/* Old:
   static propTypes = {
     match: PropTypes.object.isRequired,
     setLoading: PropTypes.func.isRequired,
@@ -16,7 +31,9 @@ export class ViewObservationPage extends React.Component {
     store: PropTypes.object.isRequired,
     goBack: PropTypes.func.isRequired
   };
+*/
 
+export class ViewObservationPage extends React.Component<ViewObservationPageProps> {
   componentWillMount() {
     this.props.setLoading();
     this.props.getObservation({
@@ -76,7 +93,7 @@ const commands = {
   loadRootNode$
 };
 
-const props = props => ({
+const props = (props: TODO) => ({
   ...props,
   goBack: props.history.goBack
 });
