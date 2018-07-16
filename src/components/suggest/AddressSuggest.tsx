@@ -57,6 +57,8 @@ export class AddressSuggest extends React.Component<
     super(props);
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
     this.requestSuggestionUpdate = this.requestSuggestionUpdate.bind(this);
+    this.clearSuggestionRequested = this.clearSuggestionRequested.bind(this);
+
     this.state = {
       value: this.props.value
     };
@@ -109,11 +111,16 @@ export class AddressSuggest extends React.Component<
     }
   }
 
+  clearSuggestionRequested() {
+    this.props.clear && this.props.clear();
+  }
+
   render() {
     return (
       <Autosuggest
         suggestions={this.props.suggest.data || []}
         onSuggestionsFetchRequested={this.requestSuggestionUpdate}
+        onSuggestionsClearRequested={this.clearSuggestionRequested}
         getSuggestionValue={this.getAddressSuggestionValue}
         renderSuggestion={this.renderAddressSuggestion}
         inputProps={{ ...(this.doneByProps as TODO), value: this.state.value }}

@@ -182,6 +182,7 @@ export default class ObservationPage extends React.Component<
   }
 
   onChangeTypeSelect(e: TODO) {
+    e.persist();
     this.setState(ps => ({
       ...ps,
       selectedType: e.target.options[e.target.selectedIndex].value
