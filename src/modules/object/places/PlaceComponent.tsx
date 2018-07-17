@@ -64,6 +64,7 @@ export type PlaceState = {
   coordinateHistory: CoordinateHistory;
   editingCoordinate: Coordinate;
   coordinateHistoryIndeks: number;
+  editCoorditeMode?: boolean;
   admPlace?: AdmPlace;
   locality?: string;
   ecology?: string;
@@ -84,10 +85,12 @@ export type PlaceProps = PlaceState & {
 export type CoordinateProps = {
   coordinateHistory: CoordinateHistory;
   editingCoordinate: Coordinate;
+  editCoordinateMode: boolean;
   coordinateHistoryIndeks: number;
   coordinateCollapsed: boolean;
   coordinateType: string;
   onChangeCoordinateNumber: (fieldName: string) => (value: number) => void;
+  onSetEditingIndex: (i: number) => void;
   onChangeCoordinateText: (fieldName: string) => (value: string) => void;
   onChangeHistoryItem: (fieldName: string) => (value: string) => void;
   getCurrentCoordinate: (ind: number) => Coordinate;
@@ -95,6 +98,7 @@ export type CoordinateProps = {
   onChangeCheckBoxBoolean: (fieldName: string) => (value: string | boolean) => void;
   onClickSaveRevision: () => void;
   onClickSaveEdit: () => void;
+  onChangeEditMode: (edit: boolean) => void;
   onToggleCollapse: () => void;
 };
 
@@ -174,7 +178,10 @@ const geometryTypes = ['Point', 'Reactangle', 'Polygone', 'Line'];
 const coordinateSources = ['Original label', 'GPS', 'Map', 'Other'];
 const altDepthUnits = ['Meters', 'Feet'];
 
-const CoordinateHistoryComponent = (props: { coordinateHistory: CoordinateHistory }) => {
+const CoordinateHistoryComponent = (props: {
+  coordinateHistory: CoordinateHistory;
+  onSetEditingIndex: (i: number) => void;
+}) => {
   const unitConv = (a?: string, u?: string) => {
     if (a && u) {
       if (u === 'Meters') {
@@ -234,6 +241,7 @@ const CoordinateHistoryComponent = (props: { coordinateHistory: CoordinateHistor
                         href=""
                         onClick={e => {
                           e.preventDefault();
+                          props.onSetEditingIndex(i);
                         }}
                       >
                         <FontAwesome name="edit" />
@@ -333,14 +341,12 @@ const UTMCoordinateComponent = (props: CoordinateProps) => {
           />
         </div>
         <div className="col-md-2">
-          <label htmlFor="utmNorthSouth">North/South </label>
+          <label htmlFor="utmBand">Band </label>
           <input
             type="text"
             className="form-control"
-            id="utmNorthSouth"
-            value={
-              props.getCurrentCoordinate(props.coordinateHistoryIndeks).utmNorthSouth
-            }
+            id="utmBand"
+            value={props.getCurrentCoordinate(props.coordinateHistoryIndeks).mgrsBand}
           />
         </div>
       </div>
@@ -751,7 +757,10 @@ const CoordinateComponent = (
     <div>
       <CoordinateMetaData {...props} />
       <AltitudeDepthData {...props} />
-      <CoordinateHistoryComponent coordinateHistory={props.coordinateHistory} />
+      <CoordinateHistoryComponent
+        coordinateHistory={props.coordinateHistory}
+        onSetEditingIndex={props.onSetEditingIndex}
+      />
       <CoordinateHistoryItemComponent {...props} />
     </div>
   );
@@ -958,27 +967,28 @@ const CoordinateComp = (props: CoordinateProps) => {
               </div>
             </div>
           </div>
-          <div style={{ textAlign: 'right' }}>
-            <button
-              className="btn btn-default"
-              onClick={e => {
-                e.preventDefault();
-                props.onClickSaveRevision();
-              }}
-            >
-              {' '}
-              Save revision
-            </button>
-            <button
-              className="btn btn-default"
-              onClick={e => {
-                e.preventDefault();
-                props.onClickSaveEdit();
-              }}
-            >
-              {' '}
-              Save
-            </button>
+          <div className="row">
+            <div className="col-md-10" style={{ textAlign: 'right' }}>
+              <CheckBox
+                id="CoordinateEditMode"
+                checked={props.editCoordinateMode}
+                displayValue="Edit mode?"
+                onChange={() =>
+                  props.onChangeEditMode(props.editCoordinateMode ? false : true)
+                }
+              />
+            </div>
+            <div className="col-md-2" style={{ textAlign: 'right' }}>
+              <button
+                className="btn btn-default"
+                onClick={e => {
+                  e.preventDefault();
+                  props.onClickSaveRevision();
+                }}
+              >
+                {props.editCoordinateMode ? 'Save' : 'Save revision'}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -1056,6 +1066,7 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
             <CoordinateComp
               {...this.state.coordinateHistory[this.state.coordinateHistoryIndeks]
                 .coordinate}
+              editCoordinateMode={this.state.editCoorditeMode || false}
               coordinateHistoryIndeks={this.state.coordinateHistoryIndeks}
               coordinateHistory={this.state.coordinateHistory}
               editingCoordinate={this.state.editingCoordinate}
@@ -1075,6 +1086,17 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
                   };
                 });
               }}
+              onSetEditingIndex={(i: number) => {
+                this.setState((ps: PlaceState) => {
+                  const newEditingCoordinate = ps.coordinateHistory[i];
+                  return {
+                    ...ps,
+                    coordinateHistoryIndeks: i,
+                    editingCoordinate: newEditingCoordinate.coordinate,
+                    editCoorditeMode: true
+                  };
+                });
+              }}
               onChangeCoordinateText={(fieldName: string) => (value: string) => {
                 this.setState((ps: PlaceState) => {
                   const s = {
@@ -1083,6 +1105,16 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
                       ...ps.editingCoordinate,
                       [fieldName]: value
                     }
+                  };
+
+                  return s;
+                });
+              }}
+              onChangeEditMode={(editMode: boolean) => {
+                this.setState((ps: PlaceState) => {
+                  const s = {
+                    ...ps,
+                    editCoorditeMode: editMode
                   };
 
                   return s;
@@ -1107,6 +1139,33 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
               }}
               onClickSaveRevision={() => {
                 this.setState((ps: PlaceState) => {
+                  const revType =
+                    ps.coordinateHistoryIndeks === 0
+                      ? 'newCoordinate'
+                      : ps.coordinateHistory[ps.coordinateHistoryIndeks]
+                          .coordinateRevisionType;
+                  if (
+                    ps.editCoorditeMode ||
+                    (ps.coordinateHistoryIndeks === 0 &&
+                      ps.coordinateHistory[ps.coordinateHistoryIndeks]
+                        .coordinateRevisionType === undefined)
+                  ) {
+                    return {
+                      ...ps,
+                      editCoorditeMode: false,
+                      coordinateHistoryIndeks: ps.coordinateHistory.length - 1,
+                      coordinateHistory: [
+                        ...ps.coordinateHistory.slice(0, ps.coordinateHistoryIndeks),
+                        {
+                          ...ps.coordinateHistory[ps.coordinateHistoryIndeks],
+                          coordinateRevisionType: revType,
+                          coordinate: ps.editingCoordinate
+                        },
+                        ...ps.coordinateHistory.slice(ps.coordinateHistoryIndeks + 1)
+                      ]
+                    };
+                  }
+
                   return {
                     ...ps,
                     coordinateHistoryIndeks: ps.coordinateHistoryIndeks + 1,
