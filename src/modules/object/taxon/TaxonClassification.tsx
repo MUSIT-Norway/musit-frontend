@@ -217,9 +217,9 @@ class SexAndStage implements ISexAndStage {
 }
 
 interface ISexAndStagesClassification {
-  sexAndStages: ISexAndStage[];
-  editingSexAndStage: ISexAndStage;
-  editingIndex: number;
+  sexAndStages?: ISexAndStage[];
+  editingSexAndStage?: ISexAndStage;
+  editingIndex?: number;
   det?: IDet;
   note?: string;
   getEventType?: () => string;
@@ -231,6 +231,7 @@ interface ISexAndStagesClassification {
 type SexAndLifeStageProps = ISexAndStagesClassification & {
   onChangeNoteField: (value: string) => void;
   onAddSexAndLifeStage: () => void;
+  onSaveSexAndLifeStage: () => void;
   setEditingIndex: (i: number) => void;
   onDelete: (i: number) => void;
   onChangeBooleanValue: (index: number) => (fieldName: string) => void;
@@ -257,13 +258,13 @@ type TaxonClassificationProps = ITaxonClassification & {
 const appSession = { museumId: 99 };
 
 export class SexAndStagesClassification implements ISexAndStagesClassification {
-  sexAndStages: ISexAndStage[];
-  editingSexAndStage: ISexAndStage;
-  editingIndex: number;
+  sexAndStages?: ISexAndStage[];
+  editingSexAndStage?: ISexAndStage;
+  editingIndex?: number;
   det?: IDet;
   note?: string;
   constructor(sexAndStagesClass: ISexAndStagesClassification) {
-    this.sexAndStages = sexAndStagesClass.sexAndStages.map(
+    this.sexAndStages = (sexAndStagesClass.sexAndStages || []).map(
       (s: ISexAndStage) => new SexAndStage(s)
     );
     this.editingIndex = sexAndStagesClass.editingIndex;
@@ -404,7 +405,7 @@ export class DetTable extends React.Component<DetProps> {
         )}
         {this.props.editingDet && (
           <div className="row">
-            <div className="col-md-12">
+            <div className="col-md-9">
               {' '}
               <div className="form-group">
                 <label htmlFor="personName">Det</label>
@@ -419,6 +420,22 @@ export class DetTable extends React.Component<DetProps> {
                       this.props.onChangePerson('personName')(e.target.value);
                   }}
                 />
+              </div>
+            </div>
+            <div className="col-md-3">
+              <div style={{ textAlign: 'left', verticalAlign: 'bottom' }}>
+                <label htmlFor="btnAddPerson">Create new</label>
+                <button
+                  type="button"
+                  className="btn btn-default form-control"
+                  onClick={e => {
+                    e.preventDefault();
+                    this.props.onAddPerson();
+                  }}
+                  id="btnAddPerson"
+                >
+                  <FontAwesome name="user-plus" />
+                </button>
               </div>
             </div>
           </div>
@@ -463,11 +480,11 @@ export class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> 
     return (
       <div>
         {this.props.sexAndStages &&
-          this.props.sexAndStages.length > 1 && (
+          this.props.sexAndStages.length > 0 && (
             <table className="table table-condensed table-hover">
               <thead>
                 <tr>
-                  <th>Sex</th>
+                  <th> Sex</th>
                   <th> Stage</th>
                   <th> Count</th>
                   <th> Estimated count</th>
@@ -476,6 +493,12 @@ export class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> 
                 </tr>
               </thead>
               <tbody>
+                {console.log(
+                  'anuradha &&&&&&&& ',
+                  this.props.sexAndStages,
+                  '  ',
+                  this.props.sexAndStages.length
+                )}
                 {this.props.sexAndStages.map((t: SexAndStage, i: number) => {
                   return (
                     <tr
@@ -514,106 +537,126 @@ export class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> 
               </tbody>
             </table>
           )}
-        <div className="row">
-          <div className="col-md-3">
-            <div className="form-group">
-              <label htmlFor="sex">Sex</label>
-              <select
-                className="form-control"
-                onChange={e => {
-                  e.preventDefault();
-                  this.props.onChangeSexAndLifeStageField('sex')(e.target.value);
-                }}
-                value={
-                  this.props.editingSexAndStage && this.props.editingSexAndStage.sex
-                    ? this.props.editingSexAndStage.sex
-                    : ''
-                }
-              >
-                {sexList.map((t, i) => (
-                  <option key={i + 'term-option'} value={t.code}>
-                    {t.term}
-                  </option>
-                ))}
-              </select>
+        {this.props.editingSexAndStage && (
+          <div className="row">
+            <div className="col-md-3">
+              <div className="form-group">
+                <label htmlFor="sex">Sex</label>
+                <select
+                  className="form-control"
+                  onChange={e => {
+                    e.preventDefault();
+                    this.props.onChangeSexAndLifeStageField('sex')(e.target.value);
+                  }}
+                  value={
+                    this.props.editingSexAndStage && this.props.editingSexAndStage.sex
+                      ? this.props.editingSexAndStage.sex
+                      : ''
+                  }
+                >
+                  {sexList.map((t, i) => (
+                    <option key={i + 'term-option'} value={t.code}>
+                      {t.term}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
-          </div>
-          <div className="col-md-3">
-            <div className="form-group">
-              <label htmlFor="stage">Stage</label>
+            <div className="col-md-3">
+              <div className="form-group">
+                <label htmlFor="stage">Stage</label>
 
-              <select
-                className="form-control"
-                onChange={e => {
-                  e.preventDefault();
-                  this.props.onChangeSexAndLifeStageField('stage')(e.target.value);
-                }}
-                value={
-                  this.props.editingSexAndStage && this.props.editingSexAndStage.stage
-                    ? this.props.editingSexAndStage.stage
-                    : ''
-                }
-              >
-                {stadiumList.map((t, i) => (
-                  <option key={i + 'key'} value={t.code}>
-                    {t.term}
-                  </option>
-                ))}
-              </select>
+                <select
+                  className="form-control"
+                  onChange={e => {
+                    e.preventDefault();
+                    this.props.onChangeSexAndLifeStageField('stage')(e.target.value);
+                  }}
+                  value={
+                    this.props.editingSexAndStage && this.props.editingSexAndStage.stage
+                      ? this.props.editingSexAndStage.stage
+                      : ''
+                  }
+                >
+                  {stadiumList.map((t, i) => (
+                    <option key={i + 'key'} value={t.code}>
+                      {t.term}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div className="col-md-2">
+              <div className="form-group">
+                <label htmlFor="count">Count</label>
+                <input
+                  id="count"
+                  className="form-control"
+                  value={
+                    this.props.editingSexAndStage && this.props.editingSexAndStage.count
+                      ? this.props.editingSexAndStage.count
+                      : ''
+                  }
+                  onChange={e => {
+                    e.preventDefault();
+                    this.props.onChangeSexAndLifeStageField('count')(e.target.value);
+                  }}
+                />
+              </div>
+            </div>
+            <div className="col-md-2">
+              <div className="form-group">
+                <label htmlFor="count" />
+                <CheckBox
+                  id="checkbox-estimated"
+                  checked={
+                    this.props.editingSexAndStage &&
+                    this.props.editingSexAndStage.estimatedCount
+                      ? true
+                      : false
+                  }
+                  displayValue=" Estimated?"
+                  onChange={() =>
+                    this.props.onChangeBooleanValue(
+                      this.props.editingIndex ? this.props.editingIndex : 0
+                    )('estimatedCount')
+                  }
+                />
+              </div>
             </div>
           </div>
-          <div className="col-md-2">
-            <div className="form-group">
-              <label htmlFor="count">Count</label>
-              <input
-                id="count"
-                className="form-control"
-                value={
-                  this.props.editingSexAndStage && this.props.editingSexAndStage.count
-                    ? this.props.editingSexAndStage.count
-                    : ''
-                }
-                onChange={e => {
-                  e.preventDefault();
-                  this.props.onChangeSexAndLifeStageField('count')(e.target.value);
-                }}
-              />
-            </div>
-          </div>
-          <div className="col-md-2">
-            <div className="form-group">
-              <label htmlFor="count" />
-              <CheckBox
-                id="checkbox-estimated"
-                checked={
-                  this.props.editingSexAndStage &&
-                  this.props.editingSexAndStage.estimatedCount
-                    ? true
-                    : false
-                }
-                displayValue=" Estimated?"
-                onChange={() =>
-                  this.props.onChangeBooleanValue(this.props.editingIndex)(
-                    'estimatedCount'
-                  )
-                }
-              />
-            </div>
-          </div>
+        )}
+        <div className="row">
           <div className="col-md-1">
             <div className="form-group">
-              <label htmlFor="btnAddSexAndStage">Add new</label>
-
+              <label htmlFor="btnAddSexAndStage" />
               <button
                 type="button"
                 className="btn btn-default btn-sm form-control"
                 id="btnAddSexAndStage"
+                disabled={this.props.editingSexAndStage !== undefined}
                 onClick={e => {
                   e.preventDefault();
                   this.props.onAddSexAndLifeStage();
                 }}
               >
                 Add
+              </button>
+            </div>
+          </div>
+          <div className="col-md-1">
+            <div className="form-group">
+              <button
+                type="button"
+                className="btn btn-default btn-sm form-control"
+                id="btnSaveSexAndStage"
+                disabled={this.props.editingSexAndStage === undefined}
+                onClick={e => {
+                  e.preventDefault();
+                  this.props.onSaveSexAndLifeStage();
+                }}
+              >
+                Save
               </button>
             </div>
           </div>
@@ -764,6 +807,12 @@ class TaxonTable extends React.Component<TaxonClassificationProps> {
                       </tr>
                     </thead>
                     <tbody>
+                      {console.log(
+                        'anuradha &&&&&&&& ',
+                        this.props.taxonNames,
+                        '  ',
+                        this.props.taxonNames.length
+                      )}
                       {this.props.taxonNames.map((t: ITaxonTerm, i: number) => {
                         return (
                           <tr
@@ -933,7 +982,7 @@ export class TaxonComponent extends React.Component<TaxonClassificationProps> {
                 <TaxonTable {...this.props} />
               </div>
             </div>
-            <div className="row"> </div>
+            <br />
             <div className="row">
               <div className="col-md-2">
                 <div className="form-group">
@@ -978,7 +1027,7 @@ export class TaxonComponent extends React.Component<TaxonClassificationProps> {
             <div className="row">
               <div className="col-md-8">
                 <div className="form-group">
-                  <label htmlFor="taxonNote">Note</label>Revison
+                  <label htmlFor="taxonNote">Note</label>
                   <textarea
                     className="form-control"
                     id="taxonNote"
@@ -997,7 +1046,7 @@ export class TaxonComponent extends React.Component<TaxonClassificationProps> {
           </div>
           <div className="col-md-4">
             <div className="row">
-              <div className="col-md-9">
+              <div className="col-md-12">
                 <DetTable
                   {...this.props.det}
                   onAddPerson={this.props.onAddPerson}
@@ -1006,22 +1055,6 @@ export class TaxonComponent extends React.Component<TaxonClassificationProps> {
                   onChangePerson={this.props.onChangePerson}
                   setDetEditingIndex={this.props.setDetEditingIndex}
                 />
-              </div>
-              <div className="col-md-3">
-                <div style={{ textAlign: 'left', verticalAlign: 'bottom' }}>
-                  <label htmlFor="btnAddPerson">Create new</label>
-                  <button
-                    type="button"
-                    className="btn btn-default form-control"
-                    onClick={e => {
-                      e.preventDefault();
-                      this.props.onAddPerson();
-                    }}
-                    id="btnAddPerson"
-                  >
-                    <FontAwesome name="user-plus" />
-                  </button>
-                </div>
               </div>
             </div>
           </div>
@@ -1109,7 +1142,6 @@ export default class ClassificationComponent extends React.Component<Props, ISta
             det: { editingIndex: 0, editingDet: {} }
           }),
           new SexAndStagesClassification({
-            sexAndStages: [{}],
             editingIndex: 0,
             editingSexAndStage: {}
           })
@@ -1220,6 +1252,7 @@ export default class ClassificationComponent extends React.Component<Props, ISta
                       currentClassification.editingIndex !== undefined
                         ? currentClassification.editingIndex
                         : 0;
+
                     const newClassification = new TaxonClassification({
                       ...currentClassification,
                       taxonNames: [
@@ -1255,7 +1288,6 @@ export default class ClassificationComponent extends React.Component<Props, ISta
                       currentClassificationIndex
                     ] as TaxonClassification;
                     const currentClassificationArray = ps.classifications.classifications;
-
                     const currentTaxName = currentClassification.editingName;
                     const newTaxName = new TaxonTerm({
                       ...currentTaxName,
@@ -1316,12 +1348,13 @@ export default class ClassificationComponent extends React.Component<Props, ISta
                     const currentClassification = ps.classifications.classifications[
                       currentClassificationIndex
                     ] as TaxonClassification;
+
                     const currentClassificationArray = ps.classifications.classifications;
                     const editingName = currentClassification.taxonNames
                       ? currentClassification.taxonNames[index]
                       : undefined;
                     if (editingName === undefined) {
-                      throw new Error('Empty taxon term table when settin index');
+                      throw new Error('Empty taxon term table when setting index');
                     }
                     const newClassification = new TaxonClassification({
                       ...currentClassification,
@@ -1671,35 +1704,38 @@ export default class ClassificationComponent extends React.Component<Props, ISta
                   this.setState((ps: State) => {
                     const currentSexAndStageIndex =
                       ps.classifications.currentSexAndStagesClassificationIndex;
+
                     const currentSexAndStagesClassification = ps.classifications
                       .classifications[
                       currentSexAndStageIndex
                     ] as ISexAndStagesClassification;
-                    const newCurrentSexAndStagesClassification = new SexAndStagesClassification(
-                      {
-                        ...currentSexAndStagesClassification,
-                        editingIndex: index,
-                        editingSexAndStage:
-                          currentSexAndStagesClassification.sexAndStages[index]
-                      }
-                    );
-                    const newCurrentClassifications = new Classifications({
-                      ...ps.classifications,
-                      classifications: [
-                        ...ps.classifications.classifications.slice(
-                          0,
-                          currentSexAndStageIndex
-                        ),
-                        newCurrentSexAndStagesClassification,
-                        ...ps.classifications.classifications.slice(
-                          currentSexAndStageIndex + 1
-                        )
-                      ]
+
+                    const currentClassificationArray = ps.classifications.classifications;
+                    const editingSexAndStage = currentSexAndStagesClassification.sexAndStages
+                      ? currentSexAndStagesClassification.sexAndStages[index]
+                      : undefined;
+
+                    if (editingSexAndStage === undefined) {
+                      throw new Error('Empty taxon term table when setting index');
+                    }
+
+                    const newClassification = new SexAndStagesClassification({
+                      ...currentSexAndStagesClassification,
+                      editingIndex: index,
+                      editingSexAndStage
                     });
+                    const newClassArray = [
+                      ...currentClassificationArray.slice(0, currentSexAndStageIndex),
+                      newClassification,
+                      ...currentClassificationArray.slice(currentSexAndStageIndex + 1)
+                    ];
 
                     return {
                       ...ps,
-                      classifications: newCurrentClassifications
+                      classifications: new Classifications({
+                        ...ps.classifications,
+                        classifications: newClassArray
+                      })
                     };
                   });
                 }}
@@ -1711,27 +1747,16 @@ export default class ClassificationComponent extends React.Component<Props, ISta
                       .classifications[
                       currentSexAndStageIndex
                     ] as ISexAndStagesClassification;
+                    const editingSexAndStage =
+                      currentSexAndStagesClassification.editingSexAndStage;
                     const newSexAndStage = new SexAndStage({
-                      ...currentSexAndStagesClassification.sexAndStages[index],
-                      [fieldName]: currentSexAndStagesClassification.sexAndStages[index][
-                        fieldName
-                      ]
-                        ? false
-                        : true
+                      ...editingSexAndStage,
+                      [fieldName]:
+                        editingSexAndStage && editingSexAndStage[fieldName] ? false : true
                     });
                     const newCurrentSexAndStagesClassification = new SexAndStagesClassification(
                       {
                         ...currentSexAndStagesClassification,
-                        sexAndStages: [
-                          ...currentSexAndStagesClassification.sexAndStages.slice(
-                            0,
-                            index
-                          ),
-                          newSexAndStage,
-                          ...currentSexAndStagesClassification.sexAndStages.slice(
-                            index + 1
-                          )
-                        ],
                         editingSexAndStage: newSexAndStage
                       }
                     );
@@ -1748,7 +1773,12 @@ export default class ClassificationComponent extends React.Component<Props, ISta
                         )
                       ]
                     });
-
+                    {
+                      console.log(
+                        'ANU: onChangeSexAndLifeStageField',
+                        newCurrentClassification
+                      );
+                    }
                     return {
                       ...ps,
                       classifications: newCurrentClassification
@@ -1756,7 +1786,7 @@ export default class ClassificationComponent extends React.Component<Props, ISta
                   });
                 }}
                 onChangeSexAndLifeStageField={(fieldName: string) => (
-                  value: string | number
+                  value: string | number | boolean
                 ) => {
                   this.setState((ps: State) => {
                     const currentSexAndStageIndex =
@@ -1765,29 +1795,16 @@ export default class ClassificationComponent extends React.Component<Props, ISta
                       .classifications[
                       currentSexAndStageIndex
                     ] as ISexAndStagesClassification;
-                    const editingIndex = currentSexAndStagesClassification.editingIndex;
                     const newSexAndStage = new SexAndStage({
                       ...currentSexAndStagesClassification.editingSexAndStage,
                       [fieldName]: value
                     });
-
                     const newCurrentSexAndStagesClassification = new SexAndStagesClassification(
                       {
                         ...currentSexAndStagesClassification,
-                        editingSexAndStage: newSexAndStage,
-                        sexAndStages: [
-                          ...currentSexAndStagesClassification.sexAndStages.slice(
-                            0,
-                            editingIndex
-                          ),
-                          newSexAndStage,
-                          ...currentSexAndStagesClassification.sexAndStages.slice(
-                            editingIndex + 1
-                          )
-                        ]
+                        editingSexAndStage: newSexAndStage
                       }
                     );
-
                     const newCurrentClassification = new Classifications({
                       ...ps.classifications,
                       classifications: [
@@ -1801,7 +1818,6 @@ export default class ClassificationComponent extends React.Component<Props, ISta
                         )
                       ]
                     });
-
                     return {
                       ...ps,
                       classifications: newCurrentClassification
@@ -1816,12 +1832,21 @@ export default class ClassificationComponent extends React.Component<Props, ISta
                       .classifications[
                       currentSexAndStageIndex
                     ] as ISexAndStagesClassification;
+
                     const currentSexAndStages =
                       currentSexAndStagesClassification.sexAndStages;
-                    const newSexAndStages = [
-                      ...currentSexAndStages.slice(0, i),
-                      ...currentSexAndStages.slice(i + 1)
-                    ];
+
+                    if (currentSexAndStages === undefined) {
+                      throw new Error('Undefined taxterm array');
+                    }
+
+                    const newSexAndStages =
+                      currentSexAndStages.length === 1
+                        ? undefined
+                        : [
+                            ...currentSexAndStages.slice(0, i),
+                            ...currentSexAndStages.slice(i + 1)
+                          ];
                     const newSexAndStagesClassification = new SexAndStagesClassification({
                       ...currentSexAndStagesClassification,
                       sexAndStages: newSexAndStages
@@ -1839,6 +1864,13 @@ export default class ClassificationComponent extends React.Component<Props, ISta
                         )
                       ]
                     });
+
+                    {
+                      console.log(
+                        'ANU: newCurrentClassifications : ',
+                        newCurrentClassifications
+                      );
+                    }
                     return {
                       ...ps,
                       classifications: newCurrentClassifications
@@ -1853,33 +1885,72 @@ export default class ClassificationComponent extends React.Component<Props, ISta
                       .classifications[
                       currentSexAndStageIndex
                     ] as ISexAndStagesClassification;
+                    const currentClassificationArray = ps.classifications.classifications;
                     const currentSexAndStages =
-                      currentSexAndStagesClassification.sexAndStages;
+                      currentSexAndStagesClassification.sexAndStages || [];
 
                     const newSexAndStage = new SexAndStage({});
-                    const newSexAndStages = [...currentSexAndStages, newSexAndStage];
+
+                    const newclassification = new SexAndStagesClassification({
+                      ...currentSexAndStagesClassification,
+                      editingIndex: currentSexAndStages.length,
+                      editingSexAndStage: newSexAndStage
+                    });
+
+                    const newClassArray = [
+                      ...currentClassificationArray.slice(0, currentSexAndStageIndex),
+                      newclassification,
+                      ...currentClassificationArray.slice(currentSexAndStageIndex + 1)
+                    ];
+                    return {
+                      ...ps,
+                      classifications: new Classifications({
+                        ...ps.classifications,
+                        classifications: newClassArray
+                      })
+                    };
+                  });
+                }}
+                onSaveSexAndLifeStage={() => {
+                  this.setState((ps: State) => {
+                    const currentClassificationArray = ps.classifications.classifications;
+                    const currentSexAndStageIndex =
+                      ps.classifications.currentSexAndStagesClassificationIndex;
+                    const currentClassification = ps.classifications.currentSexAndStagesClassification();
+                    const currentSexAndStagesClassification = ps.classifications
+                      .classifications[
+                      currentSexAndStageIndex
+                    ] as ISexAndStagesClassification;
+                    const editingindex =
+                      currentClassification.editingIndex !== undefined
+                        ? currentClassification.editingIndex
+                        : 0;
                     const newSexAndStagesClassification = new SexAndStagesClassification({
                       ...currentSexAndStagesClassification,
-                      sexAndStages: newSexAndStages,
-                      editingSexAndStage: newSexAndStage,
-                      editingIndex: newSexAndStages.length - 1
+                      sexAndStages: [
+                        ...(currentClassification.sexAndStages || []).slice(
+                          0,
+                          editingindex
+                        ),
+                        currentClassification.editingSexAndStage || {},
+                        ...(currentClassification.sexAndStages || []).slice(
+                          editingindex + 1
+                        )
+                      ],
+                      editingSexAndStage: undefined,
+                      editingIndex: undefined
                     });
-                    const newCurrentClassifications = new Classifications({
+                    const newClassifications = new Classifications({
                       ...ps.classifications,
                       classifications: [
-                        ...ps.classifications.classifications.slice(
-                          0,
-                          currentSexAndStageIndex
-                        ),
+                        ...currentClassificationArray.slice(0, currentSexAndStageIndex),
                         newSexAndStagesClassification,
-                        ...ps.classifications.classifications.slice(
-                          currentSexAndStageIndex + 1
-                        )
+                        ...currentClassificationArray.slice(currentSexAndStageIndex + 1)
                       ]
                     });
                     return {
                       ...ps,
-                      classifications: newCurrentClassifications
+                      classifications: newClassifications
                     };
                   });
                 }}

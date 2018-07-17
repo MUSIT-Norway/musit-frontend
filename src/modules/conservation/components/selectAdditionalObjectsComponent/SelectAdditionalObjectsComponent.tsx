@@ -183,6 +183,8 @@ export class SelectAdditionalObjectsComponent extends React.Component<
       );
       const objects =
         (result &&
+          result.hits &&
+          result.hits.hits &&
           result.hits.hits.map(o => ({
             ...o._source //,
             //selected: false
@@ -218,8 +220,9 @@ export class SelectAdditionalObjectsComponent extends React.Component<
           <input
             type="text"
             className="form-control"
-            id="q"
+            id="query"
             onChange={v => {
+              v.persist();
               this.setState(() => ({ q: v.target.value }));
             }}
             onKeyPress={this.enterKey as TODO}

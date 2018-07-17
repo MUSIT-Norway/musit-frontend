@@ -508,7 +508,11 @@ export default function ConservationComponent(
 
   return (
     <div className="container">
-      <Loader loaded={!props.addMode && props.store ? props.store.conservation : true} />
+      <Loader
+        loaded={
+          !props.addMode && props.store ? props.store.conservation !== undefined : true
+        }
+      />
       {props.store && <Loader loaded={!props.store.loadingConservation} />}
       <h1>{I18n.t('musit.conservation.conservation')}</h1>
 

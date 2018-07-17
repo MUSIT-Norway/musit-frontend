@@ -45,6 +45,8 @@ export class ActorSuggestComponent extends React.Component<
   constructor(props: ActorSuggestProps) {
     super(props);
     this.requestSuggestionUpdate = this.requestSuggestionUpdate.bind(this);
+    this.clearSuggestionsRequested = this.clearSuggestionsRequested.bind(this);
+
     this.state = {
       value: this.props.value
     };
@@ -73,11 +75,16 @@ export class ActorSuggestComponent extends React.Component<
     }
   }
 
+  clearSuggestionsRequested() {
+    this.props.clear && this.props.clear();
+  }
+
   render() {
     return (
       <Autosuggest
         suggestions={(this.props.suggest as MUSTFIX).data || []}
         onSuggestionsFetchRequested={this.requestSuggestionUpdate}
+        onSuggestionsClearRequested={this.clearSuggestionsRequested}
         //TODO: Is this needed?: onSuggestionsUpdateRequested={this.requestSuggestionUpdate as TODO}
 
         /*TODO: disable doesn't exist in AutoSuggest, so I had to remove this: 
