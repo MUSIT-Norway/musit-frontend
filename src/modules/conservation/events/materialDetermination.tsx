@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
-import type { MaterialDeterminationProps } from '../../../types/conservation';
+import { MaterialDeterminationProps } from '../../../types/conservation';
 import SubEventComponentNote from '../components/subEventComponentNote';
 
 export default function MaterialDetermination(props: MaterialDeterminationProps) {
@@ -16,10 +16,10 @@ export default function MaterialDetermination(props: MaterialDeterminationProps)
           {// we have change the below code with component
           props.viewMode ? (
             <p className="form-control-static" id={`materiale_${props.index}`}>
-              {props.materialDetermination.materialInfo &&
-              props.materialDetermination.materialInfo.length > 0 &&
+              {props.materialInfo &&
+              props.materialInfo.length > 0 &&
               props.materialDeterminationList
-                ? props.materialDetermination.materialInfo.map(m => (
+                ? props.materialInfo.map(m => (
                     <div>
                       {' '}
                       {m.materialId + '  ' + m.materialExtra + '  ' + m.sorting}{' '}

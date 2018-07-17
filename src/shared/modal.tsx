@@ -49,7 +49,7 @@ export const showConfirm = (message: TODO, onYes: TODO) => {
   $dialog.dialog('open');
 };
 
-export const showModal = (title: TODO, componentToRender: TODO, closeFn: TODO) => {
+export const showModal = (title: TODO, componentToRender: TODO, closeFn?: TODO) => {
   closeModal();
 
   const $dialog = (__$dialog__ = (global as REMOVEJQUERY).$('<div>').dialog({

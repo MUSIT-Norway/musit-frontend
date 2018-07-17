@@ -1,12 +1,17 @@
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
-import type { ConditionAssessmentProps } from '../../../types/conservation';
+import { ConditionAssessmentProps, ConditionCodeType } from '../../../types/conservation';
 import SubEventComponentNote from '../components/subEventComponentNote';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
+import { AppSession } from '../../../types/appSession';
 
 export default function ConditionAssessment(props: ConditionAssessmentProps) {
   const suffix = ':';
-  const getDisplayNameForConditionCode = (v: number, conditionCodes, appSession) => {
+  const getDisplayNameForConditionCode = (
+    v: number,
+    conditionCodes: Array<ConditionCodeType>,
+    appSession: AppSession
+  ) => {
     const conditionCodeObj = conditionCodes.find(c => c.conditionCode === v);
     return appSession.language.isEn && conditionCodeObj
       ? conditionCodeObj.enCondition
@@ -26,7 +31,7 @@ export default function ConditionAssessment(props: ConditionAssessmentProps) {
         </label>
         <div className="col-md-9">
           {props.viewMode ? (
-            (props.conditionAssessment.conditionCode === null) | undefined ? (
+            props.conditionAssessment.conditionCode === null || undefined ? (
               ''
             ) : (
               <div style={{ paddingTop: '8px' }}>
@@ -41,7 +46,7 @@ export default function ConditionAssessment(props: ConditionAssessmentProps) {
             <DropdownButton
               bsStyle="default"
               title={
-                (props.conditionAssessment.conditionCode === null) | undefined
+                props.conditionAssessment.conditionCode === null || undefined
                   ? I18n.t(
                       'musit.conservation.events.conditionAssessment.chooseConditionAssessment'
                     )

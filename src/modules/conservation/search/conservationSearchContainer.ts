@@ -4,17 +4,18 @@ import { Observable } from 'rxjs';
 import { inject } from 'react-rxjs';
 import { conservationSearch } from '../../../models/conservation/conservationSearch';
 import createSearchStore from '../../../search/searchStore';
-import type { ChangePage } from '../../../search/searchStore';
+import { ChangePage } from '../../../search/searchStore';
 import appSession$ from '../../../stores/appSession';
 import { simpleGet } from '../../../shared/RxAjax';
 import ConservationSearchComponent from './conservationSearchComponent';
-import type { SearchResult } from 'types/search';
-import type { ConservationSearchProps } from 'models/conservation/conservationSearch';
-import type { History } from '../../../types/Routes';
+import { SearchResult } from '../../../types/search';
+import { ConservationSearchProps } from '../../../models/conservation/conservationSearch';
+import { History } from 'history';
 import Config from '../../../config';
 import { loadPredefinedConservationTypes } from '../../../stores/predefinedConservationLoader';
 import predefined$ from '../../../stores/predefinedConservation';
-import type { ConservationType } from '../../../types/conservation';
+import { ConservationType } from '../../../types/conservation';
+import { TODO, Maybe } from '../../../types/common';
 
 const searchEndpoint: (
   p: ConservationSearchProps
@@ -36,7 +37,7 @@ const stores = () =>
     predefined: p
   }));
 
-const props = (storeProps, upstream: { history: History }) => {
+const props = (storeProps: TODO, upstream: { history: History }) => {
   return {
     onSearch: () => {
       actions.setLoading$.next();
@@ -75,10 +76,10 @@ const props = (storeProps, upstream: { history: History }) => {
             )
           );
     },
-    getConservationTypeText: (id: number): ?string => {
-      const type: ?ConservationType =
+    getConservationTypeText: (id: number): Maybe<string> => {
+      const type: Maybe<ConservationType> =
         storeProps.predefined.conservationTypes &&
-        storeProps.predefined.conservationTypes.find(at => at.id === id);
+        storeProps.predefined.conservationTypes.find((at: TODO) => at.id === id);
       return type
         ? storeProps.appSession.language.isEn
           ? type.enName
@@ -86,7 +87,7 @@ const props = (storeProps, upstream: { history: History }) => {
         : null;
     },
     searchStore: storeProps.searchStore,
-    history: url => url && upstream.history.push(url),
+    history: (url: Maybe<string>) => url && upstream.history.push(url),
     appSession: storeProps.appSession
   };
 };

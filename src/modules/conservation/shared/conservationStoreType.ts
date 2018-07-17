@@ -1,6 +1,7 @@
 // @flow
-import type { ConservationCollection } from '../../../types/conservation';
+import { ConservationCollection } from '../../../types/conservation';
+import { Maybe } from '../../../types/common';
 
 export type Store = {
-  conservation?: ?ConservationCollection
+  conservation?: Maybe<ConservationCollection>;
 };

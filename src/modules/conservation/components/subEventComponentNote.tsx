@@ -1,10 +1,10 @@
-import React from 'react';
-import type { SubEventComponentNoteProps } from '../../../types/conservation';
+import * as React from 'react';
+import { SubEventComponentNoteProps } from '../../../types/conservation';
 import ObjectSelection from './objectSelection';
 import CollapsibleEvent from './CollapsibleEvent';
 import PersonRoleDate from '../../../components/person/PersonRoleDate';
 import ViewPersonRoleDate from '../../../components/person/ViewPersonRoleDate';
-import find from 'lodash/find';
+import { find } from 'lodash';
 import { FormFileSelect } from '../../../forms/components';
 import { saveBlob } from '../../../shared/download';
 import { getFileAsBlob } from '../../../models/conservation/documents';
@@ -12,6 +12,7 @@ import { I18n } from 'react-i18nify';
 import Toolbar from './Toolbar';
 import { showModal } from '../../../shared/modal';
 import SelectAdditionalObjectsComponent from './selectAdditionalObjectsComponent/SelectAdditionalObjectsComponent';
+import { TODO } from '../../../types/common';
 
 export default function SubEventComponentNote(props: SubEventComponentNoteProps) {
   const suffix = ':';
@@ -75,7 +76,7 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
                   return props.appSession.language.isEn ? role.enRole : role.noRole;
                 }}
                 roles={props.roleList ? props.roleList.map(e => e.roleId) : []}
-                showDateForRole={(roleName: string) => [1].some(e => e === roleName)}
+                showDateForRole={(roleName: string) => [].some(e => e === roleName)} //TODO: Check whether some roles should have dates displayed
               />
             )}
           </div>
@@ -97,7 +98,7 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
               id={`note_${props.index}`}
               value={props.subEvent.note}
               onChange={t => props.onChange('note')(t.target.value)}
-              rows="5"
+              rows={5}
               disabled={props.viewMode}
             />
           )}
@@ -112,9 +113,13 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
             labelSize="h4"
             labelAbove
             elementWidth={5}
-            value={props.subEvent.documents}
+            value={props.subEvent.documents as TODO}
             multiple={true}
-            onChange={files => files && props.onDocumentUpload(props.subEvent.id, files)}
+            onChange={files =>
+              files &&
+              props.onDocumentUpload &&
+              props.onDocumentUpload((props.subEvent as TODO).id, files)
+            }
           />
         </div>
       )}
@@ -135,7 +140,7 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
                   return (
                     <div key={fid}>
                       <a
-                        href
+                        href="#"
                         onClick={e => {
                           e.preventDefault();
                           getFileAsBlob(
@@ -174,7 +179,7 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
             key="btn-addObject"
             className="btn btn-primary"
             disabled={props.viewMode}
-            onClick={objects => addObjects(objects)}
+            onClick={objects => addObjects()}
             style={{ float: 'left', marginRight: 110 }}
           >
             {I18n.t('musit.texts.addObjects')}
@@ -183,7 +188,7 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
       <ObjectSelection
         affectedThingsWithDetailsMainEvent={props.affectedThingsWithDetailsMainEvent}
         affectedThingsSubEvent={props.subEvent.affectedThings}
-        affectedThingsSubEventOnChange={t =>
+        affectedThingsSubEventOnChange={(t: TODO[]) =>
           props.onChange('affectedThings')(t.map(s => s) || [])
         }
         viewMode={props.viewMode || props.objectsReadOnly}
@@ -192,21 +197,20 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
       <br />
       <br />
       <div
-        rel="tooltip"
+        //? rel="tooltip"
         title={
           props.isFormValid
-            ? null
+            ? undefined
             : `${I18n.t('musit.errorMainMessages.saveDisabled')}: ${
-                props.getStatusTextFromErrors
+                (props as TODO).getStatusTextFromErrors
               }`
         }
         className="wrap poptooltip"
       >
         <Toolbar
-          saveOnClick={e => props.onSave(e)}
-          cancelOnClick={e => props.onCancel(e)}
-          deleteOnClick={e => props.onDelete(e)}
-          editOnClick={e => props.onEdit(e)}
+          saveOnClick={(e: TODO) => (props as TODO).onSave(e)}
+          cancelOnClick={(e: TODO) => (props as TODO).onCancel(e)}
+          deleteOnClick={(e: TODO) => (props as TODO).onDelete(e)}
           {...toolbarBooleanParameter}
           md={11}
         />
@@ -216,7 +220,7 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
   return (
     <CollapsibleEvent
       eventName={props.eventName}
-      noteLabel
+      //TODO: ? noteLabel
       eventComponent={subEventComponentNote}
       expanded={props.expanded}
       toggleExpanded={props.toggleExpanded}

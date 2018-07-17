@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
-import type { ReportProps } from '../../../types/conservation';
+import { ReportProps } from '../../../types/conservation';
 import SubEventComponentNote from '../components/subEventComponentNote';
 
 export default function Report(props: ReportProps) {
@@ -22,7 +22,7 @@ export default function Report(props: ReportProps) {
               id={`archiveReference_${props.index}`}
               value={props.report.archiveReference}
               onChange={t => props.onChange('archiveReference')(t.target.value)}
-              rows="5"
+              //?rows="5"
               disabled={props.viewMode}
             />
           )}

@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
-import type { NoteProps } from '../../../types/conservation';
+import { NoteProps } from '../../../types/conservation';
 import SubEventComponentNote from '../components/subEventComponentNote';
 
 export default function Note(props: NoteProps) {

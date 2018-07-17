@@ -3,26 +3,26 @@ import { simpleGet, simplePost, simplePut, simpleDel } from '../../shared/RxAjax
 import { Observable, Subject } from 'rxjs';
 import { createStore } from 'react-rxjs';
 import { createAction } from '../../shared/react-rxjs-patch';
-import type { Reducer } from 'react-rxjs';
+import { Reducer } from 'react-rxjs';
 import MusitConservation from '../../models/conservation';
 import MusitActor from '../../models/actor';
 import MusitObject from '../../models/object';
-import flatten from 'lodash/flatten';
-import type { Callback, AjaxGet, AjaxPost, AjaxPut, AjaxDel } from '../../types/ajax';
-import type { AppSession } from '../../types/appSession';
-import type {
+import { flatten, find } from 'lodash';
+import { Callback, AjaxGet, AjaxPost, AjaxPut, AjaxDel } from '../../types/ajax';
+import { AppSession } from '../../types/appSession';
+import {
   ConservationStoreState,
   ConservationCollection,
   ObjectInfo,
   ConservationSave
 } from '../../types/conservation';
-import type { Actor } from '../../types/actor';
+import { Actor } from '../../types/actor';
 import Sample from '../../models/sample';
-import type { SampleType } from 'types/sample';
+import { SampleType } from '../../types/sample';
 import { KEEP_ALIVE } from '../../stores/constants';
-import find from 'lodash/find';
 import { uploadFile, getFiles } from '../../models/conservation/documents';
 import { sortBy } from 'lodash';
+import { Star, TODO, Maybe } from '../../types/common';
 
 export const initialState: ConservationStoreState = {
   loadingConservation: false,
@@ -33,10 +33,10 @@ type Flag = { ['loadingConservation']: boolean };
 
 const setLoading$: Subject<Flag> = createAction('setLoading$');
 
-const flagLoading = s => () => setLoading$.next(s);
+const flagLoading = (s: TODO) => () => setLoading$.next(s);
 
-export const getConservation$: Subject<*> = createAction('getConservation$');
-const getConservationAction$: Observable<*> = getConservation$
+export const getConservation$: Subject<Star> = createAction('getConservation$');
+const getConservationAction$: Observable<Star> = getConservation$
   .do(flagLoading({ loadingConservation: true }))
   .switchMap(props =>
     MusitConservation.getConservationById(simpleGet)(props).flatMap(
@@ -50,52 +50,59 @@ const getConservationAction$: Observable<*> = getConservation$
   );
 
 export type SaveProps = {
-  id: ?number,
-  appSession: AppSession,
-  data: ConservationSave,
-  callback: Callback<*>
+  id: Maybe<number>;
+  appSession: AppSession;
+  data: ConservationSave;
+  callback: Callback<Star>;
+  ajaxPost: TODO;
+  ajaxPut: TODO;
+  /*   ajaxPost: AjaxPost<TODO>;
+  ajaxPut: AjaxPut<TODO>;
+ */
 };
 export const saveConservation$: Subject<SaveProps> = createAction('saveConservation$');
-const saveConservationAction = (post, put) => props => {
+const saveConservationAction = (post: AjaxPost<TODO>, put: AjaxPut<TODO>) => (
+  props: TODO
+) => {
   return Observable.of(props)
     .do(flagLoading({ loadingConservation: true }))
     .flatMap(saveConservation(post, put))
     .do(flagLoading({ loadingConservation: false }));
 };
 
-export const uploadFile$: Subject<*> = createAction('uploadFile$');
+export const uploadFile$: Subject<Star> = createAction('uploadFile$');
 //const uploadFileAction = props => {
-const uploadFileAction = (post, put) => props => {
+const uploadFileAction = (post: TODO, put: TODO) => (props: TODO) => {
   return Observable.of(props)
     .do(flagLoading({ loadingConservation: true }))
     .flatMap(uploadDocumentAndSaveConservation(post, put))
     .do(flagLoading({ loadingConservation: false }));
 };
 
-export const updateConservation$: Subject<*> = createAction('updateConservation$');
-const updateConservationAction$: Observable<*> = updateConservation$
+export const updateConservation$: Subject<Star> = createAction('updateConservation$');
+const updateConservationAction$: Observable<Star> = updateConservation$
   .do(flagLoading({ loadingConservation: true }))
   .switchMap(MusitConservation.editConservationEvent(simplePut))
   .do(flagLoading({ loadingConservation: false }));
 
-export const deleteConservation$: Subject<*> = createAction('deleteConservation$');
-const deleteConservationAction$: Observable<*> = deleteConservation$.switchMap(
+export const deleteConservation$: Subject<Star> = createAction('deleteConservation$');
+const deleteConservationAction$: Observable<Star> = deleteConservation$.switchMap(
   MusitConservation.deleteConservationEvent(simpleDel)
 );
 
-export const clearStore$: Subject<*> = createAction('clearStore$');
+export const clearStore$: Subject<Star> = createAction('clearStore$');
 
 type Actions = {
-  saveConservation$: Subject<*>,
-  uploadFile$: Subject<*>,
-  setLoading$: Subject<Flag>,
-  getConservationAction$: Observable<*>,
-  updateConservationAction$: Observable<*>,
-  clearStore$: Subject<*>,
-  deleteConservationAction$: Subject<*>
+  saveConservation$: Subject<Star>;
+  uploadFile$: Subject<Star>;
+  setLoading$: Subject<Flag>;
+  getConservationAction$: Observable<Star>;
+  updateConservationAction$: Observable<Star>;
+  clearStore$: Subject<Star>;
+  deleteConservationAction$: Subject<Star>;
 };
 
-const sortSubEvents = data => {
+const sortSubEvents = (data: TODO) => {
   if (data && data.events && data.events.length > 1) {
     const sortedEvents = sortBy(data.events, o => o.id);
     return { ...data, events: sortedEvents };
@@ -106,25 +113,30 @@ const sortSubEvents = data => {
 
 export const reducer$ = (
   actions: Actions,
-  ajaxGet: AjaxGet<*>,
-  ajaxPost: AjaxPost<*>,
-  ajaxPut: AjaxPut<*>,
-  ajaxDel: AjaxDel<*>
+  ajaxGet: AjaxGet<Star>,
+  ajaxPost: AjaxPost<Star>,
+  ajaxPut: AjaxPut<Star>,
+  ajaxDel: AjaxDel<Star>
 ): Observable<Reducer<ConservationStoreState>> => {
   return Observable.merge(
-    actions.deleteConservationAction$.map(() => state => ({ ...state })),
+    actions.deleteConservationAction$.map(() => (state: ConservationStoreState) => ({
+      ...state
+    })),
     actions.saveConservation$
       .switchMap(saveConservationAction(ajaxPost, ajaxPut))
-      .map(saveResult => state => ({ ...state, saveResult })),
+      .map(saveResult => (state: ConservationStoreState) => ({ ...state, saveResult })),
     actions.uploadFile$
       .switchMap(uploadFileAction(ajaxPost, ajaxPut))
-      .map(saveResult => state => ({ ...state, saveResult })),
-    actions.setLoading$.map(loading => state => ({ ...state, ...loading })),
+      .map(saveResult => (state: ConservationStoreState) => ({ ...state, saveResult })),
+    actions.setLoading$.map(loading => (state: ConservationStoreState) => ({
+      ...state,
+      ...loading
+    })),
     actions.clearStore$.map(() => () => initialState),
     Observable.merge(
       actions.getConservationAction$,
       actions.updateConservationAction$
-    ).map(conservation => state => ({
+    ).map(conservation => (state: ConservationStoreState) => ({
       ...state,
       conservation: sortSubEvents(conservation)
     }))
@@ -139,12 +151,12 @@ export const store$ = (
     getConservationAction$,
     updateConservationAction$,
     clearStore$,
-    deleteConservationAction$
+    deleteConservationAction$: deleteConservationAction$ as TODO
   },
-  ajaxGet?: AjaxGet<*> = simpleGet,
-  ajaxPost?: AjaxPost<*> = simplePost,
-  ajaxPut?: AjaxPost<*> = simplePut,
-  ajaxDel?: AjaxDel<*> = simpleDel
+  ajaxGet: AjaxGet<Star> = simpleGet,
+  ajaxPost: AjaxPost<Star> = simplePost,
+  ajaxPut: AjaxPost<Star> = simplePut,
+  ajaxDel: AjaxDel<Star> = simpleDel
 ) =>
   createStore(
     'conservationStore',
@@ -157,21 +169,21 @@ const storeSingleton = store$();
 export default storeSingleton;
 
 type SampleTypes = {
-  [string]: Array<SampleType>
+  [key: string]: Array<SampleType>;
 };
 
 export function getConservationDetails(
-  ajaxGet: AjaxGet<*>,
-  ajaxPost: AjaxPost<*>,
+  ajaxGet: AjaxGet<Star>,
+  ajaxPost: AjaxPost<Star>,
   props: {
-    id: number,
-    museumId: number,
-    collectionId: string,
-    token: string,
-    callback?: Callback<*>,
-    sampleTypes: SampleTypes
+    id: number;
+    museumId: number;
+    collectionId: string;
+    token: string;
+    callback?: Callback<Star>;
+    sampleTypes: SampleTypes;
   }
-): (conservation: ConservationCollection) => Observable<*> {
+): (conservation: ConservationCollection) => Observable<Star> {
   return (conservation: ConservationCollection) =>
     MusitActor.getActors(ajaxPost)({
       actorIds: [conservation.registeredBy || '', conservation.updatedBy || '']
@@ -184,7 +196,7 @@ export function getConservationDetails(
           flatten(
             conservation.events &&
               conservation.events.map(
-                e => e.actorsAndRoles && e.actorsAndRoles.map(a => a.actorId)
+                e => e.actorsAndRoles && e.actorsAndRoles.map((a: TODO) => a.actorId)
               )
           )
         )
@@ -249,15 +261,15 @@ export function getConservationDetails(
 }
 
 type AjaxParams = {
-  museumId: number,
-  collectionId: string,
-  token: string,
-  sampleTypes: SampleTypes
+  museumId: number;
+  collectionId: string;
+  token: string;
+  sampleTypes: SampleTypes;
 };
 
 export function getEventObjectDetails(
   props: AjaxParams,
-  ajaxGet: AjaxGet<*>
+  ajaxGet: AjaxGet<Star>
 ): (t: any) => Observable<ObjectInfo> {
   return uuid => {
     const params = {
@@ -298,7 +310,7 @@ export function zipObjectInfoWithEvents(conservation: ConservationCollection) {
     }
     const events = conservation.events
       ? conservation.events.map(e => {
-          const od = arrayOfObjectDetails.find(objD => {
+          const od = arrayOfObjectDetails.find((objD: TODO) => {
             return (
               (objD.sampleData && objD.sampleData.objectId === e) ||
               (objD.objectData && objD.objectData.uuid === e)
@@ -342,20 +354,20 @@ export function getActorNamesAndRoles(
         actorId: ard.actorId,
         roleId: ard.roleId,
         date: ard.date,
-        actorName: a.fn
+        actorName: a && a.fn
       };
     });
   }
   return [];
 }
 
-const saveConservation = (ajaxPost, ajaxPut) => ({
+const saveConservation = (ajaxPost: AjaxPost<TODO>, ajaxPut: AjaxPut<TODO>) => ({
   id,
   result,
   appSession,
   data,
   callback
-}) => {
+}: TODO) => {
   const token = appSession.accessToken;
   const museumId = appSession.museumId;
   return getConservationUpsert(
@@ -374,7 +386,15 @@ const saveConservation = (ajaxPost, ajaxPut) => ({
   });
 };
 
-function getConservationUpsert(id, ajaxPut, museumId, data, token, ajaxPost, callback) {
+function getConservationUpsert(
+  id: TODO,
+  ajaxPut: AjaxPut<TODO>,
+  museumId: TODO,
+  data: TODO,
+  token: TODO,
+  ajaxPost: AjaxPost<TODO>,
+  callback: TODO
+) {
   return id
     ? MusitConservation.editConservationEvent(ajaxPut)({
         id,
@@ -391,7 +411,10 @@ function getConservationUpsert(id, ajaxPut, museumId, data, token, ajaxPost, cal
       });
 }
 
-const uploadDocumentAndSaveConservation = (ajaxPost, ajaxPut) => ({
+const uploadDocumentAndSaveConservation = (
+  ajaxPost: AjaxPost<TODO>,
+  ajaxPut: AjaxPut<TODO>
+) => ({
   eventId,
   parentEventId,
   museumId,
@@ -400,7 +423,7 @@ const uploadDocumentAndSaveConservation = (ajaxPost, ajaxPut) => ({
   files,
   data,
   callback
-}) => {
+}: TODO) => {
   if (!eventId) {
     return Observable.empty();
   }
@@ -408,7 +431,7 @@ const uploadDocumentAndSaveConservation = (ajaxPost, ajaxPut) => ({
   const files$ =
     files.length > 0
       ? Observable.forkJoin(
-          files.map(file =>
+          files.map((file: File) =>
             uploadFile({
               eventId: eventId,
               museumId: museumId,
@@ -420,21 +443,22 @@ const uploadDocumentAndSaveConservation = (ajaxPost, ajaxPut) => ({
         )
       : Observable.of([]);
 
-  return files$.flatMap(files => {
+  return files$.flatMap((files: File[]) => {
     const newFids = files.reduce((acc, f) => {
-      if (f.fid) {
-        return [...acc, f.fid];
+      if ((f as TODO).fid) {
+        return [...acc, (f as TODO).fid];
       }
       return acc;
     }, []);
-    const badFiles = files.filter(f => !f.fid);
-    const findEvent = data && data.events && data.events.find(f => f.id === eventId);
+    const badFiles = files.filter(f => !(f as TODO).fid);
+    const findEvent =
+      data && data.events && data.events.find((f: TODO) => f.id === eventId);
     const existingFids = findEvent ? findEvent.documents : [];
     const fids = existingFids.concat(newFids);
 
     const updatedEvent = { ...findEvent, documents: fids };
     const remaingEvents =
-      data && data.events && data.events.filter(f => f.id !== eventId);
+      data && data.events && data.events.filter((f: TODO) => f.id !== eventId);
     const newEvents = remaingEvents.concat(updatedEvent);
     const updatedData = { ...data, events: newEvents };
 
@@ -457,7 +481,7 @@ const uploadDocumentAndSaveConservation = (ajaxPost, ajaxPut) => ({
         if (callback && callback.onComplete) {
           callback.onComplete({
             id: eventId,
-            results: results.results,
+            results: (results as TODO).results,
             badFiles
           });
         }

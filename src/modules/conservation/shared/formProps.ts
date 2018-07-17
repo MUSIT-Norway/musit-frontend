@@ -1,27 +1,26 @@
 // @flow
 import { getObjects, getConservationCollection } from './submit';
 import { saveConservation$, deleteConservation$ } from '../conservationStore';
-import type { Location } from '../shared/submit';
+import { Location } from '../shared/submit';
 import { simplePost, simplePut, simpleGet } from '../../../shared/RxAjax';
-import MusitObject from '../../../models/object';
-import type { History } from '../../../types/Routes';
-import type { AppSession } from '../../../types/appSession';
+import { History } from 'history';
+import { AppSession } from '../../../types/appSession';
 
-import type { PredefinedConservation } from '../../../types/predefinedConservation';
-import type { Person } from '../../../types/person';
-import type {
+import { PredefinedConservation } from '../../../types/predefinedConservation';
+import { Person } from '../../../types/person';
+import {
   ConservationStoreState as Store,
   ConservationSubTypes,
   EditableValuesForm,
   FormData
 } from '../../../types/conservation';
-import type { DomEvent } from '../../../types/dom';
-import toArray from 'lodash/toArray';
-import type { ObjectData } from '../../../types/object';
+import { DomEvent } from '../../../types/dom';
+import { toArray } from 'lodash';
+import { ObjectData } from '../../../types/object';
 import { isFormValid } from '../../../forms/validators';
 import { emitError, emitSuccess } from '../../../shared/errors';
 import Config from '../../../config';
-import { sortBy } from 'lodash';
+import { sortBy, uniq } from 'lodash';
 import { Observable } from 'rxjs';
 import { getFormEvents, getFids } from './utils';
 import { uploadFile } from '../../../models/conservation/documents';
@@ -31,25 +30,26 @@ import {
   getCurrentMeasurementDataForObject,
   getConservationReport
 } from '../../../models/conservation/conservation';
-import uniq from 'lodash/uniq';
-import moment from 'moment';
+import * as moment from 'moment';
 import { I18n } from 'react-i18nify';
+import { TODO, Maybe, Exact, MUSTFIX } from '../../../types/common';
+import { AjaxPost, AjaxPut } from '../../../types/ajax';
 
-type FormProps = {|
-  updateForm: Function,
-  store: Store,
-  searchStore?: any,
-  appSession: AppSession,
-  form: FormData,
-  history: History,
-  predefinedConservation?: PredefinedConservation,
-  location: Location<Array<ObjectData>>
-|};
+type FormProps = Exact<{
+  updateForm: Function;
+  store: Store;
+  searchStore?: any;
+  appSession: AppSession;
+  form: FormData;
+  history: History;
+  predefinedConservation?: PredefinedConservation;
+  location: Location<Array<ObjectData>>;
+}>;
 
 export default function formProps(
   props: FormProps,
-  ajaxPost: Function = simplePost,
-  ajaxPut: Function = simplePut,
+  ajaxPost: AjaxPost<TODO> = simplePost,
+  ajaxPut: AjaxPut<TODO> = simplePut,
   ajaxGet: Function = simpleGet
 ) {
   return {
@@ -58,11 +58,12 @@ export default function formProps(
     objects: getObjects(toArray(props.form.affectedThings.value), props.location),
     updateStringField: updateStringField(props.updateForm),
     updateBooleanField: updateBooleanField(props.updateForm),
+    /*
     addNewObjectToSubEventAndProcess: addNewObjectToSubEventAndProcess(
       props.updateForm,
       props.appSession,
       ajaxGet
-    ),
+    ),*/
     updateArrayField: updateArrayField(props.updateForm),
     updateMultiSelectField: updateMultiSelectField(props.updateForm),
     updateConservationSubEvent: updateConservationSubEvent(props.updateForm),
@@ -236,6 +237,7 @@ function updateMultiSelectField(updateForm: Function) {
   };
 }
 
+/*
 function addNewObjectToSubEventAndProcess(
   updateForm: Function,
   appSession: AppSession,
@@ -254,6 +256,7 @@ function addNewObjectToSubEventAndProcess(
     };
   };
 }
+*/
 
 export function updateConservationSubEvent(updateForm: Function) {
   return (name: string, events: Array<ConservationSubTypes>, arrayIndex: number) => (
@@ -292,8 +295,8 @@ export function addObjectsToSubEvent(updateForm: Function) {
 
 function updatePersonsForSubEvent(updateForm: Function) {
   return (name: string, events: Array<ConservationSubTypes>, arrayIndex: number) => (v: {
-    name: string,
-    rawValue: Array<Person>
+    name: string;
+    rawValue: Array<Person>;
   }) => {
     updateForm({
       name,
@@ -306,7 +309,7 @@ function updatePersonsForSubEvent(updateForm: Function) {
   };
 }
 
-const sortSubEventsOnly = events => {
+const sortSubEventsOnly = (events: Maybe<TODO[]>) => {
   if (events && events.length > 1) {
     return sortBy(events, (o: any) => o.id);
   } else {
@@ -318,10 +321,10 @@ function onDocumentUpload(
   form: any,
   appSession: AppSession,
   location: Location<Array<ObjectData>>,
-  updateForm?: ?Function,
+  updateForm: Maybe<Function>,
   history: any
 ) {
-  return (eventId: number, files: any) => {
+  return (eventId: number, files: File[]) => {
     const files$ =
       files.length > 0
         ? // $FlowFixMe
@@ -339,11 +342,11 @@ function onDocumentUpload(
         : Observable.of([]);
     return files$.toPromise().then((r: any) => {
       if (r.length > 0) {
-        const formEvents: any = getFormEvents(form);
-        const fids: ?Array<string> = getFids(r);
+        const formEvents = getFormEvents(form); //TODO: It really seems like getFormEvents returns an array of string, but then we later access various properties of this?
+        const fids: Maybe<Array<string>> = getFids(r);
         const formEventsWithFiles = sortSubEventsOnly(
           formEvents.map(
-            e =>
+            (e: MUSTFIX) =>
               e.id === eventId
                 ? {
                     ...e,
@@ -367,8 +370,8 @@ async function addNewSubEvent(
   form: any,
   appSession: AppSession,
   location: Location<Array<ObjectData>>,
-  newSubEventsToCreate?: ?any,
-  updateForm?: ?Function
+  newSubEventsToCreate?: Maybe<any>,
+  updateForm?: Maybe<Function>
 ) {
   const formData = getConservationCollection(form, location);
   let newSubEvents = newSubEventsToCreate || [];
@@ -376,13 +379,11 @@ async function addNewSubEvent(
   if (newSubEvents[0].eventTypeId === measurementDeterminationTypeId) {
     let measurementevent;
     try {
-      measurementevent = JSON.parse(
-        await getCurrentMeasurementDataForObject(
-          newSubEvents[0].affectedThings,
-          appSession.museumId,
-          appSession.accessToken
-        )
-      );
+      measurementevent = JSON.parse((await getCurrentMeasurementDataForObject(
+        newSubEvents[0].affectedThings,
+        appSession.museumId,
+        appSession.accessToken
+      )) as TODO);
     } catch (error) {
       measurementevent = undefined;
     }
@@ -402,11 +403,11 @@ async function addNewSubEvent(
   return saveConservation$.next({
     id: form.id.value,
     appSession,
-    data,
+    data: data as TODO,
     ajaxPost: simplePost,
     ajaxPut: simplePut,
     callback: {
-      onComplete: props => {
+      onComplete: (props: TODO) => {
         // do nothing is there is no props
         if (!props) {
           return;
@@ -436,21 +437,25 @@ async function addNewSubEvent(
           ];
 
           // new sub event with default attributes
-          const newSubEventWithDefaultAttributes = re => ({
+          const newSubEventWithDefaultAttributes = (re: TODO) => ({
             ...re,
             actorsAndRoles: defaultActorsAndRoles,
             expanded: true
           });
 
           // return the from event if reponse has similar event
-          const foundOldEventId = (re, formEvents) =>
+          const foundOldEventId = (re: TODO, formEvents: TODO[]) =>
             formEvents.find(fe => fe.id === re.id);
 
           // get the new sub events from the response
-          const newSubEvents = respEvents.filter(re => !foundOldEventId(re, formEvents));
+          const newSubEvents = respEvents.filter(
+            (re: TODO) => !foundOldEventId(re, formEvents)
+          );
           // newAllEvents = old From event + only new reponse event
           const newAllEvents = sortSubEventsOnly(
-            formEvents.concat(newSubEvents.map(e => newSubEventWithDefaultAttributes(e)))
+            formEvents.concat(
+              newSubEvents.map((e: TODO) => newSubEventWithDefaultAttributes(e))
+            )
           );
 
           // update event with sorted events
@@ -477,7 +482,7 @@ async function addNewSubEvent(
           }
         }
       },
-      onFailure: err => {
+      onFailure: (err: TODO) => {
         emitError(err);
       }
     }
@@ -492,8 +497,8 @@ function onClickBack(props: any) {
 }
 
 type OnUnmountProps = {
-  clearForm: Function,
-  clearStore: Function
+  clearForm: Function;
+  clearStore: Function;
 };
 
 export const onUnmount = (props: OnUnmountProps) => {
@@ -516,9 +521,9 @@ function saveEditableValues(updateForm: Function, form: any, i: number) {
   });
 }
 
-function setIsUpdated(updateForm: Function, events: any, index?: number) {
+function setIsUpdated(updateForm: Function, events?: TODO[], index?: number) {
   if (events && events.length > 0) {
-    const eventsWithAttributes = events.map((e, i) => ({
+    const eventsWithAttributes = events.map((e: TODO, i: number) => ({
       ...e,
       isUpdated: i === index
     }));
@@ -578,7 +583,9 @@ function applyEditableValues(
   events: Array<ConservationSubTypes>
 ) {
   const rawValue =
-    editableValues && editableValues.rawValue ? editableValues.rawValue : events;
+    editableValues && (editableValues as MUSTFIX).rawValue
+      ? (editableValues as MUSTFIX).rawValue
+      : events;
   if (i && i === -1) {
     updateForm({
       name: 'caseNumber',
@@ -600,7 +607,7 @@ function applyEditableValues(
   }
 }
 
-function onCancel(updateForm) {
+function onCancel(updateForm: TODO) {
   return (form: any, arrayIndex: number) => (evt: DomEvent) => {
     evt.preventDefault();
     applyEditableValues(
@@ -643,7 +650,7 @@ export function onDelete(updateForm: Function, appSession: AppSession) {
               message: I18n.t('musit.conservation.confirmDelete')
             });
           },
-          onFailure: e => {
+          onFailure: (e: TODO) => {
             if (e.status === 403) {
               emitError({
                 type: 'deleteError',
@@ -665,11 +672,11 @@ export function onDelete(updateForm: Function, appSession: AppSession) {
 function onSave(
   form: any,
   appSession: AppSession,
-  history,
-  location,
-  ajaxPost,
-  ajaxPut,
-  updateForm
+  history: History,
+  location: TODO,
+  ajaxPost: AjaxPost<TODO>,
+  ajaxPut: AjaxPut<TODO>,
+  updateForm: TODO
 ) {
   return (evt: DomEvent) => {
     evt.preventDefault();
@@ -678,7 +685,7 @@ function onSave(
     saveConservation$.next({
       id: id,
       appSession,
-      data: id ? data : { ...data, isUpdated: true }, // on add of main event isUpdated is true
+      data: id ? (data as TODO) : { ...data, isUpdated: true }, // on add of main event isUpdated is true
       ajaxPost,
       ajaxPut,
       callback: {
@@ -718,7 +725,7 @@ function onSave(
                 const formEventsRawValue = form.events.rawValue;
                 const updatedEventId = formEventsRawValue[localUpdatedIndexValue].id;
                 const eventFromDb = props.response.events.find(
-                  event =>
+                  (event: TODO) =>
                     event.id === updatedEventId &&
                     event.eventTypeId === measurementDeterminationTypeId
                 );
@@ -761,7 +768,7 @@ function onSave(
             );
           }
         },
-        onFailure: err => {
+        onFailure: (err: TODO) => {
           emitError(err);
         }
       }

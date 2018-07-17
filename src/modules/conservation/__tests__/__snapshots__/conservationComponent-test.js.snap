@@ -5031,14 +5031,14 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
       <div
         className="col-md-2"
       >
-        <div
+        <button
           className="btn btn-default btn-md"
           disabled={false}
           onClick={true}
           type="button"
         >
           Ekspander delhendelser
-        </div>
+        </button>
       </div>
     </div>
     <div>
@@ -5053,7 +5053,6 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
         className="col-md-12"
       >
         <Treatment
-          addNewObjectToSubEventAndProcess="events"
           affectedThingsWithDetailsMainEvent={
             Array [
               Object {
@@ -7610,7 +7609,6 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
           viewMode={true}
         />
         <TechnicalDescription
-          addNewObjectToSubEventAndProcess="events"
           affectedThingsWithDetailsMainEvent={
             Array [
               Object {

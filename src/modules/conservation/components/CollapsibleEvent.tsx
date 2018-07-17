@@ -1,16 +1,16 @@
 // @flow
-import React from 'react';
-import FontAwesome from 'react-fontawesome';
+import * as React from 'react';
+import * as FontAwesome from 'react-fontawesome';
 import { borderStyle } from '../conservationComponent';
+import { MouseEventHandler } from 'react';
 
 type Props = {
-  eventName?: string,
-  eventComponent?: any,
-  eventDefaultState?: boolean,
-  expanded?: boolean,
-  editMode?: boolean,
-  index: number,
-  toggleExpanded: Function
+  eventName?: string;
+  eventComponent?: any;
+  eventDefaultState?: boolean;
+  expanded?: boolean;
+  editMode?: boolean;
+  toggleExpanded: MouseEventHandler;
 };
 
 export default function CollapsibleEvent(props: Props) {

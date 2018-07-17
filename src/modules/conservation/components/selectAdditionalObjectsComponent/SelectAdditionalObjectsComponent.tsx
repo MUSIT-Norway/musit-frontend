@@ -1,17 +1,17 @@
 // @flow
 
-import React from 'react';
+import * as React from 'react';
 import Modal from '../../../../components/modal/MusitModal';
-import PropTypes from 'prop-types';
+import * as PropTypes from 'prop-types';
 import { RxInjectLegacy as inject } from '../../../../shared/react-rxjs-patch';
 import appSession$ from '../../../../stores/appSession';
-import type { AppSession } from '../../../../types/appSession';
+import { AppSession } from '../../../../types/appSession';
 import Config from '../../../../config';
-import type { SearchResult } from 'types/search';
+import { SearchResult } from '../../../../types/search';
 import { ajaxGetRequest } from '../../../../shared/ajaxPromise';
-import type { CollectionId } from 'types/ids';
+import { CollectionId } from '../../../../types/ids';
 
-import range from 'lodash/range';
+import { range } from 'lodash';
 /* import {
   actions as searchActions,
   store$ as searchStore$
@@ -19,7 +19,8 @@ import range from 'lodash/range';
 import { I18n } from 'react-i18nify';
 
 import pullRight from '../../../../shared/pullRight';
-import cx from 'classnames';
+import * as cx from 'classnames';
+import { TODO } from '../../../../types/common';
 
 const data = {
   appSession$
@@ -29,11 +30,11 @@ const data = {
 type ChangePage = number; //  | 'next' | 'previous';
 
 type PaginationProps = {
-  onChangePage: (page: ChangePage) => void,
-  currentPage: number,
-  visiblePageCount: number,
-  objectsPerPage: number,
-  totalObjectCount: number
+  onChangePage: (page: ChangePage) => void;
+  currentPage: number;
+  visiblePageCount: number;
+  objectsPerPage: number;
+  totalObjectCount: number;
 };
 
 class Pagination extends React.Component<PaginationProps> {
@@ -48,7 +49,7 @@ class Pagination extends React.Component<PaginationProps> {
     this.props.onChangePage(newCurrentPage);
   };
 
-  render = () => {
+  render() {
     let firstVisible = this.firstVisiblePage();
     const lastVisible = Math.min(
       firstVisible + this.props.visiblePageCount - 1,
@@ -107,28 +108,28 @@ class Pagination extends React.Component<PaginationProps> {
         </nav>
       );
     }
-  };
+  }
 }
 
 type SelectAdditionalObjectsComponentProps = {
-  appSession: AppSession,
-  addObjects: Function // PropTypes.func.isRequired
+  appSession: AppSession;
+  addObjects: Function; // PropTypes.func.isRequired
 };
 
 type CurrentPageObject = {
-  id: any,
-  museumNo?: string,
-  subNo?: string,
-  term?: string
+  id: any;
+  museumNo?: string;
+  subNo?: string;
+  term?: string;
 }; // & any
 
 type SelectAdditionalObjectsComponentState = {
-  currentPageObjects: CurrentPageObject[], //The search result, with selected info etc as well.
-  q: string, //current value in search field
-  selectedObjects: Map<string, CurrentPageObject>,
-  esFrom: number,
-  currentPage: number,
-  totalObjectCount: number
+  currentPageObjects: CurrentPageObject[]; //The search result, with selected info etc as well.
+  q: string; //current value in search field
+  selectedObjects: Map<string, CurrentPageObject>;
+  esFrom: number;
+  currentPage: number;
+  totalObjectCount: number;
 };
 
 const objectsPerPage = 15;
@@ -167,10 +168,10 @@ export class SelectAdditionalObjectsComponent extends React.Component<
     });
   }
 
-  doSearch = async (newSearch: boolean, from?: number = 0) => {
+  doSearch = async (newSearch: boolean, from: number = 0) => {
     const soek = `*${this.state.q}*`;
     const esQuery = `museumNo:${soek} OR subNo:${soek} OR term:${soek}`;
-    (document.body: any).style.cursor = 'wait';
+    document.body.style.cursor = 'wait';
     try {
       const result = await executeSearch(
         esQuery,
@@ -194,7 +195,7 @@ export class SelectAdditionalObjectsComponent extends React.Component<
         selectedObjects: newSearch ? new Map() : this.state.selectedObjects
       }));
     } finally {
-      (document.body: any).style.cursor = 'default';
+      document.body.style.cursor = 'default';
     }
   };
 
@@ -209,7 +210,7 @@ export class SelectAdditionalObjectsComponent extends React.Component<
     }
   };
 
-  render = () => {
+  render() {
     const body = (
       <div>
         <div className="form-group">
@@ -221,7 +222,7 @@ export class SelectAdditionalObjectsComponent extends React.Component<
             onChange={v => {
               this.setState(() => ({ q: v.target.value }));
             }}
-            onKeyPress={this.enterKey}
+            onKeyPress={this.enterKey as TODO}
           />
         </div>
         <button
@@ -285,7 +286,7 @@ export class SelectAdditionalObjectsComponent extends React.Component<
     );
 
     return <Modal body={body} />;
-  };
+  }
 }
 
 export async function executeSearch(
@@ -308,7 +309,7 @@ export async function executeSearch(
     museumId,
     true
   );
-  const result = JSON.parse(await ajaxGetRequest(url, token));
+  const result = JSON.parse((await ajaxGetRequest(url, token)) as TODO);
   return result;
 }
 

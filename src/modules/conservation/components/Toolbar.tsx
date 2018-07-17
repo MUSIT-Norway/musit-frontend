@@ -1,15 +1,17 @@
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
+import { Maybe } from '../../../types/common';
+import { MouseEventHandler } from 'react';
 
 type Props = {
-  saveOnClick?: ?Function,
-  saveDisabled?: ?boolean,
-  cancelOnClick?: ?Function,
-  cancelDisabled?: ?boolean,
-  deleteOnClick?: ?Function,
-  deleteDisabled?: ?boolean,
-  deleteHide?: ?boolean,
-  md?: number
+  saveOnClick?: MouseEventHandler;
+  saveDisabled?: boolean;
+  cancelOnClick?: MouseEventHandler;
+  cancelDisabled?: boolean;
+  deleteOnClick?: MouseEventHandler;
+  deleteDisabled?: boolean;
+  deleteHide?: Maybe<boolean>;
+  md?: number;
 };
 export default function Toolbar({
   saveOnClick,

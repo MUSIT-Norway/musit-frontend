@@ -1,14 +1,14 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
 import MetaInformation from '../../components/metainfo';
 import ObjectTable from './components/expandableObjects';
 import { FormInput } from '../../forms/components';
-import type { History } from '../../types/Routes';
-import type { AppSession } from '../../types/appSession';
+import { History } from 'history';
+import { AppSession } from '../../types/appSession';
 import FieldMultiSelect from '../../forms/components/FieldMultiSelect';
-import type { PredefinedConservation } from '../../types/predefinedConservation';
-import type { ConservationSubTypes, FormData } from '../../types/conservation';
+import { PredefinedConservation } from '../../types/predefinedConservation';
+import { ConservationSubTypes, FormData } from '../../types/conservation';
 import Treatment from './events/treatment';
 import TechnicalDescription from './events/technicalDescription';
 import MeasurementDetermination from './events/measurementDetermination';
@@ -16,15 +16,14 @@ import StorageAndHandling from './events/storageAndHandling';
 import HseRisk from './events/hseRisk';
 import ConditionAssessment from './events/conditionAssessment';
 import Report from './events/report';
-import type { Location } from './shared/submit';
-import type { ObjectData } from '../../types/object';
+import { Location } from './shared/submit';
+import { ObjectData } from '../../types/object';
 import Toolbar from './components/Toolbar';
 import SingleObjectSelection from './components/SingleObjectSelection';
 import MaterialDetermination from './events/materialDetermination';
 import Note from './events/note';
 import {
   formatISOString,
-  conservationProcessTypeId,
   treatmentTypeId,
   technicalDescriptionTypeId,
   storageAndHandlingTypeId,
@@ -35,68 +34,70 @@ import {
   measurementDeterminationTypeId,
   noteTypeId
 } from '../../shared/util';
-import FontAwesome from 'react-fontawesome';
+import * as FontAwesome from 'react-fontawesome';
 import { sortBy, toLower, capitalize } from 'lodash';
-import { getCurrentMeasurementDataForObject } from '../../models/conservation/conservation';
-import Loader from 'react-loader';
+import * as Loader from 'react-loader';
+import { Maybe, Star, TODO } from '../../types/common';
+import { MouseEventHandler, FormEventHandler } from 'react';
 
 type ConservationProcessProps = {
-  id?: number,
-  caseNumber?: string,
-  objects?: Array<any>,
-  updateForm: Function,
-  updateArrayField: Function,
-  updateStringField: Function,
-  updateBooleanField: Function,
-  updateMultiSelectField: Function,
-  updatePersonsForSubEvent: Function,
-  updateConservationSubEvent: Function,
-  updateSingleObjectField: Function,
-  addObjectsToSubEvent: Function,
-  addNewObjectToSubEventAndProcess: Function,
-  getEventObjectDetails?: Function,
-  addAffectedThings: Function,
-  toggleExpanded: Function,
-  toggleSingleExpanded: Function,
-  toggleObjectsExpanded: Function,
-  searchStore: any,
-  doneBy?: string,
-  doneDate?: string,
-  note?: string,
-  form: FormData,
-  loadingConservation?: boolean,
-  history: History,
-  addNewSubEvent?: ?Function,
-  onClickBack?: Function,
-  clearForm?: Function,
-  setLoading?: Function,
-  isFormValid?: boolean,
-  store: *,
-  predefinedConservation: PredefinedConservation,
-  onDocumentUpload?: Function,
-  location: Location<Array<ObjectData>>,
-  onDelete: Function,
-  onEdit: Function,
-  onSave: Function,
-  onCancel: Function,
-  onChangeQueryParam?: Function,
-  onSearch?: Function,
-  match?: any,
-  downloadConservationReport?: Function,
-  addMode?: boolean
+  id?: number;
+  caseNumber?: string;
+  objects?: Array<any>;
+  updateForm: Function;
+  updateArrayField: Function;
+  updateStringField: Function;
+  updateBooleanField: Function;
+  updateMultiSelectField: Function;
+  updatePersonsForSubEvent: Function;
+  updateConservationSubEvent: Function;
+  updateSingleObjectField: Function;
+  addObjectsToSubEvent: Function;
+  //addNewObjectToSubEventAndProcess: Function,
+  getEventObjectDetails?: Function;
+  addAffectedThings: Function;
+  toggleExpanded: Function;
+  toggleSingleExpanded: Function;
+  toggleObjectsExpanded: Function;
+  searchStore: any;
+  doneBy?: string;
+  doneDate?: string;
+  note?: string;
+  form: FormData;
+  loadingConservation?: boolean;
+  history: History;
+  addNewSubEvent?: Maybe<Function>;
+  onClickBack?: MouseEventHandler;
+  clearForm?: Function;
+  clearStore?: Function;
+  setLoading?: Function;
+  isFormValid?: boolean;
+  store: Star;
+  predefinedConservation: PredefinedConservation;
+  onDocumentUpload?: Function;
+  location: Location<Array<ObjectData>>;
+  onDelete: Function;
+  onEdit: Function;
+  onSave: MouseEventHandler;
+  onCancel: MouseEventHandler;
+  onChangeQueryParam?: Function;
+  onSearch?: Function;
+  match?: any;
+  downloadConservationReport?: Function;
+  addMode?: boolean;
 };
 
 export type Props = ConservationProcessProps & {
-  appSession: AppSession
+  appSession: AppSession;
 };
 
 type ProcessFormProps = {
-  form: FormData,
-  updateStringField: Function,
-  onSubmit?: Function
+  form: FormData;
+  updateStringField: Function;
+  onSubmit?: FormEventHandler;
 };
 
-const commonAttributes = v => ({
+const commonAttributes = (v: TODO) => ({
   eventTypeId: v,
   note: '',
   affectedThings: [],
@@ -112,7 +113,7 @@ export function borderStyle(editMode: boolean) {
       border: '0.5px solid #0099ff',
       boxShadow: editMode ? '0px 0px 3px 0px #33adff' : ''
     };
-  }
+  } else return undefined;
 }
 
 function getStatusTextFromErrors(form: FormData) {
@@ -124,8 +125,8 @@ function getStatusTextFromErrors(form: FormData) {
 
 function createSubEvents(
   props: Props & {
-    form: FormData,
-    predefinedConservation: PredefinedConservation
+    form: FormData;
+    predefinedConservation: PredefinedConservation;
   }
 ) {
   return () => {
@@ -143,9 +144,11 @@ function createSubEvents(
     const affectedThings = [props.form.singleObjectSelected.value];
     const eventTypes =
       props.form.subEventTypes && props.form.subEventTypes.rawValue
-        ? props.form.subEventTypes.rawValue.split(',').map(t => Number.parseFloat(t))
-        : [];
-    const akk = eventTypes.reduce((acc, v) => {
+        ? (props.form.subEventTypes.rawValue as TODO)
+            .split(',')
+            .map((t: TODO) => Number.parseFloat(t))
+        : ([] as TODO[]);
+    const akk = eventTypes.reduce((acc: TODO[], v: TODO) => {
       switch (v) {
         case treatmentTypeId: {
           return acc.concat([
@@ -209,7 +212,7 @@ function createSubEvents(
               materials: [],
               actorsAndRoles: defaultActorsAndRoles,
               ...commonAttributes(v),
-              affectedThings: [].concat(affectedThings)
+              affectedThings: [].concat(affectedThings as TODO)
             }
           ]);
         }
@@ -218,7 +221,7 @@ function createSubEvents(
             {
               actorsAndRoles: defaultActorsAndRoles,
               ...commonAttributes(v),
-              affectedThings: [].concat(affectedThings),
+              affectedThings: [].concat(affectedThings as TODO),
               measurementData: {}
             }
           ]);
@@ -278,21 +281,22 @@ function renderSubEvent(
   const expanded =
     urlSubEventId &&
     expandOnView &&
-    props.form.events.value[ind].id &&
-    urlSubEventId === props.form.events.value[ind].id.toString()
+    props.form.events.value &&
+    (props.form.events.value[ind] as TODO).id &&
+    urlSubEventId === (props.form.events.value[ind] as TODO).id.toString()
       ? true
-      : props.form.events.value[ind].expanded;
+      : (props.form.events as TODO).value[ind].expanded;
 
   const extraAttributes = {
     viewMode: viewMode,
     onDelete: props.onDelete(
-      props.form.events.rawValue[ind].id,
+      (props.form.events as TODO).rawValue[ind].id,
       props.form.events.rawValue || [],
       ind
     ),
     onEdit: props.onEdit(props.form, ind),
     onSave: props.onSave,
-    onCancel: props.onCancel(props.form, ind),
+    onCancel: (props.onCancel as TODO)(props.form, ind),
     editable: props.form.editable && props.form.editable.rawValue,
     expanded: expanded,
     roleList: props.predefinedConservation.roleList,
@@ -308,12 +312,13 @@ function renderSubEvent(
       props.form.events.rawValue,
       ind
     ),
+    /*
     addNewObjectToSubEventAndProcess: props.addNewObjectToSubEventAndProcess(
       props.form.events.name,
       props.form.events.rawValue,
       ind,
       props.form.affectedThings.value
-    ),
+    ),*/
     onAddObjectsToSubEvent: props.addObjectsToSubEvent(
       props.form.events.name,
       props.form.events.value,
@@ -336,80 +341,83 @@ function renderSubEvent(
     getStatusTextFromErrors: getStatusTextFromErrors(props.form)
   };
 
+  /*Sorry about the REALLY ugly TODO casting below, but a deeper cleanup is needed in the conservation data-model in order to do it properly */
   if (eventType === treatmentTypeId) {
     return (
       <Treatment
         key={`treatment_${ind}`}
-        keywords={props.predefinedConservation.keywordList}
-        materials={props.predefinedConservation.materialList}
-        treatment={props.form.events.rawValue[ind]}
-        {...extraAttributes}
+        keywords={props.predefinedConservation.keywordList as TODO}
+        materials={props.predefinedConservation.materialList as TODO}
+        treatment={(props.form.events as TODO).rawValue[ind]}
+        {...extraAttributes as TODO}
       />
     );
   } else if (eventType === technicalDescriptionTypeId) {
     return (
       <TechnicalDescription
         key={`techincalDescription_${ind}`}
-        technicalDescription={props.form.events.rawValue[ind]}
-        {...extraAttributes}
+        technicalDescription={(props.form.events as TODO).rawValue[ind]}
+        {...extraAttributes as TODO}
       />
     );
   } else if (eventType === storageAndHandlingTypeId) {
     return (
       <StorageAndHandling
         key={`storageAndHandling_${ind}`}
-        storageAndHandling={props.form.events.rawValue[ind]}
-        {...extraAttributes}
+        storageAndHandling={(props.form.events as TODO).rawValue[ind]}
+        {...extraAttributes as TODO}
       />
     );
   } else if (eventType === hseRiskAssessmentTypeId) {
     return (
       <HseRisk
         key={`hseRisk_${ind}`}
-        hseRisk={props.form.events.rawValue[ind]}
-        {...extraAttributes}
+        hseRisk={(props.form.events as TODO).rawValue[ind]}
+        {...extraAttributes as TODO}
       />
     );
   } else if (eventType === conditionAssessmentTypeId) {
     return (
       <ConditionAssessment
         key={`conditionAssessment_${ind}`}
-        conditionAssessment={props.form.events.rawValue[ind]}
-        conditionCodes={props.predefinedConservation.conditionCodeList}
-        {...extraAttributes}
+        conditionAssessment={(props.form.events as TODO).rawValue[ind]}
+        conditionCodes={props.predefinedConservation.conditionCodeList as TODO}
+        {...extraAttributes as TODO}
       />
     );
   } else if (eventType === reportTypeId) {
     return (
       <Report
         key={`report_${ind}`}
-        report={props.form.events.rawValue[ind]}
-        {...extraAttributes}
+        report={(props.form.events as TODO).rawValue[ind]}
+        {...extraAttributes as TODO}
       />
     );
   } else if (eventType === materialDeterminationTypeId) {
     return (
       <MaterialDetermination
         key={`materialDetermination_${ind}`}
-        materialDeterminationList={props.predefinedConservation.materialDeterminationList}
-        materialDetermination={props.form.events.rawValue[ind]}
-        {...extraAttributes}
+        materialDeterminationList={
+          props.predefinedConservation.materialDeterminationList as TODO
+        }
+        materialDetermination={(props.form.events as TODO).rawValue[ind]}
+        {...extraAttributes as TODO}
       />
     );
   } else if (eventType === measurementDeterminationTypeId) {
     return (
       <MeasurementDetermination
         key={`measurementDetermination${ind}`}
-        measurementDetermination={props.form.events.rawValue[ind]}
-        {...extraAttributes}
+        measurementDetermination={(props.form.events as TODO).rawValue[ind]}
+        {...extraAttributes as TODO}
       />
     );
   } else if (eventType === noteTypeId) {
     return (
       <Note
         key={`note_${ind}`}
-        note={props.form.events.rawValue[ind]}
-        {...extraAttributes}
+        note={(props.form.events as TODO).rawValue[ind]}
+        {...extraAttributes as TODO}
       />
     );
   } else {
@@ -426,7 +434,7 @@ function ConservationProcessForm(props: ProcessFormProps) {
         style={{ marginLeft: -20 }}
       >
         <FormInput
-          field={props.form.caseNumber}
+          //? field={props.form.caseNumber}
           label={I18n.t('musit.conservation.caseNumber') + suffix}
           labelWidth={1}
           labelSize="h3"
@@ -462,8 +470,8 @@ function ViewConservationProcessForm(props: ProcessFormProps) {
 }
 export default function ConservationComponent(
   props: Props & {
-    form: FormData,
-    predefinedConservation: PredefinedConservation
+    form: FormData;
+    predefinedConservation: PredefinedConservation;
   }
 ) {
   const addMode = props.form.id.value ? false : true;
@@ -543,8 +551,10 @@ export default function ConservationComponent(
         key="btn-edit"
         className="btn btn-primary"
         disabled={
-          toolbarBooleanParameterMainEvent.editDisabled ||
-          !props.appSession.rolesForModules.collectionManagementWrite
+          !!(
+            toolbarBooleanParameterMainEvent.editDisabled ||
+            !props.appSession.rolesForModules.collectionManagementWrite
+          )
         }
         onClick={props.onEdit(props.form, -1)}
         title={
@@ -571,8 +581,8 @@ export default function ConservationComponent(
       )}
       <Toolbar
         saveOnClick={props.onSave}
-        cancelOnClick={props.onCancel(props.form, -1)}
-        {...toolbarBooleanParameterMainEvent}
+        cancelOnClick={(props.onCancel as TODO)(props.form, -1)}
+        {...toolbarBooleanParameterMainEvent as TODO}
         md={12}
       />
       <br />
@@ -615,7 +625,7 @@ export default function ConservationComponent(
           <div className="form-group">
             <div className="row">
               <div className="col-md-2">
-                <div
+                <button
                   key="btn-toggleExpanded"
                   type="button"
                   className="btn btn-default btn-md"
@@ -628,7 +638,7 @@ export default function ConservationComponent(
                   {expanded(props.form)
                     ? I18n.t('musit.conservation.doCollapse')
                     : I18n.t('musit.conservation.doExpand')}
-                </div>
+                </button>
               </div>
             </div>
             <div>
@@ -636,7 +646,7 @@ export default function ConservationComponent(
             </div>
             <div className="row">
               <div className="col-md-12">
-                {props.form.events.rawValue.map((v, i) => {
+                {(props.form.events as TODO).rawValue.map((v: TODO, i: number) => {
                   return renderSubEvent(props.appSession, i, v.eventTypeId, props);
                 })}
               </div>
@@ -668,7 +678,7 @@ export default function ConservationComponent(
         )}
         visible={
           props.form.subEventTypes &&
-          ['8', '9'].includes(props.form.subEventTypes.rawValue)
+          ['8', '9'].includes((props.form.subEventTypes as TODO).rawValue)
         }
       />
       <button
@@ -678,7 +688,7 @@ export default function ConservationComponent(
         disabled={
           !props.form.subEventTypes.value ||
           props.form.subEventTypes.value.split(',').length > 1 ||
-          (['8', '9'].includes(props.form.subEventTypes.rawValue) &&
+          (['8', '9'].includes((props.form.subEventTypes as TODO).rawValue) &&
             !props.form.singleObjectSelected.value)
         }
       >

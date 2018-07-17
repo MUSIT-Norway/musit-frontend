@@ -1,42 +1,43 @@
 // @flow
 
-import React from 'react';
+import * as React from 'react';
 import Pagination from '../../../search/components/pagination';
 import SearchStats from '../../../search/components/SearchStats';
 import { I18n } from 'react-i18nify';
 import ConservationInputFormComponent from './ConservationInputFormComponent';
-import type { SearchHit } from 'types/search';
-import type { SearchStoreState, ChangePage } from '../../../search/searchStore';
+import { SearchHit } from '../../../types/search';
+import { SearchStoreState, ChangePage } from '../../../search/searchStore';
 import './conservationSearchComponent.css';
-import moment from 'moment';
+import * as moment from 'moment';
 import pullRight from '../../../shared/pullRight';
-import FontAwesome from 'react-fontawesome';
+import * as FontAwesome from 'react-fontawesome';
 import { conservationProcessTypeId } from '../../../shared/util';
-import Loader from 'react-loader';
+import * as Loader from 'react-loader';
 import NavigateSearch from '../../../search/NavigateSearch';
-import type { AppSession } from '../../../types/appSession';
+import { AppSession } from '../../../types/appSession';
+import { Maybe } from '../../../types/common';
 
 const DateFormat = 'DD.MM.YYYY HH:mm';
 
 export type Methods = {
-  getConservationTypeText: (id: number) => ?string,
-  goToConservation: (id: number, subEventId: number) => void
+  getConservationTypeText: (id: number) => Maybe<string>;
+  goToConservation: (id: number, subEventId: number) => void;
 };
 
 export type ConservationSearchComoponentProps = {
-  onSearch: () => void,
-  onChangeQueryParam: (name: string, value: string) => void,
-  onChangePage: (page: ChangePage) => void,
-  searchStore: SearchStoreState,
-  history: () => void,
-  appSession: AppSession
+  onSearch: () => void;
+  onChangeQueryParam: (name: string, value: string) => void;
+  onChangePage: (page: ChangePage) => void;
+  searchStore: SearchStoreState;
+  history: () => void;
+  appSession: AppSession;
 } & Methods;
 
 export type ResultHitProps = {
-  icon: string,
-  header: string,
-  metaInfo: Array<string | React$Node>,
-  onClickHeader: () => void
+  icon: string;
+  header: string;
+  metaInfo: Array<string | JSX.Element>;
+  onClickHeader: () => void;
 };
 
 const ConservationResultHit = (props: ResultHitProps) => {
@@ -66,7 +67,7 @@ const ConservationResultHit = (props: ResultHitProps) => {
 
 const getResultHitProps = (
   props: {
-    hit: SearchHit
+    hit: SearchHit;
   } & Methods
 ): ResultHitProps => {
   if (props && props.hit && props.hit._source) {
@@ -95,7 +96,7 @@ const getResultHitProps = (
 
 const SearchHits = (
   props: {
-    hits: Array<SearchHit>
+    hits: Array<SearchHit>;
   } & Methods
 ) => {
   const goToConservation = props.goToConservation;
@@ -118,8 +119,8 @@ const RightAlignedPagination = pullRight(Pagination);
 
 const SearchResultItem = (
   props: {
-    onChangePage: (page: ChangePage) => void,
-    searchStore: SearchStoreState
+    onChangePage: (page: ChangePage) => void;
+    searchStore: SearchStoreState;
   } & Methods
 ) =>
   props.searchStore.result && props.searchStore.result.hits.total > 0 ? (
