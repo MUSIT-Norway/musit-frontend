@@ -404,7 +404,7 @@ export class DetTable extends React.Component<DetProps> {
         )}
         {this.props.editingDet && (
           <div className="row">
-            <div className="col-md-12">
+            <div className="col-md-9">
               {' '}
               <div className="form-group">
                 <label htmlFor="personName">Det</label>
@@ -419,6 +419,22 @@ export class DetTable extends React.Component<DetProps> {
                       this.props.onChangePerson('personName')(e.target.value);
                   }}
                 />
+              </div>
+            </div>
+            <div className="col-md-3">
+              <div style={{ textAlign: 'left', verticalAlign: 'bottom' }}>
+                <label htmlFor="btnAddPerson">Create new</label>
+                <button
+                  type="button"
+                  className="btn btn-default form-control"
+                  onClick={e => {
+                    e.preventDefault();
+                    this.props.onAddPerson();
+                  }}
+                  id="btnAddPerson"
+                >
+                  <FontAwesome name="user-plus" />
+                </button>
               </div>
             </div>
           </div>
@@ -933,7 +949,7 @@ export class TaxonComponent extends React.Component<TaxonClassificationProps> {
                 <TaxonTable {...this.props} />
               </div>
             </div>
-            <div className="row"> </div>
+            <br />
             <div className="row">
               <div className="col-md-2">
                 <div className="form-group">
@@ -978,7 +994,7 @@ export class TaxonComponent extends React.Component<TaxonClassificationProps> {
             <div className="row">
               <div className="col-md-8">
                 <div className="form-group">
-                  <label htmlFor="taxonNote">Note</label>Revison
+                  <label htmlFor="taxonNote">Note</label>
                   <textarea
                     className="form-control"
                     id="taxonNote"
@@ -997,7 +1013,7 @@ export class TaxonComponent extends React.Component<TaxonClassificationProps> {
           </div>
           <div className="col-md-4">
             <div className="row">
-              <div className="col-md-9">
+              <div className="col-md-12">
                 <DetTable
                   {...this.props.det}
                   onAddPerson={this.props.onAddPerson}
@@ -1006,22 +1022,6 @@ export class TaxonComponent extends React.Component<TaxonClassificationProps> {
                   onChangePerson={this.props.onChangePerson}
                   setDetEditingIndex={this.props.setDetEditingIndex}
                 />
-              </div>
-              <div className="col-md-3">
-                <div style={{ textAlign: 'left', verticalAlign: 'bottom' }}>
-                  <label htmlFor="btnAddPerson">Create new</label>
-                  <button
-                    type="button"
-                    className="btn btn-default form-control"
-                    onClick={e => {
-                      e.preventDefault();
-                      this.props.onAddPerson();
-                    }}
-                    id="btnAddPerson"
-                  >
-                    <FontAwesome name="user-plus" />
-                  </button>
-                </div>
               </div>
             </div>
           </div>
