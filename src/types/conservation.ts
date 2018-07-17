@@ -104,11 +104,12 @@ export type SubEventComponentNoteType = {
   toggleExpanded: Function;
   toggleSingleExpanded: Function;
   measurementData?: MeasurementData;
+  archiveReference?: string;
 };
 
 type SubEventComponentProps = {
   index?: number;
-  appSession?: AppSession;
+  appSession: AppSession;
   objects?: any;
   searchStore?: any;
   viewMode?: boolean;
@@ -119,12 +120,12 @@ type SubEventComponentProps = {
   onCancel?: Function;
   onChangePersonActorRole: Function;
   onAddAffectedThings: Function;
-  getEventObjectDetails: Function;
+  getEventObjectDetails?: Function;
   onAddObjectsToSubEvent: Function;
-  addNewObjectToSubEventAndProcess: Function;
+  //addNewObjectToSubEventAndProcess: Function;
   expanded?: boolean;
   toggleExpanded: MouseEventHandler<HTMLElement>;
-  actorsAndRoles: Array<Person>;
+  actorsAndRoles?: Array<Person>;
   roleList: Array<any>;
   extraAttributes?: Maybe<any>;
   affectedThingsWithDetailsMainEvent?: Maybe<Array<ObjectInfo>>;
@@ -176,6 +177,8 @@ export type NoteType = SubEventComponentNoteType;
 
 export type SubEventComponentNoteProps = {
   subEvent: SubEventComponentNoteType;
+  eventName: string; //Not sure whether it should be here or in SubEventComponentProps
+  noteLabel: string; //ditto
 } & SubEventComponentProps;
 
 export type TreatmentProps = {
@@ -212,7 +215,8 @@ export type ReportProps = {
 export type MaterialDeterminationProps = {
   materialDeterminationList: Array<any>;
   materialDetermination: SubEventComponentNoteType;
-} & MaterialDeterminationType;
+} & MaterialDeterminationType &
+  SubEventComponentProps; //Is the latter correct?
 
 export type NoteProps = {
   note: SubEventComponentNoteType;

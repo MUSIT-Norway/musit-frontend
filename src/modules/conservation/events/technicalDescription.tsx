@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
-import type { TechnicalDescriptionProps } from '../../../types/conservation';
+import { TechnicalDescriptionProps } from '../../../types/conservation';
 import SubEventComponentNote from '../components/subEventComponentNote';
 
 export default function TechnicalDescription(props: TechnicalDescriptionProps) {

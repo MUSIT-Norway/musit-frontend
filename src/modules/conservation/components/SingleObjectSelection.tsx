@@ -1,12 +1,13 @@
 //@flow
-import React from 'react';
-import type { ObjectInfo } from '../../../types/conservation';
+import * as React from 'react';
+import { ObjectInfo } from '../../../types/conservation';
+import { Maybe } from '../../../types/common';
 
 type Props = {
-  affectedThingsWithDetailsMainEvent?: ?Array<ObjectInfo>,
-  visible: boolean,
-  affectedThingSubEventOnChange: Function,
-  viewMode?: ?boolean
+  affectedThingsWithDetailsMainEvent?: Maybe<Array<ObjectInfo>>;
+  visible: boolean;
+  affectedThingSubEventOnChange: Function;
+  viewMode?: Maybe<boolean>;
 };
 
 export default function SingleObjectSelection(p: Props) {

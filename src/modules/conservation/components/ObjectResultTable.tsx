@@ -1,20 +1,22 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
-import type { AppSession } from '../../../types/appSession';
-import type { History } from '../../../types/Routes';
-import FontAwesome from 'react-fontawesome';
-import type { ObjectData } from '../../../types/object';
+import { AppSession } from '../../../types/appSession';
+import { History } from 'history';
+import * as FontAwesome from 'react-fontawesome';
+import { ObjectData } from '../../../types/object';
 import ViewOjectData from '../../objects/components/ViewObjectData';
+import { Star, Maybe } from '../../../types/common';
+import { styleWidth10 } from '../../../shared/util';
 
 type Props = {
-  data: Array<ObjectData & { expanded: boolean }>,
-  handleClickRow: (object: Object) => void,
-  updateForm?: Function,
-  extraAttributes?: *,
-  history: History,
-  appSession: AppSession,
-  viewMode?: ?boolean
+  data: Array<ObjectData & { expanded: boolean }>;
+  handleClickRow: (object: Object) => void;
+  updateForm?: Function;
+  extraAttributes?: Star;
+  history: History;
+  appSession: AppSession;
+  viewMode?: Maybe<boolean>;
 };
 
 export default function ObjectResultTable({
@@ -40,7 +42,7 @@ export default function ObjectResultTable({
           <th>{I18n.t('musit.objects.objectsView.musNo')}</th>
           <th>{I18n.t('musit.objects.objectsView.subNo')}</th>
           <th>{I18n.t('musit.analysis.term')}</th>
-          <th width={10}> </th>
+          <th style={styleWidth10}> </th>
         </tr>
       </thead>
       <tbody>
@@ -52,12 +54,12 @@ export default function ObjectResultTable({
                 onClick={() => enableResultForObject && handleClickRow(row)}
                 className={row.expanded ? 'expanded-row' : 'collapsed-row'}
               >
-                <td name="type" width={10}>
+                <td /*name="type"*/ style={styleWidth10}>
                   <span className="icon icon-musitobject" />
                 </td>
-                <td name="museumNo">{row.museumNo}</td>
-                <td name="subNo">{row.subNo}</td>
-                <td name="term">{row.term}</td>
+                <td /*name="museumNo"*/>{row.museumNo}</td>
+                <td /*name="subNo"*/>{row.subNo}</td>
+                <td /* name="term" */>{row.term}</td>
                 <td>
                   {enableResultForObject &&
                     (row.expanded ? (

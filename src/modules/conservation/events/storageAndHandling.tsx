@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
-import type { StorageAndHandlingProps } from '../../../types/conservation';
+import { StorageAndHandlingProps } from '../../../types/conservation';
 import SubEventComponentNote from '../components/subEventComponentNote';
 
 export default function StorageAndHandling(props: StorageAndHandlingProps) {
@@ -24,7 +24,7 @@ export default function StorageAndHandling(props: StorageAndHandlingProps) {
               id={`relativeHumidity_${props.index}`}
               value={props.storageAndHandling.relativeHumidity}
               onChange={t => props.onChange('relativeHumidity')(t.target.value)}
-              rows="5"
+              //? rows="5"
               disabled={props.viewMode}
             />
           )}
@@ -45,7 +45,7 @@ export default function StorageAndHandling(props: StorageAndHandlingProps) {
               id={`temperature_${props.index}`}
               value={props.storageAndHandling.temperature}
               onChange={t => props.onChange('temperature')(t.target.value)}
-              rows="5"
+              //? rows="5"
               disabled={props.viewMode}
             />
           )}
@@ -66,7 +66,7 @@ export default function StorageAndHandling(props: StorageAndHandlingProps) {
               id={`lightAndUvLevel_${props.index}`}
               value={props.storageAndHandling.lightLevel}
               onChange={t => props.onChange('lightLevel')(t.target.value)}
-              rows="5"
+              //? rows="5"
               disabled={props.viewMode}
             />
           )}
@@ -87,7 +87,7 @@ export default function StorageAndHandling(props: StorageAndHandlingProps) {
               id={`uvLevel_${props.index}`}
               value={props.storageAndHandling.uvLevel}
               onChange={t => props.onChange('uvLevel')(t.target.value)}
-              rows="5"
+              //? rows="5"
               disabled={props.viewMode}
             />
           )}

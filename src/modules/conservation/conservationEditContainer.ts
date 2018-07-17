@@ -7,14 +7,14 @@ import props, { onUnmount } from './shared/formProps';
 import lifeCycle from '../../shared/lifeCycle';
 import appSession$ from '../../stores/appSession';
 import store$, { clearStore$, getConservation$ } from './conservationStore';
-import type { Location } from './shared/submit';
-import type { History } from '../../types/Routes';
-import type { ObjectData } from '../../types/object';
+import { Location } from './shared/submit';
+import { History } from 'history';
+import { ObjectData } from '../../types/object';
 import predefinedConservation$ from '../../stores/predefinedConservation';
 import { loadCustomPredefinedConservationTypes } from '../../stores/predefinedConservationLoader';
 import Conservation from '../../models/conservation';
-import type { Field } from '../../forms/form';
-import type { ChangePage } from '../../search/searchStore';
+import { Field } from '../../forms/form';
+import { Star, TODO } from '../../types/common';
 
 // FIX ME below 4 lines
 //import type { Props } from './conservationComponent';
@@ -40,8 +40,8 @@ function storeFactory() {
 }
 
 function addProps(
-  storeProps: *,
-  upstream: { history: History, location: Location<Array<ObjectData>> }
+  storeProps: Star,
+  upstream: { history: History; location: Location<Array<ObjectData>> }
 ): Props {
   console.log('StoreProps', storeProps);
   const sharedProps = props({
@@ -86,6 +86,6 @@ const MountableConservationViewComponent = lifeCycle({
 
 export default loadCustomPredefinedConservationTypes(
   predefinedConservation$,
-  appSession$,
+  appSession$ as TODO,
   inject(storeFactory, addProps)(MountableConservationViewComponent)
 );

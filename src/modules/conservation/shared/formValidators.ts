@@ -1,7 +1,7 @@
 // @flow
 import * as revalidate from 'revalidate';
-import type { Person } from '../../../types/person';
-import type { ConservationSubTypes } from '../../../types/conservation';
+import { Person } from '../../../types/person';
+import { ConservationSubTypes } from '../../../types/conservation';
 import { I18n } from 'react-i18nify';
 
 export const subEventValidator = revalidate.createValidator(

@@ -36,20 +36,17 @@ exports[`ObjectSelection should render ObjectSelection as read only 1`] = `
         onClick={[Function]}
       >
         <td
-          name="type"
-          width={10}
+          style={
+            Object {
+              "width": 10,
+            }
+          }
         />
-        <td
-          name="museumNo"
-        >
+        <td>
           MusN11
         </td>
-        <td
-          name="subNo"
-        />
-        <td
-          name="term"
-        >
+        <td />
+        <td>
           Solsikke
         </td>
       </tr>
@@ -57,20 +54,17 @@ exports[`ObjectSelection should render ObjectSelection as read only 1`] = `
         onClick={[Function]}
       >
         <td
-          name="type"
-          width={10}
+          style={
+            Object {
+              "width": 10,
+            }
+          }
         />
-        <td
-          name="museumNo"
-        >
+        <td>
           MusN13
         </td>
-        <td
-          name="subNo"
-        />
-        <td
-          name="term"
-        >
+        <td />
+        <td>
           Makrellsopp
         </td>
       </tr>
@@ -123,8 +117,11 @@ exports[`ObjectSelection should render ObjectSelection for add and edit 1`] = `
         onClick={[Function]}
       >
         <td
-          name="type"
-          width={10}
+          style={
+            Object {
+              "width": 10,
+            }
+          }
         >
           <input
             checked={true}
@@ -133,17 +130,11 @@ exports[`ObjectSelection should render ObjectSelection for add and edit 1`] = `
             value=""
           />
         </td>
-        <td
-          name="museumNo"
-        >
+        <td>
           MusN11
         </td>
-        <td
-          name="subNo"
-        />
-        <td
-          name="term"
-        >
+        <td />
+        <td>
           Solsikke
         </td>
       </tr>
@@ -151,8 +142,11 @@ exports[`ObjectSelection should render ObjectSelection for add and edit 1`] = `
         onClick={[Function]}
       >
         <td
-          name="type"
-          width={10}
+          style={
+            Object {
+              "width": 10,
+            }
+          }
         >
           <input
             checked={true}
@@ -161,17 +155,11 @@ exports[`ObjectSelection should render ObjectSelection for add and edit 1`] = `
             value=""
           />
         </td>
-        <td
-          name="museumNo"
-        >
+        <td>
           MusN13
         </td>
-        <td
-          name="subNo"
-        />
-        <td
-          name="term"
-        >
+        <td />
+        <td>
           Makrellsopp
         </td>
       </tr>
@@ -179,8 +167,11 @@ exports[`ObjectSelection should render ObjectSelection for add and edit 1`] = `
         onClick={[Function]}
       >
         <td
-          name="type"
-          width={10}
+          style={
+            Object {
+              "width": 10,
+            }
+          }
         >
           <input
             checked={false}
@@ -189,17 +180,11 @@ exports[`ObjectSelection should render ObjectSelection for add and edit 1`] = `
             value=""
           />
         </td>
-        <td
-          name="museumNo"
-        >
+        <td>
           MusN20
         </td>
-        <td
-          name="subNo"
-        />
-        <td
-          name="term"
-        >
+        <td />
+        <td>
           Ukjent mygg
         </td>
       </tr>

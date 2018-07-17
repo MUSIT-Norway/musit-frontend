@@ -9,7 +9,7 @@ import { SearchResult } from '../../types/search';
 import { Maybe, Star, MUSTFIX } from '../../types/common';
 
 type SearchQuery = {
-  q: Maybe<string>;
+  q?: Maybe<string>;
 };
 
 export type ConservationSearchProps = {

@@ -1,19 +1,20 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import ObjectResultTable from './ObjectResultTable';
-import type { AppSession } from '../../../types/appSession';
-import type { History } from '../../../types/Routes';
+import { AppSession } from '../../../types/appSession';
+import { History } from 'history';
+import { Maybe, TODO } from '../../../types/common';
 
 type Props = {
-  data: Array<any>,
-  renderExpanded?: (props: { index: number, data: Object }) => React$Element<*>,
-  history: History,
-  appSession: AppSession,
-  viewMode?: ?boolean
+  data: Array<any>;
+  renderExpanded?: (props: { index: number; data: Object }) => JSX.Element;
+  history: History;
+  appSession: AppSession;
+  viewMode?: Maybe<boolean>;
 };
 
 type State = {
-  expandedRowIds: Array<string>
+  expandedRowIds: Array<string>;
 };
 
 export default class ExpandableObjectTable extends React.Component<Props, State> {
@@ -43,12 +44,12 @@ export default class ExpandableObjectTable extends React.Component<Props, State>
     return !!currentExpandedRows.find(er => er === rowId);
   }
 
-  static toRowId(row: Object) {
+  static toRowId(row: TODO) {
     return row.affectedThing || row.objectId || row.uuid;
   }
 
-  static mergeWithExpanded(data, expandedRowIds) {
-    return data.map(obj => ({
+  static mergeWithExpanded(data: TODO, expandedRowIds: TODO) {
+    return data.map((obj: TODO) => ({
       ...obj,
       result: { ...obj.result },
       expanded: ExpandableObjectTable.isRowIdExpanded(
@@ -68,7 +69,7 @@ export default class ExpandableObjectTable extends React.Component<Props, State>
         )}
         {...this.state}
         handleClickRow={this.handleRowClick.bind(this)}
-        toRowId={ExpandableObjectTable.toRowId}
+        //? toRowId={ExpandableObjectTable.toRowId}
         appSession={this.props.appSession}
         history={this.props.history}
         viewMode={this.props.viewMode}

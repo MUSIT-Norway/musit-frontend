@@ -3,7 +3,7 @@ import ConservationAddComponent from './conservationComponent';
 import { inject } from 'react-rxjs';
 import { createStore } from 'react-rxjs';
 import { Observable } from 'rxjs';
-import flowRight from 'lodash/flowRight';
+import { flowRight } from 'lodash';
 import conservationForm from './conservationForm';
 import props, { onUnmount } from './shared/formProps';
 import lifeCycle from '../../shared/lifeCycle';
@@ -11,23 +11,24 @@ import appSession$ from '../../stores/appSession';
 import store$, { clearStore$ } from './conservationStore';
 import { loadPredefinedConservationTypes } from '../../stores/predefinedConservationLoader';
 import predefinedConservation$ from '../../stores/predefinedConservation';
-import type { Props } from './conservationComponent';
-import type { Location } from './shared/submit';
-import type { History } from '../../types/Routes';
-import type { ObjectData } from '../../types/object';
+import { Props } from './conservationComponent';
+import { Location } from './shared/submit';
+import { History } from 'history';
+import { ObjectData } from '../../types/object';
 import { formatISOString } from '../../shared/util';
+import { Star, TODO } from '../../types/common';
 
 const { form$, updateForm$, clearForm$ } = conservationForm;
 
 function addProps(
-  storeProps: *,
-  upstream: { history: History, location: Location<Array<ObjectData>> }
+  storeProps: Star,
+  upstream: { history: History; location: Location<Array<ObjectData>> }
 ): Props {
   const sharedProps = props({
     ...storeProps,
     ...upstream,
     updateForm: updateForm$.next.bind(updateForm$)
-  });
+  }) as TODO;
   return {
     ...sharedProps,
     clearStore: clearStore$.next.bind(clearStore$),

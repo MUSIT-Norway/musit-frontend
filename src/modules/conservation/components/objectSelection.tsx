@@ -1,16 +1,18 @@
 //@flow
-import React from 'react';
+import * as React from 'react';
 import { I18n } from 'react-i18nify';
-import type { ObjectInfo } from '../../../types/conservation';
+import { ObjectInfo } from '../../../types/conservation';
+import { Maybe, TODO } from '../../../types/common';
+import { styleWidth10 } from '../../../shared/util';
 
 type Props = {
-  affectedThingsWithDetailsMainEvent?: ?Array<ObjectInfo>,
-  affectedThingsSubEvent?: Array<string>,
-  affectedThingsSubEventOnChange?: Function,
-  viewMode?: ?boolean
+  affectedThingsWithDetailsMainEvent?: Maybe<Array<ObjectInfo>>;
+  affectedThingsSubEvent?: Array<string>;
+  affectedThingsSubEventOnChange?: Function;
+  viewMode?: Maybe<boolean>;
 };
 
-const isChecked = (uuid, affectedThingsSubEvent): boolean =>
+const isChecked = (uuid: TODO, affectedThingsSubEvent: TODO[]): boolean =>
   uuid &&
   affectedThingsSubEvent &&
   affectedThingsSubEvent.filter(e => e === uuid).length > 0
@@ -28,7 +30,10 @@ const isCheckedAll = (
     ? true
     : false;
 
-const toggleSelection = (uuid, affectedThingsSubEvent): Array<string> => {
+const toggleSelection = (
+  uuid: TODO,
+  affectedThingsSubEvent: Array<TODO>
+): Array<string> => {
   if (uuid && affectedThingsSubEvent && affectedThingsSubEvent.includes(uuid))
     return affectedThingsSubEvent.filter(f => f !== uuid);
   else if (uuid && affectedThingsSubEvent && !affectedThingsSubEvent.includes(uuid))
@@ -79,7 +84,7 @@ export default function ObjectSelection({
                     affectedThingsWithDetailsMainEvent || [],
                     affectedThingsSubEvent || []
                   )}
-                  disabled={viewMode}
+                  disabled={!!viewMode}
                   onChange={() =>
                     affectedThingsSubEventOnChange &&
                     affectedThingsSubEventOnChange(
@@ -101,7 +106,7 @@ export default function ObjectSelection({
           {affectedThingsWithDetailsMainEvent ? (
             affectedThingsWithDetailsMainEvent.map((row: any, i: number) => {
               const rows = [
-                !isChecked(row.uuid && row.uuid, affectedThingsSubEvent) &&
+                !isChecked(row.uuid && row.uuid, affectedThingsSubEvent as TODO) &&
                 viewMode ? null : (
                   <tr
                     key={['objectRow', i].join('_')}
@@ -114,22 +119,22 @@ export default function ObjectSelection({
                       )
                     }
                   >
-                    <td name="type" width={10}>
+                    <td /*name="type"*/ style={styleWidth10}>
                       {!viewMode && (
                         <input
                           type="checkbox"
                           value=""
                           checked={isChecked(
                             row.uuid && row.uuid,
-                            affectedThingsSubEvent
+                            affectedThingsSubEvent as TODO
                           )}
-                          disabled={viewMode}
+                          disabled={!!viewMode}
                         />
                       )}
                     </td>
-                    <td name="museumNo">{row.museumNo}</td>
-                    <td name="subNo">{row.subNo}</td>
-                    <td name="term">{row.term}</td>
+                    <td /*name="museumNo"*/>{row.museumNo}</td>
+                    <td /* name="subNo" */>{row.subNo}</td>
+                    <td /* name="term" */>{row.term}</td>
                   </tr>
                 )
               ];
