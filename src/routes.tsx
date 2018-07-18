@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import {flowRight} from 'lodash';
+import { flowRight } from 'lodash';
 import { RxInjectLegacy as inject } from './shared/react-rxjs-patch';
 import * as PropTypes from 'prop-types';
 import { makeUrlAware } from './stores/appSession';
@@ -53,7 +53,7 @@ import ClassEventPage from './modules/object/taxon/TaxonClassification';
  * Helper components for the router
  */
 
-const extraProps = (Component:any, extraProps:any) => (originProps:any) => (
+const extraProps = (Component: any, extraProps: any) => (originProps: any) => (
   <Component {...Object.assign({}, originProps, extraProps)} />
 );
 
@@ -63,7 +63,8 @@ const extraProps = (Component:any, extraProps:any) => (originProps:any) => (
  * @param props that comes from the router
  * @param path that should be appended to the current route
  */
-const rt = (props:any, path:string) => replace(props.match.path + '/' + path, /(\/+)/g, '/');
+const rt = (props: any, path: string) =>
+  replace(props.match.path + '/' + path, /(\/+)/g, '/');
 
 /**
  * Route pages
@@ -79,7 +80,7 @@ const MusitRouter = () => (
   </BrowserRouter>
 );
 
-const AppPage = (props:any) => (
+const AppPage = (props: any) => (
   <AppComponent {...props} goTo={props.history.push}>
     <Switch>
       <Route exact path={rt(props, '/')} component={AboutPage} />
@@ -99,7 +100,7 @@ const AppPage = (props:any) => (
 const HomePage = scrollToTop(HomeView);
 const AboutPage = scrollToTop(AboutView);
 
-const MuseumAndCollectionPage = (props:object) => (
+const MuseumAndCollectionPage = (props: object) => (
   <Switch>
     <Route path={rt(props, '/magasin')} component={MagasinPage} />
     <Route path={rt(props, '/picklist')} component={PicklistPage} />
@@ -125,7 +126,7 @@ const MuseumAndCollectionPageUrlAware = flowRight([inject(data), makeUrlAware])(
   MuseumAndCollectionPage
 );
 
-const PersonPage = (props:object) => (
+const PersonPage = (props: object) => (
   <Switch>
     <Route path={rt(props, '/addperson')} exact component={AddPersonName} />
 
@@ -135,13 +136,13 @@ const PersonPage = (props:object) => (
   </Switch>
 );
 
-const PlacePage = (props:object) => (
+const PlacePage = (props: object) => (
   <Switch>
     <Route path={rt(props, '/')} exact component={Place} />
   </Switch>
 );
 
-const PicklistPage = (props:object) => (
+const PicklistPage = (props: object) => (
   <ScrollToTop>
     <Switch>
       <Route
@@ -160,7 +161,7 @@ const PicklistPage = (props:object) => (
   </ScrollToTop>
 );
 
-const MagasinPage = (props:object) => (
+const MagasinPage = (props: object) => (
   <Switch>
     <Route path={rt(props, '/')} exact component={StorageUnitsTable} />
     <Route path={rt(props, '/add')} exact component={AddStorageUnitPanel} />
@@ -214,7 +215,7 @@ const MagasinPage = (props:object) => (
   </Switch>
 );
 
-const ObjectPage = (props:object) => (
+const ObjectPage = (props: object) => (
   <Switch>
     <Route path={rt(props, '/:id')} exact component={ViewObjectContainer} />
 
@@ -222,7 +223,7 @@ const ObjectPage = (props:object) => (
   </Switch>
 );
 
-const AnalysisPage = (props:object) => (
+const AnalysisPage = (props: object) => (
   <Switch>
     <Route path={rt(props, '/')} exact component={AnalysisSearchContainer} />
     <Route path={rt(props, '/add')} exact component={AnalysisAddContainer} />
@@ -259,7 +260,7 @@ const AnalysisPage = (props:object) => (
   </Switch>
 );
 
-const ConservationPage = (props:object) => (
+const ConservationPage = (props: object) => (
   <Switch>
     <Route path={rt(props, '/')} exact component={ConservationSearchContainer} />
     <Route path={rt(props, '/add')} exact component={ConservationAddContainer} />
@@ -278,7 +279,7 @@ const ConservationPage = (props:object) => (
   </Switch>
 );
 
-const AdministrationPage = (props:object) => (
+const AdministrationPage = (props: object) => (
   <Switch>
     <Route path={rt(props, '/')} exact component={Administration} />
     <Route path={rt(props, '/analysistypes')} exact component={AnalysisTypes} />
@@ -289,7 +290,7 @@ const AdministrationPage = (props:object) => (
   </Switch>
 );
 
-const ReportsPage = (props:object) => (
+const ReportsPage = (props: object) => (
   <Switch>
     <Route path={rt(props, '/')} exact component={Reports} />
     <Route path={rt(props, '/kdreport')} component={KDReportComponent} />
@@ -298,7 +299,7 @@ const ReportsPage = (props:object) => (
   </Switch>
 );
 
-const SearchPage = (props:object) => (
+const SearchPage = (props: object) => (
   <Switch>
     <Route path={rt(props, '/objects')} exact component={ObjectSearchContainer} />
 
@@ -306,7 +307,7 @@ const SearchPage = (props:object) => (
   </Switch>
 );
 
-const NotFoundPage = (props:object) => (
+const NotFoundPage = (props: object) => (
   <ScrollToTop>
     <NotFound {...props} />
   </ScrollToTop>

@@ -1,15 +1,26 @@
 import { MenuItem, Dropdown, Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import FontAwesome from 'react-fontawesome';
-import flatten from 'lodash/flatten';
-import uniq from 'lodash/uniq';
-import uniqBy from 'lodash/uniqBy';
-import find from 'lodash/find';
+import * as React from 'react';
+import { Component } from 'react';
+import * as FontAwesome from 'react-fontawesome';
+import { flatten, uniq, uniqBy, find, orderBy } from 'lodash';
 import { I18n } from 'react-i18nify';
-import orderBy from 'lodash/orderBy';
+import { TODO, MUSTFIX } from '../../../types/common';
+import { Group } from '../../../types/appSession';
+import { Actor } from '../../../types/actor';
 
-export default class MusitUserAccount extends Component {
+interface MusitUserAccountProps {
+  token: string;
+  actor: Actor;
+  groups: Group[];
+  selectedMuseumId: number;
+  selectedCollectionId?: string;
+  handleLogout: Function;
+  handleLanguage: Function;
+  handleMuseumId: Function;
+  handleCollectionId: Function;
+}
+
+/* Old: 
   static propTypes = {
     token: PropTypes.string.isRequired,
     actor: PropTypes.object.isRequired,
@@ -22,7 +33,10 @@ export default class MusitUserAccount extends Component {
     handleCollectionId: PropTypes.func.isRequired
   };
 
-  getCollections(mid, groups) {
+*/
+
+export default class MusitUserAccount extends Component<MusitUserAccountProps> {
+  getCollections(mid: number, groups: Group[]) {
     const collections = uniqBy(
       flatten(groups.filter(g => g.museumId === mid).map(g => g.collections)),
       c => c.uuid
@@ -33,7 +47,9 @@ export default class MusitUserAccount extends Component {
   adminLink() {
     const { token } = this.props;
     return (
-      <MenuItem onSelect={() => document.getElementById('userGroupAdmin').submit()}>
+      <MenuItem
+        onSelect={() => (document.getElementById('userGroupAdmin') as MUSTFIX).submit()}
+      >
         <form
           id={'userGroupAdmin'}
           method={'POST'}
@@ -41,7 +57,7 @@ export default class MusitUserAccount extends Component {
           action={'/service_auth/web'}
           target="blank"
         >
-          <input hidden="hidden" name="_at" readOnly="readOnly" value={token} />
+          <input hidden={true} name="_at" readOnly={true} value={token} />
         </form>
         <i className="fa fa-cogs" /> Admin
       </MenuItem>
@@ -50,7 +66,7 @@ export default class MusitUserAccount extends Component {
 
   render() {
     const currentLanguage = localStorage.getItem('language');
-    const checked = language =>
+    const checked = (language: TODO) =>
       currentLanguage === language && <FontAwesome name="check" />;
     const tooltip = (
       <Tooltip id="tooltip">
@@ -59,7 +75,7 @@ export default class MusitUserAccount extends Component {
         </strong>
       </Tooltip>
     );
-    const menuText = (t1, t2) => (
+    const menuText = (t1: TODO, t2: TODO) => (
       <Row>
         <Col md={1} sm={1} xs={1}>
           {t1}
@@ -124,7 +140,8 @@ export default class MusitUserAccount extends Component {
               </MenuItem>
             )}
             {collectionDropdown &&
-              collections.map((cc, i) => (
+              collections &&
+              collections.map((cc, i: number) => (
                 <MenuItem
                   key={i}
                   eventKey={cc.uuid}
@@ -147,7 +164,7 @@ export default class MusitUserAccount extends Component {
             {hasAdmin && <MenuItem divider />}
             {hasAdmin && this.adminLink()}
             <MenuItem divider />
-            <MenuItem eventKey={4} onSelect={this.props.handleLogout}>
+            <MenuItem eventKey={4} onSelect={this.props.handleLogout as TODO}>
               {I18n.t('musit.userProfile.logout')}
             </MenuItem>
           </Dropdown.Menu>

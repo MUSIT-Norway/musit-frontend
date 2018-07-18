@@ -17,6 +17,7 @@ export const createEnLangAppSessionContext = () =>
     museumId: 99,
     collectionId: '0000-0000-0000',
     accessToken: 'dummy-token',
+    groups: [],
     actor: { fn: 'Test Testersen' },
     language: { isEn: false, isNo: true },
     rolesForModules: {
@@ -35,6 +36,7 @@ export const createNoLangAppSessionContect = () =>
     museumId: 99,
     collectionId: '0000-0000-0000',
     accessToken: 'dummy-token',
+    groups: [],
     actor: { fn: 'Test Testersen' },
     language: { isEn: false, isNo: true },
     rolesForModules: {

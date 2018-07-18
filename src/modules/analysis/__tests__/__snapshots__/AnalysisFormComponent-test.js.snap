@@ -180,6 +180,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
             "fn": "Test",
           },
           "collectionId": "1234",
+          "groups": Array [],
           "language": Object {
             "isEn": false,
             "isNo": true,
@@ -250,6 +251,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
                   "fn": "Test",
                 },
                 "collectionId": "1234",
+                "groups": Array [],
                 "language": Object {
                   "isEn": false,
                   "isNo": true,
@@ -296,6 +298,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
               "fn": "Test",
             },
             "collectionId": "1234",
+            "groups": Array [],
             "language": Object {
               "isEn": false,
               "isNo": true,
@@ -358,6 +361,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
               "fn": "Test",
             },
             "collectionId": "1234",
+            "groups": Array [],
             "language": Object {
               "isEn": false,
               "isNo": true,

@@ -9,6 +9,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
         "fn": "Test",
       },
       "collectionId": "1234",
+      "groups": Array [],
       "language": Object {
         "isEn": false,
         "isNo": true,

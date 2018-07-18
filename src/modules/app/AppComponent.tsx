@@ -254,7 +254,7 @@ export class AppComponent extends Component<AppComponentProps> {
                   handleLanguage={this.handleLanguage}
                   handleMuseumId={this.handleMuseumId}
                   handleCollectionId={this.handleCollectionId}
-                  rootNode={this.props.rootNode}
+                  //?rootNode={this.props.rootNode}
                 />
               </NavItem>
             </Nav>

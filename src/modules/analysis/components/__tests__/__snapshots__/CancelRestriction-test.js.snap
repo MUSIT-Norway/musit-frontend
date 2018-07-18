@@ -17,6 +17,7 @@ exports[`CancelRestriction should render cancel reason and cancelledByName 1`] =
             "fn": "Test",
           },
           "collectionId": "1234",
+          "groups": Array [],
           "language": Object {
             "isEn": false,
             "isNo": true,

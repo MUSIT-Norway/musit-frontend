@@ -9,12 +9,12 @@ const clientRepoUrl = gitlabBaseUrl + '/musit-frontend';
 const backendRepoUrl = gitlabBaseUrl + '/musit';
 
 export type VersionInfo = {
-  sha: string,
-  url?: string
+  sha: string;
+  url?: string;
 };
 
 type BackendInfo = {
-  commitSha: string
+  commitSha: string;
 };
 
 function getBackendCommitSha(buildInfo?: BackendInfo) {

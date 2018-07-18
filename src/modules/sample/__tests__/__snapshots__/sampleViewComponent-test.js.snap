@@ -56,6 +56,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
             "fn": "Test",
           },
           "collectionId": "1234",
+          "groups": Array [],
           "language": Object {
             "isEn": false,
             "isNo": true,

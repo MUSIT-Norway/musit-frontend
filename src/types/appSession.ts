@@ -41,6 +41,6 @@ export interface AppSession {
     documentArchiveWrite: boolean;
   };
   buildInfo?: BuildInfo;
-  groups?: Array<Group>;
+  groups: Array<Group>;
   isGod?: boolean;
 }

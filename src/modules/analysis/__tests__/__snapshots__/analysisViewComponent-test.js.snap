@@ -221,6 +221,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
                   "fn": "Test",
                 },
                 "collectionId": "1234",
+                "groups": Array [],
                 "language": Object {
                   "isEn": false,
                   "isNo": true,
@@ -348,6 +349,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
               "fn": "Test",
             },
             "collectionId": "1234",
+            "groups": Array [],
             "language": Object {
               "isEn": false,
               "isNo": true,
@@ -412,6 +414,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
               "fn": "Test",
             },
             "collectionId": "1234",
+            "groups": Array [],
             "language": Object {
               "isEn": false,
               "isNo": true,

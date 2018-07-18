@@ -25,6 +25,7 @@ export const appSession: AppSession = {
   museumId: 99,
   collectionId: '1234',
   accessToken: '45667',
+  groups: [],
   actor: {
     fn: 'Test'
   },
