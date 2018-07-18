@@ -6,7 +6,7 @@
     "target": "es5",
     "lib": ["es6", "dom", "es2016.array.include"],
     "sourceMap": true,
-    "allowJs": true,
+    "allowJs": false,
     "jsx": "react",
     "moduleResolution": "node",
     "rootDir": "src",
@@ -27,6 +27,7 @@
     "webpack",
     "jest",
     "src/setupTests.ts",
-    "flow-typed"
+    "flow-typed",
+    ".history"
   ]
 }
