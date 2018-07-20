@@ -121,6 +121,7 @@ const SearchInputFormComponent = (props: Props) => (
         <FontAwesome name="search" style={{ fontSize: '1.3em' }} />
       </button>
       <button
+        id="executeSearch"
         className="btn btn-default pull-right"
         style={{ marginRight: '20px', marginTop: '40px' }}
         type="submit"
