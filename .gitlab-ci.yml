@@ -54,7 +54,7 @@ build:
     - sed -e "s/FROM node/FROM $MUSIT_DOCKER_REGISTRY\/library\/node/g" Dockerfile > Dockerfile.tmp && mv Dockerfile.tmp Dockerfile
 
   script:
-    - sed -i 's/LOCAL_DEVELOPMENT/'$CI_COMMIT_SHA'/g' $CI_PROJECT_DIR/src/build.js
+    - sed -i 's/LOCAL_DEVELOPMENT/'$CI_COMMIT_SHA'/g' $CI_PROJECT_DIR/src/build.ts
     - docker build -t $MUSIT_DOCKER_REGISTRY/musit/webpack:$CI_COMMIT_SHA .
     - docker push $MUSIT_DOCKER_REGISTRY/musit/webpack:$CI_COMMIT_SHA
     - docker tag  $MUSIT_DOCKER_REGISTRY/musit/webpack:$CI_COMMIT_SHA $MUSIT_DOCKER_REGISTRY/musit/webpack:utv
