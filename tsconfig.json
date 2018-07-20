@@ -28,6 +28,7 @@
     "jest",
     "src/setupTests.ts",
     "flow-typed",
-    ".history"
+    ".history",
+    "tests"
   ]
 }
