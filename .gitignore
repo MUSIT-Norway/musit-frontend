@@ -25,3 +25,5 @@ yarn-error.log*
 *.orig
 *.lock
 .history
+
+/tests

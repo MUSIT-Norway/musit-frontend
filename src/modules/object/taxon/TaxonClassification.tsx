@@ -496,7 +496,7 @@ export class SexAndLifeStageTable extends React.Component<SexAndLifeStageProps> 
                 {console.log(
                   'anuradha &&&&&&&& ',
                   this.props.sexAndStages,
-                  '  ',
+                  ' test MUSARK1852 ',
                   this.props.sexAndStages.length
                 )}
                 {this.props.sexAndStages.map((t: SexAndStage, i: number) => {
