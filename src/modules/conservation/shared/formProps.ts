@@ -1,7 +1,7 @@
 // @flow
 import { getObjects, getConservationCollection } from './submit';
 import { saveConservation$, deleteConservation$ } from '../conservationStore';
-import { Location } from '../shared/submit';
+import { Location } from './submit';
 import { simplePost, simplePut, simpleGet } from '../../../shared/RxAjax';
 import { History } from 'history';
 import { AppSession } from '../../../types/appSession';
