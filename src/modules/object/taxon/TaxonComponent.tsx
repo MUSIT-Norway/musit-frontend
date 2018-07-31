@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DetTable } from './DetTable';
+import  DetTable from './DetTable';
 import { TaxonTable } from './TaxonTable';
 import { TaxonClassificationProps } from './TaxonClassification';
 

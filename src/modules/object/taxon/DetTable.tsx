@@ -1,9 +1,11 @@
 import * as React from 'react';
 import * as FontAwesome from 'react-fontawesome';
+import { Link } from 'react-router-dom';
 
 import { DetProps, IPersonName } from './TaxonClassification';
+//import { PersonPage } from '../person/Person';
 
-export class DetTable extends React.Component<DetProps> {
+class DetTable extends React.Component<DetProps> {
   constructor(props: DetProps) {
     super(props);
   }
@@ -82,17 +84,16 @@ export class DetTable extends React.Component<DetProps> {
             <div className="col-md-3">
               <div style={{ textAlign: 'left', verticalAlign: 'bottom' }}>
                 <label htmlFor="btnAddPerson">Create new</label>
-                <button
-                  type="button"
-                  className="btn btn-default form-control"
-                  onClick={e => {
-                    e.preventDefault();
-                    this.props.onAddPerson();
+                <Link
+                  to={{
+                    pathname: 'person/addperson',
+                    state: { newName: this.props.editingDet.personName }
                   }}
-                  id="btnAddPerson"
                 >
-                  <FontAwesome name="user-plus" />
-                </button>
+                  <button className="btn btn-default form-control">
+                    <FontAwesome name="user-plus" />
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -131,3 +132,5 @@ export class DetTable extends React.Component<DetProps> {
     );
   }
 }
+
+export default DetTable;
