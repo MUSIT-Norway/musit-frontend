@@ -197,7 +197,6 @@ export class AppComponent extends Component<AppComponentProps> {
                   <NavItem>{I18n.t('musit.texts.magazine')}</NavItem>
                 </LinkContainer>
               )}
-
               <LinkContainer
                 to={Config.magasin.urls.client.report.goToReport(this.props.appSession)}
               >

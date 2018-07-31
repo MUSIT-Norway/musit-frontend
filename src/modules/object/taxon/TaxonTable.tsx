@@ -149,12 +149,6 @@ export class TaxonTable extends React.Component<TaxonClassificationProps> {
                       </tr>
                     </thead>
                     <tbody>
-                      {console.log(
-                        'anuradha &&&&&&&& ',
-                        this.props.taxonNames,
-                        '  ',
-                        this.props.taxonNames.length
-                      )}
                       {this.props.taxonNames.map((t: ITaxonTerm, i: number) => {
                         return (
                           <tr

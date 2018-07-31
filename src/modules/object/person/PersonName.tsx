@@ -2,12 +2,16 @@ import * as React from 'react';
 //import FieldMultiSelect from "../../../forms/components/FieldMultiSelect";
 import { PersonPage } from './Person';
 import { PersonState, PersonProps, PersonName, ExternalId } from './Person';
+//import { withRouter } from 'react-router-dom';
 
 type PersonNameState = {
   title?: string;
   firstName?: string;
   lastName?: string;
 };
+
+type AddPersonNameProps = PersonNameProps &
+  PersonProps & { location: { state: { newName: string } } };
 
 type AddPersonNameState = {
   visPersonForm: boolean;
@@ -121,10 +125,10 @@ const PersonName = (props: PersonNameProps) => (
 );
 
 export class AddPersonName extends React.Component<
-  PersonNameProps & PersonProps,
+  AddPersonNameProps,
   AddPersonNameState
 > {
-  constructor(props: PersonNameProps & PersonProps) {
+  constructor(props: AddPersonNameProps) {
     super(props);
     this.state = {
       visPersonForm: false,
@@ -133,11 +137,16 @@ export class AddPersonName extends React.Component<
       person: { synState: 'SEARCH' }
     };
   }
+
   render() {
     return (
       <div style={{ padding: '25px' }}>
         <PersonName
-          firstName={this.props.firstName}
+          firstName={
+            this.props.location.state.newName
+              ? this.props.location.state.newName
+              : this.props.firstName
+          }
           title={this.props.title}
           lastName={this.props.lastName}
           showAddPersonButton={() => {
