@@ -3,7 +3,6 @@ import * as FontAwesome from 'react-fontawesome';
 import { Link } from 'react-router-dom';
 
 import { DetProps, IPersonName } from './TaxonClassification';
-//import { PersonPage } from '../person/Person';
 
 class DetTable extends React.Component<DetProps> {
   constructor(props: DetProps) {
