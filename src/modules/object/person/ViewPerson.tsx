@@ -1,7 +1,7 @@
 import * as React from 'react';
 //import FieldMultiSelect from "../../../forms/components/FieldMultiSelect";
 import { PersonPage } from './Person';
-import { PersonState, PersonProps, PersonName, ExternalId } from './Person';
+import { PersonState, PersonProps, PersonName } from './Person';
 import { makeRequest } from '../../../shared/ajaxPromise';
 import { emitError, emitSuccess } from '../../../shared/errors';
 import config from '../../../config';
@@ -13,7 +13,7 @@ type PersonNameState = {
   lastName?: string;
 };
 
-type AddPersonNameState = {
+type ViewPersonState = {
   visPersonForm: boolean;
   collections?: string;
   personForName: string;
@@ -37,7 +37,7 @@ type Match = {
 
 export class ViewPerson extends React.Component<
   PersonNameProps & PersonProps & Match,
-  AddPersonNameState
+  ViewPersonState
 > {
   constructor(props: PersonNameProps & PersonProps & Match) {
     super(props);
@@ -62,7 +62,7 @@ export class ViewPerson extends React.Component<
         const parsedPerson = JSON.parse(person);
         console.log('person____________', parsedPerson);
 
-        this.setState((ps: AddPersonNameState) => ({
+        this.setState((ps: ViewPersonState) => ({
           ...ps,
           person: {
             ...ps.person,
@@ -181,7 +181,7 @@ export class ViewPerson extends React.Component<
         <PersonPage
           {...this.state.person}
           onClickNext={() =>
-            this.setState((ps: AddPersonNameState) => {
+            this.setState((ps: ViewPersonState) => {
               const nextState =
                 ps.person.synState === 'SEARCH'
                   ? 'SYNONYMIZE'
@@ -194,11 +194,63 @@ export class ViewPerson extends React.Component<
               };
             })
           }
-          onChange={(fieldName: string) => (newValue: string) => {
-            this.setState((ps: AddPersonNameState) => {
+          onAddExternalId={() => {
+            this.setState((ps: ViewPersonState) => {
+              const newPersonState = ps.person;
+              const editIndex =
+                newPersonState.externalIds && newPersonState.externalIds.length
+                  ? newPersonState.externalIds.length
+                  : 0;
+              const editItem = {};
               return {
                 ...ps,
-                person: { ...ps.person, [fieldName]: newValue }
+                person: {
+                  ...newPersonState,
+                  editingIds: editItem,
+                  editingIndex: editIndex
+                }
+              };
+            });
+          }}
+          onSaveExternalId={() => {
+            this.setState((ps: ViewPersonState) => {
+              const newPersonState = ps.person;
+              const editIndex = newPersonState.editingIndex
+                ? newPersonState.editingIndex
+                : 0;
+              const currentEditItem = newPersonState.editingIds;
+              const currentExternalIds =
+                (newPersonState.externalIds && newPersonState.externalIds) || [];
+              const nextExternalIds = currentEditItem
+                ? [
+                    ...currentExternalIds.slice(0, editIndex),
+                    currentEditItem,
+                    ...currentExternalIds.slice(editIndex + 1)
+                  ]
+                : currentExternalIds;
+
+              return {
+                ...ps,
+                person: {
+                  ...newPersonState,
+                  externalIds: nextExternalIds,
+                  editingIndex: undefined,
+                  editingIds: undefined
+                }
+              };
+            });
+          }}
+          onChangeExternalIds={(field: string) => (value: string) => {
+            this.setState((ps: ViewPersonState) => {
+              return {
+                ...ps,
+                person: {
+                  ...ps.person,
+                  editingIds: {
+                    ...ps.person.editingIds,
+                    [field]: value
+                  }
+                }
               };
             });
           }}
@@ -206,7 +258,7 @@ export class ViewPerson extends React.Component<
             e: React.SyntheticEvent<HTMLAnchorElement>
           ) => {
             e.preventDefault();
-            this.setState((p: AddPersonNameState) => {
+            this.setState((p: ViewPersonState) => {
               const personState = p.person;
               const newExteralIDItem = (personState.externalIds
                 ? personState.externalIds.slice(0, index)
@@ -223,6 +275,29 @@ export class ViewPerson extends React.Component<
               };
             });
           }}
+          setEditingIndex={(index: number) => {
+            this.setState((p: ViewPersonState) => {
+              const personState = p.person;
+              const editingItem =
+                personState.externalIds && personState.externalIds[index];
+              return {
+                ...p,
+                person: {
+                  ...personState,
+                  editingIndex: index,
+                  editingIds: editingItem
+                }
+              };
+            });
+          }}
+          onChange={(fieldName: string) => (newValue: string) => {
+            this.setState((ps: ViewPersonState) => {
+              return {
+                ...ps,
+                person: { ...ps.person, [fieldName]: newValue }
+              };
+            });
+          }}
           onChangeBornDate={() => {
             return;
           }}
@@ -236,7 +311,7 @@ export class ViewPerson extends React.Component<
             return;
           }}
           onChangeFullName={(fieldName: string) => (value: string) => {
-            this.setState((ps: AddPersonNameState) => {
+            this.setState((ps: ViewPersonState) => {
               const newPersonState = ps.person;
 
               const lastName =
@@ -269,7 +344,7 @@ export class ViewPerson extends React.Component<
             });
           }}
           onChangePersonName={(fieldName: string) => (value: string) => {
-            this.setState((ps: AddPersonNameState) => {
+            this.setState((ps: ViewPersonState) => {
               const newPersonState = ps.person;
 
               const lastName =
@@ -301,23 +376,9 @@ export class ViewPerson extends React.Component<
               };
             });
           }}
-          onAddExternalId={() => {
-            this.setState((ps: AddPersonNameState) => {
-              const newPersonState = ps.person;
-              return {
-                ...ps,
-                person: {
-                  ...newPersonState,
-                  externalIds: (newPersonState.externalIds || []).concat([
-                    { database: '', uuid: '' }
-                  ])
-                }
-              };
-            });
-          }}
           onClickAdd={(newPersonName?: PersonName) => {
             if (newPersonName) {
-              this.setState((ps: AddPersonNameState) => {
+              this.setState((ps: ViewPersonState) => {
                 const pn = ps.person;
                 return {
                   ...ps,
@@ -332,7 +393,7 @@ export class ViewPerson extends React.Component<
             }
           }}
           onChangeCollections={(v: string) => {
-            this.setState((ps: AddPersonNameState) => {
+            this.setState((ps: ViewPersonState) => {
               console.log(ps, v);
               const person = {
                 ...ps.person,
@@ -341,29 +402,6 @@ export class ViewPerson extends React.Component<
               return {
                 ...ps,
                 person
-              };
-            });
-          }}
-          onChangeExternalIds={(index: number) => (fn: string) => (value: string) => {
-            this.setState((ps: AddPersonNameState) => {
-              const newPersonState = ps.person;
-              const newExternalIDItem: ExternalId =
-                newPersonState.externalIds && newPersonState.externalIds[index]
-                  ? { ...newPersonState.externalIds[index], [fn]: value }
-                  : { [fn]: value };
-
-              return {
-                ...ps,
-                person: {
-                  ...newPersonState,
-                  externalIds: newPersonState.externalIds
-                    ? [
-                        ...newPersonState.externalIds.slice(0, index),
-                        newExternalIDItem,
-                        ...newPersonState.externalIds.slice(index + 1)
-                      ]
-                    : []
-                }
               };
             });
           }}
