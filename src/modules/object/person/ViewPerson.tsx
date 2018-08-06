@@ -52,8 +52,7 @@ export class ViewPerson extends React.Component<
   async componentWillMount() {
     if (this.props.match.params.id) {
       try {
-       // const url = 'http://localhost:3001/persons/person/';
-       const url = config.api.persons.getUrl(this.props.match.params.id as TODO);
+        const url = config.api.persons.getUrl(this.props.match.params.id as TODO);
 
         const person: any = await makeRequest({
           method: 'GET',
