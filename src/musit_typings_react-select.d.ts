@@ -1,1 +1,1 @@
-declare module 'react-select/lib/AsyncCreatable';
+declare module 'react-select';
