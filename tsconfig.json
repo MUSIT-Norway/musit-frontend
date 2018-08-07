@@ -30,5 +30,8 @@
     "flow-typed",
     ".history",
     "tests"
+  ],
+  "files": [
+    "lib/AsyncCreatable.d.ts"
   ]
 }
