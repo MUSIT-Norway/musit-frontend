@@ -2,6 +2,8 @@ import * as React from 'react';
 import DatePicker from '../../../components/DatePicker';
 import * as FontAwesome from 'react-fontawesome';
 import FieldMultiSelect from '../../../forms/components/FieldMultiSelect';
+import { EditList, databaseOption, databaseOptions } from '../components/EditList';
+import { dataBaseValues } from './mockdata/data';
 
 export type PersonName = {
   title?: string;
@@ -53,6 +55,8 @@ export type PersonProps = PersonState & {
   onDeleteExternalId: (i: number) => (e: React.SyntheticEvent<HTMLAnchorElement>) => void;
   onChangeExternalIds: (field: string) => (value: string) => void;
   setEditingIndex: (i: number) => void;
+  onChangeDbValue: (inputValue: databaseOption) => void; //=> (event: React.SyntheticEvent<HTMLSelectElement>)
+  dataBaseValues: databaseOptions;
   onClearBornDate: Function;
   onChangeBornDate: Function;
   onClearDeathDate: Function;
@@ -65,11 +69,13 @@ const ExternalIDStrings = (props: {
   editingIndex?: number;
   externalIds?: ExternalId[];
   editingIds?: ExternalId;
+  dataBaseValues: databaseOptions;
   onAdd: (event: React.SyntheticEvent<HTMLButtonElement>) => void;
   onSave: (event: React.SyntheticEvent<HTMLButtonElement>) => void;
   onChange: (field: string) => (value: string) => void;
   onDelete: (i: number) => (e: React.SyntheticEvent<HTMLAnchorElement>) => void;
   setEditingIndex: (i: number) => void;
+  onChangeDbValue: (inputValue: databaseOption) => void; //(event: React.SyntheticEvent<HTMLSelectElement>) =>
 }) => (
   <div>
     <h4>External ID's</h4>
@@ -124,10 +130,14 @@ const ExternalIDStrings = (props: {
       {props.editingIndex !== undefined && (
         <div className="row">
           <div className="col-sm-2 form-group">
-            <input
-              className="form-control"
-              value={props.editingIds && props.editingIds.database}
-              onChange={e => props.onChange('database')(e.target.value)}
+            <EditList
+              dataBaseValues={props.dataBaseValues}
+              editingValue={
+                props.editingIds && props.editingIds.database
+                  ? props.editingIds.database
+                  : ''
+              }
+              onChangeSelection={props.onChangeDbValue}
             />
           </div>
           <div className="col-sm-2 form-group">
@@ -529,6 +539,8 @@ export const PersonPage = (props: PersonProps) => {
                 onChange={props.onChangeExternalIds}
                 onDelete={props.onDeleteExternalId}
                 setEditingIndex={props.setEditingIndex}
+                onChangeDbValue={props.onChangeDbValue}
+                dataBaseValues={props.dataBaseValues}
               />
             </div>
             {props.standAlone && (
@@ -612,9 +624,9 @@ export class Person extends React.Component<PersonProps, PersonState> {
               }));
             }
           }}
+          dataBaseValues={dataBaseValues}
           onAddExternalId={() => {
             this.setState((ps: PersonState) => {
-              console.log('add clicked');
               const editIndex = (ps.externalIds || []).length
                 ? (ps.externalIds || []).length
                 : 0;
@@ -684,6 +696,18 @@ export class Person extends React.Component<PersonProps, PersonState> {
                 editingIds: editingItem
               };
               return upgragedPerson;
+            });
+          }}
+          onChangeDbValue={(inputValue: databaseOption) => {
+            this.setState((ps: PersonState) => {
+              const newPersonState = {
+                ...ps,
+                editingIds: {
+                  ...ps.editingIds,
+                  ['database']: inputValue.label
+                }
+              };
+              return newPersonState;
             });
           }}
           onChangeBornDate={() => {
