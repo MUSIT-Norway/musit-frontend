@@ -1,40 +1,38 @@
 import * as React from 'react';
-import * as AsyncCreatableSelect from 'react-select/lib/AsyncCreatable';
+import { AsyncCreatable } from 'react-select';
+import { InputGroup } from 'react-bootstrap';
 
-
-export type databaseOption= {
-    inputValue: string;
-    label: string;
+export type databaseOption = {
+  value: string;
+  label: string;
 };
 
-export type databaseOptions= databaseOption[];
+export type databaseOptions = databaseOption[];
 
-const filterColors = (inputValue: string) =>
-  dO.filter(i =>
-    i.label.toLowerCase().includes(inputValue.toLowerCase())
-  );
+const getOptions = (data: databaseOptions) => (input: string, callback: Function) => {
+  setTimeout(() => {
+    callback(null, {
+      options: data,
+      // CAREFUL! Only set this to true when there are no more options,
+      // or more specific queries will not be sent to the server.
+      complete: true
+    });
+  }, 500);
+};
 
-  const dO:databaseOptions = [
-    { inputValue: 'Facebook', label: 'Facebook'},
-    { inputValue: 'Twitter', label: 'Twitter'}
-  ];
+export type editListProps = {
+  dataBaseValues: databaseOptions;
+  editingValue: string;
+  onChangeSelection: (inputValue: databaseOption) => void;
+};
 
-const promiseOptions = (inputValue:string) =>
-  new Promise(resolve => {
-    setTimeout(() => {
-      resolve(filterColors(inputValue));
-    }, 1000);
-  });
-
-export const EditList = (props: {
-    dO:databaseOptions;
-}) =>
- (
-      <AsyncCreatableSelect
-        cacheOptions
-        defaultOptions
-        promiseOptions={promiseOptions}
+export const EditList = (props: editListProps) => (
+  <div>
+    <AsyncCreatable
+      name="editListDatabase"
+      loadOptions={getOptions(props.dataBaseValues)}
+      value={props.editingValue}
+      onChange={props.onChangeSelection}
     />
-
+  </div>
 );
-

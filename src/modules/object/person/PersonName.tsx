@@ -2,6 +2,13 @@ import * as React from 'react';
 //import FieldMultiSelect from "../../../forms/components/FieldMultiSelect";
 import { PersonPage } from './Person';
 import { PersonState, PersonProps, PersonName } from './Person';
+import {
+  EditList,
+  editListProps,
+  databaseOption,
+  databaseOptions
+} from '../components/EditList';
+import { dataBaseValues } from './mockdata/data';
 
 type PersonNameState = {
   title?: string;
@@ -184,6 +191,7 @@ export class AddPersonName extends React.Component<
                 };
               })
             }
+            dataBaseValues={dataBaseValues}
             onAddExternalId={() => {
               this.setState((ps: AddPersonNameState) => {
                 const newPersonState = ps.person;
@@ -239,6 +247,19 @@ export class AddPersonName extends React.Component<
                     editingIds: {
                       ...ps.person.editingIds,
                       [fn]: value
+                    }
+                  }
+                };
+              });
+            }}
+            onChangeDbValue={(inputValue: databaseOption) => {
+              this.setState((ps: AddPersonNameState) => {
+                return {
+                  ...ps,
+                  person: {
+                    ...ps.person,
+                    editingIds: {
+                      ['database']: inputValue.label
                     }
                   }
                 };

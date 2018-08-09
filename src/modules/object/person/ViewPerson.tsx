@@ -4,6 +4,13 @@ import { PersonPage } from './Person';
 import { PersonState, PersonProps, PersonName } from './Person';
 import { makeRequest } from '../../../shared/ajaxPromise';
 import { emitError, emitSuccess } from '../../../shared/errors';
+import {
+  EditList,
+  editListProps,
+  databaseOption,
+  databaseOptions
+} from '../components/EditList';
+import { dataBaseValues } from './mockdata/data';
 
 type PersonNameState = {
   title?: string;
@@ -190,6 +197,7 @@ export class ViewPerson extends React.Component<
               };
             })
           }
+          dataBaseValues={dataBaseValues}
           onAddExternalId={() => {
             this.setState((ps: ViewPersonState) => {
               const newPersonState = ps.person;
@@ -245,6 +253,19 @@ export class ViewPerson extends React.Component<
                   editingIds: {
                     ...ps.person.editingIds,
                     [field]: value
+                  }
+                }
+              };
+            });
+          }}
+          onChangeDbValue={(inputValue: databaseOption) => {
+            this.setState((ps: AddPersonNameState) => {
+              return {
+                ...ps,
+                person: {
+                  ...ps.person,
+                  editingIds: {
+                    ['database']: inputValue.label
                   }
                 }
               };
