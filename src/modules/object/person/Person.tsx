@@ -2,9 +2,8 @@ import * as React from 'react';
 import DatePicker from '../../../components/DatePicker';
 import * as FontAwesome from 'react-fontawesome';
 import FieldMultiSelect from '../../../forms/components/FieldMultiSelect';
-import {EditList, databaseOption, databaseOptions} from '../components/EditList';
-import {dataBaseValues} from './mockdata/data';
-
+import { EditList, databaseOption, databaseOptions } from '../components/EditList';
+import { dataBaseValues } from './mockdata/data';
 
 export type PersonName = {
   title?: string;
@@ -56,7 +55,7 @@ export type PersonProps = PersonState & {
   onDeleteExternalId: (i: number) => (e: React.SyntheticEvent<HTMLAnchorElement>) => void;
   onChangeExternalIds: (field: string) => (value: string) => void;
   setEditingIndex: (i: number) => void;
-  onChangeDbValue: (inputValue: databaseOption)  =>void;  //=> (event: React.SyntheticEvent<HTMLSelectElement>)
+  onChangeDbValue: (inputValue: databaseOption) => void; //=> (event: React.SyntheticEvent<HTMLSelectElement>)
   dataBaseValues: databaseOptions;
   onClearBornDate: Function;
   onChangeBornDate: Function;
@@ -76,94 +75,96 @@ const ExternalIDStrings = (props: {
   onChange: (field: string) => (value: string) => void;
   onDelete: (i: number) => (e: React.SyntheticEvent<HTMLAnchorElement>) => void;
   setEditingIndex: (i: number) => void;
-  onChangeDbValue:(inputValue: databaseOption) =>  void;  //(event: React.SyntheticEvent<HTMLSelectElement>) =>
+  onChangeDbValue: (inputValue: databaseOption) => void; //(event: React.SyntheticEvent<HTMLSelectElement>) =>
 }) => (
   <div>
     <h4>External ID's</h4>
     <div className="grid">
-    {props.externalIds  && props.externalIds.length > 0 && (
-       <div className="row">
-        <table className="table table-condensed table-hover">
-            <thead className="row">
-              <tr className="row">
-                <th className="col-md-2"> 
-                  <b>Database</b>
-                </th>
-                <th className="col-md-2"> 
-                  <b> UUID</b>
-                </th>
-                <th className="col-md-2"> 
-                  <b> </b>
-                </th>
-                <th className="col-md-2"> 
-                  <b> </b>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-             {props.externalIds.map((e, i) => (
-              <tr key={`tr-row${i}`}
-               className="row">
-               <td className="col-md-2"> {e.database}</td>
-               <td className="col-md-2">{e.uuid}</td>
-               <td className="col-md-2">
-                <a
-                  href=""
-                  onClick={e => {
-                      e.preventDefault();
-                      props.setEditingIndex(i);
-                    }}
-                 >
-                  <FontAwesome name="edit" />
-                </a>
-               </td>
-               <td className="col-md-2">         
-                  <a href="" onClick={props.onDelete(i)}>
-                  Delete
-                  </a>
-                </td>
-              </tr>
-             ))}
-            </tbody>
-        </table>
-       </div>
-       )
-      }
-      { 
-      (props.editingIndex !== undefined) && (
-          <div className="row" >
-            <div className="col-sm-2 form-group"> 
-              <EditList
-                dataBaseValues={props.dataBaseValues}
-                editingValue={props.editingIds && props.editingIds.database 
-                  ? props.editingIds.database 
-                  : '' }
-                onChangeSelection={props.onChangeDbValue}
-                /> 
-            </div>
-            <div className="col-sm-2 form-group">
-              <input
-                className="form-control"
-                value={props.editingIds && props.editingIds.uuid}
-                onChange={e => props.onChange('uuid')(e.target.value)}
-              />
-            </div>
+      {props.externalIds &&
+        props.externalIds.length > 0 && (
+          <div className="row">
+            <table className="table table-condensed table-hover">
+              <thead className="row">
+                <tr className="row">
+                  <th className="col-md-2">
+                    <b>Database</b>
+                  </th>
+                  <th className="col-md-2">
+                    <b> UUID</b>
+                  </th>
+                  <th className="col-md-2">
+                    <b> </b>
+                  </th>
+                  <th className="col-md-2">
+                    <b> </b>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {props.externalIds.map((e, i) => (
+                  <tr key={`tr-row${i}`} className="row">
+                    <td className="col-md-2"> {e.database}</td>
+                    <td className="col-md-2">{e.uuid}</td>
+                    <td className="col-md-2">
+                      <a
+                        href=""
+                        onClick={e => {
+                          e.preventDefault();
+                          props.setEditingIndex(i);
+                        }}
+                      >
+                        <FontAwesome name="edit" />
+                      </a>
+                    </td>
+                    <td className="col-md-2">
+                      <a href="" onClick={props.onDelete(i)}>
+                        Delete
+                      </a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
+        )}
+      {props.editingIndex !== undefined && (
+        <div className="row">
+          <div className="col-sm-2 form-group">
+            <EditList
+              dataBaseValues={props.dataBaseValues}
+              editingValue={
+                props.editingIds && props.editingIds.database
+                  ? props.editingIds.database
+                  : ''
+              }
+              onChangeSelection={props.onChangeDbValue}
+            />
+          </div>
+          <div className="col-sm-2 form-group">
+            <input
+              className="form-control"
+              value={props.editingIds && props.editingIds.uuid}
+              onChange={e => props.onChange('uuid')(e.target.value)}
+            />
+          </div>
+        </div>
       )}
-    </div> 
-    <div> 
-      <button type="button" 
-        className="btn btn-default" 
+    </div>
+    <div>
+      <button
+        type="button"
+        className="btn btn-default"
         onClick={props.onAdd}
-        disabled={props.editingIndex !== undefined }>
+        disabled={props.editingIndex !== undefined}
+      >
         Add new external ID
       </button>
-      <button type="button" 
-        className="btn btn-default" 
+      <button
+        type="button"
+        className="btn btn-default"
         onClick={props.onSave}
-        disabled={
-         (props.editingIndex === undefined) 
-          }>
+        disabled={props.editingIndex === undefined}
+      >
         Save external ID
       </button>
     </div>
@@ -540,7 +541,6 @@ export const PersonPage = (props: PersonProps) => {
                 setEditingIndex={props.setEditingIndex}
                 onChangeDbValue={props.onChangeDbValue}
                 dataBaseValues={props.dataBaseValues}
-                
               />
             </div>
             {props.standAlone && (
@@ -600,7 +600,7 @@ export class Person extends React.Component<PersonProps, PersonState> {
             })
           }
           collections={this.state.collections}
-          editingIndex = {this.state.editingIndex}
+          editingIndex={this.state.editingIndex}
           editingIds={this.state.editingIds}
           externalIds={this.state.externalIds || []}
           fullName={this.state.fullName}
@@ -627,9 +627,10 @@ export class Person extends React.Component<PersonProps, PersonState> {
           dataBaseValues={dataBaseValues}
           onAddExternalId={() => {
             this.setState((ps: PersonState) => {
-              const editIndex = (ps.externalIds || []).length ? 
-                                (ps.externalIds || []).length: 0;
-              const newEditItem =  {};
+              const editIndex = (ps.externalIds || []).length
+                ? (ps.externalIds || []).length
+                : 0;
+              const newEditItem = {};
               return {
                 ...ps,
                 editingIndex: editIndex,
@@ -639,20 +640,24 @@ export class Person extends React.Component<PersonProps, PersonState> {
           }}
           onSaveExternalId={() => {
             this.setState((ps: PersonState) => {
-              const editIndex = ps.editingIndex ? ps.editingIndex: (ps.externalIds || []).length-1;
+              const editIndex = ps.editingIndex
+                ? ps.editingIndex
+                : (ps.externalIds || []).length - 1;
               const currentEditItem = ps.editingIds;
               const currentExternalIds = (ps.externalIds && ps.externalIds) || [];
-              const nextExternalIds = currentEditItem ? [
-                ...currentExternalIds.slice(0, editIndex),
-                currentEditItem,
-                ...currentExternalIds.slice(editIndex + 1)
-              ] : currentExternalIds;
+              const nextExternalIds = currentEditItem
+                ? [
+                    ...currentExternalIds.slice(0, editIndex),
+                    currentEditItem,
+                    ...currentExternalIds.slice(editIndex + 1)
+                  ]
+                : currentExternalIds;
               return {
                 ...ps,
                 externalIds: nextExternalIds,
                 editingIndex: undefined,
                 editingIds: undefined
-              }
+              };
             });
           }}
           onChangeExternalIds={(field: string) => (value: string) => {
@@ -667,7 +672,9 @@ export class Person extends React.Component<PersonProps, PersonState> {
               return newPersonState;
             });
           }}
-          onDeleteExternalId={(index: number) => (e: React.SyntheticEvent<HTMLAnchorElement>) => {
+          onDeleteExternalId={(index: number) => (
+            e: React.SyntheticEvent<HTMLAnchorElement>
+          ) => {
             e.preventDefault();
             this.setState((p: PersonState) => {
               const newExteralIDItem = (p.externalIds
@@ -691,7 +698,7 @@ export class Person extends React.Component<PersonProps, PersonState> {
               return upgragedPerson;
             });
           }}
-          onChangeDbValue =  {(inputValue: databaseOption) => {            
+          onChangeDbValue={(inputValue: databaseOption) => {
             this.setState((ps: PersonState) => {
               const newPersonState = {
                 ...ps,
