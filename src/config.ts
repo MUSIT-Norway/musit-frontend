@@ -27,6 +27,12 @@ export default {
       canSelectPath: { '4': true, '5': true }
     }
   },
+  api: {
+    persons: {
+      addUrl: '/api/persons/person/',
+      getUrl: (personUuid: string) => `/api/persons/person/${personUuid}`
+    }
+  },
   magasin: {
     limit: 25,
     urls: {

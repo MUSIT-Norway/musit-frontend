@@ -11,6 +11,8 @@ import {
   databaseOptions
 } from '../components/EditList';
 import { dataBaseValues } from './mockdata/data';
+import config from '../../../config';
+import { TODO } from '../../../types/common';
 
 type PersonNameState = {
   title?: string;
@@ -57,11 +59,11 @@ export class ViewPerson extends React.Component<
   async componentWillMount() {
     if (this.props.match.params.id) {
       try {
-        const url = 'http://localhost:3001/persons/person/';
+        const url = config.api.persons.getUrl(this.props.match.params.id as TODO);
 
         const person: any = await makeRequest({
           method: 'GET',
-          url: url + this.props.match.params.id //b0b7400d-4db0-4908-a326-5286efe56043
+          url: url // + this.props.match.params.id //b0b7400d-4db0-4908-a326-5286efe56043
         });
         const parsedPerson = JSON.parse(person);
         console.log('person____________', parsedPerson);
@@ -94,7 +96,8 @@ export class ViewPerson extends React.Component<
   async AddNewPerson() {
     if (this.props.match.params.id) {
       try {
-        const url = 'http://localhost:3001/persons/person/';
+        //const url = 'http://localhost:3001/persons/person/';
+        const url = config.api.persons.addUrl;
         const person: any = this.state.person;
         const fullName: any = person.fullName;
         await makeRequest({
@@ -107,7 +110,7 @@ export class ViewPerson extends React.Component<
             name: fullName.nameString,
             collections: [{ museum_id: 5, collection_id: 10 }],
             personAttribute: {
-              legalEntityType: person.legalEntityType,
+              legalEntityType: person.legalEntityType || 'Person',
               displayName: fullName.lastName + ', ' + fullName.firstName,
               URL: person.url
             },
@@ -259,7 +262,7 @@ export class ViewPerson extends React.Component<
             });
           }}
           onChangeDbValue={(inputValue: databaseOption) => {
-            this.setState((ps: AddPersonNameState) => {
+            this.setState((ps: ViewPersonState) => {
               return {
                 ...ps,
                 person: {
