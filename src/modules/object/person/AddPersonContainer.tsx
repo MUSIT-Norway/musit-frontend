@@ -32,7 +32,8 @@ const addProps = (combinedStore: any, upstream: { history: History }) => ({
       data: props.data,
       token: props.token,
       collectionId: props.collectionId,
-      ajaxPost
+      ajaxPost,
+      callback: props.callback
     }),
   getPerson: (props: GetPersonProps) =>
     getPerson$.next({

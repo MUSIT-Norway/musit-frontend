@@ -122,6 +122,17 @@ export interface InputPerson {
   synonyms?: PersonName[];
 }
 
+export interface OutputPerson {
+  personUuid: string;
+  firstName?: string;
+  lastName?: string;
+  title?: string;
+  name: string;
+  personAttribute?: PersonAttribute;
+  collections: Collection[];
+  synonyms?: PersonName[];
+}
+
 export interface PersonName {
   readonly firstName?: string;
   readonly lastName?: string;
@@ -221,12 +232,7 @@ export const getPerson: (
     token: string;
     callback?: Callback<Star>;
   }
-) => Observable<InputPerson> = (ajaxGet = simpleGet) => ({
-  id,
-
-  token,
-  callback
-}) => {
+) => Observable<InputPerson> = (ajaxGet = simpleGet) => ({ id, token, callback }) => {
   const url = Config.api.persons.getUrl(id);
   return ajaxGet(url, token, callback).map(({ response }) => response);
 };

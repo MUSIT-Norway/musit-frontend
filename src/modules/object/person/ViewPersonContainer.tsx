@@ -20,7 +20,7 @@ const combinedStore$ = createStore(
 const addProps = (combinedStore: any, upstream: { history: History }) => ({
   ...combinedStore,
   ...upstream,
-  getPerson: (appSession: AppSession, upstream: { history: History }, id: string) =>
+  getPerson: (appSession: AppSession, id: string) =>
     getPerson$.next({
       id: id,
       collectionId: appSession.collectionId,
@@ -30,7 +30,7 @@ const addProps = (combinedStore: any, upstream: { history: History }) => ({
 });
 
 export const onMountProps = () => (props: any) => {
-  //props.getPerson(props.appSession, { history: props.history }, props.params.match.id);
+  props.getPerson(props.appSession, props.match.params.id);
 };
 
 export const onUnmount = () => (props: any) => {};

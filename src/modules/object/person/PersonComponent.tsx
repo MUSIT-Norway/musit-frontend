@@ -4,13 +4,17 @@ import * as FontAwesome from 'react-fontawesome';
 import FieldMultiSelect from '../../../forms/components/FieldMultiSelect';
 import {} from '../../../stores/appSession';
 import { AppSession } from '../../../types/appSession';
-//import { editPerson } from '../../../models/object/person';
+import {
+  OutputPerson,
+  PersonName as StorePersonName
+} from '../../../models/object/person';
 //import { throws } from 'assert';
 import { PersonStoreState } from './PersonStore';
 import { EditList, databaseOption, databaseOptions } from '../components/EditList';
 import { dataBaseValues } from './mockdata/data';
 import { History } from 'history';
-//import config from '../../../config';
+import config from '../../../config';
+import { AjaxResponse } from 'rxjs';
 
 export type PersonName = {
   title?: string;
@@ -34,9 +38,9 @@ export type SynPersons = {
   synonymes?: string;
 }[];
 
-type Collection = { museumId: number; collectionId: number };
+type Collection = { museum_id: number; collection_id: number };
 
-export type PersonState = {
+export interface PersonState {
   uuid?: string;
   fullName: PersonName;
   synState: SynState;
@@ -50,7 +54,50 @@ export type PersonState = {
   deadDate?: string;
   collections: Collection[];
   museumAffiliation?: string;
-};
+}
+
+export class PersonState implements PersonState {
+  uuid?: string;
+  fullName: PersonName;
+  synState: SynState;
+  url?: string;
+  externalIds?: ExternalId[];
+  editingIds?: ExternalId;
+  editingIndex?: number;
+  synonymes?: PersonName[];
+  newPerson?: PersonName;
+  bornDate?: string;
+  deadDate?: string;
+  verbatimDate?: string;
+  collections: Collection[];
+  museumAffiliation?: string;
+
+  constructor(
+    fullName: PersonName,
+    collections: Collection[],
+    synState: SynState,
+    uuid?: string,
+    url?: string,
+    externalIds?: ExternalId[],
+    synonymes?: PersonName[],
+    newPerson?: PersonName,
+    bornDate?: string,
+    deadDate?: string,
+    museumAffiliation?: string
+  ) {
+    this.uuid = uuid;
+    this.fullName = fullName;
+    this.synState = synState;
+    this.url = url;
+    this.externalIds = externalIds;
+    this.synonymes = synonymes;
+    this.newPerson = newPerson;
+    this.bornDate = bornDate;
+    this.deadDate = deadDate;
+    this.collections = collections;
+    this.museumAffiliation = museumAffiliation;
+  }
+}
 
 export type PersonProps = PersonState & {
   onClickSave: Function;
@@ -590,14 +637,45 @@ export const PersonPage = (props: PersonProps) => {
   );
 };
 
+const toFrontend: (p: PersonStoreState) => PersonState = (p: PersonStoreState) => {
+  console.log('ToFrontend', p);
+  const innP: OutputPerson = p.person as OutputPerson;
+  if (innP) {
+    console.log('AAAAAAAAA', innP);
+    const r = new PersonState(
+      { firstName: innP.firstName, lastName: innP.lastName, nameString: innP.name },
+      innP.collections,
+      'SEARCH',
+      innP.personUuid,
+      innP.personAttribute && innP.personAttribute.URL,
+      [],
+      innP.synonyms &&
+        innP.synonyms.map((p: StorePersonName) => ({
+          nameString: p.name,
+          firstName: p.firstName,
+          lastName: p.lastName,
+          title: p.title
+        })),
+      undefined,
+      innP.personAttribute && innP.personAttribute.bornDate,
+      innP.personAttribute && innP.personAttribute.deathDate,
+      undefined
+    );
+    console.log('CCCCCC', r);
+    return r;
+  }
+  return {
+    fullName: { nameString: 'y' },
+    collections: [],
+    synState: 'SEARCH'
+  };
+};
+
 export class Person extends React.Component<PersonComponentProps, PersonState> {
   constructor(props: PersonComponentProps) {
     super(props);
-    this.state = {
-      synState: 'SEARCH',
-      fullName: { nameString: 'Donald Duck' },
-      collections: []
-    };
+    console.log('STORE',props.store);
+    this.state = toFrontend(props.store);
   }
   render() {
     return (
@@ -605,21 +683,22 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
         <PersonPage
           appSession={this.props.appSession}
           standAlone
-          onClickSave={() =>
+          onClickSave={(appSession: AppSession) =>
+            this.props.addPerson &&
             this.props.addPerson({
               data: this.state,
-              token: this.props.appSession.accessToken,
-              collectionId: this.props.appSession
-                .collectionId /* ,
+              token: appSession.accessToken,
+              collectionId: appSession.collectionId,
               callback: {
-                onComplete: (r: { personUuid: string }) => {
+                onComplete: (r: AjaxResponse) => {
+                  console.log('OnComplete', this.props, r.response);
                   const url = config.magasin.urls.client.person.viewPerson(
-                    this.props.appSession,
-                    r.personUuid
+                    appSession,
+                    r.response.personUuid
                   );
                   this.props.history && this.props.history.replace(url);
                 }
-              } */
+              }
             })
           }
           synonymes={this.state.synonymes}
@@ -810,20 +889,21 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
 }
 
 export type PersonComponentProps = {
-  addPerson: Function;
-  editPerson: Function;
-  getPerson: Function;
+  addPerson?: Function;
+  editPerson?: Function;
+  getPerson?: Function;
   store: PersonStoreState;
   appSession: AppSession;
-  history?: History;
+  history: History;
 };
 
 export default (props: PersonComponentProps) => (
   <Person
     appSession={props.appSession}
     store={props.store}
-    addPerson={props.addPerson(props.appSession)}
+    addPerson={props.addPerson && props.addPerson(props.appSession)}
     editPerson={props.editPerson}
     getPerson={props.getPerson}
+    history={props.history}
   />
 );

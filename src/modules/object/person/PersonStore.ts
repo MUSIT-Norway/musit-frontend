@@ -2,6 +2,7 @@ import { simpleGet, simplePost, simplePut } from '../../../shared/RxAjax';
 import {
   getPerson,
   InputPerson,
+  OutputPerson,
   addPerson,
   editPerson,
   Person
@@ -16,8 +17,8 @@ import { Star } from '../../../types/common';
 import { PersonState, PersonName } from './PersonComponent';
 
 export type PersonStoreState = {
-  person?: InputPerson;
-  personList: Array<InputPerson>;
+  person?: InputPerson | OutputPerson;
+  personList: Array<OutputPerson>;
 };
 
 export const initialPersonState = {
@@ -35,13 +36,13 @@ export const toBackend: ((p: PersonState) => InputPerson) = (p: PersonState) => 
     p.fullName.nameString,
     [{ museum_id: 5, collection_id: 10 }],
     'person',
-    'Per',
-    'Hansen',
+    p.fullName.firstName,
+    p.fullName.lastName,
     p.fullName.nameString,
     p.bornDate,
     p.deadDate,
-    '11.03.1967',
-    'http://www.vg.no',
+    p.verbatimDate,
+    p.url,
     p.synonymes
       ? p.synonymes.map((p: PersonName) => ({
           firstName: p.firstName,
@@ -115,7 +116,7 @@ export const reducer$ = (
   return Observable.merge(
     actions.getPerson$
       .switchMap(getPersonById(ajaxGet))
-      .map((person: InputPerson) => (state: PersonStoreState) => ({ ...state, person })),
+      .map((person: OutputPerson) => (state: PersonStoreState) => ({ ...state, person })),
     actions.addPerson$
       .switchMap(addPersonData(ajaxPost))
       .map((person: InputPerson) => (state: PersonStoreState) => ({ ...state, person })),
