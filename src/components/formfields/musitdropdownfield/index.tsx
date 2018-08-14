@@ -50,7 +50,7 @@ export default class MusitDropDownField extends Component<MusitDropDownFieldProp
   };
 
   getOptions() {
-    return this.props.items.map(el => ({
+    return this.props.items.map((el: TODO) => ({
       value: el,
       label: this.props.translateKeyPrefix
         ? I18n.t(this.props.translateKeyPrefix.concat(el))
@@ -98,7 +98,7 @@ export default class MusitDropDownField extends Component<MusitDropDownFieldProp
         disabled={this.props.disabled}
         value={this.props.value}
         options={this.getOptions()}
-        onChange={el => this.props.onChange((el as TODO).value)}
+        onChange={(el: TODO) => this.props.onChange((el as TODO).value)}
         data-toggle="tooltip"
         //  title={this.props.tooltip}
         clearable={false}

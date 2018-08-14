@@ -42,8 +42,8 @@ import ConservationAddContainer from './modules/conservation/conservationAddCont
 import ConservationEditContainer from './modules/conservation/conservationEditContainer';
 import ConservationSearchContainer from './modules/conservation/search/conservationSearchContainer';
 import { AddPersonName } from './modules/object/person/PersonName';
-import { Person } from './modules/object/person/Person';
-import { ViewPerson } from './modules/object/person/ViewPerson';
+import Person from './modules/object/person/AddPersonContainer';
+import ViewPerson from './modules/object/person/ViewPersonContainer';
 import Place from './modules/object/places/PlaceComponent';
 import ClassEventPage from './modules/object/taxon/TaxonClassification';
 

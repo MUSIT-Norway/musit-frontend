@@ -2,14 +2,21 @@ import * as React from 'react';
 import DatePicker from '../../../components/DatePicker';
 import * as FontAwesome from 'react-fontawesome';
 import FieldMultiSelect from '../../../forms/components/FieldMultiSelect';
+import {} from '../../../stores/appSession';
+import { AppSession } from '../../../types/appSession';
+//import { editPerson } from '../../../models/object/person';
+//import { throws } from 'assert';
+import { PersonStoreState } from './PersonStore';
 import { EditList, databaseOption, databaseOptions } from '../components/EditList';
 import { dataBaseValues } from './mockdata/data';
+import { History } from 'history';
+//import config from '../../../config';
 
 export type PersonName = {
   title?: string;
   firstName?: string;
   lastName?: string;
-  nameString: string | null;
+  nameString: string;
 };
 
 export type ExternalId = {
@@ -27,9 +34,11 @@ export type SynPersons = {
   synonymes?: string;
 }[];
 
+type Collection = { museumId: number; collectionId: number };
+
 export type PersonState = {
   uuid?: string;
-  fullName?: PersonName;
+  fullName: PersonName;
   synState: SynState;
   url?: string;
   externalIds?: ExternalId[];
@@ -39,11 +48,13 @@ export type PersonState = {
   newPerson?: PersonName;
   bornDate?: string;
   deadDate?: string;
-  collections?: string;
+  collections: Collection[];
   museumAffiliation?: string;
 };
 
 export type PersonProps = PersonState & {
+  onClickSave: Function;
+  appSession: AppSession;
   onChange: (fieldName: string) => (newValue: string) => void;
   onChangePersonName: (fieldName: string) => (newValue: string) => void;
   onClickAdd: (newPersonName?: PersonName) => void;
@@ -418,7 +429,7 @@ export const PersonPage = (props: PersonProps) => {
                 </div>
                 <div className="col-md-8">
                   <FieldMultiSelect
-                    stringValue={props.collections}
+                    stringValue={props.collections.join(',')}
                     labelAbove
                     options={[
                       { label: 'Lav', value: 'L' },
@@ -564,7 +575,11 @@ export const PersonPage = (props: PersonProps) => {
               >
                 Cancel{' '}
               </a>
-              <button type="button" className="btn btn-primary">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => props.onClickSave(props.appSession)}
+              >
                 Save
               </button>
             </div>
@@ -575,16 +590,38 @@ export const PersonPage = (props: PersonProps) => {
   );
 };
 
-export class Person extends React.Component<PersonProps, PersonState> {
-  constructor(props: PersonProps) {
+export class Person extends React.Component<PersonComponentProps, PersonState> {
+  constructor(props: PersonComponentProps) {
     super(props);
-    this.state = { synState: 'SEARCH' };
+    this.state = {
+      synState: 'SEARCH',
+      fullName: { nameString: 'Donald Duck' },
+      collections: []
+    };
   }
   render() {
     return (
       <div className="container" style={{ paddingTop: '25px' }}>
         <PersonPage
+          appSession={this.props.appSession}
           standAlone
+          onClickSave={() =>
+            this.props.addPerson({
+              data: this.state,
+              token: this.props.appSession.accessToken,
+              collectionId: this.props.appSession
+                .collectionId /* ,
+              callback: {
+                onComplete: (r: { personUuid: string }) => {
+                  const url = config.magasin.urls.client.person.viewPerson(
+                    this.props.appSession,
+                    r.personUuid
+                  );
+                  this.props.history && this.props.history.replace(url);
+                }
+              } */
+            })
+          }
           synonymes={this.state.synonymes}
           synState={this.state.synState}
           onClickNext={() =>
@@ -608,7 +645,7 @@ export class Person extends React.Component<PersonProps, PersonState> {
             this.setState((ps: PersonState) => {
               return {
                 ...ps,
-                collections: v
+                collections: []
               };
             });
           }}
@@ -771,3 +808,22 @@ export class Person extends React.Component<PersonProps, PersonState> {
     );
   }
 }
+
+export type PersonComponentProps = {
+  addPerson: Function;
+  editPerson: Function;
+  getPerson: Function;
+  store: PersonStoreState;
+  appSession: AppSession;
+  history?: History;
+};
+
+export default (props: PersonComponentProps) => (
+  <Person
+    appSession={props.appSession}
+    store={props.store}
+    addPerson={props.addPerson(props.appSession)}
+    editPerson={props.editPerson}
+    getPerson={props.getPerson}
+  />
+);

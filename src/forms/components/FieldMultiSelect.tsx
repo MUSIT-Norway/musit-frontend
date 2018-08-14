@@ -61,7 +61,7 @@ export default function FieldMultiSelect(props: FieldMultiSelectProps) {
               id={name}
               value={values as TODO}
               options={options}
-              onChange={v => props.onChange(v)}
+              onChange={(v: TODO) => props.onChange(v)}
               style={props.style}
             />
           )}
@@ -92,7 +92,7 @@ export default function FieldMultiSelect(props: FieldMultiSelectProps) {
             id={name}
             value={values as TODO}
             options={options}
-            onChange={v => props.onChange(v)}
+            onChange={(v: TODO) => props.onChange(v)}
           />
         )}
       </div>

@@ -4,6 +4,8 @@ import { PersonPage } from './Person';
 import { PersonState, PersonProps, PersonName } from './Person';
 import { makeRequest } from '../../../shared/ajaxPromise';
 import { emitError, emitSuccess } from '../../../shared/errors';
+import { inject } from 'react-rxjs';
+
 import {
   EditList,
   editListProps,
@@ -184,8 +186,10 @@ export class ViewPerson extends React.Component<
     return (
       <div style={{ padding: '25px' }}>
         {console.log('State', this.state, this.props.match.params.id)}
+        inject
         <PersonPage
           {...this.state.person}
+          onClickSave={() => {}}
           onClickNext={() =>
             this.setState((ps: ViewPersonState) => {
               const nextState =

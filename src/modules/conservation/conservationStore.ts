@@ -38,6 +38,7 @@ const flagLoading = (s: TODO) => () => setLoading$.next(s);
 export const getConservation$: Subject<Star> = createAction('getConservation$');
 const getConservationAction$: Observable<Star> = getConservation$
   .do(flagLoading({ loadingConservation: true }))
+  .do(r => console.log(r))
   .switchMap(props =>
     MusitConservation.getConservationById(simpleGet)(props).flatMap(
       getConservationDetails(simpleGet, simplePost, props)
@@ -61,6 +62,7 @@ export type SaveProps = {
  */
 };
 export const saveConservation$: Subject<SaveProps> = createAction('saveConservation$');
+
 const saveConservationAction = (post: AjaxPost<TODO>, put: AjaxPut<TODO>) => (
   props: TODO
 ) => {

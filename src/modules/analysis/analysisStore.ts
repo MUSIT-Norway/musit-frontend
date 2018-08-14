@@ -90,7 +90,7 @@ const getAnalysisTypesAction = (get: TODO) => (props: TODO) => {
 
 export type GetAnalysisProps = CommonParams & { sampleTypes: SampleTypes };
 export const getAnalysis$: Subject<GetAnalysisProps> = createAction('getAnalysis$');
-const getAnalysisAction = (get: TODO, post: TODO) => (props: TODO) =>
+const getAnalysisAction = (get: TODO, post: TODO) => (props: GetAnalysisProps) =>
   Observable.of(props)
     .do(flagLoading({ loadingAnalysis: true }))
     .flatMap(props =>
