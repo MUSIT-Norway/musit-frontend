@@ -637,11 +637,9 @@ export const PersonPage = (props: PersonProps) => {
   );
 };
 
-const toFrontend: (p: PersonStoreState) => PersonState = (p: PersonStoreState) => {
-  console.log('ToFrontend', p);
-  const innP: OutputPerson = p.person as OutputPerson;
+export const toFrontend: (p: OutputPerson) => PersonState = (p: OutputPerson) => {
+  const innP: OutputPerson = p;
   if (innP) {
-    console.log('AAAAAAAAA', innP);
     const r = new PersonState(
       { firstName: innP.firstName, lastName: innP.lastName, nameString: innP.name },
       innP.collections,
@@ -661,7 +659,6 @@ const toFrontend: (p: PersonStoreState) => PersonState = (p: PersonStoreState) =
       innP.personAttribute && innP.personAttribute.deathDate,
       undefined
     );
-    console.log('CCCCCC', r);
     return r;
   }
   return {
@@ -674,8 +671,16 @@ const toFrontend: (p: PersonStoreState) => PersonState = (p: PersonStoreState) =
 export class Person extends React.Component<PersonComponentProps, PersonState> {
   constructor(props: PersonComponentProps) {
     super(props);
-    console.log('STORE',props.store);
-    this.state = toFrontend(props.store);
+    console.log('STORE', props.store);
+    this.state = props.store.localState
+      ? props.store.localState
+      : { fullName: { nameString: '' }, synState: 'SEARCH', collections: [] };
+  }
+  componentWillReceiveProps(props: PersonComponentProps) {
+    console.log('Did mount', props);
+    if (props.store.localState && !this.state.uuid) {
+      this.setState(() => ({ ...props.store.localState }));
+    }
   }
   render() {
     return (

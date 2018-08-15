@@ -14,9 +14,10 @@ import { KEEP_ALIVE } from '../../../stores/constants';
 import { createAction } from '../../../shared/react-rxjs-patch';
 import { Reducer } from 'react-rxjs';
 import { Star } from '../../../types/common';
-import { PersonState, PersonName } from './PersonComponent';
+import { PersonState, PersonName, toFrontend } from './PersonComponent';
 
 export type PersonStoreState = {
+  localState?: PersonState;
   person?: InputPerson | OutputPerson;
   personList: Array<OutputPerson>;
 };
@@ -116,7 +117,11 @@ export const reducer$ = (
   return Observable.merge(
     actions.getPerson$
       .switchMap(getPersonById(ajaxGet))
-      .map((person: OutputPerson) => (state: PersonStoreState) => ({ ...state, person })),
+      .map((person: OutputPerson) => (state: PersonStoreState) => ({
+        ...state,
+        person,
+        localState: toFrontend(person)
+      })),
     actions.addPerson$
       .switchMap(addPersonData(ajaxPost))
       .map((person: InputPerson) => (state: PersonStoreState) => ({ ...state, person })),

@@ -13,8 +13,7 @@ import store$, {
   GetPersonProps
 } from './PersonStore';
 import { History } from 'history';
-import { simpleGet, simplePut } from '../../../shared/RxAjax';
-import { AjaxPost } from '../../../types/ajax';
+import { AjaxPut, AjaxPost, AjaxGet } from '../../../types/ajax';
 
 const combinedStore$ = createStore(
   'combinedStore',
@@ -35,20 +34,20 @@ const addProps = (combinedStore: any, upstream: { history: History }) => ({
       ajaxPost,
       callback: props.callback
     }),
-  getPerson: (props: GetPersonProps) =>
+  getPerson: (ajaxGet: AjaxGet<any>) => (props: GetPersonProps) =>
     getPerson$.next({
       id: props.id,
       token: props.token,
       collectionId: props.collectionId,
-      ajaxGet: simpleGet
+      ajaxGet
     }),
-  editPerson: (props: EditPersonProps) =>
+  editPerson: (ajaxPut: AjaxPut<any>) => (props: EditPersonProps) =>
     editPerson$.next({
       id: props.id,
       data: props.data,
       token: props.token,
       collectionId: props.collectionId,
-      ajaxPut: simplePut
+      ajaxPut
     })
 });
 
