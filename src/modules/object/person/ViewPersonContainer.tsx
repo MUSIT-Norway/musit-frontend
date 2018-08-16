@@ -26,7 +26,8 @@ const addProps = (combinedStore: any, upstream: { history: History }) => ({
       collectionId: appSession.collectionId,
       token: appSession.accessToken,
       ajaxGet: simpleGet
-    })
+    }),
+  readOnly: true
 });
 
 export const onMountProps = () => (props: any) => {

@@ -36,7 +36,7 @@ export const toBackend: ((p: PersonState) => InputPerson) = (p: PersonState) => 
   const c = new Person(
     p.fullName.nameString,
     [{ museum_id: 5, collection_id: 10 }],
-    'person',
+    p.legalEntityType,
     p.fullName.firstName,
     p.fullName.lastName,
     p.fullName.nameString,

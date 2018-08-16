@@ -133,7 +133,12 @@ export class AddPersonName extends React.Component<
       visPersonForm: false,
       personName: { firstName: 'Stein', lastName: 'Olsen' },
       personForName: '0',
-      person: { synState: 'SEARCH', fullName: { nameString: 'Hei hei' }, collections: [] }
+      person: {
+        synState: 'SEARCH',
+        legalEntityType: 'person',
+        fullName: { nameString: 'Hei hei' },
+        collections: []
+      }
     };
   }
 

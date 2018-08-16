@@ -43,6 +43,7 @@ type Collection = { museum_id: number; collection_id: number };
 export interface PersonState {
   uuid?: string;
   fullName: PersonName;
+  legalEntityType: string;
   synState: SynState;
   url?: string;
   externalIds?: ExternalId[];
@@ -59,6 +60,7 @@ export interface PersonState {
 export class PersonState implements PersonState {
   uuid?: string;
   fullName: PersonName;
+  legalEntityType: string;
   synState: SynState;
   url?: string;
   externalIds?: ExternalId[];
@@ -74,6 +76,7 @@ export class PersonState implements PersonState {
 
   constructor(
     fullName: PersonName,
+    legalEntityType: string,
     collections: Collection[],
     synState: SynState,
     uuid?: string,
@@ -87,6 +90,7 @@ export class PersonState implements PersonState {
   ) {
     this.uuid = uuid;
     this.fullName = fullName;
+    this.legalEntityType = legalEntityType;
     this.synState = synState;
     this.url = url;
     this.externalIds = externalIds;
@@ -104,7 +108,7 @@ export type PersonProps = PersonState & {
   appSession: AppSession;
   onChange: (fieldName: string) => (newValue: string) => void;
   onChangePersonName: (fieldName: string) => (newValue: string) => void;
-  onClickAdd: (newPersonName?: PersonName) => void;
+  onClickAddPersonName: (newPersonName?: PersonName) => void;
   onChangeFullName: (fieldName: string) => (newValue: string) => void;
   onAddExternalId: () => void;
   onSaveExternalId: () => void;
@@ -121,6 +125,7 @@ export type PersonProps = PersonState & {
   onChangeDeathDate: Function;
   heading?: string;
   standAlone?: boolean;
+  readOnly?: boolean;
 };
 
 const ExternalIDStrings = (props: {
@@ -465,19 +470,32 @@ export const PersonPage = (props: PersonProps) => {
                 <div className="col-md-2">
                   <div className="form-group">
                     <label htmlFor="legalEntityType">Legal entity type</label>
-                    <select className="form-control" id="legalEntityType">
-                      <option>Person</option>
-                      <option>Group</option>
-                      <option>Organisasion</option>
-                      <option>Institution</option>
-                      <option>Business</option>
-                    </select>
+                    {!!!props.readOnly ? (
+                      <select
+                        className="form-control"
+                        id="legalEntityType"
+                        value={props.legalEntityType}
+                        onChange={v => {
+                          console.log('sssdsds', v.target.value);
+                          props.onChange('legalEntityType')(v.target.value);
+                        }}
+                      >
+                        <option value="person">Person</option>
+                        <option value="group">Group</option>
+                        <option value="organisasion">Organisation</option>
+                        <option value="institution">Institution</option>
+                        <option value="business">Business</option>
+                      </select>
+                    ) : (
+                      <div className="form-control-static">{props.legalEntityType}</div>
+                    )}
                   </div>
                 </div>
                 <div className="col-md-8">
                   <FieldMultiSelect
                     stringValue={props.collections.join(',')}
                     labelAbove
+                    viewMode={!!props.readOnly}
                     options={[
                       { label: 'Lav', value: 'L' },
                       { label: 'Karplanter', value: 'V' },
@@ -485,7 +503,7 @@ export const PersonPage = (props: PersonProps) => {
                       { label: 'Alger', value: 'A' },
                       { label: 'Sopp', value: 'F' },
                       { label: 'Terristiske evertebrater', value: 'TI' },
-                      { label: 'Terristiske evertebrater', value: 'MI' }
+                      { label: 'Marine evertebrater', value: 'MI' }
                     ]}
                     onChange={(event: string) => {
                       props.onChangeCollections(event);
@@ -568,7 +586,7 @@ export const PersonPage = (props: PersonProps) => {
                     synonymes={props.synonymes}
                     newPerson={props.newPerson}
                     onChange={props.onChange}
-                    onClickAdd={props.onClickAdd}
+                    onClickAdd={props.onClickAddPersonName}
                   />
                 )}
 
@@ -582,7 +600,7 @@ export const PersonPage = (props: PersonProps) => {
               <button
                 type="button"
                 className="btn btn-default"
-                onClick={() => props.onClickAdd(props.newPerson)}
+                onClick={() => props.onClickAddPersonName(props.newPerson)}
               >
                 Add person name
               </button>
@@ -642,6 +660,7 @@ export const toFrontend: (p: OutputPerson) => PersonState = (p: OutputPerson) =>
   if (innP) {
     const r = new PersonState(
       { firstName: innP.firstName, lastName: innP.lastName, nameString: innP.name },
+      innP.personAttribute ? innP.personAttribute.legalEntityType : '',
       innP.collections,
       'SEARCH',
       innP.personUuid,
@@ -664,6 +683,7 @@ export const toFrontend: (p: OutputPerson) => PersonState = (p: OutputPerson) =>
   return {
     fullName: { nameString: 'y' },
     collections: [],
+    legalEntityType: 'person',
     synState: 'SEARCH'
   };
 };
@@ -674,10 +694,15 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
     console.log('STORE', props.store);
     this.state = props.store.localState
       ? props.store.localState
-      : { fullName: { nameString: '' }, synState: 'SEARCH', collections: [] };
+      : {
+          fullName: { nameString: '' },
+          synState: 'SEARCH',
+          collections: [],
+          legalEntityType: 'person'
+        };
   }
   componentWillReceiveProps(props: PersonComponentProps) {
-    console.log('Did mount', props);
+    console.log('Recieve props: ====>', props);
     if (props.store.localState && !this.state.uuid) {
       this.setState(() => ({ ...props.store.localState }));
     }
@@ -686,6 +711,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
     return (
       <div className="container" style={{ paddingTop: '25px' }}>
         <PersonPage
+          readOnly={this.props.readOnly}
           appSession={this.props.appSession}
           standAlone
           onClickSave={(appSession: AppSession) =>
@@ -723,6 +749,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
           collections={this.state.collections}
           editingIndex={this.state.editingIndex}
           editingIds={this.state.editingIds}
+          legalEntityType={this.state.legalEntityType}
           externalIds={this.state.externalIds || []}
           fullName={this.state.fullName}
           onChangeCollections={(v: string) => {
@@ -734,9 +761,11 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
             });
           }}
           newPerson={this.state.newPerson}
-          onChange={(fieldName: string) => (newValue: string) =>
-            this.setState(p => ({ ...p, [fieldName]: newValue }))}
-          onClickAdd={(newPersonName?: PersonName) => {
+          onChange={(fieldName: string) => (newValue: string) => {
+            this.setState(p => ({ ...p, [fieldName]: newValue }));
+            console.log(fieldName, newValue);
+          }}
+          onClickAddPersonName={(newPersonName?: PersonName) => {
             if (newPersonName) {
               this.setState(ps => ({
                 ...ps,
@@ -900,6 +929,7 @@ export type PersonComponentProps = {
   store: PersonStoreState;
   appSession: AppSession;
   history: History;
+  readOnly: boolean;
 };
 
 export default (props: PersonComponentProps) => (
@@ -910,5 +940,6 @@ export default (props: PersonComponentProps) => (
     editPerson={props.editPerson}
     getPerson={props.getPerson}
     history={props.history}
+    readOnly={props.readOnly || false}
   />
 );

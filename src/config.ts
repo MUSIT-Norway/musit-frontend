@@ -54,9 +54,9 @@ export default {
         aboutPage: '/about',
         person: {
           addPerson: (appSession: AppSession) =>
-            `${clientContextUrl(appSession)}/person/`,
+            `${clientContextUrl(appSession)}/person/add`,
           viewPerson: (appSession: AppSession, id: string) =>
-            `${clientContextUrl(appSession)}/person/${id}`
+            `${clientContextUrl(appSession)}/person/view/${id}`
         },
         conservation: {
           editConservation: (appSession: AppSession, conservationId: number) =>
