@@ -42,7 +42,7 @@ import ConservationAddContainer from './modules/conservation/conservationAddCont
 import ConservationEditContainer from './modules/conservation/conservationEditContainer';
 import ConservationSearchContainer from './modules/conservation/search/conservationSearchContainer';
 import { AddPersonName } from './modules/object/person/PersonName';
-import Person from './modules/object/person/AddPersonContainer';
+import AddPerson from './modules/object/person/AddPersonContainer';
 import ViewPerson from './modules/object/person/ViewPersonContainer';
 import Place from './modules/object/places/PlaceComponent';
 import ClassEventPage from './modules/object/taxon/TaxonClassification';
@@ -128,11 +128,12 @@ const MuseumAndCollectionPageUrlAware = flowRight([inject(data), makeUrlAware])(
 
 const PersonPage = (props: object) => (
   <Switch>
-    <Route path={rt(props, '/addperson')} exact component={AddPersonName} />
+    <Route path={rt(props, '/personname/add')} exact component={AddPersonName} />
 
-    <Route path={rt(props, '/')} exact component={Person} />
+    <Route path={rt(props, '/add')} exact component={AddPerson} />
 
-    <Route path={rt(props, '/:id')} exact component={ViewPerson} />
+    <Route path={rt(props, '/view/:id')} exact component={ViewPerson} />
+    <Route component={NotFoundPage} />
   </Switch>
 );
 
