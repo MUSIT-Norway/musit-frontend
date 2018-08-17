@@ -495,6 +495,7 @@ export const PersonPage = (props: PersonProps) => {
                 <div className="col-md-8">
                   <FieldMultiSelect
                     stringValue={props.collections.join(',')}
+                    viewMode={props.readOnly}
                     labelAbove={true}
                     options={museumCollection.map((e, i) => ({
                       label: `${museum[e.museumId] && museum[e.museumId].abbreviation} -
