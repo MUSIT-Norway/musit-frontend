@@ -4,6 +4,8 @@ import { AppSession } from '../../types/appSession';
 import Select from 'react-select';
 import { I18n } from 'react-i18nify';
 import { Maybe, TODO } from '../../types/common';
+import { Collection } from '../../models/object/person';
+import { collections, museum } from '../../modules/object/person/mockdata/data';
 
 export interface FieldMultiSelectProps {
   stringValue?: any;
@@ -18,22 +20,25 @@ export interface FieldMultiSelectProps {
   singleSelect?: Maybe<boolean>;
   style?: any;
   name?: string; //TODO: Jeg måtte legge til denne, sjekk om den brukes noe sted, hvis ikke bør den (og bruken av den nedenfor) fjenres
+  values?: Collection[];
 }
 
 export default function FieldMultiSelect(props: FieldMultiSelectProps) {
   const placeholder = I18n.t('musit.texts.makeChoice');
   const name = props.name ? props.name : '';
-  const values: Maybe<string> = props.stringValue ? props.stringValue : '';
-  const options = props.options ? props.options : [];
-
-  const label = (opt: TODO) => (opt ? opt.label : '');
-  const filterOptions = (v: TODO) => options && options.filter(f => f.value === v);
-  const viewOptions: Maybe<Array<string>> =
+  const values: Collection[] = props.values ? props.values : [];
+  const options: Collection[] = props.options ? props.options : [];
+  const viewOptions =
     values && options
-      ? values
-          .split(',')
-          .map(v => (filterOptions(v).length > 0 ? label(filterOptions(v)[0]) : ''))
+      ? values.map((e: Collection, i: number) => ({
+          label: `${museum[e.museum_id] && museum[e.museum_id].abbreviation} -
+                            ${(collections[e.collection_id] &&
+                              collections[e.collection_id].collectionName) ||
+                              ''}`,
+          value: i
+        }))
       : [];
+
   if (props.labelAbove) {
     return (
       <div className="row form-group">
@@ -53,13 +58,13 @@ export default function FieldMultiSelect(props: FieldMultiSelectProps) {
             <Select
               {...props.inputProps}
               placeholder={placeholder}
-              clearable={false}
+              clearable={true}
               multi={!props.singleSelect}
               closeOnSelect={true}
               removeSelected={false}
               simpleValue
               id={name}
-              value={values as TODO}
+              value={viewOptions}
               options={options}
               onChange={(v: TODO) => props.onChange(v)}
               style={props.style}
@@ -90,7 +95,7 @@ export default function FieldMultiSelect(props: FieldMultiSelectProps) {
             removeSelected={false}
             simpleValue
             id={name}
-            value={values as TODO}
+            value={viewOptions}
             options={options}
             onChange={(v: TODO) => props.onChange(v)}
           />
