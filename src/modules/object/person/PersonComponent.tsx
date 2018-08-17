@@ -15,6 +15,7 @@ import { dataBaseValues } from './mockdata/data';
 import { History } from 'history';
 import config from '../../../config';
 import { AjaxResponse } from 'rxjs';
+import { museumCollection, collections, museum } from '../person/mockdata/data';
 
 export type PersonName = {
   title?: string;
@@ -494,20 +495,19 @@ export const PersonPage = (props: PersonProps) => {
                 <div className="col-md-8">
                   <FieldMultiSelect
                     stringValue={props.collections.join(',')}
-                    labelAbove
-                    viewMode={!!props.readOnly}
-                    options={[
-                      { label: 'Lav', value: 'L' },
-                      { label: 'Karplanter', value: 'V' },
-                      { label: 'Mose', value: 'M' },
-                      { label: 'Alger', value: 'A' },
-                      { label: 'Sopp', value: 'F' },
-                      { label: 'Terristiske evertebrater', value: 'TI' },
-                      { label: 'Marine evertebrater', value: 'MI' }
-                    ]}
+                    labelAbove={true}
+                    options={museumCollection.map((e, i) => ({
+                      label: `${museum[e.museumId] && museum[e.museumId].abbreviation} -
+                            ${(collections[e.collectionId] &&
+                              collections[e.collectionId].collectionName) ||
+                              ''}`,
+                      value: i
+                    }))}
+                    singleSelect={false}
                     onChange={(event: string) => {
                       props.onChangeCollections(event);
                     }}
+                    values={props.collections}
                     title="Samlinger for person"
                   />
                 </div>
@@ -708,6 +708,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
     }
   }
   render() {
+    console.log('State: ', this.state);
     return (
       <div className="container" style={{ paddingTop: '25px' }}>
         <PersonPage
@@ -754,9 +755,18 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
           fullName={this.state.fullName}
           onChangeCollections={(v: string) => {
             this.setState((ps: PersonState) => {
+              const selectedIndexes: number[] =
+                v !== '' ? v.split(',').map((s: string) => parseInt(s)) : [];
+              const newCollection: {
+                museum_id: number;
+                collection_id: number;
+              }[] = selectedIndexes.map((s: number) => ({
+                museum_id: museumCollection[s].museumId,
+                collection_id: museumCollection[s].collectionId
+              }));
               return {
                 ...ps,
-                collections: []
+                collections: newCollection || []
               };
             });
           }}
@@ -790,9 +800,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
           }}
           onSaveExternalId={() => {
             this.setState((ps: PersonState) => {
-              const editIndex = ps.editingIndex
-                ? ps.editingIndex
-                : (ps.externalIds || []).length - 1;
+              const editIndex = ps.editingIndex ? ps.editingIndex : 0;
               const currentEditItem = ps.editingIds;
               const currentExternalIds = (ps.externalIds && ps.externalIds) || [];
               const nextExternalIds = currentEditItem
