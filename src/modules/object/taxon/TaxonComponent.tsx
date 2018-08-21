@@ -3,10 +3,26 @@ import DetTable from './DetTable';
 import { TaxonTable } from './TaxonTable';
 import { TaxonClassificationProps } from './TaxonClassification';
 
+
 export class TaxonComponent extends React.Component<TaxonClassificationProps> {
   render() {
     return (
       <div className="container-fluid">
+        <div className="panel-group">
+          <div className="panel panel-default">
+            <div className="panel-heading">
+              <h4 className="panel-title">
+                <a data-toggle="collapse" href="#collapse1">
+                  Collapsible panel
+                </a>
+              </h4>
+            </div>
+            <div id="collapse1" className="panel-collapse collapse">
+              <div className="panel-body">Panel Body</div>
+              <div className="panel-footer">Panel Footer</div>
+            </div>
+          </div>
+        </div>
         <div className="row">
           <div className="col-md-8">
             <div className="row">

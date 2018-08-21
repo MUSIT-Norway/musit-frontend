@@ -85,7 +85,7 @@ class DetTable extends React.Component<DetProps> {
                 <label htmlFor="btnAddPerson">Create new</label>
                 <Link
                   to={{
-                    pathname: 'person/addperson',
+                    pathname: 'person/personname/add',
                     state: { newName: this.props.editingDet.personName }
                   }}
                 >

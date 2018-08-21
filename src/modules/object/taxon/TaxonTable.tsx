@@ -1,12 +1,8 @@
 import * as React from 'react';
 import * as FontAwesome from 'react-fontawesome';
 import { TaxonSuggest } from '../../../components/suggest/TaxonSuggest';
-import {
-  TaxonClassificationProps,
-  ScientificName,
-  ITaxonTerm,
-  appSession
-} from './TaxonClassification';
+import { TaxonClassificationProps, ITaxonTerm, appSession } from './TaxonClassification';
+import { ScientificName } from '../../../models/object/classHist';
 
 export class TaxonTable extends React.Component<TaxonClassificationProps> {
   render() {
@@ -145,7 +141,7 @@ export class TaxonTable extends React.Component<TaxonClassificationProps> {
                         <th> Presicion</th>
                         <th> Taxon cathegry</th>
                         <th />
-                        <th />>
+                        <th />
                       </tr>
                     </thead>
                     <tbody>
@@ -244,31 +240,6 @@ export class TaxonTable extends React.Component<TaxonClassificationProps> {
                 </select>
               </div>
             </div>
-            <div className="col-md-2">
-              <div className="form-group">
-                <label htmlFor="taxonCategory">Taxon Category</label>
-
-                <select
-                  id="taxonCategory"
-                  className="form-control"
-                  value={
-                    (this.props.editingName && this.props.editingName.precisionRank) || ''
-                  }
-                  onChange={e => {
-                    e.preventDefault();
-                    this.props.onChangeTaxonField('precisionRank')(e.target.value);
-                  }}
-                >
-                  <option>Velg type</option>
-                  <option value="order">Order</option>
-                  <option value="family">Family</option>
-                  <option value="genus">Genus</option>
-                  <option value="species">Species</option>
-                  <option value="subspecies">Subspecies</option>
-                  <option value="variety">Variety</option>
-                </select>
-              </div>
-            </div>
           </div>
         )}
 
@@ -284,7 +255,7 @@ export class TaxonTable extends React.Component<TaxonClassificationProps> {
                 this.props.onAddTaxon();
               }}
             >
-              Add ×
+              Add hybrid
             </button>
           </div>
           <div className="col-md-1">

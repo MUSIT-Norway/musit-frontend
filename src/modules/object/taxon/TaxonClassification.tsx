@@ -2,33 +2,7 @@ import * as React from 'react';
 import { ClassificationHistoryTable } from './ClassificationHistoryTable';
 import { SexAndStagesComponent } from './SexAndStagesComponent';
 import { TaxonComponent } from './TaxonComponent';
-
-// Scientificname-types
-type Property = {
-  Name: string;
-  Value: string;
-  Properties: Property[];
-};
-
-type DynamicProperty = {
-  Name: string;
-  Value: string;
-  Properties: Property[];
-};
-
-export type ScientificName = {
-  Id: string | null;
-  scientificNameID: number;
-  taxonID: number;
-  scientificName: string;
-  scientificNameAuthorship: string;
-  taxonRank: string;
-  taxonomicStatus: string | null;
-  acceptedNameUsage: ScientificName | null;
-  higherClassification: ScientificName[];
-  nameAccordingTo: string | null;
-  dynamicProperties: DynamicProperty[] | null;
-};
+import { ScientificName } from '../../../models/object/classHist';
 
 // Datastructure
 export interface IPersonName {
@@ -77,7 +51,10 @@ class TaxonTerm implements ITaxonTerm {
     this.scientificName = term.scientificName;
     this.taxonSuggestion = term.taxonSuggestion;
     this.precisionCode = term.precisionCode;
-    this.precisionRank = term.precisionRank;
+    this.precisionRank = term.precisionCode
+      ? term.taxonSuggestion && term.taxonSuggestion.taxonRank
+      : '';
+    console.log('Rank:', this.precisionRank, term.scientificName || term.taxonSuggestion);
   }
 }
 interface ITaxonClassification {
