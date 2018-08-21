@@ -117,6 +117,8 @@ export interface InputPerson {
   lastName?: string;
   title?: string;
   name: string;
+  database?: string;
+  uuid?: string;
   personAttribute?: PersonAttribute;
   collections: Collection[];
   synonyms?: PersonName[];
@@ -161,6 +163,12 @@ export interface PersonAttribute {
   deathDate?: string;
   verbatimDate?: string;
   URL?: string;
+  externalIds?: ExternalId[];
+}
+
+export interface ExternalId {
+  database?: string;
+  uuid?: string;
 }
 
 export class PersonAttribute {
@@ -170,12 +178,14 @@ export class PersonAttribute {
   deathDate?: string;
   verbatimDate?: string;
   URL?: string;
+  externalIds?: ExternalId[];
   constructor(
     legalEntityType: string,
     displayName?: string,
     bornDate?: string,
     deathDate?: string,
     verbatimDate?: string,
+    externalIds?: ExternalId[],
     URL?: string
   ) {
     this.legalEntityType = legalEntityType;
@@ -183,12 +193,14 @@ export class PersonAttribute {
     this.bornDate = bornDate;
     this.deathDate = deathDate;
     this.verbatimDate = verbatimDate;
+    this.externalIds = externalIds;
     this.URL = URL;
   }
 }
 
 export class Person implements InputPerson {
   name: string;
+  title?: string;
   firstName?: string;
   lastName?: string;
   personAttribute?: PersonAttribute;
@@ -199,6 +211,7 @@ export class Person implements InputPerson {
     name: string,
     collections: Collection[],
     legalEntityType: string,
+    title?: string,
     firstName?: string,
     lastName?: string,
     displayName?: string,
@@ -206,9 +219,11 @@ export class Person implements InputPerson {
     deathDate?: string,
     verbatimDate?: string,
     URL?: string,
-    synonyms?: PersonName[]
+    synonyms?: PersonName[],
+    externalIds?: ExternalId[]
   ) {
     this.name = name;
+    this.title = title;
     this.firstName = firstName;
     this.lastName = lastName;
     this.personAttribute = new PersonAttribute(
@@ -217,6 +232,7 @@ export class Person implements InputPerson {
       bornDate,
       deathDate,
       verbatimDate,
+      externalIds,
       URL
     );
     this.synonyms = synonyms;
