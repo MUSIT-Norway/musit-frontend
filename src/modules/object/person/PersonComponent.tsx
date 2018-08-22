@@ -660,13 +660,18 @@ export const toFrontend: (p: OutputPerson) => PersonState = (p: OutputPerson) =>
   const innP: OutputPerson = p;
   if (innP) {
     const r = new PersonState(
-      { firstName: innP.firstName, lastName: innP.lastName, nameString: innP.name },
+      {
+        firstName: innP.firstName,
+        lastName: innP.lastName,
+        title: innP.title,
+        nameString: innP.name
+      },
       innP.personAttribute ? innP.personAttribute.legalEntityType : '',
       innP.collections,
       'SEARCH',
       innP.personUuid,
       innP.personAttribute && innP.personAttribute.URL,
-      [],
+      innP.personAttribute && innP.personAttribute.externalIds,
       innP.synonyms &&
         innP.synonyms.map((p: StorePersonName) => ({
           nameString: p.name,
@@ -679,6 +684,8 @@ export const toFrontend: (p: OutputPerson) => PersonState = (p: OutputPerson) =>
       innP.personAttribute && innP.personAttribute.deathDate,
       undefined
     );
+
+    console.log('Anuradha toFrontend ; ', r);
     return r;
   }
   return {

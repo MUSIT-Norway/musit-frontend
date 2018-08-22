@@ -42,28 +42,51 @@ const LatLongComponent = (props: CoordinateProps) => {
             ))}
           </select>
         </div>
-        <div className="col-md-3">
-          <label htmlFor="coordinateGeomertry">Coordinate geometry </label>
-          <select
+        {props.editingCoordinate &&
+          props.editingCoordinate.coordinateType === 'Lat / Long' && (
+            <div className="col-md-3">
+              <div>
+                <label htmlFor="coordinateGeomertry">Coordinate geometry </label>
+                <select
+                  className="form-control"
+                  id="coordinateGeomertry"
+                  onChange={e => {
+                    props.onChangeCoordinateText('coordinateGeomertry')(e.target.value);
+                  }}
+                >
+                  value={
+                    props.getCurrentCoordinate(props.coordinateHistoryIndeks)
+                      .coordinateGeomertry
+                  }
+                  {geometryTypes.map((type: string, i: number) => (
+                    <option key={`optionRow_${i}`}>{type}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          )}
+        <div className="col-md-2">
+          <label htmlFor="zone">Zone </label>
+          <input
+            type="text"
             className="form-control"
-            id="coordinateGeomertry"
-            onChange={e => {
-              props.onChangeCoordinateText('coordinateGeomertry')(e.target.value);
-            }}
-          >
-            value={
-              props.getCurrentCoordinate(props.coordinateHistoryIndeks)
-                .coordinateGeomertry
-            }
-            {geometryTypes.map((type: string, i: number) => (
-              <option key={`optionRow_${i}`}>{type}</option>
-            ))}
-          </select>
+            id="zone"
+            value={props.getCurrentCoordinate(props.coordinateHistoryIndeks).utmZone}
+          />
+        </div>
+        <div className="col-md-2">
+          <label htmlFor="mgrsBand">Band </label>
+          <input
+            type="text"
+            className="form-control"
+            id="mgrsBand"
+            value={props.getCurrentCoordinate(props.coordinateHistoryIndeks).mgrsBand}
+          />
         </div>
       </div>
       <div className="row form-group">
         <div className="col-md-7">
-          <label htmlFor="latLongCoordinateString">Lat/Long-Coordinate </label>
+          <label htmlFor="latLongCoordinateString">Lat / Long-Coordinate </label>
           <input
             type="text"
             className="form-control"

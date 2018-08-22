@@ -3,6 +3,7 @@ import * as moment from 'moment';
 import CoordinateComp from './CoordinateComp';
 import MapComponent from './MapComponent';
 import AdmPlaceComponent from './AdmPlaceComponent';
+import { musitCoodinateValidate } from '../../../shared/util';
 
 export type AdmPlace = {
   admPlaceId: number;
@@ -65,6 +66,7 @@ export type PlaceState = {
   editingCoordinate: Coordinate;
   coordinateHistoryIndeks: number;
   editCoorditeMode?: boolean;
+  coordinateInvalid: boolean;
   admPlace?: AdmPlace;
   locality?: string;
   ecology?: string;
@@ -89,6 +91,7 @@ export type CoordinateProps = {
   coordinateHistoryIndeks: number;
   coordinateCollapsed: boolean;
   coordinateType: string;
+  coordinateInvalid: boolean;
   onChangeCoordinateNumber: (fieldName: string) => (value: number) => void;
   onSetEditingIndex: (i: number) => void;
   onChangeCoordinateText: (fieldName: string) => (value: string) => void;
@@ -171,7 +174,7 @@ export const admPlaces: Array<AdmPlace> = [
     zoom: 12
   }
 ];
-export const coordinateTypes = ['MGRS', 'Lat/Long', 'UTM'];
+export const coordinateTypes = ['MGRS', 'Lat / Long', 'UTM'];
 export const datumValues = ['WGS84', 'ED50', 'EUREF-89'];
 export const geometryTypes = ['Point', 'Reactangle', 'Polygone', 'Line'];
 export const coordinateSources = ['Original label', 'GPS', 'Map', 'Other'];
@@ -204,7 +207,8 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
       },
       coordinateHistory: [{ coordinate: { coordinateType: 'MGRS' } }],
       coordinateCollapsed: true,
-      coordinateHistoryIndeks: 0
+      coordinateHistoryIndeks: 0,
+      coordinateInvalid: false
     };
   }
 
@@ -255,6 +259,7 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
                 this.state.coordinateHistory[this.state.coordinateHistoryIndeks]
                   .coordinate.coordinateType || 'MGRS'
               }
+              coordinateInvalid={this.state.coordinateInvalid || false}
               coordinateCollapsed={this.state.coordinateCollapsed || false}
               onChangeCoordinateNumber={(fieldName: string) => (value: number) => {
                 this.setState((ps: PlaceState) => {
@@ -280,14 +285,17 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
               }}
               onChangeCoordinateText={(fieldName: string) => (value: string) => {
                 this.setState((ps: PlaceState) => {
+                  let coordinateInvalid: boolean = !musitCoodinateValidate(fieldName)(
+                    value
+                  );
                   const s = {
                     ...ps,
                     editingCoordinate: {
                       ...ps.editingCoordinate,
                       [fieldName]: value
-                    }
+                    },
+                    coordinateInvalid: coordinateInvalid ? coordinateInvalid : false
                   };
-
                   return s;
                 });
               }}

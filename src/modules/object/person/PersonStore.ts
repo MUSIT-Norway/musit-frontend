@@ -35,8 +35,9 @@ export type CommonParams = {
 export const toBackend: ((p: PersonState) => InputPerson) = (p: PersonState) => {
   const c = new Person(
     p.fullName.nameString,
-    [{ museum_id: 5, collection_id: 10 }],
+    p.collections,
     p.legalEntityType,
+    p.fullName.title,
     p.fullName.firstName,
     p.fullName.lastName,
     p.fullName.nameString,
@@ -51,7 +52,9 @@ export const toBackend: ((p: PersonState) => InputPerson) = (p: PersonState) => 
           title: p.title,
           name: p.nameString
         }))
-      : []
+      : [],
+    undefined //Anuradha: 21-Aug-18, Once backend developed,
+    //pass these parameters ( p.externalIds ? p.externalIds : [] )
   );
   return c;
 
