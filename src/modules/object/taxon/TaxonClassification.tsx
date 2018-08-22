@@ -309,14 +309,20 @@ interface IClassificationsToShow {
 interface IState {
   classifications: IClassifications;
   classificationsToShow: IClassificationsToShow;
+  taxonExpanded: boolean;
+  sexAndStagesExpanded: Boolean;
 }
 
 class State implements IState {
   classifications: Classifications;
   classificationsToShow: IClassificationsToShow;
+  taxonExpanded: boolean;
+  sexAndStagesExpanded: Boolean;
   constructor(s: IState) {
     this.classifications = new Classifications(s.classifications);
     this.classificationsToShow = s.classificationsToShow;
+    this.sexAndStagesExpanded = s.sexAndStagesExpanded;
+    this.taxonExpanded = s.taxonExpanded;
   }
 }
 
@@ -326,6 +332,8 @@ export default class ClassificationComponent extends React.Component<Props, ISta
   constructor(props: Props) {
     const c = {
       classifications: {
+        sexAndStagesExpanded: false,
+        taxonExpanded: false,
         classifications: [
           new TaxonClassification({
             editingIndex: 0,
