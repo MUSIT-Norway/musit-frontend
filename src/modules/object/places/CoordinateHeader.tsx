@@ -12,7 +12,8 @@ const CoordinateHeader = (props: CoordinateProps) => {
     case 'MGRS': {
       return <MGRSComponent {...props} />;
     }
-    case 'Lat/Long': {
+    case 'Lat / Long': {
+      //Error no space Lat/Long
       return <LatLongComponent {...props} />;
     }
     default: {
