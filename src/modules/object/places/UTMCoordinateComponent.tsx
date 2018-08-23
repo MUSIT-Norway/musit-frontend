@@ -95,7 +95,8 @@ const UTMCoordinateComponent = (props: CoordinateProps) => {
               props.onChangeCoordinateText('coordinateString')(e.target.value);
             }}
             value={
-              props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateString
+              props.getCurrentCoordinate(props.coordinateHistoryIndeks)
+                .coordinateString || ''
             }
           />
         </div>
