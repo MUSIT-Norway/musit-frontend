@@ -86,7 +86,9 @@ const MGRSComponent = (props: CoordinateProps) => {
       </div>
       <div
         className={
-          props.coordinateInvalid ? 'row form-group has-warning ' : 'row form-group '
+          props.coordinateInvalid
+            ? 'row form-group has-warning '
+            : 'row form-group has-success  '
         }
       >
         <div className="col-md-7">
@@ -96,7 +98,8 @@ const MGRSComponent = (props: CoordinateProps) => {
             className="form-control"
             id="MGRSCoordinateString"
             value={
-              props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateString
+              props.getCurrentCoordinate(props.coordinateHistoryIndeks)
+                .coordinateString || ''
             }
             onChange={e => {
               const v = e.target.value.toUpperCase();
