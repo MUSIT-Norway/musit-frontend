@@ -331,9 +331,9 @@ type Props = IState;
 export default class ClassificationComponent extends React.Component<Props, IState> {
   constructor(props: Props) {
     const c = {
+      sexAndStagesExpanded: false,
+      taxonExpanded: false,
       classifications: {
-        sexAndStagesExpanded: false,
-        taxonExpanded: false,
         classifications: [
           new TaxonClassification({
             editingIndex: 0,

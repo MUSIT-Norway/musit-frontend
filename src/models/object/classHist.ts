@@ -23,7 +23,7 @@ export type ScientificName = {
   higherClassification: ScientificName[];
   nameAccordingTo: string | null;
   dynamicProperties: DynamicProperty[] | null;
-};
+};  
 
 export interface Taxon {
   scientificName: ScientificName;
