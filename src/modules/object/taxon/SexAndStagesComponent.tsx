@@ -12,7 +12,7 @@ export class SexAndStagesComponent extends React.Component<SexAndLifeStageProps>
           </div>
         </div>
         <div className="row">
-          <div className="col-md-7">
+          <div className="col-md-6">
             <div className="form-group">
               <label htmlFor="sexAndStageNote">Note</label>
               <textarea className="form-control" id="sexAndStageNote" />

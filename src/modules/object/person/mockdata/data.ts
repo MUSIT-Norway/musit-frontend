@@ -119,3 +119,9 @@ export const museumCollection: { museumId: number; collectionId: number }[] = [
   { museumId: 7, collectionId: 5 },
   { museumId: 7, collectionId: 8 }
 ];
+
+export const data = [
+  { name: 'Tanner Linsley', age: 26 },
+  { name: 'Anuradha Waru.', age: 38 },
+  { name: 'Sanjeewa Waru.', age: 35 }
+];

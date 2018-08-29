@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as FontAwesome from 'react-fontawesome';
+//import * as FontAwesome from 'react-fontawesome';
 import { TaxonSuggest } from '../../../components/suggest/TaxonSuggest';
 import { TaxonClassificationProps, ITaxonTerm, appSession } from './TaxonClassification';
 import { ScientificName } from '../../../models/object/classHist';
@@ -129,11 +129,13 @@ export class TaxonTable extends React.Component<TaxonClassificationProps> {
 
     return (
       <div>
+        {/* Anuradha: 28-Aug-2018 Commented the table since we are not going to add hybrids on this release              
         {this.props.taxonNames &&
           this.props.taxonNames.length > 0 && (
             <div className="row">
               <div className="col-md-12">
                 <div className="row">
+               
                   <table className="table table-condensed table-hover">
                     <thead>
                       <tr>
@@ -188,60 +190,53 @@ export class TaxonTable extends React.Component<TaxonClassificationProps> {
                       })}
                     </tbody>
                   </table>
-                </div>
+                </div> 
               </div>
             </div>
-          )}
-        {taxonPath && <div className="row">{taxonPath}</div>}
-        <br />
-        {aggVal && (
-          <div className="row">
-            <i>{aggVal}</i>
-          </div>
-        )}
-        <br />
+          )}*/}
 
-        {this.props.editingName && (
-          <div className="row">
-            <div className="col-md-7">
-              <div className="form-group">
-                <label htmlFor="taxonSuggestADB">Taxon</label>
-                <TaxonSuggest
-                  id="taxonSuggestADB"
-                  value={value}
-                  renderFunc={scentificNameAsString}
-                  placeHolder="Taxon"
-                  appSession={appSession}
-                  onChange={(suggestion: ScientificName) => {
-                    this.props.onChangeTaxonSuggest(suggestion);
-                  }}
-                />
-              </div>
-            </div>
-
-            <div className="col-md-2">
-              <div className="form-group">
-                <label htmlFor="presicionType">Precision</label>
-
-                <select
-                  id="presicionType"
-                  className="form-control"
-                  value={
-                    (this.props.editingName && this.props.editingName.precisionCode) || ''
-                  }
-                  onChange={e => {
-                    e.preventDefault();
-                    this.props.onChangeTaxonField('precisionCode')(e.target.value);
-                  }}
-                >
-                  <option>Velg type</option>
-                  <option>cf.</option>
-                  <option>aff.</option>
-                </select>
-              </div>
+        {/* this.props.editingName && (   ) */}
+        <div className="row">
+          <div className="col-md-8">
+            <div className="form-group">
+              <label htmlFor="taxonSuggestADB">Taxon</label>
+              <TaxonSuggest
+                id="taxonSuggestADB"
+                disabled={this.props.editingName === undefined}
+                value={value}
+                renderFunc={scentificNameAsString}
+                placeHolder="Taxon"
+                appSession={appSession}
+                onChange={(suggestion: ScientificName) => {
+                  this.props.onChangeTaxonSuggest(suggestion);
+                }}
+              />
             </div>
           </div>
-        )}
+
+          <div className="col-md-4">
+            <div className="form-group">
+              <label htmlFor="presicionType">Precision</label>
+
+              <select
+                id="presicionType"
+                className="form-control"
+                disabled={this.props.editingName === undefined}
+                value={
+                  (this.props.editingName && this.props.editingName.precisionCode) || ''
+                }
+                onChange={e => {
+                  e.preventDefault();
+                  this.props.onChangeTaxonField('precisionCode')(e.target.value);
+                }}
+              >
+                <option>Velg type</option>
+                <option>cf.</option>
+                <option>aff.</option>
+              </select>
+            </div>
+          </div>
+        </div>
 
         <div className="row">
           <div className="col-md-1">
@@ -255,7 +250,7 @@ export class TaxonTable extends React.Component<TaxonClassificationProps> {
                 this.props.onAddTaxon();
               }}
             >
-              Add hybrid
+              Add
             </button>
           </div>
           <div className="col-md-1">
@@ -272,6 +267,24 @@ export class TaxonTable extends React.Component<TaxonClassificationProps> {
               Save
             </button>
           </div>
+        </div>
+        <div className="row">
+          <br />
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <label htmlFor="taxonPath">{taxonPath}</label>
+            <label htmlFor="aggVal">{aggVal}</label>
+          </div>
+
+          {/* {taxonPath && <div className="row">{taxonPath}</div>}
+            <br />
+            {aggVal && (
+              <div className="row">
+                  <i>{aggVal}</i>
+              </div>
+            )}
+          <br /> */}
         </div>
       </div>
     );

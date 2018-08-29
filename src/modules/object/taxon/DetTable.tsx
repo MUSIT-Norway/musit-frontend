@@ -12,6 +12,75 @@ class DetTable extends React.Component<DetProps> {
   render() {
     return (
       <div>
+        {/* {this.props.editingDet && (        )} */}
+        <div className="row">
+          <div className="col-md-9">
+            {' '}
+            <div className="form-group">
+              <label htmlFor="personName">Det</label>
+              <input
+                type="text"
+                className="form-control"
+                id="personName"
+                disabled={this.props.editingDet === undefined}
+                value={this.props.editingDet ? this.props.editingDet.personName : ''}
+                onChange={e => {
+                  e.preventDefault();
+                  this.props.editingDet &&
+                    this.props.onChangePerson('personName')(e.target.value);
+                }}
+              />
+            </div>
+          </div>
+          <div className="col-md-3">
+            <div style={{ textAlign: 'left', verticalAlign: 'bottom' }}>
+              <label htmlFor="btnAddPerson">Create new</label>
+              <Link
+                to={{
+                  pathname: 'person/personname/add',
+                  state: {
+                    newName: this.props.editingDet && this.props.editingDet.personName
+                  }
+                }}
+              >
+                <button className="btn btn-default form-control">
+                  <FontAwesome name="user-plus" />
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-md-2">
+            <button
+              type="button"
+              className="btn btn-default"
+              disabled={this.props.editingDet !== undefined}
+              id="btnAdd"
+              onClick={e => {
+                e.preventDefault();
+                this.props.onAddPerson();
+              }}
+            >
+              Add
+            </button>
+          </div>
+          <div className="col-md-2">
+            <button
+              type="button"
+              disabled={this.props.editingDet === undefined}
+              className="btn btn-default"
+              id="btnSave"
+              onClick={e => {
+                e.preventDefault();
+                this.props.onSavePerson();
+              }}
+            >
+              Save
+            </button>
+          </div>
+        </div>
         {this.props.personNames && this.props.personNames.length > 0 ? (
           <div className="row">
             <div className="col-md-12">
@@ -61,72 +130,6 @@ class DetTable extends React.Component<DetProps> {
         ) : (
           ' '
         )}
-        {this.props.editingDet && (
-          <div className="row">
-            <div className="col-md-9">
-              {' '}
-              <div className="form-group">
-                <label htmlFor="personName">Det</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="personName"
-                  value={this.props.editingDet ? this.props.editingDet.personName : ''}
-                  onChange={e => {
-                    e.preventDefault();
-                    this.props.editingDet &&
-                      this.props.onChangePerson('personName')(e.target.value);
-                  }}
-                />
-              </div>
-            </div>
-            <div className="col-md-3">
-              <div style={{ textAlign: 'left', verticalAlign: 'bottom' }}>
-                <label htmlFor="btnAddPerson">Create new</label>
-                <Link
-                  to={{
-                    pathname: 'person/personname/add',
-                    state: { newName: this.props.editingDet.personName }
-                  }}
-                >
-                  <button className="btn btn-default form-control">
-                    <FontAwesome name="user-plus" />
-                  </button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        )}
-        <div className="row">
-          <div className="col-md-2">
-            <button
-              type="button"
-              className="btn btn-default"
-              disabled={this.props.editingDet !== undefined}
-              id="btnAdd"
-              onClick={e => {
-                e.preventDefault();
-                this.props.onAddPerson();
-              }}
-            >
-              Add
-            </button>
-          </div>
-          <div className="col-md-2">
-            <button
-              type="button"
-              disabled={this.props.editingDet === undefined}
-              className="btn btn-default"
-              id="btnSave"
-              onClick={e => {
-                e.preventDefault();
-                this.props.onSavePerson();
-              }}
-            >
-              Save
-            </button>
-          </div>
-        </div>
       </div>
     );
   }

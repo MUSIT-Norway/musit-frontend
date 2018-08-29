@@ -3,6 +3,8 @@ import { ClassificationHistoryTable } from './ClassificationHistoryTable';
 import { SexAndStagesComponent } from './SexAndStagesComponent';
 import { TaxonComponent } from './TaxonComponent';
 import { ScientificName } from '../../../models/object/classHist';
+import { Collapse } from 'react-bootstrap';
+//import EditableTable from '../components/EditableTable';
 
 // Datastructure
 export interface IPersonName {
@@ -226,11 +228,14 @@ export type TaxonClassificationProps = ITaxonClassification & {
   onDeletePerson: (i: number) => void;
   onDeleteTaxon: (i: number) => void;
   onChangeTaxonSuggest: (suggestion: ScientificName) => void;
-  onCreateNewTaxonRevision: () => void;
+  //onCreateNewTaxonRevision: () => void;
   setDetEditingIndex: (i: number) => void;
   onChangePerson: (field: string) => (value: string) => void;
 };
 
+export type TaxonClassificationsSubProps = {
+  onChangeTaxonClassificationFields: (fieldName: string) => (value: string) => void;
+};
 export const appSession = { museumId: 99 };
 
 export class SexAndStagesClassification implements ISexAndStagesClassification {
@@ -356,12 +361,51 @@ export default class ClassificationComponent extends React.Component<Props, ISta
     super(props);
 
     this.state = new State(c);
-
     this.getFullHybridName = this.getFullHybridName.bind(this);
+    this.onToggle = this.onToggle.bind(this);
   }
 
   getFullHybridName() {
     return '';
+  }
+
+  onCreateNewTaxonRevision() {
+    this.setState((ps: State) => {
+      const emptyTaxonRevision: ITaxonClassification = {
+        taxonNames: [{}],
+        editingIndex: 0,
+        editingName: {},
+        note: '',
+        det: new Det({ personNames: [{}], editingDet: {}, editingIndex: 0 })
+      };
+      const newTaxonRevision = new TaxonClassification(emptyTaxonRevision);
+      const newClassifications = [
+        ...ps.classifications.classifications,
+        newTaxonRevision
+      ];
+      const currentTaxonClassificationIndex = newClassifications.length - 1;
+      const currentSexAndStagesClassificationIndex =
+        ps.classifications.currentSexAndStagesClassificationIndex;
+
+      return {
+        ...ps,
+        classifications: new Classifications({
+          classifications: newClassifications,
+          currentSexAndStagesClassificationIndex,
+          currentTaxonClassificationIndex
+        })
+      };
+    });
+  }
+
+  onToggle() {
+    this.setState((ps: State) => {
+      const expand = !ps.taxonExpanded;
+      return {
+        ...ps,
+        taxonExpanded: expand
+      };
+    });
   }
 
   render() {
@@ -380,7 +424,7 @@ export default class ClassificationComponent extends React.Component<Props, ISta
               <TaxonComponent
                 {...(this.state
                   .classifications as Classifications).currentTaxonClassification()}
-                onCreateNewTaxonRevision={() => {
+                /* onCreateNewTaxonRevision={() => {
                   this.setState((ps: State) => {
                     const emptyTaxonRevision: ITaxonClassification = {
                       taxonNames: [{}],
@@ -407,7 +451,7 @@ export default class ClassificationComponent extends React.Component<Props, ISta
                       })
                     };
                   });
-                }}
+                }} */
                 onAddTaxon={() => {
                   this.setState((ps: State) => {
                     const currentClassificationIndex =
@@ -858,298 +902,357 @@ export default class ClassificationComponent extends React.Component<Props, ISta
             </div>
           </div>
         </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="well">
-              <h3>Sex and stages</h3>
-              <SexAndStagesComponent
-                {...(this.state
-                  .classifications as Classifications).currentSexAndStagesClassification()}
-                onChangeNoteField={(value: string) => {
-                  this.setState((ps: State) => {
-                    const currentSexAndStageIndex =
-                      ps.classifications.currentSexAndStagesClassificationIndex;
-                    const currentSexAndStagesClassification = ps.classifications
-                      .classifications[
-                      currentSexAndStageIndex
-                    ] as ISexAndStagesClassification;
-                    const newCurrentSexAndStagesClassification = new SexAndStagesClassification(
-                      {
-                        ...currentSexAndStagesClassification,
-                        note: value
-                      }
-                    );
-                    const newCurrentClassification = new Classifications({
-                      ...ps.classifications,
-                      classifications: [
-                        ...ps.classifications.classifications.slice(
-                          0,
-                          currentSexAndStageIndex
-                        ),
-                        newCurrentSexAndStagesClassification,
-                        ...ps.classifications.classifications.slice(
-                          currentSexAndStageIndex + 1
-                        )
-                      ]
-                    });
 
-                    return {
-                      ...ps,
-                      classifications: newCurrentClassification
-                    };
-                  });
-                }}
-                setEditingIndex={(index: number) => {
-                  this.setState((ps: State) => {
-                    const currentSexAndStageIndex =
-                      ps.classifications.currentSexAndStagesClassificationIndex;
+        <div>
+          <div className="row">
+            <div className="col-md-12">
+              <div className="well">
+                <ClassificationHistoryTable {...this.state.classifications} />
+              </div>
+            </div>
+          </div>
 
-                    const currentSexAndStagesClassification = ps.classifications
-                      .classifications[
-                      currentSexAndStageIndex
-                    ] as ISexAndStagesClassification;
+          <div className="row">
+            <div className="col-md-12">
+              <div className="well">
+                <div className="row">
+                  <div className="col-md-5">
+                    <h3>Sex and stages</h3>
+                  </div>
+                  <div className="col-md-5" />
+                  <div className="col-md-2" />
+                  <button
+                    type="button"
+                    className="btn btn-default"
+                    onClick={this.onToggle}
+                  >
+                    {this.state.taxonExpanded ? 'Collapse' : 'Expand'}
+                  </button>
+                </div>
+                <Collapse in={this.state.taxonExpanded}>
+                  <div className="row">
+                    <SexAndStagesComponent
+                      {...(this.state
+                        .classifications as Classifications).currentSexAndStagesClassification()}
+                      onChangeNoteField={(value: string) => {
+                        this.setState((ps: State) => {
+                          const currentSexAndStageIndex =
+                            ps.classifications.currentSexAndStagesClassificationIndex;
+                          const currentSexAndStagesClassification = ps.classifications
+                            .classifications[
+                            currentSexAndStageIndex
+                          ] as ISexAndStagesClassification;
+                          const newCurrentSexAndStagesClassification = new SexAndStagesClassification(
+                            {
+                              ...currentSexAndStagesClassification,
+                              note: value
+                            }
+                          );
+                          const newCurrentClassification = new Classifications({
+                            ...ps.classifications,
+                            classifications: [
+                              ...ps.classifications.classifications.slice(
+                                0,
+                                currentSexAndStageIndex
+                              ),
+                              newCurrentSexAndStagesClassification,
+                              ...ps.classifications.classifications.slice(
+                                currentSexAndStageIndex + 1
+                              )
+                            ]
+                          });
 
-                    const currentClassificationArray = ps.classifications.classifications;
-                    const editingSexAndStage = currentSexAndStagesClassification.sexAndStages
-                      ? currentSexAndStagesClassification.sexAndStages[index]
-                      : undefined;
+                          return {
+                            ...ps,
+                            classifications: newCurrentClassification
+                          };
+                        });
+                      }}
+                      setEditingIndex={(index: number) => {
+                        this.setState((ps: State) => {
+                          const currentSexAndStageIndex =
+                            ps.classifications.currentSexAndStagesClassificationIndex;
 
-                    if (editingSexAndStage === undefined) {
-                      throw new Error('Empty taxon term table when setting index');
-                    }
+                          const currentSexAndStagesClassification = ps.classifications
+                            .classifications[
+                            currentSexAndStageIndex
+                          ] as ISexAndStagesClassification;
 
-                    const newClassification = new SexAndStagesClassification({
-                      ...currentSexAndStagesClassification,
-                      editingIndex: index,
-                      editingSexAndStage
-                    });
-                    const newClassArray = [
-                      ...currentClassificationArray.slice(0, currentSexAndStageIndex),
-                      newClassification,
-                      ...currentClassificationArray.slice(currentSexAndStageIndex + 1)
-                    ];
+                          const currentClassificationArray =
+                            ps.classifications.classifications;
+                          const editingSexAndStage = currentSexAndStagesClassification.sexAndStages
+                            ? currentSexAndStagesClassification.sexAndStages[index]
+                            : undefined;
 
-                    return {
-                      ...ps,
-                      classifications: new Classifications({
-                        ...ps.classifications,
-                        classifications: newClassArray
-                      })
-                    };
-                  });
-                }}
-                onChangeBooleanValue={(index: number) => (fieldName: string) => {
-                  this.setState((ps: State) => {
-                    const currentSexAndStageIndex =
-                      ps.classifications.currentSexAndStagesClassificationIndex;
-                    const currentSexAndStagesClassification = ps.classifications
-                      .classifications[
-                      currentSexAndStageIndex
-                    ] as ISexAndStagesClassification;
-                    const editingSexAndStage =
-                      currentSexAndStagesClassification.editingSexAndStage;
-                    const newSexAndStage = new SexAndStage({
-                      ...editingSexAndStage,
-                      [fieldName]:
-                        editingSexAndStage && editingSexAndStage[fieldName] ? false : true
-                    });
-                    const newCurrentSexAndStagesClassification = new SexAndStagesClassification(
-                      {
-                        ...currentSexAndStagesClassification,
-                        editingSexAndStage: newSexAndStage
-                      }
-                    );
-                    const newCurrentClassification = new Classifications({
-                      ...ps.classifications,
-                      classifications: [
-                        ...ps.classifications.classifications.slice(
-                          0,
-                          currentSexAndStageIndex
-                        ),
-                        newCurrentSexAndStagesClassification,
-                        ...ps.classifications.classifications.slice(
-                          currentSexAndStageIndex + 1
-                        )
-                      ]
-                    });
-                    return {
-                      ...ps,
-                      classifications: newCurrentClassification
-                    };
-                  });
-                }}
-                onChangeSexAndLifeStageField={(fieldName: string) => (
-                  value: string | number | boolean
-                ) => {
-                  this.setState((ps: State) => {
-                    const currentSexAndStageIndex =
-                      ps.classifications.currentSexAndStagesClassificationIndex;
-                    const currentSexAndStagesClassification = ps.classifications
-                      .classifications[
-                      currentSexAndStageIndex
-                    ] as ISexAndStagesClassification;
-                    const newSexAndStage = new SexAndStage({
-                      ...currentSexAndStagesClassification.editingSexAndStage,
-                      [fieldName]: value
-                    });
-                    const newCurrentSexAndStagesClassification = new SexAndStagesClassification(
-                      {
-                        ...currentSexAndStagesClassification,
-                        editingSexAndStage: newSexAndStage
-                      }
-                    );
-                    const newCurrentClassification = new Classifications({
-                      ...ps.classifications,
-                      classifications: [
-                        ...ps.classifications.classifications.slice(
-                          0,
-                          currentSexAndStageIndex
-                        ),
-                        newCurrentSexAndStagesClassification,
-                        ...ps.classifications.classifications.slice(
-                          currentSexAndStageIndex + 1
-                        )
-                      ]
-                    });
-                    return {
-                      ...ps,
-                      classifications: newCurrentClassification
-                    };
-                  });
-                }}
-                onDelete={i => {
-                  this.setState((ps: State) => {
-                    const currentSexAndStageIndex =
-                      ps.classifications.currentSexAndStagesClassificationIndex;
-                    const currentSexAndStagesClassification = ps.classifications
-                      .classifications[
-                      currentSexAndStageIndex
-                    ] as ISexAndStagesClassification;
+                          if (editingSexAndStage === undefined) {
+                            throw new Error('Empty taxon term table when setting index');
+                          }
 
-                    const currentSexAndStages =
-                      currentSexAndStagesClassification.sexAndStages;
-
-                    if (currentSexAndStages === undefined) {
-                      throw new Error('Undefined taxterm array');
-                    }
-
-                    const newSexAndStages =
-                      currentSexAndStages.length === 1
-                        ? undefined
-                        : [
-                            ...currentSexAndStages.slice(0, i),
-                            ...currentSexAndStages.slice(i + 1)
+                          const newClassification = new SexAndStagesClassification({
+                            ...currentSexAndStagesClassification,
+                            editingIndex: index,
+                            editingSexAndStage
+                          });
+                          const newClassArray = [
+                            ...currentClassificationArray.slice(
+                              0,
+                              currentSexAndStageIndex
+                            ),
+                            newClassification,
+                            ...currentClassificationArray.slice(
+                              currentSexAndStageIndex + 1
+                            )
                           ];
-                    const newSexAndStagesClassification = new SexAndStagesClassification({
-                      ...currentSexAndStagesClassification,
-                      sexAndStages: newSexAndStages
-                    });
-                    const newCurrentClassifications = new Classifications({
-                      ...ps.classifications,
-                      classifications: [
-                        ...ps.classifications.classifications.slice(
-                          0,
-                          currentSexAndStageIndex
-                        ),
-                        newSexAndStagesClassification,
-                        ...ps.classifications.classifications.slice(
-                          currentSexAndStageIndex + 1
-                        )
-                      ]
-                    });
-                    return {
-                      ...ps,
-                      classifications: newCurrentClassifications
-                    };
-                  });
-                }}
-                onAddSexAndLifeStage={() => {
-                  this.setState((ps: State) => {
-                    const currentSexAndStageIndex =
-                      ps.classifications.currentSexAndStagesClassificationIndex;
-                    const currentSexAndStagesClassification = ps.classifications
-                      .classifications[
-                      currentSexAndStageIndex
-                    ] as ISexAndStagesClassification;
-                    const currentClassificationArray = ps.classifications.classifications;
-                    const currentSexAndStages =
-                      currentSexAndStagesClassification.sexAndStages || [];
 
-                    const newSexAndStage = new SexAndStage({});
+                          return {
+                            ...ps,
+                            classifications: new Classifications({
+                              ...ps.classifications,
+                              classifications: newClassArray
+                            })
+                          };
+                        });
+                      }}
+                      onChangeBooleanValue={(index: number) => (fieldName: string) => {
+                        this.setState((ps: State) => {
+                          const currentSexAndStageIndex =
+                            ps.classifications.currentSexAndStagesClassificationIndex;
+                          const currentSexAndStagesClassification = ps.classifications
+                            .classifications[
+                            currentSexAndStageIndex
+                          ] as ISexAndStagesClassification;
+                          const editingSexAndStage =
+                            currentSexAndStagesClassification.editingSexAndStage;
+                          const newSexAndStage = new SexAndStage({
+                            ...editingSexAndStage,
+                            [fieldName]:
+                              editingSexAndStage && editingSexAndStage[fieldName]
+                                ? false
+                                : true
+                          });
+                          const newCurrentSexAndStagesClassification = new SexAndStagesClassification(
+                            {
+                              ...currentSexAndStagesClassification,
+                              editingSexAndStage: newSexAndStage
+                            }
+                          );
+                          const newCurrentClassification = new Classifications({
+                            ...ps.classifications,
+                            classifications: [
+                              ...ps.classifications.classifications.slice(
+                                0,
+                                currentSexAndStageIndex
+                              ),
+                              newCurrentSexAndStagesClassification,
+                              ...ps.classifications.classifications.slice(
+                                currentSexAndStageIndex + 1
+                              )
+                            ]
+                          });
+                          return {
+                            ...ps,
+                            classifications: newCurrentClassification
+                          };
+                        });
+                      }}
+                      onChangeSexAndLifeStageField={(fieldName: string) => (
+                        value: string | number | boolean
+                      ) => {
+                        this.setState((ps: State) => {
+                          const currentSexAndStageIndex =
+                            ps.classifications.currentSexAndStagesClassificationIndex;
+                          const currentSexAndStagesClassification = ps.classifications
+                            .classifications[
+                            currentSexAndStageIndex
+                          ] as ISexAndStagesClassification;
+                          const newSexAndStage = new SexAndStage({
+                            ...currentSexAndStagesClassification.editingSexAndStage,
+                            [fieldName]: value
+                          });
+                          const newCurrentSexAndStagesClassification = new SexAndStagesClassification(
+                            {
+                              ...currentSexAndStagesClassification,
+                              editingSexAndStage: newSexAndStage
+                            }
+                          );
+                          const newCurrentClassification = new Classifications({
+                            ...ps.classifications,
+                            classifications: [
+                              ...ps.classifications.classifications.slice(
+                                0,
+                                currentSexAndStageIndex
+                              ),
+                              newCurrentSexAndStagesClassification,
+                              ...ps.classifications.classifications.slice(
+                                currentSexAndStageIndex + 1
+                              )
+                            ]
+                          });
+                          return {
+                            ...ps,
+                            classifications: newCurrentClassification
+                          };
+                        });
+                      }}
+                      onDelete={i => {
+                        this.setState((ps: State) => {
+                          const currentSexAndStageIndex =
+                            ps.classifications.currentSexAndStagesClassificationIndex;
+                          const currentSexAndStagesClassification = ps.classifications
+                            .classifications[
+                            currentSexAndStageIndex
+                          ] as ISexAndStagesClassification;
 
-                    const newclassification = new SexAndStagesClassification({
-                      ...currentSexAndStagesClassification,
-                      editingIndex: currentSexAndStages.length,
-                      editingSexAndStage: newSexAndStage
-                    });
+                          const currentSexAndStages =
+                            currentSexAndStagesClassification.sexAndStages;
 
-                    const newClassArray = [
-                      ...currentClassificationArray.slice(0, currentSexAndStageIndex),
-                      newclassification,
-                      ...currentClassificationArray.slice(currentSexAndStageIndex + 1)
-                    ];
-                    return {
-                      ...ps,
-                      classifications: new Classifications({
-                        ...ps.classifications,
-                        classifications: newClassArray
-                      })
-                    };
-                  });
-                }}
-                onSaveSexAndLifeStage={() => {
-                  this.setState((ps: State) => {
-                    const currentClassificationArray = ps.classifications.classifications;
-                    const currentSexAndStageIndex =
-                      ps.classifications.currentSexAndStagesClassificationIndex;
-                    const currentClassification = ps.classifications.currentSexAndStagesClassification();
-                    const currentSexAndStagesClassification = ps.classifications
-                      .classifications[
-                      currentSexAndStageIndex
-                    ] as ISexAndStagesClassification;
-                    const editingindex =
-                      currentClassification.editingIndex !== undefined
-                        ? currentClassification.editingIndex
-                        : 0;
-                    const newSexAndStagesClassification = new SexAndStagesClassification({
-                      ...currentSexAndStagesClassification,
-                      sexAndStages: [
-                        ...(currentClassification.sexAndStages || []).slice(
-                          0,
-                          editingindex
-                        ),
-                        currentClassification.editingSexAndStage || {},
-                        ...(currentClassification.sexAndStages || []).slice(
-                          editingindex + 1
-                        )
-                      ],
-                      editingSexAndStage: undefined,
-                      editingIndex: undefined
-                    });
-                    const newClassifications = new Classifications({
-                      ...ps.classifications,
-                      classifications: [
-                        ...currentClassificationArray.slice(0, currentSexAndStageIndex),
-                        newSexAndStagesClassification,
-                        ...currentClassificationArray.slice(currentSexAndStageIndex + 1)
-                      ]
-                    });
-                    return {
-                      ...ps,
-                      classifications: newClassifications
-                    };
-                  });
-                }}
-              />
+                          if (currentSexAndStages === undefined) {
+                            throw new Error('Undefined taxterm array');
+                          }
+
+                          const newSexAndStages =
+                            currentSexAndStages.length === 1
+                              ? undefined
+                              : [
+                                  ...currentSexAndStages.slice(0, i),
+                                  ...currentSexAndStages.slice(i + 1)
+                                ];
+                          const newSexAndStagesClassification = new SexAndStagesClassification(
+                            {
+                              ...currentSexAndStagesClassification,
+                              sexAndStages: newSexAndStages
+                            }
+                          );
+                          const newCurrentClassifications = new Classifications({
+                            ...ps.classifications,
+                            classifications: [
+                              ...ps.classifications.classifications.slice(
+                                0,
+                                currentSexAndStageIndex
+                              ),
+                              newSexAndStagesClassification,
+                              ...ps.classifications.classifications.slice(
+                                currentSexAndStageIndex + 1
+                              )
+                            ]
+                          });
+                          return {
+                            ...ps,
+                            classifications: newCurrentClassifications
+                          };
+                        });
+                      }}
+                      onAddSexAndLifeStage={() => {
+                        this.setState((ps: State) => {
+                          const currentSexAndStageIndex =
+                            ps.classifications.currentSexAndStagesClassificationIndex;
+                          const currentSexAndStagesClassification = ps.classifications
+                            .classifications[
+                            currentSexAndStageIndex
+                          ] as ISexAndStagesClassification;
+                          const currentClassificationArray =
+                            ps.classifications.classifications;
+                          const currentSexAndStages =
+                            currentSexAndStagesClassification.sexAndStages || [];
+
+                          const newSexAndStage = new SexAndStage({});
+
+                          const newclassification = new SexAndStagesClassification({
+                            ...currentSexAndStagesClassification,
+                            editingIndex: currentSexAndStages.length,
+                            editingSexAndStage: newSexAndStage
+                          });
+
+                          const newClassArray = [
+                            ...currentClassificationArray.slice(
+                              0,
+                              currentSexAndStageIndex
+                            ),
+                            newclassification,
+                            ...currentClassificationArray.slice(
+                              currentSexAndStageIndex + 1
+                            )
+                          ];
+                          return {
+                            ...ps,
+                            classifications: new Classifications({
+                              ...ps.classifications,
+                              classifications: newClassArray
+                            })
+                          };
+                        });
+                      }}
+                      onSaveSexAndLifeStage={() => {
+                        this.setState((ps: State) => {
+                          const currentClassificationArray =
+                            ps.classifications.classifications;
+                          const currentSexAndStageIndex =
+                            ps.classifications.currentSexAndStagesClassificationIndex;
+                          const currentClassification = ps.classifications.currentSexAndStagesClassification();
+                          const currentSexAndStagesClassification = ps.classifications
+                            .classifications[
+                            currentSexAndStageIndex
+                          ] as ISexAndStagesClassification;
+                          const editingindex =
+                            currentClassification.editingIndex !== undefined
+                              ? currentClassification.editingIndex
+                              : 0;
+                          const newSexAndStagesClassification = new SexAndStagesClassification(
+                            {
+                              ...currentSexAndStagesClassification,
+                              sexAndStages: [
+                                ...(currentClassification.sexAndStages || []).slice(
+                                  0,
+                                  editingindex
+                                ),
+                                currentClassification.editingSexAndStage || {},
+                                ...(currentClassification.sexAndStages || []).slice(
+                                  editingindex + 1
+                                )
+                              ],
+                              editingSexAndStage: undefined,
+                              editingIndex: undefined
+                            }
+                          );
+                          const newClassifications = new Classifications({
+                            ...ps.classifications,
+                            classifications: [
+                              ...currentClassificationArray.slice(
+                                0,
+                                currentSexAndStageIndex
+                              ),
+                              newSexAndStagesClassification,
+                              ...currentClassificationArray.slice(
+                                currentSexAndStageIndex + 1
+                              )
+                            ]
+                          });
+                          return {
+                            ...ps,
+                            classifications: newClassifications
+                          };
+                        });
+                      }}
+                    />
+                  </div>
+                </Collapse>
+              </div>
             </div>
           </div>
         </div>
+
         <div className="row">
-          <div className="col-md-12">
-            <div className="well">
-              <h3>Taxon revisions</h3>
-              <ClassificationHistoryTable {...this.state.classifications} />
-            </div>
+          <div className="col-md-2">
+            <button
+              type="button"
+              className="btn btn-default"
+              onClick={e => {
+                e.preventDefault();
+                this.onCreateNewTaxonRevision();
+              }}
+            >
+              Add new revision
+            </button>
           </div>
         </div>
       </div>

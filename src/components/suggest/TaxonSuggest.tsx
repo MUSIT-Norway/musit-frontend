@@ -14,7 +14,7 @@ interface TaxonSuggestComponentProps {
   suggest?: TODO;
   onChange: Function;
   update: Function;
-  disabled?: boolean;
+  disabled?: Boolean;
   clear?: Function;
   appSession: AppSession;
   renderFunc: Function;
@@ -37,6 +37,7 @@ interface TaxonSuggestComponentProps {
 interface TaxonSuggestComponentState {
   value?: string;
   suggestions?: TaxonSuggestion[];
+  disabled: Boolean;
 }
 
 interface TaxonSuggestion {
@@ -54,13 +55,17 @@ export class TaxonSuggestComponent extends React.Component<
     super(props);
     this.requestSuggestionUpdate = this.requestSuggestionUpdate.bind(this);
     this.state = {
-      value: this.props.value
+      value: this.props.value,
+      disabled: this.props && this.props.disabled ? true : false
     };
   }
 
   componentWillReceiveProps(next: TaxonSuggestComponentProps) {
     if (next.value !== this.props.value) {
       this.setState(ps => ({ ...ps, value: next.value }));
+    }
+    if (next.disabled !== this.props.disabled) {
+      this.setState(ps => ({ ...ps, disabled: next.disabled ? next.disabled : false }));
     }
   }
 
@@ -94,7 +99,6 @@ export class TaxonSuggestComponent extends React.Component<
             return 1;
           }
         )}
-        //TODO? disabled={this.props.disabled}
         onSuggestionsFetchRequested={this.requestSuggestionUpdate}
         onSuggestionsClearRequested={() => this.setState(() => ({ suggestions: [] }))}
         getSuggestionValue={(suggestion: TaxonSuggestion) => suggestion.scientificName}
@@ -103,7 +107,8 @@ export class TaxonSuggestComponent extends React.Component<
         }
         inputProps={{
           ...(this.TaxonProps as TODO),
-          value: this.state.value
+          value: this.state.value,
+          disabled: this.state.disabled ? this.state.disabled : false
         }}
         shouldRenderSuggestions={v => v !== 'undefined'}
         onSuggestionSelected={(event, { suggestion }) => {

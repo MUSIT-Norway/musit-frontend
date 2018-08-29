@@ -268,3 +268,16 @@ export const musitCoodinateValidate = (fieldName: string) => (value: string) => 
     return false;
   }
 };
+
+export const validatePositiveInteger = (count: string) => {
+  const intRegex = new RegExp(/^\d+$/);
+  if (count === '') {
+    return true;
+  } else {
+    if (intRegex.test(count)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+};
