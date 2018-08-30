@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import DatePicker from '../../../components/DatePicker';
+import DatePicker, { getNow } from '../../../components/DatePicker';
 import { DATE_FORMAT_DISPLAY, formatISOString } from '../../../shared/util';
 import { I18n } from 'react-i18nify';
 import { AppSession } from '../../../types/appSession';
@@ -78,6 +78,7 @@ export default function AddRestriction(props: Props) {
         <DatePicker
           dateFormat={DATE_FORMAT_DISPLAY}
           value={props.restriction.expirationDate || ''}
+          defaultValue={getNow()}
           onClear={() =>
             props.updateRestriction({
               ...props.restriction,

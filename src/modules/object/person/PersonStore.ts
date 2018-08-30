@@ -42,18 +42,19 @@ export const toBackend: ((p: PersonState) => InputPerson) = (p: PersonState) => 
     p.fullName.lastName,
     p.fullName.nameString,
     p.bornDate,
-    p.deadDate,
+    p.deathDate,
     p.verbatimDate,
-    p.url,
+    p.URL,
     p.synonymes
       ? p.synonymes.map((p: PersonName) => ({
           firstName: p.firstName,
           lastName: p.lastName,
           title: p.title,
-          name: p.nameString
+          name: p.nameString,
+          isDeleted: false
         }))
       : [],
-    undefined //Anuradha: 21-Aug-18, Once backend developed,
+    p.externalIds ? p.externalIds : [] //Anuradha: 21-Aug-18, Once backend developed,
     //pass these parameters ( p.externalIds ? p.externalIds : [] )
   );
   return c;

@@ -28,7 +28,7 @@ import {
 } from '../../shared/util';
 import * as FontAwesome from 'react-fontawesome';
 import SaveCancel from '../../components/formfields/saveCancel/SaveCancel';
-import DatePicker from '../../components/DatePicker';
+import DatePicker, { getNow } from '../../components/DatePicker';
 import { ActorSuggest } from '../../components/suggest/ActorSuggest';
 import * as validation from './observationValidation';
 import { I18n } from 'react-i18nify';
@@ -422,6 +422,7 @@ export default class ObservationPage extends React.Component<
                 ) : (
                   <DatePicker
                     dateFormat={DATE_FORMAT_DISPLAY}
+                    defaultValue={getNow()}
                     onClear={(newValue: TODO) =>
                       this.setState(ps => ({ ...ps, doneDate: newValue }))
                     }

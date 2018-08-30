@@ -6,7 +6,7 @@ import { DATE_FORMAT_DISPLAY } from '../shared/util';
 import * as DatePicker from 'react-bootstrap-date-picker';
 import { TODO } from '../types/common';
 
-const getNow = () => {
+export const getNow = () => {
   return formatISOString(new Date());
 };
 
@@ -16,6 +16,7 @@ interface MusitDatePickerProps {
   onChange: Function; // PropTypes.func.isRequired,
   onClear: Function; //PropTypes.func.isRequired,
   disabled?: boolean; //PropTypes.bool
+  defaultValue?: string;
 }
 
 /* Old:
@@ -35,8 +36,11 @@ const MusitDatePicker: React.SFC<MusitDatePickerProps> = props => {
     <DatePicker
       dateFormat={props.dateFormat}
       onClear={() => props.onClear(getNow())}
-      value={props.value}
-      onChange={(newDate: TODO) => props.onChange(formatISOString(newDate))}
+      value={props.value || props.defaultValue}
+      onChange={(newDate: TODO) => {
+        const d = newDate ? formatISOString(newDate) : undefined;
+        props.onChange(d);
+      }}
       disabled={props.disabled}
     />
   );
@@ -46,6 +50,5 @@ export default MusitDatePicker;
 
 MusitDatePicker.defaultProps = {
   dateFormat: DATE_FORMAT_DISPLAY,
-  disabled: false,
-  value: getNow()
+  disabled: false
 };

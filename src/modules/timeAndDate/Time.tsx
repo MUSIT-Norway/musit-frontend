@@ -1,6 +1,6 @@
 //@flow
 import * as React from 'react';
-import MusitDatePicker from '../../components/DatePicker';
+import MusitDatePicker, { getNow } from '../../components/DatePicker';
 
 export type TimeProps = {
   from?: Date;
@@ -32,6 +32,7 @@ export default class TimeAndDate extends React.Component<TimeProps, TimeState> {
             //className="form-control"
             onChange={this.props.onChange('dateFrom')}
             onClear={this.props.onClear}
+            defaultValue={getNow()}
           />
         </div>
         <div className="col-md-2">
@@ -40,6 +41,7 @@ export default class TimeAndDate extends React.Component<TimeProps, TimeState> {
             //className="form-control"
             onChange={this.props.onChange('dateTo')}
             onClear={this.props.onClear}
+            defaultValue={getNow()}
           />
         </div>
         <div className="col-md-3">

@@ -3,7 +3,7 @@ import * as React from 'react';
 import { ActorSuggest } from '../suggest/ActorSuggest';
 import { Row, Col } from 'react-bootstrap';
 import DropdownButton from '../DropdownButton';
-import DatePicker from '../DatePicker';
+import DatePicker, { getNow } from '../DatePicker';
 import { DATE_FORMAT_DISPLAY } from '../../shared/util';
 import { AppSession } from '../../types/appSession';
 import { Person } from '../../types/person';
@@ -112,6 +112,7 @@ export const PersonRoleDate = ({
                       <DatePicker
                         dateFormat={DATE_FORMAT_DISPLAY}
                         value={v.date}
+                        defaultValue={getNow()}
                         onClear={(newValue: TODO) =>
                           updateForm({
                             name: fieldName,

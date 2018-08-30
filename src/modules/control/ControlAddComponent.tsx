@@ -20,7 +20,7 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import { Grid, Row, Col, FormControl } from 'react-bootstrap';
 import PairedToogleButtons from './ToggleButtons';
-import DatePicker from '../../components/DatePicker';
+import DatePicker, { getNow } from '../../components/DatePicker';
 import SaveCancel from '../../components/formfields/saveCancel/SaveCancel';
 import {
   flatten,
@@ -316,6 +316,7 @@ export class ControlAddContainer extends React.Component<
                         <DatePicker
                           dateFormat={DATE_FORMAT_DISPLAY}
                           value={this.state.doneDate}
+                          defaultValue={getNow()}
                           onClear={(newValue: TODO) =>
                             this.setState(ps => ({
                               ...ps,

@@ -16,6 +16,7 @@ import { History } from 'history';
 import config from '../../../config';
 import { AjaxResponse } from 'rxjs';
 import { museumCollection, collections, museum } from '../person/mockdata/data';
+import { formatISOString } from '../../../shared/util';
 
 export type PersonName = {
   title?: string;
@@ -46,14 +47,15 @@ export interface PersonState {
   fullName: PersonName;
   legalEntityType: string;
   synState: SynState;
-  url?: string;
+  URL?: string;
   externalIds?: ExternalId[];
   editingIds?: ExternalId;
   editingIndex?: number;
   synonymes?: PersonName[];
   newPerson?: PersonName;
   bornDate?: string;
-  deadDate?: string;
+  deathDate?: string;
+  verbatimDate?: string;
   collections: Collection[];
   museumAffiliation?: string;
 }
@@ -63,14 +65,14 @@ export class PersonState implements PersonState {
   fullName: PersonName;
   legalEntityType: string;
   synState: SynState;
-  url?: string;
+  URL?: string;
   externalIds?: ExternalId[];
   editingIds?: ExternalId;
   editingIndex?: number;
   synonymes?: PersonName[];
   newPerson?: PersonName;
   bornDate?: string;
-  deadDate?: string;
+  deathDate?: string;
   verbatimDate?: string;
   collections: Collection[];
   museumAffiliation?: string;
@@ -81,24 +83,26 @@ export class PersonState implements PersonState {
     collections: Collection[],
     synState: SynState,
     uuid?: string,
-    url?: string,
+    URL?: string,
     externalIds?: ExternalId[],
     synonymes?: PersonName[],
     newPerson?: PersonName,
     bornDate?: string,
-    deadDate?: string,
+    deathDate?: string,
+    verbatimDate?: string,
     museumAffiliation?: string
   ) {
     this.uuid = uuid;
     this.fullName = fullName;
     this.legalEntityType = legalEntityType;
     this.synState = synState;
-    this.url = url;
+    this.URL = URL;
     this.externalIds = externalIds;
     this.synonymes = synonymes;
     this.newPerson = newPerson;
     this.bornDate = bornDate;
-    this.deadDate = deadDate;
+    this.deathDate = deathDate;
+    this.verbatimDate = verbatimDate;
     this.collections = collections;
     this.museumAffiliation = museumAffiliation;
   }
@@ -124,6 +128,7 @@ export type PersonProps = PersonState & {
   onChangeBornDate: Function;
   onClearDeathDate: Function;
   onChangeDeathDate: Function;
+  onChangeVerbatimDate: (n?: string) => void;
   heading?: string;
   standAlone?: boolean;
   readOnly?: boolean;
@@ -554,6 +559,7 @@ export const PersonPage = (props: PersonProps) => {
                   <DatePicker
                     onClear={props.onClearBornDate}
                     onChange={props.onChangeBornDate}
+                    value={props.bornDate}
                   />
                 </div>
                 <div className="col-md-3">
@@ -561,11 +567,18 @@ export const PersonPage = (props: PersonProps) => {
                   <DatePicker
                     onClear={props.onClearDeathDate}
                     onChange={props.onChangeDeathDate}
+                    value={props.deathDate}
                   />
                 </div>
                 <div className="col-md-3">
                   <label htmlFor="verbatimDate"> Verbatim dato</label>
-                  <input className="form-control" type="text" id="verbatimDate" />
+                  <input
+                    className="form-control"
+                    value={props.verbatimDate || ''}
+                    onChange={e => props.onChangeVerbatimDate(e.target.value)}
+                    type="text"
+                    id="verbatimDate"
+                  />
                 </div>
               </div>
               <div className="form-group">
@@ -575,7 +588,7 @@ export const PersonPage = (props: PersonProps) => {
                   className="form-control"
                   id="url"
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    props.onChange('url')(e.target.value)
+                    props.onChange('URL')(e.target.value)
                   }
                 />
               </div>
@@ -682,6 +695,7 @@ export const toFrontend: (p: OutputPerson) => PersonState = (p: OutputPerson) =>
       undefined,
       innP.personAttribute && innP.personAttribute.bornDate,
       innP.personAttribute && innP.personAttribute.deathDate,
+      innP.personAttribute && innP.personAttribute.verbatimDate,
       undefined
     );
 
@@ -756,6 +770,9 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
             })
           }
           collections={this.state.collections}
+          bornDate={this.state.bornDate}
+          deathDate={this.state.deathDate}
+          verbatimDate={this.state.verbatimDate}
           editingIndex={this.state.editingIndex}
           editingIds={this.state.editingIds}
           legalEntityType={this.state.legalEntityType}
@@ -876,17 +893,23 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
               return newPersonState;
             });
           }}
-          onChangeBornDate={() => {
-            return;
+          onChangeBornDate={(n?: Date) => {
+            const newdate = n ? formatISOString(n) : undefined;
+            console.log('xxx', n, newdate);
+            this.setState((p: PersonState) => ({ ...p, bornDate: newdate }));
           }}
-          onChangeDeathDate={() => {
-            return;
+          onChangeVerbatimDate={(n?: string) => {
+            this.setState((p: PersonState) => ({ ...p, verbatimDate: n }));
+          }}
+          onChangeDeathDate={(n?: Date) => {
+            const newdate = n ? formatISOString(n) : undefined;
+            this.setState((p: PersonState) => ({ ...p, deathDate: newdate }));
           }}
           onClearBornDate={() => {
-            return;
+            this.setState((p: PersonState) => ({ ...p, bornDate: undefined }));
           }}
           onClearDeathDate={() => {
-            return;
+            this.setState((p: PersonState) => ({ ...p, deathDate: undefined }));
           }}
           onChangePersonName={(fieldName: string) => (value: string) => {
             this.setState((ps: PersonState) => {

@@ -117,8 +117,6 @@ export interface InputPerson {
   lastName?: string;
   title?: string;
   name: string;
-  database?: string;
-  uuid?: string;
   personAttribute?: PersonAttribute;
   collections: Collection[];
   synonyms?: PersonName[];
@@ -249,8 +247,8 @@ export const getPerson: (
     callback?: Callback<Star>;
   }
 ) => Observable<InputPerson> = (ajaxGet = simpleGet) => ({ id, token, callback }) => {
-  const url = Config.api.persons.getUrl(id);
-  return ajaxGet(url, token, callback).map(({ response }) => response);
+  const URL = Config.api.persons.getUrl(id);
+  return ajaxGet(URL, token, callback).map(({ response }) => response);
 };
 
 export const addPerson: (
@@ -262,8 +260,8 @@ export const addPerson: (
     callback?: Callback<Star>;
   }
 ) => Observable<InputPerson> = (ajaxPost = simplePost) => ({ data, token, callback }) => {
-  const url = Config.api.persons.addUrl;
-  return ajaxPost(url, data, token, callback).map(({ response }) => response);
+  const URL = Config.api.persons.addUrl;
+  return ajaxPost(URL, data, token, callback).map(({ response }) => response);
 };
 export const editPerson: (
   ajaxPut: AjaxPut<Star>
@@ -280,6 +278,6 @@ export const editPerson: (
   token,
   callback
 }) => {
-  const url = Config.api.persons.editURL;
-  return ajaxPut(url, data, token, callback).map(({ response }) => response);
+  const URL = Config.api.persons.editURL;
+  return ajaxPut(URL, data, token, callback).map(({ response }) => response);
 };
