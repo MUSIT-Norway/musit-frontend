@@ -314,20 +314,17 @@ interface IClassificationsToShow {
 interface IState {
   classifications: IClassifications;
   classificationsToShow: IClassificationsToShow;
-  taxonExpanded: boolean;
   sexAndStagesExpanded: Boolean;
 }
 
 class State implements IState {
   classifications: Classifications;
   classificationsToShow: IClassificationsToShow;
-  taxonExpanded: boolean;
   sexAndStagesExpanded: Boolean;
   constructor(s: IState) {
     this.classifications = new Classifications(s.classifications);
     this.classificationsToShow = s.classificationsToShow;
     this.sexAndStagesExpanded = s.sexAndStagesExpanded;
-    this.taxonExpanded = s.taxonExpanded;
   }
 }
 
@@ -337,7 +334,6 @@ export default class ClassificationComponent extends React.Component<Props, ISta
   constructor(props: Props) {
     const c = {
       sexAndStagesExpanded: false,
-      taxonExpanded: false,
       classifications: {
         classifications: [
           new TaxonClassification({
@@ -400,10 +396,16 @@ export default class ClassificationComponent extends React.Component<Props, ISta
 
   onToggle() {
     this.setState((ps: State) => {
-      const expand = !ps.taxonExpanded;
+      const expand = !ps.classificationsToShow.sexAndStages;
+      const claToShow = ps.classificationsToShow;
+      const updClaToShow = {
+        ...claToShow,
+        sexAndStages: expand
+      };
+
       return {
         ...ps,
-        taxonExpanded: expand
+        classificationsToShow: updClaToShow
       };
     });
   }
@@ -926,10 +928,12 @@ export default class ClassificationComponent extends React.Component<Props, ISta
                     className="btn btn-default"
                     onClick={this.onToggle}
                   >
-                    {this.state.taxonExpanded ? 'Collapse' : 'Expand'}
+                    {this.state.classificationsToShow.sexAndStages
+                      ? 'Collapse'
+                      : 'Expand'}
                   </button>
                 </div>
-                <Collapse in={this.state.taxonExpanded}>
+                <Collapse in={this.state.classificationsToShow.sexAndStages}>
                   <div className="row">
                     <SexAndStagesComponent
                       {...(this.state
