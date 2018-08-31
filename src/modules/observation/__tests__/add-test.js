@@ -12,7 +12,7 @@ describe('Render observation page in add mode', () => {
         goBack={() => {}}
         appSession={{}}
         doneBy={{ dataportenId: '12345', fn: 'Jarl' }}
-        doneDate="2017-01-08T11:14:25.889Z"
+        //doneDate="2017-01-08T11:14:25.889Z"
         onSaveObservation={onSaveObservation}
         mode="ADD"
         id="1"
