@@ -128,7 +128,7 @@ export type PersonProps = PersonState & {
   onChangeBornDate: Function;
   onClearDeathDate: Function;
   onChangeDeathDate: Function;
-  onChangeVerbatimDate: (n?: string) => void;
+  onChangeVerbatimDate: (newDate?: string) => void;
   heading?: string;
   standAlone?: boolean;
   readOnly?: boolean;
@@ -893,17 +893,20 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
               return newPersonState;
             });
           }}
-          onChangeBornDate={(n?: Date) => {
-            const newdate = n ? formatISOString(n) : undefined;
-            console.log('xxx', n, newdate);
-            this.setState((p: PersonState) => ({ ...p, bornDate: newdate }));
+          onChangeBornDate={(newDate?: Date) => {
+            this.setState((p: PersonState) => ({
+              ...p,
+              bornDate: newDate ? formatISOString(newDate) : undefined
+            }));
           }}
-          onChangeVerbatimDate={(n?: string) => {
-            this.setState((p: PersonState) => ({ ...p, verbatimDate: n }));
+          onChangeVerbatimDate={(newDate?: string) => {
+            this.setState((p: PersonState) => ({ ...p, verbatimDate: newDate }));
           }}
-          onChangeDeathDate={(n?: Date) => {
-            const newdate = n ? formatISOString(n) : undefined;
-            this.setState((p: PersonState) => ({ ...p, deathDate: newdate }));
+          onChangeDeathDate={(newDate?: Date) => {
+            this.setState((p: PersonState) => ({
+              ...p,
+              deathDate: newDate ? formatISOString(newDate) : undefined
+            }));
           }}
           onClearBornDate={() => {
             this.setState((p: PersonState) => ({ ...p, bornDate: undefined }));
