@@ -36,7 +36,7 @@ const MusitDatePicker: React.SFC<MusitDatePickerProps> = props => {
     <DatePicker
       dateFormat={props.dateFormat}
       onClear={() => props.onClear(getNow())}
-      value={props.value || props.defaultValue}
+      value={props.value ? props.value : props.defaultValue}
       onChange={(newDate: TODO) => {
         const d = newDate ? formatISOString(newDate) : undefined;
         props.onChange(d);
