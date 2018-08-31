@@ -32,6 +32,7 @@ exports[`Render observation page in add mode should set default date and have co
           </ControlLabel>
           <MusitDatePicker
             dateFormat="DD.MM.YYYY"
+            defaultValue="2018-08-31T00:00:00.000+02:00"
             disabled={false}
             onChange={[Function]}
             onClear={[Function]}
