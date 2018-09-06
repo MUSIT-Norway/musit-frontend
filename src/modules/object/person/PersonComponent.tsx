@@ -411,6 +411,7 @@ const AddPersonName = (props: {
   onChange: (fieldName: string) => (value: string) => void;
   heading?: string;
   standAlone?: boolean;
+  disabled?: boolean;
 }) => (
   <div>
     <h4> Add one or more synonymes</h4>
@@ -425,6 +426,7 @@ const AddPersonName = (props: {
           type="text"
           value={(props.newPerson && props.newPerson.title) || ''}
           onChange={e => props.onChange('title')(e.target.value)}
+          disabled={props.disabled}
         />
       </div>{' '}
       <div className="col-sm-3 form-group">
@@ -435,6 +437,7 @@ const AddPersonName = (props: {
           type="text"
           value={(props.newPerson && props.newPerson.firstName) || ''}
           onChange={e => props.onChange('firstName')(e.target.value)}
+          disabled={props.disabled}
         />
       </div>{' '}
       <div className="col-sm-3 form-group">
@@ -445,6 +448,7 @@ const AddPersonName = (props: {
           type="text"
           value={(props.newPerson && props.newPerson.lastName) || ''}
           onChange={e => props.onChange('lastName')(e.target.value)}
+          disabled={props.disabled}
         />
       </div>
     </div>
@@ -557,6 +561,7 @@ export const PersonPage = (props: PersonProps) => {
                       type="text"
                       value={(props.fullName && props.fullName.title) || ''}
                       onChange={e => props.onChangeFullName('title')(e.target.value)}
+                      disabled={props.readOnly}
                     />
                   </div>{' '}
                   <div className="col-sm-3 form-group">
@@ -567,6 +572,7 @@ export const PersonPage = (props: PersonProps) => {
                       type="text"
                       value={(props.fullName && props.fullName.firstName) || ''}
                       onChange={e => props.onChangeFullName('firstName')(e.target.value)}
+                      disabled={props.readOnly}
                     />
                   </div>{' '}
                   <div className="col-sm-3 form-group">
@@ -577,6 +583,7 @@ export const PersonPage = (props: PersonProps) => {
                       type="text"
                       value={(props.fullName && props.fullName.lastName) || ''}
                       onChange={e => props.onChangeFullName('lastName')(e.target.value)}
+                      disabled={props.readOnly}
                     />
                   </div>
                 </div>
@@ -588,6 +595,7 @@ export const PersonPage = (props: PersonProps) => {
                     onClear={props.onClearBornDate}
                     onChange={props.onChangeBornDate}
                     value={props.bornDate}
+                    disabled={props.readOnly}
                   />
                 </div>
                 <div className="col-md-3">
@@ -596,6 +604,7 @@ export const PersonPage = (props: PersonProps) => {
                     onClear={props.onClearDeathDate}
                     onChange={props.onChangeDeathDate}
                     value={props.deathDate}
+                    disabled={props.readOnly}
                   />
                 </div>
                 <div className="col-md-3">
@@ -606,6 +615,7 @@ export const PersonPage = (props: PersonProps) => {
                     onChange={e => props.onChangeVerbatimDate(e.target.value)}
                     type="text"
                     id="verbatimDate"
+                    disabled={props.readOnly}
                   />
                 </div>
               </div>
@@ -618,6 +628,7 @@ export const PersonPage = (props: PersonProps) => {
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     props.onChange('URL')(e.target.value)
                   }
+                  disabled={props.readOnly}
                 />
               </div>
             </div>
@@ -637,6 +648,7 @@ export const PersonPage = (props: PersonProps) => {
                 onChange={props.onChangePersonName}
                 standAlone={props.standAlone}
                 heading="Skal denne vises når man kommer fra person name?"
+                disabled={props.readOnly}
               />
               {!props.readOnly && (
                 <button
