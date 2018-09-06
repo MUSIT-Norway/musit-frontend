@@ -770,8 +770,8 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
           onClickSaveEdit={
             (appSession: AppSession) => {
               if (this.props.readOnly) {
-                console.log('Edit clicked');
-                console.log('uuid: ', this.state.uuid);
+                console.log('Edit clicked uuid: : ' , this.state.uuid);
+               
                 const url = config.magasin.urls.client.person.editPerson(
                   appSession,
                   this.state.uuid ? this.state.uuid : ''
@@ -781,12 +781,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
               } else {
                 if (this.state.uuid) {
                   console.log('Save clicked, save edited work');
-                  if (this.props.editPerson) {
-                    console.log('this.props.editPerson');
-                  } else {
-                    console.log('this.props.editPerson not defined');
-                  }
-                  this.props.editPerson &&
+                 this.props.editPerson &&
                     this.props.editPerson({
                       id: this.state.uuid,
                       data: this.state,
@@ -794,7 +789,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
                       collectionId: appSession.collectionId,
                       callback: {
                         onComplete: (r: AjaxResponse) => {
-                          console.log('OnComplete', this.props, r.response);
+                          console.log('OnComplete Edit Person', this.props, r.response);
                           const url = config.magasin.urls.client.person.viewPerson(
                             appSession,
                             r.response.personUuid
@@ -824,25 +819,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
                     });
                 }
               }
-            }
-
-            /* 
-             this.props.editPerson &&
-            this.props.editPerson({
-              data: this.state,
-              token: appSession.accessToken,
-              collectionId: appSession.collectionId,
-              callback: {
-                onComplete: (r: AjaxResponse) => {
-                  console.log('OnComplete', this.props, r.response);
-                  const url = config.magasin.urls.client.person.viewPerson(
-                    appSession,
-                    r.response.personUuid
-                  );
-                  this.props.history && this.props.history.replace(url);
-                }
-              }
-            }) */
+            }            
           }
           synonymes={this.state.synonymes}
           synState={this.state.synState}
