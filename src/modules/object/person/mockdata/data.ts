@@ -75,7 +75,7 @@ export const museum = [
   { museumId: 7, museumName: 'Kristiansand Naturmuseum', abbreviation: 'KMN' }
 ];
 
-export const museumCollection: { museumId: number; collectionId: number }[] = [
+export const museumAndCollections: { museumId: number; collectionId: number }[] = [
   { museumId: 1, collectionId: 1 },
   { museumId: 1, collectionId: 3 },
   { museumId: 2, collectionId: 1 },

@@ -44,6 +44,7 @@ import ConservationSearchContainer from './modules/conservation/search/conservat
 import { AddPersonName } from './modules/object/person/PersonName';
 import AddPerson from './modules/object/person/AddPersonContainer';
 import ViewPerson from './modules/object/person/ViewPersonContainer';
+import EditPerson from './modules/object/person/EditPersonContainer';
 import Place from './modules/object/places/PlaceComponent';
 import ClassEventPage from './modules/object/taxon/TaxonClassification';
 
@@ -133,6 +134,7 @@ const PersonPage = (props: object) => (
     <Route path={rt(props, '/add')} exact component={AddPerson} />
 
     <Route path={rt(props, '/view/:id')} exact component={ViewPerson} />
+    <Route path={rt(props, '/edit/:id')} exact component={EditPerson} />
     <Route component={NotFoundPage} />
   </Switch>
 );

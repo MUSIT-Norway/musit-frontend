@@ -1,7 +1,7 @@
 import * as React from 'react';
 import DatePicker from '../../../components/DatePicker';
 import * as FontAwesome from 'react-fontawesome';
-import FieldMultiSelect from '../../../forms/components/FieldMultiSelect';
+import FieldMultiSelect from '../components/FieldMultiSelect';
 import {} from '../../../stores/appSession';
 import { AppSession } from '../../../types/appSession';
 import {
@@ -11,11 +11,15 @@ import {
 //import { throws } from 'assert';
 import { PersonStoreState } from './PersonStore';
 import { EditList, databaseOption, databaseOptions } from '../components/EditList';
-import { dataBaseValues } from './mockdata/data';
 import { History } from 'history';
 import config from '../../../config';
 import { AjaxResponse } from 'rxjs';
-import { museumCollection, collections, museum } from '../person/mockdata/data';
+import {
+  museumAndCollections,
+  museum,
+  collections,
+  dataBaseValues
+} from '../person/mockdata/data';
 import { formatISOString } from '../../../shared/util';
 
 export type PersonName = {
@@ -29,6 +33,7 @@ export type ExternalId = {
   database?: string;
   uuid?: string;
 };
+
 export type SynState = 'SEARCH' | 'SYNONYMIZE' | 'CONFIRM';
 export type SynProps = { state: SynState; synPersons: SynPersons } & {
   onClickNext: () => void;
@@ -40,7 +45,10 @@ export type SynPersons = {
   synonymes?: string;
 }[];
 
-type Collection = { museum_id: number; collection_id: number };
+type Collection = {
+  museumId: number;
+  collectionId: number;
+};
 
 export interface PersonState {
   uuid?: string;
@@ -109,7 +117,7 @@ export class PersonState implements PersonState {
 }
 
 export type PersonProps = PersonState & {
-  onClickSave: Function;
+  onClickSaveEdit: Function;
   appSession: AppSession;
   onChange: (fieldName: string) => (newValue: string) => void;
   onChangePersonName: (fieldName: string) => (newValue: string) => void;
@@ -139,6 +147,7 @@ const ExternalIDStrings = (props: {
   externalIds?: ExternalId[];
   editingIds?: ExternalId;
   dataBaseValues: databaseOptions;
+  readOnly?: boolean;
   onAdd: (event: React.SyntheticEvent<HTMLButtonElement>) => void;
   onSave: (event: React.SyntheticEvent<HTMLButtonElement>) => void;
   onChange: (field: string) => (value: string) => void;
@@ -170,28 +179,35 @@ const ExternalIDStrings = (props: {
                 </tr>
               </thead>
               <tbody>
-                {props.externalIds.map((e, i) => (
-                  <tr key={`tr-row${i}`} className="row">
-                    <td className="col-md-2"> {e.database}</td>
-                    <td className="col-md-2">{e.uuid}</td>
-                    <td className="col-md-2">
-                      <a
-                        href=""
-                        onClick={e => {
-                          e.preventDefault();
-                          props.setEditingIndex(i);
-                        }}
-                      >
-                        <FontAwesome name="edit" />
-                      </a>
-                    </td>
-                    <td className="col-md-2">
-                      <a href="" onClick={props.onDelete(i)}>
-                        Delete
-                      </a>
-                    </td>
-                  </tr>
-                ))}
+                {console.log('Anuradha ExternalID strings ', props.externalIds)}
+                {props.externalIds &&
+                  props.externalIds.length > 0 &&
+                  props.externalIds.map((e, i) => (
+                    <tr key={`tr-row${i}`} className="row">
+                      <td className="col-md-2"> {e.database}</td>
+                      <td className="col-md-2">{e.uuid}</td>
+                      {!props.readOnly && (
+                        <div>
+                          <td className="col-md-2">
+                            <a
+                              href=""
+                              onClick={e => {
+                                e.preventDefault();
+                                props.setEditingIndex(i);
+                              }}
+                            >
+                              <FontAwesome name="edit" />
+                            </a>
+                          </td>
+                          <td className="col-md-2">
+                            <a href="" onClick={props.onDelete(i)}>
+                              Delete
+                            </a>
+                          </td>
+                        </div>
+                      )}
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
@@ -219,24 +235,26 @@ const ExternalIDStrings = (props: {
         </div>
       )}
     </div>
-    <div>
-      <button
-        type="button"
-        className="btn btn-default"
-        onClick={props.onAdd}
-        disabled={props.editingIndex !== undefined}
-      >
-        Add new external ID
-      </button>
-      <button
-        type="button"
-        className="btn btn-default"
-        onClick={props.onSave}
-        disabled={props.editingIndex === undefined}
-      >
-        Save external ID
-      </button>
-    </div>
+    {!props.readOnly && (
+      <div>
+        <button
+          type="button"
+          className="btn btn-default"
+          onClick={props.onAdd}
+          disabled={props.editingIndex !== undefined}
+        >
+          Add new external ID
+        </button>
+        <button
+          type="button"
+          className="btn btn-default"
+          onClick={props.onSave}
+          disabled={props.editingIndex === undefined}
+        >
+          Save external ID
+        </button>
+      </div>
+    )}
   </div>
 );
 const SynDo = (props: { synPersons: SynPersons; onClickNext: () => void }) => {
@@ -499,22 +517,32 @@ export const PersonPage = (props: PersonProps) => {
                 </div>
                 <div className="col-md-8">
                   <FieldMultiSelect
-                    stringValue={props.collections.join(',')}
-                    viewMode={props.readOnly}
+                    title="Samlinger for person"
                     labelAbove={true}
-                    options={museumCollection.map((e, i) => ({
-                      label: `${museum[e.museumId] && museum[e.museumId].abbreviation} -
-                            ${(collections[e.collectionId] &&
-                              collections[e.collectionId].collectionName) ||
-                              ''}`,
-                      value: i
-                    }))}
+                    viewMode={props.readOnly}
                     singleSelect={false}
-                    onChange={(event: string) => {
+                    matchProp={'label'}
+                    removeSelected={false}
+                    closeOnSelect={true}
+                    options={museumAndCollections.map(m => {
+                      const museumRecord = museum.find(e => e.museumId === m.museumId);
+                      const collectionRecord = collections.find(
+                        e => e.collectionId === m.collectionId
+                      );
+                      const labelValue = `${
+                        museumRecord ? museumRecord.abbreviation : ''
+                      }-${collectionRecord ? collectionRecord.collectionName : ''}`;
+                      return {
+                        label: labelValue,
+                        value: JSON.stringify(m)
+                      };
+                    })}
+                    values={
+                      props.collections && props.collections.map(m => JSON.stringify(m))
+                    }
+                    onChange={(event: any) => {
                       props.onChangeCollections(event);
                     }}
-                    values={props.collections}
-                    title="Samlinger for person"
                   />
                 </div>
               </div>
@@ -610,14 +638,15 @@ export const PersonPage = (props: PersonProps) => {
                 standAlone={props.standAlone}
                 heading="Skal denne vises når man kommer fra person name?"
               />
-
-              <button
-                type="button"
-                className="btn btn-default"
-                onClick={() => props.onClickAddPersonName(props.newPerson)}
-              >
-                Add person name
-              </button>
+              {!props.readOnly && (
+                <button
+                  type="button"
+                  className="btn btn-default"
+                  onClick={() => props.onClickAddPersonName(props.newPerson)}
+                >
+                  Add person name
+                </button>
+              )}
             </div>
             <div className="well well-sm">
               <ExternalIDStrings
@@ -631,6 +660,7 @@ export const PersonPage = (props: PersonProps) => {
                 setEditingIndex={props.setEditingIndex}
                 onChangeDbValue={props.onChangeDbValue}
                 dataBaseValues={props.dataBaseValues}
+                readOnly={props.readOnly}
               />
             </div>
             {props.standAlone && (
@@ -657,9 +687,9 @@ export const PersonPage = (props: PersonProps) => {
               <button
                 type="button"
                 className="btn btn-primary"
-                onClick={() => props.onClickSave(props.appSession)}
+                onClick={() => props.onClickSaveEdit(props.appSession)}
               >
-                Save
+                {props.readOnly ? `Edit` : `Save`}
               </button>
             </div>
           </div>
@@ -683,7 +713,7 @@ export const toFrontend: (p: OutputPerson) => PersonState = (p: OutputPerson) =>
       innP.collections,
       'SEARCH',
       innP.personUuid,
-      innP.personAttribute && innP.personAttribute.URL,
+      innP.personAttribute && innP.personAttribute.url,
       innP.personAttribute && innP.personAttribute.externalIds,
       innP.synonyms &&
         innP.synonyms.map((p: StorePersonName) => ({
@@ -730,16 +760,75 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
     }
   }
   render() {
-    console.log('State: ', this.state);
+    console.log('State: ', this.state, 'props', this.props);
     return (
       <div className="container" style={{ paddingTop: '25px' }}>
         <PersonPage
           readOnly={this.props.readOnly}
           appSession={this.props.appSession}
           standAlone
-          onClickSave={(appSession: AppSession) =>
-            this.props.addPerson &&
-            this.props.addPerson({
+          onClickSaveEdit={
+            (appSession: AppSession) => {
+              if (this.props.readOnly) {
+                console.log('Edit clicked');
+                console.log('uuid: ', this.state.uuid);
+                const url = config.magasin.urls.client.person.editPerson(
+                  appSession,
+                  this.state.uuid ? this.state.uuid : ''
+                );
+                console.log('url: ', url);
+                this.props.history && this.props.history.replace(url);
+              } else {
+                if (this.state.uuid) {
+                  console.log('Save clicked, save edited work');
+                  if (this.props.editPerson) {
+                    console.log('this.props.editPerson');
+                  } else {
+                    console.log('this.props.editPerson not defined');
+                  }
+                  this.props.editPerson &&
+                    this.props.editPerson({
+                      id: this.state.uuid,
+                      data: this.state,
+                      token: appSession.accessToken,
+                      collectionId: appSession.collectionId,
+                      callback: {
+                        onComplete: (r: AjaxResponse) => {
+                          console.log('OnComplete', this.props, r.response);
+                          const url = config.magasin.urls.client.person.viewPerson(
+                            appSession,
+                            r.response.personUuid
+                          );
+                          this.props.history && this.props.history.replace(url);
+                        }
+                      }
+                    });
+                } else {
+                  console.log('Save clicked, create new person');
+
+                  this.props.addPerson &&
+                    this.props.addPerson({
+                      data: this.state,
+                      token: appSession.accessToken,
+                      collectionId: appSession.collectionId,
+                      callback: {
+                        onComplete: (r: AjaxResponse) => {
+                          console.log('OnComplete', this.props, r.response);
+                          const url = config.magasin.urls.client.person.viewPerson(
+                            appSession,
+                            r.response.personUuid
+                          );
+                          this.props.history && this.props.history.replace(url);
+                        }
+                      }
+                    });
+                }
+              }
+            }
+
+            /* 
+             this.props.editPerson &&
+            this.props.editPerson({
               data: this.state,
               token: appSession.accessToken,
               collectionId: appSession.collectionId,
@@ -753,7 +842,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
                   this.props.history && this.props.history.replace(url);
                 }
               }
-            })
+            }) */
           }
           synonymes={this.state.synonymes}
           synState={this.state.synState}
@@ -778,17 +867,13 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
           legalEntityType={this.state.legalEntityType}
           externalIds={this.state.externalIds || []}
           fullName={this.state.fullName}
-          onChangeCollections={(v: string) => {
+          onChangeCollections={(v: any) => {
             this.setState((ps: PersonState) => {
-              const selectedIndexes: number[] =
-                v !== '' ? v.split(',').map((s: string) => parseInt(s)) : [];
-              const newCollection: {
-                museum_id: number;
-                collection_id: number;
-              }[] = selectedIndexes.map((s: number) => ({
-                museum_id: museumCollection[s].museumId,
-                collection_id: museumCollection[s].collectionId
-              }));
+              console.log('V:  onChagne', v);
+
+              const newCollection: any = v.map((v: any) => JSON.parse(v.value));
+              console.log('Return string onChagne', newCollection);
+
               return {
                 ...ps,
                 collections: newCollection || []
@@ -979,7 +1064,7 @@ export default (props: PersonComponentProps) => (
     appSession={props.appSession}
     store={props.store}
     addPerson={props.addPerson && props.addPerson(props.appSession)}
-    editPerson={props.editPerson}
+    editPerson={props.editPerson && props.editPerson(props.appSession)}
     getPerson={props.getPerson}
     history={props.history}
     readOnly={props.readOnly || false}

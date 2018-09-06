@@ -6,14 +6,12 @@ import lifeCycle from '../../../shared/lifeCycle';
 import appSession$ from '../../../stores/appSession';
 import store$, {
   addPerson$,
-  editPerson$,
   getPerson$,
-  EditPersonProps,
   AddPersonProps,
   GetPersonProps
 } from './PersonStore';
 import { History } from 'history';
-import { AjaxPut, AjaxPost, AjaxGet } from '../../../types/ajax';
+import { AjaxPost, AjaxGet } from '../../../types/ajax';
 
 const combinedStore$ = createStore(
   'combinedStore',
@@ -40,14 +38,6 @@ const addProps = (combinedStore: any, upstream: { history: History }) => ({
       token: props.token,
       collectionId: props.collectionId,
       ajaxGet
-    }),
-  editPerson: (ajaxPut: AjaxPut<any>) => (props: EditPersonProps) =>
-    editPerson$.next({
-      id: props.id,
-      data: props.data,
-      token: props.token,
-      collectionId: props.collectionId,
-      ajaxPut
     })
 });
 

@@ -30,7 +30,7 @@ export default {
   api: {
     persons: {
       addUrl: '/api/persons/person/',
-      editURL: '/api/persons/person/',
+      editUrl: (personUuid: string) => `/api/persons/person/edit/${personUuid}`,
       getUrl: (personUuid: string) => `/api/persons/person/${personUuid}`
     }
   },
@@ -56,7 +56,9 @@ export default {
           addPerson: (appSession: AppSession) =>
             `${clientContextUrl(appSession)}/person/add`,
           viewPerson: (appSession: AppSession, id: string) =>
-            `${clientContextUrl(appSession)}/person/view/${id}`
+            `${clientContextUrl(appSession)}/person/view/${id}`,
+          editPerson: (appSession: AppSession, id: string) =>
+            `${clientContextUrl(appSession)}/person/edit/${id}`
         },
         conservation: {
           editConservation: (appSession: AppSession, conservationId: number) =>

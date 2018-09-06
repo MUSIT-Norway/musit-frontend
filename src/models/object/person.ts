@@ -140,8 +140,8 @@ export interface PersonName {
   readonly name: string;
 }
 export interface Collection {
-  museum_id: number;
-  collection_id: number;
+  museumId: number;
+  collectionId: number;
 }
 
 export interface Database {
@@ -160,7 +160,7 @@ export interface PersonAttribute {
   bornDate?: string;
   deathDate?: string;
   verbatimDate?: string;
-  URL?: string;
+  url?: string;
   externalIds?: ExternalId[];
 }
 
@@ -175,7 +175,7 @@ export class PersonAttribute {
   bornDate?: string;
   deathDate?: string;
   verbatimDate?: string;
-  URL?: string;
+  url?: string;
   externalIds?: ExternalId[];
   constructor(
     legalEntityType: string,
@@ -192,7 +192,7 @@ export class PersonAttribute {
     this.deathDate = deathDate;
     this.verbatimDate = verbatimDate;
     this.externalIds = externalIds;
-    this.URL = URL;
+    this.url = URL;
   }
 }
 
@@ -278,6 +278,6 @@ export const editPerson: (
   token,
   callback
 }) => {
-  const URL = Config.api.persons.editURL;
+  const URL = Config.api.persons.editUrl(id);
   return ajaxPut(URL, data, token, callback).map(({ response }) => response);
 };
