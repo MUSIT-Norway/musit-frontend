@@ -419,6 +419,7 @@ const AddPersonName = (props: {
   heading?: string;
   standAlone?: boolean;
   disabled?: boolean;
+  disableTitle: boolean;
 }) => (
   <div>
     <h4> Add one or more synonymes</h4>
@@ -433,7 +434,7 @@ const AddPersonName = (props: {
           type="text"
           value={(props.newPerson && props.newPerson.title) || ''}
           onChange={e => props.onChangePersonName('title')(e.target.value)}
-          disabled={props.disabled}
+          disabled={props.disabled || props.disableTitle}
         />
       </div>{' '}
       <div className="col-sm-3 form-group">
@@ -592,7 +593,7 @@ export const PersonPage = (props: PersonProps) => {
                       type="text"
                       value={(props.fullName && props.fullName.title) || ''}
                       onChange={e => props.onChangeFullName('title')(e.target.value)}
-                      disabled={props.readOnly}
+                      disabled={props.readOnly || props.legalEntityType !== 'person'}
                     />
                   </div>{' '}
                   <div className="col-sm-3 form-group">
@@ -682,6 +683,7 @@ export const PersonPage = (props: PersonProps) => {
                 standAlone={props.standAlone}
                 heading="Skal denne vises når man kommer fra person name?"
                 disabled={props.readOnly || props.editingIndexSynonyms === undefined}
+                disableTitle={props.legalEntityType !== 'person'}
               />
               {!props.readOnly && (
                 <button
