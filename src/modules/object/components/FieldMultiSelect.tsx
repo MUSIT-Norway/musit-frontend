@@ -21,6 +21,7 @@ export interface FieldMultiSelectProps {
   options: FieldMultiOptValues[];
   values?: string[];
   onChange: Function;
+  disabled?: boolean;
 }
 
 export type FieldMultiOptValues = {
@@ -43,10 +44,10 @@ export default function FieldMultiSelect(props: FieldMultiSelectProps) {
               {props.title}
             </label>
           )}
-          {props.viewMode && (
+          {!props.viewMode && (
             <div style={{ padding: '8px' }}> {values && values.join(', ')} </div>
           )}
-          {!props.viewMode && (
+          {props.viewMode && (
             <Select
               {...props.inputProps}
               placeholder={placeholder}
@@ -61,6 +62,7 @@ export default function FieldMultiSelect(props: FieldMultiSelectProps) {
               filterOptions={props.matchProp}
               onChange={(v: TODO) => props.onChange(v)}
               style={props.style}
+              disabled={props.disabled}
             />
           )}
         </div>
@@ -75,7 +77,7 @@ export default function FieldMultiSelect(props: FieldMultiSelectProps) {
         </label>
       )}
       <div className="col-md-3">
-        {props.viewMode && (
+        {!props.viewMode && (
           <div style={{ padding: '8px' }}> {values && values.join(', ')} </div>
         )}
         {!props.viewMode && (
@@ -90,6 +92,7 @@ export default function FieldMultiSelect(props: FieldMultiSelectProps) {
             value={values}
             options={options}
             onChange={(v: TODO) => props.onChange(v)}
+            disabled={props.disabled}
           />
         )}
       </div>

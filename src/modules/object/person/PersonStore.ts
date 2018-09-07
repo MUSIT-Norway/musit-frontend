@@ -44,7 +44,7 @@ export const toBackend: ((p: PersonState) => InputPerson) = (p: PersonState) => 
     p.bornDate,
     p.deathDate,
     p.verbatimDate,
-    p.URL,
+    p.url,
     p.synonymes
       ? p.synonymes.map((p: PersonName) => ({
           firstName: p.firstName,
