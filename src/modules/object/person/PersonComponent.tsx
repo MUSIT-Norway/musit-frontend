@@ -66,6 +66,7 @@ export interface PersonState {
   verbatimDate?: string;
   collections: Collection[];
   museumAffiliation?: string;
+  editingIndexSynonyms?: number;
 }
 
 export class PersonState implements PersonState {
@@ -84,6 +85,7 @@ export class PersonState implements PersonState {
   verbatimDate?: string;
   collections: Collection[];
   museumAffiliation?: string;
+  editingIndexSynonyms?: number;
 
   constructor(
     fullName: PersonName,
@@ -98,7 +100,8 @@ export class PersonState implements PersonState {
     bornDate?: string,
     deathDate?: string,
     verbatimDate?: string,
-    museumAffiliation?: string
+    museumAffiliation?: string,
+    editingIndexSynonyms?: number
   ) {
     this.uuid = uuid;
     this.fullName = fullName;
@@ -113,6 +116,7 @@ export class PersonState implements PersonState {
     this.verbatimDate = verbatimDate;
     this.collections = collections;
     this.museumAffiliation = museumAffiliation;
+    this.editingIndexSynonyms = editingIndexSynonyms;
   }
 }
 
@@ -121,7 +125,6 @@ export type PersonProps = PersonState & {
   appSession: AppSession;
   onChange: (fieldName: string) => (newValue: string) => void;
   onChangePersonName: (fieldName: string) => (newValue: string) => void;
-  onClickAddPersonName: (newPersonName?: PersonName) => void;
   onChangeFullName: (fieldName: string) => (newValue: string) => void;
   onAddExternalId: () => void;
   onSaveExternalId: () => void;
@@ -140,6 +143,10 @@ export type PersonProps = PersonState & {
   heading?: string;
   standAlone?: boolean;
   readOnly?: boolean;
+  setEditingIndexSynonyms: (i: number) => void;
+  onClickSavePersonName: () => void;
+  onClickAddPersonName: () => void;
+  onDeleteSynonyms: (i: number) => (e: React.SyntheticEvent<HTMLAnchorElement>) => void;
 };
 
 const ExternalIDStrings = (props: {
@@ -408,7 +415,7 @@ const Synonymizer = (props: SynProps) => {
 
 const AddPersonName = (props: {
   newPerson?: PersonName;
-  onChange: (fieldName: string) => (value: string) => void;
+  onChangePersonName: (fieldName: string) => (value: string) => void;
   heading?: string;
   standAlone?: boolean;
   disabled?: boolean;
@@ -425,7 +432,7 @@ const AddPersonName = (props: {
           className="form-control"
           type="text"
           value={(props.newPerson && props.newPerson.title) || ''}
-          onChange={e => props.onChange('title')(e.target.value)}
+          onChange={e => props.onChangePersonName('title')(e.target.value)}
           disabled={props.disabled}
         />
       </div>{' '}
@@ -436,7 +443,7 @@ const AddPersonName = (props: {
           className="form-control"
           type="text"
           value={(props.newPerson && props.newPerson.firstName) || ''}
-          onChange={e => props.onChange('firstName')(e.target.value)}
+          onChange={e => props.onChangePersonName('firstName')(e.target.value)}
           disabled={props.disabled}
         />
       </div>{' '}
@@ -447,7 +454,7 @@ const AddPersonName = (props: {
           className="form-control"
           type="text"
           value={(props.newPerson && props.newPerson.lastName) || ''}
-          onChange={e => props.onChange('lastName')(e.target.value)}
+          onChange={e => props.onChangePersonName('lastName')(e.target.value)}
           disabled={props.disabled}
         />
       </div>
@@ -459,7 +466,10 @@ const PersonNames = (props: {
   synonymes?: Array<PersonName>;
   newPerson?: PersonName;
   onChange: Function;
-  onClickAdd: (newPersonName: PersonName) => void;
+  //onClickAdd: (newPersonName: PersonName) => void;
+  readOnly?: boolean;
+  setEditingIndexSynonyms: (i: number) => void;
+  onDeleteSynonyms: (i: number) => (e: React.SyntheticEvent<HTMLAnchorElement>) => void;
 }) => (
   <div>
     <h3>Synonymer</h3>
@@ -470,6 +480,7 @@ const PersonNames = (props: {
           <th>First name</th>
           <th>Last Name</th>
           <th>Name</th>
+          <th />
         </tr>
       </thead>
       <tbody>
@@ -480,6 +491,26 @@ const PersonNames = (props: {
               <td>{s.firstName}</td>
               <td>{s.lastName}</td>
               <td>{s.nameString}</td>
+              {!props.readOnly && (
+                <div>
+                  <td className="col-md-2">
+                    <a
+                      href=""
+                      onClick={e => {
+                        e.preventDefault();
+                        props.setEditingIndexSynonyms(i);
+                      }}
+                    >
+                      <FontAwesome name="edit" />
+                    </a>
+                  </td>
+                  <td className="col-md-2">
+                    <a href="" onClick={props.onDeleteSynonyms(i)}>
+                      Delete
+                    </a>
+                  </td>
+                </div>
+              )}
             </tr>
           ))}
       </tbody>
@@ -639,24 +670,37 @@ export const PersonPage = (props: PersonProps) => {
                     synonymes={props.synonymes}
                     newPerson={props.newPerson}
                     onChange={props.onChange}
-                    onClickAdd={props.onClickAddPersonName}
+                    readOnly={props.readOnly}
+                    setEditingIndexSynonyms={props.setEditingIndexSynonyms}
+                    onDeleteSynonyms={props.onDeleteSynonyms}
                   />
                 )}
 
               <AddPersonName
                 newPerson={props.newPerson}
-                onChange={props.onChangePersonName}
+                onChangePersonName={props.onChangePersonName}
                 standAlone={props.standAlone}
                 heading="Skal denne vises når man kommer fra person name?"
-                disabled={props.readOnly}
+                disabled={props.readOnly || props.editingIndexSynonyms === undefined}
               />
               {!props.readOnly && (
                 <button
                   type="button"
                   className="btn btn-default"
-                  onClick={() => props.onClickAddPersonName(props.newPerson)}
+                  onClick={() => props.onClickAddPersonName()}
+                  disabled={props.editingIndexSynonyms !== undefined}
                 >
                   Add person name
+                </button>
+              )}
+              {!props.readOnly && (
+                <button
+                  type="button"
+                  className="btn btn-default"
+                  onClick={() => props.onClickSavePersonName()}
+                  disabled={props.editingIndexSynonyms === undefined}
+                >
+                  Save person name
                 </button>
               )}
             </div>
@@ -755,7 +799,7 @@ export const toFrontend: (p: OutputPerson) => PersonState = (p: OutputPerson) =>
 export class Person extends React.Component<PersonComponentProps, PersonState> {
   constructor(props: PersonComponentProps) {
     super(props);
-    console.log('STORE', props.store);
+    //console.log('STORE', props.store);
     this.state = props.store.localState
       ? props.store.localState
       : {
@@ -766,73 +810,71 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
         };
   }
   componentWillReceiveProps(props: PersonComponentProps) {
-    console.log('Recieve props: ====>', props);
+    //console.log('Recieve props: ====>', props);
     if (props.store.localState && !this.state.uuid) {
       this.setState(() => ({ ...props.store.localState }));
     }
   }
   render() {
-    console.log('State: ', this.state, 'props', this.props);
+    console.log('State: ', this.state.newPerson, this.state.synonymes);
     return (
       <div className="container" style={{ paddingTop: '25px' }}>
         <PersonPage
           readOnly={this.props.readOnly}
           appSession={this.props.appSession}
           standAlone
-          onClickSaveEdit={
-            (appSession: AppSession) => {
-              if (this.props.readOnly) {
-                console.log('Edit clicked uuid: : ' , this.state.uuid);
-               
-                const url = config.magasin.urls.client.person.editPerson(
-                  appSession,
-                  this.state.uuid ? this.state.uuid : ''
-                );
-                console.log('url: ', url);
-                this.props.history && this.props.history.replace(url);
-              } else {
-                if (this.state.uuid) {
-                  console.log('Save clicked, save edited work');
-                 this.props.editPerson &&
-                    this.props.editPerson({
-                      id: this.state.uuid,
-                      data: this.state,
-                      token: appSession.accessToken,
-                      collectionId: appSession.collectionId,
-                      callback: {
-                        onComplete: (r: AjaxResponse) => {
-                          console.log('OnComplete Edit Person', this.props, r.response);
-                          const url = config.magasin.urls.client.person.viewPerson(
-                            appSession,
-                            r.response.personUuid
-                          );
-                          this.props.history && this.props.history.replace(url);
-                        }
-                      }
-                    });
-                } else {
-                  console.log('Save clicked, create new person');
+          onClickSaveEdit={(appSession: AppSession) => {
+            if (this.props.readOnly) {
+              console.log('Edit clicked uuid: : ', this.state.uuid);
 
-                  this.props.addPerson &&
-                    this.props.addPerson({
-                      data: this.state,
-                      token: appSession.accessToken,
-                      collectionId: appSession.collectionId,
-                      callback: {
-                        onComplete: (r: AjaxResponse) => {
-                          console.log('OnComplete', this.props, r.response);
-                          const url = config.magasin.urls.client.person.viewPerson(
-                            appSession,
-                            r.response.personUuid
-                          );
-                          this.props.history && this.props.history.replace(url);
-                        }
+              const url = config.magasin.urls.client.person.editPerson(
+                appSession,
+                this.state.uuid ? this.state.uuid : ''
+              );
+              console.log('url: ', url);
+              this.props.history && this.props.history.replace(url);
+            } else {
+              if (this.state.uuid) {
+                console.log('Save clicked, save edited work');
+                this.props.editPerson &&
+                  this.props.editPerson({
+                    id: this.state.uuid,
+                    data: this.state,
+                    token: appSession.accessToken,
+                    collectionId: appSession.collectionId,
+                    callback: {
+                      onComplete: (r: AjaxResponse) => {
+                        console.log('OnComplete Edit Person', this.props, r.response);
+                        const url = config.magasin.urls.client.person.viewPerson(
+                          appSession,
+                          r.response.personUuid
+                        );
+                        this.props.history && this.props.history.replace(url);
                       }
-                    });
-                }
+                    }
+                  });
+              } else {
+                console.log('Save clicked, create new person');
+
+                this.props.addPerson &&
+                  this.props.addPerson({
+                    data: this.state,
+                    token: appSession.accessToken,
+                    collectionId: appSession.collectionId,
+                    callback: {
+                      onComplete: (r: AjaxResponse) => {
+                        console.log('OnComplete', this.props, r.response);
+                        const url = config.magasin.urls.client.person.viewPerson(
+                          appSession,
+                          r.response.personUuid
+                        );
+                        this.props.history && this.props.history.replace(url);
+                      }
+                    }
+                  });
               }
-            }            
-          }
+            }
+          }}
           synonymes={this.state.synonymes}
           synState={this.state.synState}
           onClickNext={() =>
@@ -874,14 +916,64 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
             this.setState(p => ({ ...p, [fieldName]: newValue }));
             console.log(fieldName, newValue);
           }}
-          onClickAddPersonName={(newPersonName?: PersonName) => {
-            if (newPersonName) {
-              this.setState(ps => ({
+          editingIndexSynonyms={this.state.editingIndexSynonyms}
+          setEditingIndexSynonyms={(index: number) => {
+            this.setState((ps: PersonState) => {
+              const editingItem = ps.synonymes && ps.synonymes[index];
+              const upgragedSynonym = {
                 ...ps,
-                synonymes: newPersonName && (ps.synonymes || []).concat([newPersonName]),
+                editingIndexSynonyms: index,
+                newPerson: editingItem
+              };
+              return upgragedSynonym;
+            });
+          }}
+          onClickAddPersonName={() => {
+            this.setState((ps: PersonState) => {
+              const editIndex = (ps.synonymes || []).length
+                ? (ps.synonymes || []).length
+                : 0;
+              return {
+                ...ps,
+                editingIndexSynonyms: editIndex,
                 newPerson: undefined
-              }));
-            }
+              };
+            });
+          }}
+          onClickSavePersonName={() => {
+            this.setState((ps: PersonState) => {
+              const editIndex = ps.editingIndexSynonyms ? ps.editingIndexSynonyms : 0;
+              const editItem = ps.newPerson || { nameString: '' };
+              const currentSynonyms = ps.synonymes || [];
+              const nextSynonyms = currentSynonyms
+                ? [
+                    ...currentSynonyms.slice(0, editIndex),
+                    editItem,
+                    ...currentSynonyms.slice(editIndex + 1)
+                  ]
+                : currentSynonyms;
+              return {
+                ...ps,
+                synonymes: nextSynonyms,
+                editingIndexSynonyms: undefined,
+                newPerson: undefined
+              };
+            });
+          }}
+          onDeleteSynonyms={(index: number) => (
+            e: React.SyntheticEvent<HTMLAnchorElement>
+          ) => {
+            e.preventDefault();
+            this.setState((p: PersonState) => {
+              const newExteralIDItem = (p.synonymes
+                ? p.synonymes.slice(0, index)
+                : []
+              ).concat(p.synonymes ? p.synonymes.slice(index + 1) : []);
+              return {
+                ...p,
+                synonymes: newExteralIDItem
+              };
+            });
           }}
           dataBaseValues={dataBaseValues}
           onAddExternalId={() => {
