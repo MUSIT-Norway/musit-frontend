@@ -557,7 +557,6 @@ export const PersonPage = (props: PersonProps) => {
                     matchProp={'label'}
                     removeSelected={false}
                     closeOnSelect={true}
-                    disabled={props.readOnly}
                     options={museumAndCollections.map(m => {
                       const museumRecord = museum.find(e => e.museumId === m.museumId);
                       const collectionRecord = collections.find(
