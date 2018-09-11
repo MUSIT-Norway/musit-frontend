@@ -4,12 +4,7 @@ import PersonComponent from './PersonComponent';
 import { flowRight } from 'lodash';
 import lifeCycle from '../../../shared/lifeCycle';
 import appSession$ from '../../../stores/appSession';
-import store$, { 
-      getPerson$, 
-      editPerson$, 
-      EditPersonProps 
-       }
-      from './PersonStore';
+import store$, { getPerson$, editPerson$, EditPersonProps } from './PersonStore';
 import { AppSession } from '../../../types/appSession';
 import { History } from 'history';
 import { simpleGet } from '../../../shared/RxAjax';
@@ -27,12 +22,12 @@ const editProps = (combinedStore: any, upstream: { history: History }) => ({
   ...combinedStore,
   ...upstream,
   getPerson: (appSession: AppSession, id: string) =>
-  getPerson$.next({
-    id: id,
-    collectionId: appSession.collectionId,
-    token: appSession.accessToken,
-    ajaxGet: simpleGet
-  }), 
+    getPerson$.next({
+      id: id,
+      collectionId: appSession.collectionId,
+      token: appSession.accessToken,
+      ajaxGet: simpleGet
+    }),
   editPerson: (ajaxPut: AjaxPut<any>) => (props: EditPersonProps) => {
     editPerson$.next({
       id: props.id,
@@ -41,7 +36,7 @@ const editProps = (combinedStore: any, upstream: { history: History }) => ({
       collectionId: props.collectionId,
       ajaxPut,
       callback: props.callback
-    })
+    });
   },
   readOnly: false
 });

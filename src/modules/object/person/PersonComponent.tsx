@@ -164,7 +164,6 @@ const Synonyms = (props: {
   setEditingIndexSynonyms: (i: number) => void;
 }) => (
   <div>
-  <div>
     <h4>Synonyms</h4>
     <div className="grid">
       {props.synonyms &&
@@ -243,7 +242,7 @@ const Synonyms = (props: {
               className="form-control"
               value={props.newPerson && props.newPerson.firstName}
               onChange={e => props.onChange('firstName')(e.target.value)}
-          />
+            />
           </div>
           <div className="col-sm-2 form-group">
             <input
@@ -283,7 +282,6 @@ const Synonyms = (props: {
       </div>
     )}
   </div>
-</div>
 );
 
 const ExternalIDStrings = (props: {
@@ -332,9 +330,9 @@ const ExternalIDStrings = (props: {
                       <td className="col-md-2">{e.uuid}</td>
                       {!props.readOnly && (
                         <div>
-                          <td className="col-md-2" >
+                          <td className="col-md-2">
                             <a
-                              href=""                             
+                              href=""
                               onClick={e => {
                                 e.preventDefault();
                                 props.setEditingIndex(i);
@@ -550,7 +548,6 @@ const Synonymizer = (props: SynProps) => {
     </div>
   );
 };
-
 
 export const PersonPage = (props: PersonProps) => {
   return (
@@ -844,16 +841,15 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
                     collectionId: appSession.collectionId,
                     callback: {
                       onComplete: (r: AjaxResponse) => {
-                       
                         const url = config.magasin.urls.client.person.viewPerson(
                           appSession,
                           this.state.uuid ? this.state.uuid : '' //  r.response.personUuid  //
-                        );                        
+                        );
                         this.props.history && this.props.history.replace(url);
-                      }/* ,
+                      } /* ,
                       onFailure: (r: AjaxResponse) => {
                         alert(r.responseText);
-                      }  */                   
+                      }  */
                     }
                   });
               } else {
@@ -869,13 +865,12 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
                           r.response.personUuid
                         );
                         this.props.history && this.props.history.replace(url);
-                      }/* ,
+                      } /* ,
                       onFailure: (error: { status: number }) => {
                         alert(error.status.toString);
                       }  */
                     }
                   });
-
               }
             }
           }}
@@ -896,7 +891,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
           collections={this.state.collections}
           bornDate={this.state.bornDate}
           deathDate={this.state.deathDate}
-          url={this.state.url? this.state.url:''}
+          url={this.state.url ? this.state.url : ''}
           verbatimDate={this.state.verbatimDate}
           editingIndex={this.state.editingIndex}
           editingIds={this.state.editingIds}
