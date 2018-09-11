@@ -57,29 +57,26 @@ const AdmPlaceComponent = (
       <div className="row form-group">
         <div className="col-md-6">
           <label htmlFor="locality">Lokalitet </label>
-          <textarea className="form-control" id="locality" value={props.locality} />
+          <textarea
+            className="form-control"
+            id="locality"
+            value={props.locality}
+            onChange={(v: React.ChangeEvent<HTMLTextAreaElement>) =>
+              props.onChangeOthers('locality')(v.target.value)
+            }
+          />
         </div>
         <div className="col-md-6">
           <label htmlFor="ecology">Økologi </label>
-          <textarea className="form-control" id="ecology" value={props.ecology} />
+          <textarea
+            className="form-control"
+            id="ecology"
+            value={props.ecology}
+            onChange={(v: React.ChangeEvent<HTMLTextAreaElement>) =>
+              props.onChangeOthers('ecology')(v.target.value)
+            }
+          />
         </div>
-      </div>
-      <div className="row form-group">
-        {InputText({
-          value: props.admPlace && props.admPlace.kommune ? props.admPlace.kommune : '',
-          label: 'Kommune',
-          readOnly: true
-        })}
-        {InputText({
-          value: props.admPlace && props.admPlace.fylke ? props.admPlace.fylke : '',
-          label: 'Fylke',
-          readOnly: true
-        })}
-        {InputText({
-          value: props.admPlace && props.admPlace.land ? props.admPlace.land : '',
-          label: 'Land',
-          readOnly: true
-        })}
       </div>
     </div>
     <div className="well">

@@ -4,6 +4,7 @@ import CoordinateComp from './CoordinateComp';
 import MapComponent from './MapComponent';
 import AdmPlaceComponent from './AdmPlaceComponent';
 import { musitCoodinateValidate } from '../../../shared/util';
+import CollapseComponent from '../components/Collapse';
 
 export type AdmPlace = {
   admPlaceId: number;
@@ -184,18 +185,7 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
   constructor(props: PlaceProps) {
     super(props);
     this.state = {
-      admPlace: {
-        admPlaceId: 1,
-        name: 'Oslo',
-        type: 'Kommune',
-        overordnet: 'Oslo fylke',
-        kommune: 'Oslo',
-        fylke: 'Oslo fylke',
-        land: 'Norge',
-        lat: 59.8939224,
-        long: 10.7149059,
-        zoom: 12
-      },
+      admPlace: admPlaces[0],
       editingCoordinate: {
         coordinateType: 'MGRS',
         altitudeUnit: 'Meters',
@@ -213,219 +203,262 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
   }
 
   render() {
-    return (
-      <form style={{ padding: '20px' }}>
-        <div className="row form-group">
+    const AdmPlaceRead = (
+      <div className="grid">
+        <h3>Admplace/Station</h3>
+        <div className="row">
           <div className="col-md-4">
-            <AdmPlaceComponent
-              {...this.state}
-              onChangeOthers={(field: string) => (value: string) => {
-                this.setState((ps: PlaceState) => ({
-                  ...ps,
-                  [field]: value
-                }));
-              }}
-              onChange={(t: string) => {
-                const admPlace = admPlaces.find(
-                  (a: AdmPlace) => a.admPlaceId === parseInt(t)
-                );
-                console.log(admPlace);
-                this.setState((s: PlaceState) => ({
-                  ...s,
-                  admPlace: admPlace,
-                  kommune: (admPlace && admPlace.kommune) || '',
-                  fylke: (admPlace && admPlace.fylke) || '',
-                  land: admPlace && admPlace.land,
-                  lat: admPlace && admPlace.lat,
-                  long: admPlace && admPlace.long,
-                  overordnet: admPlace && admPlace.overordnet,
-                  type: admPlace && admPlace.type,
-                  name: admPlace && admPlace.name
-                }));
-              }}
-            />
-            <MapComponent {...this.state} />
+            <b>Admplace:</b>{' '}
+            {this.state.admPlace
+              ? (this.state.admPlace.kommune
+                  ? this.state.admPlace.kommune + ' : '
+                  : ';') +
+                (this.state.admPlace.fylke ? this.state.admPlace.fylke + ' : ' : ';') +
+                this.state.admPlace.land
+              : ''}
           </div>
+          <div className="col-md-4">
+            <b>Locality: </b>
+            <p>{this.state.locality}</p>
+          </div>
+          <div className="col-md-4">
+            <b>Ecology: </b>
+            {this.state.ecology}
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-4">
+            <b>Station:</b> {this.state.station}
+          </div>
+          <div className="col-md-4">
+            <b>Sample: </b>
+            {this.state.sample}
+          </div>
+          <div className="col-md-4">
+            <b>Ship: </b>
+            {this.state.ship}
+          </div>
+        </div>
+      </div>
+    );
+    const AdmPlaceComp = (
+      <AdmPlaceComponent
+        {...this.state}
+        onChangeOthers={(field: string) => (value: string) => {
+          this.setState((ps: PlaceState) => ({
+            ...ps,
+            [field]: value
+          }));
+        }}
+        onChange={(t: string) => {
+          const admPlace = admPlaces.find((a: AdmPlace) => a.admPlaceId === parseInt(t));
+          console.log(admPlace);
+          this.setState((s: PlaceState) => ({
+            ...s,
+            admPlace: admPlace,
+            kommune: (admPlace && admPlace.kommune) || '',
+            fylke: (admPlace && admPlace.fylke) || '',
+            land: admPlace && admPlace.land,
+            lat: admPlace && admPlace.lat,
+            long: admPlace && admPlace.long,
+            overordnet: admPlace && admPlace.overordnet,
+            type: admPlace && admPlace.type,
+            name: admPlace && admPlace.name
+          }));
+        }}
+      />
+    );
 
-          <div className="col-md-8">
-            <CoordinateComp
-              {...this.state.coordinateHistory[this.state.coordinateHistoryIndeks]
-                .coordinate}
-              editCoordinateMode={this.state.editCoorditeMode || false}
-              coordinateHistoryIndeks={this.state.coordinateHistoryIndeks}
-              coordinateHistory={this.state.coordinateHistory}
-              editingCoordinate={this.state.editingCoordinate}
-              coordinateType={
-                this.state.coordinateHistory[this.state.coordinateHistoryIndeks]
-                  .coordinate.coordinateType || 'MGRS'
-              }
-              coordinateInvalid={this.state.coordinateInvalid || false}
-              coordinateCollapsed={this.state.coordinateCollapsed || false}
-              onChangeCoordinateNumber={(fieldName: string) => (value: number) => {
-                this.setState((ps: PlaceState) => {
-                  return {
-                    ...ps,
-                    editingCoordinate: {
-                      ...ps.editingCoordinate,
-                      [fieldName]: value
-                    }
-                  };
-                });
-              }}
-              onSetEditingIndex={(i: number) => {
-                this.setState((ps: PlaceState) => {
-                  const newEditingCoordinate = ps.coordinateHistory[i];
-                  return {
-                    ...ps,
-                    coordinateHistoryIndeks: i,
-                    editingCoordinate: newEditingCoordinate.coordinate,
-                    editCoorditeMode: true
-                  };
-                });
-              }}
-              onChangeCoordinateText={(fieldName: string) => (value: string) => {
-                this.setState((ps: PlaceState) => {
-                  let coordinateInvalid: boolean = !musitCoodinateValidate(fieldName)(
-                    value
-                  );
-                  const s = {
-                    ...ps,
-                    editingCoordinate: {
-                      ...ps.editingCoordinate,
-                      [fieldName]: value
+    const CoordinateComponent = (
+      <div>
+        <CoordinateComp
+          {...this.state.coordinateHistory[this.state.coordinateHistoryIndeks].coordinate}
+          editCoordinateMode={this.state.editCoorditeMode || false}
+          coordinateHistoryIndeks={this.state.coordinateHistoryIndeks}
+          coordinateHistory={this.state.coordinateHistory}
+          editingCoordinate={this.state.editingCoordinate}
+          coordinateType={
+            this.state.coordinateHistory[this.state.coordinateHistoryIndeks].coordinate
+              .coordinateType || 'MGRS'
+          }
+          coordinateInvalid={this.state.coordinateInvalid || false}
+          coordinateCollapsed={this.state.coordinateCollapsed || false}
+          onChangeCoordinateNumber={(fieldName: string) => (value: number) => {
+            this.setState((ps: PlaceState) => {
+              return {
+                ...ps,
+                editingCoordinate: {
+                  ...ps.editingCoordinate,
+                  [fieldName]: value
+                }
+              };
+            });
+          }}
+          onSetEditingIndex={(i: number) => {
+            this.setState((ps: PlaceState) => {
+              const newEditingCoordinate = ps.coordinateHistory[i];
+              return {
+                ...ps,
+                coordinateHistoryIndeks: i,
+                editingCoordinate: newEditingCoordinate.coordinate,
+                editCoorditeMode: true
+              };
+            });
+          }}
+          onChangeCoordinateText={(fieldName: string) => (value: string) => {
+            this.setState((ps: PlaceState) => {
+              let coordinateInvalid: boolean = !musitCoodinateValidate(fieldName)(value);
+              const s = {
+                ...ps,
+                editingCoordinate: {
+                  ...ps.editingCoordinate,
+                  [fieldName]: value
+                },
+                coordinateInvalid: coordinateInvalid ? coordinateInvalid : false
+              };
+              return s;
+            });
+          }}
+          onChangeEditMode={(editMode: boolean) => {
+            this.setState((ps: PlaceState) => {
+              const s = {
+                ...ps,
+                editCoorditeMode: editMode
+              };
+
+              return s;
+            });
+          }}
+          onChangeCheckBoxBoolean={(fieldName: string) => (value: string) => {
+            this.setState((ps: PlaceState) => {
+              const s = {
+                ...ps,
+                editingCoordinate: {
+                  ...ps.editingCoordinate,
+                  [fieldName]: value
+                }
+              };
+
+              return s;
+            });
+          }}
+          getCurrentCoordinate={(ind: number) => {
+            const ret = this.state.editingCoordinate;
+            return ret;
+          }}
+          onClickSaveRevision={() => {
+            this.setState((ps: PlaceState) => {
+              const revType =
+                ps.coordinateHistoryIndeks === 0
+                  ? 'newCoordinate'
+                  : ps.coordinateHistory[ps.coordinateHistoryIndeks]
+                      .coordinateRevisionType;
+              if (
+                ps.editCoorditeMode ||
+                (ps.coordinateHistoryIndeks === 0 &&
+                  ps.coordinateHistory[ps.coordinateHistoryIndeks]
+                    .coordinateRevisionType === undefined)
+              ) {
+                return {
+                  ...ps,
+                  editCoorditeMode: false,
+                  coordinateHistoryIndeks: ps.coordinateHistory.length - 1,
+                  coordinateHistory: [
+                    ...ps.coordinateHistory.slice(0, ps.coordinateHistoryIndeks),
+                    {
+                      ...ps.coordinateHistory[ps.coordinateHistoryIndeks],
+                      coordinateRevisionType: revType,
+                      coordinate: ps.editingCoordinate
                     },
-                    coordinateInvalid: coordinateInvalid ? coordinateInvalid : false
-                  };
-                  return s;
-                });
-              }}
-              onChangeEditMode={(editMode: boolean) => {
-                this.setState((ps: PlaceState) => {
-                  const s = {
-                    ...ps,
-                    editCoorditeMode: editMode
-                  };
+                    ...ps.coordinateHistory.slice(ps.coordinateHistoryIndeks + 1)
+                  ]
+                };
+              }
 
-                  return s;
-                });
-              }}
-              onChangeCheckBoxBoolean={(fieldName: string) => (value: string) => {
-                this.setState((ps: PlaceState) => {
-                  const s = {
-                    ...ps,
-                    editingCoordinate: {
-                      ...ps.editingCoordinate,
-                      [fieldName]: value
-                    }
-                  };
-
-                  return s;
-                });
-              }}
-              getCurrentCoordinate={(ind: number) => {
-                const ret = this.state.editingCoordinate;
-                return ret;
-              }}
-              onClickSaveRevision={() => {
-                this.setState((ps: PlaceState) => {
-                  const revType =
-                    ps.coordinateHistoryIndeks === 0
-                      ? 'newCoordinate'
-                      : ps.coordinateHistory[ps.coordinateHistoryIndeks]
-                          .coordinateRevisionType;
-                  if (
-                    ps.editCoorditeMode ||
-                    (ps.coordinateHistoryIndeks === 0 &&
-                      ps.coordinateHistory[ps.coordinateHistoryIndeks]
-                        .coordinateRevisionType === undefined)
-                  ) {
-                    return {
-                      ...ps,
-                      editCoorditeMode: false,
-                      coordinateHistoryIndeks: ps.coordinateHistory.length - 1,
-                      coordinateHistory: [
-                        ...ps.coordinateHistory.slice(0, ps.coordinateHistoryIndeks),
-                        {
-                          ...ps.coordinateHistory[ps.coordinateHistoryIndeks],
-                          coordinateRevisionType: revType,
-                          coordinate: ps.editingCoordinate
-                        },
-                        ...ps.coordinateHistory.slice(ps.coordinateHistoryIndeks + 1)
-                      ]
-                    };
+              return {
+                ...ps,
+                coordinateHistoryIndeks: ps.coordinateHistoryIndeks + 1,
+                coordinateHistory: [
+                  ...ps.coordinateHistory,
+                  {
+                    coordinate: ps.editingCoordinate,
+                    coordinateRevisionType: 'coordinateRevision'
                   }
+                ]
+              };
+            });
+          }}
+          onClickSaveEdit={() => {
+            this.setState((ps: PlaceState) => {
+              return {
+                ...ps,
+                coordinateHistoryIndeks: ps.coordinateHistory[ps.coordinateHistoryIndeks]
+                  .coordinateRevisionType
+                  ? ps.coordinateHistoryIndeks + 1
+                  : ps.coordinateHistoryIndeks,
 
-                  return {
-                    ...ps,
-                    coordinateHistoryIndeks: ps.coordinateHistoryIndeks + 1,
-                    coordinateHistory: [
+                coordinateHistory: ps.coordinateHistory[ps.coordinateHistoryIndeks]
+                  .coordinateRevisionType
+                  ? [
                       ...ps.coordinateHistory,
                       {
                         coordinate: ps.editingCoordinate,
-                        coordinateRevisionType: 'coordinateRevision'
+                        coordinateRevisionType: 'coordinateEdit',
+                        registeredDate: moment().format('DD.MM.YYYY HH:mm'),
+                        registeredBy: 'Stein Olsen'
                       }
                     ]
-                  };
-                });
-              }}
-              onClickSaveEdit={() => {
-                this.setState((ps: PlaceState) => {
-                  return {
-                    ...ps,
-                    coordinateHistoryIndeks: ps.coordinateHistory[
-                      ps.coordinateHistoryIndeks
-                    ].coordinateRevisionType
-                      ? ps.coordinateHistoryIndeks + 1
-                      : ps.coordinateHistoryIndeks,
-
-                    coordinateHistory: ps.coordinateHistory[ps.coordinateHistoryIndeks]
-                      .coordinateRevisionType
-                      ? [
-                          ...ps.coordinateHistory,
-                          {
-                            coordinate: ps.editingCoordinate,
-                            coordinateRevisionType: 'coordinateEdit',
-                            registeredDate: moment().format('DD.MM.YYYY HH:mm'),
-                            registeredBy: 'Stein Olsen'
-                          }
-                        ]
-                      : [
-                          ...ps.coordinateHistory,
-                          {
-                            coordinate: ps.editingCoordinate,
-                            coordinateRevisionType: 'newCoordinate'
-                          }
-                        ]
-                  };
-                });
-              }}
-              getCurrentHistoryItem={(ind: number) => {
-                const ret = this.state.coordinateHistory[ind];
-                return ret;
-              }}
-              onToggleCollapse={() => {
-                this.setState((ps: PlaceState) => ({
-                  ...ps,
-                  coordinateCollapsed: ps.coordinateCollapsed ? false : true
-                }));
-              }}
-              onChangeHistoryItem={(fieldName: string) => (value: string) => {
-                console.log('OnChangeHistItem', fieldName, value);
-                this.setState((ps: PlaceState) => {
-                  return {
-                    ...ps,
-                    coordinateHistory: [
-                      ...ps.coordinateHistory.slice(0, ps.coordinateHistoryIndeks),
+                  : [
+                      ...ps.coordinateHistory,
                       {
-                        ...ps.coordinateHistory[ps.coordinateHistoryIndeks],
-                        [fieldName]: value
-                      },
-                      ...ps.coordinateHistory.slice(ps.coordinateHistoryIndeks + 1)
+                        coordinate: ps.editingCoordinate,
+                        coordinateRevisionType: 'newCoordinate'
+                      }
                     ]
-                  };
-                });
-              }}
-            />
+              };
+            });
+          }}
+          getCurrentHistoryItem={(ind: number) => {
+            const ret = this.state.coordinateHistory[ind];
+            return ret;
+          }}
+          onToggleCollapse={() => {
+            this.setState((ps: PlaceState) => ({
+              ...ps,
+              coordinateCollapsed: ps.coordinateCollapsed ? false : true
+            }));
+          }}
+          onChangeHistoryItem={(fieldName: string) => (value: string) => {
+            console.log('OnChangeHistItem', fieldName, value);
+            this.setState((ps: PlaceState) => {
+              return {
+                ...ps,
+                coordinateHistory: [
+                  ...ps.coordinateHistory.slice(0, ps.coordinateHistoryIndeks),
+                  {
+                    ...ps.coordinateHistory[ps.coordinateHistoryIndeks],
+                    [fieldName]: value
+                  },
+                  ...ps.coordinateHistory.slice(ps.coordinateHistoryIndeks + 1)
+                ]
+              };
+            });
+          }}
+        />
+        <MapComponent {...this.state} />
+      </div>
+    );
+    return (
+      <form style={{ padding: '20px' }}>
+        <div className="row form-group">
+          <div className="col-md-8">
+            <CollapseComponent Head={AdmPlaceRead} Body={AdmPlaceComp} />
+          </div>
+        </div>
+
+        <div className="row form-group">
+          <div className="col-md-8">
+            <CollapseComponent Head={<div>Hei hei</div>} Body={CoordinateComponent} />
           </div>
         </div>
       </form>

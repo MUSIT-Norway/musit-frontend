@@ -35,7 +35,7 @@ const MapComponent = (props: PlaceState) => (
           key={
             props.editingCoordinate &&
             props.editingCoordinate.coordinateType &&
-            props.editingCoordinate.coordinateType === 'Lat/Long' &&
+            props.editingCoordinate.coordinateType === 'Lat / Long' &&
             props.editingCoordinate.coordinateString
               ? props.editingCoordinate.coordinateString
               : props.admPlace && props.admPlace.lat && props.admPlace.long
