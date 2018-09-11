@@ -184,7 +184,7 @@ export class PersonAttribute {
     deathDate?: string,
     verbatimDate?: string,
     externalIds?: ExternalId[],
-    URL?: string
+    url?: string
   ) {
     this.legalEntityType = legalEntityType;
     this.displayName = displayName;
@@ -192,7 +192,7 @@ export class PersonAttribute {
     this.deathDate = deathDate;
     this.verbatimDate = verbatimDate;
     this.externalIds = externalIds;
-    this.url = URL;
+    this.url = url;
   }
 }
 
@@ -216,7 +216,7 @@ export class Person implements InputPerson {
     bornDate?: string,
     deathDate?: string,
     verbatimDate?: string,
-    URL?: string,
+    url?: string,
     synonyms?: PersonName[],
     externalIds?: ExternalId[]
   ) {
@@ -231,7 +231,7 @@ export class Person implements InputPerson {
       deathDate,
       verbatimDate,
       externalIds,
-      URL
+      url
     );
     this.synonyms = synonyms;
     this.collections = collections;
@@ -279,5 +279,5 @@ export const editPerson: (
   callback
 }) => {
   const URL = Config.api.persons.editUrl(id);
-  return ajaxPut(URL, data, token, callback).map(({ response }) => response);
+  return ajaxPut(URL, data, token, callback).do(r => console.log('DO',r, callback)).map(({ response }) => response);
 };

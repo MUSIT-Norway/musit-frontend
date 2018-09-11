@@ -43,30 +43,28 @@ export default function FieldMultiSelect(props: FieldMultiSelectProps) {
               {props.title}
             </label>
           )}
-          {props.viewMode && (
-            <div style={{ padding: '8px' }}> {values && values.join(', ')} </div>
-          )}
-          {!props.viewMode && (
-            <Select
-              {...props.inputProps}
-              placeholder={placeholder}
-              clearable={false}
-              multi={!props.singleSelect}
-              closeOnSelect={props.closeOnSelect}
-              removeSelected={props.removeSelected}
-              id={name}
-              value={values}
-              options={options}
-              matchProp={props.matchProp}
-              filterOptions={props.matchProp}
-              onChange={(v: TODO) => props.onChange(v)}
-              style={props.style}
-            />
-          )}
+          <Select
+            {...props.inputProps}
+            placeholder={placeholder}
+            clearable={false}
+            multi={!props.singleSelect}
+            closeOnSelect={props.closeOnSelect}
+            removeSelected={props.removeSelected}
+            id={name}
+            value={values}
+            options={options}
+            matchProp={props.matchProp}
+            filterOptions={props.matchProp}
+            onChange={(v: TODO) => props.onChange(v)}
+            style={props.style}
+            disabled={props.viewMode}
+          />
         </div>
       </div>
     );
   }
+  // note: (ANURADHA: 10-Sep-2018) Below return not executed for person pages. It will need to complete with future
+  // developments, when not using a label above.
   return (
     <div className="row form-group">
       {props.title !== '' && (
@@ -75,10 +73,10 @@ export default function FieldMultiSelect(props: FieldMultiSelectProps) {
         </label>
       )}
       <div className="col-md-3">
-        {props.viewMode && (
+        {!props.viewMode && (
           <div style={{ padding: '8px' }}> {values && values.join(', ')} </div>
         )}
-        {!props.viewMode && (
+        {props.viewMode && (
           <Select
             {...props.inputProps}
             placeholder={placeholder}
@@ -90,6 +88,7 @@ export default function FieldMultiSelect(props: FieldMultiSelectProps) {
             value={values}
             options={options}
             onChange={(v: TODO) => props.onChange(v)}
+            disabled={props.viewMode}
           />
         )}
       </div>

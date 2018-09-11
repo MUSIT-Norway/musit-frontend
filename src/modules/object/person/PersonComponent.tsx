@@ -55,7 +55,7 @@ export interface PersonState {
   fullName: PersonName;
   legalEntityType: string;
   synState: SynState;
-  URL?: string;
+  url?: string;
   externalIds?: ExternalId[];
   editingIds?: ExternalId;
   editingIndex?: number;
@@ -74,7 +74,7 @@ export class PersonState implements PersonState {
   fullName: PersonName;
   legalEntityType: string;
   synState: SynState;
-  URL?: string;
+  url?: string;
   externalIds?: ExternalId[];
   editingIds?: ExternalId;
   editingIndex?: number;
@@ -93,7 +93,7 @@ export class PersonState implements PersonState {
     collections: Collection[],
     synState: SynState,
     uuid?: string,
-    URL?: string,
+    url?: string,
     externalIds?: ExternalId[],
     synonyms?: PersonName[],
     newPerson?: PersonName,
@@ -107,7 +107,7 @@ export class PersonState implements PersonState {
     this.fullName = fullName;
     this.legalEntityType = legalEntityType;
     this.synState = synState;
-    this.URL = URL;
+    this.url = url;
     this.externalIds = externalIds;
     this.synonyms = synonyms;
     this.newPerson = newPerson;
@@ -332,9 +332,9 @@ const ExternalIDStrings = (props: {
                       <td className="col-md-2">{e.uuid}</td>
                       {!props.readOnly && (
                         <div>
-                          <td className="col-md-2">
+                          <td className="col-md-2" >
                             <a
-                              href=""
+                              href=""                             
                               onClick={e => {
                                 e.preventDefault();
                                 props.setEditingIndex(i);
@@ -563,25 +563,22 @@ export const PersonPage = (props: PersonProps) => {
                 <div className="col-md-2">
                   <div className="form-group">
                     <label htmlFor="legalEntityType">Legal entity type</label>
-                    {!!!props.readOnly ? (
-                      <select
-                        className="form-control"
-                        id="legalEntityType"
-                        value={props.legalEntityType}
-                        onChange={v => {
-                          console.log('sssdsds', v.target.value);
-                          props.onChange('legalEntityType')(v.target.value);
-                        }}
-                      >
-                        <option value="person">Person</option>
-                        <option value="group">Group</option>
-                        <option value="organisasion">Organisation</option>
-                        <option value="institution">Institution</option>
-                        <option value="business">Business</option>
-                      </select>
-                    ) : (
-                      <div className="form-control-static">{props.legalEntityType}</div>
-                    )}
+                    <select
+                      className="form-control"
+                      id="legalEntityType"
+                      value={props.legalEntityType}
+                      disabled={props.readOnly}
+                      onChange={v => {
+                        console.log('sssdsds', v.target.value);
+                        props.onChange('legalEntityType')(v.target.value);
+                      }}
+                    >
+                      <option value="person">Person</option>
+                      <option value="group">Group</option>
+                      <option value="organisasion">Organisation</option>
+                      <option value="institution">Institution</option>
+                      <option value="business">Business</option>
+                    </select>
                   </div>
                 </div>
                 <div className="col-md-8">
@@ -690,8 +687,9 @@ export const PersonPage = (props: PersonProps) => {
                   type="url"
                   className="form-control"
                   id="url"
+                  value={props.url}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    props.onChange('URL')(e.target.value)
+                    props.onChange('url')(e.target.value)
                   }
                   disabled={props.readOnly}
                 />
@@ -806,7 +804,7 @@ export const toFrontend: (p: OutputPerson) => PersonState = (p: OutputPerson) =>
 export class Person extends React.Component<PersonComponentProps, PersonState> {
   constructor(props: PersonComponentProps) {
     super(props);
-    //console.log('STORE', props.store);
+    console.log('STORE', props.store);
     this.state = props.store.localState
       ? props.store.localState
       : {
@@ -817,13 +815,12 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
         };
   }
   componentWillReceiveProps(props: PersonComponentProps) {
-    //console.log('Recieve props: ====>', props);
-    if (props.store.localState && !this.state.uuid) {
-      this.setState(() => ({ ...props.store.localState }));
+    console.log('Recieve props: ====>', props);
+    if (props.store.localState) {   // (&& !this.state.uuid ) Removed to work in after editing the person and set the state when uuid available       this.setState(() => ({ ...props.store.localState }));
     }
   }
   render() {
-    console.log('State: ', this.state.newPerson, this.state.synonyms);
+    console.log('ANURADHA State: ', this.state.externalIds);
     return (
       <div className="container" style={{ paddingTop: '25px' }}>
         <PersonPage
@@ -832,17 +829,13 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
           standAlone
           onClickSaveEdit={(appSession: AppSession) => {
             if (this.props.readOnly) {
-              console.log('Edit clicked uuid: : ', this.state.uuid);
-
               const url = config.magasin.urls.client.person.editPerson(
                 appSession,
                 this.state.uuid ? this.state.uuid : ''
               );
-              console.log('url: ', url);
               this.props.history && this.props.history.replace(url);
             } else {
               if (this.state.uuid) {
-                console.log('Save clicked, save edited work');
                 this.props.editPerson &&
                   this.props.editPerson({
                     id: this.state.uuid,
@@ -851,18 +844,19 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
                     collectionId: appSession.collectionId,
                     callback: {
                       onComplete: (r: AjaxResponse) => {
-                        console.log('OnComplete Edit Person', this.props, r.response);
+                       
                         const url = config.magasin.urls.client.person.viewPerson(
                           appSession,
-                          r.response.personUuid
-                        );
+                          this.state.uuid ? this.state.uuid : '' //  r.response.personUuid  //
+                        );                        
                         this.props.history && this.props.history.replace(url);
-                      }
+                      }/* ,
+                      onFailure: (r: AjaxResponse) => {
+                        alert(r.responseText);
+                      }  */                   
                     }
                   });
               } else {
-                console.log('Save clicked, create new person');
-
                 this.props.addPerson &&
                   this.props.addPerson({
                     data: this.state,
@@ -870,15 +864,18 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
                     collectionId: appSession.collectionId,
                     callback: {
                       onComplete: (r: AjaxResponse) => {
-                        console.log('OnComplete', this.props, r.response);
                         const url = config.magasin.urls.client.person.viewPerson(
                           appSession,
                           r.response.personUuid
                         );
                         this.props.history && this.props.history.replace(url);
-                      }
+                      }/* ,
+                      onFailure: (error: { status: number }) => {
+                        alert(error.status.toString);
+                      }  */
                     }
                   });
+
               }
             }
           }}
@@ -899,6 +896,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
           collections={this.state.collections}
           bornDate={this.state.bornDate}
           deathDate={this.state.deathDate}
+          url={this.state.url? this.state.url:''}
           verbatimDate={this.state.verbatimDate}
           editingIndex={this.state.editingIndex}
           editingIds={this.state.editingIds}

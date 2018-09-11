@@ -44,7 +44,7 @@ export const toBackend: ((p: PersonState) => InputPerson) = (p: PersonState) => 
     p.bornDate,
     p.deathDate,
     p.verbatimDate,
-    p.URL,
+    p.url,
     p.synonyms
       ? p.synonyms.map((p: PersonName) => ({
           firstName: p.firstName,
@@ -54,9 +54,10 @@ export const toBackend: ((p: PersonState) => InputPerson) = (p: PersonState) => 
           isDeleted: false
         }))
       : [],
-    p.externalIds ? p.externalIds : [] //Anuradha: 21-Aug-18, Once backend developed,
-    //pass these parameters ( p.externalIds ? p.externalIds : [] )
+    p.externalIds ? p.externalIds : [] 
   );
+
+  console.log('Anuradha toBackend : ' , c);
   return c;
 
   //return '{"firstName": "Karstennyyyn","lastName": "HårsakerNesten","title": "herr","name": "HårsakerNesten, herr Karstennn","collections": [{ "museum_id": 5, "collection_id": 10 }],"personAttribute": {"legalEntityType": "person",    "displayName": "Karstenn HårsakerNesten",    "bornDate": "10.09.1967",    "URL": "http://muligensEnUrl"}, "synonyms": [      {        "firstName": "Kristian",        "lastName": "Hårsårssaker",        "name": "K. Hårårssakerrr",        "title": "Herr"      },{        "firstName": "KK",      "lastName": "HårsårsNesten","name": "Hårårssaker, K"      },     {"firstName": "Kris",        "lastName": "HårsNest",        "name": "HårsNest,Kris"      }    ]}';
@@ -90,6 +91,7 @@ const editPersonData = (ajaxPut: AjaxPut<Star>) => (props: EditPersonProps) =>
       token: props.token,
       callback: props.callback
     })
+    
   );
 
 export const getPerson$: Subject<
