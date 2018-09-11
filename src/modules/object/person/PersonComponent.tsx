@@ -195,9 +195,9 @@ const ExternalIDStrings = (props: {
                       <td className="col-md-2">{e.uuid}</td>
                       {!props.readOnly && (
                         <div>
-                          <td className="col-md-2">
+                          <td className="col-md-2" >
                             <a
-                              href=""
+                              href=""                             
                               onClick={e => {
                                 e.preventDefault();
                                 props.setEditingIndex(i);
@@ -811,12 +811,11 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
   }
   componentWillReceiveProps(props: PersonComponentProps) {
     console.log('Recieve props: ====>', props);
-    if (props.store.localState && !this.state.uuid) {
-      this.setState(() => ({ ...props.store.localState }));
+    if (props.store.localState) {   // (&& !this.state.uuid ) Removed to work in after editing the person and set the state when uuid available       this.setState(() => ({ ...props.store.localState }));
     }
   }
   render() {
-    console.log('State: ', this.state.newPerson, this.state.synonymes);
+    console.log('ANURADHA State: ', this.state.externalIds);
     return (
       <div className="container" style={{ paddingTop: '25px' }}>
         <PersonPage
@@ -825,17 +824,13 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
           standAlone
           onClickSaveEdit={(appSession: AppSession) => {
             if (this.props.readOnly) {
-              console.log('Edit clicked uuid: : ', this.state.uuid);
-
               const url = config.magasin.urls.client.person.editPerson(
                 appSession,
                 this.state.uuid ? this.state.uuid : ''
               );
-              console.log('url: ', url);
               this.props.history && this.props.history.replace(url);
             } else {
               if (this.state.uuid) {
-                console.log('Save clicked, save edited work');
                 this.props.editPerson &&
                   this.props.editPerson({
                     id: this.state.uuid,
@@ -844,18 +839,19 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
                     collectionId: appSession.collectionId,
                     callback: {
                       onComplete: (r: AjaxResponse) => {
-                        console.log('OnComplete Edit Person', this.props, r.response);
+                       
                         const url = config.magasin.urls.client.person.viewPerson(
                           appSession,
-                          r.response.personUuid
-                        );
+                          this.state.uuid ? this.state.uuid : '' //  r.response.personUuid  //
+                        );                        
                         this.props.history && this.props.history.replace(url);
-                      }
+                      }/* ,
+                      onFailure: (r: AjaxResponse) => {
+                        alert(r.responseText);
+                      }  */                   
                     }
                   });
               } else {
-                console.log('Save clicked, create new person');
-
                 this.props.addPerson &&
                   this.props.addPerson({
                     data: this.state,
@@ -863,15 +859,18 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
                     collectionId: appSession.collectionId,
                     callback: {
                       onComplete: (r: AjaxResponse) => {
-                        console.log('OnComplete', this.props, r.response);
                         const url = config.magasin.urls.client.person.viewPerson(
                           appSession,
                           r.response.personUuid
                         );
                         this.props.history && this.props.history.replace(url);
-                      }
+                      }/* ,
+                      onFailure: (error: { status: number }) => {
+                        alert(error.status.toString);
+                      }  */
                     }
                   });
+
               }
             }
           }}
@@ -892,7 +891,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
           collections={this.state.collections}
           bornDate={this.state.bornDate}
           deathDate={this.state.deathDate}
-          url={this.state.url}
+          url={this.state.url? this.state.url:''}
           verbatimDate={this.state.verbatimDate}
           editingIndex={this.state.editingIndex}
           editingIds={this.state.editingIds}

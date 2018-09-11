@@ -31,7 +31,8 @@ const addProps = (combinedStore: any, upstream: { history: History }) => ({
       collectionId: props.collectionId,
       ajaxPost,
       callback: props.callback
-    }),
+    })
+    ,
   getPerson: (ajaxGet: AjaxGet<any>) => (props: GetPersonProps) =>
     getPerson$.next({
       id: props.id,

@@ -279,5 +279,5 @@ export const editPerson: (
   callback
 }) => {
   const URL = Config.api.persons.editUrl(id);
-  return ajaxPut(URL, data, token, callback).map(({ response }) => response);
+  return ajaxPut(URL, data, token, callback).do(r => console.log('DO',r, callback)).map(({ response }) => response);
 };
