@@ -789,7 +789,6 @@ export const toFrontend: (p: OutputPerson) => PersonState = (p: OutputPerson) =>
       innP.personAttribute && innP.personAttribute.verbatimDate,
       undefined
     );
-
     console.log('Anuradha toFrontend ; ', r);
     return r;
   }
@@ -816,7 +815,8 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
   }
   componentWillReceiveProps(props: PersonComponentProps) {
     console.log('Recieve props: ====>', props);
-    if (props.store.localState) {   // (&& !this.state.uuid ) Removed to work in after editing the person and set the state when uuid available       this.setState(() => ({ ...props.store.localState }));
+    if (props.store.localState) {
+      this.setState(() => ({ ...props.store.localState }));
     }
   }
   render() {
