@@ -169,94 +169,112 @@ const Synonyms = (props: {
       {props.synonyms &&
         props.synonyms.length > 0 && (
           <div className="row">
-            <table className="table table-condensed table-hover">
-              <thead className="row">
-                <tr className="row">
-                  <th className="col-md-2">
-                    <b>Tittel</b>
-                  </th>
-                  <th className="col-md-2">
-                    <b> Fornavn</b>
-                  </th>
-                  <th className="col-md-2">
-                    <b> Etternavn</b>
-                  </th>
-                  <th className="col-md-2">
-                    <b> Navn</b>
-                  </th>
-                  <th className="col-md-2">
-                    <b> </b>
-                  </th>
-                  <th className="col-md-2">
-                    <b> </b>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {console.log('SGG synonyms strings ', props.synonyms)}
-                {props.synonyms &&
-                  props.synonyms.length > 0 &&
-                  props.synonyms.map((e, i) => (
-                    <tr key={`tr-row${i}`} className="row">
-                      <td className="col-md-2"> {e.title}</td>
-                      <td className="col-md-2">{e.firstName}</td>
-                      <td className="col-md-2">{e.lastName}</td>
-                      <td className="col-md-2">{e.nameString}</td>
-                      {!props.readOnly && (
-                        <div>
-                          <td className="col-md-2">
-                            <a
-                              href=""
-                              onClick={e => {
-                                e.preventDefault();
-                                props.setEditingIndexSynonyms(i);
-                              }}
-                            >
-                              <FontAwesome name="edit" />
-                            </a>
-                          </td>
-                          <td className="col-md-2">
-                            <a href="" onClick={props.onDelete(i)}>
-                              Delete
-                            </a>
-                          </td>
-                        </div>
-                      )}
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
+            <div className="col-md-12">
+              <table className="table table-condensed table-hover">
+                <thead className="row">
+                  <tr className="row">
+                    <th className="col-md-2">
+                      <b>Tittel</b>
+                    </th>
+                    <th className="col-md-2">
+                      <b> Fornavn</b>
+                    </th>
+                    <th className="col-md-2">
+                      <b> Etternavn</b>
+                    </th>
+                    <th className="col-md-4">
+                      <b> Navn</b>
+                    </th>
+                    <th className="col-md-1">
+                      <b> </b>
+                    </th>
+                    <th className="col-md-1">
+                      <b> </b>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {console.log('SGG synonyms strings ', props.synonyms)}
+                  {props.synonyms &&
+                    props.synonyms.length > 0 &&
+                    props.synonyms.map((e, i) => (
+                      <tr key={`tr-row${i}`} className="row">
+                        <td className="col-md-2"> {e.title}</td>
+                        <td className="col-md-2">{e.firstName}</td>
+                        <td className="col-md-2">{e.lastName}</td>
+                        <td className="col-md-4">{e.nameString}</td>
+                        {!props.readOnly && (
+                          <div>
+                            <td className="col-md-1">
+                              <a
+                                href=""
+                                onClick={e => {
+                                  e.preventDefault();
+                                  props.setEditingIndexSynonyms(i);
+                                }}
+                              >
+                                <FontAwesome name="edit" />
+                              </a>
+                            </td>
+                            <td className="col-md-1">
+                              <a href="" onClick={props.onDelete(i)}>
+                                Delete
+                              </a>
+                            </td>
+                          </div>
+                        )}
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
       {props.editingIndexSynonyms !== undefined && (
-        <div className="row">
-          <div className="col-sm-2 form-group">
-            <input
-              className="form-control"
-              value={props.newPerson && props.newPerson.title}
-              onChange={e => props.onChange('title')(e.target.value)}
-            />
+        <div>
+          <div className="row">
+            <div className="col-sm-2 form-group">
+              <b>Tittel</b>
+            </div>
+            <div className="col-sm-2 form-group">
+              <b>Fornavn</b>
+            </div>
+            <div className="col-sm-2 form-group">
+              <b>Etternavn</b>
+            </div>
+            <div className="col-sm-4 form-group">
+              <b>Navn</b>
+            </div>
           </div>
-          <div className="col-sm-2 form-group">
-            <input
-              className="form-control"
-              value={props.newPerson && props.newPerson.firstName}
-              onChange={e => props.onChange('firstName')(e.target.value)}
-            />
-          </div>
-          <div className="col-sm-2 form-group">
-            <input
-              className="form-control"
-              value={props.newPerson && props.newPerson.lastName}
-              onChange={e => props.onChange('lastName')(e.target.value)}
-            />
-          </div>
-          <div className="col-sm-2 form-group">
-            <input
-              className="form-control"
-              value={props.newPerson && props.newPerson.nameString}
-              onChange={e => props.onChange('nameString')(e.target.value)}
-            />
+          <div className="row">
+            <div className="col-sm-2 form-group">
+              <input
+                className="form-control"
+                value={props.newPerson && props.newPerson.title}
+                onChange={e => props.onChange('title')(e.target.value)}
+              />
+            </div>
+            <div className="col-sm-2 form-group">
+              <input
+                className="form-control"
+                value={props.newPerson && props.newPerson.firstName}
+                onChange={e => props.onChange('firstName')(e.target.value)}
+              />
+            </div>
+            <div className="col-sm-2 form-group">
+              <input
+                className="form-control"
+                value={props.newPerson && props.newPerson.lastName}
+                onChange={e => props.onChange('lastName')(e.target.value)}
+              />
+            </div>
+            <div className="col-sm-4 form-group">
+              <input
+                className="form-control"
+                value={props.newPerson && props.newPerson.nameString}
+                onChange={e => props.onChange('nameString')(e.target.value)}
+              />
+            </div>
           </div>
         </div>
       )}
