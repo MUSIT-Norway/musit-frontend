@@ -94,7 +94,7 @@
     "react-addons-test-utils": "^15.5.1",
     "react-scripts": "^1.1.5",
     "react-test-renderer": "^15.5.4",
-    "sinon": "^3.2.1",
+    "sinon": "^6.2.0",
     "typescript": "^2.8.3"
   }
 }
