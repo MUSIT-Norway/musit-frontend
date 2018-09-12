@@ -29,13 +29,13 @@ const editProps = (combinedStore: any, upstream: { history: History }) => ({
       ajaxGet: simpleGet
     }),
   editPerson: (ajaxPut: AjaxPut<any>) => (props: EditPersonProps) => {
-    console.log('editPerson');
     editPerson$.next({
       id: props.id,
       data: props.data,
       token: props.token,
       collectionId: props.collectionId,
-      ajaxPut
+      ajaxPut,
+      callback: props.callback
     });
   },
   readOnly: false
