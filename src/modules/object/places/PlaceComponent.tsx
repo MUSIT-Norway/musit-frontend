@@ -215,7 +215,7 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
 
   render() {
     const AdmPlaceRead = () => (
-      <div className="container">
+      <div>
         <h3>Admplace/Station</h3>
         <div className="row">
           <div className="col-md-4">
@@ -288,214 +288,221 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
 
     const CoordinateComponent = (
       <div>
-        <CoordinateComp
-          {...this.state.coordinateHistory[this.state.coordinateHistoryIndeks].coordinate}
-          editCoordinateMode={this.state.editCoorditeMode || false}
-          coordinateHistoryIndeks={this.state.coordinateHistoryIndeks}
-          coordinateHistory={this.state.coordinateHistory}
-          editingCoordinate={this.state.editingCoordinate}
-          coordinateType={
-            this.state.coordinateHistory[this.state.coordinateHistoryIndeks].coordinate
-              .coordinateType || 'MGRS'
-          }
-          coordinateInvalid={this.state.coordinateInvalid || false}
-          coordinateCollapsed={this.state.coordinateCollapsed || false}
-          onChangeCoordinateNumber={(fieldName: string) => (value: number) => {
-            this.setState((ps: PlaceState) => {
-              return {
-                ...ps,
-                editingCoordinate: {
-                  ...ps.editingCoordinate,
-                  [fieldName]: value
-                }
-              };
-            });
-          }}
-          onSetEditingIndex={(i: number) => {
-            this.setState((ps: PlaceState) => {
-              const newEditingCoordinate = ps.coordinateHistory[i];
-              return {
-                ...ps,
-                coordinateHistoryIndeks: i,
-                editingCoordinate: newEditingCoordinate.coordinate,
-                editCoorditeMode: true
-              };
-            });
-          }}
-          onChangeCoordinateText={(fieldName: string) => (value: string) => {
-            this.setState((ps: PlaceState) => {
-              let coordinateInvalid: boolean = !musitCoodinateValidate(fieldName)(value);
-              const utmNorthSouth =
-                (value === 'UTM' && fieldName === 'coordinateType') ||
-                (fieldName !== 'coordinateType' &&
-                  ps.editingCoordinate.coordinateType === 'UTM')
-                  ? ps.editingCoordinate.utmNorthSouth
-                  : undefined;
-
-              const mgrsBand =
-                (value === 'MGRS' && fieldName === 'coordinateType') ||
-                (fieldName !== 'coordinateType' &&
-                  ps.editingCoordinate.coordinateType === 'MGRS')
-                  ? ps.editingCoordinate.mgrsBand
-                  : undefined;
-
-              const utmZone =
-                ((value === 'MGRS' || value === 'UTM') &&
-                  fieldName === 'coordinateType') ||
-                ((fieldName !== 'coordinateType' &&
-                  ps.editingCoordinate.coordinateType === 'MGRS') ||
-                  ps.editingCoordinate.coordinateType === 'UTM')
-                  ? ps.editingCoordinate.utmZone
-                  : undefined;
-
-              const coordinateGeomertry =
-                (value === 'Lat / Long' && fieldName === 'coordinateType') ||
-                (fieldName !== 'coordinateType' &&
-                  ps.editingCoordinate.coordinateType === 'Lat / Long')
-                  ? ps.editingCoordinate.coordinateGeomertry
-                  : undefined;
-
-              return {
-                ...ps,
-                editingCoordinate: {
-                  ...ps.editingCoordinate,
-                  utmNorthSouth,
-                  mgrsBand,
-                  utmZone,
-                  coordinateGeomertry,
-                  [fieldName]: value
-                },
-                coordinateInvalid: coordinateInvalid ? coordinateInvalid : false
-              };
-            });
-          }}
-          onChangeEditMode={(editMode: boolean) => {
-            this.setState((ps: PlaceState) => {
-              const s = {
-                ...ps,
-                editCoorditeMode: editMode
-              };
-
-              return s;
-            });
-          }}
-          onChangeCheckBoxBoolean={(fieldName: string) => (value: string) => {
-            this.setState((ps: PlaceState) => {
-              const s = {
-                ...ps,
-                editingCoordinate: {
-                  ...ps.editingCoordinate,
-                  [fieldName]: value
-                }
-              };
-
-              return s;
-            });
-          }}
-          getCurrentCoordinate={(ind: number) => {
-            const ret = this.state.editingCoordinate;
-            return ret;
-          }}
-          onClickSaveRevision={() => {
-            this.setState((ps: PlaceState) => {
-              const revType =
-                ps.coordinateHistoryIndeks === 0
-                  ? 'newCoordinate'
-                  : ps.coordinateHistory[ps.coordinateHistoryIndeks]
-                      .coordinateRevisionType;
-              if (
-                ps.editCoorditeMode ||
-                (ps.coordinateHistoryIndeks === 0 &&
-                  ps.coordinateHistory[ps.coordinateHistoryIndeks]
-                    .coordinateRevisionType === undefined)
-              ) {
-                return {
-                  ...ps,
-                  editCoorditeMode: false,
-                  coordinateHistoryIndeks: ps.coordinateHistory.length - 1,
-                  coordinateHistory: [
-                    ...ps.coordinateHistory.slice(0, ps.coordinateHistoryIndeks),
-                    {
-                      ...ps.coordinateHistory[ps.coordinateHistoryIndeks],
-                      coordinateRevisionType: revType,
-                      coordinate: ps.editingCoordinate
-                    },
-                    ...ps.coordinateHistory.slice(ps.coordinateHistoryIndeks + 1)
-                  ]
-                };
+        <div className="row">
+          <div className="col-md-12">
+            <CoordinateComp
+              {...this.state.coordinateHistory[this.state.coordinateHistoryIndeks]
+                .coordinate}
+              editCoordinateMode={this.state.editCoorditeMode || false}
+              coordinateHistoryIndeks={this.state.coordinateHistoryIndeks}
+              coordinateHistory={this.state.coordinateHistory}
+              editingCoordinate={this.state.editingCoordinate}
+              coordinateType={
+                this.state.coordinateHistory[this.state.coordinateHistoryIndeks]
+                  .coordinate.coordinateType || 'MGRS'
               }
+              coordinateInvalid={this.state.coordinateInvalid || false}
+              coordinateCollapsed={this.state.coordinateCollapsed || false}
+              onChangeCoordinateNumber={(fieldName: string) => (value: number) => {
+                this.setState((ps: PlaceState) => {
+                  return {
+                    ...ps,
+                    editingCoordinate: {
+                      ...ps.editingCoordinate,
+                      [fieldName]: value
+                    }
+                  };
+                });
+              }}
+              onSetEditingIndex={(i: number) => {
+                this.setState((ps: PlaceState) => {
+                  const newEditingCoordinate = ps.coordinateHistory[i];
+                  return {
+                    ...ps,
+                    coordinateHistoryIndeks: i,
+                    editingCoordinate: newEditingCoordinate.coordinate,
+                    editCoorditeMode: true
+                  };
+                });
+              }}
+              onChangeCoordinateText={(fieldName: string) => (value: string) => {
+                this.setState((ps: PlaceState) => {
+                  let coordinateInvalid: boolean = !musitCoodinateValidate(fieldName)(
+                    value
+                  );
+                  const utmNorthSouth =
+                    (value === 'UTM' && fieldName === 'coordinateType') ||
+                    (fieldName !== 'coordinateType' &&
+                      ps.editingCoordinate.coordinateType === 'UTM')
+                      ? ps.editingCoordinate.utmNorthSouth
+                      : undefined;
 
-              return {
-                ...ps,
-                coordinateHistoryIndeks: ps.coordinateHistoryIndeks + 1,
-                coordinateHistory: [
-                  ...ps.coordinateHistory,
-                  {
-                    coordinate: ps.editingCoordinate,
-                    coordinateRevisionType: 'coordinateRevision'
+                  const mgrsBand =
+                    (value === 'MGRS' && fieldName === 'coordinateType') ||
+                    (fieldName !== 'coordinateType' &&
+                      ps.editingCoordinate.coordinateType === 'MGRS')
+                      ? ps.editingCoordinate.mgrsBand
+                      : undefined;
+
+                  const utmZone =
+                    ((value === 'MGRS' || value === 'UTM') &&
+                      fieldName === 'coordinateType') ||
+                    ((fieldName !== 'coordinateType' &&
+                      ps.editingCoordinate.coordinateType === 'MGRS') ||
+                      ps.editingCoordinate.coordinateType === 'UTM')
+                      ? ps.editingCoordinate.utmZone
+                      : undefined;
+
+                  const coordinateGeomertry =
+                    (value === 'Lat / Long' && fieldName === 'coordinateType') ||
+                    (fieldName !== 'coordinateType' &&
+                      ps.editingCoordinate.coordinateType === 'Lat / Long')
+                      ? ps.editingCoordinate.coordinateGeomertry
+                      : undefined;
+
+                  return {
+                    ...ps,
+                    editingCoordinate: {
+                      ...ps.editingCoordinate,
+                      utmNorthSouth,
+                      mgrsBand,
+                      utmZone,
+                      coordinateGeomertry,
+                      [fieldName]: value
+                    },
+                    coordinateInvalid: coordinateInvalid ? coordinateInvalid : false
+                  };
+                });
+              }}
+              onChangeEditMode={(editMode: boolean) => {
+                this.setState((ps: PlaceState) => {
+                  const s = {
+                    ...ps,
+                    editCoorditeMode: editMode
+                  };
+
+                  return s;
+                });
+              }}
+              onChangeCheckBoxBoolean={(fieldName: string) => (value: string) => {
+                this.setState((ps: PlaceState) => {
+                  const s = {
+                    ...ps,
+                    editingCoordinate: {
+                      ...ps.editingCoordinate,
+                      [fieldName]: value
+                    }
+                  };
+
+                  return s;
+                });
+              }}
+              getCurrentCoordinate={(ind: number) => {
+                const ret = this.state.editingCoordinate;
+                return ret;
+              }}
+              onClickSaveRevision={() => {
+                this.setState((ps: PlaceState) => {
+                  const revType =
+                    ps.coordinateHistoryIndeks === 0
+                      ? 'newCoordinate'
+                      : ps.coordinateHistory[ps.coordinateHistoryIndeks]
+                          .coordinateRevisionType;
+                  if (
+                    ps.editCoorditeMode ||
+                    (ps.coordinateHistoryIndeks === 0 &&
+                      ps.coordinateHistory[ps.coordinateHistoryIndeks]
+                        .coordinateRevisionType === undefined)
+                  ) {
+                    return {
+                      ...ps,
+                      editCoorditeMode: false,
+                      coordinateHistoryIndeks: ps.coordinateHistory.length - 1,
+                      coordinateHistory: [
+                        ...ps.coordinateHistory.slice(0, ps.coordinateHistoryIndeks),
+                        {
+                          ...ps.coordinateHistory[ps.coordinateHistoryIndeks],
+                          coordinateRevisionType: revType,
+                          coordinate: ps.editingCoordinate
+                        },
+                        ...ps.coordinateHistory.slice(ps.coordinateHistoryIndeks + 1)
+                      ]
+                    };
                   }
-                ]
-              };
-            });
-          }}
-          onClickSaveEdit={() => {
-            this.setState((ps: PlaceState) => {
-              return {
-                ...ps,
-                coordinateHistoryIndeks: ps.coordinateHistory[ps.coordinateHistoryIndeks]
-                  .coordinateRevisionType
-                  ? ps.coordinateHistoryIndeks + 1
-                  : ps.coordinateHistoryIndeks,
 
-                coordinateHistory: ps.coordinateHistory[ps.coordinateHistoryIndeks]
-                  .coordinateRevisionType
-                  ? [
+                  return {
+                    ...ps,
+                    coordinateHistoryIndeks: ps.coordinateHistoryIndeks + 1,
+                    coordinateHistory: [
                       ...ps.coordinateHistory,
                       {
                         coordinate: ps.editingCoordinate,
-                        coordinateRevisionType: 'coordinateEdit',
-                        registeredDate: moment().format('DD.MM.YYYY HH:mm'),
-                        registeredBy: 'Stein Olsen'
+                        coordinateRevisionType: 'coordinateRevision'
                       }
                     ]
-                  : [
-                      ...ps.coordinateHistory,
+                  };
+                });
+              }}
+              onClickSaveEdit={() => {
+                this.setState((ps: PlaceState) => {
+                  return {
+                    ...ps,
+                    coordinateHistoryIndeks: ps.coordinateHistory[
+                      ps.coordinateHistoryIndeks
+                    ].coordinateRevisionType
+                      ? ps.coordinateHistoryIndeks + 1
+                      : ps.coordinateHistoryIndeks,
+
+                    coordinateHistory: ps.coordinateHistory[ps.coordinateHistoryIndeks]
+                      .coordinateRevisionType
+                      ? [
+                          ...ps.coordinateHistory,
+                          {
+                            coordinate: ps.editingCoordinate,
+                            coordinateRevisionType: 'coordinateEdit',
+                            registeredDate: moment().format('DD.MM.YYYY HH:mm'),
+                            registeredBy: 'Stein Olsen'
+                          }
+                        ]
+                      : [
+                          ...ps.coordinateHistory,
+                          {
+                            coordinate: ps.editingCoordinate,
+                            coordinateRevisionType: 'newCoordinate'
+                          }
+                        ]
+                  };
+                });
+              }}
+              getCurrentHistoryItem={(ind: number) => {
+                const ret = this.state.coordinateHistory[ind];
+                return ret;
+              }}
+              onToggleCollapse={() => {
+                this.setState((ps: PlaceState) => ({
+                  ...ps,
+                  coordinateCollapsed: ps.coordinateCollapsed ? false : true
+                }));
+              }}
+              onChangeHistoryItem={(fieldName: string) => (value: string) => {
+                console.log('OnChangeHistItem', fieldName, value);
+                this.setState((ps: PlaceState) => {
+                  return {
+                    ...ps,
+                    coordinateHistory: [
+                      ...ps.coordinateHistory.slice(0, ps.coordinateHistoryIndeks),
                       {
-                        coordinate: ps.editingCoordinate,
-                        coordinateRevisionType: 'newCoordinate'
-                      }
+                        ...ps.coordinateHistory[ps.coordinateHistoryIndeks],
+                        [fieldName]: value
+                      },
+                      ...ps.coordinateHistory.slice(ps.coordinateHistoryIndeks + 1)
                     ]
-              };
-            });
-          }}
-          getCurrentHistoryItem={(ind: number) => {
-            const ret = this.state.coordinateHistory[ind];
-            return ret;
-          }}
-          onToggleCollapse={() => {
-            this.setState((ps: PlaceState) => ({
-              ...ps,
-              coordinateCollapsed: ps.coordinateCollapsed ? false : true
-            }));
-          }}
-          onChangeHistoryItem={(fieldName: string) => (value: string) => {
-            console.log('OnChangeHistItem', fieldName, value);
-            this.setState((ps: PlaceState) => {
-              return {
-                ...ps,
-                coordinateHistory: [
-                  ...ps.coordinateHistory.slice(0, ps.coordinateHistoryIndeks),
-                  {
-                    ...ps.coordinateHistory[ps.coordinateHistoryIndeks],
-                    [fieldName]: value
-                  },
-                  ...ps.coordinateHistory.slice(ps.coordinateHistoryIndeks + 1)
-                ]
-              };
-            });
-          }}
-        />
-        <MapComponent {...this.state} />
+                  };
+                });
+              }}
+            />
+          </div>
+        </div>
       </div>
     );
     const CoordinateRead = (c: Coordinate) => {
@@ -534,10 +541,10 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
         ''
       );
       return (
-        <div className="container">
+        <div>
           <h3>Coordinates</h3>
           <div className="row">
-            <div className="col-md-8">
+            <div className="col-md-4">
               <p>
                 <b>Coordinate:</b>
                 {coordinateString}
@@ -553,11 +560,11 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
             </div>
           </div>
           <div className="row">
-            <div className="col-md-3">
+            <div className="col-md-2">
               <b>Source: </b>
               {' ' + (c.coordinateSource || '')}
             </div>
-            <div className="col-md-5">
+            <div className="col-md-4">
               <b>Note: </b>
               {' ' + (c.coordinateNote || '')}
             </div>
@@ -565,7 +572,7 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
               <b>Precision: </b>
               {' ' + (c.coordinatePrecision || '')}
             </div>
-            <div className="col-md-2">
+            <div className="col-md-1">
               <b>Accuracy: </b>
               {' ' + (c.gpsAccuracy || '')}
             </div>
@@ -574,22 +581,27 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
       );
     };
     return (
-      <form style={{ padding: '20px' }}>
-        <div className="row form-group">
-          <div className="col-md-8">
-            <CollapseComponent Head={AdmPlaceRead()} Body={AdmPlaceComp} />
+      <div className="container-fluid">
+        <form style={{ padding: '20px' }}>
+          <div className="row form-group">
+            <div className="col-md-8">
+              <div className="row">
+                {' '}
+                <CollapseComponent Head={AdmPlaceRead()} Body={AdmPlaceComp} />
+              </div>
+              <div className="row">
+                <CollapseComponent
+                  Head={CoordinateRead(this.state.editingCoordinate)}
+                  Body={CoordinateComponent}
+                />
+              </div>
+            </div>
+            <div className="col-md-4">
+              <MapComponent {...this.state} />
+            </div>
           </div>
-        </div>
-
-        <div className="row form-group">
-          <div className="col-md-8">
-            <CollapseComponent
-              Head={CoordinateRead(this.state.editingCoordinate)}
-              Body={CoordinateComponent}
-            />
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     );
   }
 }

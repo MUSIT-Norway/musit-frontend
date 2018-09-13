@@ -7,7 +7,7 @@ const getLatLong = (props: PlaceState): { lat: number; lng: number } => {
   const latLong =
     props.editingCoordinate &&
     props.editingCoordinate.coordinateType &&
-    props.editingCoordinate.coordinateType === 'Lat/Long' &&
+    props.editingCoordinate.coordinateType === 'Lat / Long' &&
     props.editingCoordinate.coordinateString
       ? {
           lat: Number(props.editingCoordinate.coordinateString.split(' ')[0]),
