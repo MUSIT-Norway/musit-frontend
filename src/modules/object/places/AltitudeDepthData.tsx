@@ -105,6 +105,9 @@ const AltitudeDepthData = (props: CoordinateProps) => (
         <label htmlFor="note">Note</label>
         <textarea
           className="form-control"
+          onChange={e => {
+            props.onChangeCoordinateText('coordinateNote')(e.target.value);
+          }}
           value={props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateNote}
           id="note"
         />

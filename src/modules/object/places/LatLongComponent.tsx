@@ -65,24 +65,6 @@ const LatLongComponent = (props: CoordinateProps) => {
               </div>
             </div>
           )}
-        <div className="col-md-2">
-          <label htmlFor="zone">Zone </label>
-          <input
-            type="text"
-            className="form-control"
-            id="zone"
-            value={props.getCurrentCoordinate(props.coordinateHistoryIndeks).utmZone}
-          />
-        </div>
-        <div className="col-md-2">
-          <label htmlFor="mgrsBand">Band </label>
-          <input
-            type="text"
-            className="form-control"
-            id="mgrsBand"
-            value={props.getCurrentCoordinate(props.coordinateHistoryIndeks).mgrsBand}
-          />
-        </div>
       </div>
       <div className="row form-group">
         <div className="col-md-7">

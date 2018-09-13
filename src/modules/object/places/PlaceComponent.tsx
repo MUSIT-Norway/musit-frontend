@@ -118,7 +118,6 @@ export const admPlaces: Array<AdmPlace> = [
     admPlaceId: 1,
     name: 'Oslo',
     type: 'Kommune',
-    overordnet: 'Oslo fylke',
     kommune: 'Oslo',
     fylke: 'Oslo fylke',
     land: 'Norge',
@@ -173,12 +172,23 @@ export const admPlaces: Array<AdmPlace> = [
     lat: 59.734017,
     long: 10.1489475,
     zoom: 12
+  },
+  {
+    admPlaceId: 6,
+    name: 'Buskerud',
+    type: 'Fylke',
+    overordnet: 'Norge',
+    fylke: 'Buskerud',
+    land: 'Norge',
+    lat: 60,
+    long: 9,
+    zoom: 12
   }
 ];
 export const coordinateTypes = ['MGRS', 'Lat / Long', 'UTM'];
 export const datumValues = ['WGS84', 'ED50', 'EUREF-89'];
 export const geometryTypes = ['Point', 'Reactangle', 'Polygone', 'Line'];
-export const coordinateSources = ['Original label', 'GPS', 'Map', 'Other'];
+export const coordinateSources = ['Original label', 'GPS', 'Map', 'Other (see note)'];
 export const altDepthUnits = ['Meters', 'Feet'];
 
 export default class PlaceComponent extends React.Component<PlaceProps, PlaceState> {
@@ -190,12 +200,13 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
         coordinateType: 'MGRS',
         altitudeUnit: 'Meters',
         depthUnit: 'Meters',
+        datum: 'WGS84',
         caAltitude: false,
         caDepth: false,
         isAddedLater: false,
         caCoordinate: false
       },
-      coordinateHistory: [{ coordinate: { coordinateType: 'MGRS' } }],
+      coordinateHistory: [{ coordinate: { coordinateType: '' } }],
       coordinateCollapsed: true,
       coordinateHistoryIndeks: 0,
       coordinateInvalid: false
@@ -203,27 +214,33 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
   }
 
   render() {
-    const AdmPlaceRead = (
-      <div className="grid">
+    const AdmPlaceRead = () => (
+      <div className="container">
         <h3>Admplace/Station</h3>
         <div className="row">
           <div className="col-md-4">
-            <b>Admplace:</b>{' '}
-            {this.state.admPlace
-              ? (this.state.admPlace.kommune
-                  ? this.state.admPlace.kommune + ' : '
-                  : ';') +
-                (this.state.admPlace.fylke ? this.state.admPlace.fylke + ' : ' : ';') +
-                this.state.admPlace.land
-              : ''}
+            <p>
+              <b>Admplace:</b>{' '}
+              {this.state.admPlace
+                ? (this.state.admPlace.kommune
+                    ? this.state.admPlace.kommune + ' : '
+                    : ';') +
+                  (this.state.admPlace.fylke ? this.state.admPlace.fylke + ' : ' : ';') +
+                  this.state.admPlace.land
+                : ''}
+            </p>
           </div>
           <div className="col-md-4">
-            <b>Locality: </b>
-            <p>{this.state.locality}</p>
+            <p>
+              <b>Locality: </b>
+              {this.state.locality}
+            </p>
           </div>
           <div className="col-md-4">
-            <b>Ecology: </b>
-            {this.state.ecology}
+            <p>
+              <b>Ecology: </b>
+              {this.state.ecology}
+            </p>
           </div>
         </div>
         <div className="row">
@@ -308,15 +325,48 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
           onChangeCoordinateText={(fieldName: string) => (value: string) => {
             this.setState((ps: PlaceState) => {
               let coordinateInvalid: boolean = !musitCoodinateValidate(fieldName)(value);
-              const s = {
+              const utmNorthSouth =
+                (value === 'UTM' && fieldName === 'coordinateType') ||
+                (fieldName !== 'coordinateType' &&
+                  ps.editingCoordinate.coordinateType === 'UTM')
+                  ? ps.editingCoordinate.utmNorthSouth
+                  : undefined;
+
+              const mgrsBand =
+                (value === 'MGRS' && fieldName === 'coordinateType') ||
+                (fieldName !== 'coordinateType' &&
+                  ps.editingCoordinate.coordinateType === 'MGRS')
+                  ? ps.editingCoordinate.mgrsBand
+                  : undefined;
+
+              const utmZone =
+                ((value === 'MGRS' || value === 'UTM') &&
+                  fieldName === 'coordinateType') ||
+                ((fieldName !== 'coordinateType' &&
+                  ps.editingCoordinate.coordinateType === 'MGRS') ||
+                  ps.editingCoordinate.coordinateType === 'UTM')
+                  ? ps.editingCoordinate.utmZone
+                  : undefined;
+
+              const coordinateGeomertry =
+                (value === 'Lat / Long' && fieldName === 'coordinateType') ||
+                (fieldName !== 'coordinateType' &&
+                  ps.editingCoordinate.coordinateType === 'Lat / Long')
+                  ? ps.editingCoordinate.coordinateGeomertry
+                  : undefined;
+
+              return {
                 ...ps,
                 editingCoordinate: {
                   ...ps.editingCoordinate,
+                  utmNorthSouth,
+                  mgrsBand,
+                  utmZone,
+                  coordinateGeomertry,
                   [fieldName]: value
                 },
                 coordinateInvalid: coordinateInvalid ? coordinateInvalid : false
               };
-              return s;
             });
           }}
           onChangeEditMode={(editMode: boolean) => {
@@ -448,17 +498,95 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
         <MapComponent {...this.state} />
       </div>
     );
+    const CoordinateRead = (c: Coordinate) => {
+      const coordinateString = c.coordinateString ? (
+        <div>
+          <b>
+            {c.coordinateType}
+            <sub>{c.datum}</sub>:
+          </b>
+          {c.isAddedLater ? '[' : ''}
+          {c.caCoordinate ? 'Ca. ' : ''}
+          {`${c.utmZone || ''}${c.mgrsBand || ''}`}
+          {c.coordinateString || ''}
+          {c.isAddedLater ? ']' : ''}
+        </div>
+      ) : (
+        ''
+      );
+      const altitudeString = c.altitudeAggregated ? (
+        <div>
+          {c.caAltitude ? 'Ca. ' : ''}
+          {c.altitudeAggregated}
+          {c.altitudeUnit === 'Meters' ? 'm.' : c.altitudeUnit === 'Feet' ? 'Ft' : ''}
+        </div>
+      ) : (
+        ''
+      );
+
+      const depthString = c.depthAggregated ? (
+        <div>
+          {c.caDepth ? 'Ca. ' : ''}
+          {c.depthAggregated}
+          {c.depthUnit === 'Meters' ? 'm.' : c.altitudeUnit === 'Feet' ? 'Ft' : ''}
+        </div>
+      ) : (
+        ''
+      );
+      return (
+        <div className="container">
+          <h3>Coordinates</h3>
+          <div className="row">
+            <div className="col-md-8">
+              <p>
+                <b>Coordinate:</b>
+                {coordinateString}
+              </p>
+            </div>
+            <div className="col-md-2">
+              <b>Alt.:</b>
+              {altitudeString}
+            </div>
+            <div className="col-md-2">
+              <b>Depth.:</b>
+              {depthString}
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-3">
+              <b>Source: </b>
+              {' ' + (c.coordinateSource || '')}
+            </div>
+            <div className="col-md-5">
+              <b>Note: </b>
+              {' ' + (c.coordinateNote || '')}
+            </div>
+            <div className="col-md-2">
+              <b>Precision: </b>
+              {' ' + (c.coordinatePrecision || '')}
+            </div>
+            <div className="col-md-2">
+              <b>Accuracy: </b>
+              {' ' + (c.gpsAccuracy || '')}
+            </div>
+          </div>
+        </div>
+      );
+    };
     return (
       <form style={{ padding: '20px' }}>
         <div className="row form-group">
           <div className="col-md-8">
-            <CollapseComponent Head={AdmPlaceRead} Body={AdmPlaceComp} />
+            <CollapseComponent Head={AdmPlaceRead()} Body={AdmPlaceComp} />
           </div>
         </div>
 
         <div className="row form-group">
           <div className="col-md-8">
-            <CollapseComponent Head={<div>Hei hei</div>} Body={CoordinateComponent} />
+            <CollapseComponent
+              Head={CoordinateRead(this.state.editingCoordinate)}
+              Body={CoordinateComponent}
+            />
           </div>
         </div>
       </form>
