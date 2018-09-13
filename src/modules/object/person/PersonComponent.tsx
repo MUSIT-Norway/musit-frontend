@@ -14,6 +14,7 @@ import { EditList, databaseOption, databaseOptions } from '../components/EditLis
 import { History } from 'history';
 import config from '../../../config';
 import { AjaxResponse } from 'rxjs';
+import { emitError } from '../../../shared/errors';
 import {
   museumAndCollections,
   museum,
@@ -215,7 +216,7 @@ const Synonyms = (props: {
                         <td className="col-md-4">{e.nameString}</td>
                         {!props.readOnly && (
                           <div>
-                            <td className="col-md-1">
+                            {/* <td className="col-md-1">
                               <a
                                 href=""
                                 onClick={e => {
@@ -225,8 +226,8 @@ const Synonyms = (props: {
                               >
                                 <FontAwesome name="edit" />
                               </a>
-                            </td>
-                            <td className="col-md-1">
+                            </td> */}
+                            <td className="col-md-2">
                               <a href="" onClick={props.onDelete(i)}>
                                 Delete
                               </a>
@@ -972,19 +973,35 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
               const editIndex = ps.editingIndexSynonyms ? ps.editingIndexSynonyms : 0;
               const editItem = ps.editSynonym || { nameString: '', status: 'NEW' };
               const currentSynonyms = ps.synonyms || [];
-              const nextSynonyms = currentSynonyms
-                ? [
-                    ...currentSynonyms.slice(0, editIndex),
-                    editItem,
-                    ...currentSynonyms.slice(editIndex + 1)
-                  ]
-                : currentSynonyms;
-              return {
-                ...ps,
-                synonyms: nextSynonyms,
-                editingIndexSynonyms: undefined,
-                editSynonym: undefined
-              };
+              const duplicateNames = currentSynonyms.filter(
+                e => e.nameString === editItem.nameString
+              );
+              if (duplicateNames.length > 0) {
+                emitError({
+                  response: {
+                    body: {
+                      message: 'Duplicate synonym found'
+                    }
+                  }
+                });
+                return {
+                  ...ps
+                };
+              } else {
+                const nextSynonyms = currentSynonyms
+                  ? [
+                      ...currentSynonyms.slice(0, editIndex),
+                      editItem,
+                      ...currentSynonyms.slice(editIndex + 1)
+                    ]
+                  : currentSynonyms;
+                return {
+                  ...ps,
+                  synonyms: nextSynonyms,
+                  editingIndexSynonyms: undefined,
+                  editSynonym: undefined
+                };
+              }
             });
           }}
           onDeleteSynonyms={(index: number) => (
