@@ -11,6 +11,7 @@ const CoordinateMetaData = (props: CoordinateProps) => {
           <select
             className="form-control"
             id="coordinateSource"
+            defaultValue={coordinateSources[0]}
             onChange={e => {
               props.onChangeCoordinateText('coordinateSource')(e.target.value);
             }}
@@ -67,6 +68,9 @@ const CoordinateMetaData = (props: CoordinateProps) => {
           <input
             className="form-control"
             type="text"
+            onChange={e => {
+              props.onChangeCoordinateText('coordinatePrecision')(e.target.value);
+            }}
             value={
               props.getCurrentCoordinate(props.coordinateHistoryIndeks)
                 .coordinatePrecision
@@ -79,6 +83,9 @@ const CoordinateMetaData = (props: CoordinateProps) => {
           <input
             className="form-control"
             type="text"
+            onChange={e => {
+              props.onChangeCoordinateText('gpsAccuracy')(e.target.value);
+            }}
             value={props.getCurrentCoordinate(props.coordinateHistoryIndeks).gpsAccuracy}
             id="accuracy"
           />
