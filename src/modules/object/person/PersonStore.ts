@@ -14,7 +14,7 @@ import { KEEP_ALIVE } from '../../../stores/constants';
 import { createAction } from '../../../shared/react-rxjs-patch';
 import { Reducer } from 'react-rxjs';
 import { Star } from '../../../types/common';
-import { PersonState, PersonName, toFrontend } from './PersonComponent';
+import { PersonState, toFrontend, SynonymType } from './PersonComponent';
 
 export type PersonStoreState = {
   localState?: PersonState;
@@ -46,18 +46,16 @@ export const toBackend: ((p: PersonState) => InputPerson) = (p: PersonState) => 
     p.verbatimDate,
     p.url,
     p.synonyms
-      ? p.synonyms.map((p: PersonName) => ({
+      ? p.synonyms.map((p: SynonymType) => ({
           firstName: p.firstName,
           lastName: p.lastName,
           title: p.title,
           name: p.nameString,
-          isDeleted: false
+          isDeleted: p.status === 'DEL' ? true : false
         }))
       : [],
     p.externalIds ? p.externalIds : []
   );
-
-  console.log('Anuradha toBackend : ', c);
   return c;
 
   //return '{"firstName": "Karstennyyyn","lastName": "HårsakerNesten","title": "herr","name": "HårsakerNesten, herr Karstennn","collections": [{ "museum_id": 5, "collection_id": 10 }],"personAttribute": {"legalEntityType": "person",    "displayName": "Karstenn HårsakerNesten",    "bornDate": "10.09.1967",    "URL": "http://muligensEnUrl"}, "synonyms": [      {        "firstName": "Kristian",        "lastName": "Hårsårssaker",        "name": "K. Hårårssakerrr",        "title": "Herr"      },{        "firstName": "KK",      "lastName": "HårsårsNesten","name": "Hårårssaker, K"      },     {"firstName": "Kris",        "lastName": "HårsNest",        "name": "HårsNest,Kris"      }    ]}';

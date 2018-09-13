@@ -138,7 +138,9 @@ export interface PersonName {
   readonly lastName?: string;
   readonly title?: string;
   readonly name: string;
+  readonly status?: string;
 }
+
 export interface Collection {
   museumId: number;
   collectionId: number;
