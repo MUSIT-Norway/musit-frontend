@@ -8,8 +8,8 @@ import {
 
 const LatLongComponent = (props: CoordinateProps) => {
   return (
-    <div>
-      <div className="row form-group">
+    <div className="form-group">
+      <div className="row">
         <div className="col-md-2">
           <label htmlFor="coordinateType">Coordinate type </label>
           <select
