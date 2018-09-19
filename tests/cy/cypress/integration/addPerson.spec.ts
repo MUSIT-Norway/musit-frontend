@@ -21,24 +21,9 @@ describe('PersonAdd', function() {
     page.firstNameField.type('Donald');
     page.lastNameField.type(lastName);
 
-    reactSelect_selectOptionWithText('collectionsForPerson', 'KHM-Arkeologi');
+    //reactSelect_selectOptionWithText('collectionsForPerson', 'KHM-Arkeologi');
 
     reactSelect_selectFirstOption('collectionsForPerson');
-
-    //cy.get('#collectionsForPerson .Select-control:first')
-    /*
-    cy.get('#collectionsForPerson .Select-control')
-      .click()
-      .wait(10000)
-      .get('.Select-option:contains(KHM-Arkeologi)')
-      .click();
-*/
-    //page.collectionsForPersonControl.trigger('keydown', { keyCode: 32, which: 32 });
-
-    //    cy.wait(1000);
-    //page.collectionsForPersonControl.type(" ");
-
-    //page.collectionsForPersonControlInput.type(' ');
 
     page.saveOrEditButton.click();
     page.saveOrEditButton.should('contain', 'Edit');
@@ -48,7 +33,7 @@ describe('PersonAdd', function() {
     page.lastNameField.should('have.value', lastName);
 
     page.saveOrEditButton.click();
-    cy.wait(500);
+    cy.wait(500); //A small pause here seemed to be needed once, but perhaps not anymore?
     page.addSynonymButton.click();
 
     page.synonymTitleField.type('Mr. ');
@@ -56,13 +41,13 @@ describe('PersonAdd', function() {
     page.synonymLastNameField.type('Duck');
     page.saveSynonymButton.click();
 
-    page.saveOrEditButton.click();
-
-    /*
     page.addExternalIdButton.click();
     page.externalIdsField.type('http://disney.com/donald');
+
+    reactSelect_selectOptionWithText('databases', 'Scopus');
+
     page.saveExternalIdButton.click();
-*/
-    //cy.screenshot();
+
+    page.saveOrEditButton.click();
   });
 });
