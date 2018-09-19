@@ -33,6 +33,10 @@ export type CommonParams = {
 };
 
 export const toBackend: ((p: PersonState) => InputPerson) = (p: PersonState) => {
+  const changedSynonyms = p.synonyms
+    ? p.synonyms.filter(e => e.status !== 'UNCHANGED')
+    : undefined;
+
   const c = new Person(
     p.fullName.nameString,
     p.collections,
@@ -45,8 +49,9 @@ export const toBackend: ((p: PersonState) => InputPerson) = (p: PersonState) => 
     p.deathDate,
     p.verbatimDate,
     p.url,
-    p.synonyms
-      ? p.synonyms.map((p: SynonymType) => ({
+    changedSynonyms
+      ? changedSynonyms.map((p: SynonymType) => ({
+          personNameUuid: p.status === 'DEL' ? p.personNameUuid : '',
           firstName: p.firstName,
           lastName: p.lastName,
           title: p.title,

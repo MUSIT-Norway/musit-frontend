@@ -139,6 +139,7 @@ export interface PersonName {
   readonly title?: string;
   readonly name: string;
   readonly status?: string;
+  readonly personNameUuid?: string;
 }
 
 export interface Collection {

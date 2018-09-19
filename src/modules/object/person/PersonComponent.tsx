@@ -54,6 +54,7 @@ type Collection = {
 export type SynonymStatus = 'NEW' | 'DEL' | 'UNCHANGED';
 
 export type SynonymType = {
+  personNameUuid?: string;
   title?: string;
   firstName?: string;
   lastName?: string;
@@ -818,7 +819,8 @@ export const toFrontend: (p: OutputPerson) => PersonState = (p: OutputPerson) =>
           firstName: p.firstName,
           lastName: p.lastName,
           title: p.title,
-          status: 'UNCHANGED'
+          status: 'UNCHANGED',
+          personNameUuid: p.personNameUuid
         })),
       undefined,
       innP.personAttribute && innP.personAttribute.bornDate,
@@ -856,7 +858,6 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
     }
   }
   render() {
-    console.log('ANURADHA State: ', this.state.synonyms);
     return (
       <div className="container" style={{ paddingTop: '25px' }}>
         <PersonPage
