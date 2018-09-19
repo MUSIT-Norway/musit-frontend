@@ -6,6 +6,13 @@ import { I18n } from 'react-i18nify';
 import { Maybe, TODO } from '../../../types/common';
 
 export interface FieldMultiSelectProps {
+  /* I added an id property because we need something to locate this component during tests.
+Note that you should not have the same 'id' and 'name', because the 'name' ends up as an id on 
+an inner input field during rendering of the component, so conflicts can arise if you use
+the same value for both 'id' and 'name'.
+*/
+
+  id?: string;
   title: Maybe<string>;
   titleSize?: string;
   labelAbove?: boolean;
@@ -37,7 +44,7 @@ export default function FieldMultiSelect(props: FieldMultiSelectProps) {
   if (props.labelAbove) {
     return (
       <div className="row form-group">
-        <div className="col-md-4">
+        <div className="col-md-4" id={props.id}>
           {props.title !== '' && (
             <label className={`control-label ${props.titleSize || ''}`} htmlFor={name}>
               {props.title}

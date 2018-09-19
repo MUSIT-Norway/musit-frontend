@@ -260,6 +260,7 @@ const Synonyms = (props: {
           <div className="row">
             <div className="col-sm-2 form-group">
               <input
+                id="synonymTitle"
                 className="form-control"
                 value={props.editSynonym && props.editSynonym.title}
                 onChange={e => props.onChange('title')(e.target.value)}
@@ -267,6 +268,7 @@ const Synonyms = (props: {
             </div>
             <div className="col-sm-2 form-group">
               <input
+                id="synonymFirstName"
                 className="form-control"
                 value={props.editSynonym && props.editSynonym.firstName}
                 onChange={e => props.onChange('firstName')(e.target.value)}
@@ -274,6 +276,7 @@ const Synonyms = (props: {
             </div>
             <div className="col-sm-2 form-group">
               <input
+                id="synonymLastName"
                 className="form-control"
                 value={props.editSynonym && props.editSynonym.lastName}
                 onChange={e => props.onChange('lastName')(e.target.value)}
@@ -293,6 +296,7 @@ const Synonyms = (props: {
     {!props.readOnly && (
       <div>
         <button
+          id="addSynonym"
           type="button"
           className="btn btn-default"
           onClick={props.onAdd}
@@ -301,6 +305,7 @@ const Synonyms = (props: {
           Add new synonym
         </button>
         <button
+          id="saveSynonym"
           type="button"
           className="btn btn-default"
           onClick={props.onSave}
@@ -384,8 +389,9 @@ const ExternalIDStrings = (props: {
         )}
       {props.editingIndex !== undefined && (
         <div className="row">
-          <div className="col-sm-2 form-group">
+          <div className="col-sm-2 form-group" id="databases">
             <EditList
+              id="databases"
               dataBaseValues={props.dataBaseValues}
               editingValue={
                 props.editingIds && props.editingIds.database
@@ -397,6 +403,7 @@ const ExternalIDStrings = (props: {
           </div>
           <div className="col-sm-2 form-group">
             <input
+              id="externalIds"
               className="form-control"
               value={props.editingIds && props.editingIds.uuid}
               onChange={e => props.onChange('uuid')(e.target.value)}
@@ -409,6 +416,7 @@ const ExternalIDStrings = (props: {
     {!props.readOnly && (
       <div>
         <button
+          id="addExternalId"
           type="button"
           className="btn btn-default"
           onClick={props.onAdd}
@@ -417,6 +425,7 @@ const ExternalIDStrings = (props: {
           Add new external ID
         </button>
         <button
+          id="saveExternalId"
           type="button"
           className="btn btn-default"
           onClick={props.onSave}
@@ -608,6 +617,7 @@ export const PersonPage = (props: PersonProps) => {
                 </div>
                 <div className="col-md-8">
                   <FieldMultiSelect
+                    id="collectionsForPerson"
                     title="Samlinger for person"
                     labelAbove={true}
                     viewMode={props.readOnly}
@@ -771,6 +781,7 @@ export const PersonPage = (props: PersonProps) => {
                 Cancel{' '}
               </a>
               <button
+                id="saveOrEdit"
                 type="button"
                 className="btn btn-primary"
                 onClick={() => props.onClickSaveEdit(props.appSession)}

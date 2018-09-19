@@ -21,6 +21,10 @@ const getOptions = (data: databaseOptions) => (input: string, callback: Function
 };
 
 export type editListProps = {
+  /* I added an id property because we need something to locate this component during tests.
+*/
+
+  id?: string;
   dataBaseValues: databaseOptions;
   editingValue: string;
   onChangeSelection: (inputValue: databaseOption) => void;
