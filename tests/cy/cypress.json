@@ -1,0 +1,6 @@
+{
+  "baseUrl": "http://musit-test:8888",
+
+  "viewportWidth": 1000,
+  "viewportHeight": 1000
+}
