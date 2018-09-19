@@ -392,7 +392,6 @@ const ExternalIDStrings = (props: {
         <div className="row">
           <div className="col-sm-2 form-group" id="databases">
             <EditList
-              id="databases"
               dataBaseValues={props.dataBaseValues}
               editingValue={
                 props.editingIds && props.editingIds.database
