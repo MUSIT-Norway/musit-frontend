@@ -31,7 +31,8 @@ export default {
     persons: {
       addUrl: '/api/persons/person/',
       editUrl: (personUuid: string) => `/api/persons/person/edit/${personUuid}`,
-      getUrl: (personUuid: string) => `/api/persons/person/${personUuid}`
+      getUrl: (personUuid: string) => `/api/persons/person/${personUuid}`,
+      searchUrl: (personName: string) => `/api/persons/person/search/${personName}`
     }
   },
   magasin: {
