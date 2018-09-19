@@ -37,16 +37,18 @@ export interface TaxonTable {
   taxonTable: Taxon[];
 }
 
-export interface Det {
+export interface personDet {
   firstName?: string;
   lastName?: string;
   title?: string;
-  nameString: string;
+  name: string;
+  personUuid: string;
+  personNameUuid: string;
 }
 
 export interface ClassEvent {
   taxon?: TaxonTable;
-  det?: Det;
+  det?: personDet;
   detDate?: Date;
   note?: string;
 }

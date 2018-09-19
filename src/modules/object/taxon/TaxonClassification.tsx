@@ -2,13 +2,14 @@ import * as React from 'react';
 import { ClassificationHistoryTable } from './ClassificationHistoryTable';
 import { SexAndStagesComponent } from './SexAndStagesComponent';
 import { TaxonComponent } from './TaxonComponent';
-import { ScientificName } from '../../../models/object/classHist';
+import { ScientificName, personDet } from '../../../models/object/classHist';
 import { Collapse } from 'react-bootstrap';
 //import EditableTable from '../components/EditableTable';
 
 // Datastructure
 export interface IPersonName {
-  personNameId?: number;
+  personNameId?: string;
+  personUuid?: string;
   personName?: string;
 }
 
@@ -35,6 +36,7 @@ export type DetProps = IDet & {
   onDeletePerson: (i: number) => void;
   setDetEditingIndex: (i: number) => void;
   onChangePerson: (field: string) => (value: string) => void;
+  onChangePersonDet: (suggestion: personDet) => void;
 };
 
 export interface ITaxonTerm {
@@ -231,6 +233,7 @@ export type TaxonClassificationProps = ITaxonClassification & {
   //onCreateNewTaxonRevision: () => void;
   setDetEditingIndex: (i: number) => void;
   onChangePerson: (field: string) => (value: string) => void;
+  onChangePersonDet: (suggestion: personDet) => void;
 };
 
 export type TaxonClassificationsSubProps = {
@@ -719,7 +722,6 @@ export default class ClassificationComponent extends React.Component<Props, ISta
                       editingDet: currentPersonNames.length === 1 ? {} : undefined
                     });
                     console.log('after delete', newDet, newDet.editingIndex);
-
                     const currentClassificationArray = ps.classifications.classifications;
                     const newClassification = new TaxonClassification({
                       ...currentClassification,
@@ -749,7 +751,11 @@ export default class ClassificationComponent extends React.Component<Props, ISta
                     const currentEditingIndex = currentDet.editingIndex;
                     const currentEditingDet = currentDet.editingDet;
                     const currentPersonNames = currentDet.personNames || [];
-
+                    console.log(
+                      'anuradha on save person',
+                      currentEditingIndex,
+                      currentEditingDet
+                    );
                     const newPersonTable =
                       currentEditingDet && currentEditingIndex !== undefined
                         ? [
@@ -838,6 +844,45 @@ export default class ClassificationComponent extends React.Component<Props, ISta
                       ...currentDet,
                       editingDet: newPerson
                     });
+                    const currentClassificationArray = ps.classifications.classifications;
+                    const newClassification = new TaxonClassification({
+                      ...currentClassification,
+                      det: newDet
+                    });
+                    console.log('NC', newClassification);
+                    const newClassArray = [
+                      ...currentClassificationArray.slice(0, currentClassificationIndex),
+                      newClassification,
+                      ...currentClassificationArray.slice(currentClassificationIndex + 1)
+                    ];
+
+                    return {
+                      ...ps,
+                      classifications: new Classifications({
+                        ...ps.classifications,
+                        classifications: newClassArray
+                      })
+                    };
+                  });
+                }}
+                onChangePersonDet={(suggestion: personDet) => {
+                  this.setState((ps: State) => {
+                    console.log('ANURADHA : SUGGESTION', suggestion);
+                    const currentClassificationIndex =
+                      ps.classifications.currentTaxonClassificationIndex;
+                    const currentClassification = ps.classifications.classifications[
+                      currentClassificationIndex
+                    ] as TaxonClassification;
+                    const currentDet = currentClassification.det;
+                    const newDet = new Det({
+                      ...currentDet,
+                      editingDet: {
+                        personNameId: suggestion ? suggestion.personNameUuid : '',
+                        personUuid: suggestion ? suggestion.personUuid : '',
+                        personName: suggestion ? suggestion.name : ''
+                      }
+                    });
+                    console.log('ANURADHA : newDet', newDet);
                     const currentClassificationArray = ps.classifications.classifications;
                     const newClassification = new TaxonClassification({
                       ...currentClassification,

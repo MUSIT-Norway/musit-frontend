@@ -80,6 +80,7 @@ export class TaxonComponent extends React.Component<TaxonClassificationProps> {
                   onSavePerson={this.props.onSavePerson}
                   onDeletePerson={this.props.onDeletePerson}
                   onChangePerson={this.props.onChangePerson}
+                  onChangePersonDet={this.props.onChangePersonDet}
                   setDetEditingIndex={this.props.setDetEditingIndex}
                 />
               </div>

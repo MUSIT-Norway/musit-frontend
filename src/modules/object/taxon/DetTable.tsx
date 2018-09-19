@@ -1,8 +1,10 @@
 import * as React from 'react';
 import * as FontAwesome from 'react-fontawesome';
 import { Link } from 'react-router-dom';
-
+import { PersonNameSuggest } from '../../../components/suggest/PersonNameSuggest';
 import { DetProps, IPersonName } from './TaxonClassification';
+import { appSession } from './TaxonClassification';
+import { personDet } from '../../../models/object/classHist';
 
 class DetTable extends React.Component<DetProps> {
   constructor(props: DetProps) {
@@ -10,6 +12,13 @@ class DetTable extends React.Component<DetProps> {
   }
 
   render() {
+    const personNameAsString = (n: personDet) => {
+      return (
+        <span className="suggestion-content">
+          {n.name ? 'Full Name: ' + n.name + ' last Name : ' + n.lastName : ''}
+        </span>
+      );
+    };
     return (
       <div>
         {/* {this.props.editingDet && (        )} */}
@@ -18,7 +27,7 @@ class DetTable extends React.Component<DetProps> {
             {' '}
             <div className="form-group">
               <label htmlFor="personName">Det</label>
-              <input
+              {/* <input
                 type="text"
                 className="form-control"
                 id="personName"
@@ -29,6 +38,20 @@ class DetTable extends React.Component<DetProps> {
                   this.props.editingDet &&
                     this.props.onChangePerson('personName')(e.target.value);
                 }}
+              /> */}
+              <PersonNameSuggest
+                id="personNameSuggestADB"
+                disabled={this.props.editingDet === undefined}
+                value={
+                  this.props.editingDet && this.props.editingDet.personName
+                    ? this.props.editingDet.personName || ''
+                    : ''
+                }
+                renderFunc={personNameAsString}
+                placeHolder="Person Name"
+                appSession={appSession}
+                onChangeTextField={this.props.onChangePerson}
+                onChange={this.props.onChangePersonDet}
               />
             </div>
           </div>
