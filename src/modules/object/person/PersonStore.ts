@@ -33,9 +33,13 @@ export type CommonParams = {
 };
 
 export const toBackend: ((p: PersonState) => InputPerson) = (p: PersonState) => {
-  const changedSynonyms = p.synonyms
+  const changedSynonymsFiltered = p.synonyms
     ? p.synonyms.filter(e => e.status !== 'UNCHANGED')
     : undefined;
+  const changedSynonyms =
+    changedSynonymsFiltered && changedSynonymsFiltered.length > 0
+      ? changedSynonymsFiltered
+      : undefined;
 
   const c = new Person(
     p.fullName.nameString,
