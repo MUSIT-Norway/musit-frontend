@@ -1,6 +1,6 @@
 import { Context } from './utils';
 
-export const accessToken = 'e5619e8e-b9bb-4632-86d9-a6394698eb3c';
+export const accessToken = '584a1d16-edc0-48f2-8725-f09265d440e4';
 
 /*
 export const defaultContext:Context = {museumId: 4,

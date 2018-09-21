@@ -182,30 +182,30 @@ const Synonyms = (props: {
         props.synonyms.length > 0 && (
           <div className="row">
             <div className="col-md-12">
-              <table className="table table-condensed table-hover">
+              <table
+                id="synynomDataTableHeader"
+                className="table table-condensed table-hover"
+              >
                 <thead className="row">
                   <tr className="row">
                     <th className="col-md-2">
                       <b>Tittel</b>
                     </th>
                     <th className="col-md-2">
-                      <b> Fornavn</b>
+                      <b>Fornavn</b>
                     </th>
                     <th className="col-md-2">
-                      <b> Etternavn</b>
+                      <b>Etternavn</b>
                     </th>
                     <th className="col-md-4">
-                      <b> Navn</b>
+                      <b>Navn</b>
                     </th>
-                    <th className="col-md-1">
-                      <b> </b>
-                    </th>
-                    <th className="col-md-1">
-                      <b> </b>
+                    <th className="col-md-2">
+                      <b />
                     </th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody id="synonymsTableBody">
                   {console.log('SGG synonyms strings ', props.synonyms)}
                   {props.synonyms &&
                     props.synonyms.length > 0 &&
@@ -338,24 +338,27 @@ const ExternalIDStrings = (props: {
       {props.externalIds &&
         props.externalIds.length > 0 && (
           <div className="row">
-            <table className="table table-condensed table-hover">
+            <table
+              id="externalIDTableHeader"
+              className="table table-condensed table-hover"
+            >
               <thead className="row">
                 <tr className="row">
                   <th className="col-md-2">
                     <b>Database</b>
                   </th>
                   <th className="col-md-2">
-                    <b> UUID</b>
+                    <b>UUID</b>
                   </th>
                   <th className="col-md-2">
-                    <b> </b>
+                    <b />
                   </th>
                   <th className="col-md-2">
-                    <b> </b>
+                    <b />
                   </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="externalIDTableBody">
                 {props.externalIds &&
                   props.externalIds.length > 0 &&
                   props.externalIds.map((e, i) => (
@@ -599,7 +602,7 @@ export const PersonPage = (props: PersonProps) => {
                     <label htmlFor="legalEntityType">Legal entity type</label>
                     <select
                       className="form-control"
-                      id="legalEntityType"
+                      id="legalEntityTypeDropDown"
                       value={props.legalEntityType}
                       disabled={props.readOnly}
                       onChange={v => {
@@ -686,7 +689,7 @@ export const PersonPage = (props: PersonProps) => {
                 </div>
               </div>
               <div className="row form-group">
-                <div className="col-md-3">
+                <div className="col-md-3" id="bornDate">
                   <label htmlFor="bornDate"> Født dato</label>
                   <DatePicker
                     onClear={props.onClearBornDate}
@@ -695,7 +698,7 @@ export const PersonPage = (props: PersonProps) => {
                     disabled={props.readOnly}
                   />
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-3" id="deathDate">
                   <label htmlFor="deathDate"> Død dato</label>
                   <DatePicker
                     onClear={props.onClearDeathDate}
