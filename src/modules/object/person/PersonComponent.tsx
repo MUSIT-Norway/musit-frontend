@@ -672,7 +672,7 @@ export const PersonPage = (props: PersonProps) => {
                       type="text"
                       value={(props.fullName && props.fullName.firstName) || ''}
                       onChange={e => props.onChangeFullName('firstName')(e.target.value)}
-                      disabled={props.readOnly}
+                      disabled={props.readOnly || props.legalEntityType !== 'person'}
                     />
                   </div>{' '}
                   <div className="col-sm-3 form-group">
@@ -683,6 +683,17 @@ export const PersonPage = (props: PersonProps) => {
                       type="text"
                       value={(props.fullName && props.fullName.lastName) || ''}
                       onChange={e => props.onChangeFullName('lastName')(e.target.value)}
+                      disabled={props.readOnly || props.legalEntityType !== 'person'}
+                    />
+                  </div>{' '}
+                  <div className="col-sm-3 form-group">
+                    <label htmlFor="lastName"> Navn </label>
+                    <input
+                      id="name"
+                      className="form-control"
+                      type="text"
+                      value={(props.fullName && props.fullName.nameString) || ''}
+                      onChange={e => props.onChangeFullName('nameString')(e.target.value)}
                       disabled={props.readOnly}
                     />
                   </div>
