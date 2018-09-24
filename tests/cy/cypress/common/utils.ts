@@ -61,7 +61,12 @@ export function reactSelect_selectFirstOption(id: string, context: string = 'bod
     .click();
 }
 
+/* Get first element of a dropdown list  */
 
+export function dropDownList_getFirstElement(id: string){
+  cy.get(`#${id}`)
+  .first();
+}
 
 
 /** A function which returns a value which should be unique locally (on this machine only).
