@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import * as Autosuggest from 'react-autosuggest';
 import Config from '../../config';
-import suggest$Fn, { update$, clear$ } from './suggestStore';
+import suggest$Fn, { update$, clear$ } from './personSuggestStore';
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 import { AppSession } from '../../types/appSession';
 import { TODO } from '../../types/common';
@@ -88,7 +88,8 @@ export class PersonNameSuggestComponent extends React.Component<
     }
   };
   requestSuggestionUpdate(update: TODO) {
-    if (update.value.length > 1) {
+    if (update.value.length > 2) {
+      console.log(' 444444 calling personNameSuggest ');
       const museumId = this.props.appSession.museumId;
       const token = undefined;
       this.props.update({ update, museumId, token });
