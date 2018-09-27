@@ -1,15 +1,25 @@
 /// <reference types="cypress"/>
 import * as constants from './constants';
 
+function mustGetEnvValue(name: string) {
+  const value = Cypress.env(name);
+  if (value==null) { //Note that undefined==null !
+    throw new Error(
+      `You need to define ${name} in the cypress.env.json or define cypress_${name} as an environment variable. (You may also need to restart cypress)`
+    );
+  }
+  return value;
+}
+
+function getAccessToken() {
+  return mustGetEnvValue('accessToken');
+}
+
 export function startup() {
-  window.localStorage.setItem(
-    'accessToken',
-    `{"accessToken":"${constants.accessToken}"}`
-  );
+  window.localStorage.setItem('accessToken', `{"accessToken":"${getAccessToken()}"}`);
 
   cy.visit('/');
 }
-
 
 export type Context = {
   museumId: number;
@@ -17,7 +27,7 @@ export type Context = {
 };
 
 export function constructUrl(context: Context, postfix: string) {
-      return `/museum/${context.museumId}/collections/${context.collection}/${postfix}`;
+  return `/museum/${context.museumId}/collections/${context.collection}/${postfix}`;
 }
 
 /* I found the body of these two functions here:
@@ -63,11 +73,9 @@ export function reactSelect_selectFirstOption(id: string, context: string = 'bod
 
 /* Get first element of a dropdown list  */
 
-export function dropDownList_getFirstElement(id: string){
-  cy.get(`#${id}`)
-  .first();
+export function dropDownList_getFirstElement(id: string) {
+  cy.get(`#${id}`).first();
 }
-
 
 /** A function which returns a value which should be unique locally (on this machine only).
  * Currently we simply return a timestamp, so we assume it isn't called *very* frequently.
@@ -77,7 +85,6 @@ export function dropDownList_getFirstElement(id: string){
 export function locallySemiUniqueString() {
   return new Date().toISOString();
 }
-
 
 /* Old
 
