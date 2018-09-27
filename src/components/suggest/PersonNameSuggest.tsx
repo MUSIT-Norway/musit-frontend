@@ -2,11 +2,13 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import * as Autosuggest from 'react-autosuggest';
 import Config from '../../config';
-import suggest$Fn, { update$, clear$ } from './suggestStore';
+import suggest$Fn, { update$, clear$ } from './personSuggestStore';
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 import { AppSession } from '../../types/appSession';
 import { TODO } from '../../types/common';
 import { personDet } from '../../models/object/classHist';
+import * as FontAwesome from 'react-fontawesome';
+import { Link } from 'react-router-dom';
 
 interface PersonNameSuggestComponentProps {
   id: string;
@@ -80,50 +82,75 @@ export class PersonNameSuggestComponent extends React.Component<
       this.setState(ps => {
         return { ...ps, value: newValue };
       });
-      /* {(event: TODO) => {
-        event.preventDefault();
-        console.log('WJIOHFUUIH FUIHFH HUIASHFUIO FUIHUIHAF UI 2');
-        this.props.onChangeTextField('personName')(newValue);
-      }}; */
     }
   };
   requestSuggestionUpdate(update: TODO) {
-    if (update.value.length > 1) {
+    if (update.value.length > 2) {
+      console.log(' 444444 calling personNameSuggest ');
       const museumId = this.props.appSession.museumId;
       const token = undefined;
+
       this.props.update({ update, museumId, token });
+      console.log('UPDATE  ', update);
     }
   }
   render() {
     return (
-      <Autosuggest
-        suggestions={(this.props.suggest.data || []).sort(
-          (a: PersonNameSuggestion, b: PersonNameSuggestion) => {
-            if (a.name <= b.name) {
-              return -1;
-            }
-            return 1;
-          }
-        )}
-        onSuggestionsFetchRequested={this.requestSuggestionUpdate}
-        onSuggestionsClearRequested={() => this.setState(() => ({ suggestions: [] }))}
-        getSuggestionValue={(suggestion: personDet) => suggestion.name}
-        renderSuggestion={(suggestion: PersonNameSuggestion) =>
-          this.props.renderFunc(suggestion)
-        }
-        inputProps={{
-          ...(this.PersonNameProps as TODO),
-          value: this.state.value,
-          disabled: this.state.disabled ? this.state.disabled : false
-        }}
-        shouldRenderSuggestions={v => v !== 'undefined'}
-        onSuggestionSelected={(event, { suggestion }) => {
-          if ((event as React.KeyboardEvent<HTMLFormElement>).keyCode === 13) {
-            event.preventDefault();
-          }
-          this.props.onChange(suggestion);
-        }}
-      />
+      <div>
+        <div className="col-md-9">
+          <div className="form-group">
+            <label htmlFor="personName">Det</label>
+            <Autosuggest
+              suggestions={(this.props.suggest.data || []).sort(
+                (a: PersonNameSuggestion, b: PersonNameSuggestion) => {
+                  if (a.name <= b.name) {
+                    return -1;
+                  }
+                  return 1;
+                }
+              )}
+              onSuggestionsFetchRequested={this.requestSuggestionUpdate}
+              onSuggestionsClearRequested={() =>
+                this.setState(() => ({ suggestions: [] }))
+              }
+              getSuggestionValue={(suggestion: personDet) => suggestion.name}
+              renderSuggestion={(suggestion: PersonNameSuggestion) =>
+                this.props.renderFunc(suggestion)
+              }
+              inputProps={{
+                ...(this.PersonNameProps as TODO),
+                value: this.state.value,
+                disabled: this.state.disabled ? this.state.disabled : false
+              }}
+              shouldRenderSuggestions={v => v !== 'undefined'}
+              onSuggestionSelected={(event, { suggestion }) => {
+                if ((event as React.KeyboardEvent<HTMLFormElement>).keyCode === 13) {
+                  event.preventDefault();
+                }
+                this.props.onChange(suggestion);
+              }}
+            />
+          </div>
+        </div>
+        <div className="col-md-3">
+          <label htmlFor="btnAddPerson">Create new</label>
+          <Link
+            to={{
+              pathname: 'person/personname/add',
+              state: {
+                newName: this.state && this.state.value
+              }
+            }}
+          >
+            <button
+              className="btn btn-default form-control"
+              disabled={this.state && this.state.disabled ? true : false}
+            >
+              <FontAwesome name="user-plus" />
+            </button>
+          </Link>
+        </div>
+      </div>
     );
   }
 }

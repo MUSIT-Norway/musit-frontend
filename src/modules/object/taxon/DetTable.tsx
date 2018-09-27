@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as FontAwesome from 'react-fontawesome';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import { PersonNameSuggest } from '../../../components/suggest/PersonNameSuggest';
 import { DetProps, IPersonName } from './TaxonClassification';
 import { appSession } from './TaxonClassification';
@@ -21,59 +21,21 @@ class DetTable extends React.Component<DetProps> {
     };
     return (
       <div>
-        {/* {this.props.editingDet && (        )} */}
         <div className="row">
-          <div className="col-md-9">
-            {' '}
-            <div className="form-group">
-              <label htmlFor="personName">Det</label>
-              {/* <input
-                type="text"
-                className="form-control"
-                id="personName"
-                disabled={this.props.editingDet === undefined}
-                value={this.props.editingDet ? this.props.editingDet.personName : ''}
-                onChange={e => {
-                  e.preventDefault();
-                  this.props.editingDet &&
-                    this.props.onChangePerson('personName')(e.target.value);
-                }}
-              /> */}
-              <PersonNameSuggest
-                id="personNameSuggestADB"
-                disabled={this.props.editingDet === undefined}
-                value={
-                  this.props.editingDet && this.props.editingDet.personName
-                    ? this.props.editingDet.personName || ''
-                    : ''
-                }
-                renderFunc={personNameAsString}
-                placeHolder="Person Name"
-                appSession={appSession}
-                onChangeTextField={this.props.onChangePerson}
-                onChange={this.props.onChangePersonDet}
-              />
-            </div>
-          </div>
-          <div className="col-md-3">
-            <div style={{ textAlign: 'left', verticalAlign: 'bottom' }}>
-              <label htmlFor="btnAddPerson">Create new</label>
-              <Link
-                to={{
-                  pathname: 'person/personname/add',
-                  state: {
-                    newName: this.props.editingDet && this.props.editingDet.personName
-                  }
-                }}
-              >
-                <button className="btn btn-default form-control">
-                  <FontAwesome name="user-plus" />
-                </button>
-              </Link>
-            </div>
-          </div>
+          <PersonNameSuggest
+            id="personNameSuggestADB"
+            disabled={this.props.editingDet === undefined}
+            value={
+              this.props.editingDet && this.props.editingDet.personName
+                ? this.props.editingDet.personName || ''
+                : ''
+            }
+            renderFunc={personNameAsString}
+            placeHolder="Person Name"
+            appSession={appSession}
+            onChange={this.props.onChangePersonDet}
+          />
         </div>
-
         <div className="row">
           <div className="col-md-2">
             <button

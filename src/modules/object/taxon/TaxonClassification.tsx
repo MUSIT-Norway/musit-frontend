@@ -35,7 +35,7 @@ export type DetProps = IDet & {
   onSavePerson: () => void;
   onDeletePerson: (i: number) => void;
   setDetEditingIndex: (i: number) => void;
-  onChangePerson: (field: string) => (value: string) => void;
+  //onChangePerson: (field: string) => (value: string) => void;
   onChangePersonDet: (suggestion: personDet) => void;
 };
 
@@ -232,7 +232,7 @@ export type TaxonClassificationProps = ITaxonClassification & {
   onChangeTaxonSuggest: (suggestion: ScientificName) => void;
   //onCreateNewTaxonRevision: () => void;
   setDetEditingIndex: (i: number) => void;
-  onChangePerson: (field: string) => (value: string) => void;
+  //onChangePerson: (field: string) => (value: string) => void;
   onChangePersonDet: (suggestion: personDet) => void;
 };
 
@@ -830,7 +830,7 @@ export default class ClassificationComponent extends React.Component<Props, ISta
                     };
                   });
                 }}
-                onChangePerson={(field: string) => (value: string) => {
+                /* onChangePerson={(field: string) => (value: string) => {
                   this.setState((ps: State) => {
                     const currentClassificationIndex =
                       ps.classifications.currentTaxonClassificationIndex;
@@ -849,7 +849,7 @@ export default class ClassificationComponent extends React.Component<Props, ISta
                       ...currentClassification,
                       det: newDet
                     });
-                    console.log('NC', newClassification);
+                    console.log('NC - onchangeperson', newClassification);
                     const newClassArray = [
                       ...currentClassificationArray.slice(0, currentClassificationIndex),
                       newClassification,
@@ -864,10 +864,9 @@ export default class ClassificationComponent extends React.Component<Props, ISta
                       })
                     };
                   });
-                }}
+                }} */
                 onChangePersonDet={(suggestion: personDet) => {
                   this.setState((ps: State) => {
-                    console.log('ANURADHA : SUGGESTION', suggestion);
                     const currentClassificationIndex =
                       ps.classifications.currentTaxonClassificationIndex;
                     const currentClassification = ps.classifications.classifications[
@@ -882,13 +881,11 @@ export default class ClassificationComponent extends React.Component<Props, ISta
                         personName: suggestion ? suggestion.name : ''
                       }
                     });
-                    console.log('ANURADHA : newDet', newDet);
                     const currentClassificationArray = ps.classifications.classifications;
                     const newClassification = new TaxonClassification({
                       ...currentClassification,
                       det: newDet
                     });
-                    console.log('NC', newClassification);
                     const newClassArray = [
                       ...currentClassificationArray.slice(0, currentClassificationIndex),
                       newClassification,
