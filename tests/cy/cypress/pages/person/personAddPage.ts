@@ -75,13 +75,17 @@ export class PersonAddPage {
     return cy.get('#externalIDTableBody');
   }
 
-  visit() {
+  public visit() {
     return cy.visit(constructUrl(this.context, 'person/add'));
   }
 
-  visitViewPage() {
-    return cy.visit(constructUrl(this.context, 'person/view/3564a192-6c56-46b8-baa3-a143e75c5c27'));
+  public visitViewPage(uuid: String): any {
+    return cy.visit(constructUrl(this.context, `person/view/${uuid}`));
   }
+
+  // ZZvisitViewPage() {
+  //   return cy.visit(constructUrl(this.context, 'person/view/3564a192-6c56-46b8-baa3-a143e75c5c27'));
+  // }
 
   visitEditPage() {
     return cy.visit(constructUrl(this.context, 'person/edit/3564a192-6c56-46b8-baa3-a143e75c5c27'));
