@@ -6,8 +6,10 @@ const CoordinateMetaData = (props: CoordinateProps) => {
   return (
     <div className="form-group">
       <div className="row">
-        <div className="col-md-3">
+        <div className="col-md-2">
           <label htmlFor="coordinateSource">Coordinate source </label>
+        </div>
+        <div className="col-md-2">
           <select
             className="form-control"
             id="coordinateSource"
@@ -24,7 +26,7 @@ const CoordinateMetaData = (props: CoordinateProps) => {
             ))}
           </select>
         </div>
-        <div className="col-md-2 form-group">
+        <div className="col-md-2">
           <div className="checkbox" id="coordinateAddedLater">
             <CheckBox
               id={'checkBoxCoordinateAddedLater'}
@@ -43,7 +45,8 @@ const CoordinateMetaData = (props: CoordinateProps) => {
               }}
             />
           </div>
-
+        </div>
+        <div className="col-md-2">
           <div className="checkbox" id="caCoordinate">
             <CheckBox
               id={'checkBoxcCaCoordinate'}
@@ -63,8 +66,12 @@ const CoordinateMetaData = (props: CoordinateProps) => {
             />
           </div>
         </div>
+      </div>
+      <div className="row">
         <div className="col-md-2">
           <label htmlFor="precision">Precision</label>
+        </div>
+        <div className="col-md-2">
           <input
             className="form-control"
             type="text"
@@ -78,8 +85,10 @@ const CoordinateMetaData = (props: CoordinateProps) => {
             id="precision"
           />
         </div>
+        <div className="col-md-1">
+          <label htmlFor="accuracy">Accuracy</label>
+        </div>
         <div className="col-md-2">
-          <label htmlFor="accuracy">GPS-accuracy</label>
           <input
             className="form-control"
             type="text"

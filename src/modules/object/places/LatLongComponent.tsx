@@ -8,10 +8,12 @@ import {
 
 const LatLongComponent = (props: CoordinateProps) => {
   return (
-    <div className="form-group">
-      <div className="row">
+    <div>
+      <div className="row form-group">
         <div className="col-md-2">
           <label htmlFor="coordinateType">Coordinate type </label>
+        </div>
+        <div className="col-md-2">
           <select
             className="form-control"
             id="coordinateType"
@@ -27,8 +29,10 @@ const LatLongComponent = (props: CoordinateProps) => {
             ))}
           </select>
         </div>
-        <div className="col-md-2">
+        <div className="col-md-1">
           <label htmlFor="datum">Datum </label>
+        </div>
+        <div className="col-md-2">
           <select
             className="form-control"
             value={props.getCurrentCoordinate(props.coordinateHistoryIndeks).datum}
@@ -42,11 +46,15 @@ const LatLongComponent = (props: CoordinateProps) => {
             ))}
           </select>
         </div>
+      </div>
+      <div className="row form-group">
         {props.editingCoordinate &&
           props.editingCoordinate.coordinateType === 'Lat / Long' && (
-            <div className="col-md-3">
-              <div>
+            <div>
+              <div className="col-md-2">
                 <label htmlFor="coordinateGeomertry">Coordinate geometry </label>
+              </div>
+              <div className="col-md-5">
                 <select
                   className="form-control"
                   id="coordinateGeomertry"
@@ -67,8 +75,10 @@ const LatLongComponent = (props: CoordinateProps) => {
           )}
       </div>
       <div className="row form-group">
-        <div className="col-md-7">
+        <div className="col-md-2">
           <label htmlFor="latLongCoordinateString">Lat / Long-Coordinate </label>
+        </div>
+        <div className="col-md-5">
           <input
             type="text"
             className="form-control"

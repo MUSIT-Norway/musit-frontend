@@ -5,8 +5,10 @@ const CoordinateHistoryItemComponent = (props: CoordinateProps) => {
   return (
     <div>
       <div className="row">
-        <div className="col-md-3">
+        <div className="col-md-2">
           <label htmlFor="coordinateRevisionNote">Note on revision </label>
+        </div>
+        <div className="col-md-6">
           <textarea
             className="form-control"
             value={props.getCurrentHistoryItem(props.coordinateHistoryIndeks).note}

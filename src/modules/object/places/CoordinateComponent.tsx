@@ -9,7 +9,7 @@ const CoordinateComponent = (
   props: CoordinateProps & { coordinateHistory: CoordinateHistory }
 ) => {
   return (
-    <div>
+    <div className="form-group">
       <CoordinateMetaData {...props} />
       <AltitudeDepthData {...props} />
       <CoordinateHistoryComponent
