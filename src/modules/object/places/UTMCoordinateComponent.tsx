@@ -8,10 +8,12 @@ import {
 
 const UTMCoordinateComponent = (props: CoordinateProps) => {
   return (
-    <div className="form-group">
-      <div className="row">
+    <div>
+      <div className="row form-group">
         <div className="col-md-2">
           <label htmlFor="coordinateType">Coordinate type </label>
+        </div>
+        <div className="col-md-2">
           <select
             className="form-control"
             value={
@@ -27,8 +29,10 @@ const UTMCoordinateComponent = (props: CoordinateProps) => {
             ))}
           </select>
         </div>
-        <div className="col-md-2">
+        <div className="col-md-1">
           <label htmlFor="datum">Datum </label>
+        </div>
+        <div className="col-md-2">
           <select
             className="form-control"
             value={props.getCurrentCoordinate(props.coordinateHistoryIndeks).datum}
@@ -42,6 +46,7 @@ const UTMCoordinateComponent = (props: CoordinateProps) => {
             ))}
           </select>
         </div>
+
         {props.editingCoordinate &&
           props.editingCoordinate.coordinateType !== 'UTM' && (
             <div className="col-md-3">
@@ -65,8 +70,12 @@ const UTMCoordinateComponent = (props: CoordinateProps) => {
               </div>
             </div>
           )}
+      </div>
+      <div className="row form-group">
         <div className="col-md-2">
           <label htmlFor="zone">Zone </label>
+        </div>
+        <div className="col-md-2">
           <input
             type="text"
             className="form-control"
@@ -74,8 +83,10 @@ const UTMCoordinateComponent = (props: CoordinateProps) => {
             value={props.getCurrentCoordinate(props.coordinateHistoryIndeks).utmZone}
           />
         </div>
-        <div className="col-md-2">
+        <div className="col-md-1">
           <label htmlFor="utmBand">Band </label>
+        </div>
+        <div className="col-md-2">
           <input
             type="text"
             className="form-control"
@@ -85,8 +96,10 @@ const UTMCoordinateComponent = (props: CoordinateProps) => {
         </div>
       </div>
       <div className="row form-group">
-        <div className="col-md-7">
+        <div className="col-md-2">
           <label htmlFor="UTMCoordinateString">UTM-Coordinate </label>
+        </div>
+        <div className="col-md-5">
           <input
             type="text"
             className="form-control"

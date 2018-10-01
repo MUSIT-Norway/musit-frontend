@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as FontAwesome from 'react-fontawesome';
 
 type CollapseState = { collapsed: Boolean };
 type CollapseProps<H, B> = {
@@ -27,35 +28,23 @@ export default class CollapseComponent<H, B> extends React.Component<
           <br />
           {Body}
         </div>
-        <div style={{ textAlign: 'right' }}>
-          {this.state.collapsed ? (
-            <button
+        <div className="form-group" style={{ textAlign: 'right', height: '30px' }}>
+          <button
+            data-toggle="tooltip"
+            title={this.state.collapsed ? 'Click to Expand' : 'Click to Hide'}
+          >
+            <FontAwesome
+              name={this.state.collapsed ? 'chevron-down' : 'chevron-up'}
+              style={{ color: 'black', float: 'right' }}
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 e.preventDefault();
                 this.setState((ps: CollapseState) => ({
                   ...ps,
-                  collapsed: false
+                  collapsed: !this.state.collapsed
                 }));
               }}
-              className="btn btn-link"
-            >
-              {'Klikk for å editere'}
-            </button>
-          ) : (
-            <button
-              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                e.preventDefault();
-                this.setState((ps: CollapseState) => ({
-                  ...ps,
-                  collapsed: true
-                }));
-              }}
-              className="btn btn-link"
-            >
-              {' '}
-              {'Klikk for å lagre'}
-            </button>
-          )}
+            />
+          </button>
         </div>
       </div>
     );

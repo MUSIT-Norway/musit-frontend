@@ -8,10 +8,12 @@ import {
 
 const MGRSComponent = (props: CoordinateProps) => {
   return (
-    <div className="form-group">
-      <div className="row">
+    <div>
+      <div className="row form-group">
         <div className="col-md-2">
           <label htmlFor="coordinateType">Coordinate type </label>
+        </div>
+        <div className="col-md-2">
           <select
             className="form-control"
             id="coordinateType"
@@ -27,8 +29,10 @@ const MGRSComponent = (props: CoordinateProps) => {
             ))}
           </select>
         </div>
-        <div className="col-md-2">
+        <div className="col-md-1">
           <label htmlFor="datum">Datum </label>
+        </div>
+        <div className="col-md-2">
           <select
             className="form-control"
             value={props.getCurrentCoordinate(props.coordinateHistoryIndeks).datum}
@@ -65,8 +69,12 @@ const MGRSComponent = (props: CoordinateProps) => {
               </div>
             </div>
           )}
+      </div>
+      <div className="row form-group">
         <div className="col-md-2">
           <label htmlFor="zone">Zone </label>
+        </div>
+        <div className="col-md-2">
           <input
             type="text"
             className="form-control"
@@ -77,8 +85,10 @@ const MGRSComponent = (props: CoordinateProps) => {
             value={props.getCurrentCoordinate(props.coordinateHistoryIndeks).utmZone}
           />
         </div>
-        <div className="col-md-2">
+        <div className="col-md-1">
           <label htmlFor="mgrsBand">Band </label>
+        </div>
+        <div className="col-md-2">
           <input
             type="text"
             className="form-control"
@@ -97,8 +107,10 @@ const MGRSComponent = (props: CoordinateProps) => {
             : 'row form-group has-success  '
         }
       >
-        <div className="col-md-7">
+        <div className="col-md-2">
           <label htmlFor="MGRSCoordinateString">MGRS-Coordinate </label>
+        </div>
+        <div className="col-md-5">
           <input
             type="text"
             className="form-control"
