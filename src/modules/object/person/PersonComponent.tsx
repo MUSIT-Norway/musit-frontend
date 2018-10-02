@@ -23,6 +23,8 @@ import {
 } from '../person/mockdata/data';
 import { formatISOString } from '../../../shared/util';
 
+import PersonSynonymSuggest from '../../../components/suggest/PersonSynonymSuggest';
+
 export type PersonName = {
   title?: string;
   firstName?: string;
@@ -36,15 +38,23 @@ export type ExternalId = {
 };
 
 export type SynState = 'SEARCH' | 'SYNONYMIZE' | 'CONFIRM';
-export type SynProps = { state: SynState; synPersons: SynPersons } & {
+export type SynProps = {
+  state: SynState;
+  synPersons: SynPerson[];
+  appSession: AppSession;
+} & {
+  onAddPersonAsSynonym: (p: SynPerson) => void;
+  onRemovePersonAsSynonym: (i: number) => void;
   onClickNext: () => void;
 };
 
-export type SynPersons = {
+export type SynPerson = {
+  personUuid: string;
   fullName: string;
-  bornDate?: string;
-  synonymes?: string;
-}[];
+  period?: string;
+  synonymes?: string[];
+  places?: string[];
+};
 
 type Collection = {
   museumId: number;
@@ -62,11 +72,21 @@ export type SynonymType = {
   status: SynonymStatus;
 };
 
+export interface PersonDet {
+  firstName?: string;
+  lastName?: string;
+  title?: string;
+  name: string;
+  personUuid: string;
+  personNameUuid: string;
+}
+
 export interface PersonState {
   uuid?: string;
   fullName: PersonName;
   legalEntityType: string;
   synState: SynState;
+  personsToSynonymize?: SynPerson[];
   url?: string;
   externalIds?: ExternalId[];
   editingIds?: ExternalId;
@@ -160,6 +180,8 @@ export type PersonProps = PersonState & {
   onClickSavePersonName: () => void;
   onClickAddPersonName: () => void;
   onDeleteSynonyms: (i: number) => (e: React.SyntheticEvent<HTMLAnchorElement>) => void;
+  onAddPersonAsSynonym: (p: SynPerson) => void;
+  onRemovePersonAsSynonym: (i: number) => void;
 };
 
 const Synonyms = (props: {
@@ -440,7 +462,7 @@ const ExternalIDStrings = (props: {
     )}
   </div>
 );
-const SynDo = (props: { synPersons: SynPersons; onClickNext: () => void }) => {
+const SynDo = (props: { synPersons: SynPerson[]; onClickNext: () => void }) => {
   return (
     <div>
       <b style={{ color: 'red' }}>
@@ -466,14 +488,18 @@ const SynSearch = (props: SynProps) => {
     <div>
       <div className="row">
         <div className="col-md-3">
-          <div className="input-group">
-            <input type="text" className="form-control" id="inputSynSearch" />
-            <div className="input-group-btn">
-              <button className="btn btn-default" onClick={props.onClickNext}>
-                Søk
-              </button>
-            </div>
-          </div>
+          <PersonSynonymSuggest
+            id="personNameSuggestADB"
+            value={
+              props.synPersons.length > 0
+                ? props.synPersons[props.synPersons.length - 1]
+                : undefined
+            }
+            renderFunc={() => ''}
+            placeHolder="Person Name"
+            appSession={props.appSession}
+            onChange={props.onAddPersonAsSynonym}
+          />
         </div>
         <div className="col-md-9">
           <b style={{ color: 'red' }}>
@@ -570,6 +596,9 @@ const Synonymizer = (props: SynProps) => {
         {props.state === 'SEARCH' ? (
           <SynSearch
             onClickNext={props.onClickNext}
+            onAddPersonAsSynonym={props.onAddPersonAsSynonym}
+            onRemovePersonAsSynonym={props.onRemovePersonAsSynonym}
+            appSession={props.appSession}
             synPersons={props.synPersons}
             state={props.state}
           />
@@ -777,6 +806,9 @@ export const PersonPage = (props: PersonProps) => {
               <Synonymizer
                 state={props.synState}
                 onClickNext={props.onClickNext}
+                onAddPersonAsSynonym={props.onAddPersonAsSynonym}
+                onRemovePersonAsSynonym={props.onRemovePersonAsSynonym}
+                appSession={props.appSession}
                 synPersons={[]}
               />
             )}
@@ -877,6 +909,10 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
           readOnly={this.props.readOnly}
           appSession={this.props.appSession}
           standAlone
+          onAddPersonAsSynonym={(p: SynPerson) => {
+            // Her skal person legges til SynPersons...
+          }}
+          onRemovePersonAsSynonym={(i: number) => {}}
           onClickSaveEdit={(appSession: AppSession) => {
             if (this.props.readOnly) {
               const url = config.magasin.urls.client.person.editPerson(
