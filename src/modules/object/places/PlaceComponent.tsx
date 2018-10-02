@@ -94,6 +94,8 @@ export type CoordinateProps = {
   coordinateCollapsed: boolean;
   coordinateType: string;
   coordinateInvalid: boolean;
+  onChangeAltitudeString: (value: string) => void;
+  onChangeDepthString: (value: string) => void;
   onChangeCoordinateNumber: (fieldName: string) => (value: number) => void;
   onSetEditingIndex: (i: number) => void;
   onChangeCoordinateText: (fieldName: string) => (value: string) => void;
@@ -337,6 +339,47 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
               };
             });
           }}
+          onChangeAltitudeString={(value: string) => {
+            const A = value.match(/\d+/g);
+            console.log('A', A);
+            const altFrom = A ? parseFloat(A[0]) : undefined;
+            const altTo = A ? parseFloat(A[1]) : undefined;
+            const altUnit = value.match(/^\d+(\s*\-\s*\d+)?\s*(ft|ft\.|f\.|feet|foot)$/i)
+              ? 'Feet'
+              : 'Meters';
+
+            this.setState((ps: PlaceState) => ({
+              ...ps,
+              editingCoordinate: {
+                ...ps.editingCoordinate,
+                altitudeAggregated: value,
+                altitudeLow: altFrom,
+                altitudeHigh: altTo,
+                altitudeUnit: altUnit
+              }
+            }));
+          }}
+          onChangeDepthString={(value: string) => {
+            const A = value.match(/\d+/g);
+            const depthFrom = A ? parseFloat(A[0]) : undefined;
+            const depthTo = A ? parseFloat(A[1]) : undefined;
+            const depthUnit = value.match(
+              /^\d+(\s*\-\s*\d+)?\s*(ft|ft\.|f\.|feet|foot)$/i
+            )
+              ? 'Feet'
+              : 'Meters';
+
+            this.setState((ps: PlaceState) => ({
+              ...ps,
+              editingCoordinate: {
+                ...ps.editingCoordinate,
+                depthAggregated: value,
+                depthLow: depthFrom,
+                depthHigh: depthTo,
+                depthUnit: depthUnit
+              }
+            }));
+          }}
           onChangeCoordinateText={(fieldName: string) => (value: string) => {
             this.setState((ps: PlaceState) => {
               let coordinateInvalid: boolean = !musitCoodinateValidate(fieldName)(value);
@@ -566,19 +609,43 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
             </div>
           </div>
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-2">
               <b>Altitude</b>
             </div>
-            <div className="col-md-6">
+            <div className="col-md-2">
+              <b>From</b>
+            </div>
+            <div className="col-md-2">
+              <b>To</b>
+            </div>
+            <div className="col-md-2">
               <b>Depth</b>
+            </div>
+            <div className="col-md-2">
+              <b>From</b>
+            </div>
+            <div className="col-md-2">
+              <b>To</b>
             </div>
           </div>
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-2">
               <p>{altitudeString}</p>
             </div>
-            <div className="col-md-6">
+            <div className="col-md-2">
+              <p>{c.altitudeLow}</p>
+            </div>
+            <div className="col-md-2">
+              <p>{c.altitudeHigh}</p>
+            </div>
+            <div className="col-md-2">
               <p>{depthString}</p>
+            </div>
+            <div className="col-md-2">
+              <p>{c.depthLow}</p>
+            </div>
+            <div className="col-md-2">
+              <p>{c.depthHigh}</p>
             </div>
           </div>
 

@@ -13,12 +13,36 @@ const AltitudeDepthData = (props: CoordinateProps) => (
           className="form-control"
           type="text"
           onChange={e => {
-            props.onChangeCoordinateText('altitudeAggregated')(e.target.value);
+            props.onChangeAltitudeString(e.target.value);
           }}
           value={
             props.getCurrentCoordinate(props.coordinateHistoryIndeks).altitudeAggregated
           }
           id="altitude"
+        />
+      </div>
+
+      <div className="col-md-1">
+        <input
+          className="form-control"
+          type="number"
+          onChange={e => {
+            props.onChangeCoordinateNumber('altitudeLow')(parseFloat(e.target.value));
+          }}
+          value={props.getCurrentCoordinate(props.coordinateHistoryIndeks).altitudeLow}
+          id="altitudeLow"
+        />
+      </div>
+
+      <div className="col-md-1">
+        <input
+          className="form-control"
+          type="number"
+          onChange={e => {
+            props.onChangeCoordinateNumber('altitudeHigh')(parseFloat(e.target.value));
+          }}
+          value={props.getCurrentCoordinate(props.coordinateHistoryIndeks).altitudeHigh}
+          id="altitudeHigh"
         />
       </div>
       <div className="col-md-1">
@@ -61,19 +85,43 @@ const AltitudeDepthData = (props: CoordinateProps) => (
     </div>
     <div className="row">
       <div className="col-md-2">
-        <label htmlFor="depth">Depth</label>
+        <label htmlFor="depthAggregated">Depth</label>
       </div>
       <div className="col-md-2">
         <input
           className="form-control"
           type="text"
           onChange={e => {
-            props.onChangeCoordinateText('depthAggregated')(e.target.value);
+            props.onChangeDepthString(e.target.value);
           }}
           value={
             props.getCurrentCoordinate(props.coordinateHistoryIndeks).depthAggregated
           }
+          id="depthAggregated"
+        />
+      </div>
+
+      <div className="col-md-1">
+        <input
+          className="form-control"
+          type="number"
+          onChange={e => {
+            props.onChangeCoordinateNumber('depthLow')(parseFloat(e.target.value));
+          }}
+          value={props.getCurrentCoordinate(props.coordinateHistoryIndeks).depthLow}
           id="depthLow"
+        />
+      </div>
+
+      <div className="col-md-1">
+        <input
+          className="form-control"
+          type="number"
+          onChange={e => {
+            props.onChangeCoordinateNumber('depthHigh')(parseFloat(e.target.value));
+          }}
+          value={props.getCurrentCoordinate(props.coordinateHistoryIndeks).depthHigh}
+          id="depthHigh"
         />
       </div>
       <div className="col-md-1">
