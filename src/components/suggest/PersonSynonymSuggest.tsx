@@ -49,9 +49,7 @@ export class PersonSynonymSuggestComponent extends React.Component<
     };
   }
   componentWillReceiveProps(next: any) {
-    console.log('componentWillReceiveProps props', this.props);
-    console.log('componentWillReceiveProps next value', next.value);
-  if (next.value !== this.props.value) {
+    if (next.value !== this.props.value) {
       this.setState(ps => ({ ...ps, value: next.value, disabled: true }));
     }
     if (next.disabled !== this.props.disabled) {
@@ -73,12 +71,9 @@ export class PersonSynonymSuggestComponent extends React.Component<
   requestSuggestionUpdate(update: TODO) {
     console.log('requestSuggestionUpdate', update);
     if (update.value.length > 2) {
-      console.log(' 444444 calling PersonSynonymSuggestion ');
       const museumId = this.props.appSession.museumId;
       const token = undefined;
-
       this.props.update({ update, museumId, token });
-      console.log('UPDATE  ', update);
     }
   }
   render() {
@@ -106,7 +101,7 @@ export class PersonSynonymSuggestComponent extends React.Component<
               }
               inputProps={{
                 ...(this.PersonNameProps as TODO),
-                value: this.state.suggestions && this.state.suggestions.length > 0 ? this.state.suggestions[this.state.suggestions.length -1] : '',
+                value: this.state.value || '',
                 disabled: this.state.disabled ? this.state.disabled : false
               }}
               shouldRenderSuggestions={v => v !== 'undefined'}
@@ -125,11 +120,8 @@ export class PersonSynonymSuggestComponent extends React.Component<
 }
 const suggest$ = suggest$Fn('PersonSynonymSuggestion', Config.api.persons.searchUrl);
 
-
 const commands = { update$, clear$ };
 
-export default   inject({ suggest$ }, commands)(
-  PersonSynonymSuggestComponent
-);
+export default inject({ suggest$ }, commands)(PersonSynonymSuggestComponent);
 
 //export default inject(data, commands)(PersonSynonymSuggestComponent);

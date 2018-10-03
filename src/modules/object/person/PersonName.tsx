@@ -135,6 +135,7 @@ export class AddPersonName extends React.Component<
       personForName: '0',
       person: {
         synState: 'SEARCH',
+        personsToSynonymize: [],
         legalEntityType: 'person',
         fullName: { nameString: 'Hei hei' },
         collections: []

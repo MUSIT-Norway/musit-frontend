@@ -40,6 +40,7 @@ export type ExternalId = {
 export type SynState = 'SEARCH' | 'SYNONYMIZE' | 'CONFIRM';
 export type SynProps = {
   state: SynState;
+  value?: string;
   synPersons: SynPerson[];
   appSession: AppSession;
 } & {
@@ -50,7 +51,10 @@ export type SynProps = {
 
 export type SynPerson = {
   personUuid: string;
-  fullName: string;
+  name: string;
+  title?: string;
+  firstName?: string;
+  lastName?: string;
   period?: string;
   synonymes?: string[];
   places?: string[];
@@ -86,7 +90,7 @@ export interface PersonState {
   fullName: PersonName;
   legalEntityType: string;
   synState: SynState;
-  personsToSynonymize?: SynPerson[];
+  personsToSynonymize: SynPerson[];
   url?: string;
   externalIds?: ExternalId[];
   editingIds?: ExternalId;
@@ -490,15 +494,10 @@ const SynSearch = (props: SynProps) => {
         <div className="col-md-3">
           <PersonSynonymSuggest
             id="personNameSuggestADB"
-            value={ ''
-              // this.props.editingDet && this.props.editingDet.personName
-              //   ? this.props.editingDet.personName || ''
-              //   : ''
-            }
-            renderFunc={(s:SynPerson) => (
-              <span className="suggestion-content">
-              {s.fullName}
-            </span>) }
+            value={''}
+            renderFunc={(s: SynPerson) => (
+              <span className="suggestion-content">{s.name}</span>
+            )}
             placeHolder="Person Name"
             appSession={props.appSession}
             onChange={props.onAddPersonAsSynonym}
@@ -598,16 +597,14 @@ const Synonymizer = (props: SynProps) => {
       <div className="panel-body">
         {props.state === 'SEARCH' ? (
           <div>
-            sdfds
-          
-          <SynSearch
-            onClickNext={props.onClickNext}
-            onAddPersonAsSynonym={props.onAddPersonAsSynonym}
-            onRemovePersonAsSynonym={props.onRemovePersonAsSynonym}
-            appSession={props.appSession}
-            synPersons={props.synPersons}
-            state={props.state}
-          />
+            <SynSearch
+              onClickNext={props.onClickNext}
+              onAddPersonAsSynonym={props.onAddPersonAsSynonym}
+              onRemovePersonAsSynonym={props.onRemovePersonAsSynonym}
+              appSession={props.appSession}
+              synPersons={props.synPersons}
+              state={props.state}
+            />
           </div>
         ) : props.state === 'SYNONYMIZE' ? (
           <SynDo synPersons={props.synPersons} onClickNext={props.onClickNext} />
@@ -886,7 +883,8 @@ export const toFrontend: (p: OutputPerson) => PersonState = (p: OutputPerson) =>
     fullName: { nameString: 'y' },
     collections: [],
     legalEntityType: 'person',
-    synState: 'SEARCH'
+    synState: 'SEARCH',
+    personsToSynonymize: []
   };
 };
 
@@ -899,6 +897,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
       : {
           fullName: { nameString: '' },
           synState: 'SEARCH',
+          personsToSynonymize: [],
           collections: [],
           legalEntityType: 'person'
         };
@@ -918,6 +917,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
           standAlone
           onAddPersonAsSynonym={(p: SynPerson) => {
             // Her skal person legges til SynPersons...
+            console.log('onAddPersonAsSynonym', p);
           }}
           onRemovePersonAsSynonym={(i: number) => {}}
           onClickSaveEdit={(appSession: AppSession) => {
@@ -971,6 +971,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
             }
           }}
           synonyms={this.state.synonyms}
+          personsToSynonymize={this.state.personsToSynonymize}
           synState={this.state.synState}
           onClickNext={() =>
             this.setState((ps: PersonState) => {

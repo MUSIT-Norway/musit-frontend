@@ -65,7 +65,7 @@ export class PersonNameSuggestComponent extends React.Component<
       disabled: this.props && this.props.disabled ? true : false
     };
   }
-  componentWillReceiveProps(next: any) {
+  componentWillReceiveProps(next: PersonNameSuggestComponentProps) {
     if (next.value !== this.props.value) {
       this.setState(ps => ({ ...ps, value: next.value, disabled: true }));
     }
