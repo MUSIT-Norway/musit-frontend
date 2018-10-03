@@ -51,6 +51,7 @@ export class PersonSynonymSuggestComponent extends React.Component<
   componentWillReceiveProps(next: any) {
     if (next.value !== this.props.value) {
       this.setState(ps => ({ ...ps, value: next.value, disabled: true }));
+      console.log('componentWillReceiveProps nextValue ', next.getSuggestionValue);
     }
     if (next.disabled !== this.props.disabled) {
       this.setState(ps => ({ ...ps, disabled: next.disabled ? next.disabled : false }));
@@ -101,7 +102,7 @@ export class PersonSynonymSuggestComponent extends React.Component<
               }
               inputProps={{
                 ...(this.PersonNameProps as TODO),
-                value: this.state.value || '',
+                value: this.state.value,
                 disabled: this.state.disabled ? this.state.disabled : false
               }}
               shouldRenderSuggestions={v => v !== 'undefined'}
@@ -109,6 +110,7 @@ export class PersonSynonymSuggestComponent extends React.Component<
                 if ((event as React.KeyboardEvent<HTMLFormElement>).keyCode === 13) {
                   event.preventDefault();
                 }
+                this.setState(ps => ({ ...ps, value: '' }));
                 this.props.onChange(suggestion);
               }}
             />
