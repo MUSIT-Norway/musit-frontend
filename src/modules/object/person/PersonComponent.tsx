@@ -490,12 +490,15 @@ const SynSearch = (props: SynProps) => {
         <div className="col-md-3">
           <PersonSynonymSuggest
             id="personNameSuggestADB"
-            value={
-              props.synPersons.length > 0
-                ? props.synPersons[props.synPersons.length - 1]
-                : undefined
+            value={ ''
+              // this.props.editingDet && this.props.editingDet.personName
+              //   ? this.props.editingDet.personName || ''
+              //   : ''
             }
-            renderFunc={() => ''}
+            renderFunc={(s:SynPerson) => (
+              <span className="suggestion-content">
+              {s.fullName}
+            </span>) }
             placeHolder="Person Name"
             appSession={props.appSession}
             onChange={props.onAddPersonAsSynonym}
@@ -594,6 +597,9 @@ const Synonymizer = (props: SynProps) => {
       </div>
       <div className="panel-body">
         {props.state === 'SEARCH' ? (
+          <div>
+            sdfds
+          
           <SynSearch
             onClickNext={props.onClickNext}
             onAddPersonAsSynonym={props.onAddPersonAsSynonym}
@@ -602,6 +608,7 @@ const Synonymizer = (props: SynProps) => {
             synPersons={props.synPersons}
             state={props.state}
           />
+          </div>
         ) : props.state === 'SYNONYMIZE' ? (
           <SynDo synPersons={props.synPersons} onClickNext={props.onClickNext} />
         ) : (

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as PropTypes from 'prop-types';
 import * as Autosuggest from 'react-autosuggest';
 import Config from '../../config';
 import suggest$Fn, { update$, clear$ } from './personSuggestStore';
@@ -50,7 +49,9 @@ export class PersonSynonymSuggestComponent extends React.Component<
     };
   }
   componentWillReceiveProps(next: any) {
-    if (next.value !== this.props.value) {
+    console.log('componentWillReceiveProps props', this.props);
+    console.log('componentWillReceiveProps next value', next.value);
+  if (next.value !== this.props.value) {
       this.setState(ps => ({ ...ps, value: next.value, disabled: true }));
     }
     if (next.disabled !== this.props.disabled) {
@@ -63,12 +64,14 @@ export class PersonSynonymSuggestComponent extends React.Component<
     type: 'search',
     onBlur: this.props.clear,
     onChange: (event: TODO, { newValue }: TODO) => {
+      console.log('PersonNameProps newValue ', newValue);
       this.setState(ps => {
         return { ...ps, value: newValue };
       });
     }
   };
   requestSuggestionUpdate(update: TODO) {
+    console.log('requestSuggestionUpdate', update);
     if (update.value.length > 2) {
       console.log(' 444444 calling PersonSynonymSuggestion ');
       const museumId = this.props.appSession.museumId;
@@ -103,7 +106,7 @@ export class PersonSynonymSuggestComponent extends React.Component<
               }
               inputProps={{
                 ...(this.PersonNameProps as TODO),
-                value: this.state.value,
+                value: this.state.suggestions && this.state.suggestions.length > 0 ? this.state.suggestions[this.state.suggestions.length -1] : '',
                 disabled: this.state.disabled ? this.state.disabled : false
               }}
               shouldRenderSuggestions={v => v !== 'undefined'}
@@ -121,20 +124,12 @@ export class PersonSynonymSuggestComponent extends React.Component<
   }
 }
 const suggest$ = suggest$Fn('PersonSynonymSuggestion', Config.api.persons.searchUrl);
-const data = {
-  appSession$: {
-    type: PropTypes.shape({
-      museumId: PropTypes.number.isRequired,
-      accessToken: PropTypes.string.isRequired
-    }).isRequired
-  },
-  suggest$
-};
+
 
 const commands = { update$, clear$ };
 
-export const PersonSynonymSuggestion = inject({ suggest$ }, commands)(
+export default   inject({ suggest$ }, commands)(
   PersonSynonymSuggestComponent
 );
 
-export default inject(data, commands)(PersonSynonymSuggestComponent);
+//export default inject(data, commands)(PersonSynonymSuggestComponent);
