@@ -246,9 +246,9 @@ const Synonyms = (props: {
                             {/* <td className="col-md-1">
                               <a
                                 href=""
-                                onClick={e => {
-                                  e.preventDefault();
-                                  props.setEditingIndexSynonyms(i);
+                              personsToSynonymize onClick={e => {
+                              personsToSynonymize   e.preventDefault();
+                              personsToSynonymize   props.setEditingIndexSynonyms(i);
                                 }}
                               >
                                 <FontAwesome name="edit" />
@@ -502,7 +502,9 @@ const SynSearch = (props: SynProps) => {
             appSession={props.appSession}
             onChange={props.onAddPersonAsSynonym}
           />
+          {console.log('synPersons', props.synPersons)}
         </div>
+
         <div className="col-md-9">
           <b style={{ color: 'red' }}>
             Man søker opp navn man vil synonymisere, får opp en liste, velger fra denne,
@@ -511,46 +513,60 @@ const SynSearch = (props: SynProps) => {
         </div>
       </div>
 
-      <div className="row">
-        <div className="col-md-8">
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Person name</th>
-                <th> Born date</th>
-                <th>Synonymes</th>
-                <th>Select</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Olsen, Stein</td>
-                <td>11.03.1967</td>
-                <td>Olsen, Stein; SAO; S.A.Olsen; Stein Alexander Olsen</td>
-                <td>
-                  <input type="checkbox" value="" />
-                </td>
-              </tr>
-              <tr>
-                <td>Glenndal, Svein Gunnar</td>
-                <td>11.03.1971</td>
-                <td>Glenndal, Svein; SGG; Glennis; S.G. Glenndal</td>
-                <td>
-                  <input type="checkbox" value="" />
-                </td>
-              </tr>
-              <tr>
-                <td>Løfall, Bjørn Petter</td>
-                <td>01.03.1966</td>
-                <td>BPL; Løfall, B.P.; Løfall, Bjørn P; Løfall</td>
-                <td>
-                  <input type="checkbox" value="" />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+      {props.synPersons &&
+        props.synPersons.length > 0 && (
+          <div className="row">
+            <table
+              id="externalIDTableHeader"
+              className="table table-condensed table-hover"
+            >
+              <thead className="row">
+                <tr className="row">
+                  <th className="col-md-2">
+                    <b>Database</b>
+                  </th>
+                  <th className="col-md-2">
+                    <b>UUID</b>
+                  </th>
+                  <th className="col-md-2">
+                    <b />
+                  </th>
+                  <th className="col-md-2">
+                    <b />
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="externalIDTableBody">
+                {props.synPersons &&
+                  props.synPersons.length > 0 &&
+                  props.synPersons.map((e, i) => (
+                    <tr key={`tr-row${i}`} className="row">
+                      <td className="col-md-2"> {e.name}</td>
+                      <td className="col-md-2">{e.synonymes}</td>
+
+                      <div>
+                        <td className="col-md-2">
+                          <a
+                            href=""
+                            onClick={e => {
+                              e.preventDefault();
+                              //props.setEditingIndex(i);
+                            }}
+                          >
+                            <FontAwesome name="edit" />
+                          </a>
+                        </td>
+                        <td className="col-md-2">
+                          <a href="">Delete</a>
+                        </td>
+                      </div>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
       <div className="row">
         <div className="col-md-1">
           <button
@@ -813,7 +829,7 @@ export const PersonPage = (props: PersonProps) => {
                 onAddPersonAsSynonym={props.onAddPersonAsSynonym}
                 onRemovePersonAsSynonym={props.onRemovePersonAsSynonym}
                 appSession={props.appSession}
-                synPersons={[]}
+                synPersons={props.personsToSynonymize}
               />
             )}
           </form>
@@ -918,6 +934,17 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
           onAddPersonAsSynonym={(p: SynPerson) => {
             // Her skal person legges til SynPersons...
             console.log('onAddPersonAsSynonym', p);
+            this.setState((ps: PersonState) => {
+              console.log('V:  onChagne', p);
+              const newSynonymPerson: SynPerson = p;
+
+              console.log('Return string onChagne', newSynonymPerson);
+
+              return {
+                ...ps,
+                personsToSynonymize: ps.personsToSynonymize.concat(newSynonymPerson) || []
+              };
+            });
           }}
           onRemovePersonAsSynonym={(i: number) => {}}
           onClickSaveEdit={(appSession: AppSession) => {
