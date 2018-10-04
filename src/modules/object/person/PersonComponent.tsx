@@ -46,7 +46,34 @@ export type SynProps = {
 };
 
 export type SynPerson = {
-  personUuid: string;
+  personUuid?: string;
+  firstName?: string;
+  lastName?: string;
+  title?: string;
+  name?: string;
+  personAttribute?: {
+    legalEntityType: string;
+    url: string;
+    externalIds: string[];
+  }[];
+  synonyms?: [
+    {
+      personNameUuid: string;
+      firstName: string;
+      lastName: string;
+      name: string;
+      isDeleted: boolean;
+    }
+  ];
+  collections?: [
+    {
+      museumId: number;
+      collectionId: number;
+    }
+  ];
+};
+
+/*  personUuid: string;
   name: string;
   title?: string;
   firstName?: string;
@@ -54,7 +81,7 @@ export type SynPerson = {
   period?: string;
   synonymes?: string[];
   places?: string[];
-};
+}; */
 
 type Collection = {
   museumId: number;
@@ -482,8 +509,15 @@ const SynDisplay = (props: { synPersons: SynPerson }) => {
             <tbody id="personToSynonymTableBody">
               <tr key={`tr-row$0`} className="row">
                 <td className="col-md-2"> {props.synPersons.name}</td>
-                <td className="col-md-2"> {props.synPersons.synonymes}</td>
-                <td className="col-md-2" />
+
+                {props.synPersons.synonyms &&
+                  props.synPersons.synonyms.length > 0 &&
+                  props.synPersons.synonyms.map((e, i) => (
+                    <tr key={`tr-row${i}`} className="row">
+                      <td className="col-md-2"> {e.name}</td>
+                      <td className="col-md-2">{e.personNameUuid}</td>
+                    </tr>
+                  ))}
               </tr>
             </tbody>
           </table>
