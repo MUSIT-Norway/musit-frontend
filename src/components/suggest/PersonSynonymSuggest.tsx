@@ -33,22 +33,26 @@ interface PersonSynonymSuggestion {
   title?: string;
   name: string;
   personAttribute: {
-     legalEntityType: string;
-     url: string;
-     externalIds: string[] }[];
+    legalEntityType: string;
+    url: string;
+    externalIds: string[];
+  }[];
   synonyms: [
-      {
-        personNameUuid: "4dbb83a2-c736-4dc7-a5ad-01da43393e12",
-        firstName: string;
-        lastName: string;
-        name: string;
-        isDeleted: boolean;
-      }],
-      collections: [{ 
-        museumId: number;
-        collectionId: number }]
-  }
-
+    {
+      personNameUuid: string;
+      firstName: string;
+      lastName: string;
+      name: string;
+      isDeleted: boolean;
+    }
+  ];
+  collections: [
+    {
+      museumId: number;
+      collectionId: number;
+    }
+  ];
+}
 
 export class PersonSynonymSuggestComponent extends React.Component<
   PersonSynonymSuggestComponentProps,
@@ -56,7 +60,7 @@ export class PersonSynonymSuggestComponent extends React.Component<
 > {
   constructor(props: PersonSynonymSuggestComponentProps) {
     super(props);
-    console.log('PersonSynonymSuggestComponentProps constructor',props);
+    console.log('PersonSynonymSuggestComponentProps constructor', props);
     this.requestSuggestionUpdate = this.requestSuggestionUpdate.bind(this);
     this.state = {
       value: this.props.value,
@@ -110,7 +114,9 @@ export class PersonSynonymSuggestComponent extends React.Component<
               onSuggestionsClearRequested={() =>
                 this.setState(() => ({ suggestions: [] }))
               }
-              getSuggestionValue={(suggestion: PersonSynonymSuggestion) => suggestion.name}
+              getSuggestionValue={(suggestion: PersonSynonymSuggestion) =>
+                suggestion.name
+              }
               renderSuggestion={(suggestion: PersonSynonymSuggestion) =>
                 this.props.renderFunc(suggestion)
               }
@@ -134,7 +140,10 @@ export class PersonSynonymSuggestComponent extends React.Component<
     );
   }
 }
-const suggest$ = suggest$Fn('PersonSynonymSuggestion', Config.api.persons.searchPersonBySynonymOrName);
+const suggest$ = suggest$Fn(
+  'PersonSynonymSuggestion',
+  Config.api.persons.searchPersonBySynonymOrName
+);
 
 const commands = { update$, clear$ };
 
