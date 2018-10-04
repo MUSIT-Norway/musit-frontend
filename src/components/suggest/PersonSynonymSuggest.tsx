@@ -5,7 +5,6 @@ import suggest$Fn, { update$, clear$ } from './personSuggestStore';
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 import { AppSession } from '../../types/appSession';
 import { TODO } from '../../types/common';
-import { personDet } from '../../models/object/classHist';
 
 interface PersonSynonymSuggestComponentProps {
   id: string;
@@ -28,13 +27,28 @@ interface PersonSynonymSuggestComponentState {
 }
 
 interface PersonSynonymSuggestion {
-  firstName: string;
+  personUuid: string;
+  firstName?: string;
   lastName?: string;
   title?: string;
   name: string;
-  personUuid: string;
-  personNameUuid: string;
-}
+  personAttribute: {
+     legalEntityType: string;
+     url: string;
+     externalIds: string[] }[];
+  synonyms: [
+      {
+        personNameUuid: "4dbb83a2-c736-4dc7-a5ad-01da43393e12",
+        firstName: string;
+        lastName: string;
+        name: string;
+        isDeleted: boolean;
+      }],
+      collections: [{ 
+        museumId: number;
+        collectionId: number }]
+  }
+
 
 export class PersonSynonymSuggestComponent extends React.Component<
   PersonSynonymSuggestComponentProps,
@@ -42,6 +56,7 @@ export class PersonSynonymSuggestComponent extends React.Component<
 > {
   constructor(props: PersonSynonymSuggestComponentProps) {
     super(props);
+    console.log('PersonSynonymSuggestComponentProps constructor',props);
     this.requestSuggestionUpdate = this.requestSuggestionUpdate.bind(this);
     this.state = {
       value: this.props.value,
@@ -96,7 +111,7 @@ export class PersonSynonymSuggestComponent extends React.Component<
               onSuggestionsClearRequested={() =>
                 this.setState(() => ({ suggestions: [] }))
               }
-              getSuggestionValue={(suggestion: personDet) => suggestion.name}
+              getSuggestionValue={(suggestion: PersonSynonymSuggestion) => suggestion.name}
               renderSuggestion={(suggestion: PersonSynonymSuggestion) =>
                 this.props.renderFunc(suggestion)
               }
@@ -120,7 +135,7 @@ export class PersonSynonymSuggestComponent extends React.Component<
     );
   }
 }
-const suggest$ = suggest$Fn('PersonSynonymSuggestion', Config.api.persons.searchUrl);
+const suggest$ = suggest$Fn('PersonSynonymSuggestion', Config.api.persons.searchPersonBySynonymOrName);
 
 const commands = { update$, clear$ };
 
