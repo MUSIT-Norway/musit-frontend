@@ -3,6 +3,7 @@ import Config from '../../config';
 import { simpleGet, simplePost, simplePut } from '../../shared/RxAjax';
 import { Callback, AjaxGet, AjaxPost, AjaxPut } from '../../types/ajax';
 import { Star } from '../../types/common';
+import { collections } from '../../modules/object/person/mockdata/data';
 
 /* const collections = [
   {
@@ -128,6 +129,7 @@ export interface OutputPerson {
   lastName?: string;
   title?: string;
   name: string;
+  isDeleted?: boolean;
   personAttribute?: PersonAttribute;
   collections: Collection[];
   synonyms?: PersonName[];
@@ -251,6 +253,23 @@ export const getPerson: (
   }
 ) => Observable<InputPerson> = (ajaxGet = simpleGet) => ({ id, token, callback }) => {
   const URL = Config.api.persons.getUrl(id);
+  return ajaxGet(URL, token, callback).map(({ response }) => response);
+};
+
+export const searchPersonName: (
+  ajaxGet: AjaxGet<Star>
+) => (
+  props: {
+    name: string;
+    token: string;
+    callback?: Callback<Star>;
+  }
+) => Observable<OutputPerson[]> = (ajaxGet = simpleGet) => ({
+  name,
+  token,
+  callback
+}) => {
+  const URL = Config.api.persons.searchPersonNameURL(name);
   return ajaxGet(URL, token, callback).map(({ response }) => response);
 };
 
