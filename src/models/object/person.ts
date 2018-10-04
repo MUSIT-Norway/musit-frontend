@@ -3,7 +3,6 @@ import Config from '../../config';
 import { simpleGet, simplePost, simplePut } from '../../shared/RxAjax';
 import { Callback, AjaxGet, AjaxPost, AjaxPut } from '../../types/ajax';
 import { Star } from '../../types/common';
-import { collections } from '../../modules/object/person/mockdata/data';
 
 /* const collections = [
   {

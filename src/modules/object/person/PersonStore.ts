@@ -20,7 +20,7 @@ import { PersonState, toFrontend, SynonymType } from './PersonComponent';
 export type PersonStoreState = {
   localState?: PersonState;
   person?: InputPerson | OutputPerson;
-  personList: Array<OutputPerson>;
+  personList?: Array<OutputPerson>;
 };
 
 export const initialPersonState = {
@@ -120,7 +120,7 @@ export const getPerson$: Subject<
 > = createAction('getPerson$');
 
 export const getPersonsFromPersonName$: Subject<
-  GetPersonsFromPersonNameProps
+  GetPersonsFromPersonNameProps & { ajaxGet: AjaxGet<Star> }
 > = createAction('getPersonFromPersonName$');
 
 export const addPerson$: Subject<

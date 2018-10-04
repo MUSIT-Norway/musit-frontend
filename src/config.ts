@@ -33,7 +33,8 @@ export default {
       editUrl: (personUuid: string) => `/api/persons/person/edit/${personUuid}`,
       getUrl: (personUuid: string) => `/api/persons/person/${personUuid}`,
       searchUrl: (personName: string) => `/api/persons/person/search/${personName}`,
-      searchPersonNameURL : (personName: string) => `/api/persons/personName/search/${personName}`
+      searchPersonNameURL: (personName: string) =>
+        `/api/persons/personName/search/${personName}`
     }
   },
   magasin: {
@@ -60,7 +61,9 @@ export default {
           viewPerson: (appSession: AppSession, id: string) =>
             `${clientContextUrl(appSession)}/person/view/${id}`,
           editPerson: (appSession: AppSession, id: string) =>
-            `${clientContextUrl(appSession)}/person/edit/${id}`
+            `${clientContextUrl(appSession)}/person/edit/${id}`,
+          searchPerson: (appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/persons/search`
         },
         conservation: {
           editConservation: (appSession: AppSession, conservationId: number) =>
