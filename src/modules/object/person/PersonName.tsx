@@ -134,8 +134,10 @@ export class AddPersonName extends React.Component<
       personName: { firstName: 'Stein', lastName: 'Olsen' },
       personForName: '0',
       person: {
-        synState: 'SEARCH',
-        personsToSynonymize: [],
+        //synState: 'SEARCH',
+        personsToSynonymize: props.personsToSynonymize
+          ? props.personsToSynonymize
+          : { personUuid: '', name: '' },
         legalEntityType: 'person',
         fullName: { nameString: 'Hei hei' },
         collections: []

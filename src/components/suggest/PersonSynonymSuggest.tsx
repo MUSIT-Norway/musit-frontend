@@ -82,7 +82,6 @@ export class PersonSynonymSuggestComponent extends React.Component<
       <div>
         <div className="col-md-9">
           <div className="form-group">
-            <label htmlFor="personName">Det</label>
             <Autosuggest
               suggestions={(this.props.suggest.data || []).sort(
                 (a: PersonSynonymSuggestion, b: PersonSynonymSuggestion) => {

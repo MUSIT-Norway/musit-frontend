@@ -36,20 +36,13 @@ export type ExternalId = {
   database?: string;
   uuid?: string;
 };
-
-export type SynState = 'SEARCH' | 'SYNONYMIZE' | 'CONFIRM';
 export type SynProps = {
-  state: SynState;
   value?: string;
-  synPersons: SynPerson[];
+  synPersons: SynPerson;
   appSession: AppSession;
 } & {
   onAddPersonAsSynonym: (p: SynPerson) => void;
-  onRemovePersonAsSynonym: (
-    i: number
-  ) => (e: React.SyntheticEvent<HTMLAnchorElement>) => void;
-  onClickNext: () => void;
-  onClickBack: () => void;
+  onRemovePersonAsSynonym: () => void;
 };
 
 export type SynPerson = {
@@ -92,8 +85,7 @@ export interface PersonState {
   uuid?: string;
   fullName: PersonName;
   legalEntityType: string;
-  synState: SynState;
-  personsToSynonymize: SynPerson[];
+  personsToSynonymize?: SynPerson;
   url?: string;
   externalIds?: ExternalId[];
   editingIds?: ExternalId;
@@ -112,7 +104,6 @@ export class PersonState implements PersonState {
   uuid?: string;
   fullName: PersonName;
   legalEntityType: string;
-  synState: SynState;
   url?: string;
   externalIds?: ExternalId[];
   editingIds?: ExternalId;
@@ -130,7 +121,6 @@ export class PersonState implements PersonState {
     fullName: PersonName,
     legalEntityType: string,
     collections: Collection[],
-    synState: SynState,
     uuid?: string,
     url?: string,
     externalIds?: ExternalId[],
@@ -145,7 +135,6 @@ export class PersonState implements PersonState {
     this.uuid = uuid;
     this.fullName = fullName;
     this.legalEntityType = legalEntityType;
-    this.synState = synState;
     this.url = url;
     this.externalIds = externalIds;
     this.synonyms = synonyms;
@@ -167,8 +156,6 @@ export type PersonProps = PersonState & {
   onChangeFullName: (fieldName: string) => (newValue: string) => void;
   onAddExternalId: () => void;
   onSaveExternalId: () => void;
-  onClickNext: () => void;
-  onClickBack: () => void;
   onChangeCollections: (newString: string) => void;
   onDeleteExternalId: (i: number) => (e: React.SyntheticEvent<HTMLAnchorElement>) => void;
   onChangeExternalIds: (field: string) => (value: string) => void;
@@ -189,9 +176,7 @@ export type PersonProps = PersonState & {
   onClickAddPersonName: () => void;
   onDeleteSynonyms: (i: number) => (e: React.SyntheticEvent<HTMLAnchorElement>) => void;
   onAddPersonAsSynonym: (p: SynPerson) => void;
-  onRemovePersonAsSynonym: (
-    i: number
-  ) => (e: React.SyntheticEvent<HTMLAnchorElement>) => void;
+  onRemovePersonAsSynonym: () => void;
 };
 
 const Synonyms = (props: {
@@ -472,51 +457,49 @@ const ExternalIDStrings = (props: {
     )}
   </div>
 );
-const SynDo = (props: {
-  synPersons: SynPerson[];
-  onClickNext: () => void;
-  onClickBack: () => void;
-}) => {
+const SynDisplay = (props: { synPersons: SynPerson }) => {
   return (
     <div>
-      <b style={{ color: 'red' }}>
-        Her kommer liste over valge personer å synonymisere, og knapp som utfører
-        synonymiseringen (# {props.synPersons.length})
-      </b>
-      <br />
       <div className="row">
-        <div className="col-md-1">
-          <button
-            type="button"
-            className="btn btn-default"
-            onClick={() => {
-              props.onClickNext();
-            }}
+        {props.synPersons.name && (
+          <table
+            id="personToSynonymTableHeader"
+            className="table table-condensed table-hover"
           >
-            Next
-          </button>
-        </div>
-        <div className="col-md-1">
-          <button
-            className="btn btn-default"
-            onClick={e => {
-              e.preventDefault();
-              props.onClickBack();
-            }}
-          >
-            Tilbake
-          </button>
-        </div>
+            <thead className="row">
+              <tr className="row">
+                <th className="col-md-2">
+                  <b>Person Full Name</b>
+                </th>
+                <th className="col-md-2">
+                  <b>Synonyms</b>
+                </th>
+                <th className="col-md-2">
+                  <b />
+                </th>
+              </tr>
+            </thead>
+            <tbody id="personToSynonymTableBody">
+              <tr key={`tr-row$0`} className="row">
+                <td className="col-md-2"> {props.synPersons.name}</td>
+                <td className="col-md-2"> {props.synPersons.synonymes}</td>
+                <td className="col-md-2" />
+              </tr>
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );
 };
-
 const SynSearch = (props: SynProps) => {
   return (
     <div>
       <div className="row">
-        <div className="col-md-3">
+        <div className="col-md-1">
+          <label htmlFor="personName">Det</label>
+        </div>
+        <div className="col-md-5">
           <PersonSynonymSuggest
             id="personNameSuggestADB"
             value={''}
@@ -530,64 +513,11 @@ const SynSearch = (props: SynProps) => {
           {console.log('synPersons', props.synPersons)}
         </div>
 
-        <div className="col-md-9">
+        <div className="col-md-6">
           <b style={{ color: 'red' }}>
             Man søker opp navn man vil synonymisere, får opp en liste, velger fra denne,
             og går videre
           </b>
-        </div>
-      </div>
-
-      {props.synPersons &&
-        props.synPersons.length > 0 && (
-          <div className="row">
-            <table
-              id="personToSynonymTableHeader"
-              className="table table-condensed table-hover"
-            >
-              <thead className="row">
-                <tr className="row">
-                  <th className="col-md-2">
-                    <b>Person Full Name</b>
-                  </th>
-                  <th className="col-md-2">
-                    <b>Synonyms</b>
-                  </th>
-                  <th className="col-md-2">
-                    <b />
-                  </th>
-                </tr>
-              </thead>
-              <tbody id="personToSynonymTableBody">
-                {props.synPersons &&
-                  props.synPersons.length > 0 &&
-                  props.synPersons.map((e, i) => (
-                    <tr key={`tr-row${i}`} className="row">
-                      <td className="col-md-2"> {e.name}</td>
-                      <td className="col-md-2">{e.synonymes}</td>
-                      <td className="col-md-2">
-                        <a href="" onClick={props.onRemovePersonAsSynonym(i)}>
-                          Delete
-                        </a>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-
-      <div className="row">
-        <div className="col-md-1">
-          <button
-            className="btn btn-default"
-            onClick={e => {
-              e.preventDefault();
-              props.onClickNext();
-            }}
-          >
-            Neste
-          </button>
         </div>
       </div>
     </div>
@@ -596,75 +526,50 @@ const SynSearch = (props: SynProps) => {
 
 const Synonymizer = (props: SynProps) => {
   return (
-    <div className="panel panel-default">
+    <div className="well panel panel-default">
       <div className="panel-heading">
         <div className="panel-title">
           <h4>Synonymizer</h4>
         </div>
-        <ul className="nav nav-pills">
-          <li className={props.state === 'SEARCH' ? 'active' : ''}>
-            <a
-              href=""
-              onClick={e => {
-                e.preventDefault();
-              }}
-            >
-              Find persons
-            </a>
-          </li>
-          <li className={props.state === 'SYNONYMIZE' ? 'active' : ''}>
-            <a href="">Do synonymizing</a>
-          </li>
-          <li className={props.state === 'CONFIRM' ? 'active' : ''}>
-            <a href="">Confirm</a>
-          </li>
-        </ul>
       </div>
       <div className="panel-body">
-        {props.state === 'SEARCH' ? (
-          <div>
-            <SynSearch
-              onClickNext={props.onClickNext}
-              onClickBack={props.onClickBack}
-              onAddPersonAsSynonym={props.onAddPersonAsSynonym}
-              onRemovePersonAsSynonym={props.onRemovePersonAsSynonym}
-              appSession={props.appSession}
-              synPersons={props.synPersons}
-              state={props.state}
-            />
-          </div>
-        ) : props.state === 'SYNONYMIZE' ? (
-          <SynDo
+        <div className="row">
+          <SynSearch
+            onAddPersonAsSynonym={props.onAddPersonAsSynonym}
+            onRemovePersonAsSynonym={props.onRemovePersonAsSynonym}
+            appSession={props.appSession}
             synPersons={props.synPersons}
-            onClickNext={props.onClickNext}
-            onClickBack={props.onClickBack}
           />
-        ) : (
-          <div>
-            <div className="row">
-              <b style={{ color: 'red' }}>Her skal man bekrefte synonymiseringen</b>
-              <br />
-            </div>
-            <div className="row">
-              <div className="col-md-1">
-                <button type="button" className="btn btn-default" onClick={() => {}}>
-                  Confirm
-                </button>
-              </div>
-              <div className="col-md-1">
-                <button
-                  className="btn btn-default"
-                  onClick={e => {
-                    e.preventDefault();
-                    props.onClickBack();
-                  }}
-                >
-                  Tilbake
-                </button>
-              </div>
-            </div>
+        </div>
+        <div className="row">
+          <SynDisplay synPersons={props.synPersons} />
+        </div>
+        <div className="row">
+          <div className="col-md-4">
+            <button
+              id="btnCancel"
+              className="btn btn-default"
+              onClick={e => {
+                e.preventDefault();
+                props.onRemovePersonAsSynonym();
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              id="btnConfirm"
+              className="btn btn-default"
+              onClick={e => {
+                e.preventDefault();
+                //props.onClickNext();
+              }}
+            >
+              Confirm
+            </button>
           </div>
-        )}
+        </div>
+        <div className="row" />
+        <div />
       </div>
     </div>
   );
@@ -854,15 +759,18 @@ export const PersonPage = (props: PersonProps) => {
                 readOnly={props.readOnly}
               />
             </div>
+            {/*   && !props.readOnly && props.uuid : 
+                NOTE ADD THIS CODE SNIPPET SHOW ONLY IN EDIT MODE */}-
             {props.standAlone && (
               <Synonymizer
-                state={props.synState}
-                onClickNext={props.onClickNext}
-                onClickBack={props.onClickBack}
                 onAddPersonAsSynonym={props.onAddPersonAsSynonym}
                 onRemovePersonAsSynonym={props.onRemovePersonAsSynonym}
                 appSession={props.appSession}
-                synPersons={props.personsToSynonymize}
+                synPersons={
+                  props.personsToSynonymize
+                    ? props.personsToSynonymize
+                    : { personUuid: '', name: '' }
+                }
               />
             )}
           </form>
@@ -907,7 +815,7 @@ export const toFrontend: (p: OutputPerson) => PersonState = (p: OutputPerson) =>
       },
       innP.personAttribute ? innP.personAttribute.legalEntityType : '',
       innP.collections,
-      'SEARCH',
+      //'SEARCH',
       innP.personUuid,
       innP.personAttribute && innP.personAttribute.url,
       innP.personAttribute && innP.personAttribute.externalIds,
@@ -933,7 +841,7 @@ export const toFrontend: (p: OutputPerson) => PersonState = (p: OutputPerson) =>
     collections: [],
     legalEntityType: 'person',
     synState: 'SEARCH',
-    personsToSynonymize: []
+    personsToSynonymize: { personUuid: '', name: '' }
   };
 };
 
@@ -945,8 +853,8 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
       ? props.store.localState
       : {
           fullName: { nameString: '' },
-          synState: 'SEARCH',
-          personsToSynonymize: [],
+          //synState: 'SEARCH',
+          //personsToSynonymize: {},
           collections: [],
           legalEntityType: 'person'
         };
@@ -968,31 +876,20 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
             // Her skal person legges til SynPersons...
             console.log('onAddPersonAsSynonym', p);
             this.setState((ps: PersonState) => {
-              console.log('V:  onChagne', p);
               const newSynonymPerson: SynPerson = p;
-
               console.log('Return string onChagne', newSynonymPerson);
-
               return {
                 ...ps,
-                personsToSynonymize: ps.personsToSynonymize.concat(newSynonymPerson) || []
+                personsToSynonymize: newSynonymPerson
               };
             });
           }}
-          onRemovePersonAsSynonym={(index: number) => (
-            e: React.SyntheticEvent<HTMLAnchorElement>
-          ) => {
-            e.preventDefault();
+          onRemovePersonAsSynonym={() => {
             this.setState((p: PersonState) => {
-              const newpersonsToSynonymize = (p.personsToSynonymize
-                ? p.personsToSynonymize.slice(0, index)
-                : []
-              ).concat(
-                p.personsToSynonymize ? p.personsToSynonymize.slice(index + 1) : []
-              );
+              const newPerToSyn: SynPerson = { personUuid: '', name: '' };
               return {
                 ...p,
-                personsToSynonymize: newpersonsToSynonymize
+                personsToSynonymize: newPerToSyn
               };
             });
           }}
@@ -1047,26 +944,10 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
             }
           }}
           synonyms={this.state.synonyms}
-          personsToSynonymize={this.state.personsToSynonymize}
-          synState={this.state.synState}
-          onClickNext={() =>
-            this.setState((ps: PersonState) => {
-              const nextState: SynState =
-                ps.synState === 'SEARCH'
-                  ? 'SYNONYMIZE'
-                  : ps.synState === 'SYNONYMIZE'
-                    ? 'CONFIRM'
-                    : 'SEARCH';
-
-              return { ...ps, synState: nextState };
-            })
-          }
-          onClickBack={() =>
-            this.setState((ps: PersonState) => {
-              const previousState: SynState =
-                ps.synState === 'CONFIRM' ? 'SYNONYMIZE' : 'SEARCH';
-              return { ...ps, synState: previousState };
-            })
+          personsToSynonymize={
+            this.state.personsToSynonymize
+              ? this.state.personsToSynonymize
+              : { personUuid: '', name: '' }
           }
           collections={this.state.collections}
           bornDate={this.state.bornDate}
