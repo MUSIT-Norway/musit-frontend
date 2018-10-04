@@ -501,7 +501,7 @@ const SynSearch = (props: SynProps) => {
         </div>
         <div className="col-md-5">
           <PersonSynonymSuggest
-            id="personNameSuggestADB"
+            id="personSynonymSuggest"
             value={''}
             renderFunc={(s: SynPerson) => (
               <span className="suggestion-content">{s.name}</span>
