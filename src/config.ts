@@ -63,7 +63,7 @@ export default {
           editPerson: (appSession: AppSession, id: string) =>
             `${clientContextUrl(appSession)}/person/edit/${id}`,
           searchPerson: (appSession: AppSession) =>
-            `${clientContextUrl(appSession)}/persons/search`
+            `${clientContextUrl(appSession)}/person/search`
         },
         conservation: {
           editConservation: (appSession: AppSession, conservationId: number) =>
