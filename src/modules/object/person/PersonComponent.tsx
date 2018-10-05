@@ -498,26 +498,19 @@ const SynDisplay = (props: { synPersons: SynPerson }) => {
                 <th className="col-md-2">
                   <b>Person Full Name</b>
                 </th>
-                <th className="col-md-2">
+                <th className="col-md-4">
                   <b>Synonyms</b>
                 </th>
-                <th className="col-md-2">
-                  <b />
+                <th className="col-md-6">
+                  <b> Collections</b>
                 </th>
               </tr>
             </thead>
             <tbody id="personToSynonymTableBody">
               <tr key={`tr-row$0`} className="row">
                 <td className="col-md-2"> {props.synPersons.name}</td>
-
-                {props.synPersons.synonyms &&
-                  props.synPersons.synonyms.length > 0 &&
-                  props.synPersons.synonyms.map((e, i) => (
-                    <tr key={`tr-row${i}`} className="row">
-                      <td className="col-md-2"> {e.name}</td>
-                      <td className="col-md-2">{e.personNameUuid}</td>
-                    </tr>
-                  ))}
+                <td className="col-md-4">{getSynonyms(props.synPersons)}</td>
+                <td className="col-md-6">{getCollections(props.synPersons)}</td>
               </tr>
             </tbody>
           </table>
@@ -526,6 +519,46 @@ const SynDisplay = (props: { synPersons: SynPerson }) => {
     </div>
   );
 };
+
+/* const  getUrl = (props: SynPerson) => {
+  let temp: string;
+  const urlConcal = props.personAttribute && props.personAttribute.length> 0 &&
+  props.personAttribute.map((e,i) => (
+      temp = temp + e.url
+    ));
+    return urlConcal;
+}; */
+const getSynonyms = (props: SynPerson) => {
+  let temp: string;
+  const synonymConcat =
+    props.synonyms &&
+    props.synonyms.length > 0 &&
+    props.synonyms.map((e, i) => (temp = i === 0 ? e.name : temp + ' : ' + e.name));
+  return synonymConcat;
+};
+
+const getCollections = (props: SynPerson) => {
+  let labelValue: string;
+  const collectionConcat =
+    props.collections &&
+    props.collections.map((m, i) => {
+      const museumRecord = museum.find(e => e.museumId === m.museumId);
+      const collectionRecord = collections.find(e => e.collectionId === m.collectionId);
+      labelValue =
+        i === 0
+          ? `${museumRecord ? museumRecord.abbreviation : ''}-${
+              collectionRecord ? collectionRecord.collectionName : ' '
+            }`
+          : ', ' +
+            `${museumRecord ? museumRecord.abbreviation : ''}-${
+              collectionRecord ? collectionRecord.collectionName : ' '
+            }`;
+
+      return labelValue;
+    });
+  return collectionConcat;
+};
+
 const SynSearch = (props: SynProps) => {
   return (
     <div>
@@ -544,7 +577,6 @@ const SynSearch = (props: SynProps) => {
             appSession={props.appSession}
             onChange={props.onAddPersonAsSynonym}
           />
-          {console.log('synPersons', props.synPersons)}
         </div>
 
         <div className="col-md-6">
