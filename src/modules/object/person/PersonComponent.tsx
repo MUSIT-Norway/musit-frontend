@@ -55,7 +55,7 @@ export type SynPerson = {
     legalEntityType: string;
     url: string;
     externalIds: string[];
-  }[];
+  };
   synonyms?: [
     {
       personNameUuid: string;
@@ -501,16 +501,20 @@ const SynDisplay = (props: { synPersons: SynPerson }) => {
                 <th className="col-md-4">
                   <b>Synonyms</b>
                 </th>
-                <th className="col-md-6">
+                <th className="col-md-3">
                   <b> Collections</b>
                 </th>
+                {/* <th className="col-md-3">
+                  <b>External IDs</b>
+                </th> */}
               </tr>
             </thead>
             <tbody id="personToSynonymTableBody">
               <tr key={`tr-row$0`} className="row">
                 <td className="col-md-2"> {props.synPersons.name}</td>
                 <td className="col-md-4">{getSynonyms(props.synPersons)}</td>
-                <td className="col-md-6">{getCollections(props.synPersons)}</td>
+                <td className="col-md-3">{getCollections(props.synPersons)}</td>
+                {/*  <td className="col-md-3">{getExternalIDs(props.synPersons)}</td> */}
               </tr>
             </tbody>
           </table>
@@ -520,14 +524,13 @@ const SynDisplay = (props: { synPersons: SynPerson }) => {
   );
 };
 
-/* const  getUrl = (props: SynPerson) => {
-  let temp: string;
-  const urlConcal = props.personAttribute && props.personAttribute.length> 0 &&
-  props.personAttribute.map((e,i) => (
-      temp = temp + e.url
-    ));
-    return urlConcal;
+/* const  getExternalIDs = (props: SynPerson) => {
+  const externalIdsString = props.personAttribute && 
+   props.personAttribute.externalIds.reduce((acc: ExternalId , val: ExternalId, i, array)
+     => (acc.database + ' '  + val.database));
+    return externalIdsString && externalIdsString ;
 }; */
+
 const getSynonyms = (props: SynPerson) => {
   let temp: string;
   const synonymConcat =
