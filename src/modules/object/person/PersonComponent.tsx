@@ -54,7 +54,7 @@ export type SynPerson = {
   personAttribute?: {
     legalEntityType: string;
     url: string;
-    externalIds: string[];
+    externalIds: ExternalId[];
   };
   synonyms?: [
     {
@@ -504,17 +504,24 @@ const SynDisplay = (props: { synPersons: SynPerson }) => {
                 <th className="col-md-3">
                   <b> Collections</b>
                 </th>
-                {/* <th className="col-md-3">
+                <th className="col-md-3">
                   <b>External IDs</b>
-                </th> */}
+                </th>
+                <th className="col-md-1">
+                  <b>URL</b>
+                </th>
               </tr>
             </thead>
             <tbody id="personToSynonymTableBody">
               <tr key={`tr-row$0`} className="row">
                 <td className="col-md-2"> {props.synPersons.name}</td>
-                <td className="col-md-4">{getSynonyms(props.synPersons)}</td>
+                <td className="col-md-3">{getSynonyms(props.synPersons)}</td>
                 <td className="col-md-3">{getCollections(props.synPersons)}</td>
-                {/*  <td className="col-md-3">{getExternalIDs(props.synPersons)}</td> */}
+                <td className="col-md-3">{getExternalIDs(props.synPersons)}</td>
+                <td className="col-md-1">
+                  {props.synPersons.personAttribute &&
+                    props.synPersons.personAttribute.url}
+                </td>
               </tr>
             </tbody>
           </table>
@@ -523,14 +530,15 @@ const SynDisplay = (props: { synPersons: SynPerson }) => {
     </div>
   );
 };
+const getExternalIDs = (props: SynPerson) => {
+  const externalIdsString =
+    props.personAttribute &&
+    props.personAttribute.externalIds
+      .map((e, i) => e.database + '  ' + e.uuid)
+      .reduce((acc, val) => acc + ' , ' + val);
 
-/* const  getExternalIDs = (props: SynPerson) => {
-  const externalIdsString = props.personAttribute && 
-   props.personAttribute.externalIds.reduce((acc: ExternalId , val: ExternalId, i, array)
-     => (acc.database + ' '  + val.database));
-    return externalIdsString && externalIdsString ;
-}; */
-
+  return externalIdsString && externalIdsString;
+};
 const getSynonyms = (props: SynPerson) => {
   let temp: string;
   const synonymConcat =
@@ -539,7 +547,6 @@ const getSynonyms = (props: SynPerson) => {
     props.synonyms.map((e, i) => (temp = i === 0 ? e.name : temp + ' : ' + e.name));
   return synonymConcat;
 };
-
 const getCollections = (props: SynPerson) => {
   let labelValue: string;
   const collectionConcat =
@@ -561,7 +568,6 @@ const getCollections = (props: SynPerson) => {
     });
   return collectionConcat;
 };
-
 const SynSearch = (props: SynProps) => {
   return (
     <div>
@@ -592,7 +598,6 @@ const SynSearch = (props: SynProps) => {
     </div>
   );
 };
-
 const Synonymizer = (props: SynProps) => {
   return (
     <div className="well panel panel-default">
@@ -643,7 +648,6 @@ const Synonymizer = (props: SynProps) => {
     </div>
   );
 };
-
 export const PersonPage = (props: PersonProps) => {
   return (
     <div className="container">
