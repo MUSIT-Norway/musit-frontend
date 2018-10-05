@@ -81,7 +81,7 @@ const NavigateSearch = (props: Props) => (
         {I18n.t('musit.analysis.analysis')}
       </button>
     )}
-       {props.appSession.rolesForModules.collectionManagementRead && (
+    {props.appSession.rolesForModules.collectionManagementRead && (
       <button
         className="btn btn-default pull-right"
         style={{
@@ -95,7 +95,9 @@ const NavigateSearch = (props: Props) => (
           e.preventDefault();
           return (
             !props.disableAnalysis &&
-            props.history(Config.magasin.urls.client.person.searchPerson(props.appSession))
+            props.history(
+              Config.magasin.urls.client.person.searchPerson(props.appSession)
+            )
           );
         }}
       >
