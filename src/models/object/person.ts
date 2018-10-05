@@ -128,6 +128,7 @@ export interface OutputPerson {
   lastName?: string;
   title?: string;
   name: string;
+  isDeleted?: boolean;
   personAttribute?: PersonAttribute;
   collections: Collection[];
   synonyms?: PersonName[];
@@ -251,6 +252,23 @@ export const getPerson: (
   }
 ) => Observable<InputPerson> = (ajaxGet = simpleGet) => ({ id, token, callback }) => {
   const URL = Config.api.persons.getUrl(id);
+  return ajaxGet(URL, token, callback).map(({ response }) => response);
+};
+
+export const searchPersonName: (
+  ajaxGet: AjaxGet<Star>
+) => (
+  props: {
+    name: string;
+    token: string;
+    callback?: Callback<Star>;
+  }
+) => Observable<OutputPerson[]> = (ajaxGet = simpleGet) => ({
+  name,
+  token,
+  callback
+}) => {
+  const URL = Config.api.persons.searchPersonBySynonymOrName(name);
   return ajaxGet(URL, token, callback).map(({ response }) => response);
 };
 

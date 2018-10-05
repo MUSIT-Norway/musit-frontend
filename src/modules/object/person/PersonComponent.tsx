@@ -980,7 +980,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
                           appSession,
                           this.state.uuid ? this.state.uuid : '' //  r.response.personUuid  //
                         );
-                        this.props.history && this.props.history.replace(url);
+                        this.props.history && this.props.history.push(url);
                       } /* ,
                       onFailure: (r: AjaxResponse) => {
                         alert(r.responseText);

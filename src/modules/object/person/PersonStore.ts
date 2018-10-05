@@ -5,6 +5,7 @@ import {
   OutputPerson,
   addPerson,
   editPerson,
+  searchPersonName,
   Person
 } from '../../../models/object/person';
 import { Observable, Subject } from 'rxjs';
@@ -19,7 +20,7 @@ import { PersonState, toFrontend, SynonymType } from './PersonComponent';
 export type PersonStoreState = {
   localState?: PersonState;
   person?: InputPerson | OutputPerson;
-  personList: Array<OutputPerson>;
+  personList?: Array<OutputPerson>;
 };
 
 export const initialPersonState = {
@@ -78,6 +79,8 @@ export type EditPersonProps = CommonParams & {
   id: string;
 };
 
+export type GetPersonsFromPersonNameProps = CommonParams & { name: string };
+
 const getPersonById = (ajaxGet: AjaxGet<Star>) => (props: GetPersonProps) =>
   Observable.of(props).flatMap(props =>
     getPerson(ajaxGet)({ id: props.id, token: props.token, callback: props.callback })
@@ -101,9 +104,24 @@ const editPersonData = (ajaxPut: AjaxPut<Star>) => (props: EditPersonProps) =>
     })
   );
 
+const searchPersonsFromName = (ajaxGet: AjaxGet<Star>) => (
+  props: GetPersonsFromPersonNameProps
+) =>
+  Observable.of(props).flatMap(props =>
+    searchPersonName(ajaxGet)({
+      name: props.name,
+      token: props.token,
+      callback: props.callback
+    })
+  );
+
 export const getPerson$: Subject<
   GetPersonProps & { ajaxGet: AjaxGet<Star> }
 > = createAction('getPerson$');
+
+export const getPersonsFromPersonName$: Subject<
+  GetPersonsFromPersonNameProps & { ajaxGet: AjaxGet<Star> }
+> = createAction('getPersonFromPersonName$');
 
 export const addPerson$: Subject<
   AddPersonProps & { ajaxPost: AjaxPost<Star> }
@@ -119,6 +137,7 @@ type Actions = {
   getPerson$: Subject<GetPersonProps>;
   addPerson$: Subject<AddPersonProps>;
   editPerson$: Subject<EditPersonProps>;
+  getPersonsFromPersonName$: Subject<GetPersonsFromPersonNameProps>;
 };
 
 export const reducer$ = (
@@ -135,6 +154,13 @@ export const reducer$ = (
         person,
         localState: toFrontend(person)
       })),
+    actions.getPersonsFromPersonName$
+      .switchMap(searchPersonsFromName(ajaxGet))
+      .map((personList: Array<OutputPerson>) => (state: PersonStoreState) => ({
+        ...state,
+        personList
+      })),
+
     actions.addPerson$
       .switchMap(addPersonData(ajaxPost))
       .map((person: InputPerson) => (state: PersonStoreState) => ({ ...state, person })),
@@ -147,7 +173,8 @@ export const store$ = (
   actions$: Actions = {
     getPerson$,
     addPerson$,
-    editPerson$
+    editPerson$,
+    getPersonsFromPersonName$
   },
   ajaxGet: AjaxGet<Star> = simpleGet,
   ajaxPost: AjaxPost<Star> = simplePost,
