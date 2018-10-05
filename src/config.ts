@@ -1,5 +1,3 @@
-// @flow
-
 //import  { MuseumId, CollectionId, NodeId, ObjectId } from '../../types/ids';
 import queryParams from './shared/queryParams';
 import { AppSession } from './types/appSession';
@@ -61,7 +59,9 @@ export default {
           viewPerson: (appSession: AppSession, id: string) =>
             `${clientContextUrl(appSession)}/person/view/${id}`,
           editPerson: (appSession: AppSession, id: string) =>
-            `${clientContextUrl(appSession)}/person/edit/${id}`
+            `${clientContextUrl(appSession)}/person/edit/${id}`,
+          searchPerson: (appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/person/search`
         },
         conservation: {
           editConservation: (appSession: AppSession, conservationId: number) =>
