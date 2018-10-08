@@ -531,13 +531,21 @@ const SynDisplay = (props: { synPersons: SynPerson }) => {
   );
 };
 const getExternalIDs = (props: SynPerson) => {
-  const externalIdsString =
+  let externalIdsString: string;
+  if (
     props.personAttribute &&
-    props.personAttribute.externalIds
-      .map((e, i) => e.database + '  ' + e.uuid)
-      .reduce((acc, val) => acc + ' , ' + val);
-
-  return externalIdsString && externalIdsString;
+    props.personAttribute.externalIds &&
+    props.personAttribute.externalIds.length > 0
+  ) {
+    externalIdsString =
+      props.personAttribute &&
+      props.personAttribute.externalIds
+        .map((e, i) => e.database + '  ' + e.uuid)
+        .reduce((acc, val) => acc + ' , ' + val);
+  } else {
+    externalIdsString = '';
+  }
+  return externalIdsString;
 };
 const getSynonyms = (props: SynPerson) => {
   let temp: string;
