@@ -46,8 +46,6 @@ export default class SearchPersonComponent extends React.Component<
                     id="searcField"
                     onChange={e => {
                       const value = e.target.value;
-                      console.log('E', e.target.value);
-
                       this.setState((ps: SearchState) => ({
                         ...ps,
                         searchString: value
@@ -59,10 +57,11 @@ export default class SearchPersonComponent extends React.Component<
                   <div className="input-group-btn">
                     <button
                       className="btn btn-default"
-                      type="button"
-                      onClick={() => {
+                      type="submit"
+                      onClick={e => {
+                        e.preventDefault();
                         this.props.getPersonsFromPersonName()({
-                          name: this.state.searchString,
+                          name: this.state.searchString || '',
                           collectionId: this.props.appSession.collectionId,
                           token: this.props.appSession.accessToken
                         });
@@ -124,7 +123,8 @@ export default class SearchPersonComponent extends React.Component<
               <div className="col-md-3"> Fant du ikke det du lette etter?</div>
               <div className="col-md-1">
                 <button
-                  className="btn btn-default"
+                  className="btn btn"
+                  type="button"
                   onClick={e => {
                     const addURL = config.magasin.urls.client.person.addPerson(
                       this.props.appSession

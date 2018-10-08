@@ -68,8 +68,6 @@ export const toBackend: ((p: PersonState) => InputPerson) = (p: PersonState) => 
   );
   console.log('to backend ', c);
   return c;
-
-  //return '{"firstName": "Karstennyyyn","lastName": "HårsakerNesten","title": "herr","name": "HårsakerNesten, herr Karstennn","collections": [{ "museum_id": 5, "collection_id": 10 }],"personAttribute": {"legalEntityType": "person",    "displayName": "Karstenn HårsakerNesten",    "bornDate": "10.09.1967",    "URL": "http://muligensEnUrl"}, "synonyms": [      {        "firstName": "Kristian",        "lastName": "Hårsårssaker",        "name": "K. Hårårssakerrr",        "title": "Herr"      },{        "firstName": "KK",      "lastName": "HårsårsNesten","name": "Hårårssaker, K"      },     {"firstName": "Kris",        "lastName": "HårsNest",        "name": "HårsNest,Kris"      }    ]}';
 };
 
 export type GetPersonProps = CommonParams & { id: string };
@@ -149,10 +147,10 @@ export const reducer$ = (
   return Observable.merge(
     actions.getPerson$
       .switchMap(getPersonById(ajaxGet))
-      .map((person: OutputPerson) => (state: PersonStoreState) => ({
+      .map((newPerson: OutputPerson) => (state: PersonStoreState) => ({
         ...state,
-        person,
-        localState: toFrontend(person)
+        person: newPerson,
+        localState: toFrontend(newPerson)
       })),
     actions.getPersonsFromPersonName$
       .switchMap(searchPersonsFromName(ajaxGet))

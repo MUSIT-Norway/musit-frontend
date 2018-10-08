@@ -24,6 +24,7 @@ const combinedStore$ = createStore(
 const addProps = (combinedStore: any, upstream: { history: History }) => ({
   ...combinedStore,
   ...upstream,
+  store: { ...combinedStore, localState: undefined },
   addPerson: (ajaxPost: AjaxPost<any>) => (props: AddPersonProps) =>
     addPerson$.next({
       data: props.data,
