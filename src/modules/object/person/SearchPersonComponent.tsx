@@ -61,7 +61,7 @@ export default class SearchPersonComponent extends React.Component<
                       onClick={e => {
                         e.preventDefault();
                         this.props.getPersonsFromPersonName()({
-                          name: this.state.searchString,
+                          name: this.state.searchString || '',
                           collectionId: this.props.appSession.collectionId,
                           token: this.props.appSession.accessToken
                         });
