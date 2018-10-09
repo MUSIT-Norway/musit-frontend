@@ -7,6 +7,7 @@ import {
   editPerson,
   searchPersonName,
   mergePerson,
+  //MergePerson,
   Person
 } from '../../../models/object/person';
 import { Observable, Subject } from 'rxjs';
@@ -78,7 +79,7 @@ export type EditPersonProps = CommonParams & {
   id: string;
 };
 export type MergePersonProps = CommonParams & {
-  data: PersonState;
+  data: any;
   id: string;
 };
 
@@ -97,6 +98,7 @@ const addPersonData = (ajaxPost: AjaxPost<Star>) => (props: AddPersonProps) =>
       callback: props.callback
     })
   );
+
 const editPersonData = (ajaxPut: AjaxPut<Star>) => (props: EditPersonProps) =>
   Observable.of(props).flatMap(props =>
     editPerson(ajaxPut)({
@@ -122,7 +124,7 @@ const mergePersonData = (ajaxPost: AjaxPost<Star>) => (props: MergePersonProps) 
   Observable.of(props).flatMap(props =>
     mergePerson(ajaxPost)({
       id: props.id,
-      data: props.data.personsToSynonymize,
+      data: props.data,
       token: props.token,
       callback: props.callback
     })
@@ -186,9 +188,9 @@ export const reducer$ = (
     actions.editPerson$
       .switchMap(editPersonData(ajaxPut))
       .map((person: InputPerson) => (state: PersonStoreState) => ({ ...state, person })),
-    actions.addPerson$
+    actions.mergePerson$
       .switchMap(mergePersonData(ajaxPost))
-      .map((person: InputPerson) => (state: PersonStoreState) => ({ ...state, person }))
+      .map(() => (state: PersonStoreState) => ({ ...state }))
   );
 };
 export const store$ = (

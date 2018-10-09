@@ -147,7 +147,6 @@ export interface InputPerson {
   personAttribute?: PersonAttribute;
   collections: Collection[];
   synonyms?: PersonName[];
-  personsToSynonymize?: SynPerson;
 }
 
 export interface OutputPerson {
@@ -160,7 +159,10 @@ export interface OutputPerson {
   personAttribute?: PersonAttribute;
   collections: Collection[];
   synonyms?: PersonName[];
-  personsToSynonymize?: SynPerson;
+}
+
+export interface MergePerson {
+  personUuid: string;
 }
 
 export interface PersonName {
@@ -343,12 +345,7 @@ export const mergePerson: (
     data: any;
     callback?: Callback<Star>;
   }
-) => Observable<InputPerson> = (ajaxPost = simplePost) => ({
-  id,
-  data,
-  token,
-  callback
-}) => {
+) => Observable<string> = (ajaxPost = simplePost) => ({ id, data, token, callback }) => {
   const URL = Config.api.persons.mergeUrl(id);
   return ajaxPost(URL, data, token, callback).map(({ response }) => response);
 };

@@ -8,7 +8,6 @@ import {
   OutputPerson,
   PersonName as StorePersonName
 } from '../../../models/object/person';
-//import { throws } from 'assert';
 import { PersonStoreState } from './PersonStore';
 import { EditList, databaseOption, databaseOptions } from '../components/EditList';
 import { History } from 'history';
@@ -39,11 +38,11 @@ export type ExternalId = {
 export type SynProps = {
   value?: string;
   synPersons: SynPerson;
-  appSession: AppSession;
+  appSession?: AppSession;
 } & {
   onAddPersonAsSynonym: (p: SynPerson) => void;
   onRemovePersonAsSynonym: () => void;
-  onClickConfirm: Function;
+  onClickMerge?: Function;
 };
 
 export type SynPerson = {
@@ -205,7 +204,7 @@ export type PersonProps = PersonState & {
   onDeleteSynonyms: (i: number) => (e: React.SyntheticEvent<HTMLAnchorElement>) => void;
   onAddPersonAsSynonym: (p: SynPerson) => void;
   onRemovePersonAsSynonym: () => void;
-  onClickConfirm: Function;
+  onClickMerge: Function;
 };
 
 const Synonyms = (props: {
@@ -222,7 +221,11 @@ const Synonyms = (props: {
   setEditingIndexSynonyms: (i: number) => void;
 }) => (
   <div>
-    <h4>Synonyms</h4>
+    <div className="panel-heading">
+      <div className="panel-title">
+        <h4>Synonyms</h4>
+      </div>
+    </div>
     <div className="grid">
       {props.synonyms &&
         props.synonyms.length > 0 && (
@@ -379,7 +382,11 @@ const ExternalIDStrings = (props: {
   onChangeDbValue: (inputValue: databaseOption) => void; //(event: React.SyntheticEvent<HTMLSelectElement>) =>
 }) => (
   <div>
-    <h4>External ID's</h4>
+    <div className="panel-heading">
+      <div className="panel-title">
+        <h4>External ID's</h4>
+      </div>
+    </div>
     <div className="grid">
       {props.externalIds &&
         props.externalIds.length > 0 && (
@@ -461,7 +468,6 @@ const ExternalIDStrings = (props: {
         </div>
       )}
     </div>
-    {console.log('inside external ids')}
     {!props.readOnly && (
       <div>
         <button
@@ -623,7 +629,6 @@ const Synonymizer = (props: SynProps) => {
             onRemovePersonAsSynonym={props.onRemovePersonAsSynonym}
             appSession={props.appSession}
             synPersons={props.synPersons}
-            onClickConfirm={props.onClickConfirm(props.appSession)}
           />
         </div>
         <div className="row">
@@ -646,7 +651,7 @@ const Synonymizer = (props: SynProps) => {
               className="btn btn-default"
               onClick={e => {
                 e.preventDefault();
-                props.onClickConfirm(props.appSession);
+                props.onClickMerge && props.onClickMerge(props.appSession);
               }}
             >
               Confirm
@@ -843,13 +848,11 @@ export const PersonPage = (props: PersonProps) => {
                 readOnly={props.readOnly}
               />
             </div>
-            {/*   && !props.readOnly && props.uuid : 
-                NOTE ADD THIS CODE SNIPPET SHOW ONLY IN EDIT MODE */}-
-            {props.standAlone && (
+            {!props.readOnly && (
               <Synonymizer
                 onAddPersonAsSynonym={props.onAddPersonAsSynonym}
                 onRemovePersonAsSynonym={props.onRemovePersonAsSynonym}
-                onClickConfirm={props.onClickConfirm}
+                onClickMerge={props.onClickMerge}
                 appSession={props.appSession}
                 synPersons={
                   props.personsToSynonymize
@@ -977,13 +980,16 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
               };
             });
           }}
-          onClickConfirm={(appSession: AppSession) => {
-            console.log('EXECUTED ', this.state.uuid, this.props.mergePerson);
+          onClickMerge={(appSession: AppSession) => {
+            console.log('EXECUTED 1', this.state.uuid, this.props.mergePerson);
             if (this.state.uuid) {
+              console.log('PROPS::', this.props);
               this.props.mergePerson &&
-                this.props.mergePerson({
+                this.props.mergePerson()({
                   id: this.state.uuid,
-                  data: this.state.personsToSynonymize,
+                  data: this.state.personsToSynonymize && {
+                    personUuid: this.state.personsToSynonymize.personUuid
+                  },
                   token: appSession.accessToken,
                   collectionId: appSession.collectionId,
                   callback: {
@@ -1345,7 +1351,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
 export type PersonComponentProps = {
   addPerson?: Function;
   editPerson?: Function;
-  mergePerson?: Function;
+  mergePerson: Function;
   getPerson?: Function;
   store: PersonStoreState;
   appSession: AppSession;
@@ -1359,7 +1365,7 @@ export default (props: PersonComponentProps) => (
     store={props.store}
     addPerson={props.addPerson && props.addPerson(props.appSession)}
     editPerson={props.editPerson && props.editPerson(props.appSession)}
-    mergePerson={props.mergePerson && props.mergePerson(props.appSession)}
+    mergePerson={props.mergePerson}
     getPerson={props.getPerson}
     history={props.history}
     readOnly={props.readOnly || false}
