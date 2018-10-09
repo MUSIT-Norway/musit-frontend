@@ -58,7 +58,6 @@ const editProps = (combinedStore: any, upstream: { history: History }) => ({
 });
 
 export const onMountProps = () => (props: any) => {
-  console.log('Props', props);
   props.getPerson(props.appSession, props.match.params.id);
 };
 

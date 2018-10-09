@@ -159,6 +159,7 @@ export interface OutputPerson {
   personAttribute?: PersonAttribute;
   collections: Collection[];
   synonyms?: PersonName[];
+  personToMergeSyn: boolean;
 }
 
 export interface MergePerson {
