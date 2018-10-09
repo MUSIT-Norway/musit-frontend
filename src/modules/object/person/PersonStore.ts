@@ -6,6 +6,7 @@ import {
   addPerson,
   editPerson,
   searchPersonName,
+  mergePerson,
   Person
 } from '../../../models/object/person';
 import { Observable, Subject } from 'rxjs';
@@ -76,6 +77,10 @@ export type EditPersonProps = CommonParams & {
   data: PersonState;
   id: string;
 };
+export type MergePersonProps = CommonParams & {
+  data: PersonState;
+  id: string;
+};
 
 export type GetPersonsFromPersonNameProps = CommonParams & { name: string };
 
@@ -113,6 +118,16 @@ const searchPersonsFromName = (ajaxGet: AjaxGet<Star>) => (
     })
   );
 
+const mergePersonData = (ajaxPost: AjaxPost<Star>) => (props: MergePersonProps) =>
+  Observable.of(props).flatMap(props =>
+    mergePerson(ajaxPost)({
+      id: props.id,
+      data: props.data.personsToSynonymize,
+      token: props.token,
+      callback: props.callback
+    })
+  );
+
 export const getPerson$: Subject<
   GetPersonProps & { ajaxGet: AjaxGet<Star> }
 > = createAction('getPerson$');
@@ -131,11 +146,18 @@ export const editPerson$: Subject<
   }
 > = createAction('editPerson$');
 
+export const mergePerson$: Subject<
+  MergePersonProps & {
+    ajaxPost: AjaxPost<Star>;
+  }
+> = createAction('mergePerson$');
+
 type Actions = {
   getPerson$: Subject<GetPersonProps>;
   addPerson$: Subject<AddPersonProps>;
   editPerson$: Subject<EditPersonProps>;
   getPersonsFromPersonName$: Subject<GetPersonsFromPersonNameProps>;
+  mergePerson$: Subject<MergePersonProps>;
 };
 
 export const reducer$ = (
@@ -158,12 +180,14 @@ export const reducer$ = (
         ...state,
         personList
       })),
-
     actions.addPerson$
       .switchMap(addPersonData(ajaxPost))
       .map((person: InputPerson) => (state: PersonStoreState) => ({ ...state, person })),
     actions.editPerson$
       .switchMap(editPersonData(ajaxPut))
+      .map((person: InputPerson) => (state: PersonStoreState) => ({ ...state, person })),
+    actions.addPerson$
+      .switchMap(mergePersonData(ajaxPost))
       .map((person: InputPerson) => (state: PersonStoreState) => ({ ...state, person }))
   );
 };
@@ -172,7 +196,8 @@ export const store$ = (
     getPerson$,
     addPerson$,
     editPerson$,
-    getPersonsFromPersonName$
+    getPersonsFromPersonName$,
+    mergePerson$
   },
   ajaxGet: AjaxGet<Star> = simpleGet,
   ajaxPost: AjaxPost<Star> = simplePost,
