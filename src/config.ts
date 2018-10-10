@@ -27,13 +27,14 @@ export default {
   },
   api: {
     persons: {
-      addUrl: '/api/persons/person/',
-      editUrl: (personUuid: string) => `/api/persons/person/edit/${personUuid}`,
-      getUrl: (personUuid: string) => `/api/persons/person/${personUuid}`,
-      searchUrl: (personName: string) => `/api/persons/person/search/${personName}`,
+      addUrl: '/api/person/persons',
+      editUrl: (personUuid: string) => `/api/person/persons/${personUuid}`,
+      getUrl: (personUuid: string) => `/api/person/persons/${personUuid}`,
+      searchUrl: (personName: string) => `/api/person/personNames?search=${personName}`,
       searchPersonBySynonymOrName: (personName: string) =>
-        `/api/persons/personName/search/${personName}`,
-      mergeUrl: (personUuid: string) => `/api/persons/person/merge/${personUuid}`
+        `/api/person/persons?search=${personName}`,
+      mergeUrl: (personUuid: string) => (personUuidToSyn: string) =>
+        `/api/person/persons/${personUuid}/merge/${personUuidToSyn}`
     }
   },
   magasin: {
