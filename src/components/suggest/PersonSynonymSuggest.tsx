@@ -5,6 +5,7 @@ import suggest$Fn, { update$, clear$ } from './personSuggestStore';
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 import { AppSession } from '../../types/appSession';
 import { TODO } from '../../types/common';
+import { uniqBy } from 'lodash';
 
 interface PersonSynonymSuggestComponentProps {
   id: string;
@@ -26,7 +27,7 @@ interface PersonSynonymSuggestComponentState {
   disabled: Boolean;
 }
 
-interface PersonSynonymSuggestion {
+export interface PersonSynonymSuggestion {
   personUuid: string;
   firstName?: string;
   lastName?: string;
@@ -46,6 +47,7 @@ interface PersonSynonymSuggestion {
       isDeleted: boolean;
     }
   ];
+  aggSyn?: string;
   collections: [
     {
       museumId: number;
@@ -102,14 +104,25 @@ export class PersonSynonymSuggestComponent extends React.Component<
         <div className="col-md-9">
           <div className="form-group">
             <Autosuggest
-              suggestions={(this.props.suggest.data || []).sort(
-                (a: PersonSynonymSuggestion, b: PersonSynonymSuggestion) => {
+              suggestions={uniqBy(
+                this.props.suggest.data || [],
+                (p: PersonSynonymSuggestion) => p.personUuid
+              )
+                .sort((a: PersonSynonymSuggestion, b: PersonSynonymSuggestion) => {
                   if (a.name <= b.name) {
                     return -1;
                   }
                   return 1;
-                }
-              )}
+                })
+                .map((p: PersonSynonymSuggestion) => ({
+                  ...p,
+                  aggSyn: p.synonyms
+                    ? `[${p.synonyms.reduce(
+                        (p, c) => `${p !== '' ? p + ';' : ''} ${c.name}`,
+                        ''
+                      )}]`
+                    : ''
+                }))}
               onSuggestionsFetchRequested={this.requestSuggestionUpdate}
               onSuggestionsClearRequested={() =>
                 this.setState(() => ({ suggestions: [] }))

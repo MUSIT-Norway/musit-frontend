@@ -52,6 +52,7 @@ export type SynPerson = {
   lastName?: string;
   title?: string;
   name?: string;
+  aggSyn?: string;
   personAttribute?: {
     legalEntityType: string;
     url: string;
@@ -601,7 +602,7 @@ const SynSearch = (props: SynProps) => {
             id="personSynonymSuggest"
             value={''}
             renderFunc={(s: SynPerson) => (
-              <span className="suggestion-content">{s.name}</span>
+              <span className="suggestion-content">{`${s.name} ${s.aggSyn}`}</span>
             )}
             placeHolder="Person Name"
             appSession={props.appSession}
