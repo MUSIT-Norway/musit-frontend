@@ -347,6 +347,6 @@ export const mergePerson: (
     callback?: Callback<Star>;
   }
 ) => Observable<string> = (ajaxPost = simplePost) => ({ id, data, token, callback }) => {
-  const URL = Config.api.persons.mergeUrl(id);
+  const URL = Config.api.persons.mergeUrl(id)(data);
   return ajaxPost(URL, data, token, callback).map(({ response }) => response);
 };
