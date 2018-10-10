@@ -32,7 +32,8 @@ export default {
       getUrl: (personUuid: string) => `/api/persons/person/${personUuid}`,
       searchUrl: (personName: string) => `/api/persons/person/search/${personName}`,
       searchPersonBySynonymOrName: (personName: string) =>
-        `/api/persons/personName/search/${personName}`
+        `/api/persons/personName/search/${personName}`,
+      mergeUrl: (personUuid: string) => `/api/persons/person/merge/${personUuid}`
     }
   },
   magasin: {

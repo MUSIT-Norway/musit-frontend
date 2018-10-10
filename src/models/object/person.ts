@@ -111,6 +111,33 @@ const museumCollection = [
   { museumId: 7, collectionId: 5 },
   { museumId: 7, collectionId: 8 }
 ]; */
+export type SynPerson = {
+  personUuid?: string;
+  firstName?: string;
+  lastName?: string;
+  title?: string;
+  name?: string;
+  personAttribute?: {
+    legalEntityType: string;
+    url: string;
+    externalIds: ExternalId[];
+  };
+  synonyms?: [
+    {
+      personNameUuid: string;
+      firstName: string;
+      lastName: string;
+      name: string;
+      isDeleted: boolean;
+    }
+  ];
+  collections?: [
+    {
+      museumId: number;
+      collectionId: number;
+    }
+  ];
+};
 
 export interface InputPerson {
   firstName?: string;
@@ -132,6 +159,11 @@ export interface OutputPerson {
   personAttribute?: PersonAttribute;
   collections: Collection[];
   synonyms?: PersonName[];
+  personToMergeSyn: boolean;
+}
+
+export interface MergePerson {
+  personUuid: string;
 }
 
 export interface PersonName {
@@ -303,4 +335,18 @@ export const editPerson: (
   return ajaxPut(URL, data, token, callback)
     .do(r => console.log('DO', r, callback))
     .map(({ response }) => response);
+};
+
+export const mergePerson: (
+  ajaxPost: AjaxPost<Star>
+) => (
+  props: {
+    id: string;
+    token: string;
+    data: any;
+    callback?: Callback<Star>;
+  }
+) => Observable<string> = (ajaxPost = simplePost) => ({ id, data, token, callback }) => {
+  const URL = Config.api.persons.mergeUrl(id);
+  return ajaxPost(URL, data, token, callback).map(({ response }) => response);
 };
