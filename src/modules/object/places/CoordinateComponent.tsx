@@ -12,11 +12,11 @@ const CoordinateComponent = (
     <div className="form-group">
       <CoordinateMetaData {...props} />
       <AltitudeDepthData {...props} />
+      <CoordinateHistoryItemComponent {...props} />
       <CoordinateHistoryComponent
         coordinateHistory={props.coordinateHistory}
         onSetEditingIndex={props.onSetEditingIndex}
       />
-      <CoordinateHistoryItemComponent {...props} />
     </div>
   );
 };

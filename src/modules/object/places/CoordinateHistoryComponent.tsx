@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as FontAwesome from 'react-fontawesome';
+//import * as FontAwesome from 'react-fontawesome';
 import { CoordinateHistory, CoordinateHistoryItem } from './PlaceComponent';
 
 const CoordinateHistoryComponent = (props: {
@@ -31,9 +31,9 @@ const CoordinateHistoryComponent = (props: {
               <th>Coordinate</th>
               <th>Altitude</th>
               <th>Depth </th>
-              <th>Date</th>
+              {/* <th>Date</th>
               <th>Reg.by</th>
-              <th />
+              <th /> */}
             </tr>
           </thead>
           <tbody>
@@ -58,7 +58,7 @@ const CoordinateHistoryComponent = (props: {
                       )}
                     </td>
 
-                    <td>{coordinate.registeredDate}</td>
+                    {/* <td>{coordinate.registeredDate}</td>
                     <td>{coordinate.registeredBy}</td>
                     <td>
                       <a
@@ -70,7 +70,7 @@ const CoordinateHistoryComponent = (props: {
                       >
                         <FontAwesome name="edit" />
                       </a>
-                    </td>
+                    </td> */}
                   </tr>
                 );
               }

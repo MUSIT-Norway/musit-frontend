@@ -1,37 +1,15 @@
 import * as React from 'react';
-import {
-  CoordinateProps,
-  coordinateTypes,
-  geometryTypes,
-  datumValues
-} from './PlaceComponent';
+import { CoordinateProps, coordinateTypes, datumValues } from './PlaceComponent';
 
 const UTMCoordinateComponent = (props: CoordinateProps) => {
   return (
     <div>
       <div className="row form-group">
-        <div className="col-md-2">
-          <label htmlFor="coordinateType">Coordinate type </label>
-        </div>
-        <div className="col-md-2">
-          <select
-            className="form-control"
-            value={
-              props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateType
-            }
-            id="coordinateType"
-            onChange={e => {
-              props.onChangeCoordinateText('coordinateType')(e.target.value);
-            }}
-          >
-            {coordinateTypes.map((type: string, i: number) => (
-              <option key={`optionRow_${i}`}>{type}</option>
-            ))}
-          </select>
-        </div>
         <div className="col-md-1">
           <label htmlFor="datum">Datum </label>
         </div>
+      </div>
+      <div className="row form-group">
         <div className="col-md-2">
           <select
             className="form-control"
@@ -46,51 +24,58 @@ const UTMCoordinateComponent = (props: CoordinateProps) => {
             ))}
           </select>
         </div>
-
-        {props.editingCoordinate &&
-          props.editingCoordinate.coordinateType !== 'UTM' && (
-            <div className="col-md-3">
-              <div>
-                <label htmlFor="coordinateGeomertry">Coordinate geometry </label>
-                <select
-                  className="form-control"
-                  id="coordinateGeomertry"
-                  onChange={e => {
-                    props.onChangeCoordinateText('coordinateGeomertry')(e.target.value);
-                  }}
-                >
-                  value={
-                    props.getCurrentCoordinate(props.coordinateHistoryIndeks)
-                      .coordinateGeomertry
-                  }
-                  {geometryTypes.map((type: string, i: number) => (
-                    <option key={`optionRow_${i}`}>{type}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          )}
+      </div>
+      <div className="row form-group">
+        <div className="col-md-2">
+          <label htmlFor="coordinateType">Coordinate type </label>
+        </div>
+      </div>
+      <div className="row form-group">
+        <div className="col-md-2">
+          <select
+            className="form-control"
+            id="coordinateType"
+            value={
+              props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateType
+            }
+            onChange={e => {
+              props.onChangeCoordinateText('coordinateType')(e.target.value);
+            }}
+          >
+            {coordinateTypes.map((type: string, i: number) => (
+              <option key={`optionRow_${i}`}>{type}</option>
+            ))}
+          </select>
+        </div>
       </div>
       <div className="row form-group">
         <div className="col-md-2">
           <label htmlFor="zone">Zone </label>
         </div>
         <div className="col-md-2">
+          <label htmlFor="mgrsBand">Band </label>
+        </div>
+      </div>
+      <div className="row form-group">
+        <div className="col-md-2">
           <input
             type="text"
             className="form-control"
             id="zone"
+            onChange={e => {
+              props.onChangeCoordinateText('utmZone')(e.target.value);
+            }}
             value={props.getCurrentCoordinate(props.coordinateHistoryIndeks).utmZone}
           />
-        </div>
-        <div className="col-md-1">
-          <label htmlFor="utmBand">Band </label>
         </div>
         <div className="col-md-2">
           <input
             type="text"
             className="form-control"
-            id="utmBand"
+            id="mgrsBand"
+            onChange={e => {
+              props.onChangeCoordinateText('mgrsBand')(e.target.value);
+            }}
             value={props.getCurrentCoordinate(props.coordinateHistoryIndeks).mgrsBand}
           />
         </div>
@@ -99,6 +84,8 @@ const UTMCoordinateComponent = (props: CoordinateProps) => {
         <div className="col-md-2">
           <label htmlFor="UTMCoordinateString">UTM-Coordinate </label>
         </div>
+      </div>
+      <div className="row form-group">
         <div className="col-md-5">
           <input
             type="text"

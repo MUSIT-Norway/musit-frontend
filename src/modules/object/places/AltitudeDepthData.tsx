@@ -3,12 +3,20 @@ import { CheckBox } from '../components/CheckBox';
 import { CoordinateProps, altDepthUnits } from './PlaceComponent';
 
 const AltitudeDepthData = (props: CoordinateProps) => (
-  <div>
+  <div className="form-group">
     <div className="row">
       <div className="col-md-2">
         <label htmlFor="altitude">Altitude</label>
       </div>
       <div className="col-md-2">
+        <label />
+      </div>
+      <div className="col-md-2">
+        <label htmlFor="altitudeUnit">Unit </label>
+      </div>
+    </div>
+    <div className="row">
+      {/* <div className="col-md-2">
         <input
           className="form-control"
           type="text"
@@ -20,9 +28,8 @@ const AltitudeDepthData = (props: CoordinateProps) => (
           }
           id="altitude"
         />
-      </div>
-
-      <div className="col-md-1">
+      </div> */}
+      <div className="col-md-2">
         <input
           className="form-control"
           type="number"
@@ -34,7 +41,7 @@ const AltitudeDepthData = (props: CoordinateProps) => (
         />
       </div>
 
-      <div className="col-md-1">
+      <div className="col-md-2">
         <input
           className="form-control"
           type="number"
@@ -45,9 +52,7 @@ const AltitudeDepthData = (props: CoordinateProps) => (
           id="altitudeHigh"
         />
       </div>
-      <div className="col-md-1">
-        <label htmlFor="altitudeUnit">Unit </label>
-      </div>
+
       <div className="col-md-2">
         <select
           className="form-control"
@@ -83,11 +88,20 @@ const AltitudeDepthData = (props: CoordinateProps) => (
         </div>
       </div>
     </div>
+
     <div className="row">
       <div className="col-md-2">
         <label htmlFor="depthAggregated">Depth</label>
       </div>
       <div className="col-md-2">
+        <label htmlFor="depthUnit" />
+      </div>
+      <div className="col-md-1">
+        <label htmlFor="depthUnit">Unit </label>
+      </div>
+    </div>
+    <div className="row">
+      {/* <div className="col-md-2">
         <input
           className="form-control"
           type="text"
@@ -99,9 +113,8 @@ const AltitudeDepthData = (props: CoordinateProps) => (
           }
           id="depthAggregated"
         />
-      </div>
-
-      <div className="col-md-1">
+      </div> */}
+      <div className="col-md-2">
         <input
           className="form-control"
           type="number"
@@ -113,7 +126,7 @@ const AltitudeDepthData = (props: CoordinateProps) => (
         />
       </div>
 
-      <div className="col-md-1">
+      <div className="col-md-2">
         <input
           className="form-control"
           type="number"
@@ -124,9 +137,7 @@ const AltitudeDepthData = (props: CoordinateProps) => (
           id="depthHigh"
         />
       </div>
-      <div className="col-md-1">
-        <label htmlFor="depthUnit">Unit </label>
-      </div>
+
       <div className="col-md-2">
         <select
           className="form-control"
@@ -166,8 +177,11 @@ const AltitudeDepthData = (props: CoordinateProps) => (
       <div className="col-md-2">
         <label htmlFor="note">Note</label>
       </div>
-      <div className="col-md-6">
+    </div>
+    <div className="row">
+      <div className="col-md-8">
         <textarea
+          rows={6}
           className="form-control"
           onChange={e => {
             props.onChangeCoordinateText('coordinateNote')(e.target.value);

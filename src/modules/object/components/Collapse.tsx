@@ -22,29 +22,34 @@ export default class CollapseComponent<H, B> extends React.Component<
     return (
       <div>
         <div>
-          <div>{Head}</div>
+          <div className="row well">
+            <div className="col-md-10" style={{ textAlign: 'left' }}>
+              {Head}
+            </div>
+            <div className="col-md-2 " style={{ textAlign: 'right', height: '50px' }}>
+              <button
+                data-toggle="tooltip"
+                title={this.state.collapsed ? 'Click to Expand' : 'Click to Hide'}
+                onClick={e => {
+                  e.preventDefault();
+                  this.setState((ps: CollapseState) => ({
+                    ...ps,
+                    collapsed: !this.state.collapsed
+                  }));
+                }}
+                className="btn btn-default"
+              >
+                <FontAwesome
+                  name={this.state.collapsed ? 'chevron-down' : 'chevron-up'}
+                  style={{ color: 'black', float: 'right' }}
+                />
+              </button>
+            </div>
+          </div>
         </div>
         <div className={`collapse${this.state.collapsed ? '' : ' in'} `}>
           <br />
           {Body}
-        </div>
-        <div className="form-group" style={{ textAlign: 'right', height: '30px' }}>
-          <button
-            data-toggle="tooltip"
-            title={this.state.collapsed ? 'Click to Expand' : 'Click to Hide'}
-          >
-            <FontAwesome
-              name={this.state.collapsed ? 'chevron-down' : 'chevron-up'}
-              style={{ color: 'black', float: 'right' }}
-              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                e.preventDefault();
-                this.setState((ps: CollapseState) => ({
-                  ...ps,
-                  collapsed: !this.state.collapsed
-                }));
-              }}
-            />
-          </button>
         </div>
       </div>
     );

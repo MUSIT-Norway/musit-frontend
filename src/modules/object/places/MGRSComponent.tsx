@@ -1,18 +1,36 @@
 import * as React from 'react';
-import {
-  CoordinateProps,
-  coordinateTypes,
-  geometryTypes,
-  datumValues
-} from './PlaceComponent';
+import { CoordinateProps, coordinateTypes, datumValues } from './PlaceComponent';
 
 const MGRSComponent = (props: CoordinateProps) => {
   return (
     <div>
       <div className="row form-group">
+        <div className="col-md-1">
+          <label htmlFor="datum">Datum </label>
+        </div>
+      </div>
+      <div className="row form-group">
+        <div className="col-md-2">
+          <select
+            className="form-control"
+            value={props.getCurrentCoordinate(props.coordinateHistoryIndeks).datum}
+            id="datum"
+            onChange={e => {
+              props.onChangeCoordinateText('datum')(e.target.value);
+            }}
+          >
+            {datumValues.map((type: string, i: number) => (
+              <option key={`optionRow_${i}`}>{type}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+      <div className="row form-group">
         <div className="col-md-2">
           <label htmlFor="coordinateType">Coordinate type </label>
         </div>
+      </div>
+      <div className="row form-group">
         <div className="col-md-2">
           <select
             className="form-control"
@@ -29,51 +47,16 @@ const MGRSComponent = (props: CoordinateProps) => {
             ))}
           </select>
         </div>
-        <div className="col-md-1">
-          <label htmlFor="datum">Datum </label>
-        </div>
-        <div className="col-md-2">
-          <select
-            className="form-control"
-            value={props.getCurrentCoordinate(props.coordinateHistoryIndeks).datum}
-            id="datum"
-            onChange={e => {
-              props.onChangeCoordinateText('datum')(e.target.value);
-            }}
-          >
-            {datumValues.map((type: string, i: number) => (
-              <option key={`optionRow_${i}`}>{type}</option>
-            ))}
-          </select>
-        </div>
-        {props.editingCoordinate &&
-          props.editingCoordinate.coordinateType !== 'MGRS' && (
-            <div className="col-md-3">
-              <div>
-                <label htmlFor="coordinateGeomertry">Coordinate geometry </label>
-                <select
-                  className="form-control"
-                  id="coordinateGeomertry"
-                  value={
-                    props.getCurrentCoordinate(props.coordinateHistoryIndeks)
-                      .coordinateGeomertry
-                  }
-                  onChange={e => {
-                    props.onChangeCoordinateText('coordinateGeomertry')(e.target.value);
-                  }}
-                >
-                  {geometryTypes.map((type: string, i: number) => (
-                    <option key={`optionRow_${i}`}>{type}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          )}
       </div>
       <div className="row form-group">
         <div className="col-md-2">
           <label htmlFor="zone">Zone </label>
         </div>
+        <div className="col-md-2">
+          <label htmlFor="mgrsBand">Band </label>
+        </div>
+      </div>
+      <div className="row form-group">
         <div className="col-md-2">
           <input
             type="text"
@@ -84,9 +67,6 @@ const MGRSComponent = (props: CoordinateProps) => {
             }}
             value={props.getCurrentCoordinate(props.coordinateHistoryIndeks).utmZone}
           />
-        </div>
-        <div className="col-md-1">
-          <label htmlFor="mgrsBand">Band </label>
         </div>
         <div className="col-md-2">
           <input
@@ -100,6 +80,11 @@ const MGRSComponent = (props: CoordinateProps) => {
           />
         </div>
       </div>
+      <div className="row form-group">
+        <div className="col-md-2">
+          <label htmlFor="MGRSCoordinateString">MGRS-Coordinate </label>
+        </div>
+      </div>
       <div
         className={
           props.coordinateInvalid
@@ -107,10 +92,7 @@ const MGRSComponent = (props: CoordinateProps) => {
             : 'row form-group has-success  '
         }
       >
-        <div className="col-md-2">
-          <label htmlFor="MGRSCoordinateString">MGRS-Coordinate </label>
-        </div>
-        <div className="col-md-5">
+        <div className="col-md-4">
           <input
             type="text"
             className="form-control"

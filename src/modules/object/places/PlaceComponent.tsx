@@ -217,7 +217,7 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
   }
 
   render() {
-    const AdmPlaceRead = () => (
+    /* const AdmPlaceRead = () => (
       <div>
         <h3>Place</h3>
         <div className="row">
@@ -275,7 +275,7 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
           </div>
         </div>
       </div>
-    );
+    ); */
     const pageBodyComp = (
       <div>
         <PageBodyComponent
@@ -555,7 +555,7 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
         />
       </div>
     );
-    const CoordinateRead = (c: Coordinate) => {
+    /* const CoordinateRead = (c: Coordinate) => {
       const coordinateString = c.coordinateString ? (
         <div>
           <b>
@@ -676,12 +676,10 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
           </div>
         </div>
       );
-    };
-
+    };*/
     const headerRead = () => (
       <div>
-        <div>{AdmPlaceRead()}</div>
-        <div>{CoordinateRead(this.state.editingCoordinate)}</div>
+        <h3>Place</h3>
       </div>
     );
 

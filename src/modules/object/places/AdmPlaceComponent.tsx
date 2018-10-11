@@ -12,9 +12,11 @@ const AdmPlaceComponent = (
       <div className="col-md-2">
         <label htmlFor="admPlaceName">Adm place </label>
       </div>
-      <div className="col-md-8">
+    </div>
+    <div className="row form-group">
+      <div className="col-md-5">
         <select
-          className="form-control"
+          className="form-control" //
           id="admPlaceName"
           onChange={e => {
             props.onChange(e.target.value);
@@ -36,8 +38,11 @@ const AdmPlaceComponent = (
       <div className="col-md-2">
         <label htmlFor="locality">Lokalitet </label>
       </div>
+    </div>
+    <div className="row form-group">
       <div className="col-md-8">
         <textarea
+          rows={6}
           className="form-control"
           id="locality"
           value={props.locality}
@@ -51,8 +56,11 @@ const AdmPlaceComponent = (
       <div className="col-md-2">
         <label htmlFor="ecology">Økologi </label>
       </div>
+    </div>
+    <div className="row form-group">
       <div className="col-md-8">
         <textarea
+          rows={6}
           className="form-control"
           id="ecology"
           value={props.ecology}
@@ -62,7 +70,7 @@ const AdmPlaceComponent = (
         />
       </div>
     </div>
-    <div className="row form-group">
+    {/* <div className="row form-group">
       <div className="col-md-2">
         <label htmlFor="ecology">Station </label>
       </div>
@@ -89,7 +97,7 @@ const AdmPlaceComponent = (
           value={props.sample ? props.sample : ''}
         />
       </div>
-    </div>
+    </div> 
     <div className="row form-group">
       <div className="col-md-2">
         <label htmlFor="ecology">Ship </label>
@@ -103,7 +111,7 @@ const AdmPlaceComponent = (
           value={props.ship ? props.ship : ''}
         />
       </div>
-    </div>
+    </div>*/}
   </div>
 );
 
