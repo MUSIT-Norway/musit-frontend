@@ -609,12 +609,6 @@ const SynSearch = (props: SynProps) => {
             onChange={props.onAddPersonAsSynonym}
           />
         </div>
-        <div className="col-md-6">
-          <b style={{ color: 'red' }}>
-            Man søker opp navn man vil synonymisere, får opp en liste, velger fra denne,
-            og går videre
-          </b>
-        </div>
       </div>
     </div>
   );
