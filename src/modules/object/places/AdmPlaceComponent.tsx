@@ -70,11 +70,19 @@ const AdmPlaceComponent = (
         />
       </div>
     </div>
-    {/* <div className="row form-group">
+     <div className="row form-group">
       <div className="col-md-2">
         <label htmlFor="ecology">Station </label>
       </div>
-      <div className="col-md-6">
+      <div className="col-md-2">
+        <label htmlFor="ecology">Sample </label>
+      </div>
+      <div className="col-md-2">
+        <label htmlFor="ecology">Ship </label>
+      </div>     
+    </div>
+    <div className="row form-group">
+      <div className="col-md-2">
         <input
           type="text"
           className="form-control"
@@ -83,12 +91,7 @@ const AdmPlaceComponent = (
           value={props.station ? props.station : ''}
         />
       </div>
-    </div>
-    <div className="row form-group">
       <div className="col-md-2">
-        <label htmlFor="ecology">Sample </label>
-      </div>
-      <div className="col-md-6">
         <input
           type="text"
           className="form-control"
@@ -97,12 +100,7 @@ const AdmPlaceComponent = (
           value={props.sample ? props.sample : ''}
         />
       </div>
-    </div> 
-    <div className="row form-group">
       <div className="col-md-2">
-        <label htmlFor="ecology">Ship </label>
-      </div>
-      <div className="col-md-6">
         <input
           type="text"
           className="form-control"
@@ -111,7 +109,7 @@ const AdmPlaceComponent = (
           value={props.ship ? props.ship : ''}
         />
       </div>
-    </div>*/}
+    </div> 
   </div>
 );
 

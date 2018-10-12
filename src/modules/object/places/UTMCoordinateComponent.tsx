@@ -86,7 +86,7 @@ const UTMCoordinateComponent = (props: CoordinateProps) => {
         </div>
       </div>
       <div className="row form-group">
-        <div className="col-md-5">
+        <div className="col-md-4">
           <input
             type="text"
             className="form-control"

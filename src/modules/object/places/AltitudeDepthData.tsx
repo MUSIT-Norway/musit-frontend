@@ -31,6 +31,7 @@ const AltitudeDepthData = (props: CoordinateProps) => (
       </div> */}
       <div className="col-md-2">
         <input
+          placeholder="Low"
           className="form-control"
           type="number"
           onChange={e => {
@@ -43,6 +44,7 @@ const AltitudeDepthData = (props: CoordinateProps) => (
 
       <div className="col-md-2">
         <input
+          placeholder="High"
           className="form-control"
           type="number"
           onChange={e => {
@@ -116,6 +118,7 @@ const AltitudeDepthData = (props: CoordinateProps) => (
       </div> */}
       <div className="col-md-2">
         <input
+          placeholder="Low"
           className="form-control"
           type="number"
           onChange={e => {
@@ -128,6 +131,7 @@ const AltitudeDepthData = (props: CoordinateProps) => (
 
       <div className="col-md-2">
         <input
+          placeholder="High"
           className="form-control"
           type="number"
           onChange={e => {
