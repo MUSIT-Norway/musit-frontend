@@ -70,7 +70,7 @@ const AdmPlaceComponent = (
         />
       </div>
     </div>
-     <div className="row form-group">
+    <div className="row form-group">
       <div className="col-md-2">
         <label htmlFor="ecology">Station </label>
       </div>
@@ -79,7 +79,7 @@ const AdmPlaceComponent = (
       </div>
       <div className="col-md-2">
         <label htmlFor="ecology">Ship </label>
-      </div>     
+      </div>
     </div>
     <div className="row form-group">
       <div className="col-md-2">
@@ -109,7 +109,7 @@ const AdmPlaceComponent = (
           value={props.ship ? props.ship : ''}
         />
       </div>
-    </div> 
+    </div>
   </div>
 );
 
