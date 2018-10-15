@@ -217,6 +217,7 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
   }
 
   render() {
+    console.log('Place state on load ', this.state);
     /* const AdmPlaceRead = () => (
       <div>
         <h3>Place</h3>
