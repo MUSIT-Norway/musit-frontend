@@ -5,6 +5,7 @@ import { AppSession } from '../../../types/appSession';
 import { AjaxGet } from '../../../types/ajax';
 import config from '../../../config';
 import { History } from 'history';
+import { PersonName } from '../../../models/object/person';
 
 export type SearchState = {
   searchString: string;
@@ -31,6 +32,23 @@ export default class SearchPersonComponent extends React.Component<
   }
 
   render() {
+    const getSynonyms = (props: PersonName[]) => {
+      let synName: string;
+      if (props.length > 0) {
+        synName =
+          props &&
+          props
+            .map(
+              (e: PersonName, i: number) =>
+                e.title + '. ' + e.lastName + ', ' + e.firstName
+            )
+            .reduce((acc, val) => acc + ' ; ' + val);
+      } else {
+        synName = '';
+      }
+      return synName;
+    };
+
     return (
       <div>
         <form style={{ padding: '25px' }}>
@@ -80,6 +98,7 @@ export default class SearchPersonComponent extends React.Component<
                   <th>Name</th>
                   <th>First name</th>
                   <th>Last name</th>
+                  <th>Synonyms</th>
                 </tr>
               </thead>
               <tbody>
@@ -93,6 +112,7 @@ export default class SearchPersonComponent extends React.Component<
                         <td>{p.name}</td>
                         <td>{p.firstName}</td>
                         <td>{p.lastName}</td>
+                        <td>{getSynonyms(p.synonyms ? p.synonyms : [])}</td>
                         <td>
                           <button
                             className="btn btn-link"
