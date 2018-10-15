@@ -183,6 +183,7 @@ export class PersonState implements PersonState {
 
 export type PersonProps = PersonState & {
   onClickSaveEdit: Function;
+  onClickCancel: Function;
   appSession: AppSession;
   onChange: (fieldName: string) => (newValue: string) => void;
   onChangePersonName: (fieldName: string) => (newValue: string) => void;
@@ -875,15 +876,15 @@ export const PersonPage = (props: PersonProps) => {
         <div className="panel-footer">
           <div className="row">
             <div className="col-md-12" style={{ textAlign: 'right' }}>
-              {' '}
-              <a
-                href="#"
-                onClick={e => {
-                  e.preventDefault();
-                }}
+              <button
+                id="btnCancel"
+                disabled={props.readOnly}
+                type="button"
+                className="btn btn-secondary"
+                onClick={() => props.onClickCancel(props.appSession)}
               >
-                Cancel{' '}
-              </a>
+                Cancel
+              </button>
               <button
                 id="saveOrEdit"
                 type="button"
@@ -1017,6 +1018,21 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
                     }  */
                   }
                 });
+            }
+          }}
+          onClickCancel={(appSession: AppSession) => {
+            if (!this.props.readOnly) {
+              if (this.state.uuid) {
+                const url = config.magasin.urls.client.person.viewPerson(
+                  appSession,
+                  this.state.uuid ? this.state.uuid : '' //  r.response.personUuid  //
+                );
+                this.props.history && this.props.history.push(url);
+              } else {
+                const url = config.magasin.urls.client.person.addPerson(appSession);
+                this.props.history && this.props.history.push(url);
+                location.reload(true);
+              }
             }
           }}
           onClickSaveEdit={(appSession: AppSession) => {
