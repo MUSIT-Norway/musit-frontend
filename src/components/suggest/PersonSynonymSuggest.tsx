@@ -94,7 +94,7 @@ export class PersonSynonymSuggestComponent extends React.Component<
     console.log('requestSuggestionUpdate', update);
     if (update.value.length > 2) {
       const museumId = this.props.appSession.museumId;
-      const token = undefined;
+      const token = this.props.appSession.accessToken;
       this.props.update({ update, museumId, token });
     }
   }
