@@ -76,6 +76,7 @@ export class TaxonComponent extends React.Component<TaxonClassificationProps> {
               <div className="col-md-12">
                 <DetTable
                   {...this.props.det}
+                  appSession={this.props.appSession}
                   onAddPerson={this.props.onAddPerson}
                   onSavePerson={this.props.onSavePerson}
                   onDeletePerson={this.props.onDeletePerson}
