@@ -4,6 +4,7 @@ import { SexAndStagesComponent } from './SexAndStagesComponent';
 import { TaxonComponent } from './TaxonComponent';
 import { ScientificName, personDet } from '../../../models/object/classHist';
 import { Collapse } from 'react-bootstrap';
+import { AppSession } from 'src/types/appSession';
 //import EditableTable from '../components/EditableTable';
 
 // Datastructure
@@ -31,6 +32,7 @@ class Det {
 }
 
 export type DetProps = IDet & {
+  appSession: AppSession;
   onAddPerson: () => void;
   onSavePerson: () => void;
   onDeletePerson: (i: number) => void;
@@ -74,6 +76,7 @@ interface ITaxonClassification {
   getPersonData?: () => string;
   getDate?: () => string;
 }
+
 
 export class TaxonClassification implements ITaxonClassification {
   taxonNames?: ITaxonTerm[];
@@ -219,6 +222,7 @@ export type SexAndLifeStageProps = ISexAndStagesClassification & {
 };
 
 export type TaxonClassificationProps = ITaxonClassification & {
+  appSession: AppSession;
   setEditingIndex: (i: number) => void;
   onChangeTaxonField: (fieldName: string) => (value: string) => void;
   onChangeTaxonClassificationFields: (fieldName: string) => (value: string) => void;
@@ -239,7 +243,6 @@ export type TaxonClassificationProps = ITaxonClassification & {
 export type TaxonClassificationsSubProps = {
   onChangeTaxonClassificationFields: (fieldName: string) => (value: string) => void;
 };
-export const appSession = { museumId: 99 };
 
 export class SexAndStagesClassification implements ISexAndStagesClassification {
   sexAndStages?: ISexAndStage[];
@@ -331,7 +334,7 @@ class State implements IState {
   }
 }
 
-type Props = IState;
+type Props = { appSession: AppSession };
 
 export default class ClassificationComponent extends React.Component<Props, IState> {
   constructor(props: Props) {
@@ -457,6 +460,7 @@ export default class ClassificationComponent extends React.Component<Props, ISta
                     };
                   });
                 }} */
+                appSession={this.props.appSession}
                 onAddTaxon={() => {
                   this.setState((ps: State) => {
                     const currentClassificationIndex =

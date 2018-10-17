@@ -47,7 +47,7 @@ import ViewPerson from './modules/object/person/ViewPersonContainer';
 import EditPerson from './modules/object/person/EditPersonContainer';
 import SearchPerson from './modules/object/person/SearchPersonContainer';
 import Place from './modules/object/places/PlaceComponent';
-import ClassEventPage from './modules/object/taxon/TaxonClassification';
+import ClassEventPage from './modules/object/taxon/TaxonContainer';
 
 /**
  *

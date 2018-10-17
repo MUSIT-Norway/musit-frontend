@@ -1,6 +1,6 @@
 import { inject, createStore } from 'react-rxjs';
 import { Observable } from 'rxjs';
-import * as TaxonClassification from './TaxonClassification';
+import TaxonClassification from './TaxonClassification';
 import { flowRight } from 'lodash';
 import appSession$ from '../../../stores/appSession';
 import { AppSession } from '../../../types/appSession';
