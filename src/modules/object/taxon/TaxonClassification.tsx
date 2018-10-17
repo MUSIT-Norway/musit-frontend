@@ -77,7 +77,6 @@ interface ITaxonClassification {
   getDate?: () => string;
 }
 
-
 export class TaxonClassification implements ITaxonClassification {
   taxonNames?: ITaxonTerm[];
   editingName?: ITaxonTerm;
