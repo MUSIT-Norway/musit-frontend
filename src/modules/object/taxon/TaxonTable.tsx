@@ -1,7 +1,7 @@
 import * as React from 'react';
 //import * as FontAwesome from 'react-fontawesome';
 import { TaxonSuggest } from '../../../components/suggest/TaxonSuggest';
-import { TaxonClassificationProps, ITaxonTerm, appSession } from './TaxonClassification';
+import { TaxonClassificationProps, ITaxonTerm } from './TaxonClassification';
 import { ScientificName } from '../../../models/object/classHist';
 
 export class TaxonTable extends React.Component<TaxonClassificationProps> {
@@ -206,7 +206,7 @@ export class TaxonTable extends React.Component<TaxonClassificationProps> {
                 value={value}
                 renderFunc={scentificNameAsString}
                 placeHolder="Taxon"
-                appSession={appSession}
+                appSession={this.props.appSession}
                 onChange={(suggestion: ScientificName) => {
                   this.props.onChangeTaxonSuggest(suggestion);
                 }}

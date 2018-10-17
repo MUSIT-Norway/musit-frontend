@@ -34,15 +34,20 @@ export default class SearchPersonComponent extends React.Component<
   render() {
     const getSynonyms = (props: PersonName[]) => {
       let synName: string;
+      let title: string;
+      let LastName: string;
+      let firstName: string;
       if (props.length > 0) {
         synName =
           props &&
           props
-            .map(
-              (e: PersonName, i: number) =>
-                e.title + '. ' + e.lastName + ', ' + e.firstName
-            )
-            .reduce((acc, val) => acc + ' ; ' + val);
+            .map((e: PersonName, i: number) => {
+              title = e.title && e.title ? e.title : ' ';
+              LastName = e.lastName && e.lastName ? '  ' + e.lastName : ' ';
+              firstName = e.firstName && e.firstName ? ', ' + e.firstName : ' ';
+              return title + LastName + firstName;
+            })
+            .reduce((acc, val) => acc + '; ' + val);
       } else {
         synName = '';
       }

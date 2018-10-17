@@ -3,7 +3,6 @@ import * as FontAwesome from 'react-fontawesome';
 //import { Link } from 'react-router-dom';
 import { PersonNameSuggest } from '../../../components/suggest/PersonNameSuggest';
 import { DetProps, IPersonName } from './TaxonClassification';
-import { appSession } from './TaxonClassification';
 import { personDet } from '../../../models/object/classHist';
 
 class DetTable extends React.Component<DetProps> {
@@ -32,7 +31,7 @@ class DetTable extends React.Component<DetProps> {
             }
             renderFunc={personNameAsString}
             placeHolder="Person Name"
-            appSession={appSession}
+            appSession={this.props.appSession}
             onChange={this.props.onChangePersonDet}
           />
         </div>
