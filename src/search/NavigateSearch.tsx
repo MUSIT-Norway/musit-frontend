@@ -90,7 +90,7 @@ const NavigateSearch = (props: Props) => (
           marginBottom: '-40px',
           color: props.disableAnalysis ? 'Gray' : 'inherit'
         }}
-        disabled={props.disableAnalysis}
+        disabled={false}
         onClick={e => {
           e.preventDefault();
           return (

@@ -128,6 +128,9 @@ export interface PersonState {
   museumAffiliation?: string;
   editingIndexSynonyms?: number;
   personToMergeSyn?: boolean;
+  enableSave?: Boolean;
+  disableOnChangeFullName?: boolean;
+  disableOnChangeOtherName?: boolean;
 }
 
 export class PersonState implements PersonState {
@@ -147,6 +150,9 @@ export class PersonState implements PersonState {
   museumAffiliation?: string;
   editingIndexSynonyms?: number;
   personToMergeSyn?: boolean;
+  enableSave?: Boolean;
+  disableOnChangeFullName?: boolean;
+  disableOnChangeOtherName?: boolean;
 
   constructor(
     fullName: PersonName,
@@ -162,7 +168,10 @@ export class PersonState implements PersonState {
     verbatimDate?: string,
     museumAffiliation?: string,
     editingIndexSynonyms?: number,
-    personToMergeSyn?: boolean
+    personToMergeSyn?: boolean,
+    enableSave?: Boolean,
+    disableOnChangeFullName?: boolean,
+    disableOnChangeOtherName?: boolean
   ) {
     this.uuid = uuid;
     this.fullName = fullName;
@@ -178,6 +187,9 @@ export class PersonState implements PersonState {
     this.museumAffiliation = museumAffiliation;
     this.editingIndexSynonyms = editingIndexSynonyms;
     this.personToMergeSyn = personToMergeSyn;
+    this.enableSave = enableSave;
+    this.disableOnChangeFullName = disableOnChangeFullName;
+    this.disableOnChangeOtherName = disableOnChangeOtherName;
   }
 }
 
@@ -674,6 +686,13 @@ const Synonymizer = (props: SynProps) => {
   );
 };
 export const PersonPage = (props: PersonProps) => {
+  const getFieldValidated = (props: PersonProps) => {
+    if (props.collections && props.fullName.nameString) {
+      return false;
+    } else {
+      return true;
+    }
+  };
   return (
     <div className="container">
       <div className="panel panel-default">
@@ -745,7 +764,11 @@ export const PersonPage = (props: PersonProps) => {
                       type="text"
                       value={(props.fullName && props.fullName.title) || ''}
                       onChange={e => props.onChangeFullName('title')(e.target.value)}
-                      disabled={props.readOnly || props.legalEntityType !== 'person'}
+                      disabled={
+                        props.readOnly ||
+                        props.legalEntityType !== 'person' ||
+                        props.disableOnChangeOtherName
+                      }
                     />
                   </div>{' '}
                   <div className="col-sm-3 form-group">
@@ -756,7 +779,11 @@ export const PersonPage = (props: PersonProps) => {
                       type="text"
                       value={(props.fullName && props.fullName.firstName) || ''}
                       onChange={e => props.onChangeFullName('firstName')(e.target.value)}
-                      disabled={props.readOnly || props.legalEntityType !== 'person'}
+                      disabled={
+                        props.readOnly ||
+                        props.legalEntityType !== 'person' ||
+                        props.disableOnChangeOtherName
+                      }
                     />
                   </div>{' '}
                   <div className="col-sm-3 form-group">
@@ -767,7 +794,11 @@ export const PersonPage = (props: PersonProps) => {
                       type="text"
                       value={(props.fullName && props.fullName.lastName) || ''}
                       onChange={e => props.onChangeFullName('lastName')(e.target.value)}
-                      disabled={props.readOnly || props.legalEntityType !== 'person'}
+                      disabled={
+                        props.readOnly ||
+                        props.legalEntityType !== 'person' ||
+                        props.disableOnChangeOtherName
+                      }
                     />
                   </div>{' '}
                   <div className="col-sm-3 form-group">
@@ -778,7 +809,7 @@ export const PersonPage = (props: PersonProps) => {
                       type="text"
                       value={(props.fullName && props.fullName.nameString) || ''}
                       onChange={e => props.onChangeFullName('nameString')(e.target.value)}
-                      disabled={props.readOnly}
+                      disabled={props.readOnly || props.disableOnChangeFullName}
                     />
                   </div>
                 </div>
@@ -888,6 +919,7 @@ export const PersonPage = (props: PersonProps) => {
               <button
                 id="saveOrEdit"
                 type="button"
+                disabled={!props.readOnly && getFieldValidated(props)}
                 className="btn btn-primary"
                 onClick={() => props.onClickSaveEdit(props.appSession)}
               >
@@ -1029,9 +1061,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
                 );
                 this.props.history && this.props.history.push(url);
               } else {
-                const url = config.magasin.urls.client.person.addPerson(appSession);
-                this.props.history && this.props.history.push(url);
-                location.reload(true);
+                this.props.history && this.props.history.goBack();
               }
             }
           }}
@@ -1101,6 +1131,9 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
           legalEntityType={this.state.legalEntityType}
           externalIds={this.state.externalIds || []}
           fullName={this.state.fullName}
+          enableSave={this.state.enableSave}
+          disableOnChangeFullName={this.state.disableOnChangeFullName}
+          disableOnChangeOtherName={this.state.disableOnChangeOtherName}
           onChangeCollections={(v: any) => {
             this.setState((ps: PersonState) => {
               console.log('V:  onChagne', v);
@@ -1360,13 +1393,27 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
                 title || firstName ? ', ' : ''
               }${title || ''}${title ? ' ' : ''}${firstName || ''}`;
 
+              const disableOnChangeFullName =
+                lastName || title || firstName ? true : false;
+
+              let disableOnChangeOtherName = false;
+              if (fieldName === 'nameString') {
+                disableOnChangeOtherName = true;
+
+                if (value === '') {
+                  disableOnChangeOtherName = false;
+                }
+              }
+
               return {
                 ...ps,
                 fullName: {
                   ...ps.fullName,
                   nameString,
                   [fieldName]: value
-                }
+                },
+                disableOnChangeFullName: disableOnChangeFullName,
+                disableOnChangeOtherName: disableOnChangeOtherName
               };
             });
           }}
