@@ -33,6 +33,7 @@ class DetTable extends React.Component<DetProps> {
             placeHolder="Person Name"
             appSession={this.props.appSession}
             onChange={this.props.onChangePersonDet}
+            history={this.props.history}
           />
         </div>
         <div className="row">
