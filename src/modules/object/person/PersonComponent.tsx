@@ -376,7 +376,7 @@ const Synonyms = (props: {
         <button
           id="saveSynonym"
           type="button"
-          className="btn btn-default"
+          className="btn btn-primary"
           onClick={props.onSave}
           disabled={props.editingIndexSynonyms === undefined}
         >
@@ -501,7 +501,7 @@ const ExternalIDStrings = (props: {
         <button
           id="saveExternalId"
           type="button"
-          className="btn btn-default"
+          className="btn btn-primary"
           onClick={props.onSave}
           disabled={props.editingIndex === undefined}
         >
@@ -650,7 +650,7 @@ const Synonymizer = (props: SynProps) => {
           <div className="col-md-4">
             <button
               id="btnCancel"
-              className="btn btn-default"
+              className="btn btn-link"
               onClick={e => {
                 e.preventDefault();
                 props.onRemovePersonAsSynonym();
@@ -668,7 +668,7 @@ const Synonymizer = (props: SynProps) => {
                     : 'Search Person to Synonimize'
                   : ''
               }
-              className="btn btn-default"
+              className="btn btn-primary"
               disabled={props.personToMergeSyn ? props.personToMergeSyn : false}
               onClick={e => {
                 e.preventDefault();
@@ -911,7 +911,7 @@ export const PersonPage = (props: PersonProps) => {
                 id="btnCancel"
                 disabled={props.readOnly}
                 type="button"
-                className="btn btn-secondary"
+                className="btn btn-link"
                 onClick={() => props.onClickCancel(props.appSession)}
               >
                 Cancel
