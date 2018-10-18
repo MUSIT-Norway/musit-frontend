@@ -128,13 +128,7 @@ const PersonName = (props: PersonNameProps) => (
       <div className="panel-footer">
         <div className="row">
           <div className="col-md-12" style={{ textAlign: 'right' }}>
-            <button
-              type="button"
-              className="btn btn-link"
-              onClick={() => {
-                //this.props.history && this.props.history.goBack();
-              }}
-            >
+            <button type="button" className="btn btn-link" onClick={() => {}}>
               Cancel
             </button>
             <button type="button" className="btn btn-primary">
