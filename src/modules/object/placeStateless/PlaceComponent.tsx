@@ -1,53 +1,63 @@
-﻿﻿import * as React from 'react';
-import CollapseComponent from '../components/Collapse';
-//import PageBodyComponent from '../places/PageBodyComponent';
-import { 
-    AdmPlace,
-    PlaceProps
+import * as React from 'react';
+import CoordinateComponent from './CoordinateComponent';
+import CoordinateHeader from './CoordinateHeader';
+import { PlaceState, CoordinateProps } from './CollectionEvents';
+import AdmPlaceComponent from './AdmPlaceComponent';
+import { CheckBox } from '../components/CheckBox';
 
-}
-from './CollectionEventsComponent';
-
-    export const coordinateTypes = ['MGRS', 'Lat / Long', 'UTM'];
-    export const datumValues = ['WGS84', 'ED50', 'EUREF-89'];
-    export const geometryTypes = ['Point', 'Reactangle', 'Polygone', 'Line'];
-    export const coordinateSources = ['Original label', 'GPS', 'Map', 'Other (see note)'];
-    export const altDepthUnits = ['Meters', 'Feet'];
-    
-    const PlaceComponent = (
-        props: PlaceProps
-    ) => {
-    const headerRead = () => (
-    <div>
-    <h3>Place</h3>
-    </div>
-    );
-    
-    const pageBodyComp = (
-    <div>
-    {/* <PageBodyComponent {...props} /> */}
-    </div>
-    );
-    
+const PlaceComponent= (
+    props: PlaceState & {
+        onChange: (value: string) => void;
+        onChangeOthers: (field: string) => (value: string) => void;
+      } & CoordinateProps
+    ) => { 
+        const PageBodyComponent = (
+            props: PlaceState & {
+              onChange: (value: string) => void;
+              onChangeOthers: (field: string) => (value: string) => void;
+            } & CoordinateProps
+          ) => {
+            return (
+              <div className="panel-group">
+                <div className="row well form-group">
+                  <AdmPlaceComponent
+                    {...props}
+                    onChangeOthers={props.onChangeOthers}
+                    onChange={props.onChange}
+                  />
+                  <CoordinateHeader {...props} />
+                  <CoordinateComponent {...props} />
+                  <div className="row">
+                    <div className="col-md-10" style={{ textAlign: 'right' }}>
+                      <CheckBox
+                        id="CoordinateEditMode"
+                        checked={props.editCoordinateMode}
+                        displayValue="Edit mode?"
+                        onChange={() =>
+                          props.onChangeEditMode(props.editCoordinateMode ? false : true)
+                        }
+                      />
+                    </div>
+                    <div className="col-md-2" style={{ textAlign: 'right' }}>
+                      <button
+                        className="btn btn-default"
+                        onClick={e => {
+                          e.preventDefault();
+                          props.onClickSaveRevision();
+                        }}
+                      >
+                        {props.editCoordinateMode ? 'Save' : 'Save revision'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          };
     return (
-    <div className="container-fluid">
-    <form style={{ padding: '20px' }}>
-    <div className="row form-group">
-    <div className="col-md-8">
-    <div className="row">
-    <CollapseComponent Head={headerRead()} Body={pageBodyComp} />
-    </div>
-    </div>
-    </div>
-    </form>
-    </div>
+        <div>
+          <PageBodyComponent {...props} />
+        </div>
     );
-    }
-    
-    export default PlaceComponent
-    
-    
-    
-    
-    
-    
+}
+export default PlaceComponent;

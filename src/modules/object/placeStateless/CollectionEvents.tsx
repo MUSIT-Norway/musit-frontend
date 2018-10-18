@@ -1,111 +1,120 @@
-﻿﻿import * as React from 'react';
+import * as React from 'react';
+import * as moment from 'moment';
+import { musitCoodinateValidate } from '../../../shared/util';
+import CollapseComponent from '../components/Collapse';
 import PlaceComponent from './PlaceComponent';
 
 export type AdmPlace = {
-admPlaceId: number;
-name?: string;
-type?: string;
-overordnet?: string;
-kommune?: string;
-fylke?: string;
-land?: string;
-lat?: number;
-long?: number;
-zoom?: number;
+  admPlaceId: number;
+  name?: string;
+  type?: string;
+  overordnet?: string;
+  kommune?: string;
+  fylke?: string;
+  land?: string;
+  lat?: number;
+  long?: number;
+  zoom?: number;
 };
+
 type Coordinate = {
-coordinateSource?: string;
-coordinateType?: string;
-coordinateGeomertry?: string;
-coordinatePrecision?: number;
-gpsAccuracy?: number;
-datum?: string;
-utmZone?: number;
-mgrsBand?: string;
-utmNorthSouth?: string;
-coordinateString?: string;
-caAltitude?: boolean;
-coordinateAddedLater?: boolean;
-coordinateNote?: string;
-altitudeLow?: number;
-altitudeHigh?: number;
-altitudeAggregated?: string;
-altitudeUnit?: string;
-depthLow?: number;
-depthAggregated?: string;
-depthHigh?: number;
-depthUnit?: string;
-caDepth?: boolean;
-isAddedLater?: boolean;
+  coordinateSource?: string;
+  coordinateType?: string;
+  coordinateGeomertry?: string;
+  coordinatePrecision?: number;
+  caAltitude?: boolean;
+  gpsAccuracy?: number;
+  datum?: string;
+  utmZone?: number;
+  mgrsBand?: string;
+  utmNorthSouth?: string;
+  coordinateString?: string;
+  caCoordinate?: boolean;
+  coordinateAddedLater?: boolean;
+  coordinateNote?: string;
+  altitudeLow?: number;
+  altitudeHigh?: number;
+  altitudeAggregated?: string;
+  altitudeUnit?: string;
+  depthLow?: number;
+  depthAggregated?: string;
+  depthHigh?: number;
+  depthUnit?: string;
+  caDepth?: boolean;
+  isAddedLater?: boolean;
 };
-type CoordinateRevisionType =
-| 'newCoordinate'
-| 'coordinateEdit'
-| 'coordinateRevision'
-| 'deleteCoordinate';
+
+export type CoordinateRevisionType =
+  | 'newCoordinate'
+  | 'coordinateEdit'
+  | 'coordinateRevision'
+  | 'deleteCoordinate';
+
 export type CoordinateHistoryItem = {
-coordinateId?: number;
-registeredBy?: string;
-registeredDate?: string;
-note?: string;
-coordinate: Coordinate;
-coordinateRevisionType?: CoordinateRevisionType;
+  coordinateId?: number;
+  registeredBy?: string;
+  registeredDate?: string;
+  note?: string;
+  coordinate: Coordinate;
+  coordinateRevisionType?: CoordinateRevisionType;
 };
 export type CoordinateHistory = Array<CoordinateHistoryItem>;
+
 export type PlaceState = {
-admPlace?: AdmPlace;
-locality?: string;
-ecology?: string;
-station?: string;
-sample?: string;
-ship?: string;
-coordinateHistory: CoordinateHistory;
-editingCoordinate: Coordinate;
-coordinateHistoryIndeks: number;
-editCoorditeMode?: boolean;
-coordinateInvalid: boolean; 
-method?: string;
-methodDescription?: string;
-coordinateCollapsed?: boolean;
+  coordinateHistory: CoordinateHistory;
+  editingCoordinate: Coordinate;
+  coordinateHistoryIndeks: number;
+  editCoorditeMode?: boolean;
+  coordinateInvalid: boolean;
+  admPlace?: AdmPlace;
+  locality?: string;
+  ecology?: string;
+  station?: string;
+  sample?: string;
+  ship?: string;
+  method?: string;
+  methodDescription?: string;
+  coordinateCollapsed?: boolean;
+  altitudeCollapsed?: boolean;
 };
 
 export type PlaceProps = PlaceState & {
-onChangeTextField: (fieldName: string) => (value: string) => void;
-onChangeNumberField: (fieldName: string) => (value: number) => void;
+  onChangeTextField: (fieldName: string) => (value: string) => void;
+  onChangeNumberField: (fieldName: string) => (value: number) => void;
 };
+
 export type CoordinateProps = {
-coordinateHistory: CoordinateHistory;
-editingCoordinate: Coordinate;
-editCoordinateMode: boolean;
-coordinateHistoryIndeks: number;
-coordinateCollapsed: boolean;
-coordinateType: string;
-coordinateInvalid: boolean;
-onChangeAltitudeString: (value: string) => void;
-onChangeDepthString: (value: string) => void;
-onChangeCoordinateNumber: (fieldName: string) => (value: number) => void;
-onSetEditingIndex: (i: number) => void;
-onChangeCoordinateText: (fieldName: string) => (value: string) => void;
-onChangeHistoryItem: (fieldName: string) => (value: string) => void;
-getCurrentCoordinate: (ind: number) => Coordinate;
-getCurrentHistoryItem: (ind: number) => CoordinateHistoryItem;
-onChangeCheckBoxBoolean: (fieldName: string) => (value: string | boolean) => void;
-onClickSaveRevision: () => void;
-onClickSaveEdit: () => void;
-onChangeEditMode: (edit: boolean) => void;
-onToggleCollapse: () => void;
+  coordinateHistory: CoordinateHistory;
+  editingCoordinate: Coordinate;
+  editCoordinateMode: boolean;
+  coordinateHistoryIndeks: number;
+  coordinateCollapsed: boolean;
+  coordinateType: string;
+  coordinateInvalid: boolean;
+  onChangeAltitudeString: (value: string) => void;
+  onChangeDepthString: (value: string) => void;
+  onChangeCoordinateNumber: (fieldName: string) => (value: number) => void;
+  onSetEditingIndex: (i: number) => void;
+  onChangeCoordinateText: (fieldName: string) => (value: string) => void;
+  onChangeHistoryItem: (fieldName: string) => (value: string) => void;
+  getCurrentCoordinate: (ind: number) => Coordinate;
+  getCurrentHistoryItem: (ind: number) => CoordinateHistoryItem;
+  onChangeCheckBoxBoolean: (fieldName: string) => (value: string | boolean) => void;
+  onClickSaveRevision: () => void;
+  onClickSaveEdit: () => void;
+  onChangeEditMode: (edit: boolean) => void;
+  onToggleCollapse: () => void;
 };
 
 export type CheckBoxProps = {
-id: string;
-checked: boolean;
-displayValue: string;
-onChange: string;
+  id: string;
+  checked: boolean;
+  displayValue: string;
+  onChange: string;
 };
 
-
 export const admPlaces: Array<AdmPlace> = [
-    {
+  {
     admPlaceId: 1,
     name: 'Oslo',
     type: 'Kommune',
@@ -115,8 +124,8 @@ export const admPlaces: Array<AdmPlace> = [
     lat: 59.8939224,
     long: 10.7149059,
     zoom: 12
-    },
-    {
+  },
+  {
     admPlaceId: 2,
     name: 'Bergen',
     type: 'Kommune',
@@ -127,8 +136,8 @@ export const admPlaces: Array<AdmPlace> = [
     lat: 60.3651115,
     long: 5.2887477,
     zoom: 11
-    },
-    {
+  },
+  {
     admPlaceId: 3,
     name: 'Trondheim',
     type: 'Kommune',
@@ -139,8 +148,8 @@ export const admPlaces: Array<AdmPlace> = [
     lat: 63.418719,
     long: 10.3685518,
     zoom: 12
-    },
-    {
+  },
+  {
     admPlaceId: 4,
     name: 'Kristiansand',
     type: 'Kommune',
@@ -151,8 +160,8 @@ export const admPlaces: Array<AdmPlace> = [
     lat: 58.1529583,
     long: 7.9390013,
     zoom: 12
-    },
-    {
+  },
+  {
     admPlaceId: 5,
     name: 'Drammen',
     type: 'Kommune',
@@ -163,8 +172,8 @@ export const admPlaces: Array<AdmPlace> = [
     lat: 59.734017,
     long: 10.1489475,
     zoom: 12
-    },
-    {
+  },
+  {
     admPlaceId: 6,
     name: 'Buskerud',
     type: 'Fylke',
@@ -174,12 +183,16 @@ export const admPlaces: Array<AdmPlace> = [
     lat: 60,
     long: 9,
     zoom: 12
-    }
-    ];
+  }
+];
+export const coordinateTypes = ['MGRS', 'Lat / Long', 'UTM'];
+export const datumValues = ['WGS84', 'ED50', 'EUREF-89'];
+export const geometryTypes = ['Point', 'Reactangle', 'Polygone', 'Line'];
+export const coordinateSources = ['Original label', 'GPS', 'Map', 'Other (see note)'];
+export const altDepthUnits = ['Meters', 'Feet'];
 
-
-export default class CollectionEventsComponent extends React.Component<PlaceProps, PlaceState> {
-     constructor(props: PlaceProps) {
+export default class CollectionEvents extends React.Component<PlaceProps, PlaceState> {
+  constructor(props: PlaceProps) {
     super(props);
     this.state = {
       admPlace: admPlaces[0],
@@ -190,7 +203,8 @@ export default class CollectionEventsComponent extends React.Component<PlaceProp
         datum: 'WGS84',
         caAltitude: false,
         caDepth: false,
-        isAddedLater: false
+        isAddedLater: false,
+        caCoordinate: false
       },
       coordinateHistory: [{ coordinate: { coordinateType: '' } }],
       coordinateCollapsed: true,
@@ -201,8 +215,7 @@ export default class CollectionEventsComponent extends React.Component<PlaceProp
 
   render() {
     console.log('Place state on load ', this.state);
-   
-    const pageBodyComp = (
+    const placeComponent = (
       <div>
         <PlaceComponent
           {...this.state}
@@ -481,24 +494,21 @@ export default class CollectionEventsComponent extends React.Component<PlaceProp
         />
       </div>
     );
-
     const headerRead = () => (
       <div>
         <h3>Place</h3>
       </div>
     );
-
     return (
       <div className="container-fluid">
         <form style={{ padding: '20px' }}>
           <div className="row form-group">
             <div className="col-md-8">
               <div className="row">
-                <CollapseComponent Head={headerRead()} Body={pageBodyComp} />
+                <CollapseComponent Head={headerRead()} Body={placeComponent} />
               </div>
             </div>
             <div className="col-md-4">
-    
             </div>
           </div>
         </form>
