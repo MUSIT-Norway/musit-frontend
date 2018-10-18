@@ -100,27 +100,6 @@ const SearchInputFormComponent = (props: Props) => (
         md={4}
       />
       <button
-        className="btn btn-default pull-right"
-        style={{ marginRight: '20px', marginTop: '40px' }}
-        type="submit"
-        onClick={e => {
-          e.preventDefault();
-          return validateNumberRangeField(
-            props &&
-              props.searchStore &&
-              props.searchStore.queryParam &&
-              props.searchStore.queryParam.museumNoAsANumber
-          )
-            ? props.search(true)
-            : emitWarning({
-                message: I18n.t('musit.texts.numberRangeMessage')
-              });
-        }}
-      >
-        <FontAwesome name="database" style={{ fontSize: '1.3em' }} />
-        <FontAwesome name="search" style={{ fontSize: '1.3em' }} />
-      </button>
-      <button
         id="executeSearch"
         className="btn btn-default pull-right"
         style={{ marginRight: '20px', marginTop: '40px' }}
