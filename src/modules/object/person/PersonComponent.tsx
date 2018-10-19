@@ -608,7 +608,7 @@ const SynSearch = (props: SynProps) => {
     <div>
       <div className="row">
         <div className="col-md-1">
-          <label htmlFor="personName">Det</label>
+          <label htmlFor="personName">Person</label>
         </div>
         <div className="col-md-5">
           <PersonSynonymSuggest
@@ -651,6 +651,7 @@ const Synonymizer = (props: SynProps) => {
             <button
               id="btnCancel"
               className="btn btn-link"
+              disabled={props.synPersons.personUuid ? false : true}
               onClick={e => {
                 e.preventDefault();
                 props.onRemovePersonAsSynonym();
