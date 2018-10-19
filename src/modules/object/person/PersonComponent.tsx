@@ -889,20 +889,22 @@ export const PersonPage = (props: PersonProps) => {
                 readOnly={props.readOnly}
               />
             </div>
-            {!props.readOnly && (
-              <Synonymizer
-                onAddPersonAsSynonym={props.onAddPersonAsSynonym}
-                onRemovePersonAsSynonym={props.onRemovePersonAsSynonym}
-                onClickMerge={props.onClickMerge}
-                appSession={props.appSession}
-                synPersons={
-                  props.personsToSynonymize
-                    ? props.personsToSynonymize
-                    : { personUuid: '', name: '' }
-                }
-                personToMergeSyn={props.personToMergeSyn}
-              />
-            )}
+            {console.log('props.uuid:', props.uuid)}
+            {!props.readOnly &&
+              props.uuid && (
+                <Synonymizer
+                  onAddPersonAsSynonym={props.onAddPersonAsSynonym}
+                  onRemovePersonAsSynonym={props.onRemovePersonAsSynonym}
+                  onClickMerge={props.onClickMerge}
+                  appSession={props.appSession}
+                  synPersons={
+                    props.personsToSynonymize
+                      ? props.personsToSynonymize
+                      : { personUuid: '', name: '' }
+                  }
+                  personToMergeSyn={props.personToMergeSyn}
+                />
+              )}
           </form>
         </div>
         <div className="panel-footer">
@@ -1003,6 +1005,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
       <div className="container" style={{ paddingTop: '25px' }}>
         <PersonPage
           readOnly={this.props.readOnly}
+          uuid={this.state.uuid}
           appSession={this.props.appSession}
           standAlone
           personToMergeSyn={this.state.personToMergeSyn}
