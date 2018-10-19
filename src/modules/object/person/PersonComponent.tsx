@@ -766,7 +766,7 @@ export const PersonPage = (props: PersonProps) => {
                       onChange={e => props.onChangeFullName('title')(e.target.value)}
                       disabled={
                         props.readOnly ||
-                        props.legalEntityType !== 'Person' ||
+                        props.legalEntityType.toLowerCase() !== 'person' ||
                         props.disableOnChangeOtherName
                       }
                     />
@@ -781,7 +781,7 @@ export const PersonPage = (props: PersonProps) => {
                       onChange={e => props.onChangeFullName('firstName')(e.target.value)}
                       disabled={
                         props.readOnly ||
-                        props.legalEntityType !== 'Person' ||
+                        props.legalEntityType.toLowerCase() !== 'person' ||
                         props.disableOnChangeOtherName
                       }
                     />
@@ -796,7 +796,7 @@ export const PersonPage = (props: PersonProps) => {
                       onChange={e => props.onChangeFullName('lastName')(e.target.value)}
                       disabled={
                         props.readOnly ||
-                        props.legalEntityType !== 'Person' ||
+                        props.legalEntityType.toLowerCase() !== 'person' ||
                         props.disableOnChangeOtherName
                       }
                     />
@@ -970,7 +970,7 @@ export const toFrontend: (p: OutputPerson) => PersonState = (p: OutputPerson) =>
   return {
     fullName: { nameString: 'y' },
     collections: [],
-    legalEntityType: 'person',
+    legalEntityType: 'Person',
     synState: 'SEARCH',
     personsToSynonymize: { personUuid: '', name: '' },
     personToMergeSyn: true
@@ -988,7 +988,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
           //synState: 'SEARCH',
           //personsToSynonymize: {},
           collections: [],
-          legalEntityType: 'person'
+          legalEntityType: 'Person'
         };
   }
   componentWillReceiveProps(props: PersonComponentProps) {
