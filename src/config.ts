@@ -65,7 +65,9 @@ export default {
           searchPerson: (appSession: AppSession) =>
             `${clientContextUrl(appSession)}/person/search`,
           addNewPersonName: (appSession: AppSession, newName: string) =>
-            `${clientContextUrl(appSession)}/person/personname/add/${newName}`
+            `${clientContextUrl(appSession)}/person/personname/add/${newName}`,
+          addNewPersonNameBlank: (appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/person/personname/add/`
         },
         conservation: {
           editConservation: (appSession: AppSession, conservationId: number) =>

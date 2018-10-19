@@ -137,10 +137,17 @@ export class PersonNameSuggestComponent extends React.Component<
             className="btn btn-default form-control"
             disabled={this.state && this.state.disabled ? true : false}
             onClick={e => {
-              const url = config.magasin.urls.client.person.addNewPersonName(
-                this.props.appSession,
-                this.state.value ? this.state.value : ''
-              );
+              let url: string;
+              if (this.state && this.state.value === '') {
+                url = config.magasin.urls.client.person.addNewPersonNameBlank(
+                  this.props.appSession
+                );
+              } else {
+                url = config.magasin.urls.client.person.addNewPersonName(
+                  this.props.appSession,
+                  this.state.value ? this.state.value : ''
+                );
+              }
               e.preventDefault();
               this.props.history && this.props.history.push(url);
             }}

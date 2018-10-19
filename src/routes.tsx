@@ -131,7 +131,7 @@ const MuseumAndCollectionPageUrlAware = flowRight([inject(data), makeUrlAware])(
 const PersonPage = (props: object) => (
   <Switch>
     <Route path={rt(props, '/personname/add/:newName')} exact component={AddPersonName} />
-
+    <Route path={rt(props, '/personname/add/')} exact component={AddPersonName} />
     <Route path={rt(props, '/add')} exact component={AddPerson} />
 
     <Route path={rt(props, '/view/:id')} exact component={ViewPerson} />
