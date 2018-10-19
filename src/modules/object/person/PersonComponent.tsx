@@ -608,7 +608,7 @@ const SynSearch = (props: SynProps) => {
     <div>
       <div className="row">
         <div className="col-md-1">
-          <label htmlFor="personName">Person</label>
+          <label htmlFor="personName">Det</label>
         </div>
         <div className="col-md-5">
           <PersonSynonymSuggest
@@ -651,7 +651,6 @@ const Synonymizer = (props: SynProps) => {
             <button
               id="btnCancel"
               className="btn btn-link"
-              disabled={props.synPersons.personUuid ? false : true}
               onClick={e => {
                 e.preventDefault();
                 props.onRemovePersonAsSynonym();
@@ -670,13 +669,7 @@ const Synonymizer = (props: SynProps) => {
                   : ''
               }
               className="btn btn-primary"
-              disabled={
-                props.personToMergeSyn
-                  ? props.personToMergeSyn
-                  : props.synPersons.personUuid
-                    ? false
-                    : true
-              }
+              disabled={props.personToMergeSyn ? props.personToMergeSyn : false}
               onClick={e => {
                 e.preventDefault();
                 props.onClickMerge && props.onClickMerge(props.appSession);
@@ -720,11 +713,11 @@ export const PersonPage = (props: PersonProps) => {
                         props.onChange('legalEntityType')(v.target.value);
                       }}
                     >
-                      <option value="person">Person</option>
-                      <option value="group">Group</option>
-                      <option value="organisasion">Organisation</option>
-                      <option value="institution">Institution</option>
-                      <option value="business">Business</option>
+                      <option value="Person">Person</option>
+                      <option value="Group">Group</option>
+                      <option value="Organisation">Organisation</option>
+                      <option value="Institution">Institution</option>
+                      <option value="Business">Business</option>
                     </select>
                   </div>
                 </div>
@@ -773,7 +766,7 @@ export const PersonPage = (props: PersonProps) => {
                       onChange={e => props.onChangeFullName('title')(e.target.value)}
                       disabled={
                         props.readOnly ||
-                        props.legalEntityType !== 'person' ||
+                        props.legalEntityType !== 'Person' ||
                         props.disableOnChangeOtherName
                       }
                     />
@@ -788,7 +781,7 @@ export const PersonPage = (props: PersonProps) => {
                       onChange={e => props.onChangeFullName('firstName')(e.target.value)}
                       disabled={
                         props.readOnly ||
-                        props.legalEntityType !== 'person' ||
+                        props.legalEntityType !== 'Person' ||
                         props.disableOnChangeOtherName
                       }
                     />
@@ -803,7 +796,7 @@ export const PersonPage = (props: PersonProps) => {
                       onChange={e => props.onChangeFullName('lastName')(e.target.value)}
                       disabled={
                         props.readOnly ||
-                        props.legalEntityType !== 'person' ||
+                        props.legalEntityType !== 'Person' ||
                         props.disableOnChangeOtherName
                       }
                     />
