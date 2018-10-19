@@ -2,6 +2,7 @@ import * as React from 'react';
 //import FieldMultiSelect from "../../../forms/components/FieldMultiSelect";
 //import { PersonPage } from './Person';
 import { PersonName } from './PersonComponent';
+import { AppSession } from 'src/types/appSession';
 
 /* type PersonNameState = {
   title?: string;
@@ -25,6 +26,8 @@ type AddPersonNameState = {
 type PersonNameProps = PersonName & {
   disableOnChangeFullName?: boolean;
   disableOnChangeOtherName?: boolean;
+  appSession: AppSession;
+  history: History;
   onClick?: () => void;
   showAddPersonButton: () => boolean;
   onChangePersonForPersonname: (val?: string) => void;
@@ -128,7 +131,13 @@ const PersonName = (props: PersonNameProps) => (
       <div className="panel-footer">
         <div className="row">
           <div className="col-md-12" style={{ textAlign: 'right' }}>
-            <button type="button" className="btn btn-link" onClick={() => {}}>
+            <button
+              type="button"
+              className="btn btn-link"
+              onClick={() => {
+                props.history.back;
+              }}
+            >
               Cancel
             </button>
             <button type="button" className="btn btn-primary">
@@ -171,6 +180,8 @@ export class AddPersonName extends React.Component<
     return (
       <div style={{ padding: '25px' }}>
         <PersonName
+          appSession={this.props.appSession}
+          history={this.props.history}
           firstName={this.state.personName && this.state.personName.firstName}
           title={this.state.personName && this.props.title}
           lastName={this.state.personName && this.props.lastName}
