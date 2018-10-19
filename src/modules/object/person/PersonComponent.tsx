@@ -376,7 +376,7 @@ const Synonyms = (props: {
         <button
           id="saveSynonym"
           type="button"
-          className="btn btn-default"
+          className="btn btn-primary"
           onClick={props.onSave}
           disabled={props.editingIndexSynonyms === undefined}
         >
@@ -501,7 +501,7 @@ const ExternalIDStrings = (props: {
         <button
           id="saveExternalId"
           type="button"
-          className="btn btn-default"
+          className="btn btn-primary"
           onClick={props.onSave}
           disabled={props.editingIndex === undefined}
         >
@@ -608,7 +608,7 @@ const SynSearch = (props: SynProps) => {
     <div>
       <div className="row">
         <div className="col-md-1">
-          <label htmlFor="personName">Det</label>
+          <label htmlFor="personName">Person</label>
         </div>
         <div className="col-md-5">
           <PersonSynonymSuggest
@@ -650,7 +650,8 @@ const Synonymizer = (props: SynProps) => {
           <div className="col-md-4">
             <button
               id="btnCancel"
-              className="btn btn-default"
+              className="btn btn-link"
+              disabled={props.synPersons.personUuid ? false : true}
               onClick={e => {
                 e.preventDefault();
                 props.onRemovePersonAsSynonym();
@@ -668,8 +669,14 @@ const Synonymizer = (props: SynProps) => {
                     : 'Search Person to Synonimize'
                   : ''
               }
-              className="btn btn-default"
-              disabled={props.personToMergeSyn ? props.personToMergeSyn : false}
+              className="btn btn-primary"
+              disabled={
+                props.personToMergeSyn
+                  ? props.personToMergeSyn
+                  : props.synPersons.personUuid
+                    ? false
+                    : true
+              }
               onClick={e => {
                 e.preventDefault();
                 props.onClickMerge && props.onClickMerge(props.appSession);
@@ -911,7 +918,7 @@ export const PersonPage = (props: PersonProps) => {
                 id="btnCancel"
                 disabled={props.readOnly}
                 type="button"
-                className="btn btn-secondary"
+                className="btn btn-link"
                 onClick={() => props.onClickCancel(props.appSession)}
               >
                 Cancel

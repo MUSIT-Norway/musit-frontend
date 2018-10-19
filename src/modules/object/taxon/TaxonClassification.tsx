@@ -5,6 +5,7 @@ import { TaxonComponent } from './TaxonComponent';
 import { ScientificName, personDet } from '../../../models/object/classHist';
 import { Collapse } from 'react-bootstrap';
 import { AppSession } from 'src/types/appSession';
+import { History } from 'history';
 //import EditableTable from '../components/EditableTable';
 
 // Datastructure
@@ -33,6 +34,7 @@ class Det {
 
 export type DetProps = IDet & {
   appSession: AppSession;
+  history: History;
   onAddPerson: () => void;
   onSavePerson: () => void;
   onDeletePerson: (i: number) => void;
@@ -222,6 +224,7 @@ export type SexAndLifeStageProps = ISexAndStagesClassification & {
 
 export type TaxonClassificationProps = ITaxonClassification & {
   appSession: AppSession;
+  history: History;
   setEditingIndex: (i: number) => void;
   onChangeTaxonField: (fieldName: string) => (value: string) => void;
   onChangeTaxonClassificationFields: (fieldName: string) => (value: string) => void;
@@ -333,7 +336,7 @@ class State implements IState {
   }
 }
 
-type Props = { appSession: AppSession };
+type Props = { appSession: AppSession; history: History };
 
 export default class ClassificationComponent extends React.Component<Props, IState> {
   constructor(props: Props) {
@@ -360,7 +363,7 @@ export default class ClassificationComponent extends React.Component<Props, ISta
       }
     };
     super(props);
-
+    console.log('IN taxon ', props);
     this.state = new State(c);
     this.getFullHybridName = this.getFullHybridName.bind(this);
     this.onToggle = this.onToggle.bind(this);
@@ -460,6 +463,7 @@ export default class ClassificationComponent extends React.Component<Props, ISta
                   });
                 }} */
                 appSession={this.props.appSession}
+                history={this.props.history}
                 onAddTaxon={() => {
                   this.setState((ps: State) => {
                     const currentClassificationIndex =

@@ -1,6 +1,6 @@
 import { inject, createStore } from 'react-rxjs';
 import { Observable } from 'rxjs';
-import TaxonClassification from './TaxonClassification';
+import PersonNameComponent from './PersonName';
 import { flowRight } from 'lodash';
 import { History } from 'history';
 import appSession$ from '../../../stores/appSession';
@@ -18,4 +18,4 @@ const props = (store: any, upstream: { history: History }) => ({
   ...store
 });
 
-export default flowRight([inject(store$, props)])(TaxonClassification);
+export default flowRight([inject(store$, props)])(PersonNameComponent);

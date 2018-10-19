@@ -1,29 +1,38 @@
 import * as React from 'react';
 //import FieldMultiSelect from "../../../forms/components/FieldMultiSelect";
 //import { PersonPage } from './Person';
-import { PersonState, PersonProps, PersonName } from './PersonComponent';
+import { PersonName } from './PersonComponent';
+import { AppSession } from 'src/types/appSession';
+import { History } from 'history';
 
-type PersonNameState = {
+/* type PersonNameState = {
   title?: string;
   firstName?: string;
   lastName?: string;
-};
+  nameString?: string;
+}; */
 
-type AddPersonNameProps = PersonNameProps &
-  PersonProps & { location: { state: { newName: string } } };
+type AddPersonNameProps = PersonNameProps & { match: { params: { newName: string } } };
 
 type AddPersonNameState = {
   visPersonForm: boolean;
   collections?: string;
   personForName: string;
-  personName: PersonNameState;
-  person: PersonState;
+  personName: PersonName;
+  // person: PersonState;
+  disableOnChangeFullName?: boolean;
+  disableOnChangeOtherName?: boolean;
 };
 
-type PersonNameProps = PersonNameState & {
+type PersonNameProps = PersonName & {
+  disableOnChangeFullName?: boolean;
+  disableOnChangeOtherName?: boolean;
+  appSession: AppSession;
+  history: History;
   onClick?: () => void;
   showAddPersonButton: () => boolean;
   onChangePersonForPersonname: (val?: string) => void;
+  onChangeFullName: (fieldName: string) => (newValue: string) => void;
 };
 
 const PersonName = (props: PersonNameProps) => (
@@ -42,6 +51,8 @@ const PersonName = (props: PersonNameProps) => (
                   type="text"
                   className="form-control"
                   id="title"
+                  onChange={e => props.onChangeFullName('title')(e.target.value)}
+                  disabled={props.disableOnChangeOtherName}
                 />
               </div>
             </div>
@@ -53,6 +64,8 @@ const PersonName = (props: PersonNameProps) => (
                   type="text"
                   className="form-control"
                   id="first-name"
+                  onChange={e => props.onChangeFullName('firstName')(e.target.value)}
+                  disabled={props.disableOnChangeOtherName}
                 />
               </div>
             </div>
@@ -64,6 +77,21 @@ const PersonName = (props: PersonNameProps) => (
                   type="text"
                   className="form-control"
                   id="Last-name"
+                  onChange={e => props.onChangeFullName('lastName')(e.target.value)}
+                  disabled={props.disableOnChangeOtherName}
+                />
+              </div>
+            </div>
+            <div className="form-group row">
+              <div className="col-sm-3">
+                <label htmlFor="last-name">Navn</label>
+                <input
+                  value={props.nameString}
+                  type="text"
+                  className="form-control"
+                  id="name"
+                  onChange={e => props.onChangeFullName('nameString')(e.target.value)}
+                  disabled={props.disableOnChangeFullName}
                 />
               </div>
             </div>
@@ -73,7 +101,7 @@ const PersonName = (props: PersonNameProps) => (
                 <select
                   className="form-control"
                   id="person"
-                  onChange={e => props.onChangePersonForPersonname(e.target.value)}
+                  //onChange={e => props.onChangePersonForPersonname(e.target.value)}
                 >
                   <option value="0">--No person--</option>
                   <option value="1">And, Arne</option>
@@ -104,15 +132,16 @@ const PersonName = (props: PersonNameProps) => (
       <div className="panel-footer">
         <div className="row">
           <div className="col-md-12" style={{ textAlign: 'right' }}>
-            {' '}
-            <a
-              href="#"
+            <button
+              type="button"
+              className="btn btn-link"
               onClick={e => {
                 e.preventDefault();
+                props.history && props.history.goBack();
               }}
             >
-              Cancel{' '}
-            </a>
+              Cancel
+            </button>
             <button type="button" className="btn btn-primary">
               Save
             </button>
@@ -128,20 +157,24 @@ export class AddPersonName extends React.Component<
   AddPersonNameState
 > {
   constructor(props: AddPersonNameProps) {
+    console.log('NEWNAME: ', props.match.params.newName);
     super(props);
     this.state = {
       visPersonForm: false,
-      personName: { firstName: 'Stein', lastName: 'Olsen' },
+      personName: {
+        firstName:
+          this.props.match.params && this.props.match.params.newName
+            ? this.props.match.params.newName
+            : props.firstName
+              ? props.firstName
+              : '',
+        lastName: props.lastName ? props.lastName : '',
+        nameString: props.nameString ? props.nameString : ''
+      },
       personForName: '0',
-      person: {
-        //synState: 'SEARCH',
-        personsToSynonymize: props.personsToSynonymize
-          ? props.personsToSynonymize
-          : { personUuid: '', name: '' },
-        legalEntityType: 'person',
-        fullName: { nameString: 'Hei hei' },
-        collections: []
-      }
+      disableOnChangeOtherName: false,
+      disableOnChangeFullName:
+        this.props.match.params && this.props.match.params.newName ? true : false
     };
   }
 
@@ -149,13 +182,14 @@ export class AddPersonName extends React.Component<
     return (
       <div style={{ padding: '25px' }}>
         <PersonName
-          firstName={
-            this.props.location.state && this.props.location.state.newName
-              ? this.props.location.state.newName
-              : this.props.firstName
-          }
-          title={this.props.title}
-          lastName={this.props.lastName}
+          appSession={this.props.appSession}
+          history={this.props.history}
+          firstName={this.state.personName && this.state.personName.firstName}
+          title={this.state.personName && this.props.title}
+          lastName={this.state.personName && this.props.lastName}
+          nameString={this.state.personName && this.props.nameString}
+          disableOnChangeFullName={this.state.disableOnChangeFullName}
+          disableOnChangeOtherName={this.state.disableOnChangeOtherName}
           showAddPersonButton={() => {
             return this.state.personForName === '0' ? true : false;
           }}
@@ -174,6 +208,54 @@ export class AddPersonName extends React.Component<
               visPersonForm: true
             }))
           }
+          onChangeFullName={(fieldName: string) => (value: string) => {
+            this.setState((ps: AddPersonNameState) => {
+              const lastName =
+                fieldName === 'lastName'
+                  ? value
+                  : ps.personName && ps.personName.lastName
+                    ? ps.personName.lastName
+                    : '';
+              const title =
+                fieldName === 'title'
+                  ? value
+                  : ps.personName && ps.personName.title
+                    ? ps.personName.title
+                    : '';
+              const firstName =
+                fieldName === 'firstName'
+                  ? value
+                  : ps.personName && ps.personName.firstName
+                    ? ps.personName.firstName
+                    : '';
+              const nameString = `${lastName || ''}${
+                title || firstName ? ', ' : ''
+              }${title || ''}${title ? ' ' : ''}${firstName || ''}`;
+
+              const disableOnChangeFullName =
+                lastName || title || firstName ? true : false;
+
+              let disableOnChangeOtherName = false;
+              if (fieldName === 'nameString') {
+                disableOnChangeOtherName = true;
+
+                if (value === '') {
+                  disableOnChangeOtherName = false;
+                }
+              }
+
+              return {
+                ...ps,
+                personName: {
+                  ...ps.personName,
+                  nameString,
+                  [fieldName]: value
+                },
+                disableOnChangeFullName: disableOnChangeFullName,
+                disableOnChangeOtherName: disableOnChangeOtherName
+              };
+            });
+          }}
         />
       </div>
     );

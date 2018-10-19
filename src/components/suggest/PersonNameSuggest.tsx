@@ -1,14 +1,15 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import * as Autosuggest from 'react-autosuggest';
-import Config from '../../config';
+import config from '../../config';
 import suggest$Fn, { update$, clear$ } from './personSuggestStore';
 import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 import { AppSession } from '../../types/appSession';
 import { TODO } from '../../types/common';
 import { personDet } from '../../models/object/classHist';
 import * as FontAwesome from 'react-fontawesome';
-import { Link } from 'react-router-dom';
+import { History } from 'history';
+//import { Link } from 'react-router-dom';
 
 interface PersonNameSuggestComponentProps {
   id: string;
@@ -22,6 +23,7 @@ interface PersonNameSuggestComponentProps {
   clear?: Function;
   appSession: AppSession;
   renderFunc: Function;
+  history: History;
 }
 
 /* Old:
@@ -131,27 +133,33 @@ export class PersonNameSuggestComponent extends React.Component<
         </div>
         <div className="col-md-3">
           <label htmlFor="btnAddPerson">Create new</label>
-          <Link
-            to={{
-              pathname: 'person/personname/add',
-              state: {
-                newName: this.state && this.state.value
+          <button
+            className="btn btn-default form-control"
+            disabled={this.state && this.state.disabled ? true : false}
+            onClick={e => {
+              let url: string;
+              if (this.state && this.state.value === '') {
+                url = config.magasin.urls.client.person.addNewPersonNameBlank(
+                  this.props.appSession
+                );
+              } else {
+                url = config.magasin.urls.client.person.addNewPersonName(
+                  this.props.appSession,
+                  this.state.value ? this.state.value : ''
+                );
               }
+              e.preventDefault();
+              this.props.history && this.props.history.push(url);
             }}
           >
-            <button
-              className="btn btn-default form-control"
-              disabled={this.state && this.state.disabled ? true : false}
-            >
-              <FontAwesome name="user-plus" />
-            </button>
-          </Link>
+            <FontAwesome name="user-plus" />
+          </button>
         </div>
       </div>
     );
   }
 }
-const suggest$ = suggest$Fn('personNameSuggest', Config.api.persons.searchUrl);
+const suggest$ = suggest$Fn('personNameSuggest', config.api.persons.searchUrl);
 const data = {
   appSession$: {
     type: PropTypes.shape({
