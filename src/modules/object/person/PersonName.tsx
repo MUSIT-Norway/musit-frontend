@@ -3,6 +3,7 @@ import * as React from 'react';
 //import { PersonPage } from './Person';
 import { PersonName } from './PersonComponent';
 import { AppSession } from 'src/types/appSession';
+import { History } from 'history';
 
 /* type PersonNameState = {
   title?: string;
@@ -134,8 +135,9 @@ const PersonName = (props: PersonNameProps) => (
             <button
               type="button"
               className="btn btn-link"
-              onClick={() => {
-                props.history.back;
+              onClick={e => {
+                e.preventDefault();
+                props.history && props.history.goBack();
               }}
             >
               Cancel
