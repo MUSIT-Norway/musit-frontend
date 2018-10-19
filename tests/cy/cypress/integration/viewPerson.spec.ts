@@ -85,7 +85,7 @@ describe('View Person', function() {
     page.lastNameField.should('be.disabled');
     page.urlField.should('be.disabled');
 
-    page.legalEntityType.should('have.value', 'person');
+    page.legalEntityType.should('have.value', 'Person');
     page.titleField.should('have.value', 'Mr.');
     page.firstNameField.should('have.value', 'Donald');
     page.urlField.should('have.value', 'http://www.google.com');
