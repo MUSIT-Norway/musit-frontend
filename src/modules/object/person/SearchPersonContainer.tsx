@@ -24,7 +24,6 @@ const searchProps = (combinedStore: any, upstream: { history: History }) => ({
   getPersonsFromPersonName: (ajaxGet: AjaxGet<any>) => (
     searchProps: GetPersonsFromPersonNameProps
   ) => {
-    console.log('SP', searchProps);
     getPersonsFromPersonName$.next({
       name: searchProps.name,
       token: searchProps.token,
