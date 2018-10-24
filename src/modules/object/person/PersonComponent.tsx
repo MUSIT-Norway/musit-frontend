@@ -817,11 +817,7 @@ export const PersonPage = (props: PersonProps) => {
               </div>
               <div className="row form-group">
                 <div className="col-md-3" id="bornDate">
-                  <label htmlFor="bornDate"> Født dato</label>
-                  <DatePicker
-                    onClear={props.onClearBornDate}
-                    onChange={props.onChangeBornDate}
-                    value={props.bornDate}
+                  <label htmlFor="bornDate"> Født dato</label>-------------------------------------------------
                     disabled={props.readOnly}
                   />
                 </div>

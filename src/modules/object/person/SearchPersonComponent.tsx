@@ -12,6 +12,8 @@ export type SearchState = {
   searchString: string;
   pageSize: number;
   activePage: number;
+  currStart: number;
+  currEnd: number;
 };
 
 const getSynonyms = (props: PersonName[]) => {
@@ -38,14 +40,20 @@ const getSynonyms = (props: PersonName[]) => {
 
 const PersonTable = (props: {
   personsToShow: OutputPerson[];
+  slice: OutputPerson[][];
   persons: OutputPerson[][];
   activePage: number;
   pageSize: number;
   totalSize: number;
   onChangeSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onClickSearch: () => void;
+  resetPages: () => void;
   onClickPage: (e: number) => void;
   onClickSize: (e: number) => void;
+  onClickNext: (n?: number) => void;
+  onClickPrev: (n?: number) => void;
+  currentStart: number;
+  currentEnd: number;
   appSession: AppSession;
   history: History;
   searchField: string;
@@ -73,6 +81,7 @@ const PersonTable = (props: {
                   type="submit"
                   onClick={e => {
                     e.preventDefault();
+                    props.resetPages();
                     props.onClickSearch();
                   }}
                 >
@@ -139,19 +148,76 @@ const PersonTable = (props: {
         </div>
         <hr />
         <ul className="pagination">
-          {props.persons.map((p: OutputPerson[], i: number) => (
-            <li className={i === props.activePage ? 'active' : ''} key={`UL-key-${i}`}>
-              <a
-                href="#"
-                onClick={e => {
-                  e.preventDefault();
-                  props.onClickPage(i);
-                }}
+          <li className="prev">
+            <a
+              href="#"
+              onClick={e => {
+                if (props.activePage - 5 >= 0) {
+                  props.onClickPrev(5);
+                }
+              }}
+            >
+              Prev 5
+            </a>
+          </li>
+          <li className="prev">
+            <a
+              href="#"
+              onClick={e => {
+                if (props.activePage - 1 >= 0) {
+                  props.onClickPrev();
+                }
+              }}
+            >
+              Prev
+            </a>
+          </li>
+          {props.persons
+            .slice(
+              props.currentStart >= 0 ? props.currentStart : 0,
+              (props.currentEnd <= props.totalSize ? props.currentEnd : props.totalSize) +
+                1
+            )
+            .map((p: OutputPerson[], i: number) => (
+              <li
+                className={i + props.currentStart === props.activePage ? 'active' : ''}
+                key={`UL-key-${i}`}
               >
-                {i + 1}
-              </a>
-            </li>
-          ))}
+                <a
+                  href="#"
+                  onClick={e => {
+                    e.preventDefault();
+                    props.onClickPage(i + props.currentStart);
+                  }}
+                >
+                  {props.currentStart + i + 1}
+                </a>
+              </li>
+            ))}
+          <li className="next">
+            <a
+              href="#"
+              onClick={e => {
+                if (props.activePage + 1 <= props.totalSize) {
+                  props.onClickNext();
+                }
+              }}
+            >
+              Next
+            </a>
+          </li>
+          <li className="next">
+            <a
+              href="#"
+              onClick={e => {
+                if (props.activePage + 5 <= props.totalSize) {
+                  props.onClickNext(5);
+                }
+              }}
+            >
+              Next 5
+            </a>
+          </li>
         </ul>
         <table className="table table-condensed table-responsive">
           <thead>
@@ -231,21 +297,51 @@ export default class SearchPersonComponent extends React.Component<
     this.onClickSearch = this.onClickSearch.bind(this);
     this.onSetActivePage = this.onSetActivePage.bind(this);
     this.onSetPageSize = this.onSetPageSize.bind(this);
+    this.onClickNext = this.onClickNext.bind(this);
+    this.onClickPrev = this.onClickPrev.bind(this);
+    this.resetPages = this.resetPages.bind(this);
 
     this.state = {
       searchString: '',
       pageSize: 10,
-      activePage: 0
+      activePage: 0,
+      currStart: 0,
+      currEnd: 4
     };
   }
 
-  onClickShowPerson(p: OutputPerson) {}
+  resetPages() {
+    this.setState((ps: SearchState) => ({
+      ...ps,
+      currStart: 0,
+      currEnd: 4,
+      activePage: 0
+    }));
+  }
+
   onClickSearch() {
     this.props.getPersonsFromPersonName()({
       name: this.state.searchString || '',
       collectionId: this.props.appSession.collectionId,
       token: this.props.appSession.accessToken
     });
+  }
+
+  onClickNext(num: number = 1) {
+    this.setState((ps: SearchState) => ({
+      ...ps,
+      currStart: ps.currStart + num,
+      currEnd: ps.currEnd + num,
+      activePage: ps.activePage + num
+    }));
+  }
+  onClickPrev(num: number = 1) {
+    this.setState((ps: SearchState) => ({
+      ...ps,
+      currStart: ps.currStart > num ? ps.currStart - num : 0,
+      currEnd: ps.currStart > num ? ps.currEnd - num : 4,
+      activePage: ps.activePage - num
+    }));
   }
   onSetActivePage(p: number) {
     this.setState(ps => ({
@@ -256,6 +352,9 @@ export default class SearchPersonComponent extends React.Component<
   onSetPageSize(s: number) {
     this.setState(ps => ({
       ...ps,
+      currStart: 0,
+      currEnd: 4,
+      activePage: 0,
       pageSize: s
     }));
   }
@@ -275,11 +374,17 @@ export default class SearchPersonComponent extends React.Component<
     return (
       <PersonTable
         personsToShow={persons[activePage] || []}
+        slice={persons.slice(this.state.currStart, this.state.currEnd)}
         persons={persons}
         totalSize={this.props.store.personList ? this.props.store.personList.length : 0}
         onClickPage={this.onSetActivePage}
         onClickSize={this.onSetPageSize}
         searchField={this.state.searchString}
+        resetPages={this.resetPages}
+        onClickNext={this.onClickNext}
+        onClickPrev={this.onClickPrev}
+        currentStart={this.state.currStart}
+        currentEnd={this.state.currEnd}
         onChangeSearch={e => {
           console.log(e);
           const value = e.target.value;
