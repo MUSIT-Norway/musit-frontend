@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { PlaceState, admPlaces, AdmPlace } from './CollectionEvents';
+import { PlaceState, AdmPlace } from './CollectionEvents';
+import { admPlaces } from './mockdata/data';
 
 const AdmPlaceComponent = (
   props: PlaceState & {
@@ -19,6 +20,7 @@ const AdmPlaceComponent = (
           className="form-control" //
           id="admPlaceName"
           onChange={e => {
+            e.preventDefault();
             props.onChange(e.target.value);
           }}
         >
@@ -39,6 +41,7 @@ const AdmPlaceComponent = (
         <label htmlFor="locality">Lokalitet </label>
       </div>
     </div>
+    {console.log('############', props.locality)}
     <div className="row form-group">
       <div className="col-md-8">
         <textarea
@@ -64,9 +67,10 @@ const AdmPlaceComponent = (
           className="form-control"
           id="ecology"
           value={props.ecology}
-          onChange={(v: React.ChangeEvent<HTMLTextAreaElement>) =>
-            props.onChangeOthers('ecology')(v.target.value)
-          }
+          onChange={(v: React.ChangeEvent<HTMLTextAreaElement>) => {
+            v.preventDefault();
+            props.onChangeOthers('ecology')(v.target.value);
+          }}
         />
       </div>
     </div>
@@ -88,7 +92,7 @@ const AdmPlaceComponent = (
           className="form-control"
           onChange={e => props.onChangeOthers('station')(e.target.value)}
           id={'txtInputStation'}
-          value={props.station ? props.station : ''}
+          value={props.station}
         />
       </div>
       <div className="col-md-2">
@@ -97,7 +101,7 @@ const AdmPlaceComponent = (
           className="form-control"
           onChange={e => props.onChangeOthers('sample')(e.target.value)}
           id={'txtInputSample'}
-          value={props.sample ? props.sample : ''}
+          value={props.sample}
         />
       </div>
       <div className="col-md-2">
@@ -106,7 +110,7 @@ const AdmPlaceComponent = (
           className="form-control"
           onChange={e => props.onChangeOthers('ship')(e.target.value)}
           id={'txtInputShip'}
-          value={props.ship ? props.ship : ''}
+          value={props.ship}
         />
       </div>
     </div>

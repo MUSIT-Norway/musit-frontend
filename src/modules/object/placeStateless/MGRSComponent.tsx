@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { CoordinateProps, coordinateTypes, datumValues } from './CollectionEvents';
+import { CoordinateProps } from './CollectionEvents';
+import { coordinateTypes, datumValues } from './mockdata/data';
 
 const MGRSComponent = (props: CoordinateProps) => {
   return (
@@ -98,8 +99,7 @@ const MGRSComponent = (props: CoordinateProps) => {
             className="form-control"
             id="MGRSCoordinateString"
             value={
-              props.getCurrentCoordinate(props.coordinateHistoryIndeks)
-                .coordinateString || ''
+              props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateString
             }
             onChange={e => {
               const v = e.target.value.toUpperCase();

@@ -3,6 +3,8 @@ import * as moment from 'moment';
 import { musitCoodinateValidate } from '../../../shared/util';
 import CollapseComponent from '../components/Collapse';
 import PlaceComponent from './PlaceComponent';
+import { admPlaces } from './mockdata/data';
+import { Collection, SynonymType, ExternalId } from '../person/PersonComponent';
 
 export type AdmPlace = {
   admPlaceId: number;
@@ -78,7 +80,7 @@ export type PlaceState = {
   altitudeCollapsed?: boolean;
 };
 
-export type PlaceProps = PlaceState & {
+export type PlaceProps = CollectionEventState & {
   onChangeTextField: (fieldName: string) => (value: string) => void;
   onChangeNumberField: (fieldName: string) => (value: number) => void;
 };
@@ -105,7 +107,6 @@ export type CoordinateProps = {
   onChangeEditMode: (edit: boolean) => void;
   onToggleCollapse: () => void;
 };
-
 export type CheckBoxProps = {
   id: string;
   checked: boolean;
@@ -113,168 +114,173 @@ export type CheckBoxProps = {
   onChange: string;
 };
 
-export const admPlaces: Array<AdmPlace> = [
-  {
-    admPlaceId: 1,
-    name: 'Oslo',
-    type: 'Kommune',
-    kommune: 'Oslo',
-    fylke: 'Oslo fylke',
-    land: 'Norge',
-    lat: 59.8939224,
-    long: 10.7149059,
-    zoom: 12
-  },
-  {
-    admPlaceId: 2,
-    name: 'Bergen',
-    type: 'Kommune',
-    overordnet: 'Hordaland',
-    kommune: 'Bergen',
-    fylke: 'Hordaland',
-    land: 'Norge',
-    lat: 60.3651115,
-    long: 5.2887477,
-    zoom: 11
-  },
-  {
-    admPlaceId: 3,
-    name: 'Trondheim',
-    type: 'Kommune',
-    overordnet: 'Trøndelag',
-    kommune: 'Trondheim',
-    fylke: 'Trøndelag',
-    land: 'Norge',
-    lat: 63.418719,
-    long: 10.3685518,
-    zoom: 12
-  },
-  {
-    admPlaceId: 4,
-    name: 'Kristiansand',
-    type: 'Kommune',
-    overordnet: 'Aust-Agder',
-    kommune: 'Kristiansand',
-    fylke: 'Aust-Agder',
-    land: 'Norge',
-    lat: 58.1529583,
-    long: 7.9390013,
-    zoom: 12
-  },
-  {
-    admPlaceId: 5,
-    name: 'Drammen',
-    type: 'Kommune',
-    overordnet: 'Buskerud',
-    kommune: 'Drammen',
-    fylke: 'Buskerud',
-    land: 'Norge',
-    lat: 59.734017,
-    long: 10.1489475,
-    zoom: 12
-  },
-  {
-    admPlaceId: 6,
-    name: 'Buskerud',
-    type: 'Fylke',
-    overordnet: 'Norge',
-    fylke: 'Buskerud',
-    land: 'Norge',
-    lat: 60,
-    long: 9,
-    zoom: 12
-  }
-];
-export const coordinateTypes = ['MGRS', 'Lat / Long', 'UTM'];
-export const datumValues = ['WGS84', 'ED50', 'EUREF-89'];
-export const geometryTypes = ['Point', 'Reactangle', 'Polygone', 'Line'];
-export const coordinateSources = ['Original label', 'GPS', 'Map', 'Other (see note)'];
-export const altDepthUnits = ['Meters', 'Feet'];
+export type Person = {
+  collections?: Collection[];
+  firstName?: string;
+  lastName?: string;
+  name: string;
+  personAttribute?: PersonAttribute;
+  personUuid: PersonUuid;
+  synonyms?: SynonymType[];
+  title?: string;
+};
 
-export default class CollectionEvents extends React.Component<PlaceProps, PlaceState> {
+export type PersonAttribute = {
+  bornDate?: string;
+  deathDate?: string;
+  displayName?: string;
+  externalIds?: ExternalId[];
+  legalEntityType: string;
+  url?: string;
+  verbatimDate?: string;
+};
+
+export type Uuid = string;
+export type EventUuid = Uuid;
+export type RoleId = number;
+export type PersonUuid = Uuid;
+export type PersonNameUuid = Uuid;
+
+export type ActorsAndRelation = {
+  actorUuid: Uuid;
+  relation: RoleId;
+};
+
+export type Event = {
+  eventUuid: EventUuid;
+  eventType: number;
+  museumId?: number;
+  collectionId?: number;
+  note?: string;
+  partOf?: EventUuid;
+  createdBy?: Person;
+  createdDate?: string;
+  relatedActors?: ActorsAndRelation[];
+  eventDateFrom?: string;
+  eventDateTo?: string;
+  eventDateVerbatim?: string;
+  placeUuid?: Uuid;
+};
+
+export type CollectionEventState = {
+  placeState: PlaceState;
+  event: Event;
+  person: Person;
+};
+
+export default class CollectionEvents extends React.Component<
+  PlaceProps,
+  CollectionEventState
+> {
   constructor(props: PlaceProps) {
     super(props);
     this.state = {
-      admPlace: admPlaces[0],
-      editingCoordinate: {
-        coordinateType: 'MGRS',
-        altitudeUnit: 'Meters',
-        depthUnit: 'Meters',
-        datum: 'WGS84',
-        caAltitude: false,
-        caDepth: false,
-        isAddedLater: false,
-        caCoordinate: false
+      placeState: {
+        admPlace: admPlaces[0],
+        editingCoordinate: {
+          coordinateType: 'MGRS',
+          altitudeUnit: 'Meters',
+          depthUnit: 'Meters',
+          datum: 'WGS84',
+          caAltitude: false,
+          caDepth: false,
+          isAddedLater: false,
+          caCoordinate: false
+        },
+        coordinateHistory: [{ coordinate: { coordinateType: '' } }],
+        coordinateCollapsed: true,
+        coordinateHistoryIndeks: 0,
+        coordinateInvalid: false
       },
-      coordinateHistory: [{ coordinate: { coordinateType: '' } }],
-      coordinateCollapsed: true,
-      coordinateHistoryIndeks: 0,
-      coordinateInvalid: false
+      event: {
+        eventUuid: 'eventID',
+        eventType: 12
+      },
+      person: {
+        personUuid: '',
+        name: 'Anuradha'
+      }
     };
   }
-
   render() {
-    console.log('Place state on load ', this.state);
-    const placeComponent = (
+    console.log('CollectionEventState on load ', this.state);
+    const PlaceBodyComponent = (
       <div>
         <PlaceComponent
           {...this.state}
           onChangeOthers={(field: string) => (value: string) => {
-            this.setState((ps: PlaceState) => ({
-              ...ps,
-              [field]: value
-            }));
+            this.setState((cs: CollectionEventState) => {
+              return {
+                ...cs,
+                placeState: {
+                  ...cs.placeState,
+                  [field]: value
+                }
+              };
+            });
           }}
           onChange={(t: string) => {
             const admPlace = admPlaces.find(
               (a: AdmPlace) => a.admPlaceId === parseInt(t)
             );
             console.log(admPlace);
-            this.setState((s: PlaceState) => ({
+            this.setState((s: CollectionEventState) => ({
               ...s,
-              admPlace: admPlace,
-              kommune: (admPlace && admPlace.kommune) || '',
-              fylke: (admPlace && admPlace.fylke) || '',
-              land: admPlace && admPlace.land,
-              lat: admPlace && admPlace.lat,
-              long: admPlace && admPlace.long,
-              overordnet: admPlace && admPlace.overordnet,
-              type: admPlace && admPlace.type,
-              name: admPlace && admPlace.name
+              placeState: {
+                ...s.placeState,
+                admPlace: admPlace,
+                kommune: (admPlace && admPlace.kommune) || '',
+                fylke: (admPlace && admPlace.fylke) || '',
+                land: admPlace && admPlace.land,
+                lat: admPlace && admPlace.lat,
+                long: admPlace && admPlace.long,
+                overordnet: admPlace && admPlace.overordnet,
+                type: admPlace && admPlace.type,
+                name: admPlace && admPlace.name
+              }
             }));
           }}
           // Cordinate Props
 
-          {...this.state.coordinateHistory[this.state.coordinateHistoryIndeks].coordinate}
-          editCoordinateMode={this.state.editCoorditeMode || false}
-          coordinateHistoryIndeks={this.state.coordinateHistoryIndeks}
-          coordinateHistory={this.state.coordinateHistory}
-          editingCoordinate={this.state.editingCoordinate}
+          {...this.state.placeState.coordinateHistory[
+            this.state.placeState.coordinateHistoryIndeks
+          ].coordinate}
+          editCoordinateMode={this.state.placeState.editCoorditeMode || false}
+          coordinateHistoryIndeks={this.state.placeState.coordinateHistoryIndeks}
+          coordinateHistory={this.state.placeState.coordinateHistory}
+          editingCoordinate={this.state.placeState.editingCoordinate}
           coordinateType={
-            this.state.coordinateHistory[this.state.coordinateHistoryIndeks].coordinate
-              .coordinateType || 'MGRS'
+            this.state.placeState.coordinateHistory[
+              this.state.placeState.coordinateHistoryIndeks
+            ].coordinate.coordinateType || 'MGRS'
           }
-          coordinateInvalid={this.state.coordinateInvalid || false}
-          coordinateCollapsed={this.state.coordinateCollapsed || false}
+          coordinateInvalid={this.state.placeState.coordinateInvalid || false}
+          coordinateCollapsed={this.state.placeState.coordinateCollapsed || false}
           onChangeCoordinateNumber={(fieldName: string) => (value: number) => {
-            this.setState((ps: PlaceState) => {
+            this.setState((cs: CollectionEventState) => {
               return {
-                ...ps,
-                editingCoordinate: {
-                  ...ps.editingCoordinate,
-                  [fieldName]: value
+                ...cs,
+                placeState: {
+                  ...cs.placeState,
+                  editingCoordinate: {
+                    ...cs.placeState.editingCoordinate,
+                    [fieldName]: value
+                  }
                 }
               };
             });
           }}
           onSetEditingIndex={(i: number) => {
-            this.setState((ps: PlaceState) => {
-              const newEditingCoordinate = ps.coordinateHistory[i];
+            this.setState((cs: CollectionEventState) => {
+              const newEditingCoordinate = cs.placeState.coordinateHistory[i];
               return {
-                ...ps,
-                coordinateHistoryIndeks: i,
-                editingCoordinate: newEditingCoordinate.coordinate,
-                editCoorditeMode: true
+                ...cs,
+                placeState: {
+                  ...cs.placeState,
+                  coordinateHistoryIndeks: i,
+                  editingCoordinate: newEditingCoordinate.coordinate,
+                  editCoorditeMode: true
+                }
               };
             });
           }}
@@ -287,14 +293,17 @@ export default class CollectionEvents extends React.Component<PlaceProps, PlaceS
               ? 'Feet'
               : 'Meters';
 
-            this.setState((ps: PlaceState) => ({
-              ...ps,
-              editingCoordinate: {
-                ...ps.editingCoordinate,
-                altitudeAggregated: value,
-                altitudeLow: altFrom,
-                altitudeHigh: altTo,
-                altitudeUnit: altUnit
+            this.setState((cs: CollectionEventState) => ({
+              ...cs,
+              placeState: {
+                ...cs.placeState,
+                editingCoordinate: {
+                  ...cs.placeState.editingCoordinate,
+                  altitudeAggregated: value,
+                  altitudeLow: altFrom,
+                  altitudeHigh: altTo,
+                  altitudeUnit: altUnit
+                }
               }
             }));
           }}
@@ -308,20 +317,29 @@ export default class CollectionEvents extends React.Component<PlaceProps, PlaceS
               ? 'Feet'
               : 'Meters';
 
-            this.setState((ps: PlaceState) => ({
-              ...ps,
-              editingCoordinate: {
-                ...ps.editingCoordinate,
-                depthAggregated: value,
-                depthLow: depthFrom,
-                depthHigh: depthTo,
-                depthUnit: depthUnit
+            this.setState((cs: CollectionEventState) => ({
+              ...cs,
+              placeState: {
+                ...cs.placeState,
+                editingCoordinate: {
+                  ...cs.placeState.editingCoordinate,
+                  depthAggregated: value,
+                  depthLow: depthFrom,
+                  depthHigh: depthTo,
+                  depthUnit: depthUnit
+                }
               }
             }));
           }}
           onChangeCoordinateText={(fieldName: string) => (value: string) => {
-            this.setState((ps: PlaceState) => {
-              let coordinateInvalid: boolean = !musitCoodinateValidate(fieldName)(value);
+            this.setState((cs: CollectionEventState) => {
+              let coordinateInvalid: boolean = false;
+
+              if (fieldName === 'coordinateString') {
+                coordinateInvalid = !musitCoodinateValidate(fieldName)(value);
+              }
+              const ps = cs.placeState;
+
               const utmNorthSouth =
                 (value === 'UTM' && fieldName === 'coordinateType') ||
                 (fieldName !== 'coordinateType' &&
@@ -352,32 +370,40 @@ export default class CollectionEvents extends React.Component<PlaceProps, PlaceS
                   ? ps.editingCoordinate.coordinateGeomertry
                   : undefined;
 
-              return {
+              console.log('&&&&&&&&&&& onChangeCoordinateText', ps, fieldName, value);
+              const newPlaceState = {
                 ...ps,
                 editingCoordinate: {
                   ...ps.editingCoordinate,
-                  utmNorthSouth,
-                  mgrsBand,
-                  utmZone,
-                  coordinateGeomertry,
+                  utmNorthSouth: utmNorthSouth,
+                  mgrsBand: mgrsBand,
+                  utmZone: utmZone,
+                  coordinateGeomertry: coordinateGeomertry,
                   [fieldName]: value
                 },
                 coordinateInvalid: coordinateInvalid ? coordinateInvalid : false
               };
+
+              return {
+                ...cs,
+                placeState: newPlaceState
+              };
             });
           }}
           onChangeEditMode={(editMode: boolean) => {
-            this.setState((ps: PlaceState) => {
-              const s = {
-                ...ps,
-                editCoorditeMode: editMode
+            this.setState((cs: CollectionEventState) => {
+              return {
+                ...cs,
+                placeState: {
+                  ...cs.placeState,
+                  editCoorditeMode: editMode
+                }
               };
-
-              return s;
             });
           }}
           onChangeCheckBoxBoolean={(fieldName: string) => (value: string) => {
-            this.setState((ps: PlaceState) => {
+            this.setState((cs: CollectionEventState) => {
+              const ps = cs.placeState;
               const s = {
                 ...ps,
                 editingCoordinate: {
@@ -385,16 +411,20 @@ export default class CollectionEvents extends React.Component<PlaceProps, PlaceS
                   [fieldName]: value
                 }
               };
-
-              return s;
+              return {
+                ...cs,
+                placeState: s
+              };
             });
           }}
           getCurrentCoordinate={(ind: number) => {
-            const ret = this.state.editingCoordinate;
+            const ret = this.state.placeState.editingCoordinate;
+            //console.log('anuradha getCurrentCoordinate : ', this.state.placeState.editingCoordinate);
             return ret;
           }}
           onClickSaveRevision={() => {
-            this.setState((ps: PlaceState) => {
+            this.setState((cs: CollectionEventState) => {
+              const ps = cs.placeState;
               const revType =
                 ps.coordinateHistoryIndeks === 0
                   ? 'newCoordinate'
@@ -406,39 +436,49 @@ export default class CollectionEvents extends React.Component<PlaceProps, PlaceS
                   ps.coordinateHistory[ps.coordinateHistoryIndeks]
                     .coordinateRevisionType === undefined)
               ) {
+                console.log('ANURADHA onClickSaveRevision New Revision');
                 return {
-                  ...ps,
-                  editCoorditeMode: false,
-                  coordinateHistoryIndeks: ps.coordinateHistory.length - 1,
-                  coordinateHistory: [
-                    ...ps.coordinateHistory.slice(0, ps.coordinateHistoryIndeks),
-                    {
-                      ...ps.coordinateHistory[ps.coordinateHistoryIndeks],
-                      coordinateRevisionType: revType,
-                      coordinate: ps.editingCoordinate
-                    },
-                    ...ps.coordinateHistory.slice(ps.coordinateHistoryIndeks + 1)
-                  ]
+                  ...cs,
+                  placeState: {
+                    ...cs.placeState,
+                    editCoorditeMode: false,
+                    coordinateHistoryIndeks: ps.coordinateHistory.length - 1,
+                    coordinateRevisionType: revType,
+                    coordinateHistory: [
+                      ...ps.coordinateHistory.slice(0, ps.coordinateHistoryIndeks),
+                      {
+                        ...ps.coordinateHistory[ps.coordinateHistoryIndeks],
+                        coordinateRevisionType: revType,
+                        coordinate: ps.editingCoordinate
+                      },
+                      ...ps.coordinateHistory.slice(ps.coordinateHistoryIndeks + 1)
+                    ]
+                  }
                 };
               }
-
+              console.log('ANURADHA onClickSaveRevision 2 : Edit Mode ');
               return {
-                ...ps,
-                coordinateHistoryIndeks: ps.coordinateHistoryIndeks + 1,
-                coordinateHistory: [
-                  ...ps.coordinateHistory,
-                  {
-                    coordinate: ps.editingCoordinate,
-                    coordinateRevisionType: 'coordinateRevision'
-                  }
-                ]
+                ...cs,
+                placeState: {
+                  ...cs.placeState,
+                  coordinateHistoryIndeks: ps.coordinateHistoryIndeks + 1,
+                  coordinateHistory: [
+                    ...ps.coordinateHistory,
+                    {
+                      coordinate: ps.editingCoordinate,
+                      coordinateRevisionType: 'coordinateRevision'
+                    }
+                  ]
+                }
               };
             });
           }}
           onClickSaveEdit={() => {
-            this.setState((ps: PlaceState) => {
+            this.setState((cs: CollectionEventState) => {
+              const ps = cs.placeState;
               return {
-                ...ps,
+                ...cs,
+                ...cs.placeState,
                 coordinateHistoryIndeks: ps.coordinateHistory[ps.coordinateHistoryIndeks]
                   .coordinateRevisionType
                   ? ps.coordinateHistoryIndeks + 1
@@ -447,7 +487,7 @@ export default class CollectionEvents extends React.Component<PlaceProps, PlaceS
                 coordinateHistory: ps.coordinateHistory[ps.coordinateHistoryIndeks]
                   .coordinateRevisionType
                   ? [
-                      ...ps.coordinateHistory,
+                      ...cs.placeState.coordinateHistory,
                       {
                         coordinate: ps.editingCoordinate,
                         coordinateRevisionType: 'coordinateEdit',
@@ -456,7 +496,7 @@ export default class CollectionEvents extends React.Component<PlaceProps, PlaceS
                       }
                     ]
                   : [
-                      ...ps.coordinateHistory,
+                      ...cs.placeState.coordinateHistory,
                       {
                         coordinate: ps.editingCoordinate,
                         coordinateRevisionType: 'newCoordinate'
@@ -466,19 +506,23 @@ export default class CollectionEvents extends React.Component<PlaceProps, PlaceS
             });
           }}
           getCurrentHistoryItem={(ind: number) => {
-            const ret = this.state.coordinateHistory[ind];
+            const ret = this.state.placeState.coordinateHistory[ind];
             return ret;
           }}
           onToggleCollapse={() => {
-            this.setState((ps: PlaceState) => ({
-              ...ps,
-              coordinateCollapsed: ps.coordinateCollapsed ? false : true
+            this.setState((cs: CollectionEventState) => ({
+              ...cs,
+              placeState: {
+                ...cs.placeState,
+                coordinateCollapsed: cs.placeState.coordinateCollapsed ? false : true
+              }
             }));
           }}
           onChangeHistoryItem={(fieldName: string) => (value: string) => {
             console.log('OnChangeHistItem', fieldName, value);
-            this.setState((ps: PlaceState) => {
-              return {
+            this.setState((cs: CollectionEventState) => {
+              const ps = cs.placeState;
+              const newPlaceState = {
                 ...ps,
                 coordinateHistory: [
                   ...ps.coordinateHistory.slice(0, ps.coordinateHistoryIndeks),
@@ -489,12 +533,17 @@ export default class CollectionEvents extends React.Component<PlaceProps, PlaceS
                   ...ps.coordinateHistory.slice(ps.coordinateHistoryIndeks + 1)
                 ]
               };
+
+              return {
+                ...cs,
+                placeState: newPlaceState
+              };
             });
           }}
         />
       </div>
     );
-    const headerRead = () => (
+    const HeaderRead = () => (
       <div>
         <h3>Place</h3>
       </div>
@@ -505,11 +554,10 @@ export default class CollectionEvents extends React.Component<PlaceProps, PlaceS
           <div className="row form-group">
             <div className="col-md-8">
               <div className="row">
-                <CollapseComponent Head={headerRead()} Body={placeComponent} />
+                <CollapseComponent Head={HeaderRead()} Body={PlaceBodyComponent} />
               </div>
             </div>
-            <div className="col-md-4">
-            </div>
+            <div className="col-md-4" />
           </div>
         </form>
       </div>

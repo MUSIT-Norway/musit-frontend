@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { CheckBox } from '../components/CheckBox';
-import { CoordinateProps, altDepthUnits } from './CollectionEvents';
+import { CoordinateProps } from './CollectionEvents';
+import { altDepthUnits } from './mockdata/data';
 
 const AltitudeDepthData = (props: CoordinateProps) => (
   <div className="form-group">

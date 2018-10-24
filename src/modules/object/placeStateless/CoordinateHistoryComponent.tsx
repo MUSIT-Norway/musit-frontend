@@ -6,6 +6,7 @@ const CoordinateHistoryComponent = (props: {
   coordinateHistory: CoordinateHistory;
   onSetEditingIndex: (i: number) => void;
 }) => {
+  console.log('anuradha coordinateHistoryComponent : props : ', props.coordinateHistory);
   const unitConv = (a?: string, u?: string) => {
     if (a && u) {
       if (u === 'Meters') {
@@ -37,44 +38,32 @@ const CoordinateHistoryComponent = (props: {
             </tr>
           </thead>
           <tbody>
-            {props.coordinateHistory.map(
-              (coordinate: CoordinateHistoryItem, i: number) => {
-                return (
-                  <tr key={`${i + 1}-key`}>
-                    <td>{coordinate.coordinateId}</td>
-                    <td>{coordinate.coordinateRevisionType}</td>
-                    <td>{coordinate.coordinate.coordinateType}</td>
-                    <td>{coordinate.coordinate.coordinateString}</td>
-                    <td>
-                      {unitConv(
-                        coordinate.coordinate.altitudeAggregated,
-                        coordinate.coordinate.altitudeUnit
-                      )}
-                    </td>
-                    <td>
-                      {unitConv(
-                        coordinate.coordinate.depthAggregated,
-                        coordinate.coordinate.depthUnit
-                      )}
-                    </td>
-
-                    {/* <td>{coordinate.registeredDate}</td>
-                    <td>{coordinate.registeredBy}</td>
-                    <td>
-                      <a
-                        href=""
-                        onClick={e => {
-                          e.preventDefault();
-                          props.onSetEditingIndex(i);
-                        }}
-                      >
-                        <FontAwesome name="edit" />
-                      </a>
-                    </td> */}
-                  </tr>
-                );
-              }
-            )}
+            <tr />
+            {props.coordinateHistory &&
+              props.coordinateHistory.map(
+                (coordinate: CoordinateHistoryItem, i: number) => {
+                  return (
+                    <tr key={`${i + 1}-key`}>
+                      <td>{coordinate.coordinateId}</td>
+                      <td>{coordinate.coordinateRevisionType}</td>
+                      <td>{coordinate.coordinate.coordinateType}</td>
+                      <td>{coordinate.coordinate.coordinateString}</td>
+                      <td>
+                        {unitConv(
+                          coordinate.coordinate.altitudeAggregated,
+                          coordinate.coordinate.altitudeUnit
+                        )}
+                      </td>
+                      <td>
+                        {unitConv(
+                          coordinate.coordinate.depthAggregated,
+                          coordinate.coordinate.depthUnit
+                        )}
+                      </td>
+                    </tr>
+                  );
+                }
+              )}
           </tbody>
         </table>
       </div>

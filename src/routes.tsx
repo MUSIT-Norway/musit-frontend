@@ -48,6 +48,7 @@ import EditPerson from './modules/object/person/EditPersonContainer';
 import SearchPerson from './modules/object/person/SearchPersonContainer';
 import Place from './modules/object/places/PlaceComponent';
 import ClassEventPage from './modules/object/taxon/TaxonContainer';
+import CollectionEvents from './modules/object/placeStateless/CollectionEvents';
 
 /**
  *
@@ -115,6 +116,7 @@ const MuseumAndCollectionPage = (props: object) => (
     <Route path={rt(props, '/person')} component={PersonPage} />
     <Route path={rt(props, '/place')} component={PlacePage} />
     <Route path={rt(props, '/classEvents')} component={ClassEventPage} />
+    <Route path={rt(props, '/placeStateless')} component={placeSteless} />
 
     <Route component={NotFoundPage} />
   </Switch>
@@ -144,6 +146,12 @@ const PersonPage = (props: object) => (
 const PlacePage = (props: object) => (
   <Switch>
     <Route path={rt(props, '/')} exact component={Place} />
+  </Switch>
+);
+
+const placeSteless = (props: object) => (
+  <Switch>
+    <Route path={rt(props, '/')} exact component={CollectionEvents} />
   </Switch>
 );
 

@@ -4,7 +4,7 @@ import CoordinateHistoryComponent from './CoordinateHistoryComponent';
 import AltitudeDepthData from './AltitudeDepthData';
 import CoordinateMetaData from './CoordinateMetaData';
 import { CoordinateProps, CoordinateHistory } from './CollectionEvents';
- 
+
 const CoordinateComponent = (
   props: CoordinateProps & { coordinateHistory: CoordinateHistory }
 ) => {

@@ -1,10 +1,6 @@
 import * as React from 'react';
-import {
-  CoordinateProps,
-  coordinateTypes,
-  geometryTypes,
-  datumValues
-} from './CollectionEvents';
+import { CoordinateProps } from './CollectionEvents';
+import { coordinateTypes, geometryTypes, datumValues } from './mockdata/data';
 
 const LatLongComponent = (props: CoordinateProps) => {
   return (

@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { CoordinateProps, coordinateTypes, datumValues } from './CollectionEvents';
+import { CoordinateProps } from './CollectionEvents';
+import { coordinateTypes, datumValues } from './mockdata/data';
 
 const UTMCoordinateComponent = (props: CoordinateProps) => {
   return (
