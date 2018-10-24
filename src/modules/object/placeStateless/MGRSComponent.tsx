@@ -30,6 +30,12 @@ const MGRSComponent = (props: CoordinateProps) => {
         <div className="col-md-2">
           <label htmlFor="coordinateType">Coordinate type </label>
         </div>
+        <div className="col-md-2">
+          <label htmlFor="zone">Zone </label>
+        </div>
+        <div className="col-md-2">
+          <label htmlFor="mgrsBand">Band </label>
+        </div>
       </div>
       <div className="row form-group">
         <div className="col-md-2">
@@ -48,16 +54,6 @@ const MGRSComponent = (props: CoordinateProps) => {
             ))}
           </select>
         </div>
-      </div>
-      <div className="row form-group">
-        <div className="col-md-2">
-          <label htmlFor="zone">Zone </label>
-        </div>
-        <div className="col-md-2">
-          <label htmlFor="mgrsBand">Band </label>
-        </div>
-      </div>
-      <div className="row form-group">
         <div className="col-md-2">
           <input
             type="text"
@@ -93,7 +89,7 @@ const MGRSComponent = (props: CoordinateProps) => {
             : 'row form-group has-success  '
         }
       >
-        <div className="col-md-4">
+        <div className="col-md-5">
           <input
             type="text"
             className="form-control"
