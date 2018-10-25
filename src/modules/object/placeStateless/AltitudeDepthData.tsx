@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { CheckBox } from '../components/CheckBox';
-import { CoordinateProps } from './CollectionEvents';
+import { CoordinateProps } from './CollectingEvents';
 import { altDepthUnits } from './mockdata/data';
 
 const AltitudeDepthData = (props: CoordinateProps) => (

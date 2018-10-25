@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { PlaceState, AdmPlace } from './CollectionEvents';
+import { PlaceState, AdmPlace } from './CollectingEvents';
 import { admPlaces } from './mockdata/data';
 
 const AdmPlaceComponent = (

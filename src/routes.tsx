@@ -48,7 +48,7 @@ import EditPerson from './modules/object/person/EditPersonContainer';
 import SearchPerson from './modules/object/person/SearchPersonContainer';
 import Place from './modules/object/places/PlaceComponent';
 import ClassEventPage from './modules/object/taxon/TaxonContainer';
-import CollectionEvents from './modules/object/placeStateless/CollectionEvents';
+import CollectingEvents from './modules/object/placeStateless/CollectingEvents';
 
 /**
  *
@@ -151,7 +151,7 @@ const PlacePage = (props: object) => (
 
 const placeSteless = (props: object) => (
   <Switch>
-    <Route path={rt(props, '/')} exact component={CollectionEvents} />
+    <Route path={rt(props, '/')} exact component={CollectingEvents} />
   </Switch>
 );
 

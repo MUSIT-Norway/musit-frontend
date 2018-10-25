@@ -1,4 +1,4 @@
-import { AdmPlace } from '../CollectionEvents';
+import { AdmPlace } from '../CollectingEvents';
 
 export const admPlaces: Array<AdmPlace> = [
   {

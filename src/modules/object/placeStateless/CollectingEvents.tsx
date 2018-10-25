@@ -5,6 +5,8 @@ import CollapseComponent from '../components/Collapse';
 import PlaceComponent from './PlaceComponent';
 import { admPlaces } from './mockdata/data';
 import { Collection, SynonymType, ExternalId } from '../person/PersonComponent';
+import EventMetadata from './EventMetadata';
+import { formatISOString } from '../../../shared/util';
 
 export type AdmPlace = {
   admPlaceId: number;
@@ -80,9 +82,18 @@ export type PlaceState = {
   altitudeCollapsed?: boolean;
 };
 
-export type PlaceProps = CollectionEventState & {
+export type CollectingEventProps = CollectingEventState & {
   onChangeTextField: (fieldName: string) => (value: string) => void;
   onChangeNumberField: (fieldName: string) => (value: number) => void;
+};
+
+export type EventMetadataProps = CollectingEventState & {
+  onChangeEventMetaData: (fieldName: string) => (value: string) => void;
+  onClearBornDate: Function;
+  onChangeBornDate: Function;
+  onClearDeathDate: Function;
+  onChangeDeathDate: Function;
+  onChangeVerbatimDate: (newDate: string) => void;
 };
 
 export type CoordinateProps = {
@@ -160,19 +171,19 @@ export type Event = {
   eventDateTo?: string;
   eventDateVerbatim?: string;
   placeUuid?: Uuid;
-};
-
-export type CollectionEventState = {
-  placeState: PlaceState;
-  event: Event;
   person: Person;
 };
 
-export default class CollectionEvents extends React.Component<
-  PlaceProps,
-  CollectionEventState
+export type CollectingEventState = {
+  placeState: PlaceState;
+  eventState: Event;
+};
+
+export default class CollectingEvents extends React.Component<
+  CollectingEventProps,
+  CollectingEventState
 > {
-  constructor(props: PlaceProps) {
+  constructor(props: CollectingEventProps) {
     super(props);
     this.state = {
       placeState: {
@@ -192,13 +203,13 @@ export default class CollectionEvents extends React.Component<
         coordinateHistoryIndeks: 0,
         coordinateInvalid: false
       },
-      event: {
-        eventUuid: 'eventID',
-        eventType: 12
-      },
-      person: {
-        personUuid: '',
-        name: 'Anuradha'
+      eventState: {
+        eventUuid: '',
+        eventType: 12,
+        person: {
+          personUuid: '',
+          name: ''
+        }
       }
     };
   }
@@ -209,7 +220,7 @@ export default class CollectionEvents extends React.Component<
         <PlaceComponent
           {...this.state}
           onChangeOthers={(field: string) => (value: string) => {
-            this.setState((cs: CollectionEventState) => {
+            this.setState((cs: CollectingEventState) => {
               return {
                 ...cs,
                 placeState: {
@@ -224,7 +235,7 @@ export default class CollectionEvents extends React.Component<
               (a: AdmPlace) => a.admPlaceId === parseInt(t)
             );
             console.log(admPlace);
-            this.setState((s: CollectionEventState) => ({
+            this.setState((s: CollectingEventState) => ({
               ...s,
               placeState: {
                 ...s.placeState,
@@ -257,7 +268,7 @@ export default class CollectionEvents extends React.Component<
           coordinateInvalid={this.state.placeState.coordinateInvalid || false}
           coordinateCollapsed={this.state.placeState.coordinateCollapsed || false}
           onChangeCoordinateNumber={(fieldName: string) => (value: number) => {
-            this.setState((cs: CollectionEventState) => {
+            this.setState((cs: CollectingEventState) => {
               return {
                 ...cs,
                 placeState: {
@@ -271,7 +282,7 @@ export default class CollectionEvents extends React.Component<
             });
           }}
           onSetEditingIndex={(i: number) => {
-            this.setState((cs: CollectionEventState) => {
+            this.setState((cs: CollectingEventState) => {
               const newEditingCoordinate = cs.placeState.coordinateHistory[i];
               return {
                 ...cs,
@@ -293,7 +304,7 @@ export default class CollectionEvents extends React.Component<
               ? 'Feet'
               : 'Meters';
 
-            this.setState((cs: CollectionEventState) => ({
+            this.setState((cs: CollectingEventState) => ({
               ...cs,
               placeState: {
                 ...cs.placeState,
@@ -317,7 +328,7 @@ export default class CollectionEvents extends React.Component<
               ? 'Feet'
               : 'Meters';
 
-            this.setState((cs: CollectionEventState) => ({
+            this.setState((cs: CollectingEventState) => ({
               ...cs,
               placeState: {
                 ...cs.placeState,
@@ -332,7 +343,7 @@ export default class CollectionEvents extends React.Component<
             }));
           }}
           onChangeCoordinateText={(fieldName: string) => (value: string) => {
-            this.setState((cs: CollectionEventState) => {
+            this.setState((cs: CollectingEventState) => {
               let coordinateInvalid: boolean = false;
 
               if (fieldName === 'coordinateString') {
@@ -391,7 +402,7 @@ export default class CollectionEvents extends React.Component<
             });
           }}
           onChangeEditMode={(editMode: boolean) => {
-            this.setState((cs: CollectionEventState) => {
+            this.setState((cs: CollectingEventState) => {
               return {
                 ...cs,
                 placeState: {
@@ -402,7 +413,7 @@ export default class CollectionEvents extends React.Component<
             });
           }}
           onChangeCheckBoxBoolean={(fieldName: string) => (value: string) => {
-            this.setState((cs: CollectionEventState) => {
+            this.setState((cs: CollectingEventState) => {
               const ps = cs.placeState;
               const s = {
                 ...ps,
@@ -423,7 +434,7 @@ export default class CollectionEvents extends React.Component<
             return ret;
           }}
           onClickSaveRevision={() => {
-            this.setState((cs: CollectionEventState) => {
+            this.setState((cs: CollectingEventState) => {
               const ps = cs.placeState;
               const revType =
                 ps.coordinateHistoryIndeks === 0
@@ -474,7 +485,7 @@ export default class CollectionEvents extends React.Component<
             });
           }}
           onClickSaveEdit={() => {
-            this.setState((cs: CollectionEventState) => {
+            this.setState((cs: CollectingEventState) => {
               const ps = cs.placeState;
               return {
                 ...cs,
@@ -510,7 +521,7 @@ export default class CollectionEvents extends React.Component<
             return ret;
           }}
           onToggleCollapse={() => {
-            this.setState((cs: CollectionEventState) => ({
+            this.setState((cs: CollectingEventState) => ({
               ...cs,
               placeState: {
                 ...cs.placeState,
@@ -520,7 +531,7 @@ export default class CollectionEvents extends React.Component<
           }}
           onChangeHistoryItem={(fieldName: string) => (value: string) => {
             console.log('OnChangeHistItem', fieldName, value);
-            this.setState((cs: CollectionEventState) => {
+            this.setState((cs: CollectingEventState) => {
               const ps = cs.placeState;
               const newPlaceState = {
                 ...ps,
@@ -548,11 +559,87 @@ export default class CollectionEvents extends React.Component<
         <h3>Place</h3>
       </div>
     );
+    const HeaderEventMetadata = () => (
+      <div>
+        <h3>Name and Date</h3>
+      </div>
+    );
+
+    const EventMetadataComponent = (
+      <div>
+        <EventMetadata
+          {...this.state}
+          onChangeEventMetaData={(fieldName: string) => (value: string) => {
+            this.setState((cs: CollectingEventState) => {
+              return {
+                ...cs,
+                eventState: {
+                  ...cs.eventState,
+                  [fieldName]: value
+                }
+              };
+            });
+          }}
+          onChangeBornDate={(newDate?: Date) => {
+            this.setState((p: CollectingEventState) => ({
+              ...p,
+              eventState: {
+                ...p.eventState,
+                eventDateFrom: newDate ? formatISOString(newDate) : undefined
+              }
+            }));
+          }}
+          onChangeDeathDate={(newDate?: Date) => {
+            this.setState((p: CollectingEventState) => ({
+              ...p,
+              eventState: {
+                ...p.eventState,
+                eventDateTo: newDate ? formatISOString(newDate) : undefined
+              }
+            }));
+          }}
+          onClearBornDate={() => {
+            this.setState((p: CollectingEventState) => ({
+              ...p,
+              eventState: {
+                ...p.eventState,
+                eventDateFrom: undefined
+              }
+            }));
+          }}
+          onClearDeathDate={() => {
+            this.setState((p: CollectingEventState) => ({
+              ...p,
+              eventState: {
+                ...p.eventState,
+                eventDateTo: undefined
+              }
+            }));
+          }}
+          onChangeVerbatimDate={(newDate: string) => {
+            this.setState((p: CollectingEventState) => ({
+              ...p,
+              eventState: {
+                ...p.eventState,
+                eventDateVerbatim: newDate
+              }
+            }));
+          }}
+        />
+      </div>
+    );
+
     return (
       <div className="container-fluid">
         <form style={{ padding: '20px' }}>
           <div className="row form-group">
             <div className="col-md-8">
+              <div className="row">
+                <CollapseComponent
+                  Head={HeaderEventMetadata()}
+                  Body={EventMetadataComponent}
+                />
+              </div>
               <div className="row">
                 <CollapseComponent Head={HeaderRead()} Body={PlaceBodyComponent} />
               </div>
