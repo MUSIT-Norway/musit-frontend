@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CoordinateProps } from './CollectingEvents';
+import { CoordinateProps } from '../collectingEvent/CollectingEvents';
 
 const CoordinateHistoryItemComponent = (props: CoordinateProps) => {
   return (

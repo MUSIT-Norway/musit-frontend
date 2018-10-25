@@ -1,6 +1,9 @@
 import * as React from 'react';
 //import * as FontAwesome from 'react-fontawesome';
-import { CoordinateHistory, CoordinateHistoryItem } from './CollectingEvents';
+import {
+  CoordinateHistory,
+  CoordinateHistoryItem
+} from '../collectingEvent/CollectingEvents';
 
 const CoordinateHistoryComponent = (props: {
   coordinateHistory: CoordinateHistory;

@@ -3,7 +3,7 @@ import CoordinateHistoryItemComponent from './CoordinateHistoryItemComponent';
 import CoordinateHistoryComponent from './CoordinateHistoryComponent';
 import AltitudeDepthData from './AltitudeDepthData';
 import CoordinateMetaData from './CoordinateMetaData';
-import { CoordinateProps, CoordinateHistory } from './CollectingEvents';
+import { CoordinateProps, CoordinateHistory } from '../collectingEvent/CollectingEvents';
 
 const CoordinateComponent = (
   props: CoordinateProps & { coordinateHistory: CoordinateHistory }

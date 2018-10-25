@@ -48,7 +48,7 @@ import EditPerson from './modules/object/person/EditPersonContainer';
 import SearchPerson from './modules/object/person/SearchPersonContainer';
 import Place from './modules/object/places/PlaceComponent';
 import ClassEventPage from './modules/object/taxon/TaxonContainer';
-import CollectingEvents from './modules/object/placeStateless/CollectingEvents';
+import CollectingEvents from './modules/object/collectingEvent/CollectingEvents';
 
 /**
  *

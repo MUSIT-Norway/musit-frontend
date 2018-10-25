@@ -1,7 +1,7 @@
 import * as React from 'react';
 import CoordinateComponent from './CoordinateComponent';
 import CoordinateHeader from './CoordinateHeader';
-import { PlaceState, CoordinateProps } from './CollectingEvents';
+import { PlaceState, CoordinateProps } from '../collectingEvent/CollectingEvents';
 import AdmPlaceComponent from './AdmPlaceComponent';
 import { CheckBox } from '../components/CheckBox';
 
