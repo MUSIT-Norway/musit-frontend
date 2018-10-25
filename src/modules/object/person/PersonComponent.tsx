@@ -85,7 +85,7 @@ export type SynPerson = {
   places?: string[];
 }; */
 
-type Collection = {
+export type Collection = {
   museumId: number;
   collectionId: number;
 };
