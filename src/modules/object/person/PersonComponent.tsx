@@ -670,13 +670,7 @@ const Synonymizer = (props: SynProps) => {
                   : ''
               }
               className="btn btn-primary"
-              disabled={
-                props.personToMergeSyn
-                  ? props.personToMergeSyn
-                  : props.synPersons.personUuid
-                    ? false
-                    : true
-              }
+              disabled={props.personToMergeSyn ? props.personToMergeSyn : false}
               onClick={e => {
                 e.preventDefault();
                 props.onClickMerge && props.onClickMerge(props.appSession);
@@ -720,11 +714,11 @@ export const PersonPage = (props: PersonProps) => {
                         props.onChange('legalEntityType')(v.target.value);
                       }}
                     >
-                      <option value="person">Person</option>
-                      <option value="group">Group</option>
-                      <option value="organisasion">Organisation</option>
-                      <option value="institution">Institution</option>
-                      <option value="business">Business</option>
+                      <option value="Person">Person</option>
+                      <option value="Group">Group</option>
+                      <option value="Organisation">Organisation</option>
+                      <option value="Institution">Institution</option>
+                      <option value="Business">Business</option>
                     </select>
                   </div>
                 </div>
@@ -773,7 +767,7 @@ export const PersonPage = (props: PersonProps) => {
                       onChange={e => props.onChangeFullName('title')(e.target.value)}
                       disabled={
                         props.readOnly ||
-                        props.legalEntityType !== 'person' ||
+                        props.legalEntityType.toLowerCase() !== 'person' ||
                         props.disableOnChangeOtherName
                       }
                     />
@@ -788,7 +782,7 @@ export const PersonPage = (props: PersonProps) => {
                       onChange={e => props.onChangeFullName('firstName')(e.target.value)}
                       disabled={
                         props.readOnly ||
-                        props.legalEntityType !== 'person' ||
+                        props.legalEntityType.toLowerCase() !== 'person' ||
                         props.disableOnChangeOtherName
                       }
                     />
@@ -803,7 +797,7 @@ export const PersonPage = (props: PersonProps) => {
                       onChange={e => props.onChangeFullName('lastName')(e.target.value)}
                       disabled={
                         props.readOnly ||
-                        props.legalEntityType !== 'person' ||
+                        props.legalEntityType.toLowerCase() !== 'person' ||
                         props.disableOnChangeOtherName
                       }
                     />
@@ -895,20 +889,22 @@ export const PersonPage = (props: PersonProps) => {
                 readOnly={props.readOnly}
               />
             </div>
-            {!props.readOnly && (
-              <Synonymizer
-                onAddPersonAsSynonym={props.onAddPersonAsSynonym}
-                onRemovePersonAsSynonym={props.onRemovePersonAsSynonym}
-                onClickMerge={props.onClickMerge}
-                appSession={props.appSession}
-                synPersons={
-                  props.personsToSynonymize
-                    ? props.personsToSynonymize
-                    : { personUuid: '', name: '' }
-                }
-                personToMergeSyn={props.personToMergeSyn}
-              />
-            )}
+            {console.log('props.uuid:', props.uuid)}
+            {!props.readOnly &&
+              props.uuid && (
+                <Synonymizer
+                  onAddPersonAsSynonym={props.onAddPersonAsSynonym}
+                  onRemovePersonAsSynonym={props.onRemovePersonAsSynonym}
+                  onClickMerge={props.onClickMerge}
+                  appSession={props.appSession}
+                  synPersons={
+                    props.personsToSynonymize
+                      ? props.personsToSynonymize
+                      : { personUuid: '', name: '' }
+                  }
+                  personToMergeSyn={props.personToMergeSyn}
+                />
+              )}
           </form>
         </div>
         <div className="panel-footer">
@@ -977,7 +973,7 @@ export const toFrontend: (p: OutputPerson) => PersonState = (p: OutputPerson) =>
   return {
     fullName: { nameString: 'y' },
     collections: [],
-    legalEntityType: 'person',
+    legalEntityType: 'Person',
     synState: 'SEARCH',
     personsToSynonymize: { personUuid: '', name: '' },
     personToMergeSyn: true
@@ -995,7 +991,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
           //synState: 'SEARCH',
           //personsToSynonymize: {},
           collections: [],
-          legalEntityType: 'person'
+          legalEntityType: 'Person'
         };
   }
   componentWillReceiveProps(props: PersonComponentProps) {
@@ -1009,6 +1005,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
       <div className="container" style={{ paddingTop: '25px' }}>
         <PersonPage
           readOnly={this.props.readOnly}
+          uuid={this.state.uuid}
           appSession={this.props.appSession}
           standAlone
           personToMergeSyn={this.state.personToMergeSyn}
