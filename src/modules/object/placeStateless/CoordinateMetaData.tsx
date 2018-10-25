@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { CheckBox } from '../components/CheckBox';
-import { CoordinateProps } from '../collectingEvent/CollectingEvents';
+import { CoordinateProps } from '../placeStateless/PlaceComponent';
 import { coordinateSources } from './mockdata/data';
 
 const CoordinateMetaData = (props: CoordinateProps) => {

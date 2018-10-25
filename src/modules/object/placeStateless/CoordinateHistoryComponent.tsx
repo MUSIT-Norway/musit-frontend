@@ -3,7 +3,7 @@ import * as React from 'react';
 import {
   CoordinateHistory,
   CoordinateHistoryItem
-} from '../collectingEvent/CollectingEvents';
+} from '../placeStateless/PlaceComponent';
 
 const CoordinateHistoryComponent = (props: {
   coordinateHistory: CoordinateHistory;

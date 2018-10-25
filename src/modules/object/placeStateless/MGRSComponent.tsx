@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CoordinateProps } from '../collectingEvent/CollectingEvents';
+import { CoordinateProps } from '../placeStateless/PlaceComponent';
 import { coordinateTypes, datumValues } from './mockdata/data';
 
 const MGRSComponent = (props: CoordinateProps) => {
