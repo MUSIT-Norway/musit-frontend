@@ -292,6 +292,7 @@ export default class SearchPersonComponent extends React.Component<
     this.setState(ps => ({
       ...ps,
       activePage: 0,
+      activePageList: 0,
       pageSize: s
     }));
   }
