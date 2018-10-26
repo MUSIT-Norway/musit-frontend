@@ -1,12 +1,14 @@
 import * as React from 'react';
 //import * as FontAwesome from 'react-fontawesome';
-import { CoordinateHistory, CoordinateHistoryItem } from './CollectingEvents';
+import {
+  CoordinateHistory,
+  CoordinateHistoryItem
+} from '../placeStateless/PlaceComponent';
 
 const CoordinateHistoryComponent = (props: {
   coordinateHistory: CoordinateHistory;
   onSetEditingIndex: (i: number) => void;
 }) => {
-  console.log('anuradha coordinateHistoryComponent : props : ', props.coordinateHistory);
   const unitConv = (a?: string, u?: string) => {
     if (a && u) {
       if (u === 'Meters') {

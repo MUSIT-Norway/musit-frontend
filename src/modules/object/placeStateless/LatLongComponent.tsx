@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CoordinateProps } from './CollectingEvents';
+import { CoordinateProps } from '../placeStateless/PlaceComponent';
 import { coordinateTypes, geometryTypes, datumValues } from './mockdata/data';
 
 const LatLongComponent = (props: CoordinateProps) => {

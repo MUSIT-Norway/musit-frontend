@@ -2,7 +2,7 @@ import * as React from 'react';
 import LatLongComponent from './LatLongComponent';
 import MGRSComponent from './MGRSComponent';
 import UTMCoordinateComponent from './UTMCoordinateComponent';
-import { CoordinateProps } from './CollectingEvents';
+import { CoordinateProps } from '../placeStateless/PlaceComponent';
 
 const CoordinateHeader = (props: CoordinateProps) => {
   switch (props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateType) {

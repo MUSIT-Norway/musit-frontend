@@ -1,4 +1,4 @@
-import { AdmPlace } from '../CollectingEvents';
+import { AdmPlace } from '../../placeStateless/PlaceComponent';
 
 export const admPlaces: Array<AdmPlace> = [
   {
