@@ -108,7 +108,7 @@ export type CheckBoxProps = {
   onChange: string;
 };
 
-export const PlaceComponent = (
+const PlaceComponent = (
   props: PlaceState & {
     onChange: (value: string) => void;
     onChangeOthers: (field: string) => (value: string) => void;
@@ -149,3 +149,5 @@ export const PlaceComponent = (
     </div>
   );
 };
+
+export default PlaceComponent;

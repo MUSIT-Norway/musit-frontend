@@ -6,7 +6,7 @@ import { admPlaces } from '../placeStateless/mockdata/data';
 import { Collection, SynonymType, ExternalId } from '../person/PersonComponent';
 import EventMetadata from './EventMetadata';
 import { formatISOString } from '../../../shared/util';
-import { PlaceComponent, AdmPlace, PlaceState } from '../placeStateless/PlaceComponent';
+import PlaceComponent, { AdmPlace, PlaceState } from '../placeStateless/PlaceComponent';
 
 export type CollectingEventProps = CollectingEventState & {
   onChangeTextField: (fieldName: string) => (value: string) => void;

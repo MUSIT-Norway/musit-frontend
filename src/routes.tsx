@@ -116,7 +116,7 @@ const MuseumAndCollectionPage = (props: object) => (
     <Route path={rt(props, '/person')} component={PersonPage} />
     <Route path={rt(props, '/place')} component={PlacePage} />
     <Route path={rt(props, '/classEvents')} component={ClassEventPage} />
-    <Route path={rt(props, '/placeStateless')} component={placeSteless} />
+    <Route path={rt(props, '/collectingEvent')} component={CollectingEvent} />
 
     <Route component={NotFoundPage} />
   </Switch>
@@ -149,7 +149,7 @@ const PlacePage = (props: object) => (
   </Switch>
 );
 
-const placeSteless = (props: object) => (
+const CollectingEvent = (props: object) => (
   <Switch>
     <Route path={rt(props, '/')} exact component={CollectingEvents} />
   </Switch>
