@@ -7,6 +7,9 @@ import { Collection, SynonymType, ExternalId } from '../person/PersonComponent';
 import EventMetadata from './EventMetadata';
 import { formatISOString } from '../../../shared/util';
 import PlaceComponent, { AdmPlace, PlaceState } from '../placeStateless/PlaceComponent';
+import { CollectingEventStoreState } from './CollectingEventStore';
+import { AppSession } from '../../../types/appSession';
+import {} from '../../../stores/appSession';
 
 export type CollectingEventProps = CollectingEventState & {
   onChangeTextField: (fieldName: string) => (value: string) => void;
@@ -68,50 +71,92 @@ export type Event = {
   eventDateTo?: string;
   eventDateVerbatim?: string;
   placeUuid?: Uuid;
-  person: Person;
 };
 
-export type CollectingEventState = {
+export interface CollectingEventState {
   placeState: PlaceState;
   eventState: Event;
+  person: Person;
+}
+
+export class CollectingEventState implements CollectingEventState {
+  placeState: PlaceState;
+  eventState: Event;
+  person: Person;
+
+  constructor(placeState: PlaceState, eventState: Event, person: Person) {
+    this.placeState = placeState;
+    this.eventState = eventState;
+    this.person = person;
+  }
+}
+
+export type CollectingProps = {
+  addCollectingEvent?: Function;
+  store: CollectingEventStoreState;
+  appSession: AppSession;
+  history: History;
 };
 
-export default class CollectingEvents extends React.Component<
-  CollectingEventProps,
+export default (props: CollectingProps) => (
+  <CollectingEvents
+    appSession={props.appSession}
+    store={props.store}
+    addCollectingEvent={
+      props.addCollectingEvent && props.addCollectingEvent(props.appSession)
+    }
+    history={props.history}
+  />
+);
+
+export class CollectingEvents extends React.Component<
+  CollectingProps,
   CollectingEventState
 > {
-  constructor(props: CollectingEventProps) {
+  constructor(props: CollectingProps) {
     super(props);
-    this.state = {
-      placeState: {
-        admPlace: admPlaces[0],
-        editingCoordinate: {
-          coordinateType: 'MGRS',
-          altitudeUnit: 'Meters',
-          depthUnit: 'Meters',
-          datum: 'WGS84',
-          caAltitude: false,
-          caDepth: false,
-          isAddedLater: false,
-          caCoordinate: false
-        },
-        coordinateHistory: [{ coordinate: { coordinateType: '' } }],
-        coordinateCollapsed: true,
-        coordinateHistoryIndeks: 0,
-        coordinateInvalid: false
-      },
-      eventState: {
-        eventUuid: '',
-        eventType: 12,
-        person: {
-          personUuid: '',
-          name: ''
-        }
-      }
-    };
+    console.log('COLLECTING EVENT STORE', props.store);
+    this.state =
+      props.store && props.store.localState
+        ? props.store.localState
+        : {
+            placeState: {
+              admPlace: admPlaces[0],
+              editingCoordinate: {
+                coordinateType: 'MGRS',
+                altitudeUnit: 'Meters',
+                depthUnit: 'Meters',
+                datum: 'WGS84',
+                caAltitude: false,
+                caDepth: false,
+                isAddedLater: false,
+                caCoordinate: false
+              },
+              coordinateHistory: [{ coordinate: { coordinateType: '' } }],
+              coordinateCollapsed: true,
+              coordinateHistoryIndeks: 0,
+              coordinateInvalid: false
+            },
+            eventState: {
+              eventUuid: '',
+              eventType: 12
+            },
+            person: {
+              personUuid: '',
+              name: ''
+            }
+          };
+  }
+
+  componentWillReceiveProps(props: CollectingProps) {
+    console.log('Recieve props: ====>', props);
+    if (props.store.localState) {
+      this.setState(() => ({ ...props.store.localState }));
+    }
   }
   render() {
     console.log('CollectionEventState on load ', this.state);
+
     const PlaceBodyComponent = (
       <div>
         <PlaceComponent
