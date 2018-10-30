@@ -76,7 +76,7 @@ export type CollectingEventState = {
   eventState: Event;
 };
 
-export default class CollectingEvents extends React.Component<
+export default class CollectingEvent extends React.Component<
   CollectingEventProps,
   CollectingEventState
 > {
