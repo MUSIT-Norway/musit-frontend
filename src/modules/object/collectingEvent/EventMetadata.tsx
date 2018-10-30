@@ -16,8 +16,8 @@ const EventMetadata = (props: EventMetadataProps) => {
             type="text"
             className="form-control"
             id={'txtInputProject'}
-            value={props.eventState.eventUuid}
-            onChange={e => props.onChangeEventMetaData('eventUuid')(e.target.value)}
+            value={props.eventState.name}
+            onChange={e => props.onChangeEventMetaData('name')(e.target.value)}
           />
         </div>
       </div>

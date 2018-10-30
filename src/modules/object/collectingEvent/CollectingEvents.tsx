@@ -10,6 +10,7 @@ import PlaceComponent, { AdmPlace, PlaceState } from '../placeStateless/PlaceCom
 import { CollectingEventStoreState } from './CollectingEventStore';
 import { AppSession } from '../../../types/appSession';
 import {} from '../../../stores/appSession';
+import { appSession } from '../../../testutils/sampleDataForTest';
 
 export type CollectingEventProps = CollectingEventState & {
   onChangeTextField: (fieldName: string) => (value: string) => void;
@@ -57,11 +58,15 @@ export type ActorsAndRelation = {
   relation: RoleId;
 };
 
-export type Event = {
+export type CollectingEvent = {
+  name: string;
   eventUuid: EventUuid;
   eventType: number;
-  museumId?: number;
-  collectionId?: number;
+  methodId: number;
+  museumId: number;
+  collectionId: number;
+  method?: string;
+  methodDescription?: string;
   note?: string;
   partOf?: EventUuid;
   createdBy?: Person;
@@ -75,16 +80,16 @@ export type Event = {
 
 export interface CollectingEventState {
   placeState: PlaceState;
-  eventState: Event;
+  eventState: CollectingEvent;
   person: Person;
 }
 
 export class CollectingEventState implements CollectingEventState {
   placeState: PlaceState;
-  eventState: Event;
+  eventState: CollectingEvent;
   person: Person;
 
-  constructor(placeState: PlaceState, eventState: Event, person: Person) {
+  constructor(placeState: PlaceState, eventState: CollectingEvent, person: Person) {
     this.placeState = placeState;
     this.eventState = eventState;
     this.person = person;
@@ -138,8 +143,12 @@ export class CollectingEvents extends React.Component<
               coordinateInvalid: false
             },
             eventState: {
+              name: '',
               eventUuid: '',
-              eventType: 12
+              eventType: 6,
+              methodId: 4,
+              museumId: 5,
+              collectionId: 10
             },
             person: {
               personUuid: '',
@@ -425,6 +434,13 @@ export class CollectingEvents extends React.Component<
                 }
               };
             });
+
+            this.props.addCollectingEvent &&
+              this.props.addCollectingEvent({
+                data: this.state,
+                token: appSession.accessToken,
+                collectionId: appSession.collectionId
+              });
           }}
           onClickSaveEdit={() => {
             this.setState((cs: CollectingEventState) => {

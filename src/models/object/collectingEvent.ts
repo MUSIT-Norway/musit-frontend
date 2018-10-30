@@ -40,6 +40,7 @@ export type PersonAttribute = {
   url?: string;
   verbatimDate?: string;
 };
+
 export interface InputEvent {
   eventUuid: EventUuid;
   eventType: number;
@@ -56,7 +57,18 @@ export interface InputEvent {
   placeUuid?: Uuid;
 }
 
-export class Event implements InputEvent {
+export interface InputCollectingEvent extends InputEvent {
+  name: string;
+  methodId?: number;
+  method?: string;
+  methodDescription?: string;
+}
+
+export class CollectingEvent implements InputCollectingEvent {
+  name: string;
+  methodId?: number;
+  method?: string;
+  methodDescription?: string;
   eventUuid: EventUuid;
   eventType: number;
   museumId?: number;
@@ -72,8 +84,12 @@ export class Event implements InputEvent {
   placeUuid?: Uuid;
 
   constructor(
+    name: string,
     eventUuid: EventUuid,
     eventType: number,
+    methodId?: number,
+    method?: string,
+    methodDescription?: string,
     museumId?: number,
     collectionId?: number,
     note?: string,
@@ -86,9 +102,13 @@ export class Event implements InputEvent {
     eventDateVerbatim?: string,
     placeUuid?: Uuid
   ) {
+    this.name = name;
     this.eventUuid = eventUuid;
     this.eventType = eventType;
-    this.museumId = museumId;
+    (this.methodId = methodId),
+      (this.method = method),
+      (this.methodDescription = methodDescription),
+      (this.museumId = museumId);
     this.collectionId = collectionId;
     this.note = note;
     this.partOf = partOf;

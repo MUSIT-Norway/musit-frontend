@@ -1,4 +1,8 @@
-import { InputEvent, addCollectingEvent } from '../../../models/object/collectingEvent';
+import {
+  InputEvent,
+  addCollectingEvent,
+  CollectingEvent
+} from '../../../models/object/collectingEvent';
 import { CollectingEventState } from './CollectingEvents';
 import { Callback, AjaxPost } from '../../../types/ajax';
 import { Star } from '../../../types/common';
@@ -26,12 +30,36 @@ export type CommonParams = {
 
 export type AddCollectingEventProps = CommonParams & { data: CollectingEventState };
 
+export const toBackend: ((p: CollectingEvent) => InputEvent) = (p: CollectingEvent) => {
+  const c = new CollectingEvent(
+    p.name,
+    p.eventUuid,
+    p.eventType,
+    p.methodId,
+    p.method,
+    p.methodDescription,
+    p.museumId,
+    p.collectionId,
+    p.note,
+    p.partOf,
+    p.createdBy,
+    p.createdDate,
+    p.relatedActors,
+    p.eventDateFrom,
+    p.eventDateTo,
+    p.eventDateVerbatim,
+    p.placeUuid
+  );
+  console.log('to backend ', c);
+  return c;
+};
+
 const addCollectingEventData = (ajaxPost: AjaxPost<Star>) => (
   props: AddCollectingEventProps
 ) =>
   Observable.of(props).flatMap(props =>
     addCollectingEvent(ajaxPost)({
-      data: props.data,
+      data: toBackend(props.data.eventState),
       token: props.token,
       callback: props.callback
     })
