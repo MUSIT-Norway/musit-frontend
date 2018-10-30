@@ -6,6 +6,7 @@ import {} from '../../../stores/appSession';
 import { AppSession } from '../../../types/appSession';
 import {
   OutputPerson,
+  EventData,
   PersonName as StorePersonName
 } from '../../../models/object/person';
 import { PersonStoreState } from './PersonStore';
@@ -20,6 +21,7 @@ import {
   collections,
   dataBaseValues
 } from '../person/mockdata/data';
+import { groupBy } from 'lodash';
 import { formatISOString } from '../../../shared/util';
 
 import PersonSynonymSuggest from '../../../components/suggest/PersonSynonymSuggest';
@@ -67,6 +69,7 @@ export type SynPerson = {
       isDeleted: boolean;
     }
   ];
+  eventData?: EventData[];
   collections?: [
     {
       museumId: number;
@@ -387,6 +390,24 @@ const Synonyms = (props: {
   </div>
 );
 
+const aggEvents: (e?: EventData[]) => string = (e: EventData[]) => {
+  if (!e) {
+    return '';
+  }
+  const maxDate = groupBy(e, (ed: EventData) => {
+    Math.max(ed.dateFrom.getSeconds());
+  });
+  const minDate = groupBy(e, (ed: EventData) => {
+    Math.min(ed.dateFrom.getSeconds());
+  });
+  const places = groupBy(
+    e.map(ed => ed.place && ed.place.admPlace.path),
+    (s: string) => s
+  );
+  console.log(places);
+
+  return `${minDate}-${maxDate} Places:`;
+};
 const ExternalIDStrings = (props: {
   editingIndex?: number;
   externalIds?: ExternalId[];
@@ -615,7 +636,9 @@ const SynSearch = (props: SynProps) => {
             id="personSynonymSuggest"
             value={''}
             renderFunc={(s: SynPerson) => (
-              <span className="suggestion-content">{`${s.name} ${s.aggSyn}`}</span>
+              <span className="suggestion-content">{`${s.name} ${s.aggSyn} ${aggEvents(
+                s.eventData
+              )}`}</span>
             )}
             placeHolder="Person Name"
             appSession={props.appSession}

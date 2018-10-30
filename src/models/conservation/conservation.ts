@@ -1,4 +1,3 @@
-// @flow
 import { Observable } from 'rxjs';
 import Config from '../../config';
 import { simpleGet, simplePut, simplePost, simpleDel } from '../../shared/RxAjax';
