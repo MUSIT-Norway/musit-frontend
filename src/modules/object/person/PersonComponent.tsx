@@ -21,8 +21,9 @@ import {
   collections,
   dataBaseValues
 } from '../person/mockdata/data';
-import { groupBy } from 'lodash';
+import { groupBy, maxBy, minBy } from 'lodash';
 import { formatISOString } from '../../../shared/util';
+import * as moment from 'moment';
 
 import PersonSynonymSuggest from '../../../components/suggest/PersonSynonymSuggest';
 
@@ -394,19 +395,28 @@ const aggEvents: (e?: EventData[]) => string = (e: EventData[]) => {
   if (!e) {
     return '';
   }
-  const maxDate = groupBy(e, (ed: EventData) => {
-    Math.max(ed.dateFrom.getSeconds());
-  });
-  const minDate = groupBy(e, (ed: EventData) => {
-    Math.min(ed.dateFrom.getSeconds());
-  });
+  const maxDate = maxBy(
+    e.map(ed => ({ dateFrom: moment(ed.dateFrom.toString()).format('YYYY') })),
+    ed => ed.dateFrom
+  );
+  const minDate = minBy(
+    e.map(ed => ({ dateFrom: moment(ed.dateFrom.toString()).format('YYYY') })),
+    ed => ed.dateFrom
+  );
+
   const places = groupBy(
-    e.map(ed => ed.place && ed.place.admPlace.path),
+    e.filter(ed => ed.place).map(ed => ed.place && ed.place.admPlace.path),
     (s: string) => s
   );
-  console.log(places);
 
-  return `${minDate}-${maxDate} Places:`;
+  const placeString = Object.keys(places)
+    .filter(k => k)
+    .sort((a, b) => (a > b ? -1 : 1))
+    .map(k => `${k}:${places[k].length}`);
+  console.log('xxxxxxx', places, maxDate, minDate);
+
+  return `Years: ${minDate && minDate.dateFrom}-${maxDate &&
+    maxDate.dateFrom} Places: ${placeString}`;
 };
 const ExternalIDStrings = (props: {
   editingIndex?: number;

@@ -326,17 +326,68 @@ export const getPersonAttributesFromEvents: (personUUID: string) => Array<EventD
       admPlaceUuid: '2',
       admPlace: {
         admPlaceUuid: '2',
-        name: 'Bærum',
+        name: 'Oslo',
         type: 'Kommune',
-        path: 'Akershus fylke, Norge'
+        path: 'Oslo fylke, Norge'
       }
     }
   },
   {
     eventUUID: '8',
     eventType: 'Collecting event',
-    dateFrom: new Date('1967-09-21'),
+    dateFrom: new Date('1933-09-21'),
     dateTo: new Date('1967-09-21'),
+    place: {
+      placeUuid: '7',
+      admPlaceUuid: '8',
+      admPlace: {
+        admPlaceUuid: '8',
+        name: 'Fredrikstad',
+        type: 'Kommune',
+        path: 'Østfold fylke, Norge'
+      }
+    }
+  },
+
+  {
+    eventUUID: '348',
+    eventType: 'Collecting event',
+    dateFrom: new Date('1967-09-21'),
+    dateTo: new Date('1999-09-21'),
+    place: {
+      placeUuid: '7',
+      admPlaceUuid: '8',
+      admPlace: {
+        admPlaceUuid: '8',
+        name: 'Fredrikstad',
+        type: 'Kommune',
+        path: 'Østfold fylke, Norge'
+      }
+    }
+  },
+
+  {
+    eventUUID: '855',
+    eventType: 'Collecting event',
+    dateFrom: new Date('2010-09-21'),
+    dateTo: new Date('2018-09-21'),
+    place: {
+      placeUuid: '7',
+      admPlaceUuid: '8',
+      admPlace: {
+        admPlaceUuid: '8',
+        name: 'Fredrikstad',
+        type: 'Kommune',
+        path: 'Østfold fylke, Norge'
+      }
+    }
+  },
+
+  {
+    eventUUID: '8655',
+    eventType: 'Collecting event',
+    dateFrom: new Date('1999-09-21'),
+    dateTo: new Date('2010-09-21'),
     place: {
       placeUuid: '7',
       admPlaceUuid: '8',
