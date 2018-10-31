@@ -79,7 +79,7 @@ const EventMetadata = (props: EventMetadataProps) => {
         </div>
       </div>
       <div className="row form-group">
-        <div className="col-md-2">
+        <div className="col-md-4">
           <label htmlFor="locality">Beskrivelse av metode </label>
         </div>
       </div>

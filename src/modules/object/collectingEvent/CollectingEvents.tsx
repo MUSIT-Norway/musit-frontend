@@ -9,8 +9,6 @@ import { formatISOString } from '../../../shared/util';
 import PlaceComponent, { AdmPlace, PlaceState } from '../placeStateless/PlaceComponent';
 import { CollectingEventStoreState } from './CollectingEventStore';
 import { AppSession } from '../../../types/appSession';
-import {} from '../../../stores/appSession';
-import { appSession } from '../../../testutils/sampleDataForTest';
 
 export type CollectingEventProps = CollectingEventState & {
   onChangeTextField: (fieldName: string) => (value: string) => void;
@@ -76,6 +74,7 @@ export type CollectingEvent = {
   eventDateTo?: string;
   eventDateVerbatim?: string;
   placeUuid?: Uuid;
+  // place: Place;
 };
 
 export interface CollectingEventState {
@@ -438,8 +437,8 @@ export class CollectingEvents extends React.Component<
             this.props.addCollectingEvent &&
               this.props.addCollectingEvent({
                 data: this.state,
-                token: appSession.accessToken,
-                collectionId: appSession.collectionId
+                token: this.props.appSession.accessToken,
+                collectionId: this.props.appSession.collectionId
               });
           }}
           onClickSaveEdit={() => {

@@ -133,16 +133,3 @@ export const addCollectingEvent: (
   const URL = Config.api.collectingEvent.addEventUrl;
   return ajaxPost(URL, data, token, callback).map(({ response }) => response);
 };
-
-/*   export const addPlace: (
-    ajaxPost: AjaxPost<Star>
-  ) => (
-    props: {
-      token: string;
-      data: any;
-      callback?: Callback<Star>;
-    }
-  ) => Observable<InputEvent> = (ajaxPost = simplePost) => ({ data, token, callback }) => {
-    const URL = Config.api.places.addPlaceUrl;
-    return ajaxPost(URL, data, token, callback).map(({ response }) => response);
-  }; */
