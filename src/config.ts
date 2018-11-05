@@ -35,6 +35,12 @@ export default {
         `/api/person/persons?search=${personName}`,
       mergeUrl: (personUuid: string) => (personUuidToSyn: string) =>
         `/api/person/persons/${personUuid}/merge/${personUuidToSyn}`
+    },
+    places: {
+      addPlaceUrl: '/api/place/places'
+    },
+    collectingEvent: {
+      addEventUrl: '/api/event/events'
     }
   },
   magasin: {

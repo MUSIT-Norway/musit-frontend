@@ -7,13 +7,15 @@ import { Collection, SynonymType, ExternalId } from '../person/PersonComponent';
 import EventMetadata from './EventMetadata';
 import { formatISOString } from '../../../shared/util';
 import PlaceComponent, { AdmPlace, PlaceState } from '../placeStateless/PlaceComponent';
+import { CollectingEventStoreState } from './CollectingEventStore';
+import { AppSession } from '../../../types/appSession';
 
-export type CollectingEventProps = CollectingEventState & {
+export type CollectingEventProps = {
   onChangeTextField: (fieldName: string) => (value: string) => void;
   onChangeNumberField: (fieldName: string) => (value: number) => void;
 };
 
-export type EventMetadataProps = CollectingEventState & {
+export type EventMetadataProps = EventState & {
   onChangeEventMetaData: (fieldName: string) => (value: string) => void;
   onClearBornDate: Function;
   onChangeBornDate: Function;
@@ -54,11 +56,15 @@ export type ActorsAndRelation = {
   relation: RoleId;
 };
 
-export type Event = {
+export interface EventState {
+  name: string;
   eventUuid: EventUuid;
   eventType: number;
-  museumId?: number;
-  collectionId?: number;
+  methodId: number;
+  museumId: number;
+  collectionId: number;
+  method?: string;
+  methodDescription?: string;
   note?: string;
   partOf?: EventUuid;
   createdBy?: Person;
@@ -68,50 +74,153 @@ export type Event = {
   eventDateTo?: string;
   eventDateVerbatim?: string;
   placeUuid?: Uuid;
-  person: Person;
-};
+}
 
-export type CollectingEventState = {
+export class EventState implements EventState {
+  name: string;
+  eventUuid: EventUuid;
+  eventType: number;
+  methodId: number;
+  museumId: number;
+  collectionId: number;
+  method?: string;
+  methodDescription?: string;
+  note?: string;
+  partOf?: EventUuid;
+  createdBy?: Person;
+  createdDate?: string;
+  relatedActors?: ActorsAndRelation[];
+  eventDateFrom?: string;
+  eventDateTo?: string;
+  eventDateVerbatim?: string;
+  placeUuid?: Uuid;
+  constructor(
+    name: string,
+    eventUuid: EventUuid,
+    eventType: number,
+    methodId: number,
+    museumId: number,
+    collectionId: number,
+    method?: string,
+    methodDescription?: string,
+    note?: string,
+    partOf?: EventUuid,
+    createdBy?: Person,
+    createdDate?: string,
+    relatedActors?: ActorsAndRelation[],
+    eventDateFrom?: string,
+    eventDateTo?: string,
+    eventDateVerbatim?: string,
+    placeUuid?: Uuid
+  ) {
+    this.name = name;
+    this.eventUuid = eventUuid;
+    this.eventType = eventType;
+    this.methodId = methodId;
+    this.museumId = museumId;
+    this.collectionId = collectionId;
+    this.method = method;
+    this.methodDescription = methodDescription;
+    this.note = note;
+    this.partOf = partOf;
+    this.createdBy = createdBy;
+    this.createdDate = createdDate;
+    this.relatedActors = relatedActors;
+    this.eventDateFrom = eventDateFrom;
+    this.eventDateTo = eventDateTo;
+    this.eventDateVerbatim = eventDateVerbatim;
+    this.placeUuid = placeUuid;
+  }
+}
+
+export interface CollectingEventState {
   placeState: PlaceState;
-  eventState: Event;
+  eventState: EventState;
+  person: Person;
+}
+
+export class CollectingEventState implements CollectingEventState {
+  placeState: PlaceState;
+  eventState: EventState;
+  person: Person;
+
+  constructor(placeState: PlaceState, eventState: EventState, person: Person) {
+    this.placeState = placeState;
+    this.eventState = eventState;
+    this.person = person;
+  }
+}
+
+export type CollectingProps = {
+  addCollectingEvent?: Function;
+  store: CollectingEventStoreState;
+  appSession: AppSession;
+  history: History;
 };
 
-export default class CollectingEvent extends React.Component<
-  CollectingEventProps,
+export default (props: CollectingProps) => (
+  <CollectingEventComponent
+    appSession={props.appSession}
+    store={props.store}
+    addCollectingEvent={
+      props.addCollectingEvent && props.addCollectingEvent(props.appSession)
+    }
+    history={props.history}
+  />
+);
+
+export class CollectingEventComponent extends React.Component<
+  CollectingProps,
   CollectingEventState
 > {
-  constructor(props: CollectingEventProps) {
+  constructor(props: CollectingProps) {
     super(props);
-    this.state = {
-      placeState: {
-        admPlace: admPlaces[0],
-        editingCoordinate: {
-          coordinateType: 'MGRS',
-          altitudeUnit: 'Meters',
-          depthUnit: 'Meters',
-          datum: 'WGS84',
-          caAltitude: false,
-          caDepth: false,
-          isAddedLater: false,
-          caCoordinate: false
-        },
-        coordinateHistory: [{ coordinate: { coordinateType: '' } }],
-        coordinateCollapsed: true,
-        coordinateHistoryIndeks: 0,
-        coordinateInvalid: false
-      },
-      eventState: {
-        eventUuid: '',
-        eventType: 12,
-        person: {
-          personUuid: '',
-          name: ''
-        }
-      }
-    };
+    console.log('COLLECTING EVENT STORE', props.store);
+    this.state =
+      props.store && props.store.localState
+        ? props.store.localState
+        : {
+            placeState: {
+              admPlace: admPlaces[0],
+              editingCoordinate: {
+                coordinateType: 'MGRS',
+                altitudeUnit: 'Meters',
+                depthUnit: 'Meters',
+                datum: 'WGS84',
+                caAltitude: false,
+                caDepth: false,
+                isAddedLater: false,
+                caCoordinate: false
+              },
+              coordinateHistory: [{ coordinate: { coordinateType: '' } }],
+              coordinateCollapsed: true,
+              coordinateHistoryIndeks: 0,
+              coordinateInvalid: false
+            },
+            eventState: {
+              name: '',
+              eventUuid: '',
+              eventType: 6,
+              methodId: 4,
+              museumId: 5,
+              collectionId: 10
+            },
+            person: {
+              personUuid: '',
+              name: ''
+            }
+          };
+  }
+
+  componentWillReceiveProps(props: CollectingProps) {
+    console.log('Recieve props: ====>', props);
+    if (props.store.localState) {
+      this.setState(() => ({ ...props.store.localState }));
+    }
   }
   render() {
     console.log('CollectionEventState on load ', this.state);
+
     const PlaceBodyComponent = (
       <div>
         <PlaceComponent
@@ -339,12 +448,15 @@ export default class CollectingEvent extends React.Component<
                   : ps.coordinateHistory[ps.coordinateHistoryIndeks]
                       .coordinateRevisionType;
               if (
-                ps.editCoorditeMode ||
+                !ps.editCoorditeMode /* ||
                 (ps.coordinateHistoryIndeks === 0 &&
                   ps.coordinateHistory[ps.coordinateHistoryIndeks]
-                    .coordinateRevisionType === undefined)
+                    .coordinateRevisionType === undefined) */
               ) {
-                console.log('ANURADHA onClickSaveRevision New Revision');
+                console.log(
+                  'ANURADHA onClickSaveRevision New Revision App Session',
+                  this.props.appSession
+                );
                 return {
                   ...cs,
                   placeState: {
@@ -380,6 +492,12 @@ export default class CollectingEvent extends React.Component<
                 }
               };
             });
+            this.props.addCollectingEvent &&
+              this.props.addCollectingEvent()({
+                data: this.state.eventState,
+                token: this.props.appSession.accessToken,
+                collectionId: this.props.appSession.collectionId
+              });
           }}
           onClickSaveEdit={() => {
             this.setState((cs: CollectingEventState) => {
@@ -465,7 +583,7 @@ export default class CollectingEvent extends React.Component<
     const EventMetadataComponent = (
       <div>
         <EventMetadata
-          {...this.state}
+          {...this.state.eventState}
           onChangeEventMetaData={(fieldName: string) => (value: string) => {
             this.setState((cs: CollectingEventState) => {
               return {

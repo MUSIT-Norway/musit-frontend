@@ -15,6 +15,7 @@ export type AdmPlace = {
   lat?: number;
   long?: number;
   zoom?: number;
+  admPlaceUuid?: string;
 };
 
 export type Coordinate = {
