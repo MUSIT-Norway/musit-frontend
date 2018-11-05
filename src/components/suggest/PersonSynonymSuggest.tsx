@@ -6,6 +6,7 @@ import { RxInjectLegacy as inject } from '../../shared/react-rxjs-patch';
 import { AppSession } from '../../types/appSession';
 import { TODO } from '../../types/common';
 import { uniqBy } from 'lodash';
+import { getPersonAttributesFromEvents, EventData } from '../../models/object/person';
 
 interface PersonSynonymSuggestComponentProps {
   id: string;
@@ -48,6 +49,7 @@ export interface PersonSynonymSuggestion {
     }
   ];
   aggSyn?: string;
+  eventData?: EventData[];
   collections: [
     {
       museumId: number;
@@ -116,6 +118,7 @@ export class PersonSynonymSuggestComponent extends React.Component<
                 })
                 .map((p: PersonSynonymSuggestion) => ({
                   ...p,
+                  eventData: getPersonAttributesFromEvents(p.personUuid),
                   aggSyn: p.synonyms
                     ? `[${p.synonyms.reduce(
                         (p, c) => `${p !== '' ? p + ';' : ''} ${c.name}`,

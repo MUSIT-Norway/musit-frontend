@@ -5,7 +5,8 @@ import { flowRight } from 'lodash';
 import appSession$ from '../../../stores/appSession';
 import store$, {
   GetPersonsFromPersonNameProps,
-  getPersonsFromPersonName$
+  getPersonsFromPersonName$,
+  getEnrichedPersonsFromPersonName$
 } from './PersonStore';
 import { History } from 'history';
 import { AjaxGet } from '../../../types/ajax';
@@ -21,6 +22,17 @@ const combinedStore$ = createStore(
 const searchProps = (combinedStore: any, upstream: { history: History }) => ({
   ...combinedStore,
   ...upstream,
+  getEnrichedPersonsFromName: (ajaxGet: AjaxGet<any>) => (
+    searchProps: GetPersonsFromPersonNameProps
+  ) => {
+    getEnrichedPersonsFromPersonName$.next({
+      name: searchProps.name,
+      token: searchProps.token,
+      collectionId: searchProps.collectionId,
+      callback: searchProps.callback,
+      ajaxGet: ajaxGet
+    });
+  },
   getPersonsFromPersonName: (ajaxGet: AjaxGet<any>) => (
     searchProps: GetPersonsFromPersonNameProps
   ) => {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { EventMetadataProps } from './CollectingEvents';
+import { EventMetadataProps } from './CollectingEventComponent';
 import DatePicker from '../../../components/DatePicker';
 
 const EventMetadata = (props: EventMetadataProps) => {
@@ -16,7 +16,7 @@ const EventMetadata = (props: EventMetadataProps) => {
             type="text"
             className="form-control"
             id={'txtInputProject'}
-            value={props.eventState.name}
+            value={props.name}
             onChange={e => props.onChangeEventMetaData('name')(e.target.value)}
           />
         </div>
@@ -37,7 +37,7 @@ const EventMetadata = (props: EventMetadataProps) => {
           <DatePicker
             onClear={props.onClearBornDate}
             onChange={props.onChangeBornDate}
-            value={props.eventState.eventDateFrom}
+            value={props.eventDateFrom}
             // disabled={props.readOnly}
           />
         </div>
@@ -45,7 +45,7 @@ const EventMetadata = (props: EventMetadataProps) => {
           <DatePicker
             onClear={props.onClearDeathDate}
             onChange={props.onChangeDeathDate}
-            value={props.eventState.eventDateTo}
+            value={props.eventDateTo}
             // disabled={props.readOnly}
           />
         </div>
@@ -54,7 +54,7 @@ const EventMetadata = (props: EventMetadataProps) => {
             type="text"
             className="form-control"
             id={'txtVerbatimDate'}
-            value={props.eventState.eventDateVerbatim}
+            value={props.eventDateVerbatim}
             onChange={e => props.onChangeVerbatimDate(e.target.value)}
             // disabled={props.readOnly}
           />
@@ -89,7 +89,7 @@ const EventMetadata = (props: EventMetadataProps) => {
             rows={6}
             className="form-control"
             id="locality"
-            value={props.eventState.note}
+            value={props.note}
             onChange={(v: React.ChangeEvent<HTMLTextAreaElement>) =>
               props.onChangeEventMetaData('note')(v.target.value)
             }

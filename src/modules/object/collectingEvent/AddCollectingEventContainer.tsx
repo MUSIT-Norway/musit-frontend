@@ -9,7 +9,7 @@ import store$, {
 } from './CollectingEventStore';
 import { History } from 'history';
 import { AjaxPost } from '../../../types/ajax';
-import CollectingEvents from './CollectingEvents';
+import { CollectingEventComponent } from './CollectingEventComponent';
 
 const combinedStore$ = createStore(
   'combinedStore',
@@ -40,7 +40,7 @@ export const onUnmount = () => (props: any) => {};
 const ManageCollectingEventsComponent = lifeCycle({
   onMount: onMountProps(),
   onUnmount
-})(CollectingEvents);
+})(CollectingEventComponent);
 
 export default flowRight([inject(combinedStore$, addCollectingEventProps)])(
   ManageCollectingEventsComponent

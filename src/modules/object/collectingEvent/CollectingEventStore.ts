@@ -3,8 +3,8 @@ import {
   addCollectingEvent,
   CollectingEvent
 } from '../../../models/object/collectingEvent';
-import { /* place , addPlace, */ InputPlace } from '../../../models/object/place';
-import { CollectingEventState } from './CollectingEvents';
+//import { /* place , addPlace, */ InputPlace } from '../../../models/object/place';
+import { CollectingEventState, EventState } from './CollectingEventComponent';
 import { Callback, AjaxPost } from '../../../types/ajax';
 import { Star } from '../../../types/common';
 import { Observable, Subject } from 'rxjs';
@@ -16,7 +16,7 @@ import { createStore } from 'react-rxjs';
 
 export type CollectingEventStoreState = {
   localState?: CollectingEventState;
-  collectingEvent?: InputEvent & InputPlace;
+  collectingEvent?: InputEvent;
   collectingEventList?: Array<InputEvent>;
 };
 export const initialCollectingEventState = {
@@ -29,9 +29,9 @@ export type CommonParams = {
   callback?: Callback<Star>;
 };
 
-export type AddCollectingEventProps = CommonParams & { data: CollectingEventState };
+export type AddCollectingEventProps = CommonParams & { data: EventState };
 
-export const toBackend: ((p: CollectingEvent) => InputEvent) = (p: CollectingEvent) => {
+export const toBackend: ((p: EventState) => InputEvent) = (p: EventState) => {
   const c = new CollectingEvent(
     p.name,
     p.eventUuid,
@@ -57,63 +57,26 @@ export const toBackend: ((p: CollectingEvent) => InputEvent) = (p: CollectingEve
 
 const addCollectingEventData = (ajaxPost: AjaxPost<Star>) => (
   props: AddCollectingEventProps
-) =>
-  Observable.of(props).flatMap(props =>
+) => {
+  console.log('Inside addCollectingEventData ');
+  return Observable.of(props).flatMap(props =>
     addCollectingEvent(ajaxPost)({
-      data: toBackend(props.data.eventState),
+      data: toBackend(props.data),
       token: props.token,
       callback: props.callback
     })
   );
+};
 
-/* export const toBackendPlace: ((p: PlaceState) => InputPlace) = (p: PlaceState) => {
-    const c = new place(
-     '',
-     p.admPlace && p.admPlace.admPlaceUuid,
-     {
-      coordinateUuid: '',
-      coordinateType: p.editingCoordinate && p.editingCoordinate.coordinateType,
-      datum: p.editingCoordinate && p.editingCoordinate.datum,
-      zone: p.editingCoordinate && p.editingCoordinate.utmZone,
-      bend: p.editingCoordinate && p.editingCoordinate.mgrsBand,
-      coordinateString: p.editingCoordinate && p.editingCoordinate.coordinateString,
-      coordinateGeometry: p.editingCoordinate && p.editingCoordinate.coordinateGeomertry
-     },
-     {
-       coordAttrUuid: '',
-       coordinateSource: p.editingCoordinate && p.editingCoordinate.coordinateSource,
-       gpsAccuracy: p.editingCoordinate && p.editingCoordinate.gpsAccuracy,
-       addedLater: p.editingCoordinate && p.editingCoordinate.gpsAccuracy,
-       coordinateCa: p.editingCoordinate && p.editingCoordinate.caCoordinate,
-       precision: p.editingCoordinate && p.editingCoordinate.coordinatePrecision,
-       altitudeString: '',
-       altitudeFrom:  p.editingCoordinate && p.editingCoordinate.altitudeLow,
-       altitudeTo:  p.editingCoordinate && p.editingCoordinate.altitudeHigh,
-       altitudeUnit: p.editingCoordinate && p.editingCoordinate.altitudeUnit,
-       derivedAltitudeMeter: '',
-       depthString: '',
-       depthFrom: p.editingCoordinate && p.editingCoordinate.depthLow,
-       depthTo: p.editingCoordinate && p.editingCoordinate.depthHigh,
-       depthUnit: p.editingCoordinate && p.editingCoordinate.depthUnit,
-       derivedDepthMeter: '',
-       note: p.editingCoordinate && p.editingCoordinate.coordinateNote
-     }
-    );
-    console.log('to backend ', c);
-    return c;
-  };
-
-const addPlaceData = (ajaxPost: AjaxPost<Star>) => (
-  props: AddCollectingEventProps
-) =>
-  Observable.of(props)
-  .flatMap(props => addPlace(ajaxPost)
-    ({
-      data: toBackendPlace(props.data.placeState),
-      token: props.token,
-      callback: props.callback
-    })
-  ); */
+/*   const addCollectingEventData = (ajaxPost: AjaxPost<Star>) => (
+    props: AddCollectingEventProps
+  ) => Observable.of(props).flatMap(props => 
+      addCollectingEvent(ajaxPost)({
+        data: toBackend(props.data),
+        token: props.token,
+        callback: props.callback
+      })
+    ); */
 
 export const addCollectingEvent$: Subject<
   AddCollectingEventProps & { ajaxPost: AjaxPost<Star> }
@@ -130,9 +93,10 @@ export const reducer$ = (
   return Observable.merge(
     actions.addCollectingEvent$
       .switchMap(addCollectingEventData(ajaxPost))
+      .do(res => console.log('HTTP response:', res))
       .map((collectingEvent: InputEvent) => (state: CollectingEventStoreState) => ({
         ...state,
-        collectingEvent
+        eventState: collectingEvent
       }))
   );
 };

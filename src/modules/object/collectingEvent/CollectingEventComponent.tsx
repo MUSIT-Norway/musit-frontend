@@ -10,12 +10,12 @@ import PlaceComponent, { AdmPlace, PlaceState } from '../placeStateless/PlaceCom
 import { CollectingEventStoreState } from './CollectingEventStore';
 import { AppSession } from '../../../types/appSession';
 
-export type CollectingEventProps = CollectingEventState & {
+export type CollectingEventProps = {
   onChangeTextField: (fieldName: string) => (value: string) => void;
   onChangeNumberField: (fieldName: string) => (value: number) => void;
 };
 
-export type EventMetadataProps = CollectingEventState & {
+export type EventMetadataProps = EventState & {
   onChangeEventMetaData: (fieldName: string) => (value: string) => void;
   onClearBornDate: Function;
   onChangeBornDate: Function;
@@ -56,7 +56,7 @@ export type ActorsAndRelation = {
   relation: RoleId;
 };
 
-export type CollectingEvent = {
+export interface EventState {
   name: string;
   eventUuid: EventUuid;
   eventType: number;
@@ -74,21 +74,77 @@ export type CollectingEvent = {
   eventDateTo?: string;
   eventDateVerbatim?: string;
   placeUuid?: Uuid;
-  // place: Place;
-};
+}
+
+export class EventState implements EventState {
+  name: string;
+  eventUuid: EventUuid;
+  eventType: number;
+  methodId: number;
+  museumId: number;
+  collectionId: number;
+  method?: string;
+  methodDescription?: string;
+  note?: string;
+  partOf?: EventUuid;
+  createdBy?: Person;
+  createdDate?: string;
+  relatedActors?: ActorsAndRelation[];
+  eventDateFrom?: string;
+  eventDateTo?: string;
+  eventDateVerbatim?: string;
+  placeUuid?: Uuid;
+  constructor(
+    name: string,
+    eventUuid: EventUuid,
+    eventType: number,
+    methodId: number,
+    museumId: number,
+    collectionId: number,
+    method?: string,
+    methodDescription?: string,
+    note?: string,
+    partOf?: EventUuid,
+    createdBy?: Person,
+    createdDate?: string,
+    relatedActors?: ActorsAndRelation[],
+    eventDateFrom?: string,
+    eventDateTo?: string,
+    eventDateVerbatim?: string,
+    placeUuid?: Uuid
+  ) {
+    this.name = name;
+    this.eventUuid = eventUuid;
+    this.eventType = eventType;
+    this.methodId = methodId;
+    this.museumId = museumId;
+    this.collectionId = collectionId;
+    this.method = method;
+    this.methodDescription = methodDescription;
+    this.note = note;
+    this.partOf = partOf;
+    this.createdBy = createdBy;
+    this.createdDate = createdDate;
+    this.relatedActors = relatedActors;
+    this.eventDateFrom = eventDateFrom;
+    this.eventDateTo = eventDateTo;
+    this.eventDateVerbatim = eventDateVerbatim;
+    this.placeUuid = placeUuid;
+  }
+}
 
 export interface CollectingEventState {
   placeState: PlaceState;
-  eventState: CollectingEvent;
+  eventState: EventState;
   person: Person;
 }
 
 export class CollectingEventState implements CollectingEventState {
   placeState: PlaceState;
-  eventState: CollectingEvent;
+  eventState: EventState;
   person: Person;
 
-  constructor(placeState: PlaceState, eventState: CollectingEvent, person: Person) {
+  constructor(placeState: PlaceState, eventState: EventState, person: Person) {
     this.placeState = placeState;
     this.eventState = eventState;
     this.person = person;
@@ -103,7 +159,7 @@ export type CollectingProps = {
 };
 
 export default (props: CollectingProps) => (
-  <CollectingEvents
+  <CollectingEventComponent
     appSession={props.appSession}
     store={props.store}
     addCollectingEvent={
@@ -113,7 +169,7 @@ export default (props: CollectingProps) => (
   />
 );
 
-export class CollectingEvents extends React.Component<
+export class CollectingEventComponent extends React.Component<
   CollectingProps,
   CollectingEventState
 > {
@@ -392,12 +448,15 @@ export class CollectingEvents extends React.Component<
                   : ps.coordinateHistory[ps.coordinateHistoryIndeks]
                       .coordinateRevisionType;
               if (
-                ps.editCoorditeMode ||
+                !ps.editCoorditeMode /* ||
                 (ps.coordinateHistoryIndeks === 0 &&
                   ps.coordinateHistory[ps.coordinateHistoryIndeks]
-                    .coordinateRevisionType === undefined)
+                    .coordinateRevisionType === undefined) */
               ) {
-                console.log('ANURADHA onClickSaveRevision New Revision');
+                console.log(
+                  'ANURADHA onClickSaveRevision New Revision App Session',
+                  this.props.appSession
+                );
                 return {
                   ...cs,
                   placeState: {
@@ -433,10 +492,9 @@ export class CollectingEvents extends React.Component<
                 }
               };
             });
-
             this.props.addCollectingEvent &&
-              this.props.addCollectingEvent({
-                data: this.state,
+              this.props.addCollectingEvent()({
+                data: this.state.eventState,
                 token: this.props.appSession.accessToken,
                 collectionId: this.props.appSession.collectionId
               });
@@ -525,7 +583,7 @@ export class CollectingEvents extends React.Component<
     const EventMetadataComponent = (
       <div>
         <EventMetadata
-          {...this.state}
+          {...this.state.eventState}
           onChangeEventMetaData={(fieldName: string) => (value: string) => {
             this.setState((cs: CollectingEventState) => {
               return {

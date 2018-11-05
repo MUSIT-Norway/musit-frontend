@@ -223,6 +223,9 @@ const PersonTable = (props: {
 );
 
 export type SearchProps = {
+  getEnrichedPersonsFromName: (
+    a?: AjaxGet<any>
+  ) => (s: GetPersonsFromPersonNameProps) => OutputPerson[];
   getPersonsFromPersonName: (
     a?: AjaxGet<any>
   ) => (s: GetPersonsFromPersonNameProps) => OutputPerson[];
@@ -262,7 +265,7 @@ export default class SearchPersonComponent extends React.Component<
   }
 
   onClickSearch() {
-    this.props.getPersonsFromPersonName()({
+    this.props.getEnrichedPersonsFromName()({
       name: this.state.searchString || '',
       collectionId: this.props.appSession.collectionId,
       token: this.props.appSession.accessToken

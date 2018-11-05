@@ -160,6 +160,7 @@ export interface OutputPerson {
   collections: Collection[];
   synonyms?: PersonName[];
   personToMergeSyn: boolean;
+  eventData?: EventData[];
 }
 
 export interface MergePerson {
@@ -273,6 +274,165 @@ export class Person implements InputPerson {
     this.collections = collections;
   }
 }
+
+export type EventData = {
+  eventUUID: string;
+  eventType: string;
+  dateFrom: Date;
+  dateTo: Date;
+  taxon?: {
+    taxonUUID: string;
+    genus: string;
+    species: string;
+  };
+  place?: {
+    placeUuid: string;
+    admPlaceUuid: string;
+    admPlace: {
+      admPlaceUuid: string;
+      name: string;
+      type: string;
+      path: string;
+    };
+  };
+};
+
+export const getPersonAttributesFromEvents: (personUUID: string) => Array<EventData> = (
+  personUUID: string
+) => [
+  {
+    eventUUID: '1',
+    eventType: 'Collecting event',
+    dateFrom: new Date('1954-09-21'),
+    dateTo: new Date('1954-09-21'),
+    place: {
+      placeUuid: '1',
+      admPlaceUuid: '1',
+      admPlace: {
+        admPlaceUuid: '1',
+        name: 'Oslo',
+        type: 'Kommune',
+        path: 'Oslo fylke, Norge'
+      }
+    }
+  },
+  {
+    eventUUID: '4',
+    eventType: 'Collecting event',
+    dateFrom: new Date('1945-09-21'),
+    dateTo: new Date('1945-09-25'),
+    place: {
+      placeUuid: '3',
+      admPlaceUuid: '2',
+      admPlace: {
+        admPlaceUuid: '2',
+        name: 'Oslo',
+        type: 'Kommune',
+        path: 'Oslo fylke, Norge'
+      }
+    }
+  },
+  {
+    eventUUID: '8',
+    eventType: 'Collecting event',
+    dateFrom: new Date('1933-09-21'),
+    dateTo: new Date('1967-09-21'),
+    place: {
+      placeUuid: '7',
+      admPlaceUuid: '8',
+      admPlace: {
+        admPlaceUuid: '8',
+        name: 'Fredrikstad',
+        type: 'Kommune',
+        path: 'Østfold fylke, Norge'
+      }
+    }
+  },
+
+  {
+    eventUUID: '348',
+    eventType: 'Collecting event',
+    dateFrom: new Date('1967-09-21'),
+    dateTo: new Date('1999-09-21'),
+    place: {
+      placeUuid: '7',
+      admPlaceUuid: '8',
+      admPlace: {
+        admPlaceUuid: '8',
+        name: 'Fredrikstad',
+        type: 'Kommune',
+        path: 'Østfold fylke, Norge'
+      }
+    }
+  },
+
+  {
+    eventUUID: '855',
+    eventType: 'Collecting event',
+    dateFrom: new Date('2010-09-21'),
+    dateTo: new Date('2018-09-21'),
+    place: {
+      placeUuid: '7',
+      admPlaceUuid: '8',
+      admPlace: {
+        admPlaceUuid: '8',
+        name: 'Fredrikstad',
+        type: 'Kommune',
+        path: 'Østfold fylke, Norge'
+      }
+    }
+  },
+
+  {
+    eventUUID: '8655',
+    eventType: 'Collecting event',
+    dateFrom: new Date('1999-09-21'),
+    dateTo: new Date('2010-09-21'),
+    place: {
+      placeUuid: '7',
+      admPlaceUuid: '8',
+      admPlace: {
+        admPlaceUuid: '8',
+        name: 'Fredrikstad',
+        type: 'Kommune',
+        path: 'Østfold fylke, Norge'
+      }
+    }
+  },
+  {
+    eventUUID: '33',
+    eventType: 'Classifiation event',
+    dateFrom: new Date('1963-09-21'),
+    dateTo: new Date('1963-09-21'),
+    taxon: {
+      taxonUUID: '7',
+      species: 'saxatilis',
+      genus: 'Carex'
+    }
+  },
+  {
+    eventUUID: '123',
+    eventType: 'Classifiation event',
+    dateFrom: new Date('1974-09-21'),
+    dateTo: new Date('1974-09-21'),
+    taxon: {
+      taxonUUID: '9',
+      species: 'alpina',
+      genus: 'Poa'
+    }
+  },
+  {
+    eventUUID: '1237',
+    eventType: 'Classifiation event',
+    dateFrom: new Date('1963-09-21'),
+    dateTo: new Date('1963-09-21'),
+    taxon: {
+      taxonUUID: '11',
+      species: 'flava',
+      genus: 'Carex'
+    }
+  }
+];
 
 export const getPerson: (
   ajaxGet: AjaxGet<Star>

@@ -1,6 +1,7 @@
 import { simpleGet, simplePost, simplePut } from '../../../shared/RxAjax';
 import {
   getPerson,
+  getPersonAttributesFromEvents,
   InputPerson,
   OutputPerson,
   addPerson,
@@ -120,6 +121,22 @@ const searchPersonsFromName = (ajaxGet: AjaxGet<Star>) => (
     })
   );
 
+const searchEnrichedPersonsFromName = (ajaxGet: AjaxGet<Star>) => (
+  props: GetPersonsFromPersonNameProps
+) =>
+  Observable.of(props).flatMap(props =>
+    searchPersonName(ajaxGet)({
+      name: props.name,
+      token: props.token,
+      callback: props.callback
+    }).map((p: OutputPerson[]) => {
+      return p.map((p: OutputPerson) => ({
+        ...p,
+        eventData: getPersonAttributesFromEvents(p.personUuid)
+      }));
+    })
+  );
+
 const mergePersonData = (ajaxPost: AjaxPost<Star>) => (props: MergePersonProps) =>
   Observable.of(props).flatMap(props =>
     mergePerson(ajaxPost)({
@@ -129,6 +146,10 @@ const mergePersonData = (ajaxPost: AjaxPost<Star>) => (props: MergePersonProps) 
       callback: props.callback
     })
   );
+
+export const getEnrichedPersonsFromPersonName$: Subject<
+  GetPersonsFromPersonNameProps & { ajaxGet: AjaxGet<Star> }
+> = createAction('getEnrichedPersonsFromPersonName$');
 
 export const getPerson$: Subject<
   GetPersonProps & { ajaxGet: AjaxGet<Star> }
@@ -159,6 +180,7 @@ type Actions = {
   addPerson$: Subject<AddPersonProps>;
   editPerson$: Subject<EditPersonProps>;
   getPersonsFromPersonName$: Subject<GetPersonsFromPersonNameProps>;
+  getEnrichedPersonsFromPersonName$: Subject<GetPersonsFromPersonNameProps>;
   mergePerson$: Subject<MergePersonProps>;
 };
 
@@ -175,6 +197,12 @@ export const reducer$ = (
         ...state,
         person: newPerson,
         localState: toFrontend(newPerson)
+      })),
+    actions.getEnrichedPersonsFromPersonName$
+      .switchMap(searchEnrichedPersonsFromName(ajaxGet))
+      .map((personList: Array<OutputPerson>) => (state: PersonStoreState) => ({
+        ...state,
+        personList
       })),
     actions.getPersonsFromPersonName$
       .switchMap(searchPersonsFromName(ajaxGet))
@@ -196,6 +224,7 @@ export const reducer$ = (
 export const store$ = (
   actions$: Actions = {
     getPerson$,
+    getEnrichedPersonsFromPersonName$,
     addPerson$,
     editPerson$,
     getPersonsFromPersonName$,

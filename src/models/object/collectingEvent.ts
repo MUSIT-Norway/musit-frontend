@@ -126,10 +126,12 @@ export const addCollectingEvent: (
 ) => (
   props: {
     token: string;
-    data: any;
+    data: InputEvent;
     callback?: Callback<Star>;
   }
 ) => Observable<InputEvent> = (ajaxPost = simplePost) => ({ data, token, callback }) => {
   const URL = Config.api.collectingEvent.addEventUrl;
-  return ajaxPost(URL, data, token, callback).map(({ response }) => response);
+  return ajaxPost(URL, data, token, callback)
+    .map(({ response }) => response)
+    .do(response => console.log('addCollectingEvent anuradha', URL, response));
 };
