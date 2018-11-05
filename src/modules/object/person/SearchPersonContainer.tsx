@@ -6,7 +6,8 @@ import appSession$ from '../../../stores/appSession';
 import store$, {
   GetPersonsFromPersonNameProps,
   getPersonsFromPersonName$,
-  getEnrichedPersonsFromPersonName$
+  getEnrichedPersonsFromPersonName$,
+  clearSearch$
 } from './PersonStore';
 import { History } from 'history';
 import { AjaxGet } from '../../../types/ajax';
@@ -33,6 +34,7 @@ const searchProps = (combinedStore: any, upstream: { history: History }) => ({
       ajaxGet: ajaxGet
     });
   },
+  clearSearch: () => clearSearch$.next(),
   getPersonsFromPersonName: (ajaxGet: AjaxGet<any>) => (
     searchProps: GetPersonsFromPersonNameProps
   ) => {

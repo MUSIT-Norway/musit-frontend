@@ -9,11 +9,12 @@ import {
   EventData,
   PersonName as StorePersonName
 } from '../../../models/object/person';
-import { PersonStoreState } from './PersonStore';
+import { PersonStoreState, GetPersonsFromPersonNameProps } from './PersonStore';
 import { EditList, databaseOption, databaseOptions } from '../components/EditList';
 import { History } from 'history';
 import config from '../../../config';
 import { AjaxResponse } from 'rxjs';
+import { AjaxGet } from '../../../types/ajax';
 import { emitError } from '../../../shared/errors';
 import {
   museumAndCollections,
@@ -25,7 +26,7 @@ import { groupBy, maxBy, minBy } from 'lodash';
 import { formatISOString } from '../../../shared/util';
 import * as moment from 'moment';
 
-import PersonSynonymSuggest from '../../../components/suggest/PersonSynonymSuggest';
+export type CombinedStore = { store: PersonStoreState; appSession: AppSession };
 
 export type PersonName = {
   title?: string;
@@ -41,12 +42,15 @@ export type ExternalId = {
 export type SynProps = {
   value?: string;
   synPersons: SynPerson;
+  personList: OutputPerson[];
   appSession?: AppSession;
   personToMergeSyn?: boolean;
 } & {
   onAddPersonAsSynonym: (p: SynPerson) => void;
   onRemovePersonAsSynonym: () => void;
   onClickMerge?: Function;
+  onClickSearch: Function;
+  onPersonSearchChange: (n: string) => void;
 };
 
 export type SynPerson = {
@@ -135,6 +139,7 @@ export interface PersonState {
   enableSave?: Boolean;
   disableOnChangeFullName?: boolean;
   disableOnChangeOtherName?: boolean;
+  personSearchString?: string;
 }
 
 export class PersonState implements PersonState {
@@ -162,6 +167,7 @@ export class PersonState implements PersonState {
     fullName: PersonName,
     legalEntityType: string,
     collections: Collection[],
+    personSearchString?: string,
     uuid?: string,
     url?: string,
     externalIds?: ExternalId[],
@@ -180,6 +186,7 @@ export class PersonState implements PersonState {
     this.uuid = uuid;
     this.fullName = fullName;
     this.legalEntityType = legalEntityType;
+    this.personSearchString = personSearchString || this.personSearchString;
     this.url = url;
     this.externalIds = externalIds;
     this.synonyms = synonyms;
@@ -201,6 +208,7 @@ export type PersonProps = PersonState & {
   onClickSaveEdit: Function;
   onClickCancel: Function;
   appSession: AppSession;
+  onPersonSearchChange: (name: string) => void;
   onChange: (fieldName: string) => (newValue: string) => void;
   onChangePersonName: (fieldName: string) => (newValue: string) => void;
   onChangeFullName: (fieldName: string) => (newValue: string) => void;
@@ -216,6 +224,7 @@ export type PersonProps = PersonState & {
   onChangeBornDate: Function;
   onClearDeathDate: Function;
   onChangeDeathDate: Function;
+  personSearchList: OutputPerson[];
   onChangeVerbatimDate: (newDate?: string) => void;
   heading?: string;
   standAlone?: boolean;
@@ -228,6 +237,11 @@ export type PersonProps = PersonState & {
   onAddPersonAsSynonym: (p: SynPerson) => void;
   onRemovePersonAsSynonym: () => void;
   onClickMerge: Function;
+  clearSearch: Function;
+  onClickSearch: Function;
+  getEnrichedPersonsFromName: (
+    a?: AjaxGet<any>
+  ) => (s: GetPersonsFromPersonNameProps) => void;
 };
 
 const Synonyms = (props: {
@@ -391,7 +405,7 @@ const Synonyms = (props: {
   </div>
 );
 
-const aggEvents: (e?: EventData[]) => string = (e: EventData[]) => {
+export const aggEvents: (e?: EventData[]) => string = (e: EventData[]) => {
   if (!e) {
     return '';
   }
@@ -636,25 +650,45 @@ const getCollections = (props: SynPerson) => {
 };
 const SynSearch = (props: SynProps) => {
   return (
-    <div>
+    <div className="container-fluid">
       <div className="row">
-        <div className="col-md-1">
-          <label htmlFor="personName">Person</label>
-        </div>
-        <div className="col-md-5">
-          <PersonSynonymSuggest
-            id="personSynonymSuggest"
-            value={''}
-            renderFunc={(s: SynPerson) => (
-              <span className="suggestion-content">{`${s.name} ${s.aggSyn} ${aggEvents(
-                s.eventData
-              )}`}</span>
-            )}
-            placeHolder="Person Name"
-            appSession={props.appSession}
-            onChange={props.onAddPersonAsSynonym}
-          />
-        </div>
+        <form className="form-inline">
+          <div className="col-md-6">
+            <div className="form-group">
+              <label htmlFor="personSearchName">Person name</label>
+              <input
+                className="form-control"
+                id="personSearchName"
+                onChange={e => props.onPersonSearchChange(e.target.value)}
+              />
+            </div>
+            <button
+              type="button"
+              className="btn btn-default"
+              onClick={e => {
+                e.preventDefault();
+                props.onClickSearch();
+              }}
+            >
+              Search
+            </button>
+          </div>
+        </form>
+      </div>
+      <div className="row">
+        <table className="table table-condensed">
+          <thead>
+            <tr>
+              <th>First name</th>
+              <th>Last name</th>
+            </tr>
+          </thead>
+          <tbody>
+            {props.personList.map((p: OutputPerson, i: number) => (
+              <tr key={`TR-${i}`}>{p.lastName}</tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
@@ -672,8 +706,11 @@ const Synonymizer = (props: SynProps) => {
           <SynSearch
             onAddPersonAsSynonym={props.onAddPersonAsSynonym}
             onRemovePersonAsSynonym={props.onRemovePersonAsSynonym}
+            onPersonSearchChange={props.onPersonSearchChange}
             appSession={props.appSession}
+            personList={props.personList}
             synPersons={props.synPersons}
+            onClickSearch={props.onClickSearch}
           />
         </div>
         <div className="row">
@@ -927,8 +964,11 @@ export const PersonPage = (props: PersonProps) => {
               props.uuid && (
                 <Synonymizer
                   onAddPersonAsSynonym={props.onAddPersonAsSynonym}
+                  onPersonSearchChange={props.onPersonSearchChange}
                   onRemovePersonAsSynonym={props.onRemovePersonAsSynonym}
                   onClickMerge={props.onClickMerge}
+                  personList={props.personSearchList}
+                  onClickSearch={props.onClickSearch}
                   appSession={props.appSession}
                   synPersons={
                     props.personsToSynonymize
@@ -980,7 +1020,7 @@ export const toFrontend: (p: OutputPerson) => PersonState = (p: OutputPerson) =>
       },
       innP.personAttribute ? innP.personAttribute.legalEntityType : '',
       innP.collections,
-      //'SEARCH',
+      undefined,
       innP.personUuid,
       innP.personAttribute && innP.personAttribute.url,
       innP.personAttribute && innP.personAttribute.externalIds,
@@ -1008,6 +1048,7 @@ export const toFrontend: (p: OutputPerson) => PersonState = (p: OutputPerson) =>
     collections: [],
     legalEntityType: 'Person',
     synState: 'SEARCH',
+    personSearchString: '',
     personsToSynonymize: { personUuid: '', name: '' },
     personToMergeSyn: true
   };
@@ -1016,7 +1057,6 @@ export const toFrontend: (p: OutputPerson) => PersonState = (p: OutputPerson) =>
 export class Person extends React.Component<PersonComponentProps, PersonState> {
   constructor(props: PersonComponentProps) {
     super(props);
-    console.log('STORE', props.store);
     this.state = props.store.localState
       ? props.store.localState
       : {
@@ -1024,7 +1064,8 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
           //synState: 'SEARCH',
           //personsToSynonymize: {},
           collections: [],
-          legalEntityType: 'Person'
+          legalEntityType: 'Person',
+          personSearchString: ''
         };
   }
   componentWillReceiveProps(props: PersonComponentProps) {
@@ -1037,11 +1078,24 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
     return (
       <div className="container" style={{ paddingTop: '25px' }}>
         <PersonPage
+          onPersonSearchChange={(name: string) => {
+            this.setState((ps: PersonState) => ({ ...ps, personSearchString: name }));
+          }}
           readOnly={this.props.readOnly}
           uuid={this.state.uuid}
           appSession={this.props.appSession}
+          personSearchList={this.props.store.personList || []}
           standAlone
           personToMergeSyn={this.state.personToMergeSyn}
+          getEnrichedPersonsFromName={this.props.getEnrichedPersonsFromName}
+          onClickSearch={() =>
+            this.props.getEnrichedPersonsFromName()({
+              name: this.state.personSearchString || '',
+              collectionId: this.props.appSession.collectionId,
+              token: this.props.appSession.accessToken
+            })
+          }
+          clearSearch={this.props.clearSearch}
           onAddPersonAsSynonym={(p: SynPerson) => {
             this.setState((ps: PersonState) => {
               const newSynonymPerson: SynPerson = p;
@@ -1465,16 +1519,24 @@ export type PersonComponentProps = {
   editPerson?: Function;
   mergePerson: Function;
   getPerson?: Function;
+  clearSearch: Function;
+  getEnrichedPersonsFromName: (
+    a?: AjaxGet<any>
+  ) => (s: GetPersonsFromPersonNameProps) => void;
   store: PersonStoreState;
   appSession: AppSession;
   history: History;
   readOnly: boolean;
+  personSearchList: OutputPerson[];
 };
 
 export default (props: PersonComponentProps) => (
   <Person
     appSession={props.appSession}
+    personSearchList={props.store.personList || []}
+    getEnrichedPersonsFromName={props.getEnrichedPersonsFromName}
     store={props.store}
+    clearSearch={props.clearSearch}
     addPerson={props.addPerson && props.addPerson(props.appSession)}
     editPerson={props.editPerson && props.editPerson(props.appSession)}
     mergePerson={props.mergePerson}
