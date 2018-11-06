@@ -683,7 +683,8 @@ const SynSearch = (props: SynProps) => {
               const ae = aggEvents(p.eventData);
               const aggSyn = p.synonyms
                 ? p.synonyms.reduce(
-                    (prev: string, p: StorePersonName) => `${prev}; ${p.name}`,
+                    (prev: string, p: StorePersonName) =>
+                      `${prev.length > 0 ? prev + '; ' : ''} ${p.name}`,
                     ''
                   )
                 : '';
@@ -1115,7 +1116,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
               };
               return {
                 ...p,
-                personsToSynonymize: newPerToSyn,
+                personToSynonymize: newPerToSyn,
                 personToMergeSyn: true
               };
             });
