@@ -512,7 +512,7 @@ const SynDisplay = (props: {
   if (props.synPerson.name) {
     return (
       <div className="container-fluid">
-        <h4>Do you want to merge this person?</h4>
+        <h4>Do you want to synonymize this person?</h4>
         <div className="row">
           {props.synPerson.name && (
             <table
