@@ -739,6 +739,7 @@ const Synonymizer = (props: SynProps) => {
         <div className="row">
           <SynDisplay
             synPerson={props.synPerson}
+            appSession={props.appSession}
             onClickMerge={props.onClickMerge}
             onRemovePersonAsSynonym={props.onRemovePersonAsSynonym}
             personToMergeSyn={props.personToMergeSyn}
