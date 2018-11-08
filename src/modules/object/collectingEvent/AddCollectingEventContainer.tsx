@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 import { flowRight } from 'lodash';
 import lifeCycle from '../../../shared/lifeCycle';
 import appSession$ from '../../../stores/appSession';
+import { loadPredefinedPlaceValues } from '../../../stores/loadPredefinedPlaceValues';
+import predefinedPlaceValues$ from '../../../stores/predefinedPlaceValues';
 import store$, {
   addCollectingEvent$,
   AddCollectingEventProps
@@ -13,10 +15,16 @@ import { CollectingEventComponent } from './CollectingEventComponent';
 
 const combinedStore$ = createStore(
   'combinedStore',
-  Observable.combineLatest(appSession$, store$, (appSession, store) => () => ({
-    appSession,
-    store
-  }))
+  Observable.combineLatest(
+    appSession$,
+    predefinedPlaceValues$,
+    store$,
+    (appSession, predefinedPlaceValues, store) => () => ({
+      appSession,
+      predefinedPlaceValues,
+      store
+    })
+  )
 );
 
 const addCollectingEventProps = (combinedStore: any, upstream: { history: History }) => ({
@@ -42,6 +50,7 @@ const ManageCollectingEventsComponent = lifeCycle({
   onUnmount
 })(CollectingEventComponent);
 
-export default flowRight([inject(combinedStore$, addCollectingEventProps)])(
-  ManageCollectingEventsComponent
-);
+export default flowRight([
+  inject(combinedStore$, addCollectingEventProps),
+  loadPredefinedPlaceValues
+])(ManageCollectingEventsComponent);

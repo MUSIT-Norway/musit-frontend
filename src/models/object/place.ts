@@ -4,7 +4,6 @@ import { simplePost, simpleGet } from '../../shared/RxAjax';
 import { Callback, AjaxPost, AjaxGet } from '../../types/ajax';
 import { Star } from '../../types/common';
 import Config from '../../config';
-import { ajaxGet } from 'rxjs/observable/dom/AjaxObservable';
 
 //export type Uuid = string;
 export type PlaceUuid = Uuid;
@@ -87,7 +86,7 @@ export const loadCoordinateSources: (
   return ajaxGet(URL, token, callback).map(({ response }) => response);
 };
 
-export const loadGeomertryTypes: (
+export const loadGeometryTypes: (
   ajaxGet: AjaxGet<Star>
 ) => (props: { token: string; callback: Callback<Star> }) => Observable<Star> = (
   ajaxGet = simpleGet

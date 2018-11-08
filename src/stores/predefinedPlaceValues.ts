@@ -3,30 +3,29 @@ import {
   loadDatum,
   loadCoordinateSources,
   loadCoordinateTypes,
-  loadGeomertryTypes
+  loadGeometryTypes
 } from '../models/object/place';
 
 import { createStore } from 'react-rxjs';
 import { createAction } from '../shared/react-rxjs-patch';
 import { Reducer } from 'react-rxjs';
 import { KEEP_ALIVE } from './constants';
-import { Predefined } from '../types/predefined';
-import { simpleGet } from '../shared/RxAjax';
-import { Star, TODO } from '../types/common';
-import { coordinateSources } from 'src/modules/object/places/PlaceComponent';
 
-export type PredefinedPlaceValues = {
-  datums: string[];
-  coordinateTypes: string[];
-  coordinateSources: string[];
-  geometryTypes: string[];
+import { simpleGet } from '../shared/RxAjax';
+import { Star } from '../types/common';
+
+export type PredefinedPlaceProps = {
+  datums: string[] | null;
+  coordinateTypes: string[] | null;
+  coordinateSources: string[] | null;
+  geometryTypes: string[] | null;
 };
 
-type PredefinedPlaceState = PredefinedPlaceValues & {
-  loadingDatum: boolean;
-  loadingGeometryTypes: boolean;
-  loadingCoordinateTypes: boolean;
-  loadingCoordinateSources: boolean;
+export type PredefinedPlaceState = PredefinedPlaceProps & {
+  loadingDatum?: boolean;
+  loadingGeometryTypes?: boolean;
+  loadingCoordinateTypes?: boolean;
+  loadingCoordinateSources?: boolean;
 };
 
 export const initialState: PredefinedPlaceState = {
@@ -34,56 +33,47 @@ export const initialState: PredefinedPlaceState = {
   loadingCoordinateSources: false,
   loadingCoordinateTypes: false,
   loadingGeometryTypes: false,
-  datums: [],
-  coordinateSources: [],
-  geometryTypes: [],
-  coordinateTypes: []
+  datums: null,
+  coordinateSources: null,
+  geometryTypes: null,
+  coordinateTypes: null
 };
 
 export const setLoadingDatumTypes$: Subject<Star> = createAction('setLoadingDatumTypes$');
 export const loadDatumTypes$: Subject<Star> = createAction('loadDatumTypes$');
-const loadDatumTypesAction$: Observable<Star> = loadDatumTypes$.switchMap(
+export const loadDatumTypesAction$: Observable<Star> = loadDatumTypes$.switchMap(
   loadDatum(simpleGet)
 );
 export const setLoadingCoordinateTypes$: Subject<Star> = createAction(
   'setLoadingCoordinateTypes$'
 );
 export const loadCoordinateTypes$: Subject<Star> = createAction('loadCoordinateTypes$');
-const loadCoordinateTypesAction$: Observable<Star> = loadCoordinateTypes$.switchMap(
-  loadCoordinateTypes(simpleGet)
-);
+export const loadCoordinateTypesAction$: Observable<
+  Star
+> = loadCoordinateTypes$.switchMap(loadCoordinateTypes(simpleGet));
 
-export const setLoadCoordinateSources$: Subject<Star> = createAction(
-  'setLoadCoordinateSources$'
+export const setLoadingCoordinateSources$: Subject<Star> = createAction(
+  'setLoadingCoordinateSources$'
 );
 export const loadCoordinateSources$: Subject<Star> = createAction(
   'loadCoordinateSources$'
 );
-const loadCoordinateSourcesAction$: Observable<Star> = loadCoordinateSources$.switchMap(
-  loadCoordinateSources(simpleGet)
-);
+export const loadCoordinateSourcesAction$: Observable<
+  Star
+> = loadCoordinateSources$.switchMap(loadCoordinateSources(simpleGet));
 
-export const setLoadGeomertryTypes$: Subject<Star> = createAction(
-  'setLoadGeomertryTypes$'
+export const setLoadingGeometryTypes$: Subject<Star> = createAction(
+  'setLoadingGeometryTypes$'
 );
-export const loadGeomertryTypes$: Subject<Star> = createAction('loadGeomertryTypes$');
-const loadGeometryTypesAction$: Observable<Star> = loadGeomertryTypes$.switchMap(
-  loadGeomertryTypes(simpleGet)
+export const loadGeometryTypes$: Subject<Star> = createAction('loadGeomertryTypes$');
+const loadGeometryTypesAction$: Observable<Star> = loadGeometryTypes$.switchMap(
+  loadGeometryTypes(simpleGet)
 );
 
 export function reducer$(actions: {
   [key: string]: Observable<Star>;
 }): Observable<Reducer<any>> {
   return Observable.merge(
-    actions.setLoadingDatumTypes$.map(() => (state: PredefinedPlaceState) => ({
-      ...state,
-      loadingDatum: true
-    })),
-    actions.loadDatums$.map((datums: string[]) => (state: PredefinedPlaceState) => ({
-      ...state,
-      datums,
-      loadingDatum: false
-    })),
     actions.setLoadingCoordinateTypes$.map(() => (state: PredefinedPlaceState) => ({
       ...state,
       loadingCoordinateTypes: true
@@ -95,9 +85,18 @@ export function reducer$(actions: {
         loadingCoordinateTypes: false
       })
     ),
-    actions.setLoadCoordinateSources$.map(() => (state: PredefinedPlaceState) => ({
+    actions.setLoadingCoordinateSources$.map(() => (state: PredefinedPlaceState) => ({
       ...state,
       loadingCoordinateSources: true
+    })),
+    actions.setLoadingDatumTypes$.map(() => (state: PredefinedPlaceState) => ({
+      ...state,
+      loadingDatum: true
+    })),
+    actions.loadDatumTypes$.map((datums: string[]) => (state: PredefinedPlaceState) => ({
+      ...state,
+      datums,
+      loadingDatum: false
     })),
     actions.loadCoordinateSources$.map(
       (coordinateSources: string[]) => (state: PredefinedPlaceState) => ({
@@ -106,11 +105,11 @@ export function reducer$(actions: {
         loadingCoordinateSources: false
       })
     ),
-    actions.setLoadGeomertryTypes$.map(() => (state: PredefinedPlaceState) => ({
+    actions.setLoadingGeometryTypes$.map(() => (state: PredefinedPlaceState) => ({
       ...state,
       loadingGeometryTypes: true
     })),
-    actions.loadingGeometryTypes$.map(
+    actions.loadGeometryTypes$.map(
       (geometryTypes: string[]) => (state: PredefinedPlaceState) => ({
         ...state,
         geometryTypes,
@@ -120,18 +119,16 @@ export function reducer$(actions: {
   );
 }
 
-export const store$ = (actions: { [key: string]: Observable<Star> }) =>
+const store$ = (actions: { [key: string]: Observable<Star> }) =>
   createStore('predefinedPlaceValues', reducer$(actions), initialState, KEEP_ALIVE);
 
-const predefined$ = store$({
+export default store$({
   setLoadingDatumTypes$,
-  loadDatum$: loadDatumTypesAction$,
-  setLoadCoordinateSources$,
+  loadDatumTypes$: loadDatumTypesAction$,
+  setLoadingCoordinateSources$,
   loadCoordinateSources$: loadCoordinateSourcesAction$,
-  setLoadGeomertryTypes$,
-  loadGeomertryTypes$: loadGeometryTypesAction$,
+  setLoadingGeometryTypes$,
+  loadGeometryTypes$: loadGeometryTypesAction$,
   setLoadingCoordinateTypes$,
   loadCoordinateTypes$: loadCoordinateTypesAction$
 });
-
-export default predefined$;
