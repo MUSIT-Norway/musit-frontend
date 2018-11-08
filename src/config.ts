@@ -37,7 +37,13 @@ export default {
         `/api/person/persons/${personUuid}/merge/${personUuidToSyn}`
     },
     places: {
-      addPlaceUrl: '/api/place/places'
+      addPlaceUrl: '/api/place/places',
+      searchAdmPlaceURL: (searchString: string) =>
+        `/api/place/admPlaces?search=${searchString}`,
+      getDatumURL: 'api/places/place/coordinatedatums',
+      getCoordinateSourceURL: 'api/places/place/coordinatesources',
+      getCoordinateTypesURL: 'api/places/place/coordinatetypes',
+      getCoordinateGeometriesURL: 'api/places/place/coordinategeometries'
     },
     collectingEvent: {
       addEventUrl: '/api/event/events'

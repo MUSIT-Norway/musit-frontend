@@ -1,9 +1,10 @@
 import { Uuid } from './collectingEvent';
 import { Observable } from 'rxjs';
-import { simplePost } from '../../shared/RxAjax';
-import { Callback, AjaxPost } from '../../types/ajax';
+import { simplePost, simpleGet } from '../../shared/RxAjax';
+import { Callback, AjaxPost, AjaxGet } from '../../types/ajax';
 import { Star } from '../../types/common';
 import Config from '../../config';
+import { ajaxGet } from 'rxjs/observable/dom/AjaxObservable';
 
 //export type Uuid = string;
 export type PlaceUuid = Uuid;
@@ -57,6 +58,42 @@ export const addPlace: (
 ) => Observable<InputPlace> = (ajaxPost = simplePost) => ({ data, token, callback }) => {
   const URL = Config.api.places.addPlaceUrl;
   return ajaxPost(URL, data, token, callback).map(({ response }) => response);
+};
+
+export const loadDatum: (
+  ajaxGet: AjaxGet<Star>
+) => (props: { token: string; callback: Callback<Star> }) => Observable<Star> = (
+  ajaxGet = simpleGet
+) => ({ token, callback }) => {
+  const URL = Config.api.places.getDatumURL;
+  return ajaxGet(URL, token, callback).map(({ response }) => response);
+};
+
+export const loadCoordinateTypes: (
+  ajaxGet: AjaxGet<Star>
+) => (props: { token: string; callback: Callback<Star> }) => Observable<Star> = (
+  ajaxGet = simpleGet
+) => ({ token, callback }) => {
+  const URL = Config.api.places.getCoordinateTypesURL;
+  return ajaxGet(URL, token, callback).map(({ response }) => response);
+};
+
+export const loadCoordinateSources: (
+  ajaxGet: AjaxGet<Star>
+) => (props: { token: string; callback: Callback<Star> }) => Observable<Star> = (
+  ajaxGet = simpleGet
+) => ({ token, callback }) => {
+  const URL = Config.api.places.getCoordinateSourceURL;
+  return ajaxGet(URL, token, callback).map(({ response }) => response);
+};
+
+export const loadGeomertryTypes: (
+  ajaxGet: AjaxGet<Star>
+) => (props: { token: string; callback: Callback<Star> }) => Observable<Star> = (
+  ajaxGet = simpleGet
+) => ({ token, callback }) => {
+  const URL = Config.api.places.getCoordinateGeometriesURL;
+  return ajaxGet(URL, token, callback).map(({ response }) => response);
 };
 
 export interface InputPlaceWithUuid {
