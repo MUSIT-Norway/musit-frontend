@@ -130,10 +130,13 @@ const searchEnrichedPersonsFromName = (ajaxGet: AjaxGet<Star>) => (
       token: props.token,
       callback: props.callback
     }).map((p: OutputPerson[]) => {
-      return p.map((p: OutputPerson) => ({
-        ...p,
-        eventData: getPersonAttributesFromEvents(p.personUuid)
-      }));
+      if (p) {
+        return p.map((p: OutputPerson) => ({
+          ...p,
+          eventData: getPersonAttributesFromEvents(p.personUuid)
+        }));
+      }
+      return [];
     })
   );
 
@@ -154,6 +157,8 @@ export const getEnrichedPersonsFromPersonName$: Subject<
 export const getPerson$: Subject<
   GetPersonProps & { ajaxGet: AjaxGet<Star> }
 > = createAction('getPerson$');
+
+export const clearSearch$: Subject<any> = createAction('clearSearch$');
 
 export const getPersonsFromPersonName$: Subject<
   GetPersonsFromPersonNameProps & { ajaxGet: AjaxGet<Star> }
@@ -179,6 +184,7 @@ type Actions = {
   getPerson$: Subject<GetPersonProps>;
   addPerson$: Subject<AddPersonProps>;
   editPerson$: Subject<EditPersonProps>;
+  clearSearch$: Subject<any>;
   getPersonsFromPersonName$: Subject<GetPersonsFromPersonNameProps>;
   getEnrichedPersonsFromPersonName$: Subject<GetPersonsFromPersonNameProps>;
   mergePerson$: Subject<MergePersonProps>;
@@ -198,6 +204,7 @@ export const reducer$ = (
         person: newPerson,
         localState: toFrontend(newPerson)
       })),
+
     actions.getEnrichedPersonsFromPersonName$
       .switchMap(searchEnrichedPersonsFromName(ajaxGet))
       .map((personList: Array<OutputPerson>) => (state: PersonStoreState) => ({
@@ -210,6 +217,10 @@ export const reducer$ = (
         ...state,
         personList
       })),
+    actions.clearSearch$.map(() => (state: PersonStoreState) => ({
+      ...state,
+      personList: []
+    })),
     actions.addPerson$
       .switchMap(addPersonData(ajaxPost))
       .map((person: InputPerson) => (state: PersonStoreState) => ({ ...state, person })),
@@ -225,6 +236,7 @@ export const store$ = (
   actions$: Actions = {
     getPerson$,
     getEnrichedPersonsFromPersonName$,
+    clearSearch$,
     addPerson$,
     editPerson$,
     getPersonsFromPersonName$,

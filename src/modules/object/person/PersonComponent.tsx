@@ -9,11 +9,12 @@ import {
   EventData,
   PersonName as StorePersonName
 } from '../../../models/object/person';
-import { PersonStoreState } from './PersonStore';
+import { PersonStoreState, GetPersonsFromPersonNameProps } from './PersonStore';
 import { EditList, databaseOption, databaseOptions } from '../components/EditList';
 import { History } from 'history';
 import config from '../../../config';
 import { AjaxResponse } from 'rxjs';
+import { AjaxGet } from '../../../types/ajax';
 import { emitError } from '../../../shared/errors';
 import {
   museumAndCollections,
@@ -25,7 +26,7 @@ import { groupBy, maxBy, minBy } from 'lodash';
 import { formatISOString } from '../../../shared/util';
 import * as moment from 'moment';
 
-import PersonSynonymSuggest from '../../../components/suggest/PersonSynonymSuggest';
+export type CombinedStore = { store: PersonStoreState; appSession: AppSession };
 
 export type PersonName = {
   title?: string;
@@ -40,54 +41,17 @@ export type ExternalId = {
 };
 export type SynProps = {
   value?: string;
-  synPersons: SynPerson;
+  synPerson: OutputPerson;
+  personList: OutputPerson[];
   appSession?: AppSession;
   personToMergeSyn?: boolean;
 } & {
-  onAddPersonAsSynonym: (p: SynPerson) => void;
+  onAddPersonAsSynonym: (p: OutputPerson) => void;
   onRemovePersonAsSynonym: () => void;
-  onClickMerge?: Function;
+  onClickMerge: Function;
+  onClickSearch: Function;
+  onPersonSearchChange: (n: string) => void;
 };
-
-export type SynPerson = {
-  personUuid?: string;
-  firstName?: string;
-  lastName?: string;
-  title?: string;
-  name?: string;
-  aggSyn?: string;
-  personAttribute?: {
-    legalEntityType: string;
-    url: string;
-    externalIds: ExternalId[];
-  };
-  synonyms?: [
-    {
-      personNameUuid: string;
-      firstName: string;
-      lastName: string;
-      name: string;
-      isDeleted: boolean;
-    }
-  ];
-  eventData?: EventData[];
-  collections?: [
-    {
-      museumId: number;
-      collectionId: number;
-    }
-  ];
-};
-
-/*  personUuid: string;
-  name: string;
-  title?: string;
-  firstName?: string;
-  lastName?: string;
-  period?: string;
-  synonymes?: string[];
-  places?: string[];
-}; */
 
 export type Collection = {
   museumId: number;
@@ -118,7 +82,7 @@ export interface PersonState {
   uuid?: string;
   fullName: PersonName;
   legalEntityType: string;
-  personsToSynonymize?: SynPerson;
+  personToSynonymize?: OutputPerson;
   url?: string;
   externalIds?: ExternalId[];
   editingIds?: ExternalId;
@@ -135,6 +99,7 @@ export interface PersonState {
   enableSave?: Boolean;
   disableOnChangeFullName?: boolean;
   disableOnChangeOtherName?: boolean;
+  personSearchString?: string;
 }
 
 export class PersonState implements PersonState {
@@ -162,6 +127,7 @@ export class PersonState implements PersonState {
     fullName: PersonName,
     legalEntityType: string,
     collections: Collection[],
+    personSearchString?: string,
     uuid?: string,
     url?: string,
     externalIds?: ExternalId[],
@@ -180,6 +146,7 @@ export class PersonState implements PersonState {
     this.uuid = uuid;
     this.fullName = fullName;
     this.legalEntityType = legalEntityType;
+    this.personSearchString = personSearchString || this.personSearchString;
     this.url = url;
     this.externalIds = externalIds;
     this.synonyms = synonyms;
@@ -201,6 +168,7 @@ export type PersonProps = PersonState & {
   onClickSaveEdit: Function;
   onClickCancel: Function;
   appSession: AppSession;
+  onPersonSearchChange: (name: string) => void;
   onChange: (fieldName: string) => (newValue: string) => void;
   onChangePersonName: (fieldName: string) => (newValue: string) => void;
   onChangeFullName: (fieldName: string) => (newValue: string) => void;
@@ -216,6 +184,7 @@ export type PersonProps = PersonState & {
   onChangeBornDate: Function;
   onClearDeathDate: Function;
   onChangeDeathDate: Function;
+  personSearchList: OutputPerson[];
   onChangeVerbatimDate: (newDate?: string) => void;
   heading?: string;
   standAlone?: boolean;
@@ -225,9 +194,15 @@ export type PersonProps = PersonState & {
   onClickSavePersonName: () => void;
   onClickAddPersonName: () => void;
   onDeleteSynonyms: (i: number) => (e: React.SyntheticEvent<HTMLAnchorElement>) => void;
-  onAddPersonAsSynonym: (p: SynPerson) => void;
+  onAddPersonAsSynonym: (p: OutputPerson) => void;
   onRemovePersonAsSynonym: () => void;
   onClickMerge: Function;
+  onSelectSynonym?: (p: OutputPerson) => void;
+  clearSearch: Function;
+  onClickSearch: Function;
+  getEnrichedPersonsFromName: (
+    a?: AjaxGet<any>
+  ) => (s: GetPersonsFromPersonNameProps) => void;
 };
 
 const Synonyms = (props: {
@@ -278,7 +253,6 @@ const Synonyms = (props: {
                   </tr>
                 </thead>
                 <tbody id="synonymsTableBody">
-                  {console.log('SGG synonyms strings ', props.synonyms)}
                   {props.synonyms &&
                     props.synonyms.length > 0 &&
                     props.synonyms.filter(e => e.status !== 'DEL').map((e, i) => (
@@ -288,24 +262,11 @@ const Synonyms = (props: {
                         <td className="col-md-2">{e.lastName}</td>
                         <td className="col-md-4">{e.nameString}</td>
                         {!props.readOnly && (
-                          <div>
-                            {/* <td className="col-md-1">
-                              <a
-                                href=""
-                              personsToSynonymize onClick={e => {
-                              personsToSynonymize   e.preventDefault();
-                              personsToSynonymize   props.setEditingIndexSynonyms(i);
-                                }}
-                              >
-                                <FontAwesome name="edit" />
-                              </a>
-                            </td> */}
-                            <td className="col-md-2">
-                              <a href="" onClick={props.onDelete(i)}>
-                                Delete
-                              </a>
-                            </td>
-                          </div>
+                          <td className="col-md-2">
+                            <a href="" onClick={props.onDelete(i)}>
+                              Delete
+                            </a>
+                          </td>
                         )}
                       </tr>
                     ))}
@@ -391,7 +352,7 @@ const Synonyms = (props: {
   </div>
 );
 
-const aggEvents: (e?: EventData[]) => string = (e: EventData[]) => {
+export const aggEvents: (e?: EventData[]) => string = (e: EventData[]) => {
   if (!e) {
     return '';
   }
@@ -413,7 +374,6 @@ const aggEvents: (e?: EventData[]) => string = (e: EventData[]) => {
     .filter(k => k)
     .sort((a, b) => (a > b ? -1 : 1))
     .map(k => `${k}:${places[k].length}`);
-  console.log('xxxxxxx', places, maxDate, minDate);
 
   return `Years: ${minDate && minDate.dateFrom}-${maxDate &&
     maxDate.dateFrom} Places: ${placeString}`;
@@ -542,53 +502,99 @@ const ExternalIDStrings = (props: {
     )}
   </div>
 );
-const SynDisplay = (props: { synPersons: SynPerson }) => {
-  return (
-    <div>
-      <div className="row">
-        {props.synPersons.name && (
-          <table
-            id="personToSynonymTableHeader"
-            className="table table-condensed table-hover"
-          >
-            <thead className="row">
-              <tr className="row">
-                <th className="col-md-2">
-                  <b>Person Full Name</b>
-                </th>
-                <th className="col-md-4">
-                  <b>Synonyms</b>
-                </th>
-                <th className="col-md-3">
-                  <b> Collections</b>
-                </th>
-                <th className="col-md-3">
-                  <b>External IDs</b>
-                </th>
-                <th className="col-md-1">
-                  <b>URL</b>
-                </th>
-              </tr>
-            </thead>
-            <tbody id="personToSynonymTableBody">
-              <tr key={`tr-row$0`} className="row">
-                <td className="col-md-2"> {props.synPersons.name}</td>
-                <td className="col-md-3">{getSynonyms(props.synPersons)}</td>
-                <td className="col-md-3">{getCollections(props.synPersons)}</td>
-                <td className="col-md-3">{getExternalIDs(props.synPersons)}</td>
-                <td className="col-md-1">
-                  {props.synPersons.personAttribute &&
-                    props.synPersons.personAttribute.url}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        )}
+const SynDisplay = (props: {
+  synPerson: OutputPerson;
+  onClickMerge?: Function;
+  personToMergeSyn?: boolean;
+  onRemovePersonAsSynonym: Function;
+  appSession?: AppSession;
+}) => {
+  if (props.synPerson.name) {
+    return (
+      <div className="container-fluid">
+        <h4>Do you want to synonymize this person?</h4>
+        <div className="row">
+          {props.synPerson.name && (
+            <table
+              id="personToSynonymTableHeader"
+              className="table table-condensed table-hover"
+            >
+              <thead className="row">
+                <tr className="row">
+                  <th className="col-md-2">
+                    <b>Full Name</b>
+                  </th>
+                  <th className="col-md-4">
+                    <b>Synonyms</b>
+                  </th>
+                  <th className="col-md-3">
+                    <b> Collections</b>
+                  </th>
+                  <th className="col-md-3">
+                    <b>External IDs</b>
+                  </th>
+                  <th className="col-md-1">
+                    <b>URL</b>
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="personToSynonymTableBody">
+                <tr key={`tr-row$0`} className="row">
+                  <td className="col-md-2"> {props.synPerson.name}</td>
+                  <td className="col-md-3">{getSynonyms(props.synPerson)}</td>
+                  <td className="col-md-3">{getCollections(props.synPerson)}</td>
+                  <td className="col-md-3">{getExternalIDs(props.synPerson)}</td>
+                  <td className="col-md-1">
+                    {props.synPerson.personAttribute &&
+                      props.synPerson.personAttribute.url}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          )}
+        </div>
+        <div className="row">
+          <div className="row">
+            <div className="col-md-4">
+              <button
+                id="btnCancel"
+                className="btn btn-link"
+                disabled={props.synPerson.personUuid ? false : true}
+                onClick={e => {
+                  e.preventDefault();
+                  props.onRemovePersonAsSynonym();
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                id="btnConfirm"
+                data-toggle="tooltip"
+                title={
+                  props.synPerson.personUuid !== ''
+                    ? props.personToMergeSyn
+                      ? 'Cannot Merge a Person with Same ID'
+                      : 'Search Person to Synonimize'
+                    : ''
+                }
+                className="btn btn-primary"
+                disabled={props.personToMergeSyn ? props.personToMergeSyn : false}
+                onClick={e => {
+                  e.preventDefault();
+                  props.onClickMerge && props.onClickMerge(props.appSession);
+                }}
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+  return <div />;
 };
-const getExternalIDs = (props: SynPerson) => {
+const getExternalIDs = (props: OutputPerson) => {
   let externalIdsString: string;
   if (
     props.personAttribute &&
@@ -605,7 +611,7 @@ const getExternalIDs = (props: SynPerson) => {
   }
   return externalIdsString;
 };
-const getSynonyms = (props: SynPerson) => {
+const getSynonyms = (props: OutputPerson) => {
   let temp: string;
   const synonymConcat =
     props.synonyms &&
@@ -613,7 +619,7 @@ const getSynonyms = (props: SynPerson) => {
     props.synonyms.map((e, i) => (temp = i === 0 ? e.name : temp + ' : ' + e.name));
   return synonymConcat;
 };
-const getCollections = (props: SynPerson) => {
+const getCollections = (props: OutputPerson) => {
   let labelValue: string;
   const collectionConcat =
     props.collections &&
@@ -635,26 +641,76 @@ const getCollections = (props: SynPerson) => {
   return collectionConcat;
 };
 const SynSearch = (props: SynProps) => {
+  console.log('PersonList: ', props.personList);
   return (
-    <div>
+    <div className="container-fluid">
       <div className="row">
-        <div className="col-md-1">
-          <label htmlFor="personName">Person</label>
+        <div className="col-md-6">
+          <div className="form-group">
+            <label htmlFor="personSearchName">Person name</label>
+            <input
+              className="form-control"
+              id="personSearchName"
+              onChange={e => props.onPersonSearchChange(e.target.value)}
+            />
+          </div>
+          <button
+            type="button"
+            className="btn btn-default"
+            onClick={e => {
+              e.preventDefault();
+              props.onClickSearch();
+            }}
+          >
+            Search
+          </button>
         </div>
-        <div className="col-md-5">
-          <PersonSynonymSuggest
-            id="personSynonymSuggest"
-            value={''}
-            renderFunc={(s: SynPerson) => (
-              <span className="suggestion-content">{`${s.name} ${s.aggSyn} ${aggEvents(
-                s.eventData
-              )}`}</span>
-            )}
-            placeHolder="Person Name"
-            appSession={props.appSession}
-            onChange={props.onAddPersonAsSynonym}
-          />
-        </div>
+      </div>
+      <div className="row">
+        <table className="table table-condensed">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>First name</th>
+              <th>Last name</th>
+              <th>Synonyms</th>
+              <th>Event data</th>
+              <th />
+            </tr>
+          </thead>
+          <tbody>
+            {props.personList.map((p: OutputPerson, i: number) => {
+              const ae = aggEvents(p.eventData);
+              const aggSyn = p.synonyms
+                ? p.synonyms.reduce(
+                    (prev: string, p: StorePersonName) =>
+                      `${prev.length > 0 ? prev + '; ' : ''} ${p.name}`,
+                    ''
+                  )
+                : '';
+              return (
+                <tr key={`TR-${i}`}>
+                  <td>{p.title}</td>
+                  <td>{p.firstName}</td>
+                  <td>{p.lastName}</td>
+                  <td>{aggSyn}</td>
+                  <td>{ae}</td>
+                  <td>
+                    <a
+                      href="#"
+                      onClick={e => {
+                        e.preventDefault();
+                        props.onAddPersonAsSynonym && props.onAddPersonAsSynonym(p);
+                      }}
+                    >
+                      Click to merge
+                    </a>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     </div>
   );
@@ -672,47 +728,24 @@ const Synonymizer = (props: SynProps) => {
           <SynSearch
             onAddPersonAsSynonym={props.onAddPersonAsSynonym}
             onRemovePersonAsSynonym={props.onRemovePersonAsSynonym}
+            onPersonSearchChange={props.onPersonSearchChange}
             appSession={props.appSession}
-            synPersons={props.synPersons}
+            personList={props.personList}
+            synPerson={props.synPerson}
+            onClickSearch={props.onClickSearch}
+            onClickMerge={props.onClickMerge}
           />
         </div>
         <div className="row">
-          <SynDisplay synPersons={props.synPersons} />
+          <SynDisplay
+            synPerson={props.synPerson}
+            appSession={props.appSession}
+            onClickMerge={props.onClickMerge}
+            onRemovePersonAsSynonym={props.onRemovePersonAsSynonym}
+            personToMergeSyn={props.personToMergeSyn}
+          />
         </div>
-        <div className="row">
-          <div className="col-md-4">
-            <button
-              id="btnCancel"
-              className="btn btn-link"
-              disabled={props.synPersons.personUuid ? false : true}
-              onClick={e => {
-                e.preventDefault();
-                props.onRemovePersonAsSynonym();
-              }}
-            >
-              Cancel
-            </button>
-            <button
-              id="btnConfirm"
-              data-toggle="tooltip"
-              title={
-                props.synPersons.personUuid !== ''
-                  ? props.personToMergeSyn
-                    ? 'Cannot Merge a Person with Same ID'
-                    : 'Search Person to Synonimize'
-                  : ''
-              }
-              className="btn btn-primary"
-              disabled={props.personToMergeSyn ? props.personToMergeSyn : false}
-              onClick={e => {
-                e.preventDefault();
-                props.onClickMerge && props.onClickMerge(props.appSession);
-              }}
-            >
-              Confirm
-            </button>
-          </div>
-        </div>
+
         <div className="row" />
         <div />
       </div>
@@ -743,7 +776,6 @@ export const PersonPage = (props: PersonProps) => {
                       value={props.legalEntityType}
                       disabled={props.readOnly}
                       onChange={v => {
-                        console.log('sssdsds', v.target.value);
                         props.onChange('legalEntityType')(v.target.value);
                       }}
                     >
@@ -922,18 +954,26 @@ export const PersonPage = (props: PersonProps) => {
                 readOnly={props.readOnly}
               />
             </div>
-            {console.log('props.uuid:', props.uuid)}
+            {console.log('props.personToSynonymize :', props.personToSynonymize)}
             {!props.readOnly &&
               props.uuid && (
                 <Synonymizer
                   onAddPersonAsSynonym={props.onAddPersonAsSynonym}
+                  onPersonSearchChange={props.onPersonSearchChange}
                   onRemovePersonAsSynonym={props.onRemovePersonAsSynonym}
                   onClickMerge={props.onClickMerge}
+                  personList={props.personSearchList}
+                  onClickSearch={props.onClickSearch}
                   appSession={props.appSession}
-                  synPersons={
-                    props.personsToSynonymize
-                      ? props.personsToSynonymize
-                      : { personUuid: '', name: '' }
+                  synPerson={
+                    props.personToSynonymize
+                      ? props.personToSynonymize
+                      : {
+                          personUuid: '',
+                          name: '',
+                          collections: [],
+                          personToMergeSyn: false
+                        }
                   }
                   personToMergeSyn={props.personToMergeSyn}
                 />
@@ -980,7 +1020,7 @@ export const toFrontend: (p: OutputPerson) => PersonState = (p: OutputPerson) =>
       },
       innP.personAttribute ? innP.personAttribute.legalEntityType : '',
       innP.collections,
-      //'SEARCH',
+      undefined,
       innP.personUuid,
       innP.personAttribute && innP.personAttribute.url,
       innP.personAttribute && innP.personAttribute.externalIds,
@@ -1008,6 +1048,7 @@ export const toFrontend: (p: OutputPerson) => PersonState = (p: OutputPerson) =>
     collections: [],
     legalEntityType: 'Person',
     synState: 'SEARCH',
+    personSearchString: '',
     personsToSynonymize: { personUuid: '', name: '' },
     personToMergeSyn: true
   };
@@ -1016,7 +1057,6 @@ export const toFrontend: (p: OutputPerson) => PersonState = (p: OutputPerson) =>
 export class Person extends React.Component<PersonComponentProps, PersonState> {
   constructor(props: PersonComponentProps) {
     super(props);
-    console.log('STORE', props.store);
     this.state = props.store.localState
       ? props.store.localState
       : {
@@ -1024,7 +1064,8 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
           //synState: 'SEARCH',
           //personsToSynonymize: {},
           collections: [],
-          legalEntityType: 'Person'
+          legalEntityType: 'Person',
+          personSearchString: ''
         };
   }
   componentWillReceiveProps(props: PersonComponentProps) {
@@ -1037,40 +1078,63 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
     return (
       <div className="container" style={{ paddingTop: '25px' }}>
         <PersonPage
+          onPersonSearchChange={(name: string) => {
+            this.setState((ps: PersonState) => ({ ...ps, personSearchString: name }));
+          }}
           readOnly={this.props.readOnly}
           uuid={this.state.uuid}
           appSession={this.props.appSession}
+          personSearchList={this.props.store.personList || []}
           standAlone
           personToMergeSyn={this.state.personToMergeSyn}
-          onAddPersonAsSynonym={(p: SynPerson) => {
+          getEnrichedPersonsFromName={this.props.getEnrichedPersonsFromName}
+          onClickSearch={() =>
+            this.props.getEnrichedPersonsFromName()({
+              name: this.state.personSearchString || '',
+              collectionId: this.props.appSession.collectionId,
+              token: this.props.appSession.accessToken
+            })
+          }
+          clearSearch={this.props.clearSearch}
+          onAddPersonAsSynonym={(p: OutputPerson) => {
+            console.log('OnAddPersonAsSynonym', p);
             this.setState((ps: PersonState) => {
-              const newSynonymPerson: SynPerson = p;
-              const tempsynToPerson =
-                newSynonymPerson.personUuid === this.state.uuid ? true : false;
+              const tempsynToPerson = p.personUuid === this.state.uuid ? true : false;
               return {
                 ...ps,
-                personsToSynonymize: newSynonymPerson,
+                personToSynonymize: p,
                 personToMergeSyn: tempsynToPerson
               };
             });
           }}
           onRemovePersonAsSynonym={() => {
             this.setState((p: PersonState) => {
-              const newPerToSyn: SynPerson = { personUuid: '', name: '' };
+              const newPerToSyn: OutputPerson = {
+                personUuid: '',
+                name: '',
+                collections: p.collections,
+                personToMergeSyn: p.personToMergeSyn || false
+              };
               return {
                 ...p,
-                personsToSynonymize: newPerToSyn,
+                personToSynonymize: newPerToSyn,
                 personToMergeSyn: true
               };
             });
+          }}
+          onSelectSynonym={(p: OutputPerson) => {
+            this.setState((ps: PersonState) => ({
+              ...ps,
+              personsToSynonymize: p
+            }));
           }}
           onClickMerge={(appSession: AppSession) => {
             if (this.state.uuid) {
               this.props.mergePerson &&
                 this.props.mergePerson()({
                   id: this.state.uuid,
-                  data: this.state.personsToSynonymize && {
-                    personUuid: this.state.personsToSynonymize.personUuid
+                  data: this.state.personToSynonymize && {
+                    personUuid: this.state.personToSynonymize.personUuid
                   },
                   token: appSession.accessToken,
                   collectionId: appSession.collectionId,
@@ -1153,10 +1217,10 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
             }
           }}
           synonyms={this.state.synonyms}
-          personsToSynonymize={
-            this.state.personsToSynonymize
-              ? this.state.personsToSynonymize
-              : { personUuid: '', name: '' }
+          personToSynonymize={
+            this.state.personToSynonymize
+              ? this.state.personToSynonymize
+              : { personUuid: '', name: '', collections: [], personToMergeSyn: false }
           }
           collections={this.state.collections}
           bornDate={this.state.bornDate}
@@ -1465,16 +1529,24 @@ export type PersonComponentProps = {
   editPerson?: Function;
   mergePerson: Function;
   getPerson?: Function;
+  clearSearch: Function;
+  getEnrichedPersonsFromName: (
+    a?: AjaxGet<any>
+  ) => (s: GetPersonsFromPersonNameProps) => void;
   store: PersonStoreState;
   appSession: AppSession;
   history: History;
   readOnly: boolean;
+  personSearchList: OutputPerson[];
 };
 
 export default (props: PersonComponentProps) => (
   <Person
     appSession={props.appSession}
+    personSearchList={props.store.personList || []}
+    getEnrichedPersonsFromName={props.getEnrichedPersonsFromName}
     store={props.store}
+    clearSearch={props.clearSearch}
     addPerson={props.addPerson && props.addPerson(props.appSession)}
     editPerson={props.editPerson && props.editPerson(props.appSession)}
     mergePerson={props.mergePerson}
