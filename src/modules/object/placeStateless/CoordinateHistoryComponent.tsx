@@ -1,15 +1,12 @@
 import * as React from 'react';
 //import * as FontAwesome from 'react-fontawesome';
-import {
-  CoordinateHistory,
-  CoordinateHistoryItem
-} from '../placeStateless/PlaceComponent';
+import { CoordinateHistory } from '../placeStateless/PlaceComponent';
 
 const CoordinateHistoryComponent = (props: {
   coordinateHistory: CoordinateHistory;
   onSetEditingIndex: (i: number) => void;
 }) => {
-  const unitConv = (a?: string, u?: string) => {
+  /*   const unitConv = (a?: string, u?: string) => {
     if (a && u) {
       if (u === 'Meters') {
         return a + 'm.';
@@ -19,7 +16,7 @@ const CoordinateHistoryComponent = (props: {
       return '';
     }
     return '';
-  };
+  }; */
 
   return (
     <div>
@@ -41,31 +38,6 @@ const CoordinateHistoryComponent = (props: {
           </thead>
           <tbody>
             <tr />
-            {props.coordinateHistory &&
-              props.coordinateHistory.map(
-                (coordinate: CoordinateHistoryItem, i: number) => {
-                  return (
-                    <tr key={`${i + 1}-key`}>
-                      <td>{coordinate.coordinateId}</td>
-                      <td>{coordinate.coordinateRevisionType}</td>
-                      <td>{coordinate.coordinate.coordinateType}</td>
-                      <td>{coordinate.coordinate.coordinateString}</td>
-                      <td>
-                        {unitConv(
-                          coordinate.coordinate.altitudeAggregated,
-                          coordinate.coordinate.altitudeUnit
-                        )}
-                      </td>
-                      <td>
-                        {unitConv(
-                          coordinate.coordinate.depthAggregated,
-                          coordinate.coordinate.depthUnit
-                        )}
-                      </td>
-                    </tr>
-                  );
-                }
-              )}
           </tbody>
         </table>
       </div>

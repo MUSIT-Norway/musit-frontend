@@ -18,11 +18,12 @@ const CoordinateMetaData = (props: CoordinateProps) => {
             id="coordinateSource"
             defaultValue={coordinateSources[0]}
             onChange={e => {
-              props.onChangeCoordinateText('coordinateSource')(e.target.value);
+              props.onChangeCoordinateAttributes('coordinateSource')(e.target.value);
             }}
           >
-            value={
-              props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateSource
+            value={props.editingCoordinate.coordinateAttributes &&
+              props.editingCoordinate.coordinateAttributes.coordinateSource
+            //props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateSource
             }
             {coordinateSources.map((type: string, i: number) => (
               <option key={`optionRow_${i}`}>{type}</option>
@@ -34,17 +35,19 @@ const CoordinateMetaData = (props: CoordinateProps) => {
             <CheckBox
               id={'checkBoxCoordinateAddedLater'}
               checked={
-                props.getCurrentCoordinate(props.coordinateHistoryIndeks) &&
-                props.getCurrentCoordinate(props.coordinateHistoryIndeks).isAddedLater
+                /*  props.getCurrentCoordinate(props.coordinateHistoryIndeks) &&
+                props.getCurrentCoordinate(props.coordinateHistoryIndeks).isAddedLater */
+                props.editingCoordinate.coordinateAttributes &&
+                props.editingCoordinate.coordinateAttributes.addedLater
                   ? true
                   : false
               }
               displayValue="Added later"
               onChange={() => {
-                props.getCurrentCoordinate(props.coordinateHistoryIndeks) &&
-                props.getCurrentCoordinate(props.coordinateHistoryIndeks).isAddedLater
-                  ? props.onChangeCheckBoxBoolean('isAddedLater')(false)
-                  : props.onChangeCheckBoxBoolean('isAddedLater')(true);
+                props.editingCoordinate.coordinateAttributes &&
+                props.editingCoordinate.coordinateAttributes.addedLater
+                  ? props.onChangeCheckBoxBoolean('addedLater')(false)
+                  : props.onChangeCheckBoxBoolean('addedLater')(true);
               }}
             />
           </div>
@@ -81,11 +84,12 @@ const CoordinateMetaData = (props: CoordinateProps) => {
             className="form-control"
             type="text"
             onChange={e => {
-              props.onChangeCoordinateText('coordinatePrecision')(e.target.value);
+              props.onChangeCoordinateAttributes('precision')(e.target.value);
             }}
             value={
-              props.getCurrentCoordinate(props.coordinateHistoryIndeks)
-                .coordinatePrecision
+              props.editingCoordinate.coordinateAttributes &&
+              props.editingCoordinate.coordinateAttributes.precision
+              //props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinatePrecision
             }
             id="precision"
           />
@@ -102,9 +106,13 @@ const CoordinateMetaData = (props: CoordinateProps) => {
             className="form-control"
             type="text"
             onChange={e => {
-              props.onChangeCoordinateText('gpsAccuracy')(e.target.value);
+              props.onChangeCoordinateAttributes('gpsAccuracy')(e.target.value);
             }}
-            value={props.getCurrentCoordinate(props.coordinateHistoryIndeks).gpsAccuracy}
+            value={
+              props.editingCoordinate.coordinateAttributes &&
+              props.editingCoordinate.coordinateAttributes.gpsAccuracy
+              //props.getCurrentCoordinate(props.coordinateHistoryIndeks).gpsAccuracy
+            }
             id="accuracy"
           />
         </div>

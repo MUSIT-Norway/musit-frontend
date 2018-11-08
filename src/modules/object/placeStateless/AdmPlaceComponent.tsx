@@ -28,7 +28,7 @@ const AdmPlaceComponent = (
             <option
               key={`optionRow_${a.admPlaceId || 0}`}
               value={a.admPlaceId}
-              label={`${a.name || ''} Type: ${a.type || ''} (${
+              label={`${a.name || ''} Type: ${a.type || ' : Path : '} (${
                 a.kommune ? a.kommune + ':' : ''
               } ${a.fylke ? a.fylke + ':' : ''} : ${a.land ? a.land : ''})`}
             />
@@ -41,14 +41,18 @@ const AdmPlaceComponent = (
         <label htmlFor="locality">Lokalitet </label>
       </div>
     </div>
-    {console.log('############', props.locality)}
+    {console.log('############', props.editingCoordinate)}
     <div className="row form-group">
       <div className="col-md-8">
         <textarea
           rows={6}
           className="form-control"
           id="locality"
-          value={props.locality}
+          value={
+            (props.editingCoordinate.attributes &&
+              props.editingCoordinate.attributes.locality) ||
+            ''
+          }
           onChange={(v: React.ChangeEvent<HTMLTextAreaElement>) =>
             props.onChangeOthers('locality')(v.target.value)
           }
@@ -66,7 +70,10 @@ const AdmPlaceComponent = (
           rows={6}
           className="form-control"
           id="ecology"
-          value={props.ecology}
+          value={
+            props.editingCoordinate.attributes &&
+            props.editingCoordinate.attributes.ecology
+          }
           onChange={(v: React.ChangeEvent<HTMLTextAreaElement>) => {
             v.preventDefault();
             props.onChangeOthers('ecology')(v.target.value);
@@ -92,7 +99,10 @@ const AdmPlaceComponent = (
           className="form-control"
           onChange={e => props.onChangeOthers('station')(e.target.value)}
           id={'txtInputStation'}
-          value={props.station}
+          value={
+            props.editingCoordinate.attributes &&
+            props.editingCoordinate.attributes.station
+          }
         />
       </div>
       <div className="col-md-2">
@@ -101,7 +111,10 @@ const AdmPlaceComponent = (
           className="form-control"
           onChange={e => props.onChangeOthers('sample')(e.target.value)}
           id={'txtInputSample'}
-          value={props.sample}
+          value={
+            props.editingCoordinate.attributes &&
+            props.editingCoordinate.attributes.sample
+          }
         />
       </div>
       <div className="col-md-2">
@@ -110,7 +123,9 @@ const AdmPlaceComponent = (
           className="form-control"
           onChange={e => props.onChangeOthers('ship')(e.target.value)}
           id={'txtInputShip'}
-          value={props.ship}
+          value={
+            props.editingCoordinate.attributes && props.editingCoordinate.attributes.ship
+          }
         />
       </div>
     </div>

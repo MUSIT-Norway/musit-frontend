@@ -18,7 +18,7 @@ export type AdmPlace = {
   admPlaceUuid?: string;
 };
 
-export type Coordinate = {
+/* export type Coordinate = {
   coordinateSource?: string;
   coordinateType?: string;
   coordinateGeomertry?: string;
@@ -43,7 +43,7 @@ export type Coordinate = {
   depthUnit?: string;
   caDepth?: boolean;
   isAddedLater?: boolean;
-};
+}; */
 
 export type CoordinateRevisionType =
   | 'newCoordinate'
@@ -61,43 +61,25 @@ export type CoordinateHistoryItem = {
 };
 export type CoordinateHistory = Array<CoordinateHistoryItem>;
 
-export type PlaceState = {
-  coordinateHistory: CoordinateHistory;
-  editingCoordinate: Coordinate;
-  coordinateHistoryIndeks: number;
-  editCoorditeMode?: boolean;
-  coordinateInvalid: boolean;
-  admPlace?: AdmPlace;
-  locality?: string;
-  ecology?: string;
-  station?: string;
-  sample?: string;
-  ship?: string;
-  method?: string;
-  methodDescription?: string;
-  coordinateCollapsed?: boolean;
-  altitudeCollapsed?: boolean;
-};
-
 export type CoordinateProps = {
-  coordinateHistory: CoordinateHistory;
+  //coordinateHistory: CoordinateHistory;
   editingCoordinate: Coordinate;
   editCoordinateMode: boolean;
-  coordinateHistoryIndeks: number;
+  //coordinateHistoryIndeks: number;
   coordinateCollapsed: boolean;
   coordinateType: string;
   coordinateInvalid: boolean;
   onChangeAltitudeString: (value: string) => void;
   onChangeDepthString: (value: string) => void;
   onChangeCoordinateNumber: (fieldName: string) => (value: number) => void;
-  onSetEditingIndex: (i: number) => void;
+  //onSetEditingIndex: (i: number) => void;
   onChangeCoordinateText: (fieldName: string) => (value: string) => void;
-  onChangeHistoryItem: (fieldName: string) => (value: string) => void;
+  onChangeCoordinateAttributes: (fieldName: string) => (value: string) => void;
+  //onChangeHistoryItem: (fieldName: string) => (value: string) => void;
   getCurrentCoordinate: (ind: number) => Coordinate;
-  getCurrentHistoryItem: (ind: number) => CoordinateHistoryItem;
-  onChangeCheckBoxBoolean: (fieldName: string) => (value: string | boolean) => void;
+  //getCurrentHistoryItem: (ind: number) => CoordinateHistoryItem;
+  onChangeCheckBoxBoolean: (fieldName: string) => (value: boolean) => void;
   onClickSaveRevision: () => void;
-  onClickSaveEdit: () => void;
   onChangeEditMode: (edit: boolean) => void;
   onToggleCollapse: () => void;
 };
@@ -108,6 +90,124 @@ export type CheckBoxProps = {
   displayValue: string;
   onChange: string;
 };
+
+/////////////////////// NEW TYPES MAPPED TO BACKEDN /////////////////////////
+export type Uuid = string;
+export type PlaceUuid = Uuid;
+export type AdmPlaceUuid = Uuid;
+export type CoordinateUuid = Uuid;
+export type CoordinateAttrUuid = Uuid;
+
+export interface InputPlace {
+  placeUuid?: PlaceUuid;
+  admPlaceUuid?: AdmPlaceUuid;
+  coordinate?: InputCoordinate;
+  coordinateAttributes?: InputCoordinateAttribute;
+  attributes?: MarinePlaceAttribute;
+}
+
+export interface PlaceState {
+  coordinate?: Coordinate;
+  editingCoordinate: Coordinate;
+  editCoordinateMode?: boolean;
+  coordinateInvalid: boolean;
+  coordinateCollapsed?: boolean;
+  altitudeCollapsed?: boolean;
+}
+
+export class PlaceState implements PlaceState {
+  coordinate?: Coordinate;
+  editingCoordinate: Coordinate;
+  editCoordinateMode?: boolean;
+  coordinateInvalid: boolean;
+  coordinateCollapsed?: boolean;
+  altitudeCollapsed?: boolean;
+  constructor(
+    editingCoordinate: Coordinate,
+    coordinateInvalid: boolean,
+    coordinate?: Coordinate,
+    editCoordinateMode?: boolean,
+    coordinateCollapsed?: boolean,
+    altitudeCollapsed?: boolean
+  ) {
+    this.coordinate = coordinate;
+    this.editingCoordinate = editingCoordinate;
+    this.editCoordinateMode = editCoordinateMode;
+    this.coordinateInvalid = coordinateInvalid;
+    this.coordinateCollapsed = coordinateCollapsed;
+    this.altitudeCollapsed = altitudeCollapsed;
+  }
+}
+/*
+ // coordinateHistory: nCoordinateHistory;
+  // coordinateHistoryIndeks: number;
+ 
+  export type nCoordinateHistoryItem = {
+  coordinateId?: number;
+  registeredBy?: string;
+  registeredDate?: string;
+  note?: string;
+  coordinate: nCoordinate;
+  coordinateRevisionType?: CoordinateRevisionType;
+};
+export type nCoordinateHistory = Array<nCoordinateHistoryItem>; */
+
+export type Coordinate = {
+  placeUuid?: PlaceUuid;
+  admPlace: AdmPlace;
+  coordinate: InputCoordinate;
+  coordinateAttributes?: InputCoordinateAttribute;
+  attributes?: MarinePlaceAttribute;
+};
+
+export type nAdmPlace = {
+  admPlaceUuid: Uuid;
+  name: string;
+  type: string;
+  path: string;
+};
+export type InputCoordinate = {
+  coordinateUuid?: CoordinateUuid;
+  coordinateType?: string;
+  datum?: string;
+  zone?: string;
+  bend?: string;
+  coordinateString?: string;
+  coordinateGeometry?: string;
+};
+
+export type InputCoordinateAttribute = {
+  coordAttrUuid?: CoordinateAttrUuid;
+  coordinateSource?: string;
+  gpsAccuracy?: number;
+  addedLater?: boolean;
+  coordinateCa?: boolean;
+  precision?: number;
+  altitudeString?: string;
+  altitudeCa?: boolean;
+  altitudeFrom?: number;
+  altitudeTo?: number;
+  altitudeUnit?: string;
+  derivedAltitudeMeter?: number;
+  depthString?: string;
+  depthCa?: boolean;
+  depthFrom?: number;
+  depthTo?: number;
+  depthUnit?: string;
+  derivedDepthMeter?: number;
+  note?: string;
+};
+
+export type MarinePlaceAttribute = {
+  locality?: string;
+  station?: string;
+  ecology?: string;
+  host?: string;
+  sample?: string;
+  ship?: string;
+  eis?: string;
+};
+////////////////////////////////////////////////
 
 const PlaceComponent = (
   props: PlaceState & {

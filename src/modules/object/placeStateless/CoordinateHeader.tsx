@@ -5,7 +5,8 @@ import UTMCoordinateComponent from './UTMCoordinateComponent';
 import { CoordinateProps } from '../placeStateless/PlaceComponent';
 
 const CoordinateHeader = (props: CoordinateProps) => {
-  switch (props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateType) {
+  switch (props.editingCoordinate.coordinate.coordinateType) {
+    //props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateType
     case 'UTM': {
       return <UTMCoordinateComponent {...props} />;
     }

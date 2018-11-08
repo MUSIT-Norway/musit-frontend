@@ -14,7 +14,10 @@ const MGRSComponent = (props: CoordinateProps) => {
         <div className="col-md-2">
           <select
             className="form-control"
-            value={props.getCurrentCoordinate(props.coordinateHistoryIndeks).datum}
+            value={
+              props.editingCoordinate.coordinate.datum
+              //props.getCurrentCoordinate(props.coordinateHistoryIndeks).datum
+            }
             id="datum"
             onChange={e => {
               props.onChangeCoordinateText('datum')(e.target.value);
@@ -34,7 +37,7 @@ const MGRSComponent = (props: CoordinateProps) => {
           <label htmlFor="zone">Zone </label>
         </div>
         <div className="col-md-2">
-          <label htmlFor="mgrsBand">Band </label>
+          <label htmlFor="mgrsBand">Bend </label>
         </div>
       </div>
       <div className="row form-group">
@@ -43,7 +46,8 @@ const MGRSComponent = (props: CoordinateProps) => {
             className="form-control"
             id="coordinateType"
             value={
-              props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateType
+              props.editingCoordinate.coordinate.coordinateType
+              //props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateType
             }
             onChange={e => {
               props.onChangeCoordinateText('coordinateType')(e.target.value);
@@ -60,9 +64,12 @@ const MGRSComponent = (props: CoordinateProps) => {
             className="form-control"
             id="zone"
             onChange={e => {
-              props.onChangeCoordinateText('utmZone')(e.target.value);
+              props.onChangeCoordinateText('zone')(e.target.value);
             }}
-            value={props.getCurrentCoordinate(props.coordinateHistoryIndeks).utmZone}
+            value={
+              props.editingCoordinate.coordinate.zone
+              // props.getCurrentCoordinate(props.coordinateHistoryIndeks).utmZone
+            }
           />
         </div>
         <div className="col-md-2">
@@ -71,9 +78,12 @@ const MGRSComponent = (props: CoordinateProps) => {
             className="form-control"
             id="mgrsBand"
             onChange={e => {
-              props.onChangeCoordinateText('mgrsBand')(e.target.value);
+              props.onChangeCoordinateText('bend')(e.target.value);
             }}
-            value={props.getCurrentCoordinate(props.coordinateHistoryIndeks).mgrsBand}
+            value={
+              props.editingCoordinate.coordinate.bend
+              //props.getCurrentCoordinate(props.coordinateHistoryIndeks).mgrsBand
+            }
           />
         </div>
       </div>
@@ -95,7 +105,8 @@ const MGRSComponent = (props: CoordinateProps) => {
             className="form-control"
             id="MGRSCoordinateString"
             value={
-              props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateString
+              props.editingCoordinate.coordinate.coordinateString
+              //props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateString
             }
             onChange={e => {
               const v = e.target.value.toUpperCase();
