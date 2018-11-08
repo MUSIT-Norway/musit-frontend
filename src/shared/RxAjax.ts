@@ -65,6 +65,7 @@ export function ajaxHelper<R, B>(
   headers?: { [key: string]: string } | null,
   responseType: string = 'json'
 ): Observable<R> {
+  console.log('AjaxHelper:', method, url, body, token, headers, responseType);
   return ajax({
     url,
     responseType,
@@ -77,7 +78,7 @@ export function ajaxHelper<R, B>(
           Authorization: 'Bearer ' + token,
           ...headers
         }
-      : undefined
+      : { ...headers }
   }) as MUSTFIX;
 }
 

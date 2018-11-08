@@ -2,8 +2,10 @@ import * as React from 'react';
 import * as FontAwesome from 'react-fontawesome';
 //import { Link } from 'react-router-dom';
 import { PersonNameSuggest } from '../../../components/suggest/PersonNameSuggest';
+import AdmplaceSuggest from '../../../components/suggest/AdmPlaceSuggest';
 import { DetProps, IPersonName } from './TaxonClassification';
 import { personDet } from '../../../models/object/classHist';
+import { AdmPlace } from '../../../models/object/place';
 
 class DetTable extends React.Component<DetProps> {
   constructor(props: DetProps) {
@@ -11,6 +13,13 @@ class DetTable extends React.Component<DetProps> {
   }
 
   render() {
+    const admPlaceAsString = (a: AdmPlace) => {
+      return (
+        <span className="suggestion-content">
+          {a.name ? 'Admplace: ' + a.name + '(' + a.type + ')  Path : ' + a.path : ''}
+        </span>
+      );
+    };
     const personNameAsString = (n: personDet) => {
       return (
         <span className="suggestion-content">
@@ -21,8 +30,24 @@ class DetTable extends React.Component<DetProps> {
     return (
       <div>
         <div className="row">
+          <AdmplaceSuggest
+            id="personNameSuggest"
+            disabled={this.props.editingDet === undefined}
+            value={
+              this.props.editingDet && this.props.editingDet.personName
+                ? this.props.editingDet.personName || ''
+                : ''
+            }
+            renderFunc={admPlaceAsString}
+            placeHolder="Admplace"
+            appSession={this.props.appSession}
+            onChange={this.props.onChangePersonDet}
+            history={this.props.history}
+          />
+        </div>
+        <div className="row">
           <PersonNameSuggest
-            id="personNameSuggestADB"
+            id="personNameSuggest"
             disabled={this.props.editingDet === undefined}
             value={
               this.props.editingDet && this.props.editingDet.personName

@@ -9,7 +9,6 @@ import { TODO } from '../../types/common';
 import { personDet } from '../../models/object/classHist';
 import * as FontAwesome from 'react-fontawesome';
 import { History } from 'history';
-//import { Link } from 'react-router-dom';
 
 interface PersonNameSuggestComponentProps {
   id: string;
