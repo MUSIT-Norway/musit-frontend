@@ -70,3 +70,68 @@ export const loadGeomertryTypes$: Subject<Star> = createAction('loadGeomertryTyp
 const loadGeometryTypesAction$: Observable<Star> = loadGeomertryTypes$.switchMap(
   loadGeomertryTypes(simpleGet)
 );
+
+export function reducer$(actions: {
+  [key: string]: Observable<Star>;
+}): Observable<Reducer<any>> {
+  return Observable.merge(
+    actions.setLoadingDatumTypes$.map(() => (state: PredefinedPlaceState) => ({
+      ...state,
+      loadingDatum: true
+    })),
+    actions.loadDatums$.map((datums: string[]) => (state: PredefinedPlaceState) => ({
+      ...state,
+      datums,
+      loadingDatum: false
+    })),
+    actions.setLoadingCoordinateTypes$.map(() => (state: PredefinedPlaceState) => ({
+      ...state,
+      loadingCoordinateTypes: true
+    })),
+    actions.loadCoordinateTypes$.map(
+      (cooordinateTypes: string[]) => (state: PredefinedPlaceState) => ({
+        ...state,
+        cooordinateTypes,
+        loadingCoordinateTypes: false
+      })
+    ),
+    actions.setLoadCoordinateSources$.map(() => (state: PredefinedPlaceState) => ({
+      ...state,
+      loadingCoordinateSources: true
+    })),
+    actions.loadCoordinateSources$.map(
+      (coordinateSources: string[]) => (state: PredefinedPlaceState) => ({
+        ...state,
+        coordinateSources,
+        loadingCoordinateSources: false
+      })
+    ),
+    actions.setLoadGeomertryTypes$.map(() => (state: PredefinedPlaceState) => ({
+      ...state,
+      loadingGeometryTypes: true
+    })),
+    actions.loadingGeometryTypes$.map(
+      (geometryTypes: string[]) => (state: PredefinedPlaceState) => ({
+        ...state,
+        geometryTypes,
+        loadingGeometryTypes: false
+      })
+    )
+  );
+}
+
+export const store$ = (actions: { [key: string]: Observable<Star> }) =>
+  createStore('predefinedPlaceValues', reducer$(actions), initialState, KEEP_ALIVE);
+
+const predefined$ = store$({
+  setLoadingDatumTypes$,
+  loadDatum$: loadDatumTypesAction$,
+  setLoadCoordinateSources$,
+  loadCoordinateSources$: loadCoordinateSourcesAction$,
+  setLoadGeomertryTypes$,
+  loadGeomertryTypes$: loadGeometryTypesAction$,
+  setLoadingCoordinateTypes$,
+  loadCoordinateTypes$: loadCoordinateTypesAction$
+});
+
+export default predefined$;
