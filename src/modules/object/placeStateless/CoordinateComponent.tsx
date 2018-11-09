@@ -1,22 +1,22 @@
 import * as React from 'react';
 import CoordinateHistoryItemComponent from './CoordinateHistoryItemComponent';
-import CoordinateHistoryComponent from './CoordinateHistoryComponent';
+//import CoordinateHistoryComponent from './CoordinateHistoryComponent';
 import AltitudeDepthData from './AltitudeDepthData';
 import CoordinateMetaData from './CoordinateMetaData';
-import { CoordinateProps, CoordinateHistory } from '../placeStateless/PlaceComponent';
+import { CoordinateProps } from '../placeStateless/PlaceComponent';
 
 const CoordinateComponent = (
-  props: CoordinateProps & { coordinateHistory: CoordinateHistory }
+  props: CoordinateProps //& { coordinateHistory: CoordinateHistory }
 ) => {
   return (
     <div className="form-group">
       <CoordinateMetaData {...props} />
       <AltitudeDepthData {...props} />
       <CoordinateHistoryItemComponent {...props} />
-      <CoordinateHistoryComponent
+      {/* <CoordinateHistoryComponent
         coordinateHistory={props.coordinateHistory}
         onSetEditingIndex={props.onSetEditingIndex}
-      />
+      /> */}
     </div>
   );
 };

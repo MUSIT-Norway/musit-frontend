@@ -11,7 +11,7 @@ const CoordinateHistoryItemComponent = (props: CoordinateProps) => {
       </div>
       <div className="row">
         <div className="col-md-8">
-          <textarea
+          {/*  <textarea
             rows={10}
             className="form-control"
             value={props.getCurrentHistoryItem(props.coordinateHistoryIndeks).note}
@@ -19,7 +19,7 @@ const CoordinateHistoryItemComponent = (props: CoordinateProps) => {
             onChange={e => {
               props.onChangeHistoryItem('note')(e.target.value);
             }}
-          />
+          /> */}
         </div>
       </div>
     </div>

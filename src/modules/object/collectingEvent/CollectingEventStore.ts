@@ -68,16 +68,6 @@ const addCollectingEventData = (ajaxPost: AjaxPost<Star>) => (
   );
 };
 
-/*   const addCollectingEventData = (ajaxPost: AjaxPost<Star>) => (
-    props: AddCollectingEventProps
-  ) => Observable.of(props).flatMap(props => 
-      addCollectingEvent(ajaxPost)({
-        data: toBackend(props.data),
-        token: props.token,
-        callback: props.callback
-      })
-    ); */
-
 export const addCollectingEvent$: Subject<
   AddCollectingEventProps & { ajaxPost: AjaxPost<Star> }
 > = createAction('addCollectingEvent$');
