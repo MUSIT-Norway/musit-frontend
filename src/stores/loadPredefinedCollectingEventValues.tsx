@@ -40,9 +40,9 @@ class PredefinedCollectingEventLoader<T> extends React.Component<Props<T>> {
     };
     console.log('IP', inputParams);
 
-    if (!this.isCoordinateTypesLoaded()) {
-      this.props.setLoadingCoordinateTypes();
-      this.props.loadCoordinateTypes(inputParams);
+    if (!this.isGeometryLoaded()) {
+      this.props.setLoadingGeometryTypes();
+      this.props.loadGeomertryTypes(inputParams);
     }
     if (!this.isCoordinateSourceLoaded()) {
       this.props.setLoadingCoordinateTypes();
