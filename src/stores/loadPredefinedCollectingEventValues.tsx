@@ -58,9 +58,9 @@ class PredefinedCollectingEventLoader<T> extends React.Component<Props<T>> {
       this.props.loadCollectingMethods(inputParams);
     }
     if (!this.isDatumLoaded()) {
+      console.log('isDatumLoaded');
       this.props.setLoadingDatumTypes();
       this.props.loadDatumTypes(inputParams);
-      console.log('isDatumLoaded');
     }
   }
 
