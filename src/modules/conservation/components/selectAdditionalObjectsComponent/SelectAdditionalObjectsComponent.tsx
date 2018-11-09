@@ -239,7 +239,7 @@ export class SelectAdditionalObjectsComponent extends React.Component<
         <button
           onClick={() => {
             this.props.addObjects(Array.from(this.state.selectedObjects.values()));
-            this.context.closeModal();
+            (this as any).context.closeModal();
           }}
         >
           {I18n.t('musit.texts.select')}
