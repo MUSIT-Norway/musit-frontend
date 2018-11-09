@@ -1,4 +1,4 @@
-import ReactTable from 'react-table';
+/* import ReactTable from 'react-table';
 import * as React from 'react';
 import { data } from '../person/mockdata/data';
 
@@ -25,6 +25,7 @@ const EditableTable = () => {
     >
       <ReactTable
         data={data}
+        context="Hei"
         columns={column}
         defaultPageSize={10}
         loading={true}
@@ -32,6 +33,6 @@ const EditableTable = () => {
       />
     </div>
   );
-};
+}; */
 
-export default EditableTable;
+///export default EditableTable;

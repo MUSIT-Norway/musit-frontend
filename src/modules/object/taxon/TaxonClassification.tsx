@@ -6,7 +6,6 @@ import { ScientificName, personDet } from '../../../models/object/classHist';
 import { Collapse } from 'react-bootstrap';
 import { AppSession } from 'src/types/appSession';
 import { History } from 'history';
-//import EditableTable from '../components/EditableTable';
 
 // Datastructure
 export interface IPersonName {
