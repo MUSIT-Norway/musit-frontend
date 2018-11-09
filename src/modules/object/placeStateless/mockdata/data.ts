@@ -1,6 +1,6 @@
-import { AdmPlace } from '../../placeStateless/PlaceComponent';
+//import { AdmPlace } from '../../placeStateless/PlaceComponent';
 
-export const admPlaces: Array<AdmPlace> = [
+/* export const admPlaces: Array<AdmPlace> = [
   {
     admPlaceId: 1,
     name: 'Oslo',
@@ -71,7 +71,7 @@ export const admPlaces: Array<AdmPlace> = [
     long: 9,
     zoom: 12
   }
-];
+]; */
 export const coordinateTypes = ['MGRS', 'Lat / Long', 'UTM'];
 export const datumValues = ['WGS84', 'ED50', 'EUREF-89'];
 export const geometryTypes = ['Point', 'Reactangle', 'Polygone', 'Line'];
