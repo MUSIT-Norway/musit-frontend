@@ -4,8 +4,8 @@ import {
   ExternalId
 } from '../../modules/object/person/PersonComponent';
 import { Observable } from 'rxjs';
-import { simplePost } from '../../shared/RxAjax';
-import { Callback, AjaxPost } from '../../types/ajax';
+import { simplePost, simpleGet } from '../../shared/RxAjax';
+import { Callback, AjaxPost, AjaxGet } from '../../types/ajax';
 import { Star } from '../../types/common';
 import Config from '../../config';
 
@@ -131,7 +131,17 @@ export const addCollectingEvent: (
   }
 ) => Observable<InputEvent> = (ajaxPost = simplePost) => ({ data, token, callback }) => {
   const URL = Config.api.collectingEvent.addEventUrl;
-  return ajaxPost(URL, data, token, callback)
-    .map(({ response }) => response)
-    .do(response => console.log('addCollectingEvent anuradha', URL, response));
+  return ajaxPost(URL, data, token, callback).map(({ response }) => response);
+};
+
+export const getCollectingEventMethods: (
+  ajaxGet: AjaxGet<Star>
+) => (
+  props: {
+    token: string;
+    callback?: Callback<Star>;
+  }
+) => Observable<Star> = (ajaxGet = simpleGet) => ({ token, callback }) => {
+  const URL = Config.api.collectingEvent.getCollectingEventMethods;
+  return ajaxGet(URL, token, callback).map(({ response }) => response);
 };

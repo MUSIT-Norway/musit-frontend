@@ -40,13 +40,14 @@ export default {
       addPlaceUrl: '/api/place/places',
       searchAdmPlaceURL: (searchString: string) =>
         `/api/place/admPlaces?search=${searchString}`,
-      getDatumURL: 'api/places/place/coordinatedatums',
-      getCoordinateSourceURL: 'api/places/place/coordinatesources',
-      getCoordinateTypesURL: 'api/places/place/coordinatetypes',
-      getCoordinateGeometriesURL: 'api/places/place/coordinategeometries'
+      getDatumURL: 'api/place/coordinatedatums',
+      getCoordinateSourceURL: 'api/place/coordinatesources',
+      getCoordinateTypesURL: 'api/place/coordinatetypes',
+      getCoordinateGeometriesURL: 'api/place/coordinategeometries'
     },
     collectingEvent: {
-      addEventUrl: '/api/event/events'
+      addEventUrl: '/api/event/events',
+      getCollectingEventMethods: '/api/event/collectingmethods'
     }
   },
   magasin: {

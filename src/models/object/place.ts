@@ -61,7 +61,7 @@ export const addPlace: (
 
 export const loadDatum: (
   ajaxGet: AjaxGet<Star>
-) => (props: { token: string; callback: Callback<Star> }) => Observable<Star> = (
+) => (props: { token: string; callback?: Callback<Star> }) => Observable<Star> = (
   ajaxGet = simpleGet
 ) => ({ token, callback }) => {
   const URL = Config.api.places.getDatumURL;
@@ -70,7 +70,7 @@ export const loadDatum: (
 
 export const loadCoordinateTypes: (
   ajaxGet: AjaxGet<Star>
-) => (props: { token: string; callback: Callback<Star> }) => Observable<Star> = (
+) => (props: { token: string; callback?: Callback<Star> }) => Observable<Star> = (
   ajaxGet = simpleGet
 ) => ({ token, callback }) => {
   const URL = Config.api.places.getCoordinateTypesURL;
@@ -79,7 +79,7 @@ export const loadCoordinateTypes: (
 
 export const loadCoordinateSources: (
   ajaxGet: AjaxGet<Star>
-) => (props: { token: string; callback: Callback<Star> }) => Observable<Star> = (
+) => (props: { token: string; callback?: Callback<Star> }) => Observable<Star> = (
   ajaxGet = simpleGet
 ) => ({ token, callback }) => {
   const URL = Config.api.places.getCoordinateSourceURL;
@@ -88,7 +88,7 @@ export const loadCoordinateSources: (
 
 export const loadGeometryTypes: (
   ajaxGet: AjaxGet<Star>
-) => (props: { token: string; callback: Callback<Star> }) => Observable<Star> = (
+) => (props: { token: string; callback?: Callback<Star> }) => Observable<Star> = (
   ajaxGet = simpleGet
 ) => ({ token, callback }) => {
   const URL = Config.api.places.getCoordinateGeometriesURL;

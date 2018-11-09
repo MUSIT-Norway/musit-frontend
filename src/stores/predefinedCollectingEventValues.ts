@@ -6,6 +6,8 @@ import {
   loadGeometryTypes
 } from '../models/object/place';
 
+import { getCollectingEventMethods } from '../models/object/collectingEvent';
+
 import { createStore } from 'react-rxjs';
 import { createAction } from '../shared/react-rxjs-patch';
 import { Reducer } from 'react-rxjs';
@@ -14,30 +16,44 @@ import { KEEP_ALIVE } from './constants';
 import { simpleGet } from '../shared/RxAjax';
 import { Star } from '../types/common';
 
-export type PredefinedPlaceProps = {
+export type PredefinedCollectingEventProps = {
   datums: string[] | null;
   coordinateTypes: string[] | null;
   coordinateSources: string[] | null;
   geometryTypes: string[] | null;
+  collectingMethods: string[] | null;
 };
 
-export type PredefinedPlaceState = PredefinedPlaceProps & {
+export type PredefinedCollectingEventState = PredefinedCollectingEventProps & {
   loadingDatum?: boolean;
   loadingGeometryTypes?: boolean;
   loadingCoordinateTypes?: boolean;
   loadingCoordinateSources?: boolean;
+  loadingCollectingMethods?: boolean;
 };
 
-export const initialState: PredefinedPlaceState = {
+export const initialState: PredefinedCollectingEventState = {
   loadingDatum: false,
+  loadingCollectingMethods: false,
   loadingCoordinateSources: false,
   loadingCoordinateTypes: false,
   loadingGeometryTypes: false,
   datums: null,
   coordinateSources: null,
   geometryTypes: null,
-  coordinateTypes: null
+  coordinateTypes: null,
+  collectingMethods: null
 };
+
+export const setLoadingCollectingMethods$: Subject<Star> = createAction(
+  'setLoadingCollectingMethods$'
+);
+export const loadCollectingMethods$: Subject<Star> = createAction(
+  'loadCollectingMethods$'
+);
+export const loadCollectingMethodsAction$: Observable<
+  Star
+> = loadCollectingMethods$.switchMap(getCollectingEventMethods(simpleGet));
 
 export const setLoadingDatumTypes$: Subject<Star> = createAction('setLoadingDatumTypes$');
 export const loadDatumTypes$: Subject<Star> = createAction('loadDatumTypes$');
@@ -74,43 +90,64 @@ export function reducer$(actions: {
   [key: string]: Observable<Star>;
 }): Observable<Reducer<any>> {
   return Observable.merge(
-    actions.setLoadingCoordinateTypes$.map(() => (state: PredefinedPlaceState) => ({
-      ...state,
-      loadingCoordinateTypes: true
-    })),
-    actions.loadCoordinateTypes$.map(
-      (cooordinateTypes: string[]) => (state: PredefinedPlaceState) => ({
+    actions.setLoadingCollectingMethods$.map(
+      () => (state: PredefinedCollectingEventState) => ({
         ...state,
-        cooordinateTypes,
+        loadingCollectingMethods: true
+      })
+    ),
+    actions.loadCollectingMethods$.map(
+      (collectingMethods: string[]) => (state: PredefinedCollectingEventState) => ({
+        ...state,
+        collectingMethods,
+        loadingCollectingMethods: false
+      })
+    ),
+    actions.setLoadingCoordinateTypes$.map(
+      () => (state: PredefinedCollectingEventState) => ({
+        ...state,
+        loadingCoordinateTypes: true
+      })
+    ),
+    actions.loadCoordinateTypes$.map(
+      (coordinateTypes: string[]) => (state: PredefinedCollectingEventState) => ({
+        ...state,
+        coordinateTypes,
         loadingCoordinateTypes: false
       })
     ),
-    actions.setLoadingCoordinateSources$.map(() => (state: PredefinedPlaceState) => ({
-      ...state,
-      loadingCoordinateSources: true
-    })),
-    actions.setLoadingDatumTypes$.map(() => (state: PredefinedPlaceState) => ({
+    actions.setLoadingCoordinateSources$.map(
+      () => (state: PredefinedCollectingEventState) => ({
+        ...state,
+        loadingCoordinateSources: true
+      })
+    ),
+    actions.setLoadingDatumTypes$.map(() => (state: PredefinedCollectingEventState) => ({
       ...state,
       loadingDatum: true
     })),
-    actions.loadDatumTypes$.map((datums: string[]) => (state: PredefinedPlaceState) => ({
-      ...state,
-      datums,
-      loadingDatum: false
-    })),
+    actions.loadDatumTypes$.map(
+      (datums: string[]) => (state: PredefinedCollectingEventState) => ({
+        ...state,
+        datums,
+        loadingDatum: false
+      })
+    ),
     actions.loadCoordinateSources$.map(
-      (coordinateSources: string[]) => (state: PredefinedPlaceState) => ({
+      (coordinateSources: string[]) => (state: PredefinedCollectingEventState) => ({
         ...state,
         coordinateSources,
         loadingCoordinateSources: false
       })
     ),
-    actions.setLoadingGeometryTypes$.map(() => (state: PredefinedPlaceState) => ({
-      ...state,
-      loadingGeometryTypes: true
-    })),
+    actions.setLoadingGeometryTypes$.map(
+      () => (state: PredefinedCollectingEventState) => ({
+        ...state,
+        loadingGeometryTypes: true
+      })
+    ),
     actions.loadGeometryTypes$.map(
-      (geometryTypes: string[]) => (state: PredefinedPlaceState) => ({
+      (geometryTypes: string[]) => (state: PredefinedCollectingEventState) => ({
         ...state,
         geometryTypes,
         loadingGeometryTypes: false
@@ -120,9 +157,16 @@ export function reducer$(actions: {
 }
 
 const store$ = (actions: { [key: string]: Observable<Star> }) =>
-  createStore('predefinedPlaceValues', reducer$(actions), initialState, KEEP_ALIVE);
+  createStore(
+    'predefinedCollectingEventValues',
+    reducer$(actions),
+    initialState,
+    KEEP_ALIVE
+  );
 
 export default store$({
+  setLoadingCollectingMethods$,
+  loadCollectingMethods$: loadCollectingMethodsAction$,
   setLoadingDatumTypes$,
   loadDatumTypes$: loadDatumTypesAction$,
   setLoadingCoordinateSources$,

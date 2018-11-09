@@ -1,16 +1,17 @@
-// @flow
 import * as React from 'react';
-import predefinedPlaces$, {
+import predefinedCollectingEvents$, {
   setLoadingCoordinateSources$,
   setLoadingGeometryTypes$,
   setLoadingCoordinateTypes$,
-  PredefinedPlaceState,
+  setLoadingCollectingMethods$,
+  PredefinedCollectingEventState,
   setLoadingDatumTypes$,
   loadDatumTypes$,
   loadCoordinateSources$,
   loadCoordinateTypes$,
-  loadGeometryTypes$
-} from './predefinedPlaceValues';
+  loadGeometryTypes$,
+  loadCollectingMethods$
+} from './predefinedCollectingEventValues';
 import appSession$ from './appSession';
 import { inject } from 'react-rxjs';
 import { Observable } from 'rxjs';
@@ -19,10 +20,12 @@ import { Star, TODO } from '../types/common';
 type Props<T> = {
   appSession: AppSession;
   component: React.ComponentType<T>;
-  predefinedPlaceValues: PredefinedPlaceState;
+  predefinedCollectingEventValues: PredefinedCollectingEventState;
   setLoadingCoordinateSources: Function;
   setLoadingGeometryTypes: Function;
   setLoadingCoordinateTypes: Function;
+  setLoadingCollectingMethods: Function;
+  loadCollectingMethods: Function;
   setLoadingDatumTypes: Function;
   loadDatumTypes: Function;
   loadCoordinateSources: Function;
@@ -30,17 +33,13 @@ type Props<T> = {
   loadGeomertryTypes: Function;
 };
 
-class PredefinedPlaceLoader<T> extends React.Component<Props<T>> {
+class PredefinedCollectingEventLoader<T> extends React.Component<Props<T>> {
   componentWillMount() {
     const inputParams = {
-      museumId: this.props.appSession.museumId,
-      collectionId: this.props.appSession.collectionId,
       token: this.props.appSession.accessToken
     };
-    if (!this.isDatumLoaded()) {
-      this.props.setLoadingDatumTypes();
-      this.props.loadDatumTypes(inputParams);
-    }
+    console.log('IP', inputParams);
+
     if (!this.isCoordinateTypesLoaded()) {
       this.props.setLoadingCoordinateTypes();
       this.props.loadCoordinateTypes(inputParams);
@@ -53,33 +52,51 @@ class PredefinedPlaceLoader<T> extends React.Component<Props<T>> {
       this.props.setLoadingCoordinateTypes();
       this.props.loadCoordinateTypes(inputParams);
     }
+
+    if (!this.isCollectingMethodsLoaded()) {
+      this.props.setLoadingCollectingMethods();
+      this.props.loadCollectingMethods(inputParams);
+    }
+    if (!this.isDatumLoaded()) {
+      this.props.setLoadingDatumTypes();
+      this.props.loadDatumTypes(inputParams);
+      console.log('isDatumLoaded');
+    }
+  }
+
+  isCollectingMethodsLoaded() {
+    console.log('Inne i isCollectingMethodsLoaded');
+    return (
+      !this.props.predefinedCollectingEventValues.loadingCollectingMethods &&
+      !!this.props.predefinedCollectingEventValues.collectingMethods
+    );
   }
 
   isDatumLoaded() {
     return (
-      !this.props.predefinedPlaceValues.loadingDatum &&
-      !!this.props.predefinedPlaceValues.datums
+      !this.props.predefinedCollectingEventValues.loadingDatum &&
+      !!this.props.predefinedCollectingEventValues.datums
     );
   }
 
   isCoordinateTypesLoaded() {
     return (
-      !this.props.predefinedPlaceValues.loadingCoordinateTypes &&
-      this.props.predefinedPlaceValues.coordinateTypes
+      !this.props.predefinedCollectingEventValues.loadingCoordinateTypes &&
+      this.props.predefinedCollectingEventValues.coordinateTypes
     );
   }
 
   isCoordinateSourceLoaded() {
     return (
-      !this.props.predefinedPlaceValues.loadingDatum &&
-      !!this.props.predefinedPlaceValues.datums
+      !this.props.predefinedCollectingEventValues.loadingDatum &&
+      !!this.props.predefinedCollectingEventValues.datums
     );
   }
 
   isGeometryLoaded() {
     return (
-      !this.props.predefinedPlaceValues.loadingGeometryTypes &&
-      this.props.predefinedPlaceValues.geometryTypes
+      !this.props.predefinedCollectingEventValues.loadingGeometryTypes &&
+      this.props.predefinedCollectingEventValues.geometryTypes
     );
   }
   render() {
@@ -96,46 +113,50 @@ class PredefinedPlaceLoader<T> extends React.Component<Props<T>> {
   }
 }
 
-export function loadPredefinedPlaceValues<P>(
+export function loadPredefinedCollectingEventValues<P>(
   Component: React.ComponentType<P>
 ): React.ComponentType<P> {
-  return loadCustomPredefinedPlaceValues(
-    predefinedPlaces$,
+  return loadCustomPredefinedCollectingEventValues(
+    predefinedCollectingEvents$,
     appSession$ as TODO,
     Component
   );
 }
 
-export function loadCustomPredefinedPlaceValues<P>(
-  predefinedPlaceValues$: Observable<Star>,
+export function loadCustomPredefinedCollectingEventValues<P>(
+  predefinedCollectingEventValues$: Observable<Star>,
   appSession$: Observable<AppSession>,
   Component: React.ComponentType<P>
 ): React.ComponentType<P> {
   type DataType = {
-    predefinedPlaceValues: PredefinedPlaceState;
+    predefinedCollectingEventValues: PredefinedCollectingEventState;
     appSession: AppSession;
   };
   const data$: Observable<DataType> = Observable.combineLatest(
-    predefinedPlaceValues$,
+    predefinedCollectingEventValues$,
     appSession$
-  ).map(([predefinedPlaceValues, appSession]) => ({
-    predefinedPlaceValues,
+  ).map(([predefinedCollectingEventValues, appSession]) => ({
+    predefinedCollectingEventValues,
     appSession
   }));
-  return inject(data$, (predefinedPlaceValues: DataType, upstream: P) => ({
-    ...predefinedPlaceValues,
+  return inject(data$, (predefinedCollectingEventValues: DataType, upstream: P) => ({
+    ...predefinedCollectingEventValues,
     ...(upstream as TODO)
   }))(
     (
       initialProps: P & {
-        predefinedPlaceValues: PredefinedPlaceState;
+        predefinedCollectingEventValues: PredefinedCollectingEventState;
         appSession: AppSession;
       }
     ) => {
       return (
-        <PredefinedPlaceLoader
+        <PredefinedCollectingEventLoader
           {...initialProps}
           component={Component}
+          setLoadingCollectingMethods={setLoadingCollectingMethods$.next.bind(
+            setLoadingCollectingMethods$
+          )}
+          loadCollectingMethods={loadCollectingMethods$.next.bind(loadCollectingMethods$)}
           setLoadingCoordinateTypes={setLoadingCoordinateTypes$.next.bind(
             setLoadingCoordinateTypes$
           )}
