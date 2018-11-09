@@ -62,16 +62,16 @@ export class AdmPlaceSuggestion extends React.Component<
     this.requestSuggestionUpdate = this.requestSuggestionUpdate.bind(this);
     this.state = {
       value: this.props.value,
-      disabled: this.props && this.props.disabled ? true : false
+      disabled: false
     };
   }
   componentWillReceiveProps(next: AdmPlaceSuggestProps) {
-    if (next.value !== this.props.value) {
+    /*   if (next.value !== this.props.value) {
       this.setState(ps => ({ ...ps, value: next.value, disabled: true }));
-    }
-    if (next.disabled !== this.props.disabled) {
-      this.setState(ps => ({ ...ps, disabled: next.disabled ? next.disabled : false }));
-    }
+    } */
+    /*  if (next.disabled !== this.props.disabled) {
+      this.setState(ps => ({ ...ps, disabled:false }));
+    } */
   }
   AdmPlaceProps = {
     id: this.props.id,

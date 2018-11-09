@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { musitCoodinateValidate } from '../../../shared/util';
 import CollapseComponent from '../components/Collapse';
-import { admPlaces } from '../placeStateless/mockdata/data';
 import { Collection, SynonymType, ExternalId } from '../person/PersonComponent';
 import EventMetadata from './EventMetadata';
 import { formatISOString } from '../../../shared/util';
@@ -14,6 +13,7 @@ import PlaceComponent, {
 } from '../placeStateless/PlaceComponent';
 import { CollectingEventStoreState } from './CollectingEventStore';
 import { AppSession } from '../../../types/appSession';
+import { History } from 'history';
 
 export type CollectingEventProps = {
   onChangeTextField: (fieldName: string) => (value: string) => void;
@@ -183,7 +183,7 @@ export class CollectingEventComponent extends React.Component<
         ? props.store.localState
         : {
             placeState: {
-              admPlace: admPlaces[0],
+              admPlace: null,
               editingInputCoordinate: {
                 coordinateType: 'MGRS',
                 datum: 'WGS84',
@@ -224,6 +224,8 @@ export class CollectingEventComponent extends React.Component<
       <div>
         <PlaceComponent
           {...this.state}
+          appSession={this.props.appSession}
+          history={this.props.history}
           onChangeOthers={(field: string) => (value: string) => {
             this.setState((cs: CollectingEventState) => {
               const newAttributes: MarinePlaceAttribute = cs.placeState.editingAttributes
@@ -239,24 +241,13 @@ export class CollectingEventComponent extends React.Component<
               };
             });
           }}
-          onChange={(t: string) => {
-            const admPlace = admPlaces.find(
-              (a: AdmPlace) => a.admPlaceId === parseInt(t)
-            );
-            console.log(admPlace);
+          onChangeAdmPlace={(t: AdmPlace) => {
+            console.log(t);
             this.setState((s: CollectingEventState) => ({
               ...s,
               placeState: {
-                ...s.placeState /* ,
-                admPlace: admPlace,
-                kommune: (admPlace && admPlace.kommune) || '',
-                fylke: (admPlace && admPlace.fylke) || '',
-                land: admPlace && admPlace.land,
-                lat: admPlace && admPlace.lat,
-                long: admPlace && admPlace.long,
-                overordnet: admPlace && admPlace.overordnet,
-                type: admPlace && admPlace.type,
-                name: admPlace && admPlace.name */
+                ...s.placeState,
+                admPlace: t
               }
             }));
           }}

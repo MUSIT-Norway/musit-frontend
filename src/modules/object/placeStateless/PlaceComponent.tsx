@@ -3,8 +3,10 @@ import CoordinateComponent from './CoordinateComponent';
 import CoordinateHeader from './CoordinateHeader';
 import AdmPlaceComponent from './AdmPlaceComponent';
 import { CheckBox } from '../components/CheckBox';
+import { AppSession } from 'src/types/appSession';
+import { History } from 'history';
 
-export type AdmPlace = {
+/* export type AdmPlace = {
   admPlaceId: number;
   name?: string;
   type?: string;
@@ -16,7 +18,7 @@ export type AdmPlace = {
   long?: number;
   zoom?: number;
   admPlaceUuid?: string;
-};
+}; */
 
 /* export type Coordinate = {
   coordinateSource?: string;
@@ -110,7 +112,7 @@ export interface InputPlace {
 
 export interface PlaceState {
   placeUuid?: PlaceUuid;
-  admPlace: AdmPlace;
+  admPlace: AdmPlace | null;
   editingInputCoordinate?: InputCoordinate;
   editingCoordinateAttribute?: InputCoordinateAttribute;
   editingAttributes?: MarinePlaceAttribute;
@@ -122,7 +124,7 @@ export interface PlaceState {
 
 export class PlaceState implements PlaceState {
   placeUuid?: PlaceUuid;
-  admPlace: AdmPlace;
+  admPlace: AdmPlace | null;
   editingInputCoordinate?: InputCoordinate;
   editingCoordinateAttribute?: InputCoordinateAttribute;
   editingAttributes?: MarinePlaceAttribute;
@@ -166,7 +168,7 @@ export class PlaceState implements PlaceState {
 };
 export type nCoordinateHistory = Array<nCoordinateHistoryItem>; */
 
-export type nAdmPlace = {
+export type AdmPlace = {
   admPlaceUuid: Uuid;
   name: string;
   type: string;
@@ -217,8 +219,10 @@ export type MarinePlaceAttribute = {
 
 const PlaceComponent = (
   props: PlaceState & {
-    onChange: (value: string) => void;
+    onChangeAdmPlace: (value: AdmPlace) => void;
     onChangeOthers: (field: string) => (value: string) => void;
+    appSession: AppSession;
+    history: History;
   } & CoordinateProps
 ) => {
   return (
@@ -227,7 +231,7 @@ const PlaceComponent = (
         <AdmPlaceComponent
           {...props}
           onChangeOthers={props.onChangeOthers}
-          onChange={props.onChange}
+          onChange={props.onChangeAdmPlace}
         />
         <CoordinateHeader {...props} />
         <CoordinateComponent {...props} />
