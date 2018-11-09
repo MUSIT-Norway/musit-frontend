@@ -56,14 +56,16 @@ export type CoordinateHistoryItem = {
   registeredBy?: string;
   registeredDate?: string;
   note?: string;
-  coordinate: Coordinate;
+  //coordinate: Coordinate;
   coordinateRevisionType?: CoordinateRevisionType;
 };
 export type CoordinateHistory = Array<CoordinateHistoryItem>;
 
 export type CoordinateProps = {
   //coordinateHistory: CoordinateHistory;
-  editingCoordinate: Coordinate;
+  editingInputCoordinate?: InputCoordinate;
+  editingCoordinateAttribute?: InputCoordinateAttribute;
+  editingAttributes?: MarinePlaceAttribute;
   editCoordinateMode: boolean;
   //coordinateHistoryIndeks: number;
   coordinateCollapsed: boolean;
@@ -76,7 +78,7 @@ export type CoordinateProps = {
   onChangeCoordinateText: (fieldName: string) => (value: string) => void;
   onChangeCoordinateAttributes: (fieldName: string) => (value: string) => void;
   //onChangeHistoryItem: (fieldName: string) => (value: string) => void;
-  getCurrentCoordinate: (ind: number) => Coordinate;
+  getCurrentCoordinate: (ind: number) => InputPlace;
   //getCurrentHistoryItem: (ind: number) => CoordinateHistoryItem;
   onChangeCheckBoxBoolean: (fieldName: string) => (value: boolean) => void;
   onClickSaveRevision: () => void;
@@ -107,8 +109,11 @@ export interface InputPlace {
 }
 
 export interface PlaceState {
-  coordinate?: Coordinate;
-  editingCoordinate: Coordinate;
+  placeUuid?: PlaceUuid;
+  admPlace: AdmPlace;
+  editingInputCoordinate?: InputCoordinate;
+  editingCoordinateAttribute?: InputCoordinateAttribute;
+  editingAttributes?: MarinePlaceAttribute;
   editCoordinateMode?: boolean;
   coordinateInvalid: boolean;
   coordinateCollapsed?: boolean;
@@ -116,26 +121,35 @@ export interface PlaceState {
 }
 
 export class PlaceState implements PlaceState {
-  coordinate?: Coordinate;
-  editingCoordinate: Coordinate;
+  placeUuid?: PlaceUuid;
+  admPlace: AdmPlace;
+  editingInputCoordinate?: InputCoordinate;
+  editingCoordinateAttribute?: InputCoordinateAttribute;
+  editingAttributes?: MarinePlaceAttribute;
   editCoordinateMode?: boolean;
   coordinateInvalid: boolean;
   coordinateCollapsed?: boolean;
   altitudeCollapsed?: boolean;
   constructor(
-    editingCoordinate: Coordinate,
+    admPlace: AdmPlace,
+    editingInputCoordinate: InputCoordinate,
+    editingCoordinateAttributes: InputCoordinateAttribute,
+    editingAttributes: MarinePlaceAttribute,
     coordinateInvalid: boolean,
-    coordinate?: Coordinate,
     editCoordinateMode?: boolean,
     coordinateCollapsed?: boolean,
-    altitudeCollapsed?: boolean
+    altitudeCollapsed?: boolean,
+    placeUuid?: PlaceUuid
   ) {
-    this.coordinate = coordinate;
-    this.editingCoordinate = editingCoordinate;
+    this.admPlace = admPlace;
+    this.editingInputCoordinate = editingInputCoordinate;
+    this.editingCoordinateAttribute = editingCoordinateAttributes;
+    this.editingAttributes = editingAttributes;
     this.editCoordinateMode = editCoordinateMode;
     this.coordinateInvalid = coordinateInvalid;
     this.coordinateCollapsed = coordinateCollapsed;
     this.altitudeCollapsed = altitudeCollapsed;
+    this.placeUuid = placeUuid;
   }
 }
 /*
@@ -151,14 +165,6 @@ export class PlaceState implements PlaceState {
   coordinateRevisionType?: CoordinateRevisionType;
 };
 export type nCoordinateHistory = Array<nCoordinateHistoryItem>; */
-
-export type Coordinate = {
-  placeUuid?: PlaceUuid;
-  admPlace: AdmPlace;
-  coordinate: InputCoordinate;
-  coordinateAttributes?: InputCoordinateAttribute;
-  attributes?: MarinePlaceAttribute;
-};
 
 export type nAdmPlace = {
   admPlaceUuid: Uuid;

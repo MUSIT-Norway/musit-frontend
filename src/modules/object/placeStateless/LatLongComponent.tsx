@@ -15,7 +15,7 @@ const LatLongComponent = (props: CoordinateProps) => {
           <select
             className="form-control"
             value={
-              props.editingCoordinate.coordinate.datum
+              props.editingInputCoordinate && props.editingInputCoordinate.datum
               //props.getCurrentCoordinate(props.coordinateHistoryIndeks).datum
             }
             id="datum"
@@ -34,8 +34,8 @@ const LatLongComponent = (props: CoordinateProps) => {
         <div className="col-md-2">
           <label htmlFor="coordinateType">Coordinate type </label>
         </div>
-        {props.editingCoordinate &&
-          props.editingCoordinate.coordinate.coordinateType === 'Lat / Long' && (
+        {props.editingInputCoordinate &&
+          props.editingInputCoordinate.coordinateType === 'Lat / Long' && (
             <div className="col-md-4">
               <label htmlFor="coordinateGeomertry">Coordinate geometry </label>
             </div>
@@ -47,7 +47,7 @@ const LatLongComponent = (props: CoordinateProps) => {
             className="form-control"
             id="coordinateType"
             value={
-              props.editingCoordinate.coordinate.coordinateType
+              props.editingInputCoordinate && props.editingInputCoordinate.coordinateType
               //props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateType
             }
             onChange={e => {
@@ -59,8 +59,8 @@ const LatLongComponent = (props: CoordinateProps) => {
             ))}
           </select>
         </div>
-        {props.editingCoordinate &&
-          props.editingCoordinate.coordinate.coordinateType === 'Lat / Long' && (
+        {props.editingInputCoordinate &&
+          props.editingInputCoordinate.coordinateType === 'Lat / Long' && (
             <div className="col-md-3">
               <select
                 className="form-control"
@@ -69,9 +69,9 @@ const LatLongComponent = (props: CoordinateProps) => {
                   props.onChangeCoordinateText('coordinateGeometry')(e.target.value);
                 }}
               >
-                value={
-                  props.editingCoordinate.coordinate.coordinateGeometry
-                  // props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateGeomertry
+                value={props.editingInputCoordinate &&
+                  props.editingInputCoordinate.coordinateGeometry
+                // props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateGeomertry
                 }
                 {geometryTypes.map((type: string, i: number) => (
                   <option key={`optionRow_${i}`}>{type}</option>
@@ -95,7 +95,8 @@ const LatLongComponent = (props: CoordinateProps) => {
               props.onChangeCoordinateText('coordinateString')(e.target.value);
             }}
             value={
-              props.editingCoordinate.coordinate.coordinateString
+              props.editingInputCoordinate &&
+              props.editingInputCoordinate.coordinateString
               //props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateString || ''
             }
           />

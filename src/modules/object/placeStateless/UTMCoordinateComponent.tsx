@@ -15,7 +15,7 @@ const UTMCoordinateComponent = (props: CoordinateProps) => {
           <select
             className="form-control"
             value={
-              props.editingCoordinate.coordinate.datum
+              props.editingInputCoordinate && props.editingInputCoordinate.datum
               //props.getCurrentCoordinate(props.coordinateHistoryIndeks).datum
             }
             id="datum"
@@ -46,7 +46,7 @@ const UTMCoordinateComponent = (props: CoordinateProps) => {
             className="form-control"
             id="coordinateType"
             value={
-              props.editingCoordinate.coordinate.coordinateType
+              props.editingInputCoordinate && props.editingInputCoordinate.coordinateType
               //props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateType
             }
             onChange={e => {
@@ -67,7 +67,7 @@ const UTMCoordinateComponent = (props: CoordinateProps) => {
               props.onChangeCoordinateText('zone')(e.target.value);
             }}
             value={
-              props.editingCoordinate.coordinate.zone
+              props.editingInputCoordinate && props.editingInputCoordinate.zone
               //props.getCurrentCoordinate(props.coordinateHistoryIndeks).utmZone
             }
           />
@@ -81,7 +81,7 @@ const UTMCoordinateComponent = (props: CoordinateProps) => {
               props.onChangeCoordinateText('bend')(e.target.value);
             }}
             value={
-              props.editingCoordinate.coordinate.bend
+              props.editingInputCoordinate && props.editingInputCoordinate.bend
               //props.getCurrentCoordinate(props.coordinateHistoryIndeks).mgrsBand
             }
           />
@@ -102,7 +102,8 @@ const UTMCoordinateComponent = (props: CoordinateProps) => {
               props.onChangeCoordinateText('coordinateString')(e.target.value);
             }}
             value={
-              props.editingCoordinate.coordinate.coordinateString
+              props.editingInputCoordinate &&
+              props.editingInputCoordinate.coordinateString
               //props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateString || ''
             }
           />

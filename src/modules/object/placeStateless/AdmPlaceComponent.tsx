@@ -41,18 +41,14 @@ const AdmPlaceComponent = (
         <label htmlFor="locality">Lokalitet </label>
       </div>
     </div>
-    {console.log('############', props.editingCoordinate)}
+    {console.log('############', props.editingInputCoordinate)}
     <div className="row form-group">
       <div className="col-md-8">
         <textarea
           rows={6}
           className="form-control"
           id="locality"
-          value={
-            (props.editingCoordinate.attributes &&
-              props.editingCoordinate.attributes.locality) ||
-            ''
-          }
+          value={(props.editingAttributes && props.editingAttributes.locality) || ''}
           onChange={(v: React.ChangeEvent<HTMLTextAreaElement>) =>
             props.onChangeOthers('locality')(v.target.value)
           }
@@ -70,10 +66,7 @@ const AdmPlaceComponent = (
           rows={6}
           className="form-control"
           id="ecology"
-          value={
-            props.editingCoordinate.attributes &&
-            props.editingCoordinate.attributes.ecology
-          }
+          value={props.editingAttributes && props.editingAttributes.ecology}
           onChange={(v: React.ChangeEvent<HTMLTextAreaElement>) => {
             v.preventDefault();
             props.onChangeOthers('ecology')(v.target.value);
@@ -99,10 +92,7 @@ const AdmPlaceComponent = (
           className="form-control"
           onChange={e => props.onChangeOthers('station')(e.target.value)}
           id={'txtInputStation'}
-          value={
-            props.editingCoordinate.attributes &&
-            props.editingCoordinate.attributes.station
-          }
+          value={props.editingAttributes && props.editingAttributes.station}
         />
       </div>
       <div className="col-md-2">
@@ -111,10 +101,7 @@ const AdmPlaceComponent = (
           className="form-control"
           onChange={e => props.onChangeOthers('sample')(e.target.value)}
           id={'txtInputSample'}
-          value={
-            props.editingCoordinate.attributes &&
-            props.editingCoordinate.attributes.sample
-          }
+          value={props.editingAttributes && props.editingAttributes.sample}
         />
       </div>
       <div className="col-md-2">
@@ -123,9 +110,7 @@ const AdmPlaceComponent = (
           className="form-control"
           onChange={e => props.onChangeOthers('ship')(e.target.value)}
           id={'txtInputShip'}
-          value={
-            props.editingCoordinate.attributes && props.editingCoordinate.attributes.ship
-          }
+          value={props.editingAttributes && props.editingAttributes.ship}
         />
       </div>
     </div>

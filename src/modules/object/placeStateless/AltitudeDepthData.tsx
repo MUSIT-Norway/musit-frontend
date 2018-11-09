@@ -39,8 +39,8 @@ const AltitudeDepthData = (props: CoordinateProps) => (
             props.onChangeCoordinateNumber('altitudeFrom')(parseFloat(e.target.value));
           }}
           value={
-            props.editingCoordinate.coordinateAttributes &&
-            props.editingCoordinate.coordinateAttributes.altitudeFrom
+            props.editingCoordinateAttribute &&
+            props.editingCoordinateAttribute.altitudeFrom
             //props.getCurrentCoordinate(props.coordinateHistoryIndeks).altitudeLow
           }
           id="altitudeLow"
@@ -56,8 +56,8 @@ const AltitudeDepthData = (props: CoordinateProps) => (
             props.onChangeCoordinateNumber('altitudeTo')(parseFloat(e.target.value));
           }}
           value={
-            props.editingCoordinate.coordinateAttributes &&
-            props.editingCoordinate.coordinateAttributes.altitudeTo
+            props.editingCoordinateAttribute &&
+            props.editingCoordinateAttribute.altitudeTo
             //props.getCurrentCoordinate(props.coordinateHistoryIndeks).altitudeHigh
           }
           id="altitudeHigh"
@@ -69,8 +69,8 @@ const AltitudeDepthData = (props: CoordinateProps) => (
           className="form-control"
           id="altitudeUnit"
           value={
-            props.editingCoordinate.coordinateAttributes &&
-            props.editingCoordinate.coordinateAttributes.altitudeUnit
+            props.editingCoordinateAttribute &&
+            props.editingCoordinateAttribute.altitudeUnit
             //props.getCurrentCoordinate(props.coordinateHistoryIndeks).altitudeUnit
           }
           onChange={e => {
@@ -86,21 +86,21 @@ const AltitudeDepthData = (props: CoordinateProps) => (
         <div className="checkbox" id="caAltitude">
           {console.log(
             'in checkbox ca altitude : ',
-            props.editingCoordinate.coordinateAttributes &&
-              props.editingCoordinate.coordinateAttributes.altitudeCa
+            props.editingCoordinateAttribute &&
+              props.editingCoordinateAttribute.altitudeCa
           )}
           <CheckBox
             id={'checkBoxCaAltitude'}
             checked={
-              props.editingCoordinate.coordinateAttributes &&
-              props.editingCoordinate.coordinateAttributes.altitudeCa
+              props.editingCoordinateAttribute &&
+              props.editingCoordinateAttribute.altitudeCa
                 ? true
                 : false
             }
             displayValue="Ca altitude"
             onChange={() => {
-              props.editingCoordinate.coordinateAttributes &&
-              props.editingCoordinate.coordinateAttributes.altitudeCa
+              props.editingCoordinateAttribute &&
+              props.editingCoordinateAttribute.altitudeCa
                 ? props.onChangeCheckBoxBoolean('altitudeCa')(false)
                 : props.onChangeCheckBoxBoolean('altitudeCa')(true);
 
@@ -146,8 +146,7 @@ const AltitudeDepthData = (props: CoordinateProps) => (
             props.onChangeCoordinateNumber('depthFrom')(parseFloat(e.target.value));
           }}
           value={
-            props.editingCoordinate.coordinateAttributes &&
-            props.editingCoordinate.coordinateAttributes.depthFrom
+            props.editingCoordinateAttribute && props.editingCoordinateAttribute.depthFrom
             //props.getCurrentCoordinate(props.coordinateHistoryIndeks).depthLow
           }
           id="depthLow"
@@ -163,8 +162,7 @@ const AltitudeDepthData = (props: CoordinateProps) => (
             props.onChangeCoordinateNumber('depthTo')(parseFloat(e.target.value));
           }}
           value={
-            props.editingCoordinate.coordinateAttributes &&
-            props.editingCoordinate.coordinateAttributes.depthTo
+            props.editingCoordinateAttribute && props.editingCoordinateAttribute.depthTo
             //props.getCurrentCoordinate(props.coordinateHistoryIndeks).depthHigh
           }
           id="depthHigh"
@@ -176,8 +174,7 @@ const AltitudeDepthData = (props: CoordinateProps) => (
           className="form-control"
           id="depthUnit"
           value={
-            props.editingCoordinate.coordinateAttributes &&
-            props.editingCoordinate.coordinateAttributes.depthUnit
+            props.editingCoordinateAttribute && props.editingCoordinateAttribute.depthUnit
             //props.getCurrentCoordinate(props.coordinateHistoryIndeks).depthUnit
           }
           onChange={e => {
@@ -196,8 +193,7 @@ const AltitudeDepthData = (props: CoordinateProps) => (
             checked={
               /* props.getCurrentCoordinate(props.coordinateHistoryIndeks) &&
               props.getCurrentCoordinate(props.coordinateHistoryIndeks).caDepth */
-              props.editingCoordinate.coordinateAttributes &&
-              props.editingCoordinate.coordinateAttributes.depthCa
+              props.editingCoordinateAttribute && props.editingCoordinateAttribute.depthCa
                 ? true
                 : false
             }
@@ -205,8 +201,7 @@ const AltitudeDepthData = (props: CoordinateProps) => (
             onChange={() => {
               /* props.getCurrentCoordinate(props.coordinateHistoryIndeks) &&
               props.getCurrentCoordinate(props.coordinateHistoryIndeks).caDepth */
-              props.editingCoordinate.coordinateAttributes &&
-              props.editingCoordinate.coordinateAttributes.depthCa
+              props.editingCoordinateAttribute && props.editingCoordinateAttribute.depthCa
                 ? props.onChangeCheckBoxBoolean('depthCa')(false)
                 : props.onChangeCheckBoxBoolean('depthCa')(true);
             }}
@@ -228,8 +223,7 @@ const AltitudeDepthData = (props: CoordinateProps) => (
             props.onChangeCoordinateAttributes('note')(e.target.value);
           }}
           value={
-            props.editingCoordinate.coordinateAttributes &&
-            props.editingCoordinate.coordinateAttributes.note
+            props.editingCoordinateAttribute && props.editingCoordinateAttribute.note
             //props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateNote
           }
           id="note"

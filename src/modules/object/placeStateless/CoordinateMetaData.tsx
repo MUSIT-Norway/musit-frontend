@@ -21,8 +21,8 @@ const CoordinateMetaData = (props: CoordinateProps) => {
               props.onChangeCoordinateAttributes('coordinateSource')(e.target.value);
             }}
           >
-            value={props.editingCoordinate.coordinateAttributes &&
-              props.editingCoordinate.coordinateAttributes.coordinateSource
+            value={props.editingCoordinateAttribute &&
+              props.editingCoordinateAttribute.coordinateSource
             //props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateSource
             }
             {coordinateSources.map((type: string, i: number) => (
@@ -37,15 +37,15 @@ const CoordinateMetaData = (props: CoordinateProps) => {
               checked={
                 /*  props.getCurrentCoordinate(props.coordinateHistoryIndeks) &&
                 props.getCurrentCoordinate(props.coordinateHistoryIndeks).isAddedLater */
-                props.editingCoordinate.coordinateAttributes &&
-                props.editingCoordinate.coordinateAttributes.addedLater
+                props.editingCoordinateAttribute &&
+                props.editingCoordinateAttribute.addedLater
                   ? true
                   : false
               }
               displayValue="Added later"
               onChange={() => {
-                props.editingCoordinate.coordinateAttributes &&
-                props.editingCoordinate.coordinateAttributes.addedLater
+                props.editingCoordinateAttribute &&
+                props.editingCoordinateAttribute.addedLater
                   ? props.onChangeCheckBoxBoolean('addedLater')(false)
                   : props.onChangeCheckBoxBoolean('addedLater')(true);
               }}
@@ -87,8 +87,8 @@ const CoordinateMetaData = (props: CoordinateProps) => {
               props.onChangeCoordinateAttributes('precision')(e.target.value);
             }}
             value={
-              props.editingCoordinate.coordinateAttributes &&
-              props.editingCoordinate.coordinateAttributes.precision
+              props.editingCoordinateAttribute &&
+              props.editingCoordinateAttribute.precision
               //props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinatePrecision
             }
             id="precision"
@@ -109,8 +109,8 @@ const CoordinateMetaData = (props: CoordinateProps) => {
               props.onChangeCoordinateAttributes('gpsAccuracy')(e.target.value);
             }}
             value={
-              props.editingCoordinate.coordinateAttributes &&
-              props.editingCoordinate.coordinateAttributes.gpsAccuracy
+              props.editingCoordinateAttribute &&
+              props.editingCoordinateAttribute.gpsAccuracy
               //props.getCurrentCoordinate(props.coordinateHistoryIndeks).gpsAccuracy
             }
             id="accuracy"
