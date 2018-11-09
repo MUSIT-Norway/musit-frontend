@@ -42,10 +42,10 @@ export default {
       addPlaceUrl: '/api/place/places',
       searchAdmPlaceURL: (searchString: string) =>
         `/api/place/admPlaces?search=${searchString}`,
-      getDatumURL: 'api/place/coordinatedatums',
-      getCoordinateSourceURL: 'api/place/coordinatesources',
-      getCoordinateTypesURL: 'api/place/coordinatetypes',
-      getCoordinateGeometriesURL: 'api/place/coordinategeometries'
+      getDatumURL: '/api/place/coordinatedatums',
+      getCoordinateSourceURL: '/api/place/coordinatesources',
+      getCoordinateTypesURL: '/api/place/coordinatetypes',
+      getCoordinateGeometriesURL: '/api/place/coordinategeometries'
     },
     collectingEvent: {
       addEventUrl: '/api/event/events',
