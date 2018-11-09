@@ -70,9 +70,12 @@ export const loadDatum: (
 
 export const loadCoordinateTypes: (
   ajaxGet: AjaxGet<Star>
-) => (props: { token: string; callback?: Callback<Star> }) => Observable<Star> = (
-  ajaxGet = simpleGet
-) => ({ token, callback }) => {
+) => (
+  props: {
+    token: string;
+    callback?: Callback<Star>;
+  }
+) => Observable<Star> = (ajaxGet = simpleGet) => ({ token, callback }) => {
   const URL = Config.api.places.getCoordinateTypesURL;
   return ajaxGet(URL, token, callback).map(({ response }) => response);
 };

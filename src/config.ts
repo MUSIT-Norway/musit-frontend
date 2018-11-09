@@ -12,8 +12,10 @@ type AppSession = {
 };
 
 */
-const clientContextUrl = (appSession: AppSession) =>
-  `/museum/${appSession.museumId}/collections/${appSession.collectionId}`;
+const clientContextUrl = (appSession: AppSession) => {
+  console.log('Client context URL');
+  return `/museum/${appSession.museumId}/collections/${appSession.collectionId}`;
+};
 
 export default {
   isDev: process.env.NODE_ENV === 'development',
@@ -27,8 +29,8 @@ export default {
   },
   api: {
     persons: {
-      addUrl: '/api/person/persons',
       editUrl: (personUuid: string) => `/api/person/persons/${personUuid}`,
+      addUrl: '/api/person/persons',
       getUrl: (personUuid: string) => `/api/person/persons/${personUuid}`,
       searchUrl: (personName: string) => `/api/person/personNames?search=${personName}`,
       searchPersonBySynonymOrName: (personName: string) =>
