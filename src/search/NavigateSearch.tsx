@@ -104,6 +104,30 @@ const NavigateSearch = (props: Props) => (
         Person
       </button>
     )}
+
+    {props.appSession.rolesForModules.collectionManagementRead && (
+      <button
+        className="btn btn-default pull-right"
+        style={{
+          marginRight: '20px',
+          marginTop: '40px',
+          marginBottom: '-40px',
+          color: props.disableAnalysis ? 'Gray' : 'inherit'
+        }}
+        disabled={false}
+        onClick={e => {
+          e.preventDefault();
+          return (
+            !props.disableAnalysis &&
+            props.history(
+              Config.magasin.urls.client.collectingEvent.add(props.appSession)
+            )
+          );
+        }}
+      >
+        Collecting event
+      </button>
+    )}
   </div>
 );
 

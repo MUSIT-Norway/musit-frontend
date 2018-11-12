@@ -3,7 +3,6 @@ import queryParams from './shared/queryParams';
 import { AppSession } from './types/appSession';
 import { Maybe } from './types/common';
 import { MuseumId, CollectionId, NodeId, ObjectId } from './types/ids';
-
 /* Old:
 type AppSession = {
   museumId: number,
@@ -68,6 +67,7 @@ export default {
           goToConservationTypes: (appSession: AppSession) =>
             `${clientContextUrl(appSession)}/administration/conservationtypes`
         },
+        start: '/',
         homePage: '/home',
         aboutPage: '/about',
         person: {
@@ -83,6 +83,10 @@ export default {
             `${clientContextUrl(appSession)}/person/personname/add/${newName}`,
           addNewPersonNameBlank: (appSession: AppSession) =>
             `${clientContextUrl(appSession)}/person/personname/add/`
+        },
+        collectingEvent: {
+          add: (appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/collectingEvent/add`
         },
         conservation: {
           editConservation: (appSession: AppSession, conservationId: number) =>

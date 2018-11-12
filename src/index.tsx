@@ -53,7 +53,7 @@ notification$.subscribe(origEvent => {
 const accessToken = queryParser.parse(window.location.search)['_at'];
 if (accessToken) {
   localStorage.setItem('accessToken', JSON.stringify({ accessToken }));
-  window.location.href = Config.magasin.urls.client.aboutPage;
+  window.location.href = Config.magasin.urls.client.start;
 } else {
   const dest = document.getElementById('content');
 

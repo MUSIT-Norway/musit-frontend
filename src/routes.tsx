@@ -86,7 +86,7 @@ const MusitRouter = () => (
 const AppPage = (props: any) => (
   <AppComponent {...props} goTo={props.history.push}>
     <Switch>
-      <Route exact path={rt(props, '/')} component={AboutPage} />
+      <Route exact path={rt(props, '/')} component={ObjectSearchContainer} />
       <Route exact path={rt(props, '/home')} component={HomePage} />
       <Route exact path={rt(props, '/about')} component={AboutPage} />
 
@@ -151,7 +151,7 @@ const PlacePage = (props: object) => (
 
 const CollectingEvent = (props: object) => (
   <Switch>
-    <Route path={rt(props, '/')} exact component={AddCollectingEventComponent} />
+    <Route path={rt(props, '/add')} exact component={AddCollectingEventComponent} />
   </Switch>
 );
 

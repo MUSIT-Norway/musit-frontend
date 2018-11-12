@@ -693,6 +693,9 @@ export class CollectingEventComponent extends React.Component<
 
     return (
       <div className="container-fluid">
+        <div className="page-header">
+          <h1>Collection event</h1>
+        </div>
         <form style={{ padding: '20px' }}>
           <div className="row form-group">
             <div className="col-md-8">
