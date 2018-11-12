@@ -1,9 +1,9 @@
 import {
-  InputEvent,
   addCollectingEvent,
-  CollectingEvent
+  CollectingEvent,
+  InputCollectingEvent
 } from '../../../models/object/collectingEvent';
-//import { /* place , addPlace, */ InputPlace } from '../../../models/object/place';
+import { addPlace, InputPlace, inputPlace } from '../../../models/object/place';
 import { CollectingEventState, EventState } from './CollectingEventComponent';
 import { Callback, AjaxPost } from '../../../types/ajax';
 import { Star } from '../../../types/common';
@@ -16,11 +16,22 @@ import { createStore } from 'react-rxjs';
 
 export type CollectingEventStoreState = {
   localState?: CollectingEventState;
-  collectingEvent?: InputEvent;
-  collectingEventList?: Array<InputEvent>;
+  collectingEvent?: InputCollectingEvent;
+  collectingEventList?: Array<InputCollectingEvent>;
+};
+
+export type PredefinedCollectingEventValues = {
+  datums: { datum: string }[] | null;
+  coordinateTypes: { type_text: string }[] | null;
+  coordinateSources: { source: string }[] | null;
+  geometryTypes: { geometry: string }[] | null;
+  collectingMethods: { methodId: number; method: string }[] | null;
 };
 export const initialCollectingEventState = {
-  collectingEventList: []
+  collectingEvent: {
+    eventType: 6,
+    name: ''
+  }
 };
 
 export type CommonParams = {
@@ -31,7 +42,7 @@ export type CommonParams = {
 
 export type AddCollectingEventProps = CommonParams & { data: EventState };
 
-export const toBackend: ((p: EventState) => InputEvent) = (p: EventState) => {
+export const toBackend: ((p: EventState) => InputCollectingEvent) = (p: EventState) => {
   const c = new CollectingEvent(
     p.name,
     p.eventUuid,
@@ -49,7 +60,7 @@ export const toBackend: ((p: EventState) => InputEvent) = (p: EventState) => {
     p.eventDateFrom,
     p.eventDateTo,
     p.eventDateVerbatim,
-    p.placeUuid
+    p.placeState.placeUuid
   );
   console.log('to backend ', c);
   return c;
@@ -58,13 +69,24 @@ export const toBackend: ((p: EventState) => InputEvent) = (p: EventState) => {
 const addCollectingEventData = (ajaxPost: AjaxPost<Star>) => (
   props: AddCollectingEventProps
 ) => {
-  console.log('Inside addCollectingEventData ');
+  const ip: InputPlace = new inputPlace(
+    undefined,
+    props.data.placeState.admPlace
+      ? props.data.placeState.admPlace.admPlaceUuid
+      : undefined,
+    props.data.placeState.editingInputCoordinate
+  );
   return Observable.of(props).flatMap(props =>
-    addCollectingEvent(ajaxPost)({
-      data: toBackend(props.data),
+    addPlace(ajaxPost)({
+      data: ip,
       token: props.token,
       callback: props.callback
-    })
+    }).flatMap(({ placeUuid }) =>
+      addCollectingEvent(ajaxPost)({
+        data: { ...toBackend(props.data), placeUuid: placeUuid },
+        token: props.token
+      })
+    )
   );
 };
 
@@ -84,10 +106,14 @@ export const reducer$ = (
     actions.addCollectingEvent$
       .switchMap(addCollectingEventData(ajaxPost))
       .do(res => console.log('HTTP response:', res))
-      .map((collectingEvent: InputEvent) => (state: CollectingEventStoreState) => ({
-        ...state,
-        eventState: collectingEvent
-      }))
+      .map(
+        (collectingEvent: InputCollectingEvent) => (
+          state: CollectingEventStoreState
+        ) => ({
+          ...state,
+          eventState: collectingEvent
+        })
+      )
   );
 };
 

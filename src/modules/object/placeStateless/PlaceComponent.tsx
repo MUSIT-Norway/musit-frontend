@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { InputCoordinate, InputCoordinateAttribute } from '../../../models/object/place';
 import CoordinateComponent from './CoordinateComponent';
 import CoordinateHeader from './CoordinateHeader';
 import AdmPlaceComponent from './AdmPlaceComponent';
@@ -66,6 +67,12 @@ export type CoordinateHistory = Array<CoordinateHistoryItem>;
 export type CoordinateProps = {
   //coordinateHistory: CoordinateHistory;
   editingInputCoordinate?: InputCoordinate;
+  coordinatePredefined: {
+    coordinateSourceTypes: { source: string }[] | null;
+    coordinatDatumTypes: { datum: string }[] | null;
+    coordinateGeometryTypes: { geometry: string }[] | null;
+    coordinateTypes: { type_text: string }[] | null;
+  };
   editingCoordinateAttribute?: InputCoordinateAttribute;
   editingAttributes?: MarinePlaceAttribute;
   editCoordinateMode: boolean;
@@ -173,37 +180,6 @@ export type AdmPlace = {
   name: string;
   type: string;
   path: string;
-};
-export type InputCoordinate = {
-  coordinateUuid?: CoordinateUuid;
-  coordinateType?: string;
-  datum?: string;
-  zone?: string;
-  bend?: string;
-  coordinateString?: string;
-  coordinateGeometry?: string;
-};
-
-export type InputCoordinateAttribute = {
-  coordAttrUuid?: CoordinateAttrUuid;
-  coordinateSource?: string;
-  gpsAccuracy?: number;
-  addedLater?: boolean;
-  coordinateCa?: boolean;
-  precision?: number;
-  altitudeString?: string;
-  altitudeCa?: boolean;
-  altitudeFrom?: number;
-  altitudeTo?: number;
-  altitudeUnit?: string;
-  derivedAltitudeMeter?: number;
-  depthString?: string;
-  depthCa?: boolean;
-  depthFrom?: number;
-  depthTo?: number;
-  depthUnit?: string;
-  derivedDepthMeter?: number;
-  note?: string;
 };
 
 export type MarinePlaceAttribute = {

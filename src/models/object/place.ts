@@ -24,7 +24,7 @@ export interface OutPlace extends InputPlace {
   admPlace: AdmPlace;
 }
 
-export class place implements InputPlace {
+export class inputPlace implements InputPlace {
   placeUuid?: PlaceUuid;
   admPlaceUuid?: AdmPlaceUuid;
   coordinate?: InputCoordinate;
@@ -129,11 +129,11 @@ export interface DbAdmPlace {
 
 export interface InputCoordinate {
   coordinateUuid?: CoordinateUuid;
-  coordinateType: string;
+  coordinateType?: string;
   datum?: string;
   zone?: string;
   bend?: string;
-  coordinateString: string;
+  coordinateString?: string;
   coordinateGeometry?: string;
 }
 
@@ -141,8 +141,8 @@ export interface InputCoordinateAttribute {
   coordAttrUuid?: CoordinateAttrUuid;
   coordinateSource?: string;
   gpsAccuracy?: number;
-  addedLater: boolean;
-  coordinateCa: boolean;
+  addedLater?: boolean;
+  coordinateCa?: boolean;
   precision?: number;
   altitudeString?: string;
   altitudeCa?: boolean;

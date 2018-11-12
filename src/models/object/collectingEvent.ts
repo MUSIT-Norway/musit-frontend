@@ -42,7 +42,7 @@ export type PersonAttribute = {
 };
 
 export interface InputEvent {
-  eventUuid: EventUuid;
+  eventUuid?: EventUuid;
   eventType: number;
   museumId?: number;
   collectionId?: number;
@@ -126,10 +126,14 @@ export const addCollectingEvent: (
 ) => (
   props: {
     token: string;
-    data: InputEvent;
+    data: InputCollectingEvent;
     callback?: Callback<Star>;
   }
-) => Observable<InputEvent> = (ajaxPost = simplePost) => ({ data, token, callback }) => {
+) => Observable<InputCollectingEvent> = (ajaxPost = simplePost) => ({
+  data,
+  token,
+  callback
+}) => {
   const URL = Config.api.collectingEvent.addEventUrl;
   return ajaxPost(URL, data, token, callback).map(({ response }) => response);
 };

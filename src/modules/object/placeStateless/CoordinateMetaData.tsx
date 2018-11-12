@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { CheckBox } from '../components/CheckBox';
 import { CoordinateProps } from '../placeStateless/PlaceComponent';
-import { coordinateSources } from './mockdata/data';
 
 const CoordinateMetaData = (props: CoordinateProps) => {
   return (
@@ -16,7 +15,11 @@ const CoordinateMetaData = (props: CoordinateProps) => {
           <select
             className="form-control"
             id="coordinateSource"
-            defaultValue={coordinateSources[0]}
+            defaultValue={
+              props.coordinatePredefined.coordinateSourceTypes
+                ? props.coordinatePredefined.coordinateSourceTypes[0].source
+                : 'hei'
+            }
             onChange={e => {
               props.onChangeCoordinateAttributes('coordinateSource')(e.target.value);
             }}
@@ -25,9 +28,15 @@ const CoordinateMetaData = (props: CoordinateProps) => {
               props.editingCoordinateAttribute.coordinateSource
             //props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateSource
             }
-            {coordinateSources.map((type: string, i: number) => (
-              <option key={`optionRow_${i}`}>{type}</option>
-            ))}
+            {props.coordinatePredefined.coordinateSourceTypes ? (
+              props.coordinatePredefined.coordinateSourceTypes.map(
+                ({ source }: { source: string }, i: number) => (
+                  <option key={`optionRow_${i}`}>{source}</option>
+                )
+              )
+            ) : (
+              <option key={`optionRow_${1}`}>{'No data'}</option>
+            )}
           </select>
         </div>
         <div className="col-md-2">

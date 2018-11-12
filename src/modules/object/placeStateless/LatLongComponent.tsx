@@ -1,7 +1,5 @@
 import * as React from 'react';
 import { CoordinateProps } from '../placeStateless/PlaceComponent';
-import { coordinateTypes, geometryTypes, datumValues } from './mockdata/data';
-
 const LatLongComponent = (props: CoordinateProps) => {
   return (
     <div>
@@ -23,9 +21,15 @@ const LatLongComponent = (props: CoordinateProps) => {
               props.onChangeCoordinateText('datum')(e.target.value);
             }}
           >
-            {datumValues.map((type: string, i: number) => (
-              <option key={`optionRow_${i}`}>{type}</option>
-            ))}
+            {props.coordinatePredefined.coordinatDatumTypes ? (
+              props.coordinatePredefined.coordinatDatumTypes.map(
+                ({ datum }: { datum: string }, i: number) => (
+                  <option key={`optionRow_${i}`}>{datum}</option>
+                )
+              )
+            ) : (
+              <option key={`optionRow_${1}`}>{'No data'}</option>
+            )}
           </select>
         </div>
       </div>
@@ -35,7 +39,7 @@ const LatLongComponent = (props: CoordinateProps) => {
           <label htmlFor="coordinateType">Coordinate type </label>
         </div>
         {props.editingInputCoordinate &&
-          props.editingInputCoordinate.coordinateType === 'Lat / Long' && (
+          props.editingInputCoordinate.coordinateType === 'LAT/LONG' && (
             <div className="col-md-4">
               <label htmlFor="coordinateGeomertry">Coordinate geometry </label>
             </div>
@@ -54,13 +58,19 @@ const LatLongComponent = (props: CoordinateProps) => {
               props.onChangeCoordinateText('coordinateType')(e.target.value);
             }}
           >
-            {coordinateTypes.map((type: string, i: number) => (
-              <option key={`optionRow_${i}`}>{type}</option>
-            ))}
+            {props.coordinatePredefined.coordinateTypes ? (
+              props.coordinatePredefined.coordinateTypes.map(
+                ({ type_text }: { type_text: string }, i: number) => (
+                  <option key={`optionRow_${i}`}>{type_text}</option>
+                )
+              )
+            ) : (
+              <option key={`optionRow_${1}`}>{'No data'}</option>
+            )}
           </select>
         </div>
         {props.editingInputCoordinate &&
-          props.editingInputCoordinate.coordinateType === 'Lat / Long' && (
+          props.editingInputCoordinate.coordinateType === 'LAT/LONG' && (
             <div className="col-md-3">
               <select
                 className="form-control"
@@ -73,9 +83,15 @@ const LatLongComponent = (props: CoordinateProps) => {
                   props.editingInputCoordinate.coordinateGeometry
                 // props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateGeomertry
                 }
-                {geometryTypes.map((type: string, i: number) => (
-                  <option key={`optionRow_${i}`}>{type}</option>
-                ))}
+                {props.coordinatePredefined.coordinateGeometryTypes ? (
+                  props.coordinatePredefined.coordinateGeometryTypes.map(
+                    ({ geometry }: { geometry: string }, i: number) => (
+                      <option key={`optionRow_${i}`}>{geometry}</option>
+                    )
+                  )
+                ) : (
+                  <option key={`optionRow_${1}`}>{'No data'}</option>
+                )}
               </select>
             </div>
           )}

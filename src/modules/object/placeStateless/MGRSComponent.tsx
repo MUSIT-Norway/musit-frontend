@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { CoordinateProps } from '../placeStateless/PlaceComponent';
-import { coordinateTypes, datumValues } from './mockdata/data';
 
 const MGRSComponent = (props: CoordinateProps) => {
   return (
@@ -23,9 +22,15 @@ const MGRSComponent = (props: CoordinateProps) => {
               props.onChangeCoordinateText('datum')(e.target.value);
             }}
           >
-            {datumValues.map((type: string, i: number) => (
-              <option key={`optionRow_${i}`}>{type}</option>
-            ))}
+            {props.coordinatePredefined.coordinatDatumTypes ? (
+              props.coordinatePredefined.coordinatDatumTypes.map(
+                ({ datum }: { datum: string }, i: number) => (
+                  <option key={`optionRow_${i}`}>{datum}</option>
+                )
+              )
+            ) : (
+              <option key={`optionRow_${1}`}>{'No datum'}</option>
+            )}
           </select>
         </div>
       </div>
@@ -53,9 +58,17 @@ const MGRSComponent = (props: CoordinateProps) => {
               props.onChangeCoordinateText('coordinateType')(e.target.value);
             }}
           >
-            {coordinateTypes.map((type: string, i: number) => (
-              <option key={`optionRow_${i}`}>{type}</option>
-            ))}
+            {props.coordinatePredefined.coordinateTypes ? (
+              props.coordinatePredefined.coordinateTypes.map(
+                ({ type_text }: { type_text: string }, i: number) => (
+                  <option key={`optionRow_${i}`} value={type_text}>
+                    {type_text}
+                  </option>
+                )
+              )
+            ) : (
+              <option key={`optionRow_${1}`}>{'No data'}</option>
+            )}
           </select>
         </div>
         <div className="col-md-2">
