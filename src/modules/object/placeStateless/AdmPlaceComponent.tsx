@@ -9,6 +9,7 @@ const AdmPlaceComponent = (
   props: PlaceState & {
     onChange: (value: AdmPlace) => void;
     onChangeOthers: (field: string) => (value: string) => void;
+    getAdmPlaceData: (field: string) => (a: AdmPlace) => string;
     appSession: AppSession;
     history: History;
   }
@@ -61,6 +62,66 @@ const AdmPlaceComponent = (
           ))}
         </select>
       </div> */}
+      </div>
+      <div className="row form-group">
+        <div className="col-md-2">
+          <label htmlFor="placeDataDisplay">
+            {props.admPlace && props.admPlace.type === 'Sub region'
+              ? 'Sub Region'
+              : 'Kommune '}{' '}
+          </label>
+        </div>
+        <div className="col-md-2">
+          <label htmlFor="placeDataDisplay">
+            {props.admPlace && props.admPlace.type === 'Sub region' ? 'Region' : 'Fylke '}{' '}
+          </label>
+        </div>
+        <div className="col-md-2">
+          <label htmlFor="placeDataDisplay">
+            {props.admPlace && props.admPlace.type === 'Sub region' ? 'Country' : 'Land '}{' '}
+          </label>
+        </div>
+      </div>
+      <div className="row form-group">
+        <div className="col-md-2">
+          <input
+            type="text"
+            className="form-control"
+            disabled={true}
+            id={'txtInputStation'}
+            value={props.getAdmPlaceData('Kommune')(
+              props.admPlace
+                ? props.admPlace
+                : { admPlaceUuid: '', type: '', path: '', name: '' }
+            )}
+          />
+        </div>
+        <div className="col-md-2">
+          <input
+            type="text"
+            className="form-control"
+            disabled={true}
+            id={'txtInputStation'}
+            value={props.getAdmPlaceData('Fylke')(
+              props.admPlace
+                ? props.admPlace
+                : { admPlaceUuid: '', type: '', path: '', name: '' }
+            )}
+          />
+        </div>
+        <div className="col-md-2">
+          <input
+            type="text"
+            className="form-control"
+            disabled={true}
+            id={'txtInputStation'}
+            value={props.getAdmPlaceData('Land')(
+              props.admPlace
+                ? props.admPlace
+                : { admPlaceUuid: '', type: '', path: '', name: '' }
+            )}
+          />
+        </div>
       </div>
       <div className="row form-group">
         <div className="col-md-2">
