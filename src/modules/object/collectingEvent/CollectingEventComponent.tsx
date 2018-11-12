@@ -407,8 +407,10 @@ export class CollectingEventComponent extends React.Component<
               let newCoordinateInvalid: boolean = false;
 
               if (fieldName === 'coordinateString') {
-                newCoordinateInvalid = !musitCoodinateValidate(cs.eventState.placeState.editingInputCoordinate && 
-                  cs.eventState.placeState.editingInputCoordinate.coordinateType)(value);
+                newCoordinateInvalid = !musitCoodinateValidate(
+                  cs.eventState.placeState.editingInputCoordinate &&
+                    cs.eventState.placeState.editingInputCoordinate.coordinateType
+                )(value);
               }
               const ps = cs.eventState.placeState;
               const bend =

@@ -8,7 +8,7 @@ const CoordinateHeader = (props: CoordinateProps) => {
   switch (props.editingInputCoordinate && props.editingInputCoordinate.coordinateType) {
     //props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateType
     case 'UTM': {
-      return <UTMCoordinateComponent {...props}/>;
+      return <UTMCoordinateComponent {...props} />;
     }
     case 'MGRS': {
       return <MGRSComponent {...props} />;

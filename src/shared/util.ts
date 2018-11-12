@@ -255,11 +255,12 @@ export const styleWidth10 = styleWidth(10);
 
 export const musitCoodinateValidate = (coordinateType?: string) => (value: string) => {
   if (coordinateType === 'MGRS') {
-    const coorRegex = new RegExp(
+    const coorRegexMGRS1 = new RegExp(
       /^[A-Z]{2}(-[A-Z]{2})?\s((\d{1}(-\d{1})?,\d{1}(-\d{1})?)|(\d{2}(-\d{2})?,\d{2}(-\d{2})?)|(\d{3}(-\d{3})?,\d{3}(-\d{3})?)|(\d{4}(-\d{4})?,\d{4}(-\d{4})?)||(\d{5}(-\d{5})?,\d{5}(-\d{5})?))$/,
       'i'
-    );
-    if (coorRegex.test(value)) {
+    ); // LL-LK 234-345, 234-456
+    const coorRegexMGRS2 = new RegExp(/^[A-Z]{2}(\d{2}|\d{4}|\d{6}|\d{8}|\d{10})$/, 'i'); //LL2345656789
+    if (coorRegexMGRS1.test(value) || coorRegexMGRS2.test(value)) {
       return true;
     } else {
       return false;
