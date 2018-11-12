@@ -263,11 +263,27 @@ export class CollectingEventComponent extends React.Component<
             console.log(t);
             this.setState((s: CollectingEventState) => ({
               ...s,
-              placeState: {
-                ...s.eventState.placeState,
-                admPlace: t
+              eventState: {
+                ...s.eventState,
+                placeState: {
+                  ...s.eventState.placeState,
+                  admPlace: t
+                }
               }
             }));
+          }}
+          getAdmPlaceData={(field: string) => (a: AdmPlace) => {
+            let arrayPlaces = a.path.split(':');
+            let PlaceString: string = '';
+
+            if (field === 'Kommune') {
+              PlaceString = arrayPlaces[5];
+            } else if (field === 'Fylke') {
+              PlaceString = arrayPlaces[4];
+            } else if (field === 'Land') {
+              PlaceString = arrayPlaces[3];
+            }
+            return PlaceString;
           }}
           // Cordinate Props
 

@@ -197,6 +197,7 @@ const PlaceComponent = (
   props: PlaceState & {
     onChangeAdmPlace: (value: AdmPlace) => void;
     onChangeOthers: (field: string) => (value: string) => void;
+    getAdmPlaceData: (field: string) => (a: AdmPlace) => string;
     appSession: AppSession;
     history: History;
   } & CoordinateProps
@@ -208,6 +209,7 @@ const PlaceComponent = (
           {...props}
           onChangeOthers={props.onChangeOthers}
           onChange={props.onChangeAdmPlace}
+          getAdmPlaceData={props.getAdmPlaceData}
         />
         <CoordinateHeader {...props} />
         <CoordinateComponent {...props} />
