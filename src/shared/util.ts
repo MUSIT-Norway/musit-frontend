@@ -253,8 +253,8 @@ export const getCultureOrNatureUnit = (appSession?: AppSession) => {
 export const styleWidth = (pixels: number) => ({ width: pixels });
 export const styleWidth10 = styleWidth(10);
 
-export const musitCoodinateValidate = (fieldName: string) => (value: string) => {
-  if (fieldName === 'coordinateString') {
+export const musitCoodinateValidate = (coordinateType?: string) => (value: string) => {
+  if (coordinateType === 'MGRS') {
     const coorRegex = new RegExp(
       /^[A-Z]{2}(-[A-Z]{2})?\s((\d{1}(-\d{1})?,\d{1}(-\d{1})?)|(\d{2}(-\d{2})?,\d{2}(-\d{2})?)|(\d{3}(-\d{3})?,\d{3}(-\d{3})?)|(\d{4}(-\d{4})?,\d{4}(-\d{4})?)||(\d{5}(-\d{5})?,\d{5}(-\d{5})?))$/,
       'i'
