@@ -12,7 +12,8 @@ import PlaceComponent, {
 } from '../placeStateless/PlaceComponent';
 import {
   CollectingEventStoreState,
-  PredefinedCollectingEventValues
+  PredefinedCollectingEventValues,
+  CollectingEventMethod
 } from './CollectingEventStore';
 import { AppSession } from '../../../types/appSession';
 import { History } from 'history';
@@ -29,6 +30,7 @@ export type EventMetadataProps = EventState & {
   onClearDeathDate: Function;
   onChangeDeathDate: Function;
   onChangeVerbatimDate: (newDate: string) => void;
+  collectingEventMethods: CollectingEventMethod[];
 };
 
 export type Person = {
@@ -647,6 +649,9 @@ export class CollectingEventComponent extends React.Component<
       <div>
         <EventMetadata
           {...this.state.eventState}
+          collectingEventMethods={
+            this.props.predefinedCollectingEventValues.collectingMethods || []
+          }
           onChangeEventMetaData={(fieldName: string) => (value: string) => {
             this.setState((cs: CollectingEventState) => {
               return {
