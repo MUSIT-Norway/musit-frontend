@@ -4,7 +4,7 @@ import DatePicker from '../../../components/DatePicker';
 
 const EventMetadata = (props: EventMetadataProps) => {
   return (
-    <div className="row well">
+    <div>
       <div className="row form-group">
         <div className="col-md-2">
           <label htmlFor="projectName">Project Name </label>

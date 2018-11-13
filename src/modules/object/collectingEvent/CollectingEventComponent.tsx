@@ -634,16 +634,8 @@ export class CollectingEventComponent extends React.Component<
         />
       </div>
     );
-    const HeaderRead = () => (
-      <div>
-        <h3>Place</h3>
-      </div>
-    );
-    const HeaderEventMetadata = () => (
-      <div>
-        <h3>Name and Date</h3>
-      </div>
-    );
+    const HeaderRead = () => <h3>Place</h3>;
+    const HeaderEventMetadata = () => <h3>Name and Date</h3>;
 
     const EventMetadataComponent = (
       <div>

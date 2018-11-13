@@ -191,7 +191,6 @@ export type MarinePlaceAttribute = {
   ship?: string;
   eis?: string;
 };
-////////////////////////////////////////////////
 
 const PlaceComponent = (
   props: PlaceState & {
@@ -203,8 +202,8 @@ const PlaceComponent = (
   } & CoordinateProps
 ) => {
   return (
-    <div className="panel-group">
-      <div className="row well form-group">
+    <div className="container panel-group">
+      <div className="row form-group">
         <AdmPlaceComponent
           {...props}
           onChangeOthers={props.onChangeOthers}
