@@ -22,13 +22,17 @@ export type CollectingEventStoreState = {
   collectingEvent?: InputCollectingEvent;
   collectingEventList?: Array<InputCollectingEvent>;
 };
+export type CollectingEventMethod = {
+  methodId: number;
+  method: string;
+};
 
 export type PredefinedCollectingEventValues = {
   datums: { datum: string }[] | null;
   coordinateTypes: { type_text: string }[] | null;
   coordinateSources: { source: string }[] | null;
   geometryTypes: { geometry: string }[] | null;
-  collectingMethods: { methodId: number; method: string }[] | null;
+  collectingMethods: CollectingEventMethod[] | null;
 };
 export const initialCollectingEventState = {
   collectingEvent: {

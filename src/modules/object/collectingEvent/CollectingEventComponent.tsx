@@ -12,7 +12,8 @@ import PlaceComponent, {
 } from '../placeStateless/PlaceComponent';
 import {
   CollectingEventStoreState,
-  PredefinedCollectingEventValues
+  PredefinedCollectingEventValues,
+  CollectingEventMethod
 } from './CollectingEventStore';
 import { AppSession } from '../../../types/appSession';
 import { History } from 'history';
@@ -30,6 +31,7 @@ export type EventMetadataProps = EventState & {
   onClearDeathDate: Function;
   onChangeDeathDate: Function;
   onChangeVerbatimDate: (newDate: string) => void;
+  collectingEventMethods: CollectingEventMethod[];
 };
 
 export type Person = {
@@ -348,7 +350,7 @@ export class CollectingEventComponent extends React.Component<
             } else if (field === 'Land') {
               PlaceString = arrayPlaces[3];
             }
-            return PlaceString;
+            return PlaceString || '';
           }}
           // Cordinate Props
 
@@ -694,21 +696,16 @@ export class CollectingEventComponent extends React.Component<
         />
       </div>
     );
-    const HeaderRead = () => (
-      <div>
-        <h3>Place</h3>
-      </div>
-    );
-    const HeaderEventMetadata = () => (
-      <div>
-        <h3>Name and Date</h3>
-      </div>
-    );
+    const HeaderRead = () => <h3>Place</h3>;
+    const HeaderEventMetadata = () => <h3>Name and Date</h3>;
 
     const EventMetadataComponent = (
       <div>
         <EventMetadata
           {...this.state.eventState}
+          collectingEventMethods={
+            this.props.predefinedCollectingEventValues.collectingMethods || []
+          }
           onChangeEventMetaData={(fieldName: string) => (value: string) => {
             this.setState((cs: CollectingEventState) => {
               return {
@@ -771,10 +768,13 @@ export class CollectingEventComponent extends React.Component<
 
     return (
       <div className="container-fluid">
-        <div className="page-header">
+        <div
+          className="page-header"
+          style={{ backgroundColor: '#e6e6e6', padding: '20px' }}
+        >
           <h1>Collection event</h1>
         </div>
-        <form style={{ padding: '20px' }}>
+        <form style={{ padding: '20px', backgroundColor: '#f2f2f2S' }}>
           <div className="row form-group">
             <div className="col-md-8">
               <div className="row">

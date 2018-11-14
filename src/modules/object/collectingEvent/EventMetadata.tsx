@@ -4,7 +4,7 @@ import DatePicker from '../../../components/DatePicker';
 
 const EventMetadata = (props: EventMetadataProps) => {
   return (
-    <div className="row well">
+    <div>
       <div className="row form-group">
         <div className="col-md-2">
           <label htmlFor="projectName">Project Name </label>
@@ -66,16 +66,33 @@ const EventMetadata = (props: EventMetadataProps) => {
         </div>
       </div>
       <div className="row form-group">
-        <div className="col-md-2">
+        <div className="col-md-3">
           <select
             className="form-control"
-            id="selectMetode"
-            value={''}
+            id="coordinateSource"
+            defaultValue=""
             onChange={e => {
-              e.preventDefault();
-              //props.onChangeProjectName(e.target.value);
+              props.onChangeEventMetaData('methodId')(e.target.value);
             }}
-          />
+          >
+            <option value={undefined} selected>
+              {'Select value'}
+            </option>
+            {props.collectingEventMethods ? (
+              props.collectingEventMethods.map(
+                (
+                  { methodId, method }: { methodId: number; method: string },
+                  i: number
+                ) => (
+                  <option key={`optionRow_${i}`} value={methodId}>
+                    {method}
+                  </option>
+                )
+              )
+            ) : (
+              <option key={`optionRow_${1}`}>{'No data'}</option>
+            )}
+          </select>
         </div>
       </div>
       <div className="row form-group">
@@ -84,9 +101,9 @@ const EventMetadata = (props: EventMetadataProps) => {
         </div>
       </div>
       <div className="row form-group">
-        <div className="col-md-8">
+        <div className="col-md-6">
           <textarea
-            rows={6}
+            rows={4}
             className="form-control"
             id="locality"
             value={props.note}

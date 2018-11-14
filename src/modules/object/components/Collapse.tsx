@@ -20,37 +20,30 @@ export default class CollapseComponent<H, B> extends React.Component<
   render() {
     const { Head, Body } = this.props;
     return (
-      <div>
+      <div className="container" style={{ borderStyle: 'solid', borderWidth: 'thin' }}>
         <div>
-          <div className="row well">
-            <div className="col-md-10" style={{ textAlign: 'left' }}>
-              {Head}
-            </div>
-            <div className="col-md-2 " style={{ textAlign: 'right', height: '50px' }}>
-              <button
-                data-toggle="tooltip"
-                title={this.state.collapsed ? 'Click to Expand' : 'Click to Hide'}
-                onClick={e => {
-                  e.preventDefault();
-                  this.setState((ps: CollapseState) => ({
-                    ...ps,
-                    collapsed: !this.state.collapsed
-                  }));
-                }}
-                className="btn btn-default"
-              >
-                <FontAwesome
-                  name={this.state.collapsed ? 'chevron-down' : 'chevron-up'}
-                  style={{ color: 'black', float: 'right' }}
-                />
-              </button>
-            </div>
-          </div>
+          {Head}
+          <button
+            data-toggle="tooltip"
+            style={{ float: 'right' }}
+            title={this.state.collapsed ? 'Click to Expand' : 'Click to Hide'}
+            onClick={e => {
+              e.preventDefault();
+              this.setState((ps: CollapseState) => ({
+                ...ps,
+                collapsed: !this.state.collapsed
+              }));
+            }}
+            className="btn btn-link"
+          >
+            <FontAwesome
+              className="fa-2x"
+              name={this.state.collapsed ? 'chevron-down' : 'chevron-up'}
+              style={{ color: 'black', float: 'right' }}
+            />
+          </button>
         </div>
-        <div className={`collapse${this.state.collapsed ? '' : ' in'} `}>
-          <br />
-          {Body}
-        </div>
+        <div className={`collapse${this.state.collapsed ? '' : ' in'}`}>{Body}</div>
       </div>
     );
   }
