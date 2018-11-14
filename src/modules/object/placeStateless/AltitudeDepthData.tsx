@@ -215,9 +215,9 @@ const AltitudeDepthData = (props: CoordinateProps) => (
       </div>
     </div>
     <div className="row">
-      <div className="col-md-8">
+      <div className="col-md-6">
         <textarea
-          rows={6}
+          rows={4}
           className="form-control"
           onChange={e => {
             props.onChangeCoordinateAttributes('note')(e.target.value);

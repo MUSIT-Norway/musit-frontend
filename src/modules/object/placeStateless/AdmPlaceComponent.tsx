@@ -130,9 +130,9 @@ const AdmPlaceComponent = (
       </div>
       {console.log('############', props.editingInputCoordinate)}
       <div className="row form-group">
-        <div className="col-md-8">
+        <div className="col-md-6">
           <textarea
-            rows={6}
+            rows={4}
             className="form-control"
             id="locality"
             value={(props.editingAttributes && props.editingAttributes.locality) || ''}
@@ -148,9 +148,9 @@ const AdmPlaceComponent = (
         </div>
       </div>
       <div className="row form-group">
-        <div className="col-md-8">
+        <div className="col-md-6">
           <textarea
-            rows={6}
+            rows={4}
             className="form-control"
             id="ecology"
             value={props.editingAttributes && props.editingAttributes.ecology}

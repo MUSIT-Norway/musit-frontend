@@ -101,9 +101,9 @@ const EventMetadata = (props: EventMetadataProps) => {
         </div>
       </div>
       <div className="row form-group">
-        <div className="col-md-8">
+        <div className="col-md-6">
           <textarea
-            rows={6}
+            rows={4}
             className="form-control"
             id="locality"
             value={props.note}
