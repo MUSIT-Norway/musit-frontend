@@ -285,7 +285,7 @@ export class CollectingEventComponent extends React.Component<
             } else if (field === 'Land') {
               PlaceString = arrayPlaces[3];
             }
-            return PlaceString;
+            return PlaceString || '';
           }}
           // Cordinate Props
 
@@ -706,10 +706,13 @@ export class CollectingEventComponent extends React.Component<
 
     return (
       <div className="container-fluid">
-        <div className="page-header">
+        <div
+          className="page-header"
+          style={{ backgroundColor: '#e6e6e6', padding: '20px' }}
+        >
           <h1>Collection event</h1>
         </div>
-        <form style={{ padding: '20px' }}>
+        <form style={{ padding: '20px', backgroundColor: '#f2f2f2S' }}>
           <div className="row form-group">
             <div className="col-md-8">
               <div className="row">

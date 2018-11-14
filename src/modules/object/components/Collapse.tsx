@@ -20,8 +20,8 @@ export default class CollapseComponent<H, B> extends React.Component<
   render() {
     const { Head, Body } = this.props;
     return (
-      <div className="container">
-        <div className="row">
+      <div className="container" style={{ borderStyle: 'solid', borderWidth: 'thin' }}>
+        <div>
           {Head}
           <button
             data-toggle="tooltip"
@@ -43,7 +43,7 @@ export default class CollapseComponent<H, B> extends React.Component<
             />
           </button>
         </div>
-        <div className={`row collapse${this.state.collapsed ? '' : ' in'}`}>{Body}</div>
+        <div className={`collapse${this.state.collapsed ? '' : ' in'}`}>{Body}</div>
       </div>
     );
   }
