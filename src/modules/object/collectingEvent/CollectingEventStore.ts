@@ -1,18 +1,21 @@
 import {
+  getCollectingEvent,
   addCollectingEvent,
   CollectingEvent,
-  InputCollectingEvent
+  InputCollectingEvent,
+  OutputCollectingEvent
 } from '../../../models/object/collectingEvent';
 import { addPlace, InputPlace, inputPlace } from '../../../models/object/place';
 import { CollectingEventState, EventState } from './CollectingEventComponent';
-import { Callback, AjaxPost } from '../../../types/ajax';
+import { Callback, AjaxGet, AjaxPost } from '../../../types/ajax';
 import { Star } from '../../../types/common';
 import { Observable, Subject } from 'rxjs';
 import { createAction } from '../../../shared/react-rxjs-patch';
 import { Reducer } from 'react-rxjs';
-import { simplePost } from '../../../shared/RxAjax';
+import { simpleGet , simplePost } from '../../../shared/RxAjax';
 import { KEEP_ALIVE } from '../../../stores/constants';
 import { createStore } from 'react-rxjs';
+import { toFrontend } from '../collectingEvent/CollectingEventComponent';
 
 export type CollectingEventStoreState = {
   localState?: CollectingEventState;
@@ -40,6 +43,7 @@ export type CommonParams = {
   callback?: Callback<Star>;
 };
 
+export type GetCollectingEventProps = CommonParams & { id : string };
 export type AddCollectingEventProps = CommonParams & { data: EventState };
 
 export const toBackend: ((p: EventState) => InputCollectingEvent) = (p: EventState) => {
@@ -65,6 +69,15 @@ export const toBackend: ((p: EventState) => InputCollectingEvent) = (p: EventSta
   console.log('to backend ', c);
   return c;
 };
+
+const getCollectingEventData = (ajaxGet: AjaxGet<Star>) => (
+  props: GetCollectingEventProps) =>
+  Observable.of(props).flatMap(props =>
+    getCollectingEvent(ajaxGet)({ id: props.id, token: props.token, callback: props.callback })
+    .do((response) => console.log('&&&&&& Response getCollectingEventData ', response)
+    )
+  );
+
 
 const addCollectingEventData = (ajaxPost: AjaxPost<Star>) => (
   props: AddCollectingEventProps
@@ -94,15 +107,28 @@ export const addCollectingEvent$: Subject<
   AddCollectingEventProps & { ajaxPost: AjaxPost<Star> }
 > = createAction('addCollectingEvent$');
 
+export const getCollectingEvent$: Subject<
+  GetCollectingEventProps & { ajaxGet: AjaxGet<Star> }
+> = createAction('getCollectingEvent$');
+
 type Actions = {
+  getCollectingEvent$: Subject<GetCollectingEventProps>;
   addCollectingEvent$: Subject<AddCollectingEventProps>;
 };
 
 export const reducer$ = (
   actions: Actions,
+  ajaxGet: AjaxGet<Star>,
   ajaxPost: AjaxPost<Star>
 ): Observable<Reducer<CollectingEventStoreState>> => {
   return Observable.merge(
+    actions.getCollectingEvent$
+    .switchMap(getCollectingEventData(ajaxGet))
+    .map((outEvent: OutputCollectingEvent ) => (state: CollectingEventStoreState) => ({
+      ...state,
+      eventState: outEvent,
+      localState: toFrontend(outEvent)
+    })),
     actions.addCollectingEvent$
       .switchMap(addCollectingEventData(ajaxPost))
       .do(res => console.log('HTTP response:', res))
@@ -119,13 +145,15 @@ export const reducer$ = (
 
 export const store$ = (
   actions$: Actions = {
+    getCollectingEvent$,
     addCollectingEvent$
   },
+  ajaxGet: AjaxGet<Star> = simpleGet,
   ajaxPost: AjaxPost<Star> = simplePost
 ) => {
   return createStore(
     'collectingEventStore',
-    reducer$(actions$, ajaxPost),
+    reducer$(actions$, ajaxGet, ajaxPost),
     initialCollectingEventState,
     KEEP_ALIVE
   );

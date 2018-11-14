@@ -49,6 +49,7 @@ import SearchPerson from './modules/object/person/SearchPersonContainer';
 import Place from './modules/object/places/PlaceComponent';
 import ClassEventPage from './modules/object/taxon/TaxonContainer';
 import AddCollectingEventComponent from './modules/object/collectingEvent/AddCollectingEventContainer';
+import ViewCollectingEventComponent from './modules/object/collectingEvent/ViewCollectingEventContainer';
 
 /**
  *AddCollectingEventContainer
@@ -152,6 +153,7 @@ const PlacePage = (props: object) => (
 const CollectingEvent = (props: object) => (
   <Switch>
     <Route path={rt(props, '/add')} exact component={AddCollectingEventComponent} />
+    <Route path={rt(props, '/view/:id')} exact component={ViewCollectingEventComponent} />
   </Switch>
 );
 

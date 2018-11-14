@@ -16,6 +16,7 @@ import {
 } from './CollectingEventStore';
 import { AppSession } from '../../../types/appSession';
 import { History } from 'history';
+import { OutputCollectingEvent } from '../../../models/object/collectingEvent';
 
 export type CollectingEventProps = {
   onChangeTextField: (fieldName: string) => (value: string) => void;
@@ -75,7 +76,7 @@ export interface EventState {
   methodDescription?: string;
   note?: string;
   partOf?: EventUuid;
-  createdBy?: Person;
+  createdBy?: PersonUuid; // Person;
   createdDate?: string;
   relatedActors?: ActorsAndRelation[];
   eventDateFrom?: string;
@@ -94,7 +95,7 @@ export class EventState implements EventState {
   methodDescription?: string;
   note?: string;
   partOf?: EventUuid;
-  createdBy?: Person;
+  createdBy?: PersonUuid; // Person;
   createdDate?: string;
   relatedActors?: ActorsAndRelation[];
   eventDateFrom?: string;
@@ -113,7 +114,7 @@ export class EventState implements EventState {
     methodDescription?: string,
     note?: string,
     partOf?: EventUuid,
-    createdBy?: Person,
+    createdBy?: PersonUuid, //Person,
     createdDate?: string,
     relatedActors?: ActorsAndRelation[],
     eventDateFrom?: string,
@@ -154,10 +155,12 @@ export class CollectingEventState implements CollectingEventState {
 
 export type CollectingProps = {
   addCollectingEvent?: Function;
+  getCollectingEvent?: Function;
   store: CollectingEventStoreState;
   predefinedCollectingEventValues: PredefinedCollectingEventValues;
   appSession: AppSession;
   history: History;
+  readOnly: boolean;
 };
 
 export default (props: CollectingProps) => (
@@ -168,9 +171,71 @@ export default (props: CollectingProps) => (
     addCollectingEvent={
       props.addCollectingEvent && props.addCollectingEvent(props.appSession)
     }
+    getCollectingEvent={props.getCollectingEvent}
     history={props.history}
+    readOnly={props.readOnly}
   />
 );
+
+
+export const toFrontend: (p: OutputCollectingEvent) => CollectingEventState
+       = (p: OutputCollectingEvent) => {
+  const innP: OutputCollectingEvent = p;
+
+  console.log('TOFrontEnd: ', p);
+  if (innP) {
+    const r = new EventState(
+      innP.name,
+      innP.eventUuid,
+      innP.eventType,
+      innP.methodId ? innP.methodId : 0,
+      innP.museumId,
+      innP.collectionId,
+      innP.place ? innP.place : { admPlace: null, coordinateInvalid: false },
+      innP.method,
+      innP.methodDescription,
+      innP.note,
+      innP.partOf,
+      innP.createdBy,
+      innP.createdDate,
+      innP.relatedActors,
+      innP.eventDateFrom,      
+      innP.eventDateTo,
+      innP.eventDateVerbatim
+    );
+    console.log('TOFrontEnd: after format ', r);
+    return {eventState : r};
+  }
+  return {
+    eventState: {
+      name: '',
+      eventUuid: '',
+      eventType: 6,
+      methodId: 4,
+      museumId: 5,
+      collectionId: 10,
+
+      placeState: {
+        admPlace: null,
+        editingInputCoordinate: {
+          coordinateType: 'MGRS',
+          datum: 'WGS84',
+          coordinateString: '',
+          coordinateGeometry: 'point'
+        },
+        editingCoordinateAttribute: {
+          altitudeUnit: 'Meters',
+          depthUnit: 'Meters',
+          coordinateCa: false,
+          addedLater: false,
+          altitudeCa: false,
+          depthCa: false
+        },
+        coordinateInvalid: false
+      }
+    }
+  };
+};
 
 export class CollectingEventComponent extends React.Component<
   CollectingProps,
@@ -215,7 +280,7 @@ export class CollectingEventComponent extends React.Component<
 
   componentWillReceiveProps(props: CollectingProps) {
     console.log('Recieve props: ====>', props);
-    if (props.store.localState) {
+    if (props.store.localState) {     
       this.setState(() => ({ ...props.store.localState }));
     }
   }
@@ -231,12 +296,14 @@ export class CollectingEventComponent extends React.Component<
           {...this.state}
           appSession={this.props.appSession}
           coordinatePredefined={{
-            coordinatDatumTypes: this.props.predefinedCollectingEventValues.datums,
-            coordinateGeometryTypes: this.props.predefinedCollectingEventValues
-              .geometryTypes,
-            coordinateSourceTypes: this.props.predefinedCollectingEventValues
-              .coordinateSources,
-            coordinateTypes: this.props.predefinedCollectingEventValues.coordinateTypes
+            coordinatDatumTypes:this.props.predefinedCollectingEventValues &&
+                this.props.predefinedCollectingEventValues.datums,
+            coordinateGeometryTypes: this.props.predefinedCollectingEventValues &&
+                this.props.predefinedCollectingEventValues.geometryTypes,
+            coordinateSourceTypes: this.props.predefinedCollectingEventValues && 
+                this.props.predefinedCollectingEventValues.coordinateSources,
+            coordinateTypes: this.props.predefinedCollectingEventValues && 
+                this.props.predefinedCollectingEventValues.coordinateTypes
           }}
           history={this.props.history}
           onChangeOthers={(field: string) => (value: string) => {
@@ -249,7 +316,6 @@ export class CollectingEventComponent extends React.Component<
                 ...cs.eventState.placeState,
                 editingAttributes: newAttributes
               };
-              console.log('New place state: ', newPlaceState);
               return {
                 ...cs,
                 eventState: {
@@ -260,7 +326,6 @@ export class CollectingEventComponent extends React.Component<
             });
           }}
           onChangeAdmPlace={(t: AdmPlace) => {
-            console.log(t);
             this.setState((s: CollectingEventState) => ({
               ...s,
               eventState: {
@@ -347,7 +412,6 @@ export class CollectingEventComponent extends React.Component<
           }} */
           onChangeAltitudeString={(value: string) => {
             const A = value.match(/\d+/g);
-            console.log('A', A);
             const altFrom = A ? parseFloat(A[0]) : undefined;
             const altTo = A ? parseFloat(A[1]) : undefined;
             const altUnit = value.match(/^\d+(\s*\-\s*\d+)?\s*(ft|ft\.|f\.|feet|foot)$/i)
@@ -516,7 +580,6 @@ export class CollectingEventComponent extends React.Component<
           }}
           onChangeCheckBoxBoolean={(fieldName: string) => (value: boolean) => {
             this.setState((cs: CollectingEventState) => {
-              console.log('anuradha : onChangeCheckBoxBoolean ', fieldName, value);
               const newCoordinateAttributes: InputCoordinateAttribute = cs.eventState
                 .placeState.editingCoordinateAttribute
                 ? {
@@ -541,7 +604,6 @@ export class CollectingEventComponent extends React.Component<
           }}
           getCurrentCoordinate={(ind: number) => {
             const ret = this.state.eventState.placeState;
-            //console.log('anuradha getCurrentCoordinate : ', this.state.placeState.editingCoordinate);
             return ret;
           }}
           onClickSaveRevision={() => {

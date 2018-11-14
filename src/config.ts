@@ -48,7 +48,8 @@ export default {
     },
     collectingEvent: {
       addEventUrl: '/api/event/events',
-      getCollectingEventMethods: '/api/event/collectingmethods'
+      getCollectingEventMethods: '/api/event/collectingmethods',
+      getEvent: (eventUuid: string) => `event/events/${eventUuid}`
     }
   },
   magasin: {
@@ -85,6 +86,8 @@ export default {
             `${clientContextUrl(appSession)}/person/personname/add/`
         },
         collectingEvent: {
+          view: (appSession: AppSession, id: string) =>
+          `${clientContextUrl(appSession)}/collectingEvent/view/${id}`,
           add: (appSession: AppSession) =>
             `${clientContextUrl(appSession)}/collectingEvent/add`
         },

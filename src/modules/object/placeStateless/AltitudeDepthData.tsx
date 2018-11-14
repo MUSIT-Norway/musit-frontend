@@ -84,11 +84,6 @@ const AltitudeDepthData = (props: CoordinateProps) => (
       </div>
       <div className="col-md-2">
         <div className="checkbox" id="caAltitude">
-          {console.log(
-            'in checkbox ca altitude : ',
-            props.editingCoordinateAttribute &&
-              props.editingCoordinateAttribute.altitudeCa
-          )}
           <CheckBox
             id={'checkBoxCaAltitude'}
             checked={
