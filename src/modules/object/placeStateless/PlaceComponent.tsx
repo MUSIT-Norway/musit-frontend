@@ -3,7 +3,7 @@ import { InputCoordinate, InputCoordinateAttribute } from '../../../models/objec
 import CoordinateComponent from './CoordinateComponent';
 import CoordinateHeader from './CoordinateHeader';
 import AdmPlaceComponent from './AdmPlaceComponent';
-import { CheckBox } from '../components/CheckBox';
+//import { CheckBox } from '../components/CheckBox';
 import { AppSession } from 'src/types/appSession';
 import { History } from 'history';
 
@@ -91,7 +91,7 @@ export type CoordinateProps = {
   getCurrentCoordinate: (ind: number) => InputPlace;
   //getCurrentHistoryItem: (ind: number) => CoordinateHistoryItem;
   onChangeCheckBoxBoolean: (fieldName: string) => (value: boolean) => void;
-  onClickSaveRevision: () => void;
+  onClickSave: () => void;
   onChangeEditMode: (edit: boolean) => void;
   onToggleCollapse: () => void;
 };
@@ -217,22 +217,22 @@ const PlaceComponent = (
         <CoordinateComponent {...props} />
         <div className="row">
           <div className="col-md-10" style={{ textAlign: 'right' }}>
-            <CheckBox
+          {/*   <CheckBox
               id="CoordinateEditMode"
               checked={props.editCoordinateMode}
               displayValue="Edit mode?"
               onChange={() => props.onChangeEditMode(!props.editCoordinateMode)}
-            />
+            /> */}
           </div>
           <div className="col-md-2" style={{ textAlign: 'right' }}>
             <button
               className="btn btn-default"
               onClick={e => {
                 e.preventDefault();
-                props.onClickSaveRevision();
+                props.onClickSave();
               }}
             >
-              {props.editCoordinateMode ? 'Save' : 'Save revision'}
+              {props.readOnly ? 'Edit' : 'Save'}
             </button>
           </div>
         </div>
