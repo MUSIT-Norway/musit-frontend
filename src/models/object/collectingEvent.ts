@@ -8,6 +8,7 @@ import { simplePost, simpleGet } from '../../shared/RxAjax';
 import { Callback, AjaxPost, AjaxGet } from '../../types/ajax';
 import { Star } from '../../types/common';
 import Config from '../../config';
+import { OutPlace } from './place';
 
 export type Uuid = string;
 export type EventUuid = Uuid;
@@ -48,7 +49,7 @@ export interface InputEvent {
   collectionId?: number;
   note?: string;
   partOf?: EventUuid;
-  createdBy?: Person;
+  createdBy?: PersonUuid; //Person;
   createdDate?: string;
   relatedActors?: ActorsAndRelation[];
   eventDateFrom?: string;
@@ -58,6 +59,37 @@ export interface InputEvent {
 }
 
 export interface InputCollectingEvent extends InputEvent {
+  name: string;
+  methodId?: number;
+  method?: string;
+  methodDescription?: string;
+}
+
+export interface OutActorAndRelation {
+  actorUuid?: PersonUuid;
+  roleId: RoleId;
+  roleText: string;
+  name: string;
+  personNameUuid: PersonNameUuid;
+}
+
+export interface OutputEvent {
+  eventUuid: EventUuid;
+  eventType: number;
+  museumId: number;
+  collectionId: number;
+  note?: string;
+  partOf?: EventUuid;
+  createdBy: PersonUuid;
+  createdDate: string;
+  relatedActors?: ActorsAndRelation[];
+  eventDateFrom?: string;
+  eventDateTo?: string;
+  eventDateVerbatim?: string;
+  place?: OutPlace;
+}
+
+export interface OutputCollectingEvent extends OutputEvent {
   name: string;
   methodId?: number;
   method?: string;
@@ -75,7 +107,7 @@ export class CollectingEvent implements InputCollectingEvent {
   collectionId?: number;
   note?: string;
   partOf?: EventUuid;
-  createdBy?: Person;
+  createdBy?: PersonUuid; // Person;
   createdDate?: string;
   relatedActors?: ActorsAndRelation[];
   eventDateFrom?: string;
@@ -94,7 +126,7 @@ export class CollectingEvent implements InputCollectingEvent {
     collectionId?: number,
     note?: string,
     partOf?: EventUuid,
-    createdBy?: Person,
+    createdBy?: PersonUuid, //Person,
     createdDate?: string,
     relatedActors?: ActorsAndRelation[],
     eventDateFrom?: string,
@@ -121,6 +153,26 @@ export class CollectingEvent implements InputCollectingEvent {
     this.placeUuid = placeUuid;
   }
 }
+export const getCollectingEvent: (
+  ajaxGet: AjaxGet<Star>
+) => (
+  props: {
+    id: string;
+    token: string;
+    callback?: Callback<Star>;
+  }
+) => Observable<InputCollectingEvent> = (ajaxGet = simpleGet) => ({
+  id,
+  token,
+  callback
+}) => {
+  const URL = Config.api.collectingEvent.getEvent(id);
+  console.log('URL', URL);
+  return ajaxGet(URL, token, callback)
+    .map(({ response }) => response)
+    .do(response => console.log('RESPONSE ::::: ', response));
+};
+
 export const addCollectingEvent: (
   ajaxPost: AjaxPost<Star>
 ) => (

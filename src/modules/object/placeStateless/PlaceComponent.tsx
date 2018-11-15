@@ -80,6 +80,7 @@ export type CoordinateProps = {
   coordinateCollapsed: boolean;
   coordinateType: string;
   coordinateInvalid: boolean;
+  readOnly: boolean;
   onChangeAltitudeString: (value: string) => void;
   onChangeDepthString: (value: string) => void;
   onChangeCoordinateNumber: (fieldName: string) => (value: number) => void;
@@ -199,6 +200,7 @@ const PlaceComponent = (
     getAdmPlaceData: (field: string) => (a: AdmPlace) => string;
     appSession: AppSession;
     history: History;
+    readOnly?: boolean;
   } & CoordinateProps
 ) => {
   return (
@@ -209,6 +211,7 @@ const PlaceComponent = (
           onChangeOthers={props.onChangeOthers}
           onChange={props.onChangeAdmPlace}
           getAdmPlaceData={props.getAdmPlaceData}
+          readOnly={props.readOnly || false}
         />
         <CoordinateHeader {...props} />
         <CoordinateComponent {...props} />

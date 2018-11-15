@@ -7,6 +7,7 @@ type CollapseProps<H, B> = {
   Body: JSX.Element;
   headProps?: H;
   bodyProps?: B;
+  readOnly?: boolean;
 };
 
 export default class CollapseComponent<H, B> extends React.Component<
@@ -15,7 +16,7 @@ export default class CollapseComponent<H, B> extends React.Component<
 > {
   constructor(props: CollapseProps<H, B>) {
     super(props);
-    this.state = { collapsed: true };
+    this.state = { collapsed: props.readOnly ? false : true };
   }
   render() {
     const { Head, Body } = this.props;
