@@ -8,7 +8,7 @@ import { simplePost, simpleGet } from '../../shared/RxAjax';
 import { Callback, AjaxPost, AjaxGet } from '../../types/ajax';
 import { Star } from '../../types/common';
 import Config from '../../config';
-import { PlaceState } from '../../modules/object/placeStateless/PlaceComponent';
+import {OutPlace} from './place';
 
 export type Uuid = string;
 export type EventUuid = Uuid;
@@ -86,7 +86,7 @@ export interface OutputEvent {
   eventDateFrom?: string;
   eventDateTo?: string;
   eventDateVerbatim?: string;
-  place?: PlaceState;
+  place?: OutPlace;
 }
 
 export interface OutputCollectingEvent extends OutputEvent {
@@ -163,10 +163,10 @@ export const getCollectingEvent: (
     callback?: Callback<Star>;
   }
 ) => Observable<InputCollectingEvent> = (ajaxGet = simpleGet) => ({ id, token, callback }) => {
-  const URL = Config.api.collectingEvent.getEvent(id)
+  const URL = Config.api.collectingEvent.getEvent(id);
+  console.log('URL', URL);
   return ajaxGet(URL, token, callback)
-  .map(({ response }) => response)
-  .do((response)=> console.log ( '((((()))))))) ', token));
+  .map(({ response }) => response).do((response)=> console.log('RESPONSE ::::: ', response));
 };
 
 export const addCollectingEvent: (

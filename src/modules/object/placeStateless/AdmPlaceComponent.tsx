@@ -12,6 +12,7 @@ const AdmPlaceComponent = (
     getAdmPlaceData: (field: string) => (a: AdmPlace) => string;
     appSession: AppSession;
     history: History;
+    readOnly: boolean;
   }
 ) => {
   const admPlaceAsString = (a: AdmPlace) => {
@@ -33,7 +34,7 @@ const AdmPlaceComponent = (
         <div className="col-md-6">
           <AdmplaceSuggest
             id="personNameSuggest"
-            disabled={false}
+            disabled={props.readOnly}
             value={props.admPlace && props.admPlace.name ? props.admPlace.name || '' : ''}
             renderFunc={admPlaceAsString}
             placeHolder="Admplace"
@@ -87,8 +88,8 @@ const AdmPlaceComponent = (
           <input
             type="text"
             className="form-control"
-            disabled={true}
             id={'txtInputStation'}
+            disabled={props.readOnly}
             value={props.getAdmPlaceData('Kommune')(
               props.admPlace
                 ? props.admPlace
@@ -100,7 +101,7 @@ const AdmPlaceComponent = (
           <input
             type="text"
             className="form-control"
-            disabled={true}
+            disabled={props.readOnly}
             id={'txtInputStation'}
             value={props.getAdmPlaceData('Fylke')(
               props.admPlace
@@ -113,7 +114,7 @@ const AdmPlaceComponent = (
           <input
             type="text"
             className="form-control"
-            disabled={true}
+            disabled={props.readOnly}
             id={'txtInputStation'}
             value={props.getAdmPlaceData('Land')(
               props.admPlace
@@ -135,6 +136,7 @@ const AdmPlaceComponent = (
             rows={4}
             className="form-control"
             id="locality"
+            disabled={props.readOnly}
             value={(props.editingAttributes && props.editingAttributes.locality) || ''}
             onChange={(v: React.ChangeEvent<HTMLTextAreaElement>) =>
               props.onChangeOthers('locality')(v.target.value)
@@ -153,6 +155,7 @@ const AdmPlaceComponent = (
             rows={4}
             className="form-control"
             id="ecology"
+            disabled={props.readOnly}
             value={props.editingAttributes && props.editingAttributes.ecology}
             onChange={(v: React.ChangeEvent<HTMLTextAreaElement>) => {
               v.preventDefault();
@@ -177,6 +180,7 @@ const AdmPlaceComponent = (
           <input
             type="text"
             className="form-control"
+            disabled={props.readOnly}
             onChange={e => props.onChangeOthers('station')(e.target.value)}
             id={'txtInputStation'}
             value={props.editingAttributes && props.editingAttributes.station}
@@ -186,6 +190,7 @@ const AdmPlaceComponent = (
           <input
             type="text"
             className="form-control"
+            disabled={props.readOnly}
             onChange={e => props.onChangeOthers('sample')(e.target.value)}
             id={'txtInputSample'}
             value={props.editingAttributes && props.editingAttributes.sample}
@@ -195,6 +200,7 @@ const AdmPlaceComponent = (
           <input
             type="text"
             className="form-control"
+            disabled={props.readOnly}
             onChange={e => props.onChangeOthers('ship')(e.target.value)}
             id={'txtInputShip'}
             value={props.editingAttributes && props.editingAttributes.ship}

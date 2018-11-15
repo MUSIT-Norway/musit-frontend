@@ -4,6 +4,8 @@ import CollectingEventComponent from './CollectingEventComponent';
 import { flowRight } from 'lodash';
 import lifeCycle from '../../../shared/lifeCycle';
 import appSession$ from '../../../stores/appSession';
+import { loadPredefinedCollectingEventValues } from '../../../stores/loadPredefinedCollectingEventValues';
+import predefinedCollectingEventValues$ from '../../../stores/predefinedCollectingEventValues';
 import store$, { getCollectingEvent$ } from './CollectingEventStore';
 import { AppSession } from '../../../types/appSession';
 import { History } from 'history';
@@ -11,8 +13,11 @@ import { simpleGet } from '../../../shared/RxAjax';
 
 const combinedStore$ = createStore(
   'combinedStore',
-  Observable.combineLatest(appSession$, store$, (appSession, store) => () => ({
+  Observable.combineLatest(appSession$,    
+    predefinedCollectingEventValues$, store$, (appSession,
+      predefinedCollectingEventValues, store) => () => ({
     appSession,
+    predefinedCollectingEventValues,
     store
   }))
 );
@@ -41,6 +46,7 @@ const ManagedConservationFormComponent = lifeCycle({
   onUnmount
 })(CollectingEventComponent);
 
-export default flowRight([inject(combinedStore$, addProps)])(
+export default flowRight([inject(combinedStore$, addProps),
+  loadPredefinedCollectingEventValues])(
   ManagedConservationFormComponent
 );

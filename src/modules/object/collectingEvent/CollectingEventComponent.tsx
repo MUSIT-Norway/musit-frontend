@@ -18,6 +18,8 @@ import {
 import { AppSession } from '../../../types/appSession';
 import { History } from 'history';
 import { OutputCollectingEvent } from '../../../models/object/collectingEvent';
+import { AjaxResponse } from 'rxjs';
+import config from '../../../config';
 
 export type CollectingEventProps = {
   onChangeTextField: (fieldName: string) => (value: string) => void;
@@ -32,6 +34,7 @@ export type EventMetadataProps = EventState & {
   onChangeDeathDate: Function;
   onChangeVerbatimDate: (newDate: string) => void;
   collectingEventMethods: CollectingEventMethod[];
+  readOnly?: boolean;
 };
 
 export type Person = {
@@ -103,7 +106,7 @@ export class EventState implements EventState {
   eventDateFrom?: string;
   eventDateTo?: string;
   eventDateVerbatim?: string;
-  placeState: PlaceState;
+  placeState: PlaceState
   constructor(
     name: string,
     eventUuid: EventUuid,
@@ -175,7 +178,7 @@ export default (props: CollectingProps) => (
     }
     getCollectingEvent={props.getCollectingEvent}
     history={props.history}
-    readOnly={props.readOnly}
+    readOnly={props.readOnly || false}   
   />
 );
 
@@ -193,7 +196,15 @@ export const toFrontend: (p: OutputCollectingEvent) => CollectingEventState
       innP.methodId ? innP.methodId : 0,
       innP.museumId,
       innP.collectionId,
-      innP.place ? innP.place : { admPlace: null, coordinateInvalid: false },
+      innP.place ?
+      {
+        admPlace: {...innP.place.admPlace},
+        editingInputCoordinate: {...innP.place.coordinate},
+        editingCoordinateAttribute: {...innP.place.coordinateAttributes},
+        editingAttributes: {...innP.place.attributes},
+        coordinateInvalid: false 
+      }
+      : { admPlace: null, coordinateInvalid: false },
       innP.method,
       innP.methodDescription,
       innP.note,
@@ -203,7 +214,7 @@ export const toFrontend: (p: OutputCollectingEvent) => CollectingEventState
       innP.relatedActors,
       innP.eventDateFrom,      
       innP.eventDateTo,
-      innP.eventDateVerbatim
+      innP.eventDateVerbatim      
     );
     console.log('TOFrontEnd: after format ', r);
     return {eventState : r};
@@ -246,6 +257,7 @@ export class CollectingEventComponent extends React.Component<
   constructor(props: CollectingProps) {
     super(props);
     console.log('COLLECTING EVENT STORE', props.store);
+    console.log ('VIEW MODE : ', props.readOnly)
     this.state =
       props.store && props.store.localState
         ? props.store.localState
@@ -274,7 +286,7 @@ export class CollectingEventComponent extends React.Component<
                   altitudeCa: false,
                   depthCa: false
                 },
-                coordinateInvalid: false
+                coordinateInvalid: false                
               }
             }
           };
@@ -289,7 +301,7 @@ export class CollectingEventComponent extends React.Component<
   render() {
     console.log(
       'CollectionEventState on load anuradha ',
-      this.state.eventState.placeState
+      this.state.eventState
     );
 
     const PlaceBodyComponent = (
@@ -307,7 +319,8 @@ export class CollectingEventComponent extends React.Component<
             coordinateTypes: this.props.predefinedCollectingEventValues && 
                 this.props.predefinedCollectingEventValues.coordinateTypes
           }}
-          history={this.props.history}
+          history={this.props.history}  
+          readOnly={this.props.readOnly}        
           onChangeOthers={(field: string) => (value: string) => {
             this.setState((cs: CollectingEventState) => {
               const newAttributes: MarinePlaceAttribute = cs.eventState.placeState
@@ -650,7 +663,17 @@ export class CollectingEventComponent extends React.Component<
               this.props.addCollectingEvent()({
                 data: this.state.eventState,
                 token: this.props.appSession.accessToken,
-                collectionId: this.props.appSession.collectionId
+                collectionId: this.props.appSession.collectionId,
+                callback: {
+                  onComplete: (r: AjaxResponse) => {
+                    console.log(' to view mode :::: ', r.response )
+                    const url = config.magasin.urls.client.collectingEvent.view(
+                      this.props.appSession,
+                      r.response.eventUuid
+                    );
+                    this.props.history && this.props.history.replace(url);
+                  } 
+                }
               });
           }}
           /*           getCurrentHistoryItem={(ind: number) => {
@@ -703,6 +726,7 @@ export class CollectingEventComponent extends React.Component<
       <div>
         <EventMetadata
           {...this.state.eventState}
+          readOnly={this.props.readOnly}
           collectingEventMethods={
             this.props.predefinedCollectingEventValues.collectingMethods || []
           }

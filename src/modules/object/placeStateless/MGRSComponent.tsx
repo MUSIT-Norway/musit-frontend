@@ -18,6 +18,7 @@ const MGRSComponent = (props: CoordinateProps) => {
               //props.getCurrentCoordinate(props.coordinateHistoryIndeks).datum
             }
             id="datum"
+            disabled={props.readOnly}
             onChange={e => {
               props.onChangeCoordinateText('datum')(e.target.value);
             }}
@@ -50,6 +51,7 @@ const MGRSComponent = (props: CoordinateProps) => {
           <select
             className="form-control"
             id="coordinateType"
+            disabled={props.readOnly}
             value={
               props.editingInputCoordinate && props.editingInputCoordinate.coordinateType
               //props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateType
@@ -76,6 +78,7 @@ const MGRSComponent = (props: CoordinateProps) => {
             type="text"
             className="form-control"
             id="zone"
+            disabled={props.readOnly}
             onChange={e => {
               props.onChangeCoordinateText('zone')(e.target.value);
             }}
@@ -90,6 +93,7 @@ const MGRSComponent = (props: CoordinateProps) => {
             type="text"
             className="form-control"
             id="mgrsBand"
+            disabled={props.readOnly}
             onChange={e => {
               props.onChangeCoordinateText('bend')(e.target.value);
             }}
@@ -117,6 +121,7 @@ const MGRSComponent = (props: CoordinateProps) => {
             type="text"
             className="form-control"
             id="MGRSCoordinateString"
+            disabled={props.readOnly}
             value={
               props.editingInputCoordinate &&
               props.editingInputCoordinate.coordinateString

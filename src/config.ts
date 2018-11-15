@@ -49,7 +49,7 @@ export default {
     collectingEvent: {
       addEventUrl: '/api/event/events',
       getCollectingEventMethods: '/api/event/collectingmethods',
-      getEvent: (eventUuid: string) => `event/events/${eventUuid}`
+      getEvent: (eventUuid: string) => `/api/event/events/${eventUuid}`
     }
   },
   magasin: {

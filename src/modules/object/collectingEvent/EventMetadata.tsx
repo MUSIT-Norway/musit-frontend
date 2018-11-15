@@ -17,6 +17,7 @@ const EventMetadata = (props: EventMetadataProps) => {
             className="form-control"
             id={'txtInputProject'}
             value={props.name}
+            disabled={props.readOnly}
             onChange={e => props.onChangeEventMetaData('name')(e.target.value)}
           />
         </div>
@@ -38,7 +39,7 @@ const EventMetadata = (props: EventMetadataProps) => {
             onClear={props.onClearBornDate}
             onChange={props.onChangeBornDate}
             value={props.eventDateFrom}
-            // disabled={props.readOnly}
+            disabled={props.readOnly}
           />
         </div>
         <div className="col-md-2" id="deathDate">
@@ -46,7 +47,7 @@ const EventMetadata = (props: EventMetadataProps) => {
             onClear={props.onClearDeathDate}
             onChange={props.onChangeDeathDate}
             value={props.eventDateTo}
-            // disabled={props.readOnly}
+            disabled={props.readOnly}
           />
         </div>
         <div className="col-md-2">
@@ -56,7 +57,7 @@ const EventMetadata = (props: EventMetadataProps) => {
             id={'txtVerbatimDate'}
             value={props.eventDateVerbatim}
             onChange={e => props.onChangeVerbatimDate(e.target.value)}
-            // disabled={props.readOnly}
+            disabled={props.readOnly}
           />
         </div>
       </div>
@@ -71,6 +72,7 @@ const EventMetadata = (props: EventMetadataProps) => {
             className="form-control"
             id="coordinateSource"
             defaultValue=""
+            disabled={props.readOnly}
             onChange={e => {
               props.onChangeEventMetaData('methodId')(e.target.value);
             }}
@@ -107,6 +109,7 @@ const EventMetadata = (props: EventMetadataProps) => {
             className="form-control"
             id="locality"
             value={props.note}
+            disabled={props.readOnly}
             onChange={(v: React.ChangeEvent<HTMLTextAreaElement>) =>
               props.onChangeEventMetaData('note')(v.target.value)
             }

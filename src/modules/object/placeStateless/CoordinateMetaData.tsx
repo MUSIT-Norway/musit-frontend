@@ -15,6 +15,7 @@ const CoordinateMetaData = (props: CoordinateProps) => {
           <select
             className="form-control"
             id="coordinateSource"
+            disabled={props.readOnly}
             defaultValue={
               props.coordinatePredefined.coordinateSourceTypes
                 ? props.coordinatePredefined.coordinateSourceTypes[0].source
@@ -43,6 +44,7 @@ const CoordinateMetaData = (props: CoordinateProps) => {
           <div className="checkbox" id="coordinateAddedLater">
             <CheckBox
               id={'checkBoxCoordinateAddedLater'}
+              viewMode={props.readOnly}
               checked={
                 /*  props.getCurrentCoordinate(props.coordinateHistoryIndeks) &&
                 props.getCurrentCoordinate(props.coordinateHistoryIndeks).isAddedLater */
@@ -92,6 +94,7 @@ const CoordinateMetaData = (props: CoordinateProps) => {
           <input
             className="form-control"
             type="text"
+            disabled={props.readOnly}
             onChange={e => {
               props.onChangeCoordinateAttributes('precision')(e.target.value);
             }}
@@ -114,6 +117,7 @@ const CoordinateMetaData = (props: CoordinateProps) => {
           <input
             className="form-control"
             type="text"
+            disabled={props.readOnly}
             onChange={e => {
               props.onChangeCoordinateAttributes('gpsAccuracy')(e.target.value);
             }}

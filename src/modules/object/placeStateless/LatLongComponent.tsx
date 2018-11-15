@@ -17,6 +17,7 @@ const LatLongComponent = (props: CoordinateProps) => {
               //props.getCurrentCoordinate(props.coordinateHistoryIndeks).datum
             }
             id="datum"
+            disabled={props.readOnly}
             onChange={e => {
               props.onChangeCoordinateText('datum')(e.target.value);
             }}
@@ -50,6 +51,7 @@ const LatLongComponent = (props: CoordinateProps) => {
           <select
             className="form-control"
             id="coordinateType"
+            disabled={props.readOnly}
             value={
               props.editingInputCoordinate && props.editingInputCoordinate.coordinateType
               //props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateType
@@ -75,6 +77,7 @@ const LatLongComponent = (props: CoordinateProps) => {
               <select
                 className="form-control"
                 id="coordinateGeomertry"
+                disabled={props.readOnly}
                 onChange={e => {
                   props.onChangeCoordinateText('coordinateGeometry')(e.target.value);
                 }}
@@ -107,6 +110,7 @@ const LatLongComponent = (props: CoordinateProps) => {
             type="text"
             className="form-control"
             id="latLongCoordinateString"
+            disabled={props.readOnly}
             onChange={e => {
               props.onChangeCoordinateText('coordinateString')(e.target.value);
             }}

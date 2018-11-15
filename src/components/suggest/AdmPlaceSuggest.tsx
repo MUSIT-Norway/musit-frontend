@@ -51,6 +51,7 @@ export interface AdmPlaceSuggestProps {
   appSession: AppSession;
   renderFunc: Function;
   history: History;
+  
 }
 
 export class AdmPlaceSuggestion extends React.Component<
@@ -61,8 +62,7 @@ export class AdmPlaceSuggestion extends React.Component<
     super(props);
     this.requestSuggestionUpdate = this.requestSuggestionUpdate.bind(this);
     this.state = {
-      value: this.props.value,
-      disabled: false
+      value: this.props.value
     };
   }
   componentWillReceiveProps(next: AdmPlaceSuggestProps) {

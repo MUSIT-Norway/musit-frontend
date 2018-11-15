@@ -91,17 +91,20 @@ const addCollectingEventData = (ajaxPost: AjaxPost<Star>) => (
     props.data.placeState.admPlace
       ? props.data.placeState.admPlace.admPlaceUuid
       : undefined,
-    props.data.placeState.editingInputCoordinate
+    props.data.placeState.editingInputCoordinate,
+    props.data.placeState.editingCoordinateAttribute,
+    props.data.placeState.editingAttributes
   );
+  console.log( '////// add collectingEventData InputPlace ', ip)
   return Observable.of(props).flatMap(props =>
     addPlace(ajaxPost)({
       data: ip,
       token: props.token,
-      callback: props.callback
     }).flatMap(({ placeUuid }) =>
       addCollectingEvent(ajaxPost)({
         data: { ...toBackend(props.data), placeUuid: placeUuid },
-        token: props.token
+        token: props.token,
+        callback: props.callback
       })
     )
   );
@@ -135,7 +138,6 @@ export const reducer$ = (
     })),
     actions.addCollectingEvent$
       .switchMap(addCollectingEventData(ajaxPost))
-      .do(res => console.log('HTTP response:', res))
       .map(
         (collectingEvent: InputCollectingEvent) => (
           state: CollectingEventStoreState

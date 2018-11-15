@@ -35,6 +35,7 @@ const AltitudeDepthData = (props: CoordinateProps) => (
           placeholder="Low"
           className="form-control"
           type="number"
+          disabled={props.readOnly}
           onChange={e => {
             props.onChangeCoordinateNumber('altitudeFrom')(parseFloat(e.target.value));
           }}
@@ -52,6 +53,7 @@ const AltitudeDepthData = (props: CoordinateProps) => (
           placeholder="High"
           className="form-control"
           type="number"
+          disabled={props.readOnly}
           onChange={e => {
             props.onChangeCoordinateNumber('altitudeTo')(parseFloat(e.target.value));
           }}
@@ -68,6 +70,7 @@ const AltitudeDepthData = (props: CoordinateProps) => (
         <select
           className="form-control"
           id="altitudeUnit"
+          disabled={props.readOnly}
           value={
             props.editingCoordinateAttribute &&
             props.editingCoordinateAttribute.altitudeUnit
@@ -86,6 +89,7 @@ const AltitudeDepthData = (props: CoordinateProps) => (
         <div className="checkbox" id="caAltitude">
           <CheckBox
             id={'checkBoxCaAltitude'}
+            viewMode={props.readOnly}
             checked={
               props.editingCoordinateAttribute &&
               props.editingCoordinateAttribute.altitudeCa
@@ -137,6 +141,7 @@ const AltitudeDepthData = (props: CoordinateProps) => (
           placeholder="Low"
           className="form-control"
           type="number"
+          disabled={props.readOnly}
           onChange={e => {
             props.onChangeCoordinateNumber('depthFrom')(parseFloat(e.target.value));
           }}
@@ -153,6 +158,7 @@ const AltitudeDepthData = (props: CoordinateProps) => (
           placeholder="High"
           className="form-control"
           type="number"
+          disabled={props.readOnly}
           onChange={e => {
             props.onChangeCoordinateNumber('depthTo')(parseFloat(e.target.value));
           }}
@@ -168,6 +174,7 @@ const AltitudeDepthData = (props: CoordinateProps) => (
         <select
           className="form-control"
           id="depthUnit"
+          disabled={props.readOnly}
           value={
             props.editingCoordinateAttribute && props.editingCoordinateAttribute.depthUnit
             //props.getCurrentCoordinate(props.coordinateHistoryIndeks).depthUnit
@@ -185,6 +192,7 @@ const AltitudeDepthData = (props: CoordinateProps) => (
         <div className="checkbox" id="caDepth">
           <CheckBox
             id={'checkBoxCaDepth'}
+            viewMode={props.readOnly}
             checked={
               /* props.getCurrentCoordinate(props.coordinateHistoryIndeks) &&
               props.getCurrentCoordinate(props.coordinateHistoryIndeks).caDepth */
@@ -214,6 +222,7 @@ const AltitudeDepthData = (props: CoordinateProps) => (
         <textarea
           rows={4}
           className="form-control"
+          disabled={props.readOnly}
           onChange={e => {
             props.onChangeCoordinateAttributes('note')(e.target.value);
           }}
