@@ -11,32 +11,38 @@ const CoordinateMetaData = (props: CoordinateProps) => {
         </div>
       </div>
       <div className="row">
-        <div className="col-md-2">
+        <div className="col-md-5">
           <select
             className="form-control"
             id="coordinateSource"
             disabled={props.readOnly}
-            defaultValue={
-              props.coordinatePredefined.coordinateSourceTypes
-                ? props.coordinatePredefined.coordinateSourceTypes[0].source
-                : 'hei'
+            defaultValue={undefined}
+            value={
+              props.editingCoordinateAttribute
+                ? props.editingCoordinateAttribute.coordinateSource
+                : undefined
+              //props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateSource
             }
             onChange={e => {
+              console.log('On change', e.target.value);
               props.onChangeCoordinateAttributes('coordinateSource')(e.target.value);
             }}
           >
-            value={props.editingCoordinateAttribute &&
-              props.editingCoordinateAttribute.coordinateSource
-            //props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateSource
-            }
+            <option value={undefined} key={`optionRow_${'x'}`}>
+              {'--- Not selected ---'}
+            </option>
             {props.coordinatePredefined.coordinateSourceTypes ? (
               props.coordinatePredefined.coordinateSourceTypes.map(
                 ({ source }: { source: string }, i: number) => (
-                  <option key={`optionRow_${i}`}>{source}</option>
+                  <option key={`optionRow_${i}`} value={source}>
+                    {source}
+                  </option>
                 )
               )
             ) : (
-              <option key={`optionRow_${1}`}>{'No data'}</option>
+              <option value={undefined} key={`optionRow_${'xx'}`}>
+                {'--- No data ---'}
+              </option>
             )}
           </select>
         </div>
@@ -93,10 +99,13 @@ const CoordinateMetaData = (props: CoordinateProps) => {
         <div className="col-md-4">
           <input
             className="form-control"
-            type="text"
+            type="number"
             disabled={props.readOnly}
+            defaultValue={undefined}
             onChange={e => {
-              props.onChangeCoordinateAttributes('precision')(e.target.value);
+              props.onChangeNumberCoordinateAttributes('precision')(
+                parseFloat(e.target.value)
+              );
             }}
             value={
               props.editingCoordinateAttribute &&
@@ -116,10 +125,12 @@ const CoordinateMetaData = (props: CoordinateProps) => {
         <div className="col-md-4">
           <input
             className="form-control"
-            type="text"
+            type="number"
             disabled={props.readOnly}
             onChange={e => {
-              props.onChangeCoordinateAttributes('gpsAccuracy')(e.target.value);
+              props.onChangeNumberCoordinateAttributes('gpsAccuracy')(
+                parseFloat(e.target.value)
+              );
             }}
             value={
               props.editingCoordinateAttribute &&

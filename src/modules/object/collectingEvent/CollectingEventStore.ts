@@ -97,6 +97,12 @@ const addCollectingEventData = (ajaxPost: AjaxPost<Star>) => (
     props.data.placeState.editingCoordinateAttribute,
     props.data.placeState.editingAttributes
   );
+  console.log(
+    'Place data: ',
+    ip,
+    'Editing coordinate attribute',
+    props.data.placeState.editingCoordinateAttribute
+  );
   return Observable.of(props).flatMap(props =>
     addPlace(ajaxPost)({
       data: ip,

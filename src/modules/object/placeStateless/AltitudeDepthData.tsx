@@ -37,14 +37,16 @@ const AltitudeDepthData = (props: CoordinateProps) => (
           type="number"
           disabled={props.readOnly}
           onChange={e => {
-            props.onChangeCoordinateNumber('altitudeFrom')(parseFloat(e.target.value));
+            props.onChangeNumberCoordinateAttributes('altitudeFrom')(
+              parseFloat(e.target.value)
+            );
           }}
           value={
             props.editingCoordinateAttribute &&
             props.editingCoordinateAttribute.altitudeFrom
             //props.getCurrentCoordinate(props.coordinateHistoryIndeks).altitudeLow
           }
-          id="altitudeLow"
+          id="altitudeFrom"
         />
       </div>
 
@@ -55,14 +57,16 @@ const AltitudeDepthData = (props: CoordinateProps) => (
           type="number"
           disabled={props.readOnly}
           onChange={e => {
-            props.onChangeCoordinateNumber('altitudeTo')(parseFloat(e.target.value));
+            props.onChangeNumberCoordinateAttributes('altitudeTo')(
+              parseFloat(e.target.value)
+            );
           }}
           value={
             props.editingCoordinateAttribute &&
             props.editingCoordinateAttribute.altitudeTo
             //props.getCurrentCoordinate(props.coordinateHistoryIndeks).altitudeHigh
           }
-          id="altitudeHigh"
+          id="altitudeTo"
         />
       </div>
 
@@ -143,7 +147,9 @@ const AltitudeDepthData = (props: CoordinateProps) => (
           type="number"
           disabled={props.readOnly}
           onChange={e => {
-            props.onChangeCoordinateNumber('depthFrom')(parseFloat(e.target.value));
+            props.onChangeNumberCoordinateAttributes('depthFrom')(
+              parseFloat(e.target.value)
+            );
           }}
           value={
             props.editingCoordinateAttribute && props.editingCoordinateAttribute.depthFrom
@@ -160,7 +166,9 @@ const AltitudeDepthData = (props: CoordinateProps) => (
           type="number"
           disabled={props.readOnly}
           onChange={e => {
-            props.onChangeCoordinateNumber('depthTo')(parseFloat(e.target.value));
+            props.onChangeNumberCoordinateAttributes('depthTo')(
+              parseFloat(e.target.value)
+            );
           }}
           value={
             props.editingCoordinateAttribute && props.editingCoordinateAttribute.depthTo
