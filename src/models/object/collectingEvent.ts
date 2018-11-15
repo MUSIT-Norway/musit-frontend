@@ -8,7 +8,7 @@ import { simplePost, simpleGet } from '../../shared/RxAjax';
 import { Callback, AjaxPost, AjaxGet } from '../../types/ajax';
 import { Star } from '../../types/common';
 import Config from '../../config';
-import {OutPlace} from './place';
+import { OutPlace } from './place';
 
 export type Uuid = string;
 export type EventUuid = Uuid;
@@ -89,13 +89,12 @@ export interface OutputEvent {
   place?: OutPlace;
 }
 
-export interface OutputCollectingEvent extends OutputEvent {
+export interface OutputCollectingEvent extends OutputEvent {
   name: string;
   methodId?: number;
   method?: string;
   methodDescription?: string;
 }
-
 
 export class CollectingEvent implements InputCollectingEvent {
   name: string;
@@ -127,7 +126,7 @@ export class CollectingEvent implements InputCollectingEvent {
     collectionId?: number,
     note?: string,
     partOf?: EventUuid,
-    createdBy?:PersonUuid, //Person,
+    createdBy?: PersonUuid, //Person,
     createdDate?: string,
     relatedActors?: ActorsAndRelation[],
     eventDateFrom?: string,
@@ -162,11 +161,16 @@ export const getCollectingEvent: (
     token: string;
     callback?: Callback<Star>;
   }
-) => Observable<InputCollectingEvent> = (ajaxGet = simpleGet) => ({ id, token, callback }) => {
+) => Observable<InputCollectingEvent> = (ajaxGet = simpleGet) => ({
+  id,
+  token,
+  callback
+}) => {
   const URL = Config.api.collectingEvent.getEvent(id);
   console.log('URL', URL);
   return ajaxGet(URL, token, callback)
-  .map(({ response }) => response).do((response)=> console.log('RESPONSE ::::: ', response));
+    .map(({ response }) => response)
+    .do(response => console.log('RESPONSE ::::: ', response));
 };
 
 export const addCollectingEvent: (
@@ -185,8 +189,6 @@ export const addCollectingEvent: (
   const URL = Config.api.collectingEvent.addEventUrl;
   return ajaxPost(URL, data, token, callback).map(({ response }) => response);
 };
-
-
 
 export const getCollectingEventMethods: (
   ajaxGet: AjaxGet<Star>

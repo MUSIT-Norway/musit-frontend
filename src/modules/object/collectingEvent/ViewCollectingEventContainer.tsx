@@ -13,20 +13,23 @@ import { simpleGet } from '../../../shared/RxAjax';
 
 const combinedStore$ = createStore(
   'combinedStore',
-  Observable.combineLatest(appSession$,    
-    predefinedCollectingEventValues$, store$, (appSession,
-      predefinedCollectingEventValues, store) => () => ({
-    appSession,
-    predefinedCollectingEventValues,
-    store
-  }))
+  Observable.combineLatest(
+    appSession$,
+    predefinedCollectingEventValues$,
+    store$,
+    (appSession, predefinedCollectingEventValues, store) => () => ({
+      appSession,
+      predefinedCollectingEventValues,
+      store
+    })
+  )
 );
 
 const addProps = (combinedStore: any, upstream: { history: History }) => ({
   ...combinedStore,
   ...upstream,
   getCollectingEvent: (appSession: AppSession, id: string) =>
-  getCollectingEvent$.next({
+    getCollectingEvent$.next({
       id: id,
       collectionId: appSession.collectionId,
       token: appSession.accessToken,
@@ -46,7 +49,7 @@ const ManagedConservationFormComponent = lifeCycle({
   onUnmount
 })(CollectingEventComponent);
 
-export default flowRight([inject(combinedStore$, addProps),
-  loadPredefinedCollectingEventValues])(
-  ManagedConservationFormComponent
-);
+export default flowRight([
+  inject(combinedStore$, addProps),
+  loadPredefinedCollectingEventValues
+])(ManagedConservationFormComponent);

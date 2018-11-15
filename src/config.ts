@@ -87,7 +87,7 @@ export default {
         },
         collectingEvent: {
           view: (appSession: AppSession, id: string) =>
-          `${clientContextUrl(appSession)}/collectingEvent/view/${id}`,
+            `${clientContextUrl(appSession)}/collectingEvent/view/${id}`,
           add: (appSession: AppSession) =>
             `${clientContextUrl(appSession)}/collectingEvent/add`
         },

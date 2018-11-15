@@ -106,7 +106,7 @@ export class EventState implements EventState {
   eventDateFrom?: string;
   eventDateTo?: string;
   eventDateVerbatim?: string;
-  placeState: PlaceState
+  placeState: PlaceState;
   constructor(
     name: string,
     eventUuid: EventUuid,
@@ -178,13 +178,13 @@ export default (props: CollectingProps) => (
     }
     getCollectingEvent={props.getCollectingEvent}
     history={props.history}
-    readOnly={props.readOnly || false}   
+    readOnly={props.readOnly || false}
   />
 );
 
-
-export const toFrontend: (p: OutputCollectingEvent) => CollectingEventState
-       = (p: OutputCollectingEvent) => {
+export const toFrontend: (p: OutputCollectingEvent) => CollectingEventState = (
+  p: OutputCollectingEvent
+) => {
   const innP: OutputCollectingEvent = p;
 
   console.log('TOFrontEnd: ', p);
@@ -196,15 +196,15 @@ export const toFrontend: (p: OutputCollectingEvent) => CollectingEventState
       innP.methodId ? innP.methodId : 0,
       innP.museumId,
       innP.collectionId,
-      innP.place ?
-      {
-        admPlace: {...innP.place.admPlace},
-        editingInputCoordinate: {...innP.place.coordinate},
-        editingCoordinateAttribute: {...innP.place.coordinateAttributes},
-        editingAttributes: {...innP.place.attributes},
-        coordinateInvalid: false 
-      }
-      : { admPlace: null, coordinateInvalid: false },
+      innP.place
+        ? {
+            admPlace: { ...innP.place.admPlace },
+            editingInputCoordinate: { ...innP.place.coordinate },
+            editingCoordinateAttribute: { ...innP.place.coordinateAttributes },
+            editingAttributes: { ...innP.place.attributes },
+            coordinateInvalid: false
+          }
+        : { admPlace: null, coordinateInvalid: false },
       innP.method,
       innP.methodDescription,
       innP.note,
@@ -212,12 +212,12 @@ export const toFrontend: (p: OutputCollectingEvent) => CollectingEventState
       innP.createdBy,
       innP.createdDate,
       innP.relatedActors,
-      innP.eventDateFrom,      
+      innP.eventDateFrom,
       innP.eventDateTo,
-      innP.eventDateVerbatim      
+      innP.eventDateVerbatim
     );
     console.log('TOFrontEnd: after format ', r);
-    return {eventState : r};
+    return { eventState: r };
   }
   return {
     eventState: {
@@ -257,7 +257,7 @@ export class CollectingEventComponent extends React.Component<
   constructor(props: CollectingProps) {
     super(props);
     console.log('COLLECTING EVENT STORE', props.store);
-    console.log ('VIEW MODE : ', props.readOnly)
+    console.log('VIEW MODE : ', props.readOnly);
     this.state =
       props.store && props.store.localState
         ? props.store.localState
@@ -286,7 +286,7 @@ export class CollectingEventComponent extends React.Component<
                   altitudeCa: false,
                   depthCa: false
                 },
-                coordinateInvalid: false                
+                coordinateInvalid: false
               }
             }
           };
@@ -294,33 +294,32 @@ export class CollectingEventComponent extends React.Component<
 
   componentWillReceiveProps(props: CollectingProps) {
     console.log('Recieve props: ====>', props);
-    if (props.store.localState) {     
+    if (props.store.localState) {
       this.setState(() => ({ ...props.store.localState }));
     }
   }
   render() {
-    console.log(
-      'CollectionEventState on load anuradha ',
-      this.state.eventState
-    );
-
     const PlaceBodyComponent = (
       <div>
         <PlaceComponent
           {...this.state}
           appSession={this.props.appSession}
           coordinatePredefined={{
-            coordinatDatumTypes:this.props.predefinedCollectingEventValues &&
-                this.props.predefinedCollectingEventValues.datums,
-            coordinateGeometryTypes: this.props.predefinedCollectingEventValues &&
-                this.props.predefinedCollectingEventValues.geometryTypes,
-            coordinateSourceTypes: this.props.predefinedCollectingEventValues && 
-                this.props.predefinedCollectingEventValues.coordinateSources,
-            coordinateTypes: this.props.predefinedCollectingEventValues && 
-                this.props.predefinedCollectingEventValues.coordinateTypes
+            coordinatDatumTypes:
+              this.props.predefinedCollectingEventValues &&
+              this.props.predefinedCollectingEventValues.datums,
+            coordinateGeometryTypes:
+              this.props.predefinedCollectingEventValues &&
+              this.props.predefinedCollectingEventValues.geometryTypes,
+            coordinateSourceTypes:
+              this.props.predefinedCollectingEventValues &&
+              this.props.predefinedCollectingEventValues.coordinateSources,
+            coordinateTypes:
+              this.props.predefinedCollectingEventValues &&
+              this.props.predefinedCollectingEventValues.coordinateTypes
           }}
-          history={this.props.history}  
-          readOnly={this.props.readOnly}        
+          history={this.props.history}
+          readOnly={this.props.readOnly}
           onChangeOthers={(field: string) => (value: string) => {
             this.setState((cs: CollectingEventState) => {
               const newAttributes: MarinePlaceAttribute = cs.eventState.placeState
@@ -625,10 +624,6 @@ export class CollectingEventComponent extends React.Component<
             this.setState((cs: CollectingEventState) => {
               const ps = cs.eventState.placeState;
               if (!ps.editCoordinateMode) {
-                console.log(
-                  'ANURADHA onClickSaveRevision New Revision App Session',
-                  this.props.appSession
-                );
                 return {
                   ...cs,
                   eventState: {
@@ -640,7 +635,6 @@ export class CollectingEventComponent extends React.Component<
                   }
                 };
               }
-              console.log('ANURADHA onClickSaveRevision 2 : Edit Mode ');
               return {
                 ...cs,
                 eventState: {
@@ -666,13 +660,12 @@ export class CollectingEventComponent extends React.Component<
                 collectionId: this.props.appSession.collectionId,
                 callback: {
                   onComplete: (r: AjaxResponse) => {
-                    console.log(' to view mode :::: ', r.response )
                     const url = config.magasin.urls.client.collectingEvent.view(
                       this.props.appSession,
                       r.response.eventUuid
                     );
                     this.props.history && this.props.history.replace(url);
-                  } 
+                  }
                 }
               });
           }}
@@ -805,10 +798,15 @@ export class CollectingEventComponent extends React.Component<
                 <CollapseComponent
                   Head={HeaderEventMetadata()}
                   Body={EventMetadataComponent}
+                  readOnly={this.props.readOnly}
                 />
               </div>
               <div className="row">
-                <CollapseComponent Head={HeaderRead()} Body={PlaceBodyComponent} />
+                <CollapseComponent
+                  Head={HeaderRead()}
+                  Body={PlaceBodyComponent}
+                  readOnly={this.props.readOnly}
+                />
               </div>
             </div>
             <div className="col-md-4" />

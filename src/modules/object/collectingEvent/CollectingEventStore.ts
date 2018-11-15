@@ -12,7 +12,7 @@ import { Star } from '../../../types/common';
 import { Observable, Subject } from 'rxjs';
 import { createAction } from '../../../shared/react-rxjs-patch';
 import { Reducer } from 'react-rxjs';
-import { simpleGet , simplePost } from '../../../shared/RxAjax';
+import { simpleGet, simplePost } from '../../../shared/RxAjax';
 import { KEEP_ALIVE } from '../../../stores/constants';
 import { createStore } from 'react-rxjs';
 import { toFrontend } from '../collectingEvent/CollectingEventComponent';
@@ -47,7 +47,7 @@ export type CommonParams = {
   callback?: Callback<Star>;
 };
 
-export type GetCollectingEventProps = CommonParams & { id : string };
+export type GetCollectingEventProps = CommonParams & { id: string };
 export type AddCollectingEventProps = CommonParams & { data: EventState };
 
 export const toBackend: ((p: EventState) => InputCollectingEvent) = (p: EventState) => {
@@ -75,13 +75,15 @@ export const toBackend: ((p: EventState) => InputCollectingEvent) = (p: EventSta
 };
 
 const getCollectingEventData = (ajaxGet: AjaxGet<Star>) => (
-  props: GetCollectingEventProps) =>
+  props: GetCollectingEventProps
+) =>
   Observable.of(props).flatMap(props =>
-    getCollectingEvent(ajaxGet)({ id: props.id, token: props.token, callback: props.callback })
-    .do((response) => console.log('&&&&&& Response getCollectingEventData ', response)
-    )
+    getCollectingEvent(ajaxGet)({
+      id: props.id,
+      token: props.token,
+      callback: props.callback
+    })
   );
-
 
 const addCollectingEventData = (ajaxPost: AjaxPost<Star>) => (
   props: AddCollectingEventProps
@@ -95,11 +97,10 @@ const addCollectingEventData = (ajaxPost: AjaxPost<Star>) => (
     props.data.placeState.editingCoordinateAttribute,
     props.data.placeState.editingAttributes
   );
-  console.log( '////// add collectingEventData InputPlace ', ip)
   return Observable.of(props).flatMap(props =>
     addPlace(ajaxPost)({
       data: ip,
-      token: props.token,
+      token: props.token
     }).flatMap(({ placeUuid }) =>
       addCollectingEvent(ajaxPost)({
         data: { ...toBackend(props.data), placeUuid: placeUuid },
@@ -130,12 +131,12 @@ export const reducer$ = (
 ): Observable<Reducer<CollectingEventStoreState>> => {
   return Observable.merge(
     actions.getCollectingEvent$
-    .switchMap(getCollectingEventData(ajaxGet))
-    .map((outEvent: OutputCollectingEvent ) => (state: CollectingEventStoreState) => ({
-      ...state,
-      eventState: outEvent,
-      localState: toFrontend(outEvent)
-    })),
+      .switchMap(getCollectingEventData(ajaxGet))
+      .map((outEvent: OutputCollectingEvent) => (state: CollectingEventStoreState) => ({
+        ...state,
+        eventState: outEvent,
+        localState: toFrontend(outEvent)
+      })),
     actions.addCollectingEvent$
       .switchMap(addCollectingEventData(ajaxPost))
       .map(
