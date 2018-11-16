@@ -69,6 +69,32 @@ export type ActorsAndRelation = {
   relation: RoleId;
 };
 
+export interface EventData {
+
+  name: string;
+  eventUuid: EventUuid;
+  eventType: number;
+  methodId: number;
+  museumId: number;
+  collectionId: number;
+  method?: string;
+  methodDescription?: string;
+  note?: string;
+  partOf?: EventUuid;
+  createdBy?: PersonUuid; // Person;
+  createdDate?: string;
+  relatedActors?: ActorsAndRelation[];
+  editingActor?: ActorsAndRelation;
+  eventDateFrom?: string;
+  eventDateTo?: string;
+  eventDateVerbatim?: string;
+}
+
+export interface NewEventState {
+  eventData: EventData; 
+  placeState: PlaceState;
+
+}
 export interface EventState {
   name: string;
   eventUuid: EventUuid;
@@ -87,6 +113,7 @@ export interface EventState {
   eventDateFrom?: string;
   eventDateTo?: string;
   eventDateVerbatim?: string;
+  editState?: "editing"|""
 }
 
 export class EventState implements EventState {
