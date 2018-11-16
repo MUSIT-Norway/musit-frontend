@@ -352,15 +352,15 @@ export class CollectingEventComponent extends React.Component<
             }));
           }}
           getAdmPlaceData={(field: string) => (a: AdmPlace) => {
-            let arrayPlaces = a.path.split(':');
+            let arrayPlaces = a.path ? a.path.split(':') : undefined;
             let PlaceString: string = '';
 
             if (field === 'Kommune') {
-              PlaceString = arrayPlaces[5];
+              PlaceString = arrayPlaces ? arrayPlaces[5] : '';
             } else if (field === 'Fylke') {
-              PlaceString = arrayPlaces[4];
+              PlaceString = arrayPlaces ? arrayPlaces[4] : '';
             } else if (field === 'Land') {
-              PlaceString = arrayPlaces[3];
+              PlaceString = arrayPlaces ? arrayPlaces[3] : '';
             }
             return PlaceString || '';
           }}
@@ -578,7 +578,7 @@ export class CollectingEventComponent extends React.Component<
               };
             });
           }}
-          onChangeEditMode={(editMode: boolean) => {
+          onChangeNumberCoordinateAttributes={(fieldName: string) => (value: number) => {
             this.setState((cs: CollectingEventState) => {
               return {
                 ...cs,
@@ -586,7 +586,10 @@ export class CollectingEventComponent extends React.Component<
                   ...cs.eventState,
                   placeState: {
                     ...cs.eventState.placeState,
-                    editCoorditeMode: editMode
+                    editingCoordinateAttribute: {
+                      ...cs.eventState.placeState.editingCoordinateAttribute,
+                      [fieldName]: value
+                    }
                   }
                 }
               };
@@ -653,7 +656,7 @@ export class CollectingEventComponent extends React.Component<
                 }
               };
             });
-            
+
             this.props.addCollectingEvent &&
               this.props.addCollectingEvent()({
                 data: this.state.eventState,

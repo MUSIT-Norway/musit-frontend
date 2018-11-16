@@ -89,7 +89,7 @@ const AdmPlaceComponent = (
             type="text"
             className="form-control"
             id={'txtInputStation'}
-            disabled={props.readOnly}
+            disabled={true}
             value={props.getAdmPlaceData('Kommune')(
               props.admPlace
                 ? props.admPlace
@@ -101,7 +101,7 @@ const AdmPlaceComponent = (
           <input
             type="text"
             className="form-control"
-            disabled={props.readOnly}
+            disabled={true}
             id={'txtInputStation'}
             value={props.getAdmPlaceData('Fylke')(
               props.admPlace
@@ -114,7 +114,7 @@ const AdmPlaceComponent = (
           <input
             type="text"
             className="form-control"
-            disabled={props.readOnly}
+            disabled={true}
             id={'txtInputStation'}
             value={props.getAdmPlaceData('Land')(
               props.admPlace
@@ -129,7 +129,6 @@ const AdmPlaceComponent = (
           <label htmlFor="locality">Lokalitet </label>
         </div>
       </div>
-      {console.log('############', props.editingInputCoordinate)}
       <div className="row form-group">
         <div className="col-md-6">
           <textarea
@@ -166,13 +165,13 @@ const AdmPlaceComponent = (
       </div>
       <div className="row form-group">
         <div className="col-md-2">
-          <label htmlFor="ecology">Station </label>
+          <label htmlFor="txtInputStation">Station </label>
         </div>
         <div className="col-md-2">
-          <label htmlFor="ecology">Sample </label>
+          <label htmlFor="txtInputSample">Sample </label>
         </div>
         <div className="col-md-2">
-          <label htmlFor="ecology">Ship </label>
+          <label htmlFor="txtInputShip">Ship </label>
         </div>
       </div>
       <div className="row form-group">
@@ -181,7 +180,9 @@ const AdmPlaceComponent = (
             type="text"
             className="form-control"
             disabled={props.readOnly}
-            onChange={e => props.onChangeOthers('station')(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              props.onChangeOthers('station')(e.target.value)
+            }
             id={'txtInputStation'}
             value={props.editingAttributes && props.editingAttributes.station}
           />
@@ -191,7 +192,9 @@ const AdmPlaceComponent = (
             type="text"
             className="form-control"
             disabled={props.readOnly}
-            onChange={e => props.onChangeOthers('sample')(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              props.onChangeOthers('sample')(e.target.value)
+            }
             id={'txtInputSample'}
             value={props.editingAttributes && props.editingAttributes.sample}
           />
@@ -201,7 +204,9 @@ const AdmPlaceComponent = (
             type="text"
             className="form-control"
             disabled={props.readOnly}
-            onChange={e => props.onChangeOthers('ship')(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              props.onChangeOthers('ship')(e.target.value)
+            }
             id={'txtInputShip'}
             value={props.editingAttributes && props.editingAttributes.ship}
           />

@@ -13,10 +13,6 @@ const CoordinateComponent = (
       <CoordinateMetaData {...props} />
       <AltitudeDepthData {...props} />
       <CoordinateHistoryItemComponent {...props} />
-      {/* <CoordinateHistoryComponent
-        coordinateHistory={props.coordinateHistory}
-        onSetEditingIndex={props.onSetEditingIndex}
-      /> */}
     </div>
   );
 };

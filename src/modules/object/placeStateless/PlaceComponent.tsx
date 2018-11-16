@@ -87,12 +87,13 @@ export type CoordinateProps = {
   //onSetEditingIndex: (i: number) => void;
   onChangeCoordinateText: (fieldName: string) => (value: string) => void;
   onChangeCoordinateAttributes: (fieldName: string) => (value: string) => void;
+  onChangeNumberCoordinateAttributes: (fieldName: string) => (value: number) => void;
   //onChangeHistoryItem: (fieldName: string) => (value: string) => void;
   getCurrentCoordinate: (ind: number) => InputPlace;
   //getCurrentHistoryItem: (ind: number) => CoordinateHistoryItem;
   onChangeCheckBoxBoolean: (fieldName: string) => (value: boolean) => void;
   onClickSave: () => void;
-  onChangeEditMode: (edit: boolean) => void;
+  //onChangeEditMode: (edit: boolean) => void;
   onToggleCollapse: () => void;
 };
 
@@ -217,7 +218,7 @@ const PlaceComponent = (
         <CoordinateComponent {...props} />
         <div className="row">
           <div className="col-md-10" style={{ textAlign: 'right' }}>
-          {/*   <CheckBox
+            {/*   <CheckBox
               id="CoordinateEditMode"
               checked={props.editCoordinateMode}
               displayValue="Edit mode?"

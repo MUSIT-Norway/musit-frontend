@@ -96,6 +96,43 @@ export interface OutputCollectingEvent extends OutputEvent {
   methodDescription?: string;
 }
 
+export interface OutPlaceAndRelation {
+  placeUuid: Uuid;
+  roleId: RoleId;
+  roleText: string;
+}
+
+export interface InputPlaceAndRelation {
+  placeUuid: Uuid;
+  roleId: RoleId;
+}
+
+export class InputPlaceAndRelation implements InputPlaceAndRelation {
+  placeUuid: Uuid;
+  roleId: RoleId;
+  constructor(placeUuid: Uuid, roleId: RoleId) {
+    this.placeUuid = placeUuid;
+    this.roleId = roleId;
+  }
+}
+
+export interface InputDateRevision {
+  eventDateFrom: string;
+  eventDateTo: string;
+  eventDateVerbatim: string;
+}
+
+export class InputDateRevision implements InputDateRevision {
+  eventDateFrom: string;
+  eventDateTo: string;
+  eventDateVerbatim: string;
+  constructor(eventDateFrom: string, eventDateTo: string, eventDateVerbatim: string) {
+    this.eventDateFrom = eventDateFrom;
+    this.eventDateTo = eventDateTo;
+    this.eventDateVerbatim = eventDateVerbatim;
+  }
+}
+
 export class CollectingEvent implements InputCollectingEvent {
   name: string;
   methodId?: number;
@@ -211,6 +248,26 @@ export const editEventDateRivision: (
     .map(({ response }) => response);
 };
 
+export const editEventPlaceRivision: (
+  ajaxPut: AjaxPut<Star>
+) => (
+  props: {
+    id: string;
+    token: string;
+    data: any;
+    callback?: Callback<Star>;
+  }
+) => Observable<InputCollectingEvent> = (ajaxPut = simplePut) => ({
+  id,
+  data,
+  token,
+  callback
+}) => {
+  const URL = Config.api.collectingEvent.editEvent.eventPlaceRivision(id);
+  return ajaxPut(URL, data, token, callback)
+    .do(r => console.log('DO', r, callback))
+    .map(({ response }) => response);
+};
 
 export const getCollectingEventMethods: (
   ajaxGet: AjaxGet<Star>

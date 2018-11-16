@@ -7,7 +7,7 @@ const EventMetadata = (props: EventMetadataProps) => {
     <div>
       <div className="row form-group">
         <div className="col-md-2">
-          <label htmlFor="projectName">Project Name </label>
+          <label htmlFor="txtInputProject">Project Name </label>
         </div>
       </div>
       <div className="row form-group">
@@ -16,7 +16,7 @@ const EventMetadata = (props: EventMetadataProps) => {
             type="text"
             className="form-control"
             id={'txtInputProject'}
-            value={props.name}
+            value={props.name || ''}
             disabled={props.readOnly}
             onChange={e => props.onChangeEventMetaData('name')(e.target.value)}
           />
@@ -38,7 +38,7 @@ const EventMetadata = (props: EventMetadataProps) => {
           <DatePicker
             onClear={props.onClearBornDate}
             onChange={props.onChangeBornDate}
-            value={props.eventDateFrom}
+            value={props.eventDateFrom || ''}
             disabled={props.readOnly}
           />
         </div>
@@ -46,7 +46,7 @@ const EventMetadata = (props: EventMetadataProps) => {
           <DatePicker
             onClear={props.onClearDeathDate}
             onChange={props.onChangeDeathDate}
-            value={props.eventDateTo}
+            value={props.eventDateTo || ''}
             disabled={props.readOnly}
           />
         </div>
@@ -55,7 +55,7 @@ const EventMetadata = (props: EventMetadataProps) => {
             type="text"
             className="form-control"
             id={'txtVerbatimDate'}
-            value={props.eventDateVerbatim}
+            value={props.eventDateVerbatim || ''}
             onChange={e => props.onChangeVerbatimDate(e.target.value)}
             disabled={props.readOnly}
           />
@@ -71,15 +71,14 @@ const EventMetadata = (props: EventMetadataProps) => {
           <select
             className="form-control"
             id="coordinateSource"
-            defaultValue=""
+            defaultValue={undefined}
             disabled={props.readOnly}
+            value={props.methodId}
             onChange={e => {
               props.onChangeEventMetaData('methodId')(e.target.value);
             }}
           >
-            <option value={undefined} selected>
-              {'Select value'}
-            </option>
+            <option value={undefined}>{'Select value'}</option>
             {props.collectingEventMethods ? (
               props.collectingEventMethods.map(
                 (
@@ -108,7 +107,7 @@ const EventMetadata = (props: EventMetadataProps) => {
             rows={4}
             className="form-control"
             id="locality"
-            value={props.note}
+            value={props.note || ''}
             disabled={props.readOnly}
             onChange={(v: React.ChangeEvent<HTMLTextAreaElement>) =>
               props.onChangeEventMetaData('note')(v.target.value)
