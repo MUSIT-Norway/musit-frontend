@@ -12,10 +12,26 @@ export type EditAndSaveButtonProps = {
   cancelButtonText: string;
 };
 
-export const EditAndSaveButtons = (props: EditAndSaveButtonProps) => {
+const EditAndSaveButtons = (props: EditAndSaveButtonProps) => {
   return (
-    <div className="row">
-      <div className="col-md-2">
+    <div className="container-fluid" style={{ padding: '10px' }}>
+      <form className="form-inline" style={{ float: 'right' }}>
+        <button
+          type="button"
+          className="btn btn-link"
+          onClick={props.onClickCancel}
+          disabled={props.cancelButtonState.disabled}
+        >
+          {props.cancelButtonText}
+        </button>{' '}
+        <button
+          type="button"
+          className="btn btn-default"
+          onClick={props.onClickEdit}
+          disabled={props.editButtonState.disabled}
+        >
+          {props.editButtonText}
+        </button>{' '}
         <button
           type="button"
           className="btn btn-primary"
@@ -24,27 +40,9 @@ export const EditAndSaveButtons = (props: EditAndSaveButtonProps) => {
         >
           {props.saveButtonText}
         </button>
-      </div>
-      <div className="col-md-2">
-        <button
-          type="button"
-          className="btn btn-default"
-          onClick={props.onClickEdit}
-          disabled={props.editButtonState.disabled}
-        >
-          {props.editButtonText}
-        </button>
-      </div>
-      <div className="col-md-2">
-        <button
-          type="button"
-          className="btn btn-link"
-          onClick={props.onClickCancel}
-          disabled={props.cancelButtonState.disabled}
-        >
-          {props.cancelButtonText}
-        </button>
-      </div>
+      </form>
     </div>
   );
 };
+
+export default EditAndSaveButtons;

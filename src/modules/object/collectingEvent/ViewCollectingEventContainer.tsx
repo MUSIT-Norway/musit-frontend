@@ -35,7 +35,10 @@ const addProps = (combinedStore: any, upstream: { history: History }) => ({
       token: appSession.accessToken,
       ajaxGet: simpleGet
     }),
-  readOnly: true
+  eventDataReadOnly: true,
+  placeReadonly: true,
+  personReadOnly: true,
+  addStateReadOnly: true
 });
 
 export const onMountProps = () => (props: any) => {

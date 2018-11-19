@@ -4,13 +4,13 @@ import {
   CollectingEvent,
   InputCollectingEvent,
   OutputCollectingEvent,
-  editEventDateRivision,
-  editEventPlaceRivision,
+  editEventDateRevision,
+  editEventPlaceRevision,
   InputDateRevision,
   InputPlaceAndRelation
 } from '../../../models/object/collectingEvent';
 import { addPlace, InputPlace, inputPlace } from '../../../models/object/place';
-import { CollectingEventState, EventState } from './CollectingEventComponent';
+import { CollectingEventState } from './CollectingEventComponent';
 import { Callback, AjaxGet, AjaxPost, AjaxPut } from '../../../types/ajax';
 import { Star } from '../../../types/common';
 import { Observable, Subject } from 'rxjs';
@@ -50,27 +50,32 @@ export type CommonParams = {
 };
 
 export type GetCollectingEventProps = CommonParams & { id: string };
-export type AddCollectingEventProps = CommonParams & { data: EventState };
-export type EditCollectingEventProps = CommonParams & { data: EventState; id: string };
+export type AddCollectingEventProps = CommonParams & { data: CollectingEventState };
+export type EditCollectingEventProps = CommonParams & {
+  data: CollectingEventState;
+  id: string;
+};
 
-export const toBackend: ((p: EventState) => InputCollectingEvent) = (p: EventState) => {
+export const toBackend: ((p: CollectingEventState) => InputCollectingEvent) = (
+  p: CollectingEventState
+) => {
   const c = new CollectingEvent(
-    p.name,
-    p.eventUuid,
-    p.eventType,
-    p.methodId,
-    p.method,
-    p.methodDescription,
-    p.museumId,
-    p.collectionId,
-    p.note,
-    p.partOf,
-    p.createdBy,
-    p.createdDate,
-    p.relatedActors,
-    p.eventDateFrom,
-    p.eventDateTo,
-    p.eventDateVerbatim,
+    p.eventData.name,
+    p.eventData.eventUuid,
+    p.eventData.eventType,
+    p.eventData.methodId,
+    p.eventData.method,
+    p.eventData.methodDescription,
+    p.eventData.museumId,
+    p.eventData.collectionId,
+    p.eventData.note,
+    p.eventData.partOf,
+    p.eventData.createdBy,
+    p.eventData.createdDate,
+    p.eventData.relatedActors,
+    p.eventData.eventDateFrom,
+    p.eventData.eventDateTo,
+    p.eventData.eventDateVerbatim,
     p.placeState.placeUuid
   );
   console.log('to backend ', c);
@@ -120,37 +125,43 @@ const addCollectingEventData = (ajaxPost: AjaxPost<Star>) => (
   );
 };
 
-const editEventDateRivisionData = (ajaxPut: AjaxPut<Star>) => (
+const editEventDateRevisionData = (ajaxPut: AjaxPut<Star>) => (
   props: EditCollectingEventProps
 ) =>
   Observable.of(props).flatMap(props => {
-    const InputPlaceAndRivision = new InputDateRevision(
-      props.data && props.data.eventDateFrom ? props.data.eventDateFrom : '',
-      props.data && props.data.eventDateTo ? props.data.eventDateTo : '',
-      props.data && props.data.eventDateVerbatim ? props.data.eventDateVerbatim : ''
+    const InputPlaceAndRevision = new InputDateRevision(
+      props.data && props.data.eventData.eventDateFrom
+        ? props.data.eventData.eventDateFrom
+        : '',
+      props.data && props.data.eventData.eventDateTo
+        ? props.data.eventData.eventDateTo
+        : '',
+      props.data && props.data.eventData.eventDateVerbatim
+        ? props.data.eventData.eventDateVerbatim
+        : ''
     );
-    return editEventDateRivision(ajaxPut)({
+    return editEventDateRevision(ajaxPut)({
       id: props.id,
-      data: InputPlaceAndRivision,
+      data: InputPlaceAndRevision,
       token: props.token,
       callback: props.callback
     });
   });
 
-const editEventPlaceRivisionData = (ajaxPut: AjaxPut<Star>) => (
+const editEventPlaceRevisionData = (ajaxPut: AjaxPut<Star>) => (
   props: EditCollectingEventProps
 ) =>
   Observable.of(props).flatMap(props => {
-    const InputPlaceAndRivision = new InputPlaceAndRelation(
+    const InputPlaceAndRevision = new InputPlaceAndRelation(
       props.data.placeState && props.data.placeState.placeUuid
         ? props.data.placeState.placeUuid
         : '',
       15
     );
 
-    return editEventPlaceRivision(ajaxPut)({
+    return editEventPlaceRevision(ajaxPut)({
       id: props.id,
-      data: InputPlaceAndRivision,
+      data: InputPlaceAndRevision,
       token: props.token,
       callback: props.callback
     });
@@ -160,27 +171,33 @@ export const addCollectingEvent$: Subject<
   AddCollectingEventProps & { ajaxPost: AjaxPost<Star> }
 > = createAction('addCollectingEvent$');
 
+export const setDisabledState$: Subject<{
+  fieldName: string;
+  value: boolean;
+}> = createAction('setDisabledState$');
+
 export const getCollectingEvent$: Subject<
   GetCollectingEventProps & { ajaxGet: AjaxGet<Star> }
 > = createAction('getCollectingEvent$');
 
-export const editEventDateRivision$: Subject<
+export const editEventDateRevision$: Subject<
   EditCollectingEventProps & {
     ajaxPut: AjaxPut<Star>;
   }
-> = createAction('editEventDateRivision$');
+> = createAction('editEventDateRevision$');
 
-export const editEventPlaceRivision$: Subject<
+export const editEventPlaceRevision$: Subject<
   EditCollectingEventProps & {
     ajaxPut: AjaxPut<Star>;
   }
-> = createAction('editEventPlaceRivision$');
+> = createAction('editEventPlaceRevision$');
 
 type Actions = {
   getCollectingEvent$: Subject<GetCollectingEventProps>;
   addCollectingEvent$: Subject<AddCollectingEventProps>;
-  editEventDateRivision$: Subject<EditCollectingEventProps>;
-  editEventPlaceRivision$: Subject<EditCollectingEventProps>;
+  editEventDateRevision$: Subject<EditCollectingEventProps>;
+  editEventPlaceRevision$: Subject<EditCollectingEventProps>;
+  setDisabledState$: Subject<{ fieldName: string; value: boolean }>;
 };
 
 export const reducer$ = (
@@ -190,6 +207,14 @@ export const reducer$ = (
   ajaxPut: AjaxPut<Star>
 ): Observable<Reducer<CollectingEventStoreState>> => {
   return Observable.merge(
+    actions.setDisabledState$.map(
+      (v: { fieldName: string; value: boolean }) => (
+        state: CollectingEventStoreState
+      ) => ({
+        ...state,
+        [v.fieldName]: v.value
+      })
+    ),
     actions.getCollectingEvent$
       .switchMap(getCollectingEventData(ajaxGet))
       .map((outEvent: OutputCollectingEvent) => (state: CollectingEventStoreState) => ({
@@ -207,8 +232,8 @@ export const reducer$ = (
           eventState: collectingEvent
         })
       ),
-    actions.editEventDateRivision$
-      .switchMap(editEventDateRivisionData(ajaxPut))
+    actions.editEventDateRevision$
+      .switchMap(editEventDateRevisionData(ajaxPut))
       .map(
         (collectingEvent: InputCollectingEvent) => (
           state: CollectingEventStoreState
@@ -217,8 +242,8 @@ export const reducer$ = (
           eventState: collectingEvent
         })
       ),
-    actions.editEventPlaceRivision$
-      .switchMap(editEventPlaceRivisionData(ajaxPut))
+    actions.editEventPlaceRevision$
+      .switchMap(editEventPlaceRevisionData(ajaxPut))
       .map(
         (collectingEvent: InputCollectingEvent) => (
           state: CollectingEventStoreState
@@ -234,8 +259,9 @@ export const store$ = (
   actions$: Actions = {
     getCollectingEvent$,
     addCollectingEvent$,
-    editEventDateRivision$,
-    editEventPlaceRivision$
+    editEventDateRevision$,
+    editEventPlaceRevision$,
+    setDisabledState$
   },
   ajaxGet: AjaxGet<Star> = simpleGet,
   ajaxPost: AjaxPost<Star> = simplePost,

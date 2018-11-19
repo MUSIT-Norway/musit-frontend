@@ -6,8 +6,8 @@ import appSession$ from '../../../stores/appSession';
 import { loadPredefinedCollectingEventValues } from '../../../stores/loadPredefinedCollectingEventValues';
 import predefinedCollectingEventValues$ from '../../../stores/predefinedCollectingEventValues';
 import store$, {
-  editEventDateRivision$,
-  editEventPlaceRivision$,
+  editEventDateRevision$,
+  editEventPlaceRevision$,
   EditCollectingEventProps
 } from './CollectingEventStore';
 import { History } from 'history';
@@ -35,8 +35,8 @@ const editCollectingEventProps = (
   ...combinedStore,
   ...upstream,
   store: { ...combinedStore, localState: undefined },
-  editEventDateRivision: (ajaxPut: AjaxPut<any>) => (props: EditCollectingEventProps) => {
-    editEventDateRivision$.next({
+  editEventDateRevision: (ajaxPut: AjaxPut<any>) => (props: EditCollectingEventProps) => {
+    editEventDateRevision$.next({
       id: props.id,
       data: props.data,
       token: props.token,
@@ -45,10 +45,10 @@ const editCollectingEventProps = (
       callback: props.callback
     });
   },
-  editEventPlaceRivision: (ajaxPut: AjaxPut<any>) => (
+  editEventPlaceRevision: (ajaxPut: AjaxPut<any>) => (
     props: EditCollectingEventProps
   ) => {
-    editEventPlaceRivision$.next({
+    editEventPlaceRevision$.next({
       id: props.id,
       data: props.data,
       token: props.token,

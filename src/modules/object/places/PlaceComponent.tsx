@@ -678,11 +678,6 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
         </div>
       );
     };*/
-    const headerRead = () => (
-      <div>
-        <h3>Place</h3>
-      </div>
-    );
 
     return (
       <div className="container-fluid">
@@ -690,7 +685,7 @@ export default class PlaceComponent extends React.Component<PlaceProps, PlaceSta
           <div className="row form-group">
             <div className="col-md-8">
               <div className="row">
-                <CollapseComponent Head={headerRead()} Body={pageBodyComp} />
+                <CollapseComponent head="Event" Body={pageBodyComp} />
               </div>
             </div>
             <div className="col-md-4">

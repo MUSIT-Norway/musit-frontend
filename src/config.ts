@@ -51,9 +51,9 @@ export default {
       getCollectingEventMethods: '/api/event/collectingmethods',
       getEvent: (eventUuid: string) => `/api/event/events/${eventUuid}`,
       editEvent: {
-        eventDateRivision: (eventUuid: string) =>
+        eventDateRevision: (eventUuid: string) =>
           `/api/event/events/${eventUuid}/dateRevisions`,
-        eventPlaceRivision: (eventUuid: string) =>
+        eventPlaceRevision: (eventUuid: string) =>
           `/api/event/events/${eventUuid}/placeRevisions`
       }
     }

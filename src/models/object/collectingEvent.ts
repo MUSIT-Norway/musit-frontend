@@ -227,7 +227,7 @@ export const addCollectingEvent: (
   return ajaxPost(URL, data, token, callback).map(({ response }) => response);
 };
 
-export const editEventDateRivision: (
+export const editEventDateRevision: (
   ajaxPut: AjaxPut<Star>
 ) => (
   props: {
@@ -242,13 +242,13 @@ export const editEventDateRivision: (
   token,
   callback
 }) => {
-  const URL = Config.api.collectingEvent.editEvent.eventDateRivision(id);
+  const URL = Config.api.collectingEvent.editEvent.eventDateRevision(id);
   return ajaxPut(URL, data, token, callback)
     .do(r => console.log('DO', r, callback))
     .map(({ response }) => response);
 };
 
-export const editEventPlaceRivision: (
+export const editEventPlaceRevision: (
   ajaxPut: AjaxPut<Star>
 ) => (
   props: {
@@ -263,7 +263,7 @@ export const editEventPlaceRivision: (
   token,
   callback
 }) => {
-  const URL = Config.api.collectingEvent.editEvent.eventPlaceRivision(id);
+  const URL = Config.api.collectingEvent.editEvent.eventPlaceRevision(id);
   return ajaxPut(URL, data, token, callback)
     .do(r => console.log('DO', r, callback))
     .map(({ response }) => response);
