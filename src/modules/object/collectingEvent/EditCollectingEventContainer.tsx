@@ -8,7 +8,9 @@ import predefinedCollectingEventValues$ from '../../../stores/predefinedCollecti
 import store$, {
   editEventDateRevision$,
   editEventPlaceRevision$,
-  EditCollectingEventProps
+  EditCollectingEventProps,
+  setDisabledState$,
+  setDraftState$
 } from './CollectingEventStore';
 import { History } from 'history';
 import { AjaxPut } from '../../../types/ajax';
@@ -34,7 +36,12 @@ const editCollectingEventProps = (
 ) => ({
   ...combinedStore,
   ...upstream,
+
   store: { ...combinedStore, localState: undefined },
+  setDisabledState: (fieldName: string) => (value: boolean) =>
+    setDisabledState$.next({ fieldName, value }),
+  setDraftState: (subState?: string) => (fieldName: string) => (value: boolean) =>
+    setDraftState$.next({ subState: subState, fieldName: fieldName, value: value }),
   editEventDateRevision: (ajaxPut: AjaxPut<any>) => (props: EditCollectingEventProps) => {
     editEventDateRevision$.next({
       id: props.id,

@@ -176,6 +176,12 @@ export const setDisabledState$: Subject<{
   value: boolean;
 }> = createAction('setDisabledState$');
 
+export const setDraftState$: Subject<{
+  subState?: string;
+  fieldName: string;
+  value: boolean;
+}> = createAction('setDraftState$');
+
 export const getCollectingEvent$: Subject<
   GetCollectingEventProps & { ajaxGet: AjaxGet<Star> }
 > = createAction('getCollectingEvent$');
@@ -198,6 +204,7 @@ type Actions = {
   editEventDateRevision$: Subject<EditCollectingEventProps>;
   editEventPlaceRevision$: Subject<EditCollectingEventProps>;
   setDisabledState$: Subject<{ fieldName: string; value: boolean }>;
+  setDraftState$: Subject<{ subState?: string; fieldName: string; value: boolean }>;
 };
 
 export const reducer$ = (
@@ -215,6 +222,26 @@ export const reducer$ = (
         [v.fieldName]: v.value
       })
     ),
+    actions.setDraftState$.map(
+      (v: { subState?: string; fieldName: string; value: boolean }) => (
+        state: CollectingEventStoreState
+      ) => {
+        const collectingEvent = state.collectingEvent;
+        if (v.subState) {
+          const newSubState = collectingEvent
+            ? { ...collectingEvent[v.subState], [v.fieldName]: v.value }
+            : { [v.fieldName]: v.value };
+          return {
+            ...state,
+            collectingEvent: {
+              ...state.collectingEvent,
+              [v.subState]: { ...newSubState }
+            }
+          };
+        }
+        return { ...collectingEvent, [v.fieldName]: v.value };
+      }
+    ),
     actions.getCollectingEvent$
       .switchMap(getCollectingEventData(ajaxGet))
       .map((outEvent: OutputCollectingEvent) => (state: CollectingEventStoreState) => ({
@@ -229,7 +256,8 @@ export const reducer$ = (
           state: CollectingEventStoreState
         ) => ({
           ...state,
-          eventState: collectingEvent
+          eventState: collectingEvent,
+          isDraft: true
         })
       ),
     actions.editEventDateRevision$
@@ -261,7 +289,8 @@ export const store$ = (
     addCollectingEvent$,
     editEventDateRevision$,
     editEventPlaceRevision$,
-    setDisabledState$
+    setDisabledState$,
+    setDraftState$
   },
   ajaxGet: AjaxGet<Star> = simpleGet,
   ajaxPost: AjaxPost<Star> = simplePost,

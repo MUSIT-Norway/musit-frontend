@@ -19,7 +19,7 @@ import { History } from 'history';
 import { OutputCollectingEvent } from '../../../models/object/collectingEvent';
 import { AjaxResponse } from 'rxjs';
 import config from '../../../config';
-import { EditState, NonEditState } from '../types';
+import { EditState, NonEditState, RevisionState, DraftState } from '../types';
 import EditAndSaveButtons from '../components/EditAndSaveButtons';
 
 export type EventMetadataProps = EventData & {
@@ -31,7 +31,9 @@ export type EventMetadataProps = EventData & {
   onChangeVerbatimDate: (newDate: string) => void;
   collectingEventMethods: CollectingEventMethod[];
   onSetReadOnlyState?: (value: boolean) => void;
+  setDraftState: (fieldName: string, value: boolean) => void;
   readOnly?: boolean;
+  isDraft?: boolean;
 };
 
 export type Uuid = string;
@@ -63,14 +65,14 @@ export interface EventData {
   eventDateFrom?: string;
   eventDateTo?: string;
   eventDateVerbatim?: string;
-  editState?: EditState | NonEditState;
+  editState: EditState | NonEditState;
 }
 
 export interface PersonState {
   personUuid: string;
   personName: string;
   personSynonyms: string;
-  editState?: EditState | NonEditState;
+  editState: EditState | NonEditState;
 }
 
 export class EventData implements EventData {
@@ -91,13 +93,14 @@ export class EventData implements EventData {
   eventDateFrom?: string;
   eventDateTo?: string;
   eventDateVerbatim?: string;
-  editState?: EditState | NonEditState;
+  editState: EditState | NonEditState;
   constructor(
     name: string,
     eventUuid: EventUuid,
     eventType: number,
     museumId: number,
     collectionId: number,
+    editState: EditState | NonEditState,
     methodId?: number,
     method?: string,
     methodDescription?: string,
@@ -109,8 +112,7 @@ export class EventData implements EventData {
     editingActor?: ActorsAndRelation,
     eventDateFrom?: string,
     eventDateTo?: string,
-    eventDateVerbatim?: string,
-    editState?: EditState | NonEditState
+    eventDateVerbatim?: string
   ) {
     this.name = name;
     this.eventUuid = eventUuid;
@@ -143,6 +145,7 @@ export type CollectingProps = {
   addCollectingEvent?: Function;
   getCollectingEvent?: Function;
   setDisabledState: Function;
+  setDraftState: (subState?: string) => (fieldName: string) => (value: boolean) => void;
   store: CollectingEventStoreState;
   predefinedCollectingEventValues: PredefinedCollectingEventValues;
   appSession: AppSession;
@@ -150,11 +153,14 @@ export type CollectingProps = {
   eventDataReadOnly: boolean;
   placeReadOnly: boolean;
   personReadOnly: boolean;
-  addStateReadOnly: boolean;
+  addStateHidden: boolean;
+  isDraft?: boolean;
+  saveState?: DraftState | RevisionState;
 };
 
 export default (props: CollectingProps) => (
   <CollectingEventComponent
+    setDraftState={props.setDraftState}
     setDisabledState={props.setDisabledState}
     appSession={props.appSession}
     predefinedCollectingEventValues={props.predefinedCollectingEventValues}
@@ -164,10 +170,11 @@ export default (props: CollectingProps) => (
     }
     getCollectingEvent={props.getCollectingEvent}
     history={props.history}
-    eventDataReadOnly={props.eventDataReadOnly && props.addStateReadOnly}
-    placeReadOnly={props.placeReadOnly && props.addStateReadOnly}
-    personReadOnly={props.personReadOnly && props.addStateReadOnly}
-    addStateReadOnly={props.addStateReadOnly}
+    eventDataReadOnly={props.eventDataReadOnly && props.addStateHidden}
+    placeReadOnly={props.placeReadOnly && props.addStateHidden}
+    personReadOnly={props.personReadOnly && props.addStateHidden}
+    addStateHidden={props.addStateHidden}
+    saveState={props.saveState}
   />
 );
 
@@ -185,6 +192,7 @@ export const toFrontend: (p: OutputCollectingEvent) => CollectingEventState = (
         innP.eventType,
         innP.museumId,
         innP.collectionId,
+        'Not editing',
         innP.methodId,
         innP.method,
         innP.methodDescription,
@@ -196,8 +204,7 @@ export const toFrontend: (p: OutputCollectingEvent) => CollectingEventState = (
         undefined,
         innP.eventDateFrom,
         innP.eventDateTo,
-        innP.eventDateVerbatim,
-        undefined
+        innP.eventDateVerbatim
       ),
       placeState: innP.place
         ? {
@@ -205,9 +212,10 @@ export const toFrontend: (p: OutputCollectingEvent) => CollectingEventState = (
             editingInputCoordinate: { ...innP.place.coordinate },
             editingCoordinateAttribute: { ...innP.place.coordinateAttributes },
             editingAttributes: { ...innP.place.attributes },
-            coordinateInvalid: false
+            coordinateInvalid: false,
+            editState: 'Not editing'
           }
-        : { admPlace: null, coordinateInvalid: false }
+        : { admPlace: null, coordinateInvalid: false, editState: 'Not editing' }
     };
 
     console.log('TOFrontEnd: after format ', r);
@@ -220,7 +228,8 @@ export const toFrontend: (p: OutputCollectingEvent) => CollectingEventState = (
       eventType: 6,
       methodId: 4,
       museumId: 5,
-      collectionId: 10
+      collectionId: 10,
+      editState: 'Not editing'
     },
 
     placeState: {
@@ -239,7 +248,8 @@ export const toFrontend: (p: OutputCollectingEvent) => CollectingEventState = (
         altitudeCa: false,
         depthCa: false
       },
-      coordinateInvalid: false
+      coordinateInvalid: false,
+      editState: 'Not editing'
     }
   };
 };
@@ -262,6 +272,7 @@ export class CollectingEventComponent extends React.Component<
               6,
               4,
               5,
+              'Editing',
               10,
               undefined,
               undefined,
@@ -273,8 +284,7 @@ export class CollectingEventComponent extends React.Component<
               undefined,
               undefined,
               undefined,
-              undefined,
-              'Editing'
+              undefined
             ),
 
             placeState: {
@@ -293,7 +303,8 @@ export class CollectingEventComponent extends React.Component<
                 altitudeCa: false,
                 depthCa: false
               },
-              coordinateInvalid: false
+              coordinateInvalid: false,
+              editState: 'Editing'
             }
           };
   }
@@ -309,7 +320,7 @@ export class CollectingEventComponent extends React.Component<
     const PlaceBodyComponent = (
       <div>
         <PlaceComponent
-          {...this.state}
+          {...this.state.placeState}
           appSession={this.props.appSession}
           coordinatePredefined={{
             coordinatDatumTypes:
@@ -326,9 +337,19 @@ export class CollectingEventComponent extends React.Component<
               this.props.predefinedCollectingEventValues.coordinateTypes
           }}
           history={this.props.history}
-          readOnly={
-            this.props.placeReadOnly && this.props.addStateReadOnly ? true : false
+          setDraftState={(fieldName: string, value: boolean) =>
+            this.props.setDraftState('placeState')(fieldName)(value)
           }
+          isDraft={this.props.isDraft}
+          setEditMode={() => {
+            localStorage.clear();
+            localStorage.setItem['placeEdit'] = true;
+            this.props.setDisabledState('placeReadOnly')(false);
+            this.props.setDisabledState('personReadOnly')(true);
+            this.props.setDisabledState('eventDataReadOnly')(true);
+            this.props.setDisabledState('addStateReadOnly')(false);
+          }}
+          readOnly={this.props.placeReadOnly && this.props.addStateHidden ? true : false}
           onChangeOthers={(field: string) => (value: string) => {
             this.setState((cs: CollectingEventState) => {
               const newAttributes: MarinePlaceAttribute = cs.placeState.editingAttributes
@@ -669,7 +690,13 @@ export class CollectingEventComponent extends React.Component<
           onSetReadOnlyState={(value: boolean) =>
             this.props.setDisabledState('eventDataReadOnly')(value)
           }
-          readOnly={this.props.eventDataReadOnly && this.props.addStateReadOnly ? true : false}
+          setDraftState={(fieldName: string, value: boolean) =>
+            this.props.setDraftState('eventData')(fieldName)(value)
+          }
+          isDraft={this.props.isDraft}
+          readOnly={
+            this.props.eventDataReadOnly && this.props.addStateHidden ? true : false
+          }
           collectingEventMethods={
             this.props.predefinedCollectingEventValues.collectingMethods || []
           }
@@ -753,70 +780,61 @@ export class CollectingEventComponent extends React.Component<
         </div>
 
         <div className="panel-footer">
-          <EditAndSaveButtons
-            onClickCancel={() => this.props.setDisabledState('addStateReadOnly')(true)}
-            onClickEdit={() => this.props.setDisabledState('addStateReadOnly')(false)}
-            onClickSave={() => {
-              this.props.setDisabledState('addStateReadOnly')(true);
-              this.setState((cs: CollectingEventState) => {
-                const ps = cs.placeState;
-                if (!ps.editCoordinateMode) {
-                  return {
-                    ...cs,
-                    placeState: {
-                      ...cs.placeState,
-                      editCoorditeMode: false
-                    }
-                  };
-                }
-                return {
-                  ...cs,
-                  placeState: {
-                    ...cs.placeState
-                  }
-                  /* coordinateHistoryIndeks: ps.coordinateHistoryIndeks + 1,
-                  coordinateHistory: [
-                    ...ps.coordinateHistory,
-                    {
-                      coordinate: ps.editingCoordinate,
-                      coordinateRevisionType: 'coordinateRevision'
-                    }
-                  ] */
-                };
-              });
+          {!this.props.addStateHidden ? (
+            <EditAndSaveButtons
+              onClickDraft={() => {
+                this.props.setDisabledState('addStateReadOnly')(true);
+                this.props.setDraftState(undefined)('isDraft')(false);
+              }}
+              onClickCancel={() => this.props.setDisabledState('addStateReadOnly')(true)}
+              onClickEdit={() => this.props.setDisabledState('addStateReadOnly')(false)}
+              onClickSave={() => {
+                this.props.setDraftState(undefined)('isDraft')(false);
+                this.props.setDisabledState('addStateReadOnly')(true);
 
-              this.props.addCollectingEvent &&
-                this.props.addCollectingEvent()({
-                  data: this.state,
-                  token: this.props.appSession.accessToken,
-                  collectionId: this.props.appSession.collectionId,
-                  callback: {
-                    onComplete: (r: AjaxResponse) => {
-                      const url = config.magasin.urls.client.collectingEvent.view(
-                        this.props.appSession,
-                        r.response.eventUuid
-                      );
-                      this.props.history && this.props.history.replace(url);
+                this.props.addCollectingEvent &&
+                  this.props.addCollectingEvent()({
+                    data: this.state,
+                    token: this.props.appSession.accessToken,
+                    collectionId: this.props.appSession.collectionId,
+                    callback: {
+                      onComplete: (r: AjaxResponse) => {
+                        const url = config.magasin.urls.client.collectingEvent.view(
+                          this.props.appSession,
+                          r.response.eventUuid
+                        );
+                        this.props.history && this.props.history.replace(url);
+                      }
                     }
-                  }
-                });
-            }}
-            editButtonState={{
-              visible: true,
-              disabled: this.props.addStateReadOnly
-            }}
-            cancelButtonState={{
-              visible: true,
-              disabled: this.props.addStateReadOnly
-            }}
-            saveButtonState={{
-              visible: true,
-              disabled: this.props.addStateReadOnly
-            }}
-            saveButtonText="Lagre"
-            editButtonText="Endre"
-            cancelButtonText="Avbryt"
-          />
+                  });
+              }}
+              editButtonState={{
+                visible: false,
+                disabled: !this.props.addStateHidden
+              }}
+              cancelButtonState={{
+                visible: true,
+                disabled: this.props.addStateHidden
+              }}
+              saveButtonState={{
+                visible: true,
+                disabled: this.props.addStateHidden
+              }}
+              draftButtonState={{
+                visible:
+                  this.props.isDraft === undefined || this.props.isDraft ? true : false,
+                disabled:
+                  this.props.addStateHidden &&
+                  (this.props.isDraft === undefined || this.props.isDraft ? false : true)
+              }}
+              saveButtonText="Lagre"
+              editButtonText="Endre"
+              cancelButtonText="Avbryt"
+              draftButtonText="Lagre utkast"
+            />
+          ) : (
+            <div />
+          )}
         </div>
       </div>
     );

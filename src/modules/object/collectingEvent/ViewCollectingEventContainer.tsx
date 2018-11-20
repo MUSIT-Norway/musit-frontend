@@ -6,7 +6,11 @@ import lifeCycle from '../../../shared/lifeCycle';
 import appSession$ from '../../../stores/appSession';
 import { loadPredefinedCollectingEventValues } from '../../../stores/loadPredefinedCollectingEventValues';
 import predefinedCollectingEventValues$ from '../../../stores/predefinedCollectingEventValues';
-import store$, { getCollectingEvent$ } from './CollectingEventStore';
+import store$, {
+  getCollectingEvent$,
+  setDisabledState$,
+  setDraftState$
+} from './CollectingEventStore';
 import { AppSession } from '../../../types/appSession';
 import { History } from 'history';
 import { simpleGet } from '../../../shared/RxAjax';
@@ -35,6 +39,10 @@ const addProps = (combinedStore: any, upstream: { history: History }) => ({
       token: appSession.accessToken,
       ajaxGet: simpleGet
     }),
+  setDisabledState: (fieldName: string) => (value: boolean) =>
+    setDisabledState$.next({ fieldName, value }),
+  setDraftState: (subState?: string) => (fieldName: string) => (value: boolean) =>
+    setDraftState$.next({ subState: subState, fieldName: fieldName, value: value }),
   eventDataReadOnly: true,
   placeReadonly: true,
   personReadOnly: true,

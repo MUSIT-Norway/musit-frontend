@@ -121,12 +121,24 @@ const EventMetadata = (props: EventMetadataProps) => {
         onClickCancel={() => {}}
         onClickEdit={() => {}}
         onClickSave={() => {}}
+        onClickDraft={() => {}}
         editButtonState={{ visible: true, disabled: props.readOnly ? false : true }}
-        cancelButtonState={{ visible: true, disabled: props.readOnly ? true : false }}
-        saveButtonState={{ visible: true, disabled: props.readOnly ? true : false }}
+        cancelButtonState={{
+          visible: true,
+          disabled: props.readOnly ? true : props.editState === 'Not editing' || false
+        }}
+        saveButtonState={{
+          visible: true,
+          disabled: props.readOnly ? true : props.editState === 'Not editing' || false
+        }}
+        draftButtonState={{
+          visible: props.isDraft ? true : false,
+          disabled: props.readOnly ? true : props.editState === 'Not editing' || false
+        }}
         saveButtonText="Lagre"
         editButtonText="Endre"
         cancelButtonText="Avbryt"
+        draftButtonText="Lagre utkast"
       />
     </div>
   );

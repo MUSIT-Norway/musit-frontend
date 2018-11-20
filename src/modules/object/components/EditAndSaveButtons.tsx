@@ -2,12 +2,15 @@ import * as React from 'react';
 
 export type EditAndSaveButtonProps = {
   onClickSave: ((e: React.MouseEvent<HTMLButtonElement>) => void);
+  onClickDraft: ((e: React.MouseEvent<HTMLButtonElement>) => void);
   onClickEdit: ((e: React.MouseEvent<HTMLButtonElement>) => void);
   onClickCancel: ((e: React.MouseEvent<HTMLButtonElement>) => void);
   editButtonState: { visible: boolean; disabled: boolean };
   saveButtonState: { visible: boolean; disabled: boolean };
   cancelButtonState: { visible: boolean; disabled: boolean };
+  draftButtonState: { visible: boolean; disabled: boolean };
   saveButtonText: string;
+  draftButtonText: string;
   editButtonText: string;
   cancelButtonText: string;
 };
@@ -24,17 +27,29 @@ const EditAndSaveButtons = (props: EditAndSaveButtonProps) => {
         >
           {props.cancelButtonText}
         </button>{' '}
+        {props.editButtonState.visible ? (
+          <button
+            type="button"
+            className="btn btn-default"
+            onClick={props.onClickEdit}
+            disabled={props.editButtonState.disabled}
+          >
+            {props.editButtonText}
+          </button>
+        ) : (
+          <span />
+        )}{' '}
         <button
           type="button"
-          className="btn btn-default"
-          onClick={props.onClickEdit}
-          disabled={props.editButtonState.disabled}
+          className="btn btn-warning"
+          onClick={props.onClickDraft}
+          disabled={props.draftButtonState.disabled}
         >
-          {props.editButtonText}
+          {props.draftButtonText}
         </button>{' '}
         <button
           type="button"
-          className="btn btn-primary"
+          className="btn btn-success"
           onClick={props.onClickSave}
           disabled={props.saveButtonState.disabled}
         >

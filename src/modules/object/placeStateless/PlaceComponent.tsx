@@ -89,7 +89,7 @@ export interface PlaceState {
   coordinateInvalid: boolean;
   coordinateCollapsed?: boolean;
   altitudeCollapsed?: boolean;
-  editState?: EditState | NonEditState;
+  editState: EditState | NonEditState;
 }
 
 export class PlaceState implements PlaceState {
@@ -102,12 +102,14 @@ export class PlaceState implements PlaceState {
   coordinateInvalid: boolean;
   coordinateCollapsed?: boolean;
   altitudeCollapsed?: boolean;
+  editState: EditState | NonEditState;
   constructor(
     admPlace: AdmPlace,
     editingInputCoordinate: InputCoordinate,
     editingCoordinateAttributes: InputCoordinateAttribute,
     editingAttributes: MarinePlaceAttribute,
     coordinateInvalid: boolean,
+    editState: EditState | NonEditState,
     editCoordinateMode?: boolean,
     coordinateCollapsed?: boolean,
     altitudeCollapsed?: boolean,
@@ -119,7 +121,7 @@ export class PlaceState implements PlaceState {
     this.editingAttributes = editingAttributes;
     this.editCoordinateMode = editCoordinateMode;
     this.coordinateInvalid = coordinateInvalid;
-    this.coordinateCollapsed = coordinateCollapsed;
+    (this.editState = editState), (this.coordinateCollapsed = coordinateCollapsed);
     this.altitudeCollapsed = altitudeCollapsed;
     this.placeUuid = placeUuid;
   }
@@ -147,9 +149,12 @@ const PlaceComponent = (
     onChangeAdmPlace: (value: AdmPlace) => void;
     onChangeOthers: (field: string) => (value: string) => void;
     getAdmPlaceData: (field: string) => (a: AdmPlace) => string;
+    setDraftState: (fieldName: string, value: boolean) => void;
+    setEditMode: () => void;
     appSession: AppSession;
     history: History;
     readOnly?: boolean;
+    isDraft?: boolean;
   } & CoordinateProps
 ) => {
   return (
@@ -167,11 +172,23 @@ const PlaceComponent = (
         <EditAndSaveButtons
           onClickCancel={() => {}}
           onClickEdit={() => {}}
+          onClickDraft={() => {}}
           onClickSave={() => {}}
           editButtonState={{ visible: true, disabled: props.readOnly ? false : true }}
-          cancelButtonState={{ visible: true, disabled: props.readOnly ? true : false }}
-          saveButtonState={{ visible: true, disabled: props.readOnly ? true : false }}
+          draftButtonState={{
+            visible: props.isDraft ? true : false,
+            disabled: props.readOnly ? true : props.editState === 'Not editing' || false
+          }}
+          cancelButtonState={{
+            visible: true,
+            disabled: props.readOnly ? true : props.editState === 'Not editing' || false
+          }}
+          saveButtonState={{
+            visible: true,
+            disabled: props.readOnly ? true : props.editState === 'Not editing' || false
+          }}
           saveButtonText="Lagre"
+          draftButtonText="Lagre utkast"
           editButtonText="Endre"
           cancelButtonText="Avbryt"
         />
