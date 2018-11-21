@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { musitCoodinateValidate } from '../../../shared/util';
 import CollapseComponent from '../components/Collapse';
-import { Collection, SynonymType, ExternalId } from '../person/PersonComponent';
+//import { Collection, SynonymType, ExternalId } from '../person/PersonComponent';
 import EventMetadata from './EventMetadata';
 import { formatISOString } from '../../../shared/util';
 import { InputCoordinate, InputCoordinateAttribute } from '../../../models/object/place';
@@ -17,9 +17,16 @@ import {
 } from './CollectingEventStore';
 import { AppSession } from '../../../types/appSession';
 import { History } from 'history';
-import { OutputCollectingEvent } from '../../../models/object/collectingEvent';
+import {
+  OutputCollectingEvent,
+  ActorsAndRelation,
+  EventUuid,
+  PersonUuid
+} from '../../../models/object/collectingEvent';
 import { AjaxResponse } from 'rxjs';
 import config from '../../../config';
+import PersonComponent from './PersonComponent';
+import { personDet } from '../../../models/object/classHist';
 
 export type CollectingEventProps = {
   onChangeTextField: (fieldName: string) => (value: string) => void;
@@ -37,38 +44,6 @@ export type EventMetadataProps = EventState & {
   readOnly?: boolean;
 };
 
-export type Person = {
-  collections?: Collection[];
-  firstName?: string;
-  lastName?: string;
-  name: string;
-  personAttribute?: PersonAttribute;
-  personUuid: PersonUuid;
-  synonyms?: SynonymType[];
-  title?: string;
-};
-
-export type PersonAttribute = {
-  bornDate?: string;
-  deathDate?: string;
-  displayName?: string;
-  externalIds?: ExternalId[];
-  legalEntityType: string;
-  url?: string;
-  verbatimDate?: string;
-};
-
-export type Uuid = string;
-export type EventUuid = Uuid;
-export type RoleId = number;
-export type PersonUuid = Uuid;
-export type PersonNameUuid = Uuid;
-
-export type ActorsAndRelation = {
-  actorUuid: Uuid;
-  relation: RoleId;
-};
-
 export interface EventState {
   name: string;
   eventUuid: EventUuid;
@@ -83,6 +58,7 @@ export interface EventState {
   partOf?: EventUuid;
   createdBy?: PersonUuid; // Person;
   createdDate?: string;
+  editingRelatedActors?: ActorsAndRelation;
   relatedActors?: ActorsAndRelation[];
   eventDateFrom?: string;
   eventDateTo?: string;
@@ -102,6 +78,7 @@ export class EventState implements EventState {
   partOf?: EventUuid;
   createdBy?: PersonUuid; // Person;
   createdDate?: string;
+  editingRelatedActors?: ActorsAndRelation;
   relatedActors?: ActorsAndRelation[];
   eventDateFrom?: string;
   eventDateTo?: string;
@@ -121,6 +98,7 @@ export class EventState implements EventState {
     partOf?: EventUuid,
     createdBy?: PersonUuid, //Person,
     createdDate?: string,
+    editingRelatedActors?: ActorsAndRelation,
     relatedActors?: ActorsAndRelation[],
     eventDateFrom?: string,
     eventDateTo?: string,
@@ -138,6 +116,7 @@ export class EventState implements EventState {
     this.partOf = partOf;
     this.createdBy = createdBy;
     this.createdDate = createdDate;
+    this.editingRelatedActors = editingRelatedActors;
     this.relatedActors = relatedActors;
     this.eventDateFrom = eventDateFrom;
     this.eventDateTo = eventDateTo;
@@ -152,7 +131,6 @@ export interface CollectingEventState {
 
 export class CollectingEventState implements CollectingEventState {
   eventState: EventState;
-
   constructor(eventState: EventState) {
     this.eventState = eventState;
   }
@@ -211,6 +189,7 @@ export const toFrontend: (p: OutputCollectingEvent) => CollectingEventState = (
       innP.partOf,
       innP.createdBy,
       innP.createdDate,
+      {},
       innP.relatedActors,
       innP.eventDateFrom,
       innP.eventDateTo,
@@ -257,7 +236,7 @@ export class CollectingEventComponent extends React.Component<
   constructor(props: CollectingProps) {
     super(props);
     console.log('COLLECTING EVENT STORE', props.store);
-    console.log('VIEW MODE : ', props.readOnly);
+
     this.state =
       props.store && props.store.localState
         ? props.store.localState
@@ -290,6 +269,7 @@ export class CollectingEventComponent extends React.Component<
               }
             }
           };
+    console.log('COLL EVENT STATE : ', this.state);
   }
 
   componentWillReceiveProps(props: CollectingProps) {
@@ -717,6 +697,7 @@ export class CollectingEventComponent extends React.Component<
     );
     const HeaderRead = () => <h3>Place</h3>;
     const HeaderEventMetadata = () => <h3>Name and Date</h3>;
+    const HeaderPerson = () => <h3>Person</h3>;
 
     const EventMetadataComponent = (
       <div>
@@ -786,6 +767,86 @@ export class CollectingEventComponent extends React.Component<
       </div>
     );
 
+    const PersonComponentBody = (
+      <div>
+        <PersonComponent
+          {...this.state}
+          disabled={this.props.readOnly ? this.props.readOnly : false}
+          value={''}
+          appSession={this.props.appSession}
+          history={this.props.history}
+          actorsAndRelation={
+            this.state.eventState ? this.state.eventState.relatedActors : []
+          }
+          onChangePerson={(suggestion: personDet) => {
+            this.setState((cs: CollectingEventState) => {
+              console.log('ANURADHA RETURNED cs ', cs);
+              const newEditActros = {
+                actorUuid: suggestion ? suggestion.personUuid : '',
+                personNameUuid: suggestion ? suggestion.personNameUuid : '',
+                name: suggestion ? suggestion.name : '',
+                roleId: 15
+              };
+              console.log('ANURADHA RETURNED SUGGESSTION ', newEditActros);
+              return {
+                ...cs,
+                eventState: {
+                  ...cs.eventState,
+                  editingRelatedActors: newEditActros
+                }
+              };
+            });
+          }}
+          onAddPerson={() => {
+            this.setState((cs: CollectingEventState) => {
+              console.log('ANURADHA RETURNED onAdd cs ', cs);
+              const index = cs.eventState.relatedActors
+                ? cs.eventState.relatedActors.length
+                : 0;
+              const currentRelatedActors = cs.eventState.relatedActors
+                ? cs.eventState.relatedActors
+                : [];
+              const newRActors = [
+                ...currentRelatedActors.slice(0, index),
+                cs.eventState.editingRelatedActors || {},
+                ...currentRelatedActors.slice(index + 1)
+              ];
+              return {
+                ...cs,
+                eventState: {
+                  ...cs.eventState,
+                  relatedActors: newRActors
+                }
+              };
+            });
+          }}
+          onDeletePerson={(i: number) => {
+            this.setState((cs: CollectingEventState) => {
+              console.log('ANURADHA RETURNED onAdd cs ', cs);
+              const currentRelatedActors = cs.eventState.relatedActors
+                ? cs.eventState.relatedActors
+                : [];
+              const newRActors =
+                currentRelatedActors.length === 1
+                  ? undefined
+                  : [
+                      ...currentRelatedActors.slice(0, i),
+                      ...currentRelatedActors.slice(i + 1)
+                    ];
+              return {
+                ...cs,
+                eventState: {
+                  ...cs.eventState,
+                  relatedActors: newRActors,
+                  editingRelatedActors: currentRelatedActors.length === 1 ? {} : undefined
+                }
+              };
+            });
+          }}
+        />
+      </div>
+    );
+
     return (
       <div className="container-fluid">
         <div
@@ -804,6 +865,15 @@ export class CollectingEventComponent extends React.Component<
                   readOnly={this.props.readOnly}
                 />
               </div>
+
+              <div className="row">
+                <CollapseComponent
+                  Head={HeaderPerson()}
+                  Body={PersonComponentBody}
+                  readOnly={this.props.readOnly}
+                />
+              </div>
+
               <div className="row">
                 <CollapseComponent
                   Head={HeaderRead()}

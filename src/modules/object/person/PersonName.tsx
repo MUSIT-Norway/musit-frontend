@@ -4,6 +4,7 @@ import * as React from 'react';
 import { PersonName } from './PersonComponent';
 import { AppSession } from 'src/types/appSession';
 import { History } from 'history';
+import { PersonStoreState } from './PersonStore';
 
 /* type PersonNameState = {
   title?: string;
@@ -14,7 +15,7 @@ import { History } from 'history';
 
 type AddPersonNameProps = PersonNameProps & { match: { params: { newName: string } } };
 
-type AddPersonNameState = {
+export type AddPersonNameState = {
   visPersonForm: boolean;
   collections?: string;
   personForName: string;
@@ -24,15 +25,16 @@ type AddPersonNameState = {
   disableOnChangeOtherName?: boolean;
 };
 
-type PersonNameProps = PersonName & {
-  disableOnChangeFullName?: boolean;
-  disableOnChangeOtherName?: boolean;
+type PersonNameProps = AddPersonNameState & {
   appSession: AppSession;
   history: History;
   onClick?: () => void;
   showAddPersonButton: () => boolean;
   onChangePersonForPersonname: (val?: string) => void;
   onChangeFullName: (fieldName: string) => (newValue: string) => void;
+  onCreatePersonName: Function;
+  addPersonName?: Function;
+  store: PersonStoreState;
 };
 
 const PersonName = (props: PersonNameProps) => (
@@ -47,7 +49,7 @@ const PersonName = (props: PersonNameProps) => (
               <div className="col-sm-3">
                 <label htmlFor="title">Title</label>
                 <input
-                  value={props.title}
+                  value={props.personName.title}
                   type="text"
                   className="form-control"
                   id="title"
@@ -60,7 +62,7 @@ const PersonName = (props: PersonNameProps) => (
               <div className="col-sm-3">
                 <label htmlFor="first-name">First name</label>
                 <input
-                  value={props.firstName}
+                  value={props.personName.firstName}
                   type="text"
                   className="form-control"
                   id="first-name"
@@ -73,7 +75,7 @@ const PersonName = (props: PersonNameProps) => (
               <div className="col-sm-3">
                 <label htmlFor="last-name">Last name</label>
                 <input
-                  value={props.lastName}
+                  value={props.personName.lastName}
                   type="text"
                   className="form-control"
                   id="Last-name"
@@ -86,7 +88,7 @@ const PersonName = (props: PersonNameProps) => (
               <div className="col-sm-3">
                 <label htmlFor="last-name">Navn</label>
                 <input
-                  value={props.nameString}
+                  value={props.personName.nameString}
                   type="text"
                   className="form-control"
                   id="name"
@@ -142,7 +144,21 @@ const PersonName = (props: PersonNameProps) => (
             >
               Cancel
             </button>
-            <button type="button" className="btn btn-primary">
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={e => {
+                e.preventDefault();
+                props.onCreatePersonName(props.appSession);
+              }}
+              /* {
+                  console.log('Anuradha hit save ', props.appSession)
+                  return props.addPersonName &&  props.addPersonName({
+                    data: props.personName,
+                    token: props.appSession.accessToken,
+                    collectionId: props.appSession.collectionId})
+              }}} */
+            >
               Save
             </button>
           </div>
@@ -158,38 +174,50 @@ export class AddPersonName extends React.Component<
 > {
   constructor(props: AddPersonNameProps) {
     console.log('NEWNAME: ', props.match.params.newName);
+    console.log('STORE ', props.store.personNameState);
     super(props);
-    this.state = {
-      visPersonForm: false,
-      personName: {
-        firstName:
-          this.props.match.params && this.props.match.params.newName
-            ? this.props.match.params.newName
-            : props.firstName
-              ? props.firstName
-              : '',
-        lastName: props.lastName ? props.lastName : '',
-        nameString: props.nameString ? props.nameString : ''
-      },
-      personForName: '0',
-      disableOnChangeOtherName: false,
-      disableOnChangeFullName:
-        this.props.match.params && this.props.match.params.newName ? true : false
-    };
+    this.state = props.store.personNameState
+      ? props.store.personNameState
+      : {
+          visPersonForm: false,
+          personName: {
+            firstName:
+              this.props.match.params && this.props.match.params.newName
+                ? this.props.match.params.newName
+                : props.personName && props.personName.firstName
+                  ? props.personName.firstName
+                  : '',
+            lastName:
+              props.personName && props.personName.lastName
+                ? props.personName.lastName
+                : '',
+            nameString:
+              props.personName && props.personName.nameString
+                ? props.personName.nameString
+                : ''
+          },
+          personForName: '0',
+          disableOnChangeOtherName: false,
+          disableOnChangeFullName:
+            this.props.match.params && this.props.match.params.newName ? true : false
+        };
   }
 
+  componentWillReceiveProps(props: AddPersonNameProps) {
+    console.log('Recieve props: ====>', props);
+    if (props.store.localState) {
+      this.setState(() => ({ ...props.store.personNameState }));
+    }
+  }
   render() {
+    console.log('Page load ');
     return (
       <div style={{ padding: '25px' }}>
         <PersonName
+          {...this.state}
+          store={this.props.store}
           appSession={this.props.appSession}
           history={this.props.history}
-          firstName={this.state.personName && this.state.personName.firstName}
-          title={this.state.personName && this.props.title}
-          lastName={this.state.personName && this.props.lastName}
-          nameString={this.state.personName && this.props.nameString}
-          disableOnChangeFullName={this.state.disableOnChangeFullName}
-          disableOnChangeOtherName={this.state.disableOnChangeOtherName}
           showAddPersonButton={() => {
             return this.state.personForName === '0' ? true : false;
           }}
@@ -208,8 +236,21 @@ export class AddPersonName extends React.Component<
               visPersonForm: true
             }))
           }
+          //addPersonName={this.props.addPersonName && this.props.addPersonName(this.props.appSession)}
+          onCreatePersonName={(appSession: AppSession) => {
+            console.log('Anuradha hit save ', this.state);
+            return (
+              this.props.addPersonName &&
+              this.props.addPersonName()({
+                data: this.state,
+                token: appSession.accessToken,
+                collectionId: appSession.collectionId
+              })
+            );
+          }}
           onChangeFullName={(fieldName: string) => (value: string) => {
             this.setState((ps: AddPersonNameState) => {
+              console.log('ANURADHA in onChangeFullName : ', fieldName, value);
               const lastName =
                 fieldName === 'lastName'
                   ? value
