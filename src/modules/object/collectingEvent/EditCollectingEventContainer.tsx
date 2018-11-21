@@ -43,7 +43,7 @@ const editCollectingEventProps = (combinedStore: any, upstream: { history: Histo
     placeReadOnly: localStorage.getItem('editComponent') === 'place' ? false : true,
     personReadOnly: localStorage.getItem('editComponent') === 'person' ? false : true,
     addStateHidden: true,
-    store: { ...combinedStore, localState: undefined },
+    store: { ...combinedStore, localState: combinedStore.store.localState },
 
     getCollectingEvent: (ajaxGet = simpleGet) => (appSession: AppSession, id: string) =>
       getCollectingEvent$.next({

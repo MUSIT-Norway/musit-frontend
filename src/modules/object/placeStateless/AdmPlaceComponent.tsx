@@ -22,7 +22,7 @@ const AdmPlaceComponent = (
       </span>
     );
   };
-  console.log('Admplance' + JSON.stringify(props.admPlace));
+  console.log('Admplance', props.admPlace);
 
   return (
     <div>

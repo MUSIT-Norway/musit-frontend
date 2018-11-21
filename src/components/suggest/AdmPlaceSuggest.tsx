@@ -79,6 +79,7 @@ export class AdmPlaceSuggestion extends React.Component<
     type: 'search',
     onBlur: this.props.clear,
     onChange: (event: TODO, { newValue }: TODO) => {
+      console.log('OnChange', newValue);
       this.setState(ps => {
         return { ...ps, value: newValue };
       });
@@ -105,7 +106,7 @@ export class AdmPlaceSuggestion extends React.Component<
         renderSuggestion={(suggestion: AdmPlace) => this.props.renderFunc(suggestion)}
         inputProps={{
           ...(this.AdmPlaceProps as TODO),
-          value: this.state.value,
+          value: this.state.value || this.props.value,
           disabled: this.state.disabled ? this.state.disabled : false
         }}
         shouldRenderSuggestions={v => v !== 'undefined'}
