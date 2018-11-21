@@ -154,6 +154,9 @@ export type CollectingProps = {
   placeReadOnly: boolean;
   personReadOnly: boolean;
   addStateHidden: boolean;
+  placeCollapsed: boolean;
+  eventDataCollapsed: boolean;
+  personCollapsed: boolean;
   isDraft?: boolean;
   saveState?: DraftState | RevisionState;
 };
@@ -173,6 +176,9 @@ export default (props: CollectingProps) => (
     eventDataReadOnly={props.eventDataReadOnly && props.addStateHidden}
     placeReadOnly={props.placeReadOnly && props.addStateHidden}
     personReadOnly={props.personReadOnly && props.addStateHidden}
+    personCollapsed={props.personCollapsed}
+    placeCollapsed={props.placeCollapsed}
+    eventDataCollapsed={props.eventDataCollapsed}
     addStateHidden={props.addStateHidden}
     saveState={props.saveState}
   />
@@ -321,6 +327,7 @@ export class CollectingEventComponent extends React.Component<
       <div>
         <PlaceComponent
           {...this.state.placeState}
+          collectingEventUUid={this.state.eventData.eventUuid}
           appSession={this.props.appSession}
           coordinatePredefined={{
             coordinatDatumTypes:
@@ -343,11 +350,7 @@ export class CollectingEventComponent extends React.Component<
           isDraft={this.props.isDraft}
           setEditMode={() => {
             localStorage.clear();
-            localStorage.setItem['placeEdit'] = true;
-            this.props.setDisabledState('placeReadOnly')(false);
-            this.props.setDisabledState('personReadOnly')(true);
-            this.props.setDisabledState('eventDataReadOnly')(true);
-            this.props.setDisabledState('addStateReadOnly')(false);
+            localStorage.setItem('editComponent', 'place');
           }}
           readOnly={this.props.placeReadOnly && this.props.addStateHidden ? true : false}
           onChangeOthers={(field: string) => (value: string) => {
@@ -770,12 +773,14 @@ export class CollectingEventComponent extends React.Component<
             head="Event data"
             Body={EventMetadataComponent}
             readOnly={this.props.eventDataReadOnly}
+            collapsed={this.props.eventDataCollapsed}
           />
           <br />
           <CollapseComponent
             head="Place"
             Body={PlaceBodyComponent}
             readOnly={this.props.placeReadOnly}
+            collapsed={this.props.placeCollapsed}
           />
         </div>
 

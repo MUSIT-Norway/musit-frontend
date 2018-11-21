@@ -22,6 +22,7 @@ const AdmPlaceComponent = (
       </span>
     );
   };
+  console.log('Admplance' + JSON.stringify(props.admPlace));
 
   return (
     <div>
@@ -35,7 +36,7 @@ const AdmPlaceComponent = (
           <AdmplaceSuggest
             id="personNameSuggest"
             disabled={props.readOnly}
-            value={props.admPlace && props.admPlace.name ? props.admPlace.name || '' : ''}
+            value={props.admPlace && props.admPlace.name ? props.admPlace.name : ''}
             renderFunc={admPlaceAsString}
             placeHolder="Admplace"
             appSession={props.appSession}
@@ -43,26 +44,6 @@ const AdmPlaceComponent = (
             history={props.history}
           />
         </div>
-        {/* <div className="col-md-5">
-        <select
-          className="form-control" //
-          id="admPlaceName"
-          onChange={e => {
-            e.preventDefault();
-            props.onChange(e.target.value);
-          }}
-        >
-          {admPlaces.map((a: AdmPlace) => (
-            <option
-              key={`optionRow_${a.admPlaceId || 0}`}
-              value={a.admPlaceId}
-              label={`${a.name || ''} Type: ${a.type || ' : Path : '} (${
-                a.kommune ? a.kommune + ':' : ''
-              } ${a.fylke ? a.fylke + ':' : ''} : ${a.land ? a.land : ''})`}
-            />
-          ))}
-        </select>
-      </div> */}
       </div>
       <div className="row form-group">
         <div className="col-md-2">

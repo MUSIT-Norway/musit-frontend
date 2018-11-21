@@ -32,6 +32,7 @@ const combinedStore$ = createStore(
 const addProps = (combinedStore: any, upstream: { history: History }) => ({
   ...combinedStore,
   ...upstream,
+
   getCollectingEvent: (appSession: AppSession, id: string) =>
     getCollectingEvent$.next({
       id: id,
@@ -44,9 +45,12 @@ const addProps = (combinedStore: any, upstream: { history: History }) => ({
   setDraftState: (subState?: string) => (fieldName: string) => (value: boolean) =>
     setDraftState$.next({ subState: subState, fieldName: fieldName, value: value }),
   eventDataReadOnly: true,
-  placeReadonly: true,
+  placeReadOnly: true,
   personReadOnly: true,
-  addStateReadOnly: true
+  addStateHidden: true,
+  placeCollapsed: false,
+  eventDataCollapsed: false,
+  personCollapsed: false
 });
 
 export const onMountProps = () => (props: any) => {
@@ -55,7 +59,7 @@ export const onMountProps = () => (props: any) => {
 
 export const onUnmount = () => (props: any) => {};
 
-const ManagedConservationFormComponent = lifeCycle({
+const ManagedCollectingEventComponent = lifeCycle({
   onMount: onMountProps(),
   onUnmount
 })(CollectingEventComponent);
@@ -63,4 +67,4 @@ const ManagedConservationFormComponent = lifeCycle({
 export default flowRight([
   inject(combinedStore$, addProps),
   loadPredefinedCollectingEventValues
-])(ManagedConservationFormComponent);
+])(ManagedCollectingEventComponent);

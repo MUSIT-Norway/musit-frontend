@@ -33,10 +33,10 @@ const addCollectingEventProps = (combinedStore: any, upstream: { history: Histor
   ...combinedStore,
   ...upstream,
   store: { ...combinedStore, localState: undefined },
-  eventDataReadOnly: localStorage.getItem['eventDataEdit'] ? false : true,
-  placeReadOnly: localStorage.getItem['placeEdit'] ? false : true,
-  personReadOnly: localStorage.getItem['personEdit'] ? false : true,
-  addStateReadOnly: false,
+  eventDataReadOnly: false,
+  placeReadOnly: false,
+  personReadOnly: false,
+  addStateHidden: false,
   setDisabledState: (fieldName: string) => (value: boolean) =>
     setDisabledState$.next({ fieldName, value }),
   setDraftState: (subState?: string) => (fieldName: string) => (value: boolean) =>

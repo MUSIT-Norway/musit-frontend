@@ -39,14 +39,16 @@ const EditAndSaveButtons = (props: EditAndSaveButtonProps) => {
         ) : (
           <span />
         )}{' '}
-        <button
-          type="button"
-          className="btn btn-warning"
-          onClick={props.onClickDraft}
-          disabled={props.draftButtonState.disabled}
-        >
-          {props.draftButtonText}
-        </button>{' '}
+        {props.draftButtonState.visible && (
+          <button
+            type="button"
+            className="btn btn-warning"
+            onClick={props.onClickDraft}
+            disabled={props.draftButtonState.disabled}
+          >
+            {props.draftButtonText}
+          </button>
+        )}
         <button
           type="button"
           className="btn btn-success"

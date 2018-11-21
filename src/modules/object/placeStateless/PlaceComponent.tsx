@@ -7,6 +7,7 @@ import { AppSession } from 'src/types/appSession';
 import { History } from 'history';
 import { EditState, NonEditState } from '../types';
 import EditAndSaveButtons from '../components/EditAndSaveButtons';
+import config from 'src/config';
 
 export type CoordinateRevisionType =
   | 'newCoordinate'
@@ -155,6 +156,7 @@ const PlaceComponent = (
     history: History;
     readOnly?: boolean;
     isDraft?: boolean;
+    collectingEventUUid?: string;
   } & CoordinateProps
 ) => {
   return (
@@ -171,7 +173,18 @@ const PlaceComponent = (
         <CoordinateComponent {...props} />
         <EditAndSaveButtons
           onClickCancel={() => {}}
-          onClickEdit={() => {}}
+          onClickEdit={() => {
+            const URL = props.collectingEventUUid
+              ? config.magasin.urls.client.collectingEvent.edit(
+                  props.appSession,
+                  props.collectingEventUUid
+                )
+              : undefined;
+            if (URL) {
+              props.setEditMode();
+              props.history.push(URL);
+            }
+          }}
           onClickDraft={() => {}}
           onClickSave={() => {}}
           editButtonState={{ visible: true, disabled: props.readOnly ? false : true }}

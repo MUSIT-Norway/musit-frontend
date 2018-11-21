@@ -92,6 +92,8 @@ export default {
             `${clientContextUrl(appSession)}/person/personname/add/`
         },
         collectingEvent: {
+          edit: (appSession: AppSession, id: string) =>
+            `${clientContextUrl(appSession)}/collectingEvent/edit/${id}`,
           view: (appSession: AppSession, id: string) =>
             `${clientContextUrl(appSession)}/collectingEvent/view/${id}`,
           add: (appSession: AppSession) =>
