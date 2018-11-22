@@ -12,8 +12,7 @@ import {
   Person,
   addPersonName,
   InputPersonName,
-  getPersonName,
-  outPersonName
+  getPersonName
 } from '../../../models/object/person';
 import { Observable, Subject } from 'rxjs';
 import { Callback, AjaxGet, AjaxPost, AjaxPut } from '../../../types/ajax';
@@ -177,25 +176,22 @@ const mergePersonData = (ajaxPost: AjaxPost<Star>) => (props: MergePersonProps) 
 const addPersonNameData = (ajaxGet: AjaxGet<Star>, ajaxPost: AjaxPost<Star>) => (
   props: AddPersonNameProps
 ) =>
-  Observable.of(props).flatMap(props =>
-    addPersonName(ajaxPost)({
-      data: toBackendPersonName(props.data),
-      token: props.token,
-      callback: props.callback
-    })
-      .do(res => console.log('((((=====)))) ', res.personNameUuid))
-      .flatMap(
-        ({ personNameUuid }) =>
-          personNameUuid
-            ? getPersonNameFromUuid(ajaxGet)({
-                id: personNameUuid || '',
-                collectionId: props.collectionId,
-                token: props.token
-              })
-            : Observable.empty()
-      )
-      .do((res: outPersonName) => console.log('((((=====)))) ', res))
-  );
+  Observable.of(props)
+    .flatMap(props =>
+      addPersonName(ajaxPost)({
+        data: toBackendPersonName(props.data),
+        token: props.token,
+        callback: props.callback
+      })
+    )
+    .do(res => console.log('((((=====)))) ', res.personNameUuid))
+    .flatMap(res => {
+      return getPersonNameFromUuid(ajaxGet)({
+        id: res.personNameUuid || '',
+        collectionId: props.collectionId,
+        token: props.token
+      });
+    });
 
 /*
         .flatMap(({personNameUuid}) => personNameUuid ? 
@@ -299,16 +295,16 @@ export const reducer$ = (
       .map(() => (state: PersonStoreState) => ({ ...state })),
     actions.addPersonName$
       .switchMap(addPersonNameData(ajaxGet, ajaxPost))
-      .do((res: outPersonName) => {
-        console.log('ANURADHA IN addPersonName$', res);
+      .map((o: InputPersonName) => (state: PersonStoreState) => {
+        console.log('I map i reducer: ', o);
+        return {
+          ...state,
+          personNameState: {
+            ...state.personNameState,
+            personName: o
+          }
+        };
       })
-      .map((o: outPersonName) => (state: PersonStoreState) => ({
-        ...state,
-        personNameState: {
-          ...state.personNameState,
-          personName: o
-        }
-      }))
   );
 };
 

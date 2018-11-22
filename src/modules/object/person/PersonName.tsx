@@ -244,7 +244,8 @@ export class AddPersonName extends React.Component<
               this.props.addPersonName()({
                 data: this.state,
                 token: appSession.accessToken,
-                collectionId: appSession.collectionId
+                collectionId: appSession.collectionId,
+                callback: (res: any) => console.log('call back ====> ', res)
               })
             );
           }}

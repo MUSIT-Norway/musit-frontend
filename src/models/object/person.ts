@@ -183,7 +183,9 @@ export class InputPersonName implements PersonName {
     public lastName?: string,
     public title?: string,
     public status?: string,
-    public personNameUuid?: string
+    public personNameUuid?: string,
+    public concatPersonName?: string,
+    public isDeleted?: boolean
   ) {}
 }
 
@@ -192,8 +194,8 @@ export interface outPersonName {
   lastName?: string;
   title?: string;
   name: string;
-  //concatPersonName?: string;
-  //isDeleted?: boolean;
+  concatPersonName?: string;
+  isDeleted?: boolean;
   personNameUuid?: string;
 }
 
@@ -523,11 +525,9 @@ export const getPersonName: (
     token: string;
     callback?: Callback<Star>;
   }
-) => Observable<string> = (ajaxGet = simpleGet) => ({ id, token, callback }) => {
+) => Observable<InputPersonName> = (ajaxGet = simpleGet) => ({ id, token, callback }) => {
   const URL = Config.api.persons.getPersonNameUrl(id);
-  return ajaxGet(URL, token, callback).map(
-    ({ personNameUuid }: { personNameUuid: string }) => personNameUuid
-  );
+  return ajaxGet(URL, token, callback).map(({ response }) => response);
 };
 
 export const editPerson: (
