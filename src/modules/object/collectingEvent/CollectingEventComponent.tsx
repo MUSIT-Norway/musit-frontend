@@ -16,11 +16,18 @@ import {
 } from './CollectingEventStore';
 import { AppSession } from '../../../types/appSession';
 import { History } from 'history';
-import { OutputCollectingEvent } from '../../../models/object/collectingEvent';
+import {
+  OutputCollectingEvent,
+  ActorsAndRelation,
+  EventUuid,
+  PersonUuid
+} from '../../../models/object/collectingEvent';
 import { AjaxResponse } from 'rxjs';
 import config from '../../../config';
 import { EditState, NonEditState, RevisionState, DraftState } from '../types';
 import EditAndSaveButtons from '../components/EditAndSaveButtons';
+import PersonComponent from './PersonComponent';
+import { personDet } from '../../../models/object/classHist';
 
 export type EventMetadataProps = EventData & {
   onChangeEventMetaData: (fieldName: string) => (value: string) => void;
@@ -65,6 +72,7 @@ export interface EventData {
   partOf?: EventUuid;
   createdBy?: PersonUuid; // Person;
   createdDate?: string;
+  editingRelatedActors?: ActorsAndRelation;
   relatedActors?: ActorsAndRelation[];
   editingActor?: ActorsAndRelation;
   eventDateFrom?: string;
@@ -318,6 +326,7 @@ export class CollectingEventComponent extends React.Component<
               editState: 'Editing'
             }
           };
+    console.log('COLL EVENT STATE : ', this.state);
   }
 
   componentWillReceiveProps(props: CollectingProps) {
@@ -777,6 +786,86 @@ export class CollectingEventComponent extends React.Component<
       </div>
     );
 
+    const PersonComponentBody = (
+      <div>
+        <PersonComponent
+          {...this.state}
+          disabled={this.props.personReadOnly ? this.props.personReadOnly : false}
+          value={''}
+          appSession={this.props.appSession}
+          history={this.props.history}
+          actorsAndRelation={
+            this.state.eventData ? this.state.eventData.relatedActors : []
+          }
+          onChangePerson={(suggestion: personDet) => {
+            this.setState((cs: CollectingEventState) => {
+              console.log('ANURADHA RETURNED cs ', cs);
+              const newEditActors = {
+                actorUuid: suggestion ? suggestion.personUuid : '',
+                personNameUuid: suggestion ? suggestion.personNameUuid : '',
+                name: suggestion ? suggestion.name : '',
+                roleId: 15
+              };
+              console.log('ANURADHA RETURNED SUGGESSTION ', newEditActors);
+              return {
+                ...cs,
+                eventData: {
+                  ...cs.eventData,
+                  editingRelatedActors: newEditActors
+                }
+              };
+            });
+          }}
+          onAddPerson={() => {
+            this.setState((cs: CollectingEventState) => {
+              console.log('ANURADHA RETURNED onAdd cs ', cs);
+              const index = cs.eventData.relatedActors
+                ? cs.eventData.relatedActors.length
+                : 0;
+              const currentRelatedActors = cs.eventData.relatedActors
+                ? cs.eventData.relatedActors
+                : [];
+              const newRActors = [
+                ...currentRelatedActors.slice(0, index),
+                cs.eventData.editingRelatedActors || {},
+                ...currentRelatedActors.slice(index + 1)
+              ];
+              return {
+                ...cs,
+                eventData: {
+                  ...cs.eventData,
+                  relatedActors: newRActors
+                }
+              };
+            });
+          }}
+          onDeletePerson={(i: number) => {
+            this.setState((cs: CollectingEventState) => {
+              console.log('ANURADHA RETURNED onAdd cs ', cs);
+              const currentRelatedActors = cs.eventData.relatedActors
+                ? cs.eventData.relatedActors
+                : [];
+              const newRActors =
+                currentRelatedActors.length === 1
+                  ? undefined
+                  : [
+                      ...currentRelatedActors.slice(0, i),
+                      ...currentRelatedActors.slice(i + 1)
+                    ];
+              return {
+                ...cs,
+                eventState: {
+                  ...cs.eventData,
+                  relatedActors: newRActors,
+                  editingRelatedActors: currentRelatedActors.length === 1 ? {} : undefined
+                }
+              };
+            });
+          }}
+        />
+      </div>
+    );
+
     return (
       <div className="container panel panel-default">
         <div className="panel-heading">
@@ -788,6 +877,12 @@ export class CollectingEventComponent extends React.Component<
             Body={EventMetadataComponent}
             readOnly={this.props.eventDataReadOnly}
             collapsed={this.props.eventDataCollapsed}
+          />
+          <br />
+          <CollapseComponent
+            head="Person data"
+            Body={PersonComponentBody}
+            readOnly={this.props.personReadOnly}
           />
           <br />
           <CollapseComponent

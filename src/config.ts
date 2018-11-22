@@ -35,7 +35,10 @@ export default {
       searchPersonBySynonymOrName: (personName: string) =>
         `/api/person/persons?search=${personName}`,
       mergeUrl: (personUuid: string) => (personUuidToSyn: string) =>
-        `/api/person/persons/${personUuid}/merge/${personUuidToSyn}`
+        `/api/person/persons/${personUuid}/merge/${personUuidToSyn}`,
+      addPersonNameUrl: '/api/person/personnames',
+      getPersonNameUrl: (personNameUuid: string) =>
+        `/api/person/personNames/${personNameUuid}`
     },
     places: {
       addPlaceUrl: '/api/place/places',
