@@ -34,7 +34,6 @@ const combinedStore$ = createStore(
 );
 
 const editCollectingEventProps = (combinedStore: any, upstream: { history: History }) => {
-  console.log('Local storage: ', localStorage);
   return {
     ...combinedStore,
     ...upstream,

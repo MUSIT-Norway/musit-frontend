@@ -156,6 +156,7 @@ const PlaceComponent = (
     history: History;
     readOnly?: boolean;
     isDraft?: boolean;
+    showButtonRow?: boolean;
     collectingEventUUid?: string;
   } & CoordinateProps
 ) => {
@@ -171,40 +172,43 @@ const PlaceComponent = (
         />
         <CoordinateHeader {...props} />
         <CoordinateComponent {...props} />
-        <EditAndSaveButtons
-          onClickCancel={() => {}}
-          onClickEdit={() => {
-            const URL = props.collectingEventUUid
-              ? config.magasin.urls.client.collectingEvent.edit(
-                  props.appSession,
-                  props.collectingEventUUid
-                )
-              : undefined;
-            if (URL) {
-              props.setEditMode();
-              props.history.push(URL);
-            }
-          }}
-          onClickDraft={() => {}}
-          onClickSave={() => {}}
-          editButtonState={{ visible: true, disabled: props.readOnly ? false : true }}
-          draftButtonState={{
-            visible: props.isDraft ? true : false,
-            disabled: props.readOnly ? true : props.editState === 'Not editing' || false
-          }}
-          cancelButtonState={{
-            visible: true,
-            disabled: props.readOnly ? true : props.editState === 'Not editing' || false
-          }}
-          saveButtonState={{
-            visible: true,
-            disabled: props.readOnly ? true : props.editState === 'Not editing' || false
-          }}
-          saveButtonText="Lagre"
-          draftButtonText="Lagre utkast"
-          editButtonText="Endre"
-          cancelButtonText="Avbryt"
-        />
+
+        {props.showButtonRow && (
+          <EditAndSaveButtons
+            onClickCancel={() => {}}
+            onClickEdit={() => {
+              const URL = props.collectingEventUUid
+                ? config.magasin.urls.client.collectingEvent.edit(
+                    props.appSession,
+                    props.collectingEventUUid
+                  )
+                : undefined;
+              if (URL) {
+                props.setEditMode();
+                props.history.push(URL);
+              }
+            }}
+            onClickDraft={() => {}}
+            onClickSave={() => {}}
+            editButtonState={{ visible: true, disabled: props.readOnly ? false : true }}
+            draftButtonState={{
+              visible: props.isDraft ? true : false,
+              disabled: props.readOnly ? true : props.editState === 'Not editing' || false
+            }}
+            cancelButtonState={{
+              visible: true,
+              disabled: props.readOnly ? true : props.editState === 'Not editing' || false
+            }}
+            saveButtonState={{
+              visible: true,
+              disabled: props.readOnly ? true : props.editState === 'Not editing' || false
+            }}
+            saveButtonText="Lagre"
+            draftButtonText="Lagre utkast"
+            editButtonText="Endre"
+            cancelButtonText="Avbryt"
+          />
+        )}
       </div>
     </div>
   );

@@ -34,6 +34,11 @@ export type EventMetadataProps = EventData & {
   setDraftState: (fieldName: string, value: boolean) => void;
   readOnly?: boolean;
   isDraft?: boolean;
+  showButtonRows?: boolean;
+  collectingEventUuid?: string;
+  appSession: AppSession;
+  history: History;
+  setEditMode: () => void;
 };
 
 export type Uuid = string;
@@ -327,6 +332,7 @@ export class CollectingEventComponent extends React.Component<
       <div>
         <PlaceComponent
           {...this.state.placeState}
+          showButtonRow={this.props.addStateHidden}
           collectingEventUUid={this.state.eventData.eventUuid}
           appSession={this.props.appSession}
           coordinatePredefined={{
@@ -690,6 +696,14 @@ export class CollectingEventComponent extends React.Component<
       <div>
         <EventMetadata
           {...this.state.eventData}
+          history={this.props.history}
+          setEditMode={() => {
+            localStorage.clear();
+            localStorage.setItem('editComponent', 'eventMetaData');
+          }}
+          collectingEventUuid={this.state.eventData.eventUuid}
+          appSession={this.props.appSession}
+          showButtonRows={this.props.addStateHidden}
           onSetReadOnlyState={(value: boolean) =>
             this.props.setDisabledState('eventDataReadOnly')(value)
           }
@@ -791,7 +805,7 @@ export class CollectingEventComponent extends React.Component<
                 this.props.setDisabledState('addStateReadOnly')(true);
                 this.props.setDraftState(undefined)('isDraft')(false);
               }}
-              onClickCancel={() => this.props.setDisabledState('addStateReadOnly')(true)}
+              onClickCancel={() => this.props.history.goBack()}
               onClickEdit={() => this.props.setDisabledState('addStateReadOnly')(false)}
               onClickSave={() => {
                 this.props.setDraftState(undefined)('isDraft')(false);
@@ -819,7 +833,7 @@ export class CollectingEventComponent extends React.Component<
               }}
               cancelButtonState={{
                 visible: true,
-                disabled: this.props.addStateHidden
+                disabled: !this.props.addStateHidden
               }}
               saveButtonState={{
                 visible: true,

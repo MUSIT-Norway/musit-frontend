@@ -2,13 +2,14 @@ import * as React from 'react';
 import { EventMetadataProps } from './CollectingEventComponent';
 import DatePicker from '../../../components/DatePicker';
 import EditAndSaveButtons from '../components/EditAndSaveButtons';
+import config from '../../../config';
 
 const EventMetadata = (props: EventMetadataProps) => {
   return (
     <div className="container-fluid panel-group">
       <div className="row form-group">
         <div className="col-md-6">
-          <label htmlFor="txtInputProject">Project Name </label>
+          <label htmlFor="txtInputProject">Name </label>
         </div>
       </div>
       <div className="row form-group">
@@ -117,29 +118,43 @@ const EventMetadata = (props: EventMetadataProps) => {
         </div>
       </div>
 
-      <EditAndSaveButtons
-        onClickCancel={() => {}}
-        onClickEdit={() => {}}
-        onClickSave={() => {}}
-        onClickDraft={() => {}}
-        editButtonState={{ visible: true, disabled: props.readOnly ? false : true }}
-        cancelButtonState={{
-          visible: true,
-          disabled: props.readOnly ? true : props.editState === 'Not editing' || false
-        }}
-        saveButtonState={{
-          visible: true,
-          disabled: props.readOnly ? true : props.editState === 'Not editing' || false
-        }}
-        draftButtonState={{
-          visible: props.isDraft ? true : false,
-          disabled: props.readOnly ? true : props.editState === 'Not editing' || false
-        }}
-        saveButtonText="Lagre"
-        editButtonText="Endre"
-        cancelButtonText="Avbryt"
-        draftButtonText="Lagre utkast"
-      />
+      {props.showButtonRows && (
+        <EditAndSaveButtons
+          onClickCancel={() => {}}
+          onClickEdit={() => {
+            console.log('HERRR');
+            const URL = props.collectingEventUuid
+              ? config.magasin.urls.client.collectingEvent.edit(
+                  props.appSession,
+                  props.collectingEventUuid
+                )
+              : undefined;
+            if (URL) {
+              props.setEditMode();
+              props.history.push(URL);
+            }
+          }}
+          onClickSave={() => {}}
+          onClickDraft={() => {}}
+          editButtonState={{ visible: true, disabled: props.readOnly ? false : true }}
+          cancelButtonState={{
+            visible: true,
+            disabled: props.readOnly ? true : props.editState === 'Not editing' || false
+          }}
+          saveButtonState={{
+            visible: true,
+            disabled: props.readOnly ? true : props.editState === 'Not editing' || false
+          }}
+          draftButtonState={{
+            visible: props.isDraft ? true : false,
+            disabled: props.readOnly ? true : props.editState === 'Not editing' || false
+          }}
+          saveButtonText="Lagre"
+          editButtonText="Endre"
+          cancelButtonText="Avbryt"
+          draftButtonText="Lagre utkast"
+        />
+      )}
     </div>
   );
 };
