@@ -3,16 +3,20 @@ import {
   addCollectingEvent,
   CollectingEvent,
   InputCollectingEvent,
-  OutputCollectingEvent
+  OutputCollectingEvent,
+  editEventDateRivision,
+  editEventPlaceRivision,
+  InputDateRevision,
+  InputPlaceAndRelation
 } from '../../../models/object/collectingEvent';
 import { addPlace, InputPlace, inputPlace } from '../../../models/object/place';
 import { CollectingEventState, EventState } from './CollectingEventComponent';
-import { Callback, AjaxGet, AjaxPost } from '../../../types/ajax';
+import { Callback, AjaxGet, AjaxPost, AjaxPut } from '../../../types/ajax';
 import { Star } from '../../../types/common';
 import { Observable, Subject } from 'rxjs';
 import { createAction } from '../../../shared/react-rxjs-patch';
 import { Reducer } from 'react-rxjs';
-import { simpleGet, simplePost } from '../../../shared/RxAjax';
+import { simpleGet, simplePost, simplePut } from '../../../shared/RxAjax';
 import { KEEP_ALIVE } from '../../../stores/constants';
 import { createStore } from 'react-rxjs';
 import { toFrontend } from '../collectingEvent/CollectingEventComponent';
@@ -26,7 +30,6 @@ export type CollectingEventMethod = {
   methodId: number;
   method: string;
 };
-
 export type PredefinedCollectingEventValues = {
   datums: { datum: string }[] | null;
   coordinateTypes: { type_text: string }[] | null;
@@ -40,7 +43,6 @@ export const initialCollectingEventState = {
     name: ''
   }
 };
-
 export type CommonParams = {
   collectionId: string;
   token: string;
@@ -49,6 +51,7 @@ export type CommonParams = {
 
 export type GetCollectingEventProps = CommonParams & { id: string };
 export type AddCollectingEventProps = CommonParams & { data: EventState };
+export type EditCollectingEventProps = CommonParams & { data: EventState; id: string };
 
 export const toBackend: ((p: EventState) => InputCollectingEvent) = (p: EventState) => {
   const c = new CollectingEvent(
@@ -117,6 +120,42 @@ const addCollectingEventData = (ajaxPost: AjaxPost<Star>) => (
   );
 };
 
+const editEventDateRivisionData = (ajaxPut: AjaxPut<Star>) => (
+  props: EditCollectingEventProps
+) =>
+  Observable.of(props).flatMap(props => {
+    const InputPlaceAndRivision = new InputDateRevision(
+      props.data && props.data.eventDateFrom ? props.data.eventDateFrom : '',
+      props.data && props.data.eventDateTo ? props.data.eventDateTo : '',
+      props.data && props.data.eventDateVerbatim ? props.data.eventDateVerbatim : ''
+    );
+    return editEventDateRivision(ajaxPut)({
+      id: props.id,
+      data: InputPlaceAndRivision,
+      token: props.token,
+      callback: props.callback
+    });
+  });
+
+const editEventPlaceRivisionData = (ajaxPut: AjaxPut<Star>) => (
+  props: EditCollectingEventProps
+) =>
+  Observable.of(props).flatMap(props => {
+    const InputPlaceAndRivision = new InputPlaceAndRelation(
+      props.data.placeState && props.data.placeState.placeUuid
+        ? props.data.placeState.placeUuid
+        : '',
+      15
+    );
+
+    return editEventPlaceRivision(ajaxPut)({
+      id: props.id,
+      data: InputPlaceAndRivision,
+      token: props.token,
+      callback: props.callback
+    });
+  });
+
 export const addCollectingEvent$: Subject<
   AddCollectingEventProps & { ajaxPost: AjaxPost<Star> }
 > = createAction('addCollectingEvent$');
@@ -125,15 +164,30 @@ export const getCollectingEvent$: Subject<
   GetCollectingEventProps & { ajaxGet: AjaxGet<Star> }
 > = createAction('getCollectingEvent$');
 
+export const editEventDateRivision$: Subject<
+  EditCollectingEventProps & {
+    ajaxPut: AjaxPut<Star>;
+  }
+> = createAction('editEventDateRivision$');
+
+export const editEventPlaceRivision$: Subject<
+  EditCollectingEventProps & {
+    ajaxPut: AjaxPut<Star>;
+  }
+> = createAction('editEventPlaceRivision$');
+
 type Actions = {
   getCollectingEvent$: Subject<GetCollectingEventProps>;
   addCollectingEvent$: Subject<AddCollectingEventProps>;
+  editEventDateRivision$: Subject<EditCollectingEventProps>;
+  editEventPlaceRivision$: Subject<EditCollectingEventProps>;
 };
 
 export const reducer$ = (
   actions: Actions,
   ajaxGet: AjaxGet<Star>,
-  ajaxPost: AjaxPost<Star>
+  ajaxPost: AjaxPost<Star>,
+  ajaxPut: AjaxPut<Star>
 ): Observable<Reducer<CollectingEventStoreState>> => {
   return Observable.merge(
     actions.getCollectingEvent$
@@ -152,6 +206,26 @@ export const reducer$ = (
           ...state,
           eventState: collectingEvent
         })
+      ),
+    actions.editEventDateRivision$
+      .switchMap(editEventDateRivisionData(ajaxPut))
+      .map(
+        (collectingEvent: InputCollectingEvent) => (
+          state: CollectingEventStoreState
+        ) => ({
+          ...state,
+          eventState: collectingEvent
+        })
+      ),
+    actions.editEventPlaceRivision$
+      .switchMap(editEventPlaceRivisionData(ajaxPut))
+      .map(
+        (collectingEvent: InputCollectingEvent) => (
+          state: CollectingEventStoreState
+        ) => ({
+          ...state,
+          eventState: collectingEvent
+        })
       )
   );
 };
@@ -159,14 +233,17 @@ export const reducer$ = (
 export const store$ = (
   actions$: Actions = {
     getCollectingEvent$,
-    addCollectingEvent$
+    addCollectingEvent$,
+    editEventDateRivision$,
+    editEventPlaceRivision$
   },
   ajaxGet: AjaxGet<Star> = simpleGet,
-  ajaxPost: AjaxPost<Star> = simplePost
+  ajaxPost: AjaxPost<Star> = simplePost,
+  ajaxPut: AjaxPost<Star> = simplePut
 ) => {
   return createStore(
     'collectingEventStore',
-    reducer$(actions$, ajaxGet, ajaxPost),
+    reducer$(actions$, ajaxGet, ajaxPost, ajaxPut),
     initialCollectingEventState,
     KEEP_ALIVE
   );

@@ -603,7 +603,7 @@ export class CollectingEventComponent extends React.Component<
             const ret = this.state.eventState.placeState;
             return ret;
           }}
-          onClickSaveRevision={() => {
+          onClickSave={() => {
             this.setState((cs: CollectingEventState) => {
               const ps = cs.eventState.placeState;
               if (!ps.editCoordinateMode) {
@@ -636,6 +636,7 @@ export class CollectingEventComponent extends React.Component<
                 }
               };
             });
+
             this.props.addCollectingEvent &&
               this.props.addCollectingEvent()({
                 data: this.state.eventState,
