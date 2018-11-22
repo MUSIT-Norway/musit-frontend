@@ -59,6 +59,8 @@ class DetTable extends React.Component<DetProps> {
             appSession={this.props.appSession}
             onChange={this.props.onChangePersonDet}
             history={this.props.history}
+            labelText="Det"
+            hideCreateNewPerson={false}
           />
         </div>
         <div className="row">

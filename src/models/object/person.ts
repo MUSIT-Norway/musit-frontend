@@ -176,6 +176,29 @@ export interface PersonName {
   readonly personNameUuid?: string;
 }
 
+export class InputPersonName implements PersonName {
+  constructor(
+    public name: string,
+    public firstName?: string,
+    public lastName?: string,
+    public title?: string,
+    public status?: string,
+    public personNameUuid?: string,
+    public concatPersonName?: string,
+    public isDeleted?: boolean
+  ) {}
+}
+
+export interface outPersonName {
+  firstName?: string;
+  lastName?: string;
+  title?: string;
+  name: string;
+  concatPersonName?: string;
+  isDeleted?: boolean;
+  personNameUuid?: string;
+}
+
 export interface Collection {
   museumId: number;
   collectionId: number;
@@ -476,6 +499,37 @@ export const addPerson: (
   const URL = Config.api.persons.addUrl;
   return ajaxPost(URL, data, token, callback).map(({ response }) => response);
 };
+
+export const addPersonName: (
+  ajaxPost: AjaxPost<Star>
+) => (
+  props: {
+    token: string;
+    data: any;
+    callback?: Callback<Star>;
+  }
+) => Observable<InputPersonName> = (ajaxPost = simplePost) => ({
+  data,
+  token,
+  callback
+}) => {
+  const URL = Config.api.persons.addPersonNameUrl;
+  return ajaxPost(URL, data, token, callback).map(({ response }) => response);
+};
+
+export const getPersonName: (
+  ajaxGet: AjaxGet<Star>
+) => (
+  props: {
+    id: string;
+    token: string;
+    callback?: Callback<Star>;
+  }
+) => Observable<InputPersonName> = (ajaxGet = simpleGet) => ({ id, token, callback }) => {
+  const URL = Config.api.persons.getPersonNameUrl(id);
+  return ajaxGet(URL, token, callback).map(({ response }) => response);
+};
+
 export const editPerson: (
   ajaxPut: AjaxPut<Star>
 ) => (
