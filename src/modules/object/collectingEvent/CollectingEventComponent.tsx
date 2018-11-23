@@ -3,16 +3,23 @@ import { musitCoodinateValidate } from '../../../shared/util';
 import CollapseComponent from '../components/Collapse';
 import EventMetadata from './EventMetadata';
 import { formatISOString } from '../../../shared/util';
-import { InputCoordinate, InputCoordinateAttribute } from '../../../models/object/place';
+import {
+  InputCoordinate,
+  InputCoordinateAttribute,
+  OutPlace
+} from '../../../models/object/place';
 import PlaceComponent, {
   AdmPlace,
   PlaceState,
-  MarinePlaceAttribute
+  MarinePlaceAttribute,
+  InputPlace,
+  toPlaceBackend
 } from '../placeStateless/PlaceComponent';
 import {
   CollectingEventStoreState,
   PredefinedCollectingEventValues,
-  CollectingEventMethod
+  CollectingEventMethod,
+  EditPlaceProps
 } from './CollectingEventStore';
 import { AppSession } from '../../../types/appSession';
 import { History } from 'history';
@@ -28,6 +35,8 @@ import { EditState, NonEditState, RevisionState, DraftState } from '../types';
 import EditAndSaveButtons from '../components/EditAndSaveButtons';
 import PersonComponent from './PersonComponent';
 import { personDet } from '../../../models/object/classHist';
+import { PersonState } from '../person/PersonComponent';
+import { AjaxPut } from 'src/types/ajax';
 
 export type EventMetadataProps = EventData & {
   onChangeEventMetaData: (fieldName: string) => (value: string) => void;
@@ -152,10 +161,15 @@ export interface CollectingEventState {
   eventData: EventData;
   placeState: PlaceState;
   personState?: PersonState;
+  editingPlaceState?: InputPlace;
+  editingEventData?: EventData;
 }
 
 export type CollectingProps = {
   addCollectingEvent?: Function;
+  editEventPlaceRevision?: (
+    ajaxPut?: AjaxPut<OutPlace>
+  ) => (props: EditPlaceProps) => void;
   getCollectingEvent?: Function;
   setDisabledState: Function;
   setDraftState: (subState?: string) => (fieldName: string) => (value: boolean) => void;
@@ -232,7 +246,8 @@ export const toFrontend: (p: OutputCollectingEvent) => CollectingEventState = (
             editingCoordinateAttribute: { ...innP.place.coordinateAttributes },
             editingAttributes: { ...innP.place.attributes },
             coordinateInvalid: false,
-            editState: 'Not editing'
+            editState: 'Not editing',
+            placeUuid: innP.place.placeUuid
           }
         : { admPlace: null, coordinateInvalid: false, editState: 'Not editing' }
     };
@@ -279,8 +294,10 @@ export class CollectingEventComponent extends React.Component<
 > {
   constructor(props: CollectingProps) {
     super(props);
-    console.log('COLLECTING EVENT STORE', props.store);
-    console.log('VIEW MODE : ', props.eventDataReadOnly);
+
+    this.savePlace = this.savePlace.bind(this);
+    this.saveEvent = this.saveEvent.bind(this);
+    this.savePerson = this.savePerson.bind(this);
     this.state =
       props.store && props.store.localState
         ? props.store.localState
@@ -335,6 +352,33 @@ export class CollectingEventComponent extends React.Component<
       this.setState(() => ({ ...props.store.localState }));
     }
   }
+
+  savePlace(place: PlaceState) {
+    console.log(place, this.state.placeState.placeUuid);
+
+    if (this.props.editEventPlaceRevision && place && place.placeUuid) {
+      const URL = config.magasin.urls.client.collectingEvent.view(
+        this.props.appSession,
+        this.state.eventData.eventUuid
+      );
+      const props: EditPlaceProps = {
+        id: this.state.eventData.eventUuid,
+        data: toPlaceBackend(place),
+        token: this.props.appSession.accessToken,
+        collectionId: this.props.appSession.collectionId,
+        callback: {
+          onComplete: () => this.props.history.replace(URL)
+        }
+      };
+      console.log(props, URL);
+      this.props.editEventPlaceRevision()(props);
+    }
+  }
+
+  saveEvent(eventData: EventData) {}
+
+  savePerson(personState: PersonState) {}
+
   render() {
     console.log('STATE----->', this.state);
     const PlaceBodyComponent = (
@@ -373,9 +417,10 @@ export class CollectingEventComponent extends React.Component<
               const newAttributes: MarinePlaceAttribute = cs.placeState.editingAttributes
                 ? { ...cs.placeState.editingAttributes, [field]: value }
                 : { [field]: value };
-              const newPlaceState = {
+              const newPlaceState: PlaceState = {
                 ...cs.placeState,
-                editingAttributes: newAttributes
+                editingAttributes: newAttributes,
+                editState: 'Editing'
               };
               return {
                 ...cs,
@@ -388,6 +433,7 @@ export class CollectingEventComponent extends React.Component<
               ...s,
               placeState: {
                 ...s.placeState,
+                editState: 'Editing',
                 admPlace: t
               }
             }));
@@ -405,15 +451,8 @@ export class CollectingEventComponent extends React.Component<
             }
             return PlaceString || '';
           }}
-          // Cordinate Props
-
-          /*           {...this.state.placeState.coordinateHistory[
-            this.state.placeState.coordinateHistoryIndeks
-          ].coordinate} */
           admPlace={this.state.placeState.admPlace}
           editCoordinateMode={this.state.placeState.editCoordinateMode || false}
-          //coordinateHistoryIndeks={this.state.placeState.coordinateHistoryIndeks}
-          //coordinateHistory={this.state.placeState.coordinateHistory}
           editingInputCoordinate={
             this.state.placeState && this.state.placeState.editingInputCoordinate
           }
@@ -436,6 +475,7 @@ export class CollectingEventComponent extends React.Component<
                 ...cs,
                 placeState: {
                   ...cs.placeState,
+                  editState: 'Editing',
                   editingCoordinateAttribute: {
                     ...cs.placeState.editingCoordinateAttribute,
                     [fieldName]: value
@@ -481,8 +521,9 @@ export class CollectingEventComponent extends React.Component<
                     altitudeUnit: altUnit,
                     altitudeString: value
                   };
-              const newPlaceState = {
+              const newPlaceState: PlaceState = {
                 ...cs.placeState,
+                editState: 'Editing',
                 editingCoordinateAttribute: newCoordinateAttributes
               };
               const newEventState = {
@@ -507,6 +548,7 @@ export class CollectingEventComponent extends React.Component<
               ...cs,
               placeState: {
                 ...cs.placeState,
+                editState: 'Editing',
                 editingCoordinateAttribute: {
                   ...cs.placeState.editingCoordinateAttribute,
                   depthAggregated: value,
@@ -579,8 +621,9 @@ export class CollectingEventComponent extends React.Component<
                   }
                 : { [fieldName]: value };
 
-              const newPlaceState = {
+              const newPlaceState: PlaceState = {
                 ...cs.placeState,
+                editState: 'Editing',
                 editingInputCoordinate: newInputCoordinate,
                 coordinateInvalid: newCoordinateInvalid
               };
@@ -597,6 +640,7 @@ export class CollectingEventComponent extends React.Component<
                 ...cs,
                 placeState: {
                   ...cs.placeState,
+                  editState: 'Editing',
                   editingCoordinateAttribute: {
                     ...cs.placeState.editingCoordinateAttribute,
                     [fieldName]: value
@@ -611,6 +655,7 @@ export class CollectingEventComponent extends React.Component<
                 ...cs,
                 placeState: {
                   ...cs.placeState,
+                  editState: 'Editing',
                   editingCoordinateAttribute: {
                     ...cs.placeState.editingCoordinateAttribute,
                     [fieldName]: value
@@ -629,8 +674,9 @@ export class CollectingEventComponent extends React.Component<
                   }
                 : { [fieldName]: value };
 
-              const newPlaceState = {
+              const newPlaceState: PlaceState = {
                 ...cs.placeState,
+                editState: 'Editing',
                 editingCoordinateAttribute: newCoordinateAttributes
               };
               const newEventState = {
@@ -645,48 +691,8 @@ export class CollectingEventComponent extends React.Component<
             return ret;
           }}
           onClickSave={() => {
-            this.setState((cs: CollectingEventState) => {
-              const ps = cs.placeState;
-              if (!ps.editCoordinateMode) {
-                return {
-                  ...cs,
-                  placeState: {
-                    ...cs.placeState,
-                    editCoorditeMode: false
-                  }
-                };
-              }
-              return {
-                ...cs,
-                placeState: {
-                  ...cs.placeState
-                }
-                /* coordinateHistoryIndeks: ps.coordinateHistoryIndeks + 1,
-                  coordinateHistory: [
-                    ...ps.coordinateHistory,
-                    {
-                      coordinate: ps.editingCoordinate,
-                      coordinateRevisionType: 'coordinateRevision'
-                    }
-                  ] */
-              };
-            });
-
-            this.props.addCollectingEvent &&
-              this.props.addCollectingEvent()({
-                data: this.state,
-                token: this.props.appSession.accessToken,
-                collectionId: this.props.appSession.collectionId,
-                callback: {
-                  onComplete: (r: AjaxResponse) => {
-                    const url = config.magasin.urls.client.collectingEvent.view(
-                      this.props.appSession,
-                      r.response.eventUuid
-                    );
-                    this.props.history && this.props.history.replace(url);
-                  }
-                }
-              });
+            console.log('Hei');
+            this.savePlace(this.state.placeState);
           }}
           onToggleCollapse={() => {
             this.setState((cs: CollectingEventState) => ({
@@ -732,6 +738,7 @@ export class CollectingEventComponent extends React.Component<
                 ...cs,
                 eventData: {
                   ...cs.eventData,
+                  editState: 'Editing',
                   [fieldName]: value
                 }
               };
@@ -742,6 +749,7 @@ export class CollectingEventComponent extends React.Component<
               ...p,
               eventData: {
                 ...p.eventData,
+                editState: 'Editing',
                 eventDateFrom: newDate ? formatISOString(newDate) : undefined
               }
             }));
@@ -751,6 +759,7 @@ export class CollectingEventComponent extends React.Component<
               ...p,
               eventData: {
                 ...p.eventData,
+                editState: 'Editing',
                 eventDateTo: newDate ? formatISOString(newDate) : undefined
               }
             }));
@@ -760,6 +769,7 @@ export class CollectingEventComponent extends React.Component<
               ...p,
               eventData: {
                 ...p.eventData,
+                editState: 'Editing',
                 eventDateFrom: undefined
               }
             }));
@@ -769,6 +779,7 @@ export class CollectingEventComponent extends React.Component<
               ...p,
               eventData: {
                 ...p.eventData,
+                editState: 'Editing',
                 eventDateTo: undefined
               }
             }));
@@ -778,6 +789,7 @@ export class CollectingEventComponent extends React.Component<
               ...p,
               eventData: {
                 ...p.eventData,
+                editState: 'Editing',
                 eventDateVerbatim: newDate
               }
             }));
@@ -878,12 +890,13 @@ export class CollectingEventComponent extends React.Component<
             readOnly={this.props.eventDataReadOnly}
             collapsed={this.props.eventDataCollapsed}
           />
-          <br />
-          <CollapseComponent
-            head="Person data"
-            Body={PersonComponentBody}
-            readOnly={this.props.personReadOnly}
-          />
+          {false && (
+            <CollapseComponent
+              head="Person data"
+              Body={PersonComponentBody}
+              readOnly={this.props.personReadOnly}
+            />
+          )}{' '}
           <br />
           <CollapseComponent
             head="Place"

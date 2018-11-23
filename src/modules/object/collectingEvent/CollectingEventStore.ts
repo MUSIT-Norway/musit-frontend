@@ -6,8 +6,7 @@ import {
   OutputCollectingEvent,
   editEventDateRevision,
   editEventPlaceRevision,
-  InputDateRevision,
-  InputPlaceAndRelation
+  InputDateRevision
 } from '../../../models/object/collectingEvent';
 import { addPlace, InputPlace, inputPlace } from '../../../models/object/place';
 import { CollectingEventState } from './CollectingEventComponent';
@@ -55,6 +54,7 @@ export type EditCollectingEventProps = CommonParams & {
   data: CollectingEventState;
   id: string;
 };
+export type EditPlaceProps = CommonParams & { id: string; data: InputPlace };
 
 export const toBackend: ((p: CollectingEventState) => InputCollectingEvent) = (
   p: CollectingEventState
@@ -148,20 +148,13 @@ const editEventDateRevisionData = (ajaxPut: AjaxPut<Star>) => (
     });
   });
 
-const editEventPlaceRevisionData = (ajaxPut: AjaxPut<Star>) => (
-  props: EditCollectingEventProps
+const editEventPlaceRevisionData = (ajaxPost: AjaxPost<Star>) => (
+  props: EditPlaceProps
 ) =>
   Observable.of(props).flatMap(props => {
-    const InputPlaceAndRevision = new InputPlaceAndRelation(
-      props.data.placeState && props.data.placeState.placeUuid
-        ? props.data.placeState.placeUuid
-        : '',
-      15
-    );
-
-    return editEventPlaceRevision(ajaxPut)({
+    return editEventPlaceRevision(ajaxPost)({
       id: props.id,
-      data: InputPlaceAndRevision,
+      data: props.data,
       token: props.token,
       callback: props.callback
     });
@@ -193,7 +186,7 @@ export const editEventDateRevision$: Subject<
 > = createAction('editEventDateRevision$');
 
 export const editEventPlaceRevision$: Subject<
-  EditCollectingEventProps & {
+  EditPlaceProps & {
     ajaxPut: AjaxPut<Star>;
   }
 > = createAction('editEventPlaceRevision$');
@@ -202,7 +195,7 @@ type Actions = {
   getCollectingEvent$: Subject<GetCollectingEventProps>;
   addCollectingEvent$: Subject<AddCollectingEventProps>;
   editEventDateRevision$: Subject<EditCollectingEventProps>;
-  editEventPlaceRevision$: Subject<EditCollectingEventProps>;
+  editEventPlaceRevision$: Subject<EditPlaceProps>;
   setDisabledState$: Subject<{ fieldName: string; value: boolean }>;
   setDraftState$: Subject<{ subState?: string; fieldName: string; value: boolean }>;
 };
@@ -271,15 +264,10 @@ export const reducer$ = (
         })
       ),
     actions.editEventPlaceRevision$
-      .switchMap(editEventPlaceRevisionData(ajaxPut))
-      .map(
-        (collectingEvent: InputCollectingEvent) => (
-          state: CollectingEventStoreState
-        ) => ({
-          ...state,
-          eventState: collectingEvent
-        })
-      )
+      .switchMap(editEventPlaceRevisionData(ajaxPost))
+      .map(() => (state: CollectingEventStoreState) => ({
+        ...state
+      }))
   );
 };
 

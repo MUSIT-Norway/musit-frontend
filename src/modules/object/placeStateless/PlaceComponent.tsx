@@ -1,5 +1,9 @@
 import * as React from 'react';
-import { InputCoordinate, InputCoordinateAttribute } from '../../../models/object/place';
+import {
+  InputCoordinate,
+  InputCoordinateAttribute,
+  InputPlace
+} from '../../../models/object/place';
 import CoordinateComponent from './CoordinateComponent';
 import CoordinateHeader from './CoordinateHeader';
 import AdmPlaceComponent from './AdmPlaceComponent';
@@ -145,6 +149,23 @@ export type MarinePlaceAttribute = {
   eis?: string;
 };
 
+export const toPlaceBackend: (placeState: PlaceState) => InputPlace = (
+  placeState: PlaceState
+) => {
+  return {
+    admPlaceUuid: placeState.admPlace ? placeState.admPlace.admPlaceUuid : undefined,
+    coordinate: {
+      ...placeState.editingInputCoordinate,
+      zone:
+        placeState.editingInputCoordinate && placeState.editingInputCoordinate.zone
+          ? placeState.editingInputCoordinate.zone.toString()
+          : undefined
+    },
+    coordinateAttributes: placeState.editingCoordinateAttribute,
+    attributes: placeState.editingAttributes
+  };
+};
+
 const PlaceComponent = (
   props: PlaceState & {
     onChangeAdmPlace: (value: AdmPlace) => void;
@@ -189,7 +210,7 @@ const PlaceComponent = (
               }
             }}
             onClickDraft={() => {}}
-            onClickSave={() => {}}
+            onClickSave={props.onClickSave}
             editButtonState={{ visible: true, disabled: props.readOnly ? false : true }}
             draftButtonState={{
               visible: props.isDraft ? true : false,

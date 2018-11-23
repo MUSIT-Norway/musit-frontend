@@ -8,7 +8,7 @@ import { simplePost, simpleGet, simplePut } from '../../shared/RxAjax';
 import { Callback, AjaxPost, AjaxGet, AjaxPut } from '../../types/ajax';
 import { Star } from '../../types/common';
 import Config from '../../config';
-import { OutPlace } from './place';
+import { OutPlace, InputPlaceWithUuid } from './place';
 
 export type Uuid = string;
 export type EventUuid = Uuid;
@@ -252,24 +252,22 @@ export const editEventDateRevision: (
 };
 
 export const editEventPlaceRevision: (
-  ajaxPut: AjaxPut<Star>
+  ajaxPost: AjaxPost<Star>
 ) => (
   props: {
     id: string;
     token: string;
-    data: any;
+    data: InputPlaceWithUuid;
     callback?: Callback<Star>;
   }
-) => Observable<InputCollectingEvent> = (ajaxPut = simplePut) => ({
+) => Observable<InputPlaceWithUuid> = (ajaxPost = simplePost) => ({
   id,
   data,
   token,
   callback
 }) => {
   const URL = Config.api.collectingEvent.editEvent.eventPlaceRevision(id);
-  return ajaxPut(URL, data, token, callback)
-    .do(r => console.log('DO', r, callback))
-    .map(({ response }) => response);
+  return ajaxPost(URL, data, token, callback).map(({ response }) => response);
 };
 
 export const getCollectingEventMethods: (

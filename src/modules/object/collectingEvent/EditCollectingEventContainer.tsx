@@ -10,6 +10,7 @@ import store$, {
   editEventDateRevision$,
   editEventPlaceRevision$,
   EditCollectingEventProps,
+  EditPlaceProps,
   getCollectingEvent$,
   setDisabledState$,
   setDraftState$
@@ -67,9 +68,7 @@ const editCollectingEventProps = (combinedStore: any, upstream: { history: Histo
         callback: props.callback
       });
     },
-    editEventPlaceRevision: (ajaxPut: AjaxPut<any>) => (
-      props: EditCollectingEventProps
-    ) => {
+    editEventPlaceRevision: (ajaxPut: AjaxPut<any>) => (props: EditPlaceProps) => {
       editEventPlaceRevision$.next({
         id: props.id,
         data: props.data,
