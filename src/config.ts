@@ -57,7 +57,9 @@ export default {
         eventDateRevision: (eventUuid: string) =>
           `/api/event/events/${eventUuid}/dateRevisions`,
         eventPlaceRevision: (eventUuid: string) =>
-          `/api/event/events/${eventUuid}/placeRevisions`
+          `/api/event/events/${eventUuid}/placeRevisions`,
+        eventAttributesRevision: (eventUuid: string) =>
+          `/api/event/events/${eventUuid}/attributeRevisions`
       }
     }
   },

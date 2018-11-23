@@ -4,8 +4,8 @@ import {
   ExternalId
 } from '../../modules/object/person/PersonComponent';
 import { Observable } from 'rxjs';
-import { simplePost, simpleGet, simplePut } from '../../shared/RxAjax';
-import { Callback, AjaxPost, AjaxGet, AjaxPut } from '../../types/ajax';
+import { simplePost, simpleGet } from '../../shared/RxAjax';
+import { Callback, AjaxPost, AjaxGet } from '../../types/ajax';
 import { Star } from '../../types/common';
 import Config from '../../config';
 import { OutPlace, InputPlaceWithUuid } from './place';
@@ -231,22 +231,43 @@ export const addCollectingEvent: (
 };
 
 export const editEventDateRevision: (
-  ajaxPut: AjaxPut<Star>
+  ajaxPost: AjaxPost<Star>
 ) => (
   props: {
     id: string;
     token: string;
-    data: any;
+    data: InputDateRevision;
     callback?: Callback<Star>;
   }
-) => Observable<InputCollectingEvent> = (ajaxPut = simplePut) => ({
+) => Observable<InputCollectingEvent> = (ajaxPost = simplePost) => ({
   id,
   data,
   token,
   callback
 }) => {
   const URL = Config.api.collectingEvent.editEvent.eventDateRevision(id);
-  return ajaxPut(URL, data, token, callback)
+  return ajaxPost(URL, data, token, callback)
+    .do(r => console.log('DO', r, callback))
+    .map(({ response }) => response);
+};
+
+export const editEventAttributesRevision: (
+  ajaxPost: AjaxPost<Star>
+) => (
+  props: {
+    id: string;
+    token: string;
+    data: InputCollectingEvent;
+    callback?: Callback<Star>;
+  }
+) => Observable<InputCollectingEvent> = (ajaxPost = simplePost) => ({
+  id,
+  data,
+  token,
+  callback
+}) => {
+  const URL = Config.api.collectingEvent.editEvent.eventAttributesRevision(id);
+  return ajaxPost(URL, data, token, callback)
     .do(r => console.log('DO', r, callback))
     .map(({ response }) => response);
 };

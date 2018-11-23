@@ -8,7 +8,9 @@ import { loadPredefinedCollectingEventValues } from '../../../stores/loadPredefi
 import predefinedCollectingEventValues$ from '../../../stores/predefinedCollectingEventValues';
 import store$, {
   editEventDateRevision$,
+  editEventAttributesRevision$,
   editEventPlaceRevision$,
+  editEventMetaData$,
   EditCollectingEventProps,
   EditPlaceProps,
   getCollectingEvent$,
@@ -16,7 +18,7 @@ import store$, {
   setDraftState$
 } from './CollectingEventStore';
 import { History } from 'history';
-import { AjaxPut } from '../../../types/ajax';
+import { AjaxPost } from '../../../types/ajax';
 import { simpleGet } from '../../../shared/RxAjax';
 import { CollectingEventComponent } from './CollectingEventComponent';
 
@@ -56,7 +58,7 @@ const editCollectingEventProps = (combinedStore: any, upstream: { history: Histo
       setDisabledState$.next({ fieldName, value }),
     setDraftState: (subState?: string) => (fieldName: string) => (value: boolean) =>
       setDraftState$.next({ subState: subState, fieldName: fieldName, value: value }),
-    editEventDateRevision: (ajaxPut: AjaxPut<any>) => (
+    editEventDateRevision: (ajaxPost: AjaxPost<any>) => (
       props: EditCollectingEventProps
     ) => {
       editEventDateRevision$.next({
@@ -64,17 +66,39 @@ const editCollectingEventProps = (combinedStore: any, upstream: { history: Histo
         data: props.data,
         token: props.token,
         collectionId: props.collectionId,
-        ajaxPut,
+        ajaxPost,
         callback: props.callback
       });
     },
-    editEventPlaceRevision: (ajaxPut: AjaxPut<any>) => (props: EditPlaceProps) => {
+    editEventMetaData: (ajaxPost: AjaxPost<any>) => (props: EditCollectingEventProps) => {
+      editEventMetaData$.next({
+        id: props.id,
+        data: props.data,
+        token: props.token,
+        collectionId: props.collectionId,
+        ajaxPost,
+        callback: props.callback
+      });
+    },
+    editEventAttributesRevision: (ajaxPost: AjaxPost<any>) => (
+      props: EditCollectingEventProps
+    ) => {
+      editEventAttributesRevision$.next({
+        id: props.id,
+        data: props.data,
+        token: props.token,
+        collectionId: props.collectionId,
+        ajaxPost,
+        callback: props.callback
+      });
+    },
+    editEventPlaceRevision: (ajaxPost: AjaxPost<any>) => (props: EditPlaceProps) => {
       editEventPlaceRevision$.next({
         id: props.id,
         data: props.data,
         token: props.token,
         collectionId: props.collectionId,
-        ajaxPut,
+        ajaxPost,
         callback: props.callback
       });
     }

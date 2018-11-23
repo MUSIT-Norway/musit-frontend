@@ -134,7 +134,7 @@ const EventMetadata = (props: EventMetadataProps) => {
               props.history.push(URL);
             }
           }}
-          onClickSave={() => {}}
+          onClickSave={props.onClickSave}
           onClickDraft={() => {}}
           editButtonState={{ visible: true, disabled: props.readOnly ? false : true }}
           cancelButtonState={{

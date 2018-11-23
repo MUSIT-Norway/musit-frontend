@@ -6,6 +6,7 @@ import {
   OutputCollectingEvent,
   editEventDateRevision,
   editEventPlaceRevision,
+  editEventAttributesRevision,
   InputDateRevision
 } from '../../../models/object/collectingEvent';
 import { addPlace, InputPlace, inputPlace } from '../../../models/object/place';
@@ -51,7 +52,7 @@ export type CommonParams = {
 export type GetCollectingEventProps = CommonParams & { id: string };
 export type AddCollectingEventProps = CommonParams & { data: CollectingEventState };
 export type EditCollectingEventProps = CommonParams & {
-  data: CollectingEventState;
+  data: InputCollectingEvent;
   id: string;
 };
 export type EditPlaceProps = CommonParams & { id: string; data: InputPlace };
@@ -125,24 +126,77 @@ const addCollectingEventData = (ajaxPost: AjaxPost<Star>) => (
   );
 };
 
-const editEventDateRevisionData = (ajaxPut: AjaxPut<Star>) => (
+const editEventMetaData = (ajaxPost: AjaxPost<Star>) => (
+  props: EditCollectingEventProps
+) => {
+  const inputDateRevision = new InputDateRevision(
+    props.data && props.data.eventDateFrom ? props.data.eventDateFrom : '',
+    props.data && props.data.eventDateTo ? props.data.eventDateTo : '',
+    props.data && props.data.eventDateVerbatim ? props.data.eventDateVerbatim : ''
+  );
+  const inputEventAttributes: InputCollectingEvent = {
+    name: props.data.name,
+    eventType: props.data.eventType,
+    method: props.data.method,
+    methodId: props.data.methodId,
+    methodDescription: props.data.methodDescription,
+    note: props.data.note
+  };
+  return Observable.forkJoin(
+    editEventDateRevision(ajaxPost)({
+      id: props.id,
+      data: inputDateRevision,
+      token: props.token
+    }),
+    editEventAttributesRevision(ajaxPost)({
+      id: props.id,
+      data: inputEventAttributes,
+      token: props.token
+    })
+  )
+    .last()
+    .toPromise()
+    .then(
+      onComplete =>
+        props.callback &&
+        props.callback.onComplete &&
+        props.callback.onComplete(onComplete)
+    );
+};
+
+const editEventDateRevisionData = (ajaxPost: AjaxPost<Star>) => (
   props: EditCollectingEventProps
 ) =>
   Observable.of(props).flatMap(props => {
-    const InputPlaceAndRevision = new InputDateRevision(
-      props.data && props.data.eventData.eventDateFrom
-        ? props.data.eventData.eventDateFrom
-        : '',
-      props.data && props.data.eventData.eventDateTo
-        ? props.data.eventData.eventDateTo
-        : '',
-      props.data && props.data.eventData.eventDateVerbatim
-        ? props.data.eventData.eventDateVerbatim
-        : ''
+    const inputPlaceAndRevision = new InputDateRevision(
+      props.data && props.data.eventDateFrom ? props.data.eventDateFrom : '',
+      props.data && props.data.eventDateTo ? props.data.eventDateTo : '',
+      props.data && props.data.eventDateVerbatim ? props.data.eventDateVerbatim : ''
     );
-    return editEventDateRevision(ajaxPut)({
+
+    return editEventDateRevision(ajaxPost)({
       id: props.id,
-      data: InputPlaceAndRevision,
+      data: inputPlaceAndRevision,
+      token: props.token,
+      callback: props.callback
+    });
+  });
+
+const editEventAttributesRevisionData = (ajaxPost: AjaxPost<Star>) => (
+  props: EditCollectingEventProps
+) =>
+  Observable.of(props).flatMap(props => {
+    const inputEventAttributes: InputCollectingEvent = {
+      name: props.data.name,
+      eventType: props.data.eventType,
+      method: props.data.method,
+      methodId: props.data.methodId,
+      methodDescription: props.data.methodDescription,
+      note: props.data.note
+    };
+    return editEventAttributesRevision(ajaxPost)({
+      id: props.id,
+      data: inputEventAttributes,
       token: props.token,
       callback: props.callback
     });
@@ -181,21 +235,34 @@ export const getCollectingEvent$: Subject<
 
 export const editEventDateRevision$: Subject<
   EditCollectingEventProps & {
-    ajaxPut: AjaxPut<Star>;
+    ajaxPost: AjaxPost<Star>;
   }
 > = createAction('editEventDateRevision$');
 
 export const editEventPlaceRevision$: Subject<
   EditPlaceProps & {
-    ajaxPut: AjaxPut<Star>;
+    ajaxPost: AjaxPost<Star>;
   }
 > = createAction('editEventPlaceRevision$');
+
+export const editEventAttributesRevision$: Subject<
+  EditCollectingEventProps & {
+    ajaxPost: AjaxPost<Star>;
+  }
+> = createAction('editEventAttributesRevision$');
+export const editEventMetaData$: Subject<
+  EditCollectingEventProps & {
+    ajaxPost: AjaxPost<Star>;
+  }
+> = createAction('editEventMetaData$');
 
 type Actions = {
   getCollectingEvent$: Subject<GetCollectingEventProps>;
   addCollectingEvent$: Subject<AddCollectingEventProps>;
   editEventDateRevision$: Subject<EditCollectingEventProps>;
+  editEventAttributesRevision$: Subject<EditCollectingEventProps>;
   editEventPlaceRevision$: Subject<EditPlaceProps>;
+  editEventMetaData$: Subject<EditCollectingEventProps>;
   setDisabledState$: Subject<{ fieldName: string; value: boolean }>;
   setDraftState$: Subject<{ subState?: string; fieldName: string; value: boolean }>;
 };
@@ -254,15 +321,28 @@ export const reducer$ = (
         })
       ),
     actions.editEventDateRevision$
-      .switchMap(editEventDateRevisionData(ajaxPut))
+      .switchMap(editEventDateRevisionData(ajaxPost))
       .map(
         (collectingEvent: InputCollectingEvent) => (
           state: CollectingEventStoreState
         ) => ({
-          ...state,
-          eventState: collectingEvent
+          ...state
         })
       ),
+    actions.editEventAttributesRevision$
+      .switchMap(editEventAttributesRevisionData(ajaxPost))
+      .map(
+        (collectingEvent: InputCollectingEvent) => (
+          state: CollectingEventStoreState
+        ) => ({
+          ...state
+        })
+      ),
+    actions.editEventMetaData$
+      .switchMap(editEventMetaData(ajaxPost))
+      .map(() => (state: CollectingEventStoreState) => ({
+        ...state
+      })),
     actions.editEventPlaceRevision$
       .switchMap(editEventPlaceRevisionData(ajaxPost))
       .map(() => (state: CollectingEventStoreState) => ({
@@ -277,8 +357,10 @@ export const store$ = (
     addCollectingEvent$,
     editEventDateRevision$,
     editEventPlaceRevision$,
+    editEventAttributesRevision$,
     setDisabledState$,
-    setDraftState$
+    setDraftState$,
+    editEventMetaData$
   },
   ajaxGet: AjaxGet<Star> = simpleGet,
   ajaxPost: AjaxPost<Star> = simplePost,

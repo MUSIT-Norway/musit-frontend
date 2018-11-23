@@ -3,11 +3,7 @@ import { musitCoodinateValidate } from '../../../shared/util';
 import CollapseComponent from '../components/Collapse';
 import EventMetadata from './EventMetadata';
 import { formatISOString } from '../../../shared/util';
-import {
-  InputCoordinate,
-  InputCoordinateAttribute,
-  OutPlace
-} from '../../../models/object/place';
+import { InputCoordinate, InputCoordinateAttribute } from '../../../models/object/place';
 import PlaceComponent, {
   AdmPlace,
   PlaceState,
@@ -19,7 +15,8 @@ import {
   CollectingEventStoreState,
   PredefinedCollectingEventValues,
   CollectingEventMethod,
-  EditPlaceProps
+  EditPlaceProps,
+  EditCollectingEventProps
 } from './CollectingEventStore';
 import { AppSession } from '../../../types/appSession';
 import { History } from 'history';
@@ -27,7 +24,8 @@ import {
   OutputCollectingEvent,
   ActorsAndRelation,
   EventUuid,
-  PersonUuid
+  PersonUuid,
+  InputCollectingEvent
 } from '../../../models/object/collectingEvent';
 import { AjaxResponse } from 'rxjs';
 import config from '../../../config';
@@ -36,9 +34,10 @@ import EditAndSaveButtons from '../components/EditAndSaveButtons';
 import PersonComponent from './PersonComponent';
 import { personDet } from '../../../models/object/classHist';
 import { PersonState } from '../person/PersonComponent';
-import { AjaxPut } from 'src/types/ajax';
+import { AjaxPost } from 'src/types/ajax';
 
 export type EventMetadataProps = EventData & {
+  onClickSave: () => void;
   onChangeEventMetaData: (fieldName: string) => (value: string) => void;
   onClearBornDate: Function;
   onChangeBornDate: Function;
@@ -167,9 +166,16 @@ export interface CollectingEventState {
 
 export type CollectingProps = {
   addCollectingEvent?: Function;
-  editEventPlaceRevision?: (
-    ajaxPut?: AjaxPut<OutPlace>
-  ) => (props: EditPlaceProps) => void;
+  editEventMetaData?: (
+    ajaxPost?: AjaxPost<any>
+  ) => (props: EditCollectingEventProps) => void;
+  editEventAttributesRevision?: (
+    ajaxPost?: AjaxPost<any>
+  ) => (props: EditCollectingEventProps) => void;
+  editEventDateRevision?: (
+    ajaxPost?: AjaxPost<any>
+  ) => (props: EditCollectingEventProps) => void;
+  editEventPlaceRevision?: (ajaxPost?: AjaxPost<any>) => (props: EditPlaceProps) => void;
   getCollectingEvent?: Function;
   setDisabledState: Function;
   setDraftState: (subState?: string) => (fieldName: string) => (value: boolean) => void;
@@ -210,6 +216,12 @@ export default (props: CollectingProps) => (
     saveState={props.saveState}
   />
 );
+
+export const toEventDataBackend: (p: CollectingEventState) => InputCollectingEvent = (
+  p: CollectingEventState
+) => {
+  return p.eventData;
+};
 
 export const toFrontend: (p: OutputCollectingEvent) => CollectingEventState = (
   p: OutputCollectingEvent
@@ -375,7 +387,29 @@ export class CollectingEventComponent extends React.Component<
     }
   }
 
-  saveEvent(eventData: EventData) {}
+  saveEvent(collectingEventState: CollectingEventState) {
+    if (
+      this.props.editEventMetaData &&
+      collectingEventState.eventData &&
+      collectingEventState.eventData.eventUuid
+    ) {
+      const URL = config.magasin.urls.client.collectingEvent.view(
+        this.props.appSession,
+        this.state.eventData.eventUuid
+      );
+      const props: EditCollectingEventProps = {
+        id: this.state.eventData.eventUuid,
+        data: toEventDataBackend(collectingEventState),
+        token: this.props.appSession.accessToken,
+        collectionId: this.props.appSession.collectionId,
+        callback: {
+          onComplete: () => this.props.history.replace(URL)
+        }
+      };
+
+      this.props.editEventMetaData()(props);
+    }
+  }
 
   savePerson(personState: PersonState) {}
 
@@ -712,6 +746,7 @@ export class CollectingEventComponent extends React.Component<
         <EventMetadata
           {...this.state.eventData}
           history={this.props.history}
+          onClickSave={() => this.saveEvent(this.state)}
           setEditMode={() => {
             localStorage.clear();
             localStorage.setItem('editComponent', 'eventMetaData');

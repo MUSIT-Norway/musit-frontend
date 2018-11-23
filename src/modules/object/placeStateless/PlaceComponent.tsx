@@ -11,7 +11,7 @@ import { AppSession } from 'src/types/appSession';
 import { History } from 'history';
 import { EditState, NonEditState } from '../types';
 import EditAndSaveButtons from '../components/EditAndSaveButtons';
-import config from 'src/config';
+import config from '../../../configq';
 
 export type CoordinateRevisionType =
   | 'newCoordinate'
