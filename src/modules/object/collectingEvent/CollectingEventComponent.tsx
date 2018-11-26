@@ -27,6 +27,7 @@ import { AjaxResponse } from 'rxjs';
 import config from '../../../config';
 import PersonComponent from './PersonComponent';
 import { personDet } from '../../../models/object/classHist';
+import { PersonName } from '../person/PersonComponent';
 
 export type CollectingEventProps = {
   onChangeTextField: (fieldName: string) => (value: string) => void;
@@ -63,6 +64,9 @@ export interface EventState {
   eventDateFrom?: string;
   eventDateTo?: string;
   eventDateVerbatim?: string;
+  editingPersonName?: PersonName;
+  disableOnChangeFullName?: boolean;
+  disableOnChangeOtherName?: boolean;
 }
 
 export class EventState implements EventState {
@@ -84,6 +88,9 @@ export class EventState implements EventState {
   eventDateTo?: string;
   eventDateVerbatim?: string;
   placeState: PlaceState;
+  editingPersonName?: PersonName;
+  disableOnChangeFullName?: boolean;
+  disableOnChangeOtherName?: boolean;
   constructor(
     name: string,
     eventUuid: EventUuid,
@@ -102,7 +109,10 @@ export class EventState implements EventState {
     relatedActors?: ActorsAndRelation[],
     eventDateFrom?: string,
     eventDateTo?: string,
-    eventDateVerbatim?: string
+    eventDateVerbatim?: string,
+    editingPersonName?: PersonName,
+    disableOnChangeFullName?: boolean,
+    disableOnChangeOtherName?: boolean
   ) {
     this.name = name;
     this.eventUuid = eventUuid;
@@ -122,6 +132,9 @@ export class EventState implements EventState {
     this.eventDateTo = eventDateTo;
     this.eventDateVerbatim = eventDateVerbatim;
     this.placeState = placeState;
+    this.editingPersonName = editingPersonName;
+    this.disableOnChangeFullName = disableOnChangeFullName;
+    this.disableOnChangeOtherName = disableOnChangeOtherName;
   }
 }
 
@@ -144,6 +157,7 @@ export type CollectingProps = {
   appSession: AppSession;
   history: History;
   readOnly: boolean;
+  addPersonName?: Function;
 };
 
 export default (props: CollectingProps) => (
@@ -236,7 +250,6 @@ export class CollectingEventComponent extends React.Component<
   constructor(props: CollectingProps) {
     super(props);
     console.log('COLLECTING EVENT STORE', props.store);
-
     this.state =
       props.store && props.store.localState
         ? props.store.localState
@@ -266,7 +279,9 @@ export class CollectingEventComponent extends React.Component<
                   depthCa: false
                 },
                 coordinateInvalid: false
-              }
+              },
+              disableOnChangeFullName: false,
+              disableOnChangeOtherName: false
             }
           };
     console.log('COLL EVENT STATE : ', this.state);
@@ -779,6 +794,15 @@ export class CollectingEventComponent extends React.Component<
           actorsAndRelation={
             this.state.eventState ? this.state.eventState.relatedActors : []
           }
+          editingPersonName={
+            this.state.eventState && this.state.eventState.editingPersonName
+          }
+          disableOnChangeFullName={
+            this.state.eventState && this.state.eventState.disableOnChangeFullName
+          }
+          disableOnChangeOtherName={
+            this.state.eventState && this.state.eventState.disableOnChangeOtherName
+          }
           onChangePerson={(suggestion: personDet) => {
             this.setState((cs: CollectingEventState) => {
               console.log('ANURADHA RETURNED cs ', cs);
@@ -840,6 +864,74 @@ export class CollectingEventComponent extends React.Component<
                   ...cs.eventState,
                   relatedActors: newRActors,
                   editingRelatedActors: currentRelatedActors.length === 1 ? {} : undefined
+                }
+              };
+            });
+          }}
+          onCreatePersonName={(appSession: AppSession) => {
+            console.log('Anuradha hit save ', this.state);
+            return (
+              this.props.addPersonName &&
+              this.props.addPersonName()({
+                data: this.state,
+                token: appSession.accessToken,
+                collectionId: appSession.collectionId,
+                callback: (res: any) => console.log('call back ====> ', res)
+              })
+            );
+          }}
+          onChangeFullName={(fieldName: string) => (value: string) => {
+            this.setState((ps: CollectingEventState) => {
+              console.log('ANURADHA in onChangeFullName : ', fieldName, value);
+              console.log('onChangeFullName = CollectingEventComp', ps.eventState);
+              const lastName =
+                fieldName === 'lastName'
+                  ? value
+                  : ps.eventState.editingPersonName &&
+                    ps.eventState.editingPersonName.lastName
+                    ? ps.eventState.editingPersonName.lastName
+                    : '';
+              const title =
+                fieldName === 'title'
+                  ? value
+                  : ps.eventState.editingPersonName &&
+                    ps.eventState.editingPersonName.title
+                    ? ps.eventState.editingPersonName.title
+                    : '';
+              const firstName =
+                fieldName === 'firstName'
+                  ? value
+                  : ps.eventState.editingPersonName &&
+                    ps.eventState.editingPersonName.firstName
+                    ? ps.eventState.editingPersonName.firstName
+                    : '';
+              const nameString = `${lastName || ''}${
+                title || firstName ? ', ' : ''
+              }${title || ''}${title ? ' ' : ''}${firstName || ''}`;
+
+              const disableOnChangeFullName =
+                lastName || title || firstName ? true : false;
+
+              let disableOnChangeOtherName = false;
+              if (fieldName === 'nameString') {
+                disableOnChangeOtherName = true;
+
+                if (value === '') {
+                  disableOnChangeOtherName = false;
+                }
+              }
+
+              return {
+                ...ps,
+                eventState: {
+                  ...ps.eventState,
+                  editingPersonName: {
+                    ...ps.eventState.editingPersonName,
+                    nameString,
+                    [fieldName]: value
+                  },
+                  disableOnChangeFullName: disableOnChangeFullName,
+                  disableOnChangeOtherName: disableOnChangeOtherName
                 }
               };
             });

@@ -7,6 +7,8 @@ import { History } from 'history';
 import { personDet } from '../../../models/object/classHist';
 import config from '../../../config';
 //import * as FontAwesome from 'react-fontawesome';
+import { PersonNameComponent } from '../person/PersonNameComponent';
+import { PersonName } from '../person/PersonComponent';
 
 const personNameAsString = (n: ActorsAndRelation) => {
   return (
@@ -23,6 +25,11 @@ export type PersonProps = {
   onChangePerson: (suggestion: personDet) => void;
   onAddPerson: () => void;
   onDeletePerson: (i: number) => void;
+  editingPersonName?: PersonName;
+  disableOnChangeFullName?: boolean;
+  disableOnChangeOtherName?: boolean;
+  onChangeFullName: (fieldName: string) => (newValue: string) => void;
+  onCreatePersonName: Function;
 };
 
 const PersonComponent = (props: PersonProps) => {
@@ -132,6 +139,19 @@ const PersonComponent = (props: PersonProps) => {
             {' '}
             Opprett ny person
           </button>
+        </div>
+      </div>
+      <div className="row form-group">
+        <div className="col-md-2">
+          <PersonNameComponent
+            personName={props.editingPersonName && props.editingPersonName}
+            disableOnChangeFullName={props.disableOnChangeFullName}
+            disableOnChangeOtherName={props.disableOnChangeOtherName}
+            appSession={props.appSession}
+            history={props.history}
+            onCreatePersonName={props.onCreatePersonName}
+            onChangeFullName={props.onChangeFullName}
+          />
         </div>
       </div>
 

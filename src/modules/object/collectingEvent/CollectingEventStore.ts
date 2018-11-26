@@ -20,11 +20,20 @@ import { simpleGet, simplePost, simplePut } from '../../../shared/RxAjax';
 import { KEEP_ALIVE } from '../../../stores/constants';
 import { createStore } from 'react-rxjs';
 import { toFrontend } from '../collectingEvent/CollectingEventComponent';
+import {
+  addPersonName,
+  InputPersonName,
+  getPersonName
+} from '../../../models/object/person';
+//import { AddPersonNameState } from '../person/PersonNameComponent';
+import { PersonName } from '../person/PersonComponent';
 
 export type CollectingEventStoreState = {
   localState?: CollectingEventState;
   collectingEvent?: InputCollectingEvent;
   collectingEventList?: Array<InputCollectingEvent>;
+  personName?: InputPersonName;
+  //personNameState?: PersonName;
 };
 export type CollectingEventMethod = {
   methodId: number;
@@ -53,6 +62,9 @@ export type GetCollectingEventProps = CommonParams & { id: string };
 export type AddCollectingEventProps = CommonParams & { data: EventState };
 export type EditCollectingEventProps = CommonParams & { data: EventState; id: string };
 
+export type AddPersonNameProps = CommonParams & { data: PersonName };
+export type GetPersonNameProps = CommonParams & { id: string };
+
 export const toBackend: ((p: EventState) => InputCollectingEvent) = (p: EventState) => {
   const c = new CollectingEvent(
     p.name,
@@ -73,6 +85,14 @@ export const toBackend: ((p: EventState) => InputCollectingEvent) = (p: EventSta
     p.eventDateVerbatim,
     p.placeState.placeUuid
   );
+  console.log('to backend ', c);
+  return c;
+};
+
+export const toBackendPersonName: ((p: PersonName) => InputPersonName) = (
+  p: PersonName
+) => {
+  const c = new InputPersonName(p.nameString, p.firstName, p.lastName, p.title);
   console.log('to backend ', c);
   return c;
 };
@@ -156,6 +176,30 @@ const editEventPlaceRivisionData = (ajaxPut: AjaxPut<Star>) => (
     });
   });
 
+const addPersonNameData = (ajaxGet: AjaxGet<Star>, ajaxPost: AjaxPost<Star>) => (
+  props: AddPersonNameProps
+) =>
+  Observable.of(props)
+    .flatMap(props =>
+      addPersonName(ajaxPost)({
+        data: toBackendPersonName(props.data),
+        token: props.token,
+        callback: props.callback
+      })
+    )
+    .do(res => console.log('((((=====)))) ', res.personNameUuid))
+    .flatMap(res => {
+      return getPersonNameFromUuid(ajaxGet)({
+        id: res.personNameUuid || '',
+        collectionId: props.collectionId,
+        token: props.token
+      });
+    });
+
+const getPersonNameFromUuid = (ajaxGet: AjaxGet<Star>) => (props: GetPersonNameProps) =>
+  Observable.of(props).flatMap(props =>
+    getPersonName(ajaxGet)({ id: props.id, token: props.token, callback: props.callback })
+  );
 export const addCollectingEvent$: Subject<
   AddCollectingEventProps & { ajaxPost: AjaxPost<Star> }
 > = createAction('addCollectingEvent$');
@@ -176,11 +220,21 @@ export const editEventPlaceRivision$: Subject<
   }
 > = createAction('editEventPlaceRivision$');
 
+export const addPersonName$: Subject<
+  AddPersonNameProps & { ajaxPost: AjaxPost<Star> }
+> = createAction('addPersonName$');
+
+export const getPersonName$: Subject<
+  GetPersonNameProps & { ajaxGet: AjaxGet<Star> }
+> = createAction('getPersonName$');
+
 type Actions = {
   getCollectingEvent$: Subject<GetCollectingEventProps>;
   addCollectingEvent$: Subject<AddCollectingEventProps>;
   editEventDateRivision$: Subject<EditCollectingEventProps>;
   editEventPlaceRivision$: Subject<EditCollectingEventProps>;
+  addPersonName$: Subject<AddPersonNameProps>;
+  getPersonName$: Subject<GetPersonNameProps>;
 };
 
 export const reducer$ = (
@@ -226,7 +280,16 @@ export const reducer$ = (
           ...state,
           eventState: collectingEvent
         })
-      )
+      ),
+    actions.addPersonName$
+      .switchMap(addPersonNameData(ajaxGet, ajaxPost))
+      .map((o: InputPersonName) => (state: CollectingEventStoreState) => {
+        console.log('I map i reducer: ', o);
+        return {
+          ...state,
+          personName: o
+        };
+      })
   );
 };
 
@@ -235,7 +298,9 @@ export const store$ = (
     getCollectingEvent$,
     addCollectingEvent$,
     editEventDateRivision$,
-    editEventPlaceRivision$
+    editEventPlaceRivision$,
+    addPersonName$,
+    getPersonName$
   },
   ajaxGet: AjaxGet<Star> = simpleGet,
   ajaxPost: AjaxPost<Star> = simplePost,

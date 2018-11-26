@@ -1,6 +1,6 @@
 import { inject, createStore } from 'react-rxjs';
 import { Observable } from 'rxjs';
-import PersonNameComponent from './PersonName';
+import PersonNameComponent from './PersonNameComponent';
 import { flowRight } from 'lodash';
 import { History } from 'history';
 import appSession$ from '../../../stores/appSession';

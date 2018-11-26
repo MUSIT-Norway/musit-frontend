@@ -22,7 +22,7 @@ import { createAction } from '../../../shared/react-rxjs-patch';
 import { Reducer } from 'react-rxjs';
 import { Star } from '../../../types/common';
 import { PersonState, toFrontend, SynonymType } from './PersonComponent';
-import { AddPersonNameState } from './PersonName';
+import { AddPersonNameState } from './PersonNameComponent';
 
 export type PersonStoreState = {
   localState?: PersonState;
