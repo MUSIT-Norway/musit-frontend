@@ -54,7 +54,9 @@ export type CoordinateProps = {
   onChangeCoordinateNumber: (fieldName: string) => (value: number) => void;
   //onSetEditingIndex: (i: number) => void;
   onChangeCoordinateText: (fieldName: string) => (value: string) => void;
-  onCoordinateInputExit: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  onCoordinateMGRSKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  onCoordinateUTMKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  onCoordinateLatLonKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onChangeCoordinateAttributes: (fieldName: string) => (value: string) => void;
   onChangeNumberCoordinateAttributes: (fieldName: string) => (value: number) => void;
   //onChangeHistoryItem: (fieldName: string) => (value: string) => void;
@@ -153,14 +155,78 @@ export type MarinePlaceAttribute = {
   eis?: string;
 };
 
-export const coordMGRSStrToDerived: (
+export const coordLatLongStrToDerived: (
   coordStr: string, //Assume like ' 32VNN2345545432 [zone][band][100kmE][100kmN][Easting][Northing]
   coordType: string,
-  datum: 'ED50' | 'WGS84'
+  datum: 'WGS84' | 'ED50'
+) => DerivedCoordinate | undefined = (coordStr, coordType, datum) => {
+  if (coordType === 'LAT/LONG') {
+    let coordStrings = coordStr.split(' ');
+    if (coordStrings.length !== 2) {
+      coordStrings = coordStr.match(/\d.*?(N|S|E|W)/g) as string[];
+    }
+
+    console.log(coordStrings);
+    const latStr = coordStrings ? coordStrings[0].trim() : '';
+    const longStr = coordStrings ? coordStrings[1].trim() : '';
+    const lat = Geodesy.Dms.parseDMS(latStr);
+    const long = Geodesy.Dms.parseDMS(longStr);
+    const d =
+      datum === 'ED50'
+        ? Geodesy.LatLonEllipsoidal.datum.ED50
+        : datum === 'WGS84'
+          ? Geodesy.LatLonEllipsoidal.datum.WGS84
+          : undefined;
+
+    const latLng = new Geodesy.LatLonEllipsoidal(lat, long, d);
+
+    let u;
+    try {
+      u = latLng.toUtm();
+    } catch {
+      u = {
+        easting: undefined,
+        northing: undefined
+      };
+    }
+
+    if (u || latLng) {
+      return {
+        utmX: u.easting,
+        utmY: u.northing,
+        lat: latLng.lat,
+        lng: latLng.lon
+      };
+    }
+  }
+  return undefined;
+};
+
+export const coordMGRSStrToDerived: (
+  coordStr: string, //Assume like ' 32V NN(-NM) 23455(-34567), 45432(-56789) [zone][band][100kmE][100kmN][Easting][Northing]
+  coordType: string,
+  datum: 'WGS84' | 'ED50'
 ) => DerivedCoordinate | undefined = (coordStr, coordType, datum) => {
   if (coordType === 'MGRS') {
-    const parsedCoordStr = coordStr.replace(/[\,\s]/g, '');
-    const mgrs = Geodesy.Mgrs.parse(parsedCoordStr);
+    const parsedCoordStr = coordStr.replace(/^\d\d[A-Z]/i, '');
+    const letterPart = parsedCoordStr.match(/[A-Z][A-Z](-[A-Z][A-Z])?/i);
+    const digitPart = parsedCoordStr.match(
+      /(\d{1}(\-\d{1})?(\,|\s)\d{1}(\-\d{1})?)|(\d{2}(\-\d{2})?(\,|\s)\d{2}(\-\d{2})?)|(\d{3}(\-\d{3})?(\,|\s)\d{3}(\-\d{3})?)|(\d{4}(\-\d{4})?(\,|\s)\d{4}(\-\d{4})?)|(\d{5}(\-\d{5})?(\,|\s)\d{5}(\-\d{5})?)/g
+    );
+
+    console.log('XXXX', letterPart, digitPart);
+
+    const m = Geodesy.Mgrs.parse(parsedCoordStr);
+    const mgrs = new Geodesy.Mgrs(
+      m.zone,
+      m.band,
+      m.e100k,
+      m.n100k,
+      m.easting,
+      m.northing,
+      datum
+    );
+
     const u = mgrs.toUtm();
     const latLng = u.toLatLonE();
     if (u && latLng) {

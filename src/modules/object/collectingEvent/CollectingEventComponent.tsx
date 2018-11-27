@@ -10,7 +10,8 @@ import PlaceComponent, {
   MarinePlaceAttribute,
   InputPlace,
   toPlaceBackend,
-  coordMGRSStrToDerived
+  coordMGRSStrToDerived,
+  coordLatLongStrToDerived
 } from '../placeStateless/PlaceComponent';
 import {
   CollectingEventStoreState,
@@ -21,6 +22,7 @@ import {
 } from './CollectingEventStore';
 import { AppSession } from '../../../types/appSession';
 import { History } from 'history';
+import * as Geodesy from 'geodesy';
 import {
   OutputCollectingEvent,
   ActorsAndRelation,
@@ -423,7 +425,51 @@ export class CollectingEventComponent extends React.Component<
           showButtonRow={this.props.addStateHidden}
           collectingEventUUid={this.state.eventData.eventUuid}
           appSession={this.props.appSession}
-          onCoordinateInputExit={e => {
+          onCoordinateLatLonKeyPress={e => {
+            if (e.charCode === 13) {
+              console.log('E', e);
+
+              const datum: Geodesy.datum =
+                this.state.placeState.editingInputCoordinate &&
+                (this.state.placeState.editingInputCoordinate.datum === 'WGS84' ||
+                  this.state.placeState.editingInputCoordinate.datum === 'ED50')
+                  ? this.state.placeState.editingInputCoordinate.datum
+                  : 'WGS84';
+
+              try {
+                const coordStr =
+                  this.state.placeState.editingInputCoordinate &&
+                  this.state.placeState.editingInputCoordinate.coordinateString;
+                const derivedCoordinate =
+                  this.state.placeState.editingInputCoordinate &&
+                  coordStr &&
+                  this.state.placeState.editingInputCoordinate.datum &&
+                  this.state.placeState.editingInputCoordinate.coordinateType
+                    ? coordLatLongStrToDerived(
+                        coordStr,
+                        this.state.placeState.editingInputCoordinate.coordinateType,
+                        datum
+                      )
+                    : undefined;
+                this.setState((ps: CollectingEventState) => ({
+                  ...ps,
+                  placeState: {
+                    ...ps.placeState,
+                    editingInputCoordinate: ps.placeState.editingInputCoordinate
+                      ? {
+                          ...ps.placeState.editingInputCoordinate,
+                          derivedCoordinate: derivedCoordinate
+                        }
+                      : undefined
+                  }
+                }));
+              } catch (e) {
+                console.log(e);
+              }
+            }
+          }}
+          onCoordinateUTMKeyPress={e => {}}
+          onCoordinateMGRSKeyPress={e => {
             if (e.charCode === 13) {
               console.log('E', e);
 
@@ -441,10 +487,7 @@ export class CollectingEventComponent extends React.Component<
                   this.state.placeState.editingInputCoordinate.zone &&
                   this.state.placeState.editingInputCoordinate.zone.toString() +
                     this.state.placeState.editingInputCoordinate.bend +
-                    this.state.placeState.editingInputCoordinate.coordinateString.replace(
-                      /[\,\s]/g,
-                      ''
-                    );
+                    this.state.placeState.editingInputCoordinate.coordinateString;
                 const derivedCoordinate =
                   this.state.placeState.editingInputCoordinate &&
                   coordStr &&

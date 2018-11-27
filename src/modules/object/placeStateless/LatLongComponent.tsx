@@ -111,6 +111,7 @@ const LatLongComponent = (props: CoordinateProps) => {
             className="form-control"
             id="latLongCoordinateString"
             disabled={props.readOnly}
+            onKeyPress={props.onCoordinateLatLonKeyPress}
             onChange={e => {
               props.onChangeCoordinateText('coordinateString')(e.target.value);
             }}
