@@ -2,16 +2,19 @@ import * as React from 'react';
 import {
   InputCoordinate,
   InputCoordinateAttribute,
-  InputPlace
+  InputPlace,
+  DerivedCoordinate
 } from '../../../models/object/place';
 import CoordinateComponent from './CoordinateComponent';
 import CoordinateHeader from './CoordinateHeader';
 import AdmPlaceComponent from './AdmPlaceComponent';
+import Map from '../mapcomponent/MapComponent';
 import { AppSession } from 'src/types/appSession';
 import { History } from 'history';
 import { EditState, NonEditState } from '../types';
 import EditAndSaveButtons from '../components/EditAndSaveButtons';
 import config from '../../../config';
+import * as Geodesy from 'geodesy';
 
 export type CoordinateRevisionType =
   | 'newCoordinate'
@@ -51,6 +54,7 @@ export type CoordinateProps = {
   onChangeCoordinateNumber: (fieldName: string) => (value: number) => void;
   //onSetEditingIndex: (i: number) => void;
   onChangeCoordinateText: (fieldName: string) => (value: string) => void;
+  onCoordinateInputExit: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onChangeCoordinateAttributes: (fieldName: string) => (value: string) => void;
   onChangeNumberCoordinateAttributes: (fieldName: string) => (value: number) => void;
   //onChangeHistoryItem: (fieldName: string) => (value: string) => void;
@@ -149,6 +153,28 @@ export type MarinePlaceAttribute = {
   eis?: string;
 };
 
+export const coordMGRSStrToDerived: (
+  coordStr: string, //Assume like ' 32VNN2345545432 [zone][band][100kmE][100kmN][Easting][Northing]
+  coordType: string,
+  datum: 'ED50' | 'WGS84'
+) => DerivedCoordinate | undefined = (coordStr, coordType, datum) => {
+  if (coordType === 'MGRS') {
+    const parsedCoordStr = coordStr.replace(/[\,\s]/g, '');
+    const mgrs = Geodesy.Mgrs.parse(parsedCoordStr);
+    const u = mgrs.toUtm();
+    const latLng = u.toLatLonE();
+    if (u && latLng) {
+      return {
+        utmX: u.easting,
+        utmY: u.northing,
+        lat: latLng.lat,
+        lng: latLng.lon
+      };
+    }
+  }
+  return undefined;
+};
+
 export const toPlaceBackend: (placeState: PlaceState) => InputPlace = (
   placeState: PlaceState
 ) => {
@@ -191,6 +217,26 @@ const PlaceComponent = (
           getAdmPlaceData={props.getAdmPlaceData}
           readOnly={props.readOnly || false}
         />
+        {props.editingInputCoordinate &&
+          props.editingInputCoordinate.derivedCoordinate && (
+            <Map
+              coord={
+                props.editingInputCoordinate &&
+                props.editingInputCoordinate.derivedCoordinate
+                  ? {
+                      lat:
+                        props.editingInputCoordinate &&
+                        props.editingInputCoordinate.derivedCoordinate &&
+                        props.editingInputCoordinate.derivedCoordinate.lat,
+                      lng:
+                        props.editingInputCoordinate &&
+                        props.editingInputCoordinate.derivedCoordinate &&
+                        props.editingInputCoordinate.derivedCoordinate.lng
+                    }
+                  : undefined
+              }
+            />
+          )}
         <CoordinateHeader {...props} />
         <CoordinateComponent {...props} />
 

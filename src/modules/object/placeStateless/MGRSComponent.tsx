@@ -119,6 +119,7 @@ const MGRSComponent = (props: CoordinateProps) => {
         <div className="col-md-5">
           <input
             type="text"
+            onKeyPress={props.onCoordinateInputExit}
             className="form-control"
             id="MGRSCoordinateString"
             disabled={props.readOnly}
