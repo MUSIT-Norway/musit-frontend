@@ -1,21 +1,23 @@
 import * as React from 'react';
 import { EventMetadataProps } from './CollectingEventComponent';
 import DatePicker from '../../../components/DatePicker';
+import EditAndSaveButtons from '../components/EditAndSaveButtons';
+import config from '../../../config';
 
 const EventMetadata = (props: EventMetadataProps) => {
   return (
-    <div>
+    <div className="container-fluid panel-group">
       <div className="row form-group">
-        <div className="col-md-2">
-          <label htmlFor="txtInputProject">Project Name </label>
+        <div className="col-md-6">
+          <label htmlFor="txtInputProject">Name </label>
         </div>
       </div>
       <div className="row form-group">
-        <div className="col-md-3">
+        <div className="col-md-6">
           <input
             type="text"
             className="form-control"
-            id={'txtInputProject'}
+            id="txtInputProject"
             value={props.name || ''}
             disabled={props.readOnly}
             onChange={e => props.onChangeEventMetaData('name')(e.target.value)}
@@ -23,18 +25,18 @@ const EventMetadata = (props: EventMetadataProps) => {
         </div>
       </div>
       <div className="row form-group">
-        <div className="col-md-2">
-          <label htmlFor="projectName">From Date </label>
+        <div className="col-md-3">
+          <label htmlFor="dateFrom">From Date </label>
         </div>
-        <div className="col-md-2">
-          <label htmlFor="projectName">To Date </label>
+        <div className="col-md-3">
+          <label htmlFor="DateTo">To Date </label>
         </div>
-        <div className="col-md-2">
-          <label htmlFor="projectName">Verbatim dato </label>
+        <div className="col-md-3">
+          <label htmlFor="txtVerbatimDate">Verbatim dato </label>
         </div>
       </div>
       <div className="row form-group">
-        <div className="col-md-2" id="bornDate">
+        <div className="col-md-3" id="dateFrom">
           <DatePicker
             onClear={props.onClearBornDate}
             onChange={props.onChangeBornDate}
@@ -42,7 +44,7 @@ const EventMetadata = (props: EventMetadataProps) => {
             disabled={props.readOnly}
           />
         </div>
-        <div className="col-md-2" id="deathDate">
+        <div className="col-md-3" id="DateTo">
           <DatePicker
             onClear={props.onClearDeathDate}
             onChange={props.onChangeDeathDate}
@@ -50,7 +52,7 @@ const EventMetadata = (props: EventMetadataProps) => {
             disabled={props.readOnly}
           />
         </div>
-        <div className="col-md-2">
+        <div className="col-md-3">
           <input
             type="text"
             className="form-control"
@@ -62,7 +64,7 @@ const EventMetadata = (props: EventMetadataProps) => {
         </div>
       </div>
       <div className="row form-group">
-        <div className="col-md-2">
+        <div className="col-md-3">
           <label htmlFor="projectName">Metode</label>
         </div>
       </div>
@@ -70,7 +72,7 @@ const EventMetadata = (props: EventMetadataProps) => {
         <div className="col-md-3">
           <select
             className="form-control"
-            id="coordinateSource"
+            id="collectingMethod"
             defaultValue={undefined}
             disabled={props.readOnly}
             value={props.methodId}
@@ -97,8 +99,8 @@ const EventMetadata = (props: EventMetadataProps) => {
         </div>
       </div>
       <div className="row form-group">
-        <div className="col-md-4">
-          <label htmlFor="locality">Beskrivelse av metode </label>
+        <div className="col-md-6">
+          <label htmlFor="methodDescription">Beskrivelse av metode </label>
         </div>
       </div>
       <div className="row form-group">
@@ -106,16 +108,53 @@ const EventMetadata = (props: EventMetadataProps) => {
           <textarea
             rows={4}
             className="form-control"
-            id="locality"
-            value={props.note || ''}
+            id="methodDescription"
+            value={props.methodDescription || ''}
             disabled={props.readOnly}
             onChange={(v: React.ChangeEvent<HTMLTextAreaElement>) =>
-              props.onChangeEventMetaData('note')(v.target.value)
+              props.onChangeEventMetaData('methodDescription')(v.target.value)
             }
           />
         </div>
       </div>
-      <div className="row form-group" />
+
+      {props.showButtonRows && (
+        <EditAndSaveButtons
+          onClickCancel={() => {}}
+          onClickEdit={() => {
+            console.log('HERRR');
+            const URL = props.collectingEventUuid
+              ? config.magasin.urls.client.collectingEvent.edit(
+                  props.appSession,
+                  props.collectingEventUuid
+                )
+              : undefined;
+            if (URL) {
+              props.setEditMode();
+              props.history.push(URL);
+            }
+          }}
+          onClickSave={props.onClickSave}
+          onClickDraft={() => {}}
+          editButtonState={{ visible: true, disabled: props.readOnly ? false : true }}
+          cancelButtonState={{
+            visible: true,
+            disabled: props.readOnly ? true : props.editState === 'Not editing' || false
+          }}
+          saveButtonState={{
+            visible: true,
+            disabled: props.readOnly ? true : props.editState === 'Not editing' || false
+          }}
+          draftButtonState={{
+            visible: props.isDraft ? true : false,
+            disabled: props.readOnly ? true : props.editState === 'Not editing' || false
+          }}
+          saveButtonText="Lagre"
+          editButtonText="Endre"
+          cancelButtonText="Avbryt"
+          draftButtonText="Lagre utkast"
+        />
+      )}
     </div>
   );
 };

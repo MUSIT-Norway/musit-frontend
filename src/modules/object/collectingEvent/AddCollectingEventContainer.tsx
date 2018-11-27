@@ -7,7 +7,9 @@ import { loadPredefinedCollectingEventValues } from '../../../stores/loadPredefi
 import predefinedCollectingEventValues$ from '../../../stores/predefinedCollectingEventValues';
 import store$, {
   addCollectingEvent$,
-  AddCollectingEventProps
+  AddCollectingEventProps,
+  setDisabledState$,
+  setDraftState$
 } from './CollectingEventStore';
 import { History } from 'history';
 import { AjaxPost } from '../../../types/ajax';
@@ -31,6 +33,14 @@ const addCollectingEventProps = (combinedStore: any, upstream: { history: Histor
   ...combinedStore,
   ...upstream,
   store: { ...combinedStore, localState: undefined },
+  eventDataReadOnly: false,
+  placeReadOnly: false,
+  personReadOnly: false,
+  addStateHidden: false,
+  setDisabledState: (fieldName: string) => (value: boolean) =>
+    setDisabledState$.next({ fieldName, value }),
+  setDraftState: (subState?: string) => (fieldName: string) => (value: boolean) =>
+    setDraftState$.next({ subState: subState, fieldName: fieldName, value: value }),
   addCollectingEvent: (ajaxPost: AjaxPost<any>) => (props: AddCollectingEventProps) =>
     addCollectingEvent$.next({
       data: props.data,

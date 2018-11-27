@@ -6,7 +6,11 @@ import lifeCycle from '../../../shared/lifeCycle';
 import appSession$ from '../../../stores/appSession';
 import { loadPredefinedCollectingEventValues } from '../../../stores/loadPredefinedCollectingEventValues';
 import predefinedCollectingEventValues$ from '../../../stores/predefinedCollectingEventValues';
-import store$, { getCollectingEvent$ } from './CollectingEventStore';
+import store$, {
+  getCollectingEvent$,
+  setDisabledState$,
+  setDraftState$
+} from './CollectingEventStore';
 import { AppSession } from '../../../types/appSession';
 import { History } from 'history';
 import { simpleGet } from '../../../shared/RxAjax';
@@ -28,6 +32,7 @@ const combinedStore$ = createStore(
 const addProps = (combinedStore: any, upstream: { history: History }) => ({
   ...combinedStore,
   ...upstream,
+
   getCollectingEvent: (appSession: AppSession, id: string) =>
     getCollectingEvent$.next({
       id: id,
@@ -35,7 +40,17 @@ const addProps = (combinedStore: any, upstream: { history: History }) => ({
       token: appSession.accessToken,
       ajaxGet: simpleGet
     }),
-  readOnly: true
+  setDisabledState: (fieldName: string) => (value: boolean) =>
+    setDisabledState$.next({ fieldName, value }),
+  setDraftState: (subState?: string) => (fieldName: string) => (value: boolean) =>
+    setDraftState$.next({ subState: subState, fieldName: fieldName, value: value }),
+  eventDataReadOnly: true,
+  placeReadOnly: true,
+  personReadOnly: true,
+  addStateHidden: true,
+  placeCollapsed: false,
+  eventDataCollapsed: false,
+  personCollapsed: false
 });
 
 export const onMountProps = () => (props: any) => {
@@ -44,7 +59,7 @@ export const onMountProps = () => (props: any) => {
 
 export const onUnmount = () => (props: any) => {};
 
-const ManagedConservationFormComponent = lifeCycle({
+const ManagedCollectingEventComponent = lifeCycle({
   onMount: onMountProps(),
   onUnmount
 })(CollectingEventComponent);
@@ -52,4 +67,4 @@ const ManagedConservationFormComponent = lifeCycle({
 export default flowRight([
   inject(combinedStore$, addProps),
   loadPredefinedCollectingEventValues
-])(ManagedConservationFormComponent);
+])(ManagedCollectingEventComponent);

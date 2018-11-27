@@ -54,10 +54,12 @@ export default {
       getCollectingEventMethods: '/api/event/collectingmethods',
       getEvent: (eventUuid: string) => `/api/event/events/${eventUuid}`,
       editEvent: {
-        eventDateRivision: (eventUuid: string) =>
+        eventDateRevision: (eventUuid: string) =>
           `/api/event/events/${eventUuid}/dateRevisions`,
-        eventPlaceRivision: (eventUuid: string) =>
-          `/api/event/events/${eventUuid}/placeRevisions`
+        eventPlaceRevision: (eventUuid: string) =>
+          `/api/event/events/${eventUuid}/placeRevisions`,
+        eventAttributesRevision: (eventUuid: string) =>
+          `/api/event/events/${eventUuid}/attributeRevisions`
       }
     }
   },
@@ -95,6 +97,8 @@ export default {
             `${clientContextUrl(appSession)}/person/personname/add/`
         },
         collectingEvent: {
+          edit: (appSession: AppSession, id: string) =>
+            `${clientContextUrl(appSession)}/collectingEvent/edit/${id}`,
           view: (appSession: AppSession, id: string) =>
             `${clientContextUrl(appSession)}/collectingEvent/view/${id}`,
           add: (appSession: AppSession) =>

@@ -1,52 +1,17 @@
 import * as React from 'react';
-import { InputCoordinate, InputCoordinateAttribute } from '../../../models/object/place';
+import {
+  InputCoordinate,
+  InputCoordinateAttribute,
+  InputPlace
+} from '../../../models/object/place';
 import CoordinateComponent from './CoordinateComponent';
 import CoordinateHeader from './CoordinateHeader';
 import AdmPlaceComponent from './AdmPlaceComponent';
-//import { CheckBox } from '../components/CheckBox';
 import { AppSession } from 'src/types/appSession';
 import { History } from 'history';
-
-/* export type AdmPlace = {
-  admPlaceId: number;
-  name?: string;
-  type?: string;
-  overordnet?: string;
-  kommune?: string;
-  fylke?: string;
-  land?: string;
-  lat?: number;
-  long?: number;
-  zoom?: number;
-  admPlaceUuid?: string;
-}; */
-
-/* export type Coordinate = {
-  coordinateSource?: string;
-  coordinateType?: string;
-  coordinateGeomertry?: string;
-  coordinatePrecision?: number;
-  caAltitude?: boolean;
-  gpsAccuracy?: number;
-  datum?: string;
-  utmZone?: number;
-  mgrsBand?: string;
-  utmNorthSouth?: string;
-  coordinateString?: string;
-  caCoordinate?: boolean;
-  coordinateAddedLater?: boolean;
-  coordinateNote?: string;
-  altitudeLow?: number;
-  altitudeHigh?: number;
-  altitudeAggregated?: string;
-  altitudeUnit?: string;
-  depthLow?: number;
-  depthAggregated?: string;
-  depthHigh?: number;
-  depthUnit?: string;
-  caDepth?: boolean;
-  isAddedLater?: boolean;
-}; */
+import { EditState, NonEditState } from '../types';
+import EditAndSaveButtons from '../components/EditAndSaveButtons';
+import config from '../../../config';
 
 export type CoordinateRevisionType =
   | 'newCoordinate'
@@ -104,7 +69,7 @@ export type CheckBoxProps = {
   onChange: string;
 };
 
-/////////////////////// NEW TYPES MAPPED TO BACKEDN /////////////////////////
+/////////////////////// NEW TYPES MAPPED TO BACKEND /////////////////////////
 export type Uuid = string;
 export type PlaceUuid = Uuid;
 export type AdmPlaceUuid = Uuid;
@@ -129,6 +94,7 @@ export interface PlaceState {
   coordinateInvalid: boolean;
   coordinateCollapsed?: boolean;
   altitudeCollapsed?: boolean;
+  editState: EditState | NonEditState;
 }
 
 export class PlaceState implements PlaceState {
@@ -141,12 +107,14 @@ export class PlaceState implements PlaceState {
   coordinateInvalid: boolean;
   coordinateCollapsed?: boolean;
   altitudeCollapsed?: boolean;
+  editState: EditState | NonEditState;
   constructor(
     admPlace: AdmPlace,
     editingInputCoordinate: InputCoordinate,
     editingCoordinateAttributes: InputCoordinateAttribute,
     editingAttributes: MarinePlaceAttribute,
     coordinateInvalid: boolean,
+    editState: EditState | NonEditState,
     editCoordinateMode?: boolean,
     coordinateCollapsed?: boolean,
     altitudeCollapsed?: boolean,
@@ -158,24 +126,11 @@ export class PlaceState implements PlaceState {
     this.editingAttributes = editingAttributes;
     this.editCoordinateMode = editCoordinateMode;
     this.coordinateInvalid = coordinateInvalid;
-    this.coordinateCollapsed = coordinateCollapsed;
+    (this.editState = editState), (this.coordinateCollapsed = coordinateCollapsed);
     this.altitudeCollapsed = altitudeCollapsed;
     this.placeUuid = placeUuid;
   }
 }
-/*
- // coordinateHistory: nCoordinateHistory;
-  // coordinateHistoryIndeks: number;
- 
-  export type nCoordinateHistoryItem = {
-  coordinateId?: number;
-  registeredBy?: string;
-  registeredDate?: string;
-  note?: string;
-  coordinate: nCoordinate;
-  coordinateRevisionType?: CoordinateRevisionType;
-};
-export type nCoordinateHistory = Array<nCoordinateHistoryItem>; */
 
 export type AdmPlace = {
   admPlaceUuid: Uuid;
@@ -194,18 +149,40 @@ export type MarinePlaceAttribute = {
   eis?: string;
 };
 
+export const toPlaceBackend: (placeState: PlaceState) => InputPlace = (
+  placeState: PlaceState
+) => {
+  return {
+    admPlaceUuid: placeState.admPlace ? placeState.admPlace.admPlaceUuid : undefined,
+    coordinate: {
+      ...placeState.editingInputCoordinate,
+      zone:
+        placeState.editingInputCoordinate && placeState.editingInputCoordinate.zone
+          ? placeState.editingInputCoordinate.zone.toString()
+          : undefined
+    },
+    coordinateAttributes: placeState.editingCoordinateAttribute,
+    attributes: placeState.editingAttributes
+  };
+};
+
 const PlaceComponent = (
   props: PlaceState & {
     onChangeAdmPlace: (value: AdmPlace) => void;
     onChangeOthers: (field: string) => (value: string) => void;
     getAdmPlaceData: (field: string) => (a: AdmPlace) => string;
+    setDraftState: (fieldName: string, value: boolean) => void;
+    setEditMode: () => void;
     appSession: AppSession;
     history: History;
     readOnly?: boolean;
+    isDraft?: boolean;
+    showButtonRow?: boolean;
+    collectingEventUUid?: string;
   } & CoordinateProps
 ) => {
   return (
-    <div className="container panel-group">
+    <div className="container-fluid panel-group">
       <div className="row form-group">
         <AdmPlaceComponent
           {...props}
@@ -216,27 +193,43 @@ const PlaceComponent = (
         />
         <CoordinateHeader {...props} />
         <CoordinateComponent {...props} />
-        <div className="row">
-          <div className="col-md-10" style={{ textAlign: 'right' }}>
-            {/*   <CheckBox
-              id="CoordinateEditMode"
-              checked={props.editCoordinateMode}
-              displayValue="Edit mode?"
-              onChange={() => props.onChangeEditMode(!props.editCoordinateMode)}
-            /> */}
-          </div>
-          <div className="col-md-2" style={{ textAlign: 'right' }}>
-            <button
-              className="btn btn-default"
-              onClick={e => {
-                e.preventDefault();
-                props.onClickSave();
-              }}
-            >
-              {props.readOnly ? 'Edit' : 'Save'}
-            </button>
-          </div>
-        </div>
+
+        {props.showButtonRow && (
+          <EditAndSaveButtons
+            onClickCancel={() => {}}
+            onClickEdit={() => {
+              const URL = props.collectingEventUUid
+                ? config.magasin.urls.client.collectingEvent.edit(
+                    props.appSession,
+                    props.collectingEventUUid
+                  )
+                : undefined;
+              if (URL) {
+                props.setEditMode();
+                props.history.push(URL);
+              }
+            }}
+            onClickDraft={() => {}}
+            onClickSave={props.onClickSave}
+            editButtonState={{ visible: true, disabled: props.readOnly ? false : true }}
+            draftButtonState={{
+              visible: props.isDraft ? true : false,
+              disabled: props.readOnly ? true : props.editState === 'Not editing' || false
+            }}
+            cancelButtonState={{
+              visible: true,
+              disabled: props.readOnly ? true : props.editState === 'Not editing' || false
+            }}
+            saveButtonState={{
+              visible: true,
+              disabled: props.readOnly ? true : props.editState === 'Not editing' || false
+            }}
+            saveButtonText="Lagre"
+            draftButtonText="Lagre utkast"
+            editButtonText="Endre"
+            cancelButtonText="Avbryt"
+          />
+        )}
       </div>
     </div>
   );

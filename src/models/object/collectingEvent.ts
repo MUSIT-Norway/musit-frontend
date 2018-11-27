@@ -4,11 +4,11 @@ import {
   ExternalId
 } from '../../modules/object/person/PersonComponent';
 import { Observable } from 'rxjs';
-import { simplePost, simpleGet, simplePut } from '../../shared/RxAjax';
-import { Callback, AjaxPost, AjaxGet, AjaxPut } from '../../types/ajax';
+import { simplePost, simpleGet } from '../../shared/RxAjax';
+import { Callback, AjaxPost, AjaxGet } from '../../types/ajax';
 import { Star } from '../../types/common';
 import Config from '../../config';
-import { OutPlace } from './place';
+import { OutPlace, InputPlaceWithUuid } from './place';
 
 export type Uuid = string;
 export type EventUuid = Uuid;
@@ -230,46 +230,65 @@ export const addCollectingEvent: (
   return ajaxPost(URL, data, token, callback).map(({ response }) => response);
 };
 
-export const editEventDateRivision: (
-  ajaxPut: AjaxPut<Star>
+export const editEventDateRevision: (
+  ajaxPost: AjaxPost<Star>
 ) => (
   props: {
     id: string;
     token: string;
-    data: any;
+    data: InputDateRevision;
     callback?: Callback<Star>;
   }
-) => Observable<InputCollectingEvent> = (ajaxPut = simplePut) => ({
+) => Observable<InputCollectingEvent> = (ajaxPost = simplePost) => ({
   id,
   data,
   token,
   callback
 }) => {
-  const URL = Config.api.collectingEvent.editEvent.eventDateRivision(id);
-  return ajaxPut(URL, data, token, callback)
+  const URL = Config.api.collectingEvent.editEvent.eventDateRevision(id);
+  return ajaxPost(URL, data, token, callback)
     .do(r => console.log('DO', r, callback))
     .map(({ response }) => response);
 };
 
-export const editEventPlaceRivision: (
-  ajaxPut: AjaxPut<Star>
+export const editEventAttributesRevision: (
+  ajaxPost: AjaxPost<Star>
 ) => (
   props: {
     id: string;
     token: string;
-    data: any;
+    data: InputCollectingEvent;
     callback?: Callback<Star>;
   }
-) => Observable<InputCollectingEvent> = (ajaxPut = simplePut) => ({
+) => Observable<InputCollectingEvent> = (ajaxPost = simplePost) => ({
   id,
   data,
   token,
   callback
 }) => {
-  const URL = Config.api.collectingEvent.editEvent.eventPlaceRivision(id);
-  return ajaxPut(URL, data, token, callback)
+  const URL = Config.api.collectingEvent.editEvent.eventAttributesRevision(id);
+  return ajaxPost(URL, data, token, callback)
     .do(r => console.log('DO', r, callback))
     .map(({ response }) => response);
+};
+
+export const editEventPlaceRevision: (
+  ajaxPost: AjaxPost<Star>
+) => (
+  props: {
+    id: string;
+    token: string;
+    data: InputPlaceWithUuid;
+    callback?: Callback<Star>;
+  }
+) => Observable<InputPlaceWithUuid> = (ajaxPost = simplePost) => ({
+  id,
+  data,
+  token,
+  callback
+}) => {
+  const URL = Config.api.collectingEvent.editEvent.eventPlaceRevision(id);
+  return ajaxPost(URL, data, token, callback).map(({ response }) => response);
 };
 
 export const getCollectingEventMethods: (

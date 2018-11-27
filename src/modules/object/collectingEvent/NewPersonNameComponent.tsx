@@ -7,8 +7,6 @@ import { History } from 'history';
 import { personDet } from '../../../models/object/classHist';
 import config from '../../../config';
 //import * as FontAwesome from 'react-fontawesome';
-import { PersonNameComponent } from '../person/PersonNameComponent';
-import { PersonName } from '../person/PersonComponent';
 
 const personNameAsString = (n: ActorsAndRelation) => {
   return (
@@ -17,7 +15,7 @@ const personNameAsString = (n: ActorsAndRelation) => {
 };
 
 export type PersonProps = {
-  personNames?: PersonName[];
+  actorsAndRelation?: ActorsAndRelation[];
   disabled: boolean;
   value?: string;
   appSession: AppSession;
@@ -25,43 +23,51 @@ export type PersonProps = {
   onChangePerson: (suggestion: personDet) => void;
   onAddPerson: () => void;
   onDeletePerson: (i: number) => void;
-  editingPersonName?: PersonName;
-  disableOnChangeFullName?: boolean;
-  disableOnChangeOtherName?: boolean;
-  onChangeFullName: (fieldName: string) => (newValue: string) => void;
-  onCreatePersonName: Function;
 };
 
 const PersonComponent = (props: PersonProps) => {
   return (
-    <div>
-      <div className="row form-group">
-        <div className="col-md-10">
-          <PersonNameSuggest
-            id="PersonNameSuggestCollectingEvent"
-            disabled={props.disabled}
-            value={props.value}
-            renderFunc={personNameAsString}
-            placeHolder="Person Name"
-            appSession={props.appSession}
-            onChange={props.onChangePerson}
-            history={props.history}
-            labelText="Leg (person name)"
-            hideCreateNewPerson={true}
-          />
-        </div>
-        <div className="col-md-2">
-          <button
-            className="btn btn-default form-control"
-            onClick={e => {
-              e.preventDefault();
-              props.onAddPerson();
-            }}
-          >
-            {' '}
-            Legg til person
-          </button>
-        </div>
+    <div className="container-fluid">
+      <div className="row">
+        <PersonNameSuggest
+          id="PersonNameSuggestCollectingEvent"
+          disabled={props.disabled}
+          value={props.value}
+          renderFunc={personNameAsString}
+          placeHolder="Person Name"
+          appSession={props.appSession}
+          onChange={props.onChangePerson}
+          history={props.history}
+          labelText="Leg (person name)"
+          hideCreateNewPerson={true}
+        />
+      </div>
+      <div className="row">
+        {' '}
+        <button
+          className="btn btn-default"
+          onClick={e => {
+            e.preventDefault();
+            props.onAddPerson();
+          }}
+        >
+          {' '}
+          Legg til person
+        </button>
+        <button
+          className="btn btn-default"
+          onClick={e => {
+            let url: string;
+            url = config.magasin.urls.client.person.addNewPersonNameBlank(
+              props.appSession
+            );
+            e.preventDefault();
+            props.history && props.history.push(url);
+          }}
+        >
+          {' '}
+          Opprett nytt personnavn
+        </button>
       </div>
       <div className="row form-group">
         <div className="col-md-12">
@@ -74,8 +80,8 @@ const PersonComponent = (props: PersonProps) => {
               </tr>
             </thead>
             <tbody>
-              {props.personNames &&
-                props.personNames.map((d: PersonName, i: number) => (
+              {props.actorsAndRelation &&
+                props.actorsAndRelation.map((d: ActorsAndRelation, i: number) => (
                   <div key={`det-row-${i}`}>
                     <tr>
                       <td className="col-md-5">
@@ -83,7 +89,7 @@ const PersonComponent = (props: PersonProps) => {
                           type="text"
                           className="form-control"
                           disabled={true}
-                          value={d.nameString}
+                          value={d.name}
                         />
                       </td>
                       <td className="col-md-5">
@@ -123,39 +129,6 @@ const PersonComponent = (props: PersonProps) => {
           </table>
         </div>
       </div>
-      <div className="row form-group">
-        <div className="col-md-2">
-          <button
-            className="btn btn-default form-control"
-            onClick={e => {
-              let url: string;
-              url = config.magasin.urls.client.person.addNewPersonNameBlank(
-                props.appSession
-              );
-              e.preventDefault();
-              props.history && props.history.push(url);
-            }}
-          >
-            {' '}
-            Opprett ny person
-          </button>
-        </div>
-      </div>
-      <div className="row form-group">
-        <div className="col-md-2">
-          <PersonNameComponent
-            personName={props.editingPersonName && props.editingPersonName}
-            disableOnChangeFullName={props.disableOnChangeFullName}
-            disableOnChangeOtherName={props.disableOnChangeOtherName}
-            appSession={props.appSession}
-            history={props.history}
-            onCreatePersonName={props.onCreatePersonName}
-            onChangeFullName={props.onChangeFullName}
-          />
-        </div>
-      </div>
-
-      <div className="row form-group" />
     </div>
   );
 };

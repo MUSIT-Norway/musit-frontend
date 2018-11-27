@@ -50,6 +50,7 @@ import Place from './modules/object/places/PlaceComponent';
 import ClassEventPage from './modules/object/taxon/TaxonContainer';
 import AddCollectingEventComponent from './modules/object/collectingEvent/AddCollectingEventContainer';
 import ViewCollectingEventComponent from './modules/object/collectingEvent/ViewCollectingEventContainer';
+import EditCollectingEvent from './modules/object/collectingEvent/EditCollectingEventContainer';
 
 /**
  *AddCollectingEventContainer
@@ -154,6 +155,7 @@ const CollectingEvent = (props: object) => (
   <Switch>
     <Route path={rt(props, '/add')} exact component={AddCollectingEventComponent} />
     <Route path={rt(props, '/view/:id')} exact component={ViewCollectingEventComponent} />
+    <Route path={rt(props, '/edit/:id')} exact component={EditCollectingEvent} />
   </Switch>
 );
 
