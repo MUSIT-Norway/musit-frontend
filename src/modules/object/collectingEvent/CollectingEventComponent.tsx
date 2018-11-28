@@ -496,7 +496,9 @@ export class CollectingEventComponent extends React.Component<
                     ? coordMGRSStrToDerived(
                         coordStr,
                         this.state.placeState.editingInputCoordinate.coordinateType,
-                        datum
+                        datum,
+                        this.state.placeState.editingInputCoordinate.zone,
+                        this.state.placeState.editingInputCoordinate.bend
                       )
                     : undefined;
                 this.setState((ps: CollectingEventState) => ({

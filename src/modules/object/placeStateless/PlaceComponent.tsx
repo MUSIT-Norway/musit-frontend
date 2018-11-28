@@ -205,27 +205,63 @@ export const coordLatLongStrToDerived: (
 export const coordMGRSStrToDerived: (
   coordStr: string, //Assume like ' 32V NN(-NM) 23455(-34567), 45432(-56789) [zone][band][100kmE][100kmN][Easting][Northing]
   coordType: string,
-  datum: 'WGS84' | 'ED50'
-) => DerivedCoordinate | undefined = (coordStr, coordType, datum) => {
-  if (coordType === 'MGRS') {
+  datum: 'WGS84' | 'ED50',
+  zone?: string,
+  band?: string
+) => DerivedCoordinate | undefined = (coordStr, coordType, datum, zone, band) => {
+  if (coordType === 'MGRS' && coordStr) {
     const parsedCoordStr = coordStr.replace(/^\d\d[A-Z]/i, '');
-    const letterPart = parsedCoordStr.match(/[A-Z][A-Z](-[A-Z][A-Z])?/i);
-    const digitPart = parsedCoordStr.match(
+    const letterPart = parsedCoordStr.match(/[A-Z][A-Z](\-[A-Z][A-Z])?/i);
+    let digitPartArr = parsedCoordStr.match(
       /(\d{1}(\-\d{1})?(\,|\s)\d{1}(\-\d{1})?)|(\d{2}(\-\d{2})?(\,|\s)\d{2}(\-\d{2})?)|(\d{3}(\-\d{3})?(\,|\s)\d{3}(\-\d{3})?)|(\d{4}(\-\d{4})?(\,|\s)\d{4}(\-\d{4})?)|(\d{5}(\-\d{5})?(\,|\s)\d{5}(\-\d{5})?)/g
     );
+    let eastingAndNorthing = digitPartArr ? digitPartArr[0].trim().split(',') : undefined;
+    console.log('Hei');
 
-    console.log('XXXX', letterPart, digitPart);
+    if (eastingAndNorthing && eastingAndNorthing.length !== 2) {
+      eastingAndNorthing = digitPartArr ? digitPartArr[0].trim().split(' ') : undefined;
+    }
+    let easting, northing;
+    if (eastingAndNorthing && eastingAndNorthing.length === 2) {
+      easting = eastingAndNorthing[0];
+      northing = eastingAndNorthing[1];
+    }
+    const eastingArr = easting && easting.split('-');
+    const northingArr = northing && northing.split('-');
+    const letters = letterPart && letterPart[0];
+    const letterArr = letters && letters.split('-');
+    const b1 = letterArr && letterArr[0];
+    const b2 = letterArr && letterArr[1] ? letterArr[1] : b1;
+    const e1 = eastingArr && eastingArr[0] ? eastingArr[0] : '';
+    const n1 = northingArr && northingArr[0] ? northingArr[0] : '';
 
-    const m = Geodesy.Mgrs.parse(parsedCoordStr);
+    const e2 = eastingArr && eastingArr[1] ? eastingArr[1] : e1;
+    const n2 = northingArr && northingArr[1] ? northingArr[1] : n1;
+    const s1 = (zone ? zone : '') + (band ? band : '') + ' ' + b1 + ' ' + e1 + ' ' + n1;
+
+    const s2 =
+      (zone ? zone.toString() : '') +
+      (band ? band : '') +
+      ' ' +
+      b2 +
+      ' ' +
+      +e2 +
+      ' ' +
+      n2;
+    console.log('SQ', s1, s2);
+
+    const m1 = Geodesy.Mgrs.parse(s1);
     const mgrs = new Geodesy.Mgrs(
-      m.zone,
-      m.band,
-      m.e100k,
-      m.n100k,
-      m.easting,
-      m.northing,
+      m1.zone,
+      m1.band,
+      m1.e100k,
+      m1.n100k,
+      m1.easting,
+      m1.northing,
       datum
     );
+
+    console.log('MGRS', mgrs);
 
     const u = mgrs.toUtm();
     const latLng = u.toLatLonE();
@@ -234,7 +270,9 @@ export const coordMGRSStrToDerived: (
         utmX: u.easting,
         utmY: u.northing,
         lat: latLng.lat,
-        lng: latLng.lon
+        lng: latLng.lon,
+        d1: s1,
+        d2: s2
       };
     }
   }

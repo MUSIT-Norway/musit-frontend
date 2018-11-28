@@ -134,6 +134,8 @@ export type DerivedCoordinate = {
   utm33Y?: number;
   utmX?: number;
   utmY?: number;
+  d1?: string;
+  d2?: string;
 };
 
 export interface InputCoordinate {
