@@ -7,13 +7,9 @@ import config from '../../../config';
 const EventMetadata = (props: EventMetadataProps) => {
   return (
     <div className="container-fluid panel-group">
-      <div className="row form-group">
-        <div className="col-md-6">
+      <div className="row">
+        <div className="col-md-6 form-group">
           <label htmlFor="txtInputProject">Name </label>
-        </div>
-      </div>
-      <div className="row form-group">
-        <div className="col-md-6">
           <input
             type="text"
             className="form-control"
@@ -25,18 +21,8 @@ const EventMetadata = (props: EventMetadataProps) => {
         </div>
       </div>
       <div className="row form-group">
-        <div className="col-md-3">
-          <label htmlFor="dateFrom">From Date </label>
-        </div>
-        <div className="col-md-3">
-          <label htmlFor="DateTo">To Date </label>
-        </div>
-        <div className="col-md-3">
-          <label htmlFor="txtVerbatimDate">Verbatim dato </label>
-        </div>
-      </div>
-      <div className="row form-group">
         <div className="col-md-3" id="dateFrom">
+          <label htmlFor="dateFrom">From Date </label>
           <DatePicker
             onClear={props.onClearBornDate}
             onChange={props.onChangeBornDate}
@@ -45,6 +31,7 @@ const EventMetadata = (props: EventMetadataProps) => {
           />
         </div>
         <div className="col-md-3" id="DateTo">
+          <label htmlFor="DateTo">To Date </label>
           <DatePicker
             onClear={props.onClearDeathDate}
             onChange={props.onChangeDeathDate}
@@ -53,6 +40,7 @@ const EventMetadata = (props: EventMetadataProps) => {
           />
         </div>
         <div className="col-md-3">
+          <label htmlFor="txtVerbatimDate">Verbatim dato </label>
           <input
             type="text"
             className="form-control"
@@ -65,11 +53,7 @@ const EventMetadata = (props: EventMetadataProps) => {
       </div>
       <div className="row form-group">
         <div className="col-md-3">
-          <label htmlFor="projectName">Metode</label>
-        </div>
-      </div>
-      <div className="row form-group">
-        <div className="col-md-3">
+          <label htmlFor="collectingMethod">Metode</label>
           <select
             className="form-control"
             id="collectingMethod"
@@ -101,10 +85,6 @@ const EventMetadata = (props: EventMetadataProps) => {
       <div className="row form-group">
         <div className="col-md-6">
           <label htmlFor="methodDescription">Beskrivelse av metode </label>
-        </div>
-      </div>
-      <div className="row form-group">
-        <div className="col-md-6">
           <textarea
             rows={4}
             className="form-control"
@@ -122,7 +102,6 @@ const EventMetadata = (props: EventMetadataProps) => {
         <EditAndSaveButtons
           onClickCancel={() => {}}
           onClickEdit={() => {
-            console.log('HERRR');
             const URL = props.collectingEventUuid
               ? config.magasin.urls.client.collectingEvent.edit(
                   props.appSession,

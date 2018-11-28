@@ -1,6 +1,5 @@
 import * as React from 'react';
 import CoordinateHistoryItemComponent from './CoordinateHistoryItemComponent';
-//import CoordinateHistoryComponent from './CoordinateHistoryComponent';
 import AltitudeDepthData from './AltitudeDepthData';
 import CoordinateMetaData from './CoordinateMetaData';
 import { CoordinateProps } from '../placeStateless/PlaceComponent';

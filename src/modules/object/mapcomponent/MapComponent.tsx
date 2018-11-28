@@ -8,6 +8,10 @@ type MapProps = {
     lng: number;
   };
   coordinateString?: string;
+  style?: {
+    height: string;
+    width: string;
+  };
 };
 
 const getLatLong = (props: MapProps): { lat: number; lng: number } => {
@@ -22,8 +26,8 @@ const getLatLong = (props: MapProps): { lat: number; lng: number } => {
 };
 
 const MapComponent = (props: MapProps) => (
-  <div className="well">
-    <div style={{ height: '40vh', width: '100%' }}>
+  <div className="well" style={{ ...props.style }}>
+    <div style={{ height: '100%', width: '100%' }}>
       {getLatLong(props) &&
       !(getLatLong(props).lat === 0 && getLatLong(props).lng === 0) ? (
         <GoogleMapReact

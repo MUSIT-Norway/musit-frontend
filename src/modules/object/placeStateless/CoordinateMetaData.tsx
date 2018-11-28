@@ -6,12 +6,8 @@ const CoordinateMetaData = (props: CoordinateProps) => {
   return (
     <div className="form-group">
       <div className="row">
-        <div className="col-md-2">
-          <label htmlFor="coordinateSource">Coordinate source </label>
-        </div>
-      </div>
-      <div className="row">
         <div className="col-md-5">
+          <label htmlFor="coordinateSource">Coordinate source </label>
           <select
             className="form-control"
             id="coordinateSource"
@@ -68,12 +64,8 @@ const CoordinateMetaData = (props: CoordinateProps) => {
         </div>
       </div>
       <div className="row">
-        <div className="col-md-2">
-          <label htmlFor="precision">Precision</label>
-        </div>
-      </div>
-      <div className="row">
         <div className="col-md-4">
+          <label htmlFor="precision">Precision</label>
           <input
             className="form-control"
             type="number"
@@ -93,12 +85,8 @@ const CoordinateMetaData = (props: CoordinateProps) => {
         </div>
       </div>
       <div className="row">
-        <div className="col-md-1">
-          <label htmlFor="accuracy">Accuracy</label>
-        </div>
-      </div>
-      <div className="row">
         <div className="col-md-4">
+          <label htmlFor="accuracy">Accuracy</label>
           <input
             className="form-control"
             type="number"

@@ -4,12 +4,8 @@ const LatLongComponent = (props: CoordinateProps) => {
   return (
     <div>
       <div className="row form-group">
-        <div className="col-md-1">
-          <label htmlFor="datum">Datum </label>
-        </div>
-      </div>
-      <div className="row form-group">
         <div className="col-md-2">
+          <label htmlFor="datum">Datum </label>
           <select
             className="form-control"
             value={
@@ -34,20 +30,9 @@ const LatLongComponent = (props: CoordinateProps) => {
           </select>
         </div>
       </div>
-
       <div className="row form-group">
         <div className="col-md-2">
           <label htmlFor="coordinateType">Coordinate type </label>
-        </div>
-        {props.editingInputCoordinate &&
-          props.editingInputCoordinate.coordinateType === 'LAT/LONG' && (
-            <div className="col-md-4">
-              <label htmlFor="coordinateGeomertry">Coordinate geometry </label>
-            </div>
-          )}
-      </div>
-      <div className="row form-group">
-        <div className="col-md-2">
           <select
             className="form-control"
             id="coordinateType"
@@ -74,6 +59,7 @@ const LatLongComponent = (props: CoordinateProps) => {
         {props.editingInputCoordinate &&
           props.editingInputCoordinate.coordinateType === 'LAT/LONG' && (
             <div className="col-md-3">
+              <label htmlFor="coordinateGeomertry">Coordinate geometry </label>
               <select
                 className="form-control"
                 id="coordinateGeomertry"
@@ -100,12 +86,8 @@ const LatLongComponent = (props: CoordinateProps) => {
           )}
       </div>
       <div className="row form-group">
-        <div className="col-md-4">
-          <label htmlFor="latLongCoordinateString">Lat / Long-Coordinate </label>
-        </div>
-      </div>
-      <div className="row form-group">
         <div className="col-md-5">
+          <label htmlFor="latLongCoordinateString">Lat / Long-Coordinate </label>
           <input
             type="text"
             className="form-control"
