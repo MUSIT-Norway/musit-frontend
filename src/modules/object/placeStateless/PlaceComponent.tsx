@@ -324,6 +324,102 @@ export const toPlaceBackend: (placeState: PlaceState) => InputPlace = (
   };
 };
 
+export const PlaceComponentView = (props: PlaceState) => {
+  const pathArray =
+    props.admPlace && props.admPlace.path ? props.admPlace.path.split(':') : undefined;
+  const admPlaceName = pathArray ? pathArray[pathArray.length - 1] : '';
+  const country = pathArray ? pathArray[3] : '';
+  const fylke = pathArray ? pathArray[4] : '';
+  const kommune = pathArray ? pathArray[5] : '';
+
+  return (
+    <div className="container-fluid">
+      <form className="form-horizontal">
+        <div className="form-group row">
+          <div className="col-md-3">
+            <label className="control-label" htmlFor="admPlace">
+              Admplace
+            </label>
+            <div className="form-control-static" id="admPlace">
+              {admPlaceName}
+            </div>
+          </div>
+          <div className="col-md-3">
+            <label className="control-label" htmlFor="kommune">
+              Kommune
+            </label>
+            <div className="form-control-static" id="kommune">
+              {kommune}
+            </div>
+          </div>
+          <div className="col-md-3">
+            <label className="control-label" htmlFor="fylke">
+              Fylke
+            </label>
+            <div className="form-control-static" id="fylke">
+              {fylke}
+            </div>
+          </div>
+          <div className="col-md-2">
+            <label className="control-label" htmlFor="country">
+              Land
+            </label>
+            <div className="form-control-static" id="country">
+              {country}
+            </div>
+          </div>
+        </div>
+        <div className="form-group row">
+          <div className="col-md-6">
+            <label className="control-label" htmlFor="lokalitet">
+              Lokalitet
+            </label>
+            <div className="form-control-static" id="lokalitet">
+              {props.editingAttributes ? props.editingAttributes.locality : ''}
+            </div>
+          </div>
+          <div className="col-md-6">
+            <label className="control-label" htmlFor="ecology">
+              Økologi
+            </label>
+            <div className="form-control-static" id="ecology">
+              {props.editingAttributes ? props.editingAttributes.ecology : ''}
+            </div>
+          </div>
+        </div>
+        <div className="form-group row">
+          <div className="col-md-3">
+            <label className="control-label" htmlFor="station">
+              Station
+            </label>
+            <div className="form-control-static" id="station">
+              {props.editingAttributes ? props.editingAttributes.station : ''}
+            </div>
+          </div>
+          <div className="col-md-3">
+            <label className="control-label" htmlFor="sample">
+              Sample
+            </label>
+            <div className="form-control-static" id="ecology">
+              {props.editingAttributes ? props.editingAttributes.sample : ''}
+            </div>
+          </div>
+          <div className="col-md-3">
+            <label className="control-label" htmlFor="ship">
+              Ship
+            </label>
+            <div className="form-control-static" id="ship">
+              {props.editingAttributes ? props.editingAttributes.ship : ''}
+            </div>
+          </div>
+          <hr />
+          
+        </div>
+      </form>
+    </div>
+  );
+};
+
 const PlaceComponent = (
   props: PlaceState & {
     onChangeAdmPlace: (value: AdmPlace) => void;
@@ -339,6 +435,9 @@ const PlaceComponent = (
     collectingEventUUid?: string;
   } & CoordinateProps
 ) => {
+  if (props.readOnly) {
+    return <PlaceComponentView {...props} />;
+  }
   return (
     <div className="container-fluid panel-group">
       <div className="row form-group">

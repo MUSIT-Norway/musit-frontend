@@ -4,7 +4,73 @@ import DatePicker from '../../../components/DatePicker';
 import EditAndSaveButtons from '../components/EditAndSaveButtons';
 import config from '../../../config';
 
+const ViewEventMetaData = (props: EventMetadataProps) => {
+  return (
+    <div className="container-fluid">
+      <form className="form-horizontal">
+        <div className="form-group row">
+          <div className="col-md-3">
+            <label className="control-label inline" htmlFor="eventName">
+              Name
+            </label>
+            <div className="form-control-static" id="eventName">
+              {props.name}
+            </div>
+          </div>
+        </div>
+        <div className="form-group row">
+          <div className="col-md-3">
+            <label className="control-label" htmlFor="dateFrom">
+              Date from
+            </label>
+            <div className="form-control-static" id="dateFrom">
+              {props.eventDateFrom}
+            </div>{' '}
+          </div>
+          <div className="col-md-3">
+            <label className="control-label" htmlFor="dateTo">
+              Date to
+            </label>
+            <div className="form-control-static" id="dateTo">
+              {props.eventDateTo}
+            </div>{' '}
+          </div>
+          <div className="col-md-3">
+            <label className="control-label" htmlFor="verbatimDate">
+              Verbatim date
+            </label>
+            <div className="form-control-static" id="verbatimDate">
+              {props.eventDateVerbatim}
+            </div>
+          </div>
+        </div>
+        <div className="form-group row">
+          <div className="col-md-3">
+            <label className="control-label" htmlFor="method">
+              Method
+            </label>
+            <div className="form-control-static" id="method">
+              {props.method}
+            </div>
+          </div>
+          <div className="col-md-9">
+            <label className="control-label" htmlFor="method">
+              Method description
+            </label>
+            <div className="form-control-static" id="method">
+              {props.methodDescription}
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+};
+
 const EventMetadata = (props: EventMetadataProps) => {
+  if (props.readOnly) {
+    return <ViewEventMetaData {...props} />;
+  }
   return (
     <div className="container-fluid panel-group">
       <div className="row">

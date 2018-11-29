@@ -614,7 +614,7 @@ export class CollectingEventComponent extends React.Component<
             }));
           }}
           getAdmPlaceData={(field: string) => (a: AdmPlace) => {
-            let arrayPlaces = a.path ? a.path.split(':') : undefined;
+            const arrayPlaces = a.path ? a.path.split(':') : undefined;
             let PlaceString: string = '';
 
             if (field === 'Kommune') {
