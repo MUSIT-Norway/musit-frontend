@@ -127,6 +127,17 @@ export interface DbAdmPlace {
   fullPath: string;
 }
 
+export type DerivedCoordinate = {
+  lat: number;
+  lng: number;
+  utm33X?: number;
+  utm33Y?: number;
+  utmX?: number;
+  utmY?: number;
+  d1?: string;
+  d2?: string;
+};
+
 export interface InputCoordinate {
   coordinateUuid?: CoordinateUuid;
   coordinateType?: string;
@@ -135,6 +146,7 @@ export interface InputCoordinate {
   bend?: string;
   coordinateString?: string;
   coordinateGeometry?: string;
+  derivedCoordinate?: DerivedCoordinate;
 }
 
 export interface InputCoordinateAttribute {

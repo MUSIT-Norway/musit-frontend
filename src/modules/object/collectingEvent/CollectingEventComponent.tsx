@@ -9,7 +9,10 @@ import PlaceComponent, {
   PlaceState,
   MarinePlaceAttribute,
   InputPlace,
-  toPlaceBackend
+  toPlaceBackend,
+  coordMGRSStrToDerived,
+  coordLatLongStrToDerived,
+  coordUTMStrToDerived
 } from '../placeStateless/PlaceComponent';
 import {
   CollectingEventStoreState,
@@ -20,6 +23,7 @@ import {
 } from './CollectingEventStore';
 import { AppSession } from '../../../types/appSession';
 import { History } from 'history';
+import * as Geodesy from 'geodesy';
 import {
   OutputCollectingEvent,
   ActorsAndRelation,
@@ -439,6 +443,143 @@ export class CollectingEventComponent extends React.Component<
           showButtonRow={this.props.addStateHidden}
           collectingEventUUid={this.state.eventData.eventUuid}
           appSession={this.props.appSession}
+          onCoordinateLatLonKeyPress={e => {
+            if (e.charCode === 13) {
+              console.log('E', e);
+
+              const datum: Geodesy.datum =
+                this.state.placeState.editingInputCoordinate &&
+                (this.state.placeState.editingInputCoordinate.datum === 'WGS84' ||
+                  this.state.placeState.editingInputCoordinate.datum === 'ED50')
+                  ? this.state.placeState.editingInputCoordinate.datum
+                  : 'WGS84';
+
+              try {
+                const coordStr =
+                  this.state.placeState.editingInputCoordinate &&
+                  this.state.placeState.editingInputCoordinate.coordinateString;
+                const derivedCoordinate =
+                  this.state.placeState.editingInputCoordinate &&
+                  coordStr &&
+                  this.state.placeState.editingInputCoordinate.datum &&
+                  this.state.placeState.editingInputCoordinate.coordinateType
+                    ? coordLatLongStrToDerived(
+                        coordStr,
+                        this.state.placeState.editingInputCoordinate.coordinateType,
+                        datum
+                      )
+                    : undefined;
+                this.setState((ps: CollectingEventState) => ({
+                  ...ps,
+                  placeState: {
+                    ...ps.placeState,
+                    editingInputCoordinate: ps.placeState.editingInputCoordinate
+                      ? {
+                          ...ps.placeState.editingInputCoordinate,
+                          derivedCoordinate: derivedCoordinate
+                        }
+                      : undefined
+                  }
+                }));
+              } catch (e) {
+                console.log(e);
+              }
+            }
+          }}
+          onCoordinateUTMKeyPress={e => {
+            if (e.charCode === 13) {
+              const datum =
+                this.state.placeState.editingInputCoordinate &&
+                (this.state.placeState.editingInputCoordinate.datum === 'WGS84' ||
+                  this.state.placeState.editingInputCoordinate.datum === 'ED50')
+                  ? this.state.placeState.editingInputCoordinate.datum
+                  : 'WGS84';
+
+              try {
+                const coordStr =
+                  this.state.placeState.editingInputCoordinate &&
+                  this.state.placeState.editingInputCoordinate.coordinateString;
+                const derivedCoordinate =
+                  this.state.placeState.editingInputCoordinate &&
+                  coordStr &&
+                  this.state.placeState.editingInputCoordinate.datum &&
+                  this.state.placeState.editingInputCoordinate.coordinateType
+                    ? coordUTMStrToDerived(
+                        coordStr,
+                        this.state.placeState.editingInputCoordinate.coordinateType,
+                        datum,
+                        this.state.placeState.editingInputCoordinate.zone,
+                        this.state.placeState.editingInputCoordinate.bend
+                          ? this.state.placeState.editingInputCoordinate.bend >= 'N'
+                            ? 'N'
+                            : 'S'
+                          : undefined
+                      )
+                    : undefined;
+                this.setState((ps: CollectingEventState) => ({
+                  ...ps,
+                  placeState: {
+                    ...ps.placeState,
+                    editingInputCoordinate: ps.placeState.editingInputCoordinate
+                      ? {
+                          ...ps.placeState.editingInputCoordinate,
+                          derivedCoordinate: derivedCoordinate
+                        }
+                      : undefined
+                  }
+                }));
+              } catch (e) {
+                console.log(e);
+              }
+            }
+          }}
+          onCoordinateMGRSKeyPress={e => {
+            if (e.charCode === 13) {
+              const datum =
+                this.state.placeState.editingInputCoordinate &&
+                (this.state.placeState.editingInputCoordinate.datum === 'WGS84' ||
+                  this.state.placeState.editingInputCoordinate.datum === 'ED50')
+                  ? this.state.placeState.editingInputCoordinate.datum
+                  : 'WGS84';
+
+              try {
+                const coordStr =
+                  this.state.placeState.editingInputCoordinate &&
+                  this.state.placeState.editingInputCoordinate.coordinateString &&
+                  this.state.placeState.editingInputCoordinate.zone &&
+                  this.state.placeState.editingInputCoordinate.zone.toString() +
+                    this.state.placeState.editingInputCoordinate.bend +
+                    this.state.placeState.editingInputCoordinate.coordinateString;
+                const derivedCoordinate =
+                  this.state.placeState.editingInputCoordinate &&
+                  coordStr &&
+                  this.state.placeState.editingInputCoordinate.datum &&
+                  this.state.placeState.editingInputCoordinate.coordinateType
+                    ? coordMGRSStrToDerived(
+                        coordStr,
+                        this.state.placeState.editingInputCoordinate.coordinateType,
+                        datum,
+                        this.state.placeState.editingInputCoordinate.zone,
+                        this.state.placeState.editingInputCoordinate.bend
+                      )
+                    : undefined;
+                this.setState((ps: CollectingEventState) => ({
+                  ...ps,
+                  placeState: {
+                    ...ps.placeState,
+                    editingInputCoordinate: ps.placeState.editingInputCoordinate
+                      ? {
+                          ...ps.placeState.editingInputCoordinate,
+                          derivedCoordinate: derivedCoordinate
+                        }
+                      : undefined
+                  }
+                }));
+              } catch (e) {
+                console.log(e);
+              }
+            }
+          }}
           coordinatePredefined={{
             coordinatDatumTypes:
               this.props.predefinedCollectingEventValues &&
@@ -490,7 +631,7 @@ export class CollectingEventComponent extends React.Component<
             }));
           }}
           getAdmPlaceData={(field: string) => (a: AdmPlace) => {
-            let arrayPlaces = a.path ? a.path.split(':') : undefined;
+            const arrayPlaces = a.path ? a.path.split(':') : undefined;
             let PlaceString: string = '';
 
             if (field === 'Kommune') {
@@ -633,11 +774,13 @@ export class CollectingEventComponent extends React.Component<
                 )(value);
               }
               const ps = cs.placeState;
-              const bend =
-                (value === 'MGRS' && fieldName === 'coordinateType') ||
+              const band =
+                ((value === 'MGRS' || value === 'UTM') &&
+                  fieldName === 'coordinateType') ||
                 (fieldName !== 'coordinateType' &&
                   ps.editingInputCoordinate &&
-                  ps.editingInputCoordinate.coordinateType === 'MGRS')
+                  (ps.editingInputCoordinate.coordinateType === 'MGRS' ||
+                    ps.editingInputCoordinate.coordinateType === 'UTM'))
                   ? ps.editingInputCoordinate && ps.editingInputCoordinate.bend
                   : undefined;
 
@@ -665,7 +808,7 @@ export class CollectingEventComponent extends React.Component<
                 .editingInputCoordinate
                 ? {
                     ...cs.placeState.editingInputCoordinate,
-                    bend: bend,
+                    bend: band,
                     zone: zone,
                     coordinateGeometry: coordinateGeometry,
                     [fieldName]: value

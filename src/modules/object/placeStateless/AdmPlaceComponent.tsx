@@ -27,14 +27,10 @@ const AdmPlaceComponent = (
   return (
     <div>
       <div className="row form-group">
-        <div className="col-md-2">
-          <label htmlFor="admPlaceName">Adm place </label>
-        </div>
-      </div>
-      <div className="row form-group">
         <div className="col-md-6">
+          <label htmlFor="admPlaceNameSuggest">Adm place </label>
           <AdmplaceSuggest
-            id="personNameSuggest"
+            id="admPlaceNameSuggest"
             disabled={props.readOnly}
             value={props.admPlace && props.admPlace.name ? props.admPlace.name : ''}
             renderFunc={admPlaceAsString}
@@ -52,20 +48,6 @@ const AdmPlaceComponent = (
               ? 'Sub Region'
               : 'Kommune '}{' '}
           </label>
-        </div>
-        <div className="col-md-2">
-          <label htmlFor="placeDataDisplay">
-            {props.admPlace && props.admPlace.type === 'Sub region' ? 'Region' : 'Fylke '}{' '}
-          </label>
-        </div>
-        <div className="col-md-2">
-          <label htmlFor="placeDataDisplay">
-            {props.admPlace && props.admPlace.type === 'Sub region' ? 'Country' : 'Land '}{' '}
-          </label>
-        </div>
-      </div>
-      <div className="row form-group">
-        <div className="col-md-2">
           <input
             type="text"
             className="form-control"
@@ -79,6 +61,9 @@ const AdmPlaceComponent = (
           />
         </div>
         <div className="col-md-2">
+          <label htmlFor="placeDataDisplay">
+            {props.admPlace && props.admPlace.type === 'Sub region' ? 'Region' : 'Fylke '}{' '}
+          </label>
           <input
             type="text"
             className="form-control"
@@ -92,6 +77,9 @@ const AdmPlaceComponent = (
           />
         </div>
         <div className="col-md-2">
+          <label htmlFor="placeDataDisplay">
+            {props.admPlace && props.admPlace.type === 'Sub region' ? 'Country' : 'Land '}{' '}
+          </label>
           <input
             type="text"
             className="form-control"
@@ -106,12 +94,8 @@ const AdmPlaceComponent = (
         </div>
       </div>
       <div className="row form-group">
-        <div className="col-md-2">
-          <label htmlFor="locality">Lokalitet </label>
-        </div>
-      </div>
-      <div className="row form-group">
         <div className="col-md-6">
+          <label htmlFor="locality">Lokalitet </label>
           <textarea
             rows={4}
             className="form-control"
@@ -125,12 +109,8 @@ const AdmPlaceComponent = (
         </div>
       </div>
       <div className="row form-group">
-        <div className="col-md-2">
-          <label htmlFor="ecology">Økologi </label>
-        </div>
-      </div>
-      <div className="row form-group">
         <div className="col-md-6">
+          <label htmlFor="ecology">Økologi </label>
           <textarea
             rows={4}
             className="form-control"
@@ -147,16 +127,6 @@ const AdmPlaceComponent = (
       <div className="row form-group">
         <div className="col-md-2">
           <label htmlFor="txtInputStation">Station </label>
-        </div>
-        <div className="col-md-2">
-          <label htmlFor="txtInputSample">Sample </label>
-        </div>
-        <div className="col-md-2">
-          <label htmlFor="txtInputShip">Ship </label>
-        </div>
-      </div>
-      <div className="row form-group">
-        <div className="col-md-2">
           <input
             type="text"
             className="form-control"
@@ -169,6 +139,7 @@ const AdmPlaceComponent = (
           />
         </div>
         <div className="col-md-2">
+          <label htmlFor="txtInputSample">Sample </label>
           <input
             type="text"
             className="form-control"
@@ -181,6 +152,7 @@ const AdmPlaceComponent = (
           />
         </div>
         <div className="col-md-2">
+          <label htmlFor="txtInputShip">Ship </label>
           <input
             type="text"
             className="form-control"

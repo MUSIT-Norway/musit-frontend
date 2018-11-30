@@ -6,7 +6,7 @@ const CoordinateHistoryItemComponent = (props: CoordinateProps) => {
     <div className="form-group">
       <div className="row">
         <div className="col-md-2">
-          <label htmlFor="coordinateRevisionNote">Note on revision </label>
+          <label htmlFor="coordinateRevisionNote">"" </label>
         </div>
       </div>
       <div className="row">

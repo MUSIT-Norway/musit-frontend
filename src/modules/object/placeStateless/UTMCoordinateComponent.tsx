@@ -5,12 +5,8 @@ const UTMCoordinateComponent = (props: CoordinateProps) => {
   return (
     <div>
       <div className="row form-group">
-        <div className="col-md-1">
-          <label htmlFor="datum">Datum </label>
-        </div>
-      </div>
-      <div className="row form-group">
         <div className="col-md-2">
+          <label htmlFor="datum">Datum </label>
           <select
             className="form-control"
             value={
@@ -38,16 +34,6 @@ const UTMCoordinateComponent = (props: CoordinateProps) => {
       <div className="row form-group">
         <div className="col-md-2">
           <label htmlFor="coordinateType">Coordinate type </label>
-        </div>
-        <div className="col-md-2">
-          <label htmlFor="zone">Zone </label>
-        </div>
-        <div className="col-md-2">
-          <label htmlFor="mgrsBand">Bend </label>
-        </div>
-      </div>
-      <div className="row form-group">
-        <div className="col-md-2">
           <select
             className="form-control"
             id="coordinateType"
@@ -72,6 +58,7 @@ const UTMCoordinateComponent = (props: CoordinateProps) => {
           </select>
         </div>
         <div className="col-md-2">
+          <label htmlFor="zone">Zone </label>
           <input
             type="text"
             className="form-control"
@@ -87,6 +74,7 @@ const UTMCoordinateComponent = (props: CoordinateProps) => {
           />
         </div>
         <div className="col-md-2">
+          <label htmlFor="mgrsBand">Bend </label>
           <input
             type="text"
             className="form-control"
@@ -103,17 +91,14 @@ const UTMCoordinateComponent = (props: CoordinateProps) => {
         </div>
       </div>
       <div className="row form-group">
-        <div className="col-md-2">
-          <label htmlFor="UTMCoordinateString">UTM-Coordinate </label>
-        </div>
-      </div>
-      <div className="row form-group">
         <div className="col-md-5">
+          <label htmlFor="UTMCoordinateString">UTM-Coordinate </label>
           <input
             type="text"
             className="form-control"
             id="UTMCoordinateString"
             disabled={props.readOnly}
+            onKeyPress={props.onCoordinateUTMKeyPress}
             onChange={e => {
               props.onChangeCoordinateText('coordinateString')(e.target.value);
             }}

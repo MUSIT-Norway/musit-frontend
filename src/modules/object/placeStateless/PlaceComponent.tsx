@@ -2,16 +2,19 @@ import * as React from 'react';
 import {
   InputCoordinate,
   InputCoordinateAttribute,
-  InputPlace
+  InputPlace,
+  DerivedCoordinate
 } from '../../../models/object/place';
 import CoordinateComponent from './CoordinateComponent';
 import CoordinateHeader from './CoordinateHeader';
 import AdmPlaceComponent from './AdmPlaceComponent';
+import Map from '../mapcomponent/MapComponent';
 import { AppSession } from 'src/types/appSession';
 import { History } from 'history';
 import { EditState, NonEditState } from '../types';
 import EditAndSaveButtons from '../components/EditAndSaveButtons';
 import config from '../../../config';
+import * as Geodesy from 'geodesy';
 
 export type CoordinateRevisionType =
   | 'newCoordinate'
@@ -51,6 +54,9 @@ export type CoordinateProps = {
   onChangeCoordinateNumber: (fieldName: string) => (value: number) => void;
   //onSetEditingIndex: (i: number) => void;
   onChangeCoordinateText: (fieldName: string) => (value: string) => void;
+  onCoordinateMGRSKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  onCoordinateUTMKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  onCoordinateLatLonKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onChangeCoordinateAttributes: (fieldName: string) => (value: string) => void;
   onChangeNumberCoordinateAttributes: (fieldName: string) => (value: number) => void;
   //onChangeHistoryItem: (fieldName: string) => (value: string) => void;
@@ -149,6 +155,158 @@ export type MarinePlaceAttribute = {
   eis?: string;
 };
 
+export const coordLatLongStrToDerived: (
+  coordStr: string, //Assume like ' 32VNN2345545432 [zone][band][100kmE][100kmN][Easting][Northing]
+  coordType: string,
+  datum: 'WGS84' | 'ED50'
+) => DerivedCoordinate | undefined = (coordStr, coordType, datum) => {
+  if (coordType === 'LAT/LONG') {
+    let str = coordStr;
+    let coordStrings = str.split(' ');
+    if (coordStrings.length !== 2) {
+      coordStrings = str.match(/\d.*?(N|S|E|W)/g) as string[];
+    }
+    if (coordStrings.length === 2) {
+      coordStrings = coordStrings.map(s => s.replace(/\,/, '.'));
+    }
+
+    console.log(coordStrings);
+    const latStr = coordStrings ? coordStrings[0].trim() : '';
+    const longStr = coordStrings ? coordStrings[1].trim() : '';
+    const lat = Geodesy.Dms.parseDMS(latStr);
+    const long = Geodesy.Dms.parseDMS(longStr);
+    const d =
+      datum === 'ED50'
+        ? Geodesy.LatLonEllipsoidal.datum.ED50
+        : datum === 'WGS84'
+          ? Geodesy.LatLonEllipsoidal.datum.WGS84
+          : undefined;
+
+    const latLng = new Geodesy.LatLonEllipsoidal(lat, long, d);
+
+    let u;
+    try {
+      u = latLng.toUtm();
+    } catch {
+      u = {
+        easting: undefined,
+        northing: undefined
+      };
+    }
+
+    if (u || latLng) {
+      return {
+        utmX: u.easting,
+        utmY: u.northing,
+        lat: latLng.lat,
+        lng: latLng.lon
+      };
+    }
+  }
+  return undefined;
+};
+
+export const coordUTMStrToDerived: (
+  coordStr: string,
+  coordType: string,
+  datum: 'WGS84' | 'ED50',
+  zone?: string,
+  NS?: string
+) => DerivedCoordinate | undefined = (coordStr, coordType, datum, zone, NS) => {
+  if (coordType === 'UTM' && coordStr) {
+    const coordArr = coordStr.match(/\d+((\,|\.)\d+)?/g);
+    console.log('ARR', coordArr);
+    let easting;
+    let northing;
+    if (coordArr && coordArr.length === 2) {
+      easting = Number.parseFloat(coordArr[0]);
+      northing = Number.parseFloat(coordArr[1]);
+    }
+    const parseStr = zone + ' ' + NS + ' ' + easting + ' ' + northing;
+
+    const utm = Geodesy.Utm.parse(parseStr);
+
+    console.log('UTM', parseStr, utm);
+
+    const latLng = utm.toLatLonE();
+
+    if (utm && latLng) {
+      return {
+        utmX: utm.easting,
+        utmY: utm.northing,
+        lat: latLng.lat,
+        lng: latLng.lon,
+        d1: parseStr
+      };
+    }
+  }
+  return undefined;
+};
+
+export const coordMGRSStrToDerived: (
+  coordStr: string, //Assume like ' 32V NN(-NM) 23455(-34567), 45432(-56789) [zone][band][100kmE][100kmN][Easting][Northing]
+  coordType: string,
+  datum: 'WGS84' | 'ED50',
+  zone?: string,
+  band?: string
+) => DerivedCoordinate | undefined = (coordStr, coordType, datum, zone, band) => {
+  if (coordType === 'MGRS' && coordStr) {
+    const parsedCoordStr = coordStr.replace(/^\d\d[A-Z]/i, '');
+    const letterPart = parsedCoordStr.match(/[A-Z][A-Z](\-[A-Z][A-Z])?/i);
+    let digitPartArr = parsedCoordStr.match(
+      /(\d{1}(\-\d{1})?(\,|\s)\d{1}(\-\d{1})?)|(\d{2}(\-\d{2})?(\,|\s)\d{2}(\-\d{2})?)|(\d{3}(\-\d{3})?(\,|\s)\d{3}(\-\d{3})?)|(\d{4}(\-\d{4})?(\,|\s)\d{4}(\-\d{4})?)|(\d{5}(\-\d{5})?(\,|\s)\d{5}(\-\d{5})?)/g
+    );
+    let eastingAndNorthing = digitPartArr ? digitPartArr[0].trim().split(',') : undefined;
+
+    if (eastingAndNorthing && eastingAndNorthing.length !== 2) {
+      eastingAndNorthing = digitPartArr ? digitPartArr[0].trim().split(' ') : undefined;
+    }
+    let easting, northing;
+    if (eastingAndNorthing && eastingAndNorthing.length === 2) {
+      easting = eastingAndNorthing[0];
+      northing = eastingAndNorthing[1];
+    }
+    const eastingArr = easting && easting.split('-');
+    const northingArr = northing && northing.split('-');
+    const letters = letterPart && letterPart[0];
+    const letterArr = letters && letters.split('-');
+    const b1 = letterArr && letterArr[0];
+    const b2 = letterArr && letterArr[1] ? letterArr[1] : b1;
+    const e1 = eastingArr && eastingArr[0] ? eastingArr[0] : '';
+    const n1 = northingArr && northingArr[0] ? northingArr[0] : '';
+
+    const e2 = eastingArr && eastingArr[1] ? eastingArr[1] : e1;
+    const n2 = northingArr && northingArr[1] ? northingArr[1] : n1;
+    const s1 = (zone ? zone : '') + (band ? band : '') + ' ' + b1 + ' ' + e1 + ' ' + n1;
+
+    const s2 =
+      (zone ? zone.toString() : '') +
+      (band ? band : '') +
+      ' ' +
+      b2 +
+      ' ' +
+      +e2 +
+      ' ' +
+      n2;
+
+    const mgrs = Geodesy.Mgrs.parse(s1);
+
+    const u = mgrs.toUtm();
+    const latLng = u.toLatLonE();
+    if (u && latLng) {
+      return {
+        utmX: u.easting,
+        utmY: u.northing,
+        lat: latLng.lat,
+        lng: latLng.lon,
+        d1: s1,
+        d2: s2
+      };
+    }
+  }
+  return undefined;
+};
+
 export const toPlaceBackend: (placeState: PlaceState) => InputPlace = (
   placeState: PlaceState
 ) => {
@@ -166,6 +324,207 @@ export const toPlaceBackend: (placeState: PlaceState) => InputPlace = (
   };
 };
 
+export const PlaceComponentView = (props: PlaceState) => {
+  const pathArray =
+    props.admPlace && props.admPlace.path ? props.admPlace.path.split(':') : undefined;
+  const admPlaceName = pathArray ? pathArray[pathArray.length - 1] : '';
+  const country = pathArray ? pathArray[3] : '';
+  const fylke = pathArray ? pathArray[4] : '';
+  const kommune = pathArray ? pathArray[5] : '';
+
+  return (
+    <div className="container-fluid">
+      <form className="form-horizontal">
+        <div className="form-group row">
+          <div className="col-md-3">
+            <label className="control-label" htmlFor="admPlace">
+              Admplace
+            </label>
+            <div className="form-control-static" id="admPlace">
+              {admPlaceName}
+            </div>
+          </div>
+          <div className="col-md-3">
+            <label className="control-label" htmlFor="kommune">
+              Kommune
+            </label>
+            <div className="form-control-static" id="kommune">
+              {kommune}
+            </div>
+          </div>
+          <div className="col-md-3">
+            <label className="control-label" htmlFor="fylke">
+              Fylke
+            </label>
+            <div className="form-control-static" id="fylke">
+              {fylke}
+            </div>
+          </div>
+          <div className="col-md-2">
+            <label className="control-label" htmlFor="country">
+              Land
+            </label>
+            <div className="form-control-static" id="country">
+              {country}
+            </div>
+          </div>
+        </div>
+        <div className="form-group row">
+          <div className="col-md-6">
+            <label className="control-label" htmlFor="lokalitet">
+              Lokalitet
+            </label>
+            <div className="form-control-static" id="lokalitet">
+              {props.editingAttributes ? props.editingAttributes.locality : ''}
+            </div>
+          </div>
+          <div className="col-md-6">
+            <label className="control-label" htmlFor="ecology">
+              Økologi
+            </label>
+            <div className="form-control-static" id="ecology">
+              {props.editingAttributes ? props.editingAttributes.ecology : ''}
+            </div>
+          </div>
+        </div>
+        <div className="form-group row">
+          <div className="col-md-3">
+            <label className="control-label" htmlFor="station">
+              Station
+            </label>
+            <div className="form-control-static" id="station">
+              {props.editingAttributes ? props.editingAttributes.station : ''}
+            </div>
+          </div>
+          <div className="col-md-3">
+            <label className="control-label" htmlFor="sample">
+              Sample
+            </label>
+            <div className="form-control-static" id="sample">
+              {props.editingAttributes ? props.editingAttributes.sample : ''}
+            </div>
+          </div>
+          <div className="col-md-3">
+            <label className="control-label" htmlFor="ship">
+              Ship
+            </label>
+            <div className="form-control-static" id="ship">
+              {props.editingAttributes ? props.editingAttributes.ship : ''}
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div className="form-group row">
+          <div className="col-md-3">
+            <label className="control-label" htmlFor="datum">
+              Datum
+            </label>
+            <div className="form-control-static" id="datum">
+              {props.editingInputCoordinate ? props.editingInputCoordinate.datum : ''}
+            </div>
+          </div>
+          <div className="col-md-3">
+            <label className="control-label" htmlFor="coordType">
+              Coordinate type
+            </label>
+            <div className="form-control-static" id="coordType">
+              {props.editingInputCoordinate
+                ? props.editingInputCoordinate.coordinateType
+                : ''}
+            </div>
+          </div>
+          {props.editingInputCoordinate &&
+          props.editingInputCoordinate.coordinateType === 'LAT/LONG' ? (
+            <div className="col-md-2">
+              <label className="control-label" htmlFor="geometry">
+                Geometry
+              </label>
+              <div className="form-control-static" id="datum">
+                {props.editingInputCoordinate
+                  ? props.editingInputCoordinate.coordinateGeometry
+                  : ''}
+              </div>
+            </div>
+          ) : (
+            <div>
+              <div className="col-md-2">
+                <label className="control-label" htmlFor="zone">
+                  Zone
+                </label>
+                <div className="form-control-static" id="zone">
+                  {props.editingInputCoordinate ? props.editingInputCoordinate.zone : ''}
+                </div>
+              </div>
+              <div className="col-md-3">
+                <label className="control-label" htmlFor="band">
+                  Band
+                </label>
+                <div className="form-control-static" id="band">
+                  {props.editingInputCoordinate ? props.editingInputCoordinate.bend : ''}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+        <div className="form-group row">
+          <div className="col-md-3">
+            <label className="control-label" htmlFor="datum">
+              {props.editingInputCoordinate &&
+              props.editingInputCoordinate.coordinateType === 'MGRS'
+                ? 'MGRS'
+                : props.editingInputCoordinate && props.editingInputCoordinate === 'UTM'
+                  ? 'UTM'
+                  : props.editingInputCoordinate &&
+                    props.editingInputCoordinate.coordinateType === 'LAT/LONG'
+                    ? 'Lat/Long'
+                    : 'Unknown'}
+            </label>
+            <div className="form-control-static" id="datum">
+              {props.editingInputCoordinate
+                ? props.editingInputCoordinate.coordinateString
+                : ''}
+            </div>
+          </div>
+          <div className="col-md-3">
+            <label className="control-label" htmlFor="coordType">
+              Coordinate source
+            </label>
+            <div className="form-control-static" id="coordType">
+              {props.editingCoordinateAttribute
+                ? props.editingCoordinateAttribute.coordinateSource
+                : ''}
+            </div>
+          </div>
+          <div className="col-md-2">
+            <label className="control-label" htmlFor="coordAddedLater">
+              Added later?
+            </label>
+            <div className="form-control-static" id="coordAddedLater">
+              {props.editingCoordinateAttribute &&
+              props.editingCoordinateAttribute.addedLater
+                ? 'Yes'
+                : 'No'}
+            </div>
+          </div>
+          <div>
+            <div className="col-md-2">
+              <label className="control-label" htmlFor="caCoord">
+                Doubtfull coordinate
+              </label>
+              <div className="form-control-static" id="caCoord">
+                {props.editingCoordinateAttribute &&
+                props.editingCoordinateAttribute.coordinateCa
+                  ? 'Yes'
+                  : 'No'}
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+};
+
 const PlaceComponent = (
   props: PlaceState & {
     onChangeAdmPlace: (value: AdmPlace) => void;
@@ -181,6 +540,9 @@ const PlaceComponent = (
     collectingEventUUid?: string;
   } & CoordinateProps
 ) => {
+  if (props.readOnly) {
+    return <PlaceComponentView {...props} />;
+  }
   return (
     <div className="container-fluid panel-group">
       <div className="row form-group">
@@ -192,6 +554,30 @@ const PlaceComponent = (
           readOnly={props.readOnly || false}
         />
         <CoordinateHeader {...props} />
+        {props.editingInputCoordinate &&
+          props.editingInputCoordinate.derivedCoordinate && (
+            <Map
+              style={{
+                height: '40vh',
+                width: '60%'
+              }}
+              coord={
+                props.editingInputCoordinate &&
+                props.editingInputCoordinate.derivedCoordinate
+                  ? {
+                      lat:
+                        props.editingInputCoordinate &&
+                        props.editingInputCoordinate.derivedCoordinate &&
+                        props.editingInputCoordinate.derivedCoordinate.lat,
+                      lng:
+                        props.editingInputCoordinate &&
+                        props.editingInputCoordinate.derivedCoordinate &&
+                        props.editingInputCoordinate.derivedCoordinate.lng
+                    }
+                  : undefined
+              }
+            />
+          )}
         <CoordinateComponent {...props} />
 
         {props.showButtonRow && (
