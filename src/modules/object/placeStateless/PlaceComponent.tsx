@@ -400,7 +400,7 @@ export const PlaceComponentView = (props: PlaceState) => {
             <label className="control-label" htmlFor="sample">
               Sample
             </label>
-            <div className="form-control-static" id="ecology">
+            <div className="form-control-static" id="sample">
               {props.editingAttributes ? props.editingAttributes.sample : ''}
             </div>
           </div>
@@ -412,8 +412,113 @@ export const PlaceComponentView = (props: PlaceState) => {
               {props.editingAttributes ? props.editingAttributes.ship : ''}
             </div>
           </div>
-          <hr />
-          
+        </div>
+        <hr />
+        <div className="form-group row">
+          <div className="col-md-3">
+            <label className="control-label" htmlFor="datum">
+              Datum
+            </label>
+            <div className="form-control-static" id="datum">
+              {props.editingInputCoordinate ? props.editingInputCoordinate.datum : ''}
+            </div>
+          </div>
+          <div className="col-md-3">
+            <label className="control-label" htmlFor="coordType">
+              Coordinate type
+            </label>
+            <div className="form-control-static" id="coordType">
+              {props.editingInputCoordinate
+                ? props.editingInputCoordinate.coordinateType
+                : ''}
+            </div>
+          </div>
+          {props.editingInputCoordinate &&
+          props.editingInputCoordinate.coordinateType === 'LAT/LONG' ? (
+            <div className="col-md-2">
+              <label className="control-label" htmlFor="geometry">
+                Geometry
+              </label>
+              <div className="form-control-static" id="datum">
+                {props.editingInputCoordinate
+                  ? props.editingInputCoordinate.coordinateGeometry
+                  : ''}
+              </div>
+            </div>
+          ) : (
+            <div>
+              <div className="col-md-2">
+                <label className="control-label" htmlFor="zone">
+                  Zone
+                </label>
+                <div className="form-control-static" id="zone">
+                  {props.editingInputCoordinate ? props.editingInputCoordinate.zone : ''}
+                </div>
+              </div>
+              <div className="col-md-3">
+                <label className="control-label" htmlFor="band">
+                  Band
+                </label>
+                <div className="form-control-static" id="band">
+                  {props.editingInputCoordinate ? props.editingInputCoordinate.bend : ''}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+        <div className="form-group row">
+          <div className="col-md-3">
+            <label className="control-label" htmlFor="datum">
+              {props.editingInputCoordinate &&
+              props.editingInputCoordinate.coordinateType === 'MGRS'
+                ? 'MGRS'
+                : props.editingInputCoordinate && props.editingInputCoordinate === 'UTM'
+                  ? 'UTM'
+                  : props.editingInputCoordinate &&
+                    props.editingInputCoordinate.coordinateType === 'LAT/LONG'
+                    ? 'Lat/Long'
+                    : 'Unknown'}
+            </label>
+            <div className="form-control-static" id="datum">
+              {props.editingInputCoordinate
+                ? props.editingInputCoordinate.coordinateString
+                : ''}
+            </div>
+          </div>
+          <div className="col-md-3">
+            <label className="control-label" htmlFor="coordType">
+              Coordinate source
+            </label>
+            <div className="form-control-static" id="coordType">
+              {props.editingCoordinateAttribute
+                ? props.editingCoordinateAttribute.coordinateSource
+                : ''}
+            </div>
+          </div>
+          <div className="col-md-2">
+            <label className="control-label" htmlFor="coordAddedLater">
+              Added later?
+            </label>
+            <div className="form-control-static" id="coordAddedLater">
+              {props.editingCoordinateAttribute &&
+              props.editingCoordinateAttribute.addedLater
+                ? 'Yes'
+                : 'No'}
+            </div>
+          </div>
+          <div>
+            <div className="col-md-2">
+              <label className="control-label" htmlFor="caCoord">
+                Doubtfull coordinate
+              </label>
+              <div className="form-control-static" id="caCoord">
+                {props.editingCoordinateAttribute &&
+                props.editingCoordinateAttribute.coordinateCa
+                  ? 'Yes'
+                  : 'No'}
+              </div>
+            </div>
+          </div>
         </div>
       </form>
     </div>
