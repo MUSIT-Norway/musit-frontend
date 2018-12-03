@@ -98,6 +98,15 @@ export const loadGeometryTypes: (
   return ajaxGet(URL, token, callback).map(({ response }) => response);
 };
 
+export const loadCountries: (
+  ajaxGet: AjaxGet<Star>
+) => (props: { token: string; callback?: Callback<Star> }) => Observable<Star> = (
+  ajaxGet = simpleGet
+) => ({ token, callback }) => {
+  const URL = Config.api.places.loadAdmPlaceWithType('land');
+  return ajaxGet(URL, token, callback).map(({ response }) => response);
+};
+
 export interface InputPlaceWithUuid {
   placeUuid?: PlaceUuid;
   admPlaceUuid?: AdmPlaceUuid;

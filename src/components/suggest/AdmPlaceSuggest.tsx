@@ -42,6 +42,7 @@ export interface AdmPlaceSuggestProps {
   id: string;
   value?: string;
   placeHolder?: string;
+  filter?: string;
   suggest?: TODO;
   onChange: Function;
   onChangeTextField: Function;
@@ -86,7 +87,7 @@ export class AdmPlaceSuggestion extends React.Component<
     }
   };
   requestSuggestionUpdate(update: TODO) {
-    if (update.value.length > 2) {
+    if (update.value.length >= 2) {
       const token = this.props.appSession.accessToken;
       this.props.update({ update, token });
     }
@@ -94,12 +95,18 @@ export class AdmPlaceSuggestion extends React.Component<
   render() {
     return (
       <Autosuggest
-        suggestions={(this.props.suggest.data || []).sort((a: AdmPlace, b: AdmPlace) => {
-          if (a.name <= b.name) {
-            return -1;
-          }
-          return 1;
-        })}
+        suggestions={(this.props.suggest.data || [])
+          .filter((a: AdmPlace) => {
+            return this.props.filter
+              ? a.path.includes(this.props.filter) || this.props.filter === 'alle'
+              : true;
+          })
+          .sort((a: AdmPlace, b: AdmPlace) => {
+            if (a.name <= b.name) {
+              return -1;
+            }
+            return 1;
+          })}
         onSuggestionsFetchRequested={this.requestSuggestionUpdate}
         onSuggestionsClearRequested={() => this.setState(() => ({ data: [] }))}
         getSuggestionValue={(suggestion: AdmPlace) => suggestion.name}

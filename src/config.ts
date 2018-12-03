@@ -47,7 +47,8 @@ export default {
       getDatumURL: '/api/place/coordinatedatums',
       getCoordinateSourceURL: '/api/place/coordinatesources',
       getCoordinateTypesURL: '/api/place/coordinatetypes',
-      getCoordinateGeometriesURL: '/api/place/coordinategeometries'
+      getCoordinateGeometriesURL: '/api/place/coordinategeometries',
+      loadAdmPlaceWithType: (type: string) => `/api/place/admPlaces?type=${type}`
     },
     collectingEvent: {
       addEventUrl: '/api/event/events',

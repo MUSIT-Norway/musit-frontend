@@ -9,10 +9,12 @@ const AdmPlaceComponent = (
   props: PlaceState & {
     onChange: (value: AdmPlace) => void;
     onChangeOthers: (field: string) => (value: string) => void;
+    onSelectCountry: (e: React.ChangeEvent<HTMLSelectElement>) => void;
     getAdmPlaceData: (field: string) => (a: AdmPlace) => string;
     appSession: AppSession;
     history: History;
     readOnly: boolean;
+    countries: AdmPlace[];
   }
 ) => {
   const admPlaceAsString = (a: AdmPlace) => {
@@ -35,10 +37,31 @@ const AdmPlaceComponent = (
             value={props.admPlace && props.admPlace.name ? props.admPlace.name : ''}
             renderFunc={admPlaceAsString}
             placeHolder="Admplace"
+            filter={props.selectedCountry || 'Norway'}
             appSession={props.appSession}
             onChange={props.onChange}
             history={props.history}
           />
+        </div>
+        <div className="col-md-4">
+          <label htmlFor="admPlaceCountries">Search within country </label>
+          <select
+            className="form-control"
+            id="admPlaceCountries"
+            value={props.selectedCountry || 'Norway'}
+            onChange={props.onSelectCountry}
+          >
+            <option value="alle"> ---Show all --- </option>
+            {props.countries
+              .sort(
+                (a, b: AdmPlace) => (a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1)
+              )
+              .map((a: AdmPlace, i: number) => (
+                <option key={`countries-${i}`} value={a.name}>
+                  {a.name}
+                </option>
+              ))}
+          </select>
         </div>
       </div>
       <div className="row form-group">

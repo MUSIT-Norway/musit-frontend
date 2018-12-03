@@ -4,13 +4,15 @@ import predefinedCollectingEvents$, {
   setLoadingGeometryTypes$,
   setLoadingCoordinateTypes$,
   setLoadingCollectingMethods$,
+  setLoadingCountries$,
   PredefinedCollectingEventState,
   setLoadingDatumTypes$,
   loadDatumTypes$,
   loadCoordinateSources$,
   loadCoordinateTypes$,
   loadGeometryTypes$,
-  loadCollectingMethods$
+  loadCollectingMethods$,
+  loadCountries$
 } from './predefinedCollectingEventValues';
 import appSession$ from './appSession';
 import { inject } from 'react-rxjs';
@@ -27,10 +29,12 @@ type Props<T> = {
   setLoadingCollectingMethods: Function;
   loadCollectingMethods: Function;
   setLoadingDatumTypes: Function;
+  setLoadingCountries: Function;
   loadDatumTypes: Function;
   loadCoordinateSources: Function;
   loadCoordinateTypes: Function;
   loadGeomertryTypes: Function;
+  loadCountries: Function;
 };
 
 class PredefinedCollectingEventLoader<T> extends React.Component<Props<T>> {
@@ -38,7 +42,6 @@ class PredefinedCollectingEventLoader<T> extends React.Component<Props<T>> {
     const inputParams = {
       token: this.props.appSession.accessToken
     };
-    console.log('IP', inputParams);
 
     if (!this.isGeometryLoaded()) {
       this.props.setLoadingGeometryTypes();
@@ -51,6 +54,11 @@ class PredefinedCollectingEventLoader<T> extends React.Component<Props<T>> {
     if (!this.isCoordinateTypesLoaded()) {
       this.props.setLoadingCoordinateTypes();
       this.props.loadCoordinateTypes(inputParams);
+    }
+
+    if (!this.isCountriesLoaded()) {
+      this.props.setLoadingCountries();
+      this.props.loadCountries(inputParams);
     }
 
     if (!this.isCollectingMethodsLoaded()) {
@@ -79,6 +87,13 @@ class PredefinedCollectingEventLoader<T> extends React.Component<Props<T>> {
     );
   }
 
+  isCountriesLoaded() {
+    return (
+      !this.props.predefinedCollectingEventValues.loadingCountries &&
+      !!this.props.predefinedCollectingEventValues.countries
+    );
+  }
+
   isCoordinateTypesLoaded() {
     return (
       !this.props.predefinedCollectingEventValues.loadingCoordinateTypes &&
@@ -104,7 +119,8 @@ class PredefinedCollectingEventLoader<T> extends React.Component<Props<T>> {
       !this.isCoordinateSourceLoaded() ||
       !this.isDatumLoaded() ||
       !this.isCoordinateTypesLoaded() ||
-      !this.isGeometryLoaded()
+      !this.isGeometryLoaded() ||
+      !this.isCountriesLoaded()
     ) {
       return <div className="loading" />;
     }
@@ -156,6 +172,7 @@ export function loadCustomPredefinedCollectingEventValues<P>(
           setLoadingCollectingMethods={setLoadingCollectingMethods$.next.bind(
             setLoadingCollectingMethods$
           )}
+          setLoadingCountries={setLoadingCountries$.next.bind(setLoadingCountries$)}
           loadCollectingMethods={loadCollectingMethods$.next.bind(loadCollectingMethods$)}
           setLoadingCoordinateTypes={setLoadingCoordinateTypes$.next.bind(
             setLoadingCoordinateTypes$
@@ -167,6 +184,7 @@ export function loadCustomPredefinedCollectingEventValues<P>(
           loadCoordinateSources={loadCoordinateSources$.next.bind(loadCoordinateSources$)}
           setLoadingDatumTypes={setLoadingDatumTypes$.next.bind(setLoadingDatumTypes$)}
           loadDatumTypes={loadDatumTypes$.next.bind(loadDatumTypes$)}
+          loadCountries={loadCountries$.next.bind(loadCountries$)}
           setLoadingGeometryTypes={setLoadingGeometryTypes$.next.bind(
             setLoadingGeometryTypes$
           )}

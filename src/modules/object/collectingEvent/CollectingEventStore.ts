@@ -20,6 +20,7 @@ import { simpleGet, simplePost, simplePut } from '../../../shared/RxAjax';
 import { KEEP_ALIVE } from '../../../stores/constants';
 import { createStore } from 'react-rxjs';
 import { toFrontend } from '../collectingEvent/CollectingEventComponent';
+import { AdmPlace } from '../placeStateless/PlaceComponent';
 
 export type CollectingEventStoreState = {
   localState?: CollectingEventState;
@@ -36,6 +37,7 @@ export type PredefinedCollectingEventValues = {
   coordinateSources: { source: string }[] | null;
   geometryTypes: { geometry: string }[] | null;
   collectingMethods: CollectingEventMethod[] | null;
+  countries: AdmPlace[];
 };
 export const initialCollectingEventState = {
   collectingEvent: {

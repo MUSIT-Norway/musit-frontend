@@ -3,7 +3,9 @@ import {
   loadDatum,
   loadCoordinateSources,
   loadCoordinateTypes,
-  loadGeometryTypes
+  loadGeometryTypes,
+  loadCountries,
+  AdmPlace
 } from '../models/object/place';
 
 import { getCollectingEventMethods } from '../models/object/collectingEvent';
@@ -22,6 +24,7 @@ export type PredefinedCollectingEventProps = {
   coordinateSources: string[] | null;
   geometryTypes: string[] | null;
   collectingMethods: string[] | null;
+  countries: AdmPlace[] | null;
 };
 
 export type PredefinedCollectingEventState = PredefinedCollectingEventProps & {
@@ -30,6 +33,7 @@ export type PredefinedCollectingEventState = PredefinedCollectingEventProps & {
   loadingCoordinateTypes?: boolean;
   loadingCoordinateSources?: boolean;
   loadingCollectingMethods?: boolean;
+  loadingCountries?: boolean;
 };
 
 export const initialState: PredefinedCollectingEventState = {
@@ -38,12 +42,20 @@ export const initialState: PredefinedCollectingEventState = {
   loadingCoordinateSources: false,
   loadingCoordinateTypes: false,
   loadingGeometryTypes: false,
+  loadingCountries: false,
   datums: null,
   coordinateSources: null,
+  countries: null,
   geometryTypes: null,
   coordinateTypes: null,
   collectingMethods: null
 };
+
+export const setLoadingCountries$: Subject<Star> = createAction('setLoadingCountries$');
+export const loadCountries$: Subject<Star> = createAction('loadCountries$');
+export const loadCountriesAction$: Observable<Star> = loadCountries$.switchMap(
+  loadCountries(simpleGet)
+);
 
 export const setLoadingCollectingMethods$: Subject<Star> = createAction(
   'setLoadingCollectingMethods$'
@@ -101,6 +113,18 @@ export function reducer$(actions: {
         ...state,
         collectingMethods,
         loadingCollectingMethods: false
+      })
+    ),
+
+    actions.setLoadingCountries$.map(() => (state: PredefinedCollectingEventState) => ({
+      ...state,
+      loadingCountries: true
+    })),
+    actions.loadCountries$.map(
+      (countries: AdmPlace[]) => (state: PredefinedCollectingEventState) => ({
+        ...state,
+        countries,
+        loadingCountries: false
       })
     ),
     actions.setLoadingCoordinateTypes$.map(
@@ -166,6 +190,8 @@ const store$ = (actions: { [key: string]: Observable<Star> }) =>
 
 export default store$({
   setLoadingCollectingMethods$,
+  setLoadingCountries$,
+  loadCountries$: loadCountriesAction$,
   loadCollectingMethods$: loadCollectingMethodsAction$,
   setLoadingDatumTypes$,
   loadDatumTypes$: loadDatumTypesAction$,
