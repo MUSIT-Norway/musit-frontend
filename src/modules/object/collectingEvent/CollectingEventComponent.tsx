@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { musitCoodinateValidate } from '../../../shared/util';
 import CollapseComponent from '../components/Collapse';
-import EventMetadata from './EventMetadata';
+import EventMetadata, { ViewEventMetaData } from './EventMetadata';
 import { formatISOString } from '../../../shared/util';
 import { InputCoordinate, InputCoordinateAttribute } from '../../../models/object/place';
 import PlaceComponent, {
@@ -12,7 +12,8 @@ import PlaceComponent, {
   toPlaceBackend,
   coordMGRSStrToDerived,
   coordLatLongStrToDerived,
-  coordUTMStrToDerived
+  coordUTMStrToDerived,
+  PlaceView
 } from '../placeStateless/PlaceComponent';
 import {
   CollectingEventStoreState,
@@ -60,6 +61,10 @@ export type EventMetadataProps = EventData & {
   history: History;
   setEditMode: () => void;
 };
+
+export type EventEditMetadataProps = {
+  onClickEdit: () => void;
+} & EventData;
 
 export type Uuid = string;
 export type EventUuid = Uuid;
@@ -311,6 +316,7 @@ export class CollectingEventComponent extends React.Component<
     this.savePlace = this.savePlace.bind(this);
     this.saveEvent = this.saveEvent.bind(this);
     this.savePerson = this.savePerson.bind(this);
+    this.addAndSaveCollecingEvent = this.addAndSaveCollecingEvent.bind(this);
     this.state =
       props.store && props.store.localState
         ? props.store.localState
@@ -376,6 +382,27 @@ export class CollectingEventComponent extends React.Component<
     }
   }
 
+  addAndSaveCollecingEvent() {
+    this.props.setDraftState(undefined)('isDraft')(false);
+    this.props.setDisabledState('addStateReadOnly')(true);
+
+    this.props.addCollectingEvent &&
+      this.props.addCollectingEvent()({
+        data: this.state,
+        token: this.props.appSession.accessToken,
+        collectionId: this.props.appSession.collectionId,
+        callback: {
+          onComplete: (r: AjaxResponse) => {
+            const url = config.magasin.urls.client.collectingEvent.view(
+              this.props.appSession,
+              r.response.eventUuid
+            );
+            this.props.history && this.props.history.replace(url);
+          }
+        }
+      });
+  }
+
   savePlace(place: PlaceState) {
     console.log(place, this.state.placeState.placeUuid);
 
@@ -426,6 +453,27 @@ export class CollectingEventComponent extends React.Component<
 
   render() {
     console.log('STATE----->', this.state);
+    const PlaceViewComponent = (
+      <div>
+        <PlaceView
+          {...this.state.placeState}
+          onClickEdit={() => {
+            const URL =
+              this.props.store.collectingEvent && this.state.eventData.eventUuid
+                ? config.magasin.urls.client.collectingEvent.edit(
+                    this.props.appSession,
+                    this.state.eventData.eventUuid
+                  )
+                : undefined;
+            if (URL) {
+              localStorage.clear();
+              localStorage.setItem('editComponent', 'place');
+              this.props.history.push(URL);
+            }
+          }}
+        />
+      </div>
+    );
     const PlaceBodyComponent = (
       <div>
         <PlaceComponent
@@ -433,6 +481,14 @@ export class CollectingEventComponent extends React.Component<
           showButtonRow={this.props.addStateHidden}
           collectingEventUUid={this.state.eventData.eventUuid}
           appSession={this.props.appSession}
+          countries={this.props.predefinedCollectingEventValues.countries.sort()}
+          onSelectCountry={(e: React.ChangeEvent<HTMLSelectElement>) => {
+            const v = e.target.value;
+            this.setState((ps: CollectingEventState) => ({
+              ...ps,
+              placeState: { ...ps.placeState, selectedCountry: v }
+            }));
+          }}
           onCoordinateLatLonKeyPress={e => {
             if (e.charCode === 13) {
               console.log('E', e);
@@ -875,7 +931,11 @@ export class CollectingEventComponent extends React.Component<
             return ret;
           }}
           onClickSave={() => {
-            this.savePlace(this.state.placeState);
+            if (this.props.addCollectingEvent) {
+              this.addAndSaveCollecingEvent();
+            } else {
+              this.savePlace(this.state.placeState);
+            }
           }}
           onToggleCollapse={() => {
             this.setState((cs: CollectingEventState) => ({
@@ -889,13 +949,38 @@ export class CollectingEventComponent extends React.Component<
         />
       </div>
     );
+    const ViewEventMetaDataComp = (
+      <ViewEventMetaData
+        {...this.state.eventData}
+        onClickEdit={() => {
+          const URL =
+            this.props.store.collectingEvent && this.state.eventData.eventUuid
+              ? config.magasin.urls.client.collectingEvent.edit(
+                  this.props.appSession,
+                  this.state.eventData.eventUuid
+                )
+              : undefined;
+          if (URL) {
+            localStorage.clear();
+            localStorage.setItem('editComponent', 'eventMetaData');
+            this.props.history.push(URL);
+          }
+        }}
+      />
+    );
 
     const EventMetadataComponent = (
       <div>
         <EventMetadata
           {...this.state.eventData}
           history={this.props.history}
-          onClickSave={() => this.saveEvent(this.state)}
+          onClickSave={() => {
+            if (this.props.addCollectingEvent) {
+              this.addAndSaveCollecingEvent();
+            } else {
+              this.saveEvent(this.state);
+            }
+          }}
           setEditMode={() => {
             localStorage.clear();
             localStorage.setItem('editComponent', 'eventMetaData');
@@ -1235,24 +1320,28 @@ export class CollectingEventComponent extends React.Component<
         </div>
         <div className="panel-body" style={{ backgroundColor: '#f6f6f2' }}>
           <CollapseComponent
-            head="Event data"
+            heading="Event metadata"
+            Head={ViewEventMetaDataComp}
             Body={EventMetadataComponent}
             readOnly={this.props.eventDataReadOnly}
             collapsed={this.props.eventDataCollapsed}
+            showHead={this.state.eventData.eventUuid ? true : false}
           />
           {
             <CollapseComponent
-              head="Person data"
+              Head={<div />}
               Body={PersonComponentBody}
               readOnly={this.props.personReadOnly}
             />
           }{' '}
           <br />
           <CollapseComponent
-            head="Place"
+            heading="Place"
+            Head={PlaceViewComponent}
             Body={PlaceBodyComponent}
             readOnly={this.props.placeReadOnly}
-            collapsed={this.props.placeCollapsed}
+            collapsed={this.props.eventDataCollapsed}
+            showHead={this.state.placeState.placeUuid ? true : false}
           />
         </div>
 
@@ -1266,24 +1355,7 @@ export class CollectingEventComponent extends React.Component<
               onClickCancel={() => this.props.history.goBack()}
               onClickEdit={() => this.props.setDisabledState('addStateReadOnly')(false)}
               onClickSave={() => {
-                this.props.setDraftState(undefined)('isDraft')(false);
-                this.props.setDisabledState('addStateReadOnly')(true);
-
-                this.props.addCollectingEvent &&
-                  this.props.addCollectingEvent()({
-                    data: this.state,
-                    token: this.props.appSession.accessToken,
-                    collectionId: this.props.appSession.collectionId,
-                    callback: {
-                      onComplete: (r: AjaxResponse) => {
-                        const url = config.magasin.urls.client.collectingEvent.view(
-                          this.props.appSession,
-                          r.response.eventUuid
-                        );
-                        this.props.history && this.props.history.replace(url);
-                      }
-                    }
-                  });
+                this.addAndSaveCollecingEvent();
               }}
               editButtonState={{
                 visible: false,

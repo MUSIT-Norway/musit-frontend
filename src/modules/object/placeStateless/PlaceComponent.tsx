@@ -92,6 +92,7 @@ export interface InputPlace {
 
 export interface PlaceState {
   placeUuid?: PlaceUuid;
+  selectedCountry?: string;
   admPlace: AdmPlace | null;
   editingInputCoordinate?: InputCoordinate;
   editingCoordinateAttribute?: InputCoordinateAttribute;
@@ -105,6 +106,7 @@ export interface PlaceState {
 
 export class PlaceState implements PlaceState {
   placeUuid?: PlaceUuid;
+  selectedCountry?: string;
   admPlace: AdmPlace | null;
   editingInputCoordinate?: InputCoordinate;
   editingCoordinateAttribute?: InputCoordinateAttribute;
@@ -121,6 +123,7 @@ export class PlaceState implements PlaceState {
     editingAttributes: MarinePlaceAttribute,
     coordinateInvalid: boolean,
     editState: EditState | NonEditState,
+    selectedCountry?: string,
     editCoordinateMode?: boolean,
     coordinateCollapsed?: boolean,
     altitudeCollapsed?: boolean,
@@ -135,6 +138,7 @@ export class PlaceState implements PlaceState {
     (this.editState = editState), (this.coordinateCollapsed = coordinateCollapsed);
     this.altitudeCollapsed = altitudeCollapsed;
     this.placeUuid = placeUuid;
+    this.selectedCountry = selectedCountry;
   }
 }
 
@@ -324,13 +328,66 @@ export const toPlaceBackend: (placeState: PlaceState) => InputPlace = (
   };
 };
 
-export const PlaceComponentView = (props: PlaceState) => {
+export const PlaceView = (props: PlaceState & { onClickEdit: () => void }) => {
   const pathArray =
     props.admPlace && props.admPlace.path ? props.admPlace.path.split(':') : undefined;
   const admPlaceName = pathArray ? pathArray[pathArray.length - 1] : '';
   const country = pathArray ? pathArray[3] : '';
   const fylke = pathArray ? pathArray[4] : '';
   const kommune = pathArray ? pathArray[5] : '';
+  let altitude =
+    props.editingCoordinateAttribute &&
+    props.editingCoordinateAttribute.altitudeFrom &&
+    props.editingCoordinateAttribute.altitudeFrom.toString();
+  altitude =
+    altitude &&
+    props.editingCoordinateAttribute &&
+    props.editingCoordinateAttribute.altitudeTo
+      ? altitude + '-' + props.editingCoordinateAttribute.altitudeTo.toString()
+      : altitude;
+  altitude =
+    altitude &&
+    props.editingCoordinateAttribute &&
+    props.editingCoordinateAttribute.altitudeUnit
+      ? altitude + props.editingCoordinateAttribute.altitudeUnit
+      : altitude;
+  altitude =
+    altitude &&
+    props.editingCoordinateAttribute &&
+    props.editingCoordinateAttribute.altitudeCa
+      ? 'Ca.' + altitude
+      : altitude;
+
+  let depth =
+    props.editingCoordinateAttribute &&
+    props.editingCoordinateAttribute.depthFrom &&
+    props.editingCoordinateAttribute.depthFrom.toString();
+  depth =
+    depth && props.editingCoordinateAttribute && props.editingCoordinateAttribute.depthTo
+      ? depth + '-' + props.editingCoordinateAttribute.depthTo.toString()
+      : depth;
+  depth =
+    depth &&
+    props.editingCoordinateAttribute &&
+    props.editingCoordinateAttribute.depthUnit
+      ? depth + props.editingCoordinateAttribute.depthUnit
+      : depth;
+  depth =
+    depth && props.editingCoordinateAttribute && props.editingCoordinateAttribute.depthCa
+      ? 'Ca.' + depth
+      : depth;
+
+  let coordinateString = props.editingInputCoordinate
+    ? props.editingInputCoordinate.coordinateString
+    : undefined;
+  coordinateString =
+    props.editingCoordinateAttribute && props.editingCoordinateAttribute.coordinateCa
+      ? 'Ca.' + coordinateString
+      : coordinateString;
+  coordinateString =
+    props.editingCoordinateAttribute && props.editingCoordinateAttribute.addedLater
+      ? '[ ' + coordinateString + ' ]'
+      : coordinateString;
 
   return (
     <div className="container-fluid">
@@ -370,7 +427,7 @@ export const PlaceComponentView = (props: PlaceState) => {
           </div>
         </div>
         <div className="form-group row">
-          <div className="col-md-6">
+          <div className="col-md-3">
             <label className="control-label" htmlFor="lokalitet">
               Lokalitet
             </label>
@@ -378,7 +435,7 @@ export const PlaceComponentView = (props: PlaceState) => {
               {props.editingAttributes ? props.editingAttributes.locality : ''}
             </div>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-3">
             <label className="control-label" htmlFor="ecology">
               Økologi
             </label>
@@ -386,9 +443,7 @@ export const PlaceComponentView = (props: PlaceState) => {
               {props.editingAttributes ? props.editingAttributes.ecology : ''}
             </div>
           </div>
-        </div>
-        <div className="form-group row">
-          <div className="col-md-3">
+          <div className="col-md-2">
             <label className="control-label" htmlFor="station">
               Station
             </label>
@@ -396,7 +451,7 @@ export const PlaceComponentView = (props: PlaceState) => {
               {props.editingAttributes ? props.editingAttributes.station : ''}
             </div>
           </div>
-          <div className="col-md-3">
+          <div className="col-md-2">
             <label className="control-label" htmlFor="sample">
               Sample
             </label>
@@ -404,7 +459,7 @@ export const PlaceComponentView = (props: PlaceState) => {
               {props.editingAttributes ? props.editingAttributes.sample : ''}
             </div>
           </div>
-          <div className="col-md-3">
+          <div className="col-md-2">
             <label className="control-label" htmlFor="ship">
               Ship
             </label>
@@ -421,16 +476,6 @@ export const PlaceComponentView = (props: PlaceState) => {
             </label>
             <div className="form-control-static" id="datum">
               {props.editingInputCoordinate ? props.editingInputCoordinate.datum : ''}
-            </div>
-          </div>
-          <div className="col-md-3">
-            <label className="control-label" htmlFor="coordType">
-              Coordinate type
-            </label>
-            <div className="form-control-static" id="coordType">
-              {props.editingInputCoordinate
-                ? props.editingInputCoordinate.coordinateType
-                : ''}
             </div>
           </div>
           {props.editingInputCoordinate &&
@@ -465,10 +510,42 @@ export const PlaceComponentView = (props: PlaceState) => {
               </div>
             </div>
           )}
+
+          <div className="col-md-3">
+            <label className="control-label" htmlFor="coordSource">
+              Coordinate source
+            </label>
+            <div className="form-control-static" id="coordSource">
+              {props.editingCoordinateAttribute
+                ? props.editingCoordinateAttribute.coordinateSource
+                : ''}
+            </div>
+          </div>
+
+          <div className="col-md-2">
+            <label className="control-label" htmlFor="precision">
+              Precision
+            </label>
+            <div className="form-control-static" id="precision">
+              {props.editingCoordinateAttribute
+                ? props.editingCoordinateAttribute.precision
+                : ''}
+            </div>
+          </div>
+          <div className="col-md-2">
+            <label className="control-label" htmlFor="gpsAccuracy">
+              Accuracy
+            </label>
+            <div className="form-control-static" id="gpsAccuracy">
+              {props.editingCoordinateAttribute
+                ? props.editingCoordinateAttribute.gpsAccuracy
+                : ''}
+            </div>
+          </div>
         </div>
         <div className="form-group row">
-          <div className="col-md-3">
-            <label className="control-label" htmlFor="datum">
+          <div className="col-md-5">
+            <label className="control-label" htmlFor="coordString">
               {props.editingInputCoordinate &&
               props.editingInputCoordinate.coordinateType === 'MGRS'
                 ? 'MGRS'
@@ -479,44 +556,26 @@ export const PlaceComponentView = (props: PlaceState) => {
                     ? 'Lat/Long'
                     : 'Unknown'}
             </label>
-            <div className="form-control-static" id="datum">
+            <div className="form-control-static" id="coordString">
               {props.editingInputCoordinate
                 ? props.editingInputCoordinate.coordinateString
                 : ''}
             </div>
           </div>
           <div className="col-md-3">
-            <label className="control-label" htmlFor="coordType">
-              Coordinate source
+            <label className="control-label" htmlFor="altitude">
+              Altitude{' '}
             </label>
-            <div className="form-control-static" id="coordType">
-              {props.editingCoordinateAttribute
-                ? props.editingCoordinateAttribute.coordinateSource
-                : ''}
+            <div className="form-control-static" id="altitude">
+              {altitude}
             </div>
           </div>
-          <div className="col-md-2">
-            <label className="control-label" htmlFor="coordAddedLater">
-              Added later?
+          <div className="col-md-3">
+            <label className="control-label" htmlFor="depth">
+              Depth
             </label>
-            <div className="form-control-static" id="coordAddedLater">
-              {props.editingCoordinateAttribute &&
-              props.editingCoordinateAttribute.addedLater
-                ? 'Yes'
-                : 'No'}
-            </div>
-          </div>
-          <div>
-            <div className="col-md-2">
-              <label className="control-label" htmlFor="caCoord">
-                Doubtfull coordinate
-              </label>
-              <div className="form-control-static" id="caCoord">
-                {props.editingCoordinateAttribute &&
-                props.editingCoordinateAttribute.coordinateCa
-                  ? 'Yes'
-                  : 'No'}
-              </div>
+            <div className="form-control-static" id="depth">
+              {depth}
             </div>
           </div>
         </div>
@@ -531,6 +590,7 @@ const PlaceComponent = (
     onChangeOthers: (field: string) => (value: string) => void;
     getAdmPlaceData: (field: string) => (a: AdmPlace) => string;
     setDraftState: (fieldName: string, value: boolean) => void;
+    onSelectCountry: (e: React.ChangeEvent<HTMLSelectElement>) => void;
     setEditMode: () => void;
     appSession: AppSession;
     history: History;
@@ -538,11 +598,9 @@ const PlaceComponent = (
     isDraft?: boolean;
     showButtonRow?: boolean;
     collectingEventUUid?: string;
+    countries: AdmPlace[];
   } & CoordinateProps
 ) => {
-  if (props.readOnly) {
-    return <PlaceComponentView {...props} />;
-  }
   return (
     <div className="container-fluid panel-group">
       <div className="row form-group">

@@ -20,13 +20,14 @@ import { simpleGet, simplePost, simplePut } from '../../../shared/RxAjax';
 import { KEEP_ALIVE } from '../../../stores/constants';
 import { createStore } from 'react-rxjs';
 import { toFrontend } from '../collectingEvent/CollectingEventComponent';
-import {
-  addPersonName,
-  getPersonName,
-  InputPersonName,
-  inputPersonName
-} from '../../../models/object/person';
+import { AdmPlace } from '../placeStateless/PlaceComponent';
 import { PersonState } from './PersonComponent';
+import {
+  inputPersonName,
+  InputPersonName,
+  getPersonName,
+  addPersonName
+} from '../../../models/object/person';
 
 export type CollectingEventStoreState = {
   localState?: CollectingEventState;
@@ -44,6 +45,7 @@ export type PredefinedCollectingEventValues = {
   coordinateSources: { source: string }[] | null;
   geometryTypes: { geometry: string }[] | null;
   collectingMethods: CollectingEventMethod[] | null;
+  countries: AdmPlace[];
 };
 export const initialCollectingEventState = {
   collectingEvent: {
