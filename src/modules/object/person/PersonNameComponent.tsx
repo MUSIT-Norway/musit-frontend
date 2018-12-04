@@ -17,11 +17,12 @@ type PersonNameProps = {
 
 export const PersonNameComponent = (props: PersonNameProps) => {
   return (
-    <div className="container">
-      <h3>Person-name</h3>
-      <div className="form-group row">
+    <form className="form-horizontal">
+      <div className="form-group">
+        <label className="control-label col-md-2" htmlFor="title">
+          Title
+        </label>
         <div className="col-sm-3">
-          <label htmlFor="title">Title</label>
           <input
             value={props.editingPersonName && props.editingPersonName.title}
             type="text"
@@ -35,9 +36,11 @@ export const PersonNameComponent = (props: PersonNameProps) => {
           />
         </div>
       </div>
-      <div className="form-group row">
+      <div className="form-group">
+        <label className="control-label col-md-2" htmlFor="first-name">
+          First name
+        </label>
         <div className="col-sm-3">
-          <label htmlFor="first-name">First name</label>
           <input
             value={props.editingPersonName && props.editingPersonName.firstName}
             type="text"
@@ -51,14 +54,16 @@ export const PersonNameComponent = (props: PersonNameProps) => {
           />
         </div>
       </div>
-      <div className="form-group row">
+      <div className="form-group">
+        <label className="control-label col-md-2" htmlFor="last-name">
+          Last name
+        </label>
         <div className="col-sm-3">
-          <label htmlFor="last-name">Last name</label>
           <input
             value={props.editingPersonName && props.editingPersonName.lastName}
             type="text"
             className="form-control"
-            id="Last-name"
+            id="last-name"
             onChange={e => {
               e.preventDefault();
               props.onChangeFullName('lastName')(e.target.value);
@@ -67,9 +72,11 @@ export const PersonNameComponent = (props: PersonNameProps) => {
           />
         </div>
       </div>
-      <div className="form-group row">
+      <div className="form-group">
+        <label className="control-label col-md-2" htmlFor="last-name">
+          Navn
+        </label>
         <div className="col-sm-3">
-          <label htmlFor="last-name">Navn</label>
           <input
             value={props.editingPersonName && props.editingPersonName.name}
             type="text"
@@ -107,7 +114,7 @@ export const PersonNameComponent = (props: PersonNameProps) => {
           </button>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 

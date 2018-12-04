@@ -76,7 +76,7 @@ const AdmPlaceComponent = (
         </div>
         <div className="form-group">
           <label className="control-label col-md-2" htmlFor="idKommune">
-            Adm place
+            Selected adm place
           </label>
           <div className="col-md-2">
             <input

@@ -78,7 +78,7 @@ const EventMetadata = (props: EventMetadataProps) => {
     <div className="container-fluid">
       <form className="form-horizontal">
         <div className="form-group">
-          <label className="control-label col-md-1" htmlFor="nameInput">
+          <label className="control-label col-md-2" htmlFor="nameInput">
             Name
           </label>
           <div className="col-md-4">
@@ -92,9 +92,38 @@ const EventMetadata = (props: EventMetadataProps) => {
               onChange={e => props.onChangeEventMetaData('name')(e.target.value)}
             />
           </div>
+          <div className="col-md-3">
+            <select
+              className="form-control"
+              id="collectingMethod"
+              defaultValue={undefined}
+              placeholder="Method"
+              disabled={props.readOnly}
+              value={props.methodId}
+              onChange={e => {
+                props.onChangeEventMetaData('methodId')(e.target.value);
+              }}
+            >
+              <option value={undefined}>{'Select value'}</option>
+              {props.collectingEventMethods ? (
+                props.collectingEventMethods.map(
+                  (
+                    { methodId, method }: { methodId: number; method: string },
+                    i: number
+                  ) => (
+                    <option key={`optionRow_${i}`} value={methodId}>
+                      {method}
+                    </option>
+                  )
+                )
+              ) : (
+                <option key={`optionRow_${1}`}>{'No data'}</option>
+              )}
+            </select>
+          </div>
         </div>
         <div className="form-group">
-          <label className="control-label col-md-1" htmlFor="dateInput">
+          <label className="control-label col-md-2" htmlFor="dateInput">
             Date
           </label>
           <div className="col-md-2">
@@ -127,7 +156,7 @@ const EventMetadata = (props: EventMetadataProps) => {
           </div>
         </div>
         <div className="form-group">
-          <label className="control-label col-md-1" htmlFor="eventNote">
+          <label className="control-label col-md-2" htmlFor="eventNote">
             Note
           </label>
 
@@ -145,6 +174,42 @@ const EventMetadata = (props: EventMetadataProps) => {
           </div>
         </div>
       </form>
+      {props.showButtonRows && (
+        <EditAndSaveButtons
+          onClickCancel={() => {}}
+          onClickEdit={() => {
+            const URL = props.collectingEventUuid
+              ? config.magasin.urls.client.collectingEvent.edit(
+                  props.appSession,
+                  props.collectingEventUuid
+                )
+              : undefined;
+            if (URL) {
+              props.setEditMode();
+              props.history.push(URL);
+            }
+          }}
+          onClickSave={props.onClickSave}
+          onClickDraft={() => {}}
+          editButtonState={{ visible: true, disabled: props.readOnly ? false : true }}
+          cancelButtonState={{
+            visible: true,
+            disabled: props.readOnly ? true : props.editState === 'Not editing' || false
+          }}
+          saveButtonState={{
+            visible: true,
+            disabled: props.readOnly ? true : props.editState === 'Not editing' || false
+          }}
+          draftButtonState={{
+            visible: props.isDraft ? true : false,
+            disabled: props.readOnly ? true : props.editState === 'Not editing' || false
+          }}
+          saveButtonText="Lagre"
+          editButtonText="Endre"
+          cancelButtonText="Avbryt"
+          draftButtonText="Lagre utkast"
+        />
+      )}
     </div>
   );
 

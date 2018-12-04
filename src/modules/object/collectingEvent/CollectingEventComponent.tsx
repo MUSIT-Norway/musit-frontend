@@ -1359,6 +1359,7 @@ export class CollectingEventComponent extends React.Component<
           {
             <CollapseComponent
               Head={<div />}
+              heading="Person"
               Body={PersonComponentBody}
               readOnly={this.props.personReadOnly}
             />

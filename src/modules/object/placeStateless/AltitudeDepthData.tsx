@@ -4,7 +4,175 @@ import { CoordinateProps } from '../placeStateless/PlaceComponent';
 import { altDepthUnits } from './mockdata/data';
 
 const AltitudeDepthData = (props: CoordinateProps) => (
-  <div className="form-group">
+  <div className="container-fluid">
+    <form className="form-horizontal">
+      <div className="form-group">
+        <label className="control-label col-md-2" htmlFor="altitudeFrom">
+          Altitude
+        </label>
+        <div className="col-md-2">
+          <input
+            placeholder="From"
+            className="form-control"
+            type="number"
+            disabled={props.readOnly}
+            onChange={e => {
+              props.onChangeNumberCoordinateAttributes('altitudeFrom')(
+                parseFloat(e.target.value)
+              );
+            }}
+            value={
+              props.editingCoordinateAttribute &&
+              props.editingCoordinateAttribute.altitudeFrom
+            }
+            id="altitudeFrom"
+          />
+        </div>
+
+        <div className="col-md-2">
+          <input
+            placeholder="To"
+            className="form-control"
+            id="alt-h"
+            type="number"
+            disabled={props.readOnly}
+            onChange={e => {
+              props.onChangeNumberCoordinateAttributes('altitudeTo')(
+                parseFloat(e.target.value)
+              );
+            }}
+            value={
+              props.editingCoordinateAttribute &&
+              props.editingCoordinateAttribute.altitudeTo
+            }
+          />
+        </div>
+        <div className="col-md-2">
+          <select
+            className="form-control"
+            id="altitudeUnit"
+            disabled={props.readOnly}
+            value={
+              props.editingCoordinateAttribute &&
+              props.editingCoordinateAttribute.altitudeUnit
+            }
+            onChange={e => {
+              props.onChangeCoordinateAttributes('altitudeUnit')(e.target.value);
+            }}
+          >
+            {altDepthUnits.map((type: string, i: number) => (
+              <option key={`optionRow_${i}`}>{type}</option>
+            ))}
+          </select>
+        </div>
+        <div className="col-md-2">
+          <div className="checkbox" id="caAltitude">
+            <CheckBox
+              id={'checkBoxCaAltitude'}
+              viewMode={props.readOnly}
+              checked={
+                props.editingCoordinateAttribute &&
+                props.editingCoordinateAttribute.altitudeCa
+                  ? true
+                  : false
+              }
+              displayValue="Ca altitude"
+              onChange={() => {
+                props.editingCoordinateAttribute &&
+                props.editingCoordinateAttribute.altitudeCa
+                  ? props.onChangeCheckBoxBoolean('altitudeCa')(false)
+                  : props.onChangeCheckBoxBoolean('altitudeCa')(true);
+              }}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="form-group">
+        <label className="control-label col-md-2" htmlFor="depthFrom">
+          Depth
+        </label>
+        <div className="col-md-2">
+          <input
+            placeholder="From"
+            className="form-control"
+            type="number"
+            disabled={props.readOnly}
+            onChange={e => {
+              props.onChangeNumberCoordinateAttributes('depthFrom')(
+                parseFloat(e.target.value)
+              );
+            }}
+            value={
+              props.editingCoordinateAttribute &&
+              props.editingCoordinateAttribute.depthFrom
+            }
+            id="depthLow"
+          />
+        </div>
+
+        <div className="col-md-2">
+          <input
+            placeholder="To"
+            className="form-control"
+            type="number"
+            disabled={props.readOnly}
+            onChange={e => {
+              props.onChangeNumberCoordinateAttributes('depthTo')(
+                parseFloat(e.target.value)
+              );
+            }}
+            value={
+              props.editingCoordinateAttribute && props.editingCoordinateAttribute.depthTo
+            }
+            id="depthHigh"
+          />
+        </div>
+
+        <div className="col-md-2">
+          <select
+            className="form-control"
+            id="depthUnit"
+            disabled={props.readOnly}
+            value={
+              props.editingCoordinateAttribute &&
+              props.editingCoordinateAttribute.depthUnit
+            }
+            onChange={e => {
+              props.onChangeCoordinateAttributes('depthUnit')(e.target.value);
+            }}
+          >
+            {altDepthUnits.map((type: string, i: number) => (
+              <option key={`optionRow_${i}`}>{type}</option>
+            ))}
+          </select>
+        </div>
+        <div className="col-md-2">
+          <div className="checkbox" id="caDepth">
+            <CheckBox
+              id={'checkBoxCaDepth'}
+              viewMode={props.readOnly}
+              checked={
+                props.editingCoordinateAttribute &&
+                props.editingCoordinateAttribute.depthCa
+                  ? true
+                  : false
+              }
+              displayValue="Ca depth"
+              onChange={() => {
+                props.editingCoordinateAttribute &&
+                props.editingCoordinateAttribute.depthCa
+                  ? props.onChangeCheckBoxBoolean('depthCa')(false)
+                  : props.onChangeCheckBoxBoolean('depthCa')(true);
+              }}
+            />
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  /*   <div className="form-group">
     <div className="row">
       <div className="col-md-2">
         <label htmlFor="altitude">Altitude</label>
@@ -21,7 +189,6 @@ const AltitudeDepthData = (props: CoordinateProps) => (
           value={
             props.editingCoordinateAttribute &&
             props.editingCoordinateAttribute.altitudeFrom
-            //props.getCurrentCoordinate(props.coordinateHistoryIndeks).altitudeLow
           }
           id="altitudeFrom"
         />
@@ -43,7 +210,6 @@ const AltitudeDepthData = (props: CoordinateProps) => (
           value={
             props.editingCoordinateAttribute &&
             props.editingCoordinateAttribute.altitudeTo
-            //props.getCurrentCoordinate(props.coordinateHistoryIndeks).altitudeHigh
           }
         />
       </div>
@@ -56,7 +222,6 @@ const AltitudeDepthData = (props: CoordinateProps) => (
           value={
             props.editingCoordinateAttribute &&
             props.editingCoordinateAttribute.altitudeUnit
-            //props.getCurrentCoordinate(props.coordinateHistoryIndeks).altitudeUnit
           }
           onChange={e => {
             props.onChangeCoordinateAttributes('altitudeUnit')(e.target.value);
@@ -84,9 +249,6 @@ const AltitudeDepthData = (props: CoordinateProps) => (
               props.editingCoordinateAttribute.altitudeCa
                 ? props.onChangeCheckBoxBoolean('altitudeCa')(false)
                 : props.onChangeCheckBoxBoolean('altitudeCa')(true);
-
-              /* props.getCurrentCoordinate(props.coordinateHistoryIndeks) &&
-              props.getCurrentCoordinate(props.coordinateHistoryIndeks).caAltitude */
             }}
           />
         </div>
@@ -107,7 +269,6 @@ const AltitudeDepthData = (props: CoordinateProps) => (
           }}
           value={
             props.editingCoordinateAttribute && props.editingCoordinateAttribute.depthFrom
-            //props.getCurrentCoordinate(props.coordinateHistoryIndeks).depthLow
           }
           id="depthLow"
         />
@@ -127,7 +288,6 @@ const AltitudeDepthData = (props: CoordinateProps) => (
           }}
           value={
             props.editingCoordinateAttribute && props.editingCoordinateAttribute.depthTo
-            //props.getCurrentCoordinate(props.coordinateHistoryIndeks).depthHigh
           }
           id="depthHigh"
         />
@@ -141,7 +301,6 @@ const AltitudeDepthData = (props: CoordinateProps) => (
           disabled={props.readOnly}
           value={
             props.editingCoordinateAttribute && props.editingCoordinateAttribute.depthUnit
-            //props.getCurrentCoordinate(props.coordinateHistoryIndeks).depthUnit
           }
           onChange={e => {
             props.onChangeCoordinateAttributes('depthUnit')(e.target.value);
@@ -158,16 +317,12 @@ const AltitudeDepthData = (props: CoordinateProps) => (
             id={'checkBoxCaDepth'}
             viewMode={props.readOnly}
             checked={
-              /* props.getCurrentCoordinate(props.coordinateHistoryIndeks) &&
-              props.getCurrentCoordinate(props.coordinateHistoryIndeks).caDepth */
               props.editingCoordinateAttribute && props.editingCoordinateAttribute.depthCa
                 ? true
                 : false
             }
             displayValue="Ca depth"
             onChange={() => {
-              /* props.getCurrentCoordinate(props.coordinateHistoryIndeks) &&
-              props.getCurrentCoordinate(props.coordinateHistoryIndeks).caDepth */
               props.editingCoordinateAttribute && props.editingCoordinateAttribute.depthCa
                 ? props.onChangeCheckBoxBoolean('depthCa')(false)
                 : props.onChangeCheckBoxBoolean('depthCa')(true);
@@ -193,7 +348,7 @@ const AltitudeDepthData = (props: CoordinateProps) => (
         />
       </div>
     </div>
-  </div>
+  </div> */
 );
 
 export default AltitudeDepthData;
