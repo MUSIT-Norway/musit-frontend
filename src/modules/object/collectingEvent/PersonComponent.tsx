@@ -1,14 +1,13 @@
 import * as React from 'react';
 import { PersonNameSuggest } from '../../../components/suggest/PersonNameSuggest';
-//import { EventMetadataProps} from './CollectingEventComponent';
 import { ActorsAndRelation } from '../../../models/object/collectingEvent';
 import { AppSession } from '../../../types/appSession';
 import { History } from 'history';
 import { personDet } from '../../../models/object/classHist';
-import config from '../../../config';
-//import * as FontAwesome from 'react-fontawesome';
 import { PersonNameComponent } from '../person/PersonNameComponent';
-import { PersonName } from '../person/PersonComponent';
+import { inputPersonName } from '../../../models/object/person';
+
+import { EditState, NonEditState } from '../types';
 
 const personNameAsString = (n: ActorsAndRelation) => {
   return (
@@ -16,8 +15,32 @@ const personNameAsString = (n: ActorsAndRelation) => {
   );
 };
 
+export type PersonNameForCollectingEvent = inputPersonName & {
+  personUuid?: string;
+  roleId?: number;
+};
+export interface PersonState {
+  personName?: PersonNameForCollectingEvent;
+  personsNames?: PersonNameForCollectingEvent[];
+  editingPersonName?: PersonNameForCollectingEvent;
+  editState?: EditState | NonEditState;
+  disableOnChangeFullName?: boolean;
+  disableOnChangeOtherName?: boolean;
+  showNewPersonName?: boolean;
+}
+
+export class PersonState implements PersonState {
+  public personName?: PersonNameForCollectingEvent;
+  public personNames?: PersonNameForCollectingEvent[];
+  public editingPersonName?: PersonNameForCollectingEvent;
+  public editState?: EditState | NonEditState;
+  public disableOnChangeFullName?: boolean;
+  public disableOnChangeOtherName?: boolean;
+  public showNewPersonName?: boolean;
+}
+
 export type PersonProps = {
-  personNames?: PersonName[];
+  personNames?: inputPersonName[];
   disabled: boolean;
   value?: string;
   appSession: AppSession;
@@ -25,11 +48,13 @@ export type PersonProps = {
   onChangePerson: (suggestion: personDet) => void;
   onAddPerson: () => void;
   onDeletePerson: (i: number) => void;
-  editingPersonName?: PersonName;
+  editingPersonName?: inputPersonName;
   disableOnChangeFullName?: boolean;
   disableOnChangeOtherName?: boolean;
+  showNewPersonName?: boolean;
   onChangeFullName: (fieldName: string) => (newValue: string) => void;
   onCreatePersonName: Function;
+  onClickNewPersonName: () => void;
 };
 
 const PersonComponent = (props: PersonProps) => {
@@ -75,7 +100,7 @@ const PersonComponent = (props: PersonProps) => {
             </thead>
             <tbody>
               {props.personNames &&
-                props.personNames.map((d: PersonName, i: number) => (
+                props.personNames.map((d: inputPersonName, i: number) => (
                   <div key={`det-row-${i}`}>
                     <tr>
                       <td className="col-md-5">
@@ -83,7 +108,7 @@ const PersonComponent = (props: PersonProps) => {
                           type="text"
                           className="form-control"
                           disabled={true}
-                          value={d.nameString}
+                          value={d.name}
                         />
                       </td>
                       <td className="col-md-5">
@@ -94,17 +119,6 @@ const PersonComponent = (props: PersonProps) => {
                           value={d.personNameUuid}
                         />
                       </td>
-                      {/* <td className="col-md-1">
-                        <a
-                          href=""
-                          onClick={e => {
-                            e.preventDefault();
-                            //props.setDetEditingIndex(i);
-                          }}
-                        >
-                          <FontAwesome name="edit" />
-                        </a>
-                      </td> */}
                       <td className="col-md-1">
                         <a
                           href=""
@@ -128,12 +142,8 @@ const PersonComponent = (props: PersonProps) => {
           <button
             className="btn btn-default form-control"
             onClick={e => {
-              let url: string;
-              url = config.magasin.urls.client.person.addNewPersonNameBlank(
-                props.appSession
-              );
               e.preventDefault();
-              props.history && props.history.push(url);
+              props.onClickNewPersonName();
             }}
           >
             {' '}
@@ -142,17 +152,19 @@ const PersonComponent = (props: PersonProps) => {
         </div>
       </div>
       <div className="row form-group">
-        <div className="col-md-2">
-          <PersonNameComponent
-            personName={props.editingPersonName && props.editingPersonName}
-            disableOnChangeFullName={props.disableOnChangeFullName}
-            disableOnChangeOtherName={props.disableOnChangeOtherName}
-            appSession={props.appSession}
-            history={props.history}
-            onCreatePersonName={props.onCreatePersonName}
-            onChangeFullName={props.onChangeFullName}
-          />
-        </div>
+        {props.showNewPersonName && (
+          <div className="col-md-2">
+            <PersonNameComponent
+              editingPersonName={props.editingPersonName}
+              disableOnChangeFullName={props.disableOnChangeFullName}
+              disableOnChangeOtherName={props.disableOnChangeOtherName}
+              appSession={props.appSession}
+              history={props.history}
+              onCreatePersonName={props.onCreatePersonName}
+              onChangeFullName={props.onChangeFullName}
+            />
+          </div>
+        )}
       </div>
 
       <div className="row form-group" />

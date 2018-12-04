@@ -1,28 +1,11 @@
 import * as React from 'react';
-//import FieldMultiSelect from "../../../forms/components/FieldMultiSelect";
-//import { PersonPage } from './Person';
-import { PersonName } from './PersonComponent';
+import { inputPersonName } from '../../../models/object/person';
 import { AppSession } from 'src/types/appSession';
 import { History } from 'history';
-import { PersonStoreState } from './PersonStore';
-
-/* type PersonNameState = {
-  title?: string;
-  firstName?: string;
-  lastName?: string;
-  nameString?: string;
-}; */
-
-//type AddPersonNameProps = PersonNameProps & { match: { params: { newName: string } } };
-
-export type AddPersonNameState = {
-  personName: PersonName;
-  disableOnChangeFullName?: boolean;
-  disableOnChangeOtherName?: boolean;
-};
 
 type PersonNameProps = {
-  personName?: PersonName;
+  //personName?: inputPersonName;
+  editingPersonName?: inputPersonName;
   disableOnChangeFullName?: boolean;
   disableOnChangeOtherName?: boolean;
   appSession: AppSession;
@@ -30,7 +13,6 @@ type PersonNameProps = {
   onChangeFullName: (fieldName: string) => (newValue: string) => void;
   onCreatePersonName: Function;
   addPersonName?: Function;
-  store?: PersonStoreState;
 };
 
 export const PersonNameComponent = (props: PersonNameProps) => {
@@ -41,11 +23,14 @@ export const PersonNameComponent = (props: PersonNameProps) => {
         <div className="col-sm-3">
           <label htmlFor="title">Title</label>
           <input
-            value={props.personName && props.personName.title}
+            value={props.editingPersonName && props.editingPersonName.title}
             type="text"
             className="form-control"
             id="title"
-            onChange={e => props.onChangeFullName('title')(e.target.value)}
+            onChange={e => {
+              e.preventDefault();
+              props.onChangeFullName('title')(e.target.value);
+            }}
             disabled={props.disableOnChangeOtherName}
           />
         </div>
@@ -54,11 +39,14 @@ export const PersonNameComponent = (props: PersonNameProps) => {
         <div className="col-sm-3">
           <label htmlFor="first-name">First name</label>
           <input
-            value={props.personName && props.personName.firstName}
+            value={props.editingPersonName && props.editingPersonName.firstName}
             type="text"
             className="form-control"
             id="first-name"
-            onChange={e => props.onChangeFullName('firstName')(e.target.value)}
+            onChange={e => {
+              e.preventDefault();
+              props.onChangeFullName('firstName')(e.target.value);
+            }}
             disabled={props.disableOnChangeOtherName}
           />
         </div>
@@ -67,11 +55,14 @@ export const PersonNameComponent = (props: PersonNameProps) => {
         <div className="col-sm-3">
           <label htmlFor="last-name">Last name</label>
           <input
-            value={props.personName && props.personName.lastName}
+            value={props.editingPersonName && props.editingPersonName.lastName}
             type="text"
             className="form-control"
             id="Last-name"
-            onChange={e => props.onChangeFullName('lastName')(e.target.value)}
+            onChange={e => {
+              e.preventDefault();
+              props.onChangeFullName('lastName')(e.target.value);
+            }}
             disabled={props.disableOnChangeOtherName}
           />
         </div>
@@ -80,44 +71,20 @@ export const PersonNameComponent = (props: PersonNameProps) => {
         <div className="col-sm-3">
           <label htmlFor="last-name">Navn</label>
           <input
-            value={props.personName && props.personName.nameString}
+            value={props.editingPersonName && props.editingPersonName.name}
             type="text"
             className="form-control"
             id="name"
-            onChange={e => props.onChangeFullName('nameString')(e.target.value)}
+            onChange={e => {
+              e.preventDefault();
+              props.onChangeFullName('nameString')(e.target.value);
+            }}
             disabled={props.disableOnChangeFullName}
           />
         </div>
       </div>
-      <div className="form-group row">
-        <div className="col-sm-3">
-          <label htmlFor="person">Synonyme for</label>
-          <select
-            className="form-control"
-            id="person"
-            //onChange={e => props.onChangePersonForPersonname(e.target.value)}
-          >
-            <option value="0">--No person--</option>
-            <option value="1">And, Arne</option>
-            <option value="2">Duck, Dolly</option>
-            <option value="3">Duck, Donald</option>
-            <option value="4">Mus, Mikke</option>
-            <option value="5">Kent, Clark</option>
-            <option value="6">Wayne, Bruce</option>
-            <option value="7">Parker, Peter</option>
-            <option value="8">Lane, Louise</option>
-          </select>
-          <button
-            type="button"
-            className="btn btn-default"
-            //onClick={props.onClick}
-          >
-            Ny person
-          </button>
-        </div>
-      </div>
       <div className="row">
-        <div className="col-md-12" style={{ textAlign: 'right' }}>
+        <div className="col-md-11" style={{ textAlign: 'right' }}>
           <button
             type="button"
             className="btn btn-link"
@@ -135,13 +102,6 @@ export const PersonNameComponent = (props: PersonNameProps) => {
               e.preventDefault();
               props.onCreatePersonName(props.appSession);
             }}
-            /* {
-                  console.log('Anuradha hit save ', props.appSession)
-                  return props.addPersonName &&  props.addPersonName({
-                    data: props.personName,
-                    token: props.appSession.accessToken,
-                    collectionId: props.appSession.collectionId})
-              }}} */
           >
             Save
           </button>

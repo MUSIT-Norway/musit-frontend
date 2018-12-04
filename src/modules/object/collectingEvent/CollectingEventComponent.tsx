@@ -37,8 +37,9 @@ import { EditState, NonEditState, RevisionState, DraftState } from '../types';
 import EditAndSaveButtons from '../components/EditAndSaveButtons';
 import PersonComponent from './PersonComponent';
 import { personDet } from '../../../models/object/classHist';
-import { PersonName } from '../person/PersonComponent';
 import { AjaxPost } from 'src/types/ajax';
+import { PersonNameForCollectingEvent, PersonState } from './PersonComponent';
+//import { inputPersonName } from '../../../models/object/person';
 
 export type EventMetadataProps = EventData & {
   onClickSave: () => void;
@@ -91,26 +92,6 @@ export interface EventData {
   eventDateTo?: string;
   eventDateVerbatim?: string;
   editState: EditState | NonEditState;
-}
-
-export type PersonNameForCollectingEvent = PersonName & {
-  personUuid?: string;
-  roleId?: number;
-};
-export interface PersonState {
-  personName?: PersonNameForCollectingEvent;
-  persons?: PersonNameForCollectingEvent[];
-  editState: EditState | NonEditState;
-  disableOnChangeFullName?: boolean;
-  disableOnChangeOtherName?: boolean;
-}
-
-export class PersonState implements PersonState {
-  public personName?: PersonNameForCollectingEvent;
-  public personNames?: PersonNameForCollectingEvent[];
-  public editState: EditState | NonEditState;
-  public disableOnChangeFullName?: boolean;
-  public disableOnChangeOtherName?: boolean;
 }
 
 export class EventData implements EventData {
@@ -210,6 +191,7 @@ export type CollectingProps = {
   personCollapsed: boolean;
   isDraft?: boolean;
   saveState?: DraftState | RevisionState;
+  addPersonName: Function;
 };
 
 export default (props: CollectingProps) => (
@@ -232,6 +214,7 @@ export default (props: CollectingProps) => (
     eventDataCollapsed={props.eventDataCollapsed}
     addStateHidden={props.addStateHidden}
     saveState={props.saveState}
+    addPersonName={props.addPersonName}
   />
 );
 
@@ -373,10 +356,17 @@ export class CollectingEventComponent extends React.Component<
               editState: 'Editing'
             },
             personState: {
-              editState: 'Editing'
+              showNewPersonName: false,
+              editState: 'Editing',
+              personName: {
+                name: ''
+              },
+              editingPersonName: {
+                name: ''
+              },
+              personNames: []
             }
           };
-    console.log('COLL EVENT STATE : ', this.state);
   }
 
   componentWillReceiveProps(props: CollectingProps) {
@@ -885,7 +875,6 @@ export class CollectingEventComponent extends React.Component<
             return ret;
           }}
           onClickSave={() => {
-            console.log('Hei');
             this.savePlace(this.state.placeState);
           }}
           onToggleCollapse={() => {
@@ -1004,12 +993,14 @@ export class CollectingEventComponent extends React.Component<
           personNames={
             this.state && this.state.personState ? this.state.personState.personNames : []
           }
-          editingPersonName={this.state.personState && this.state.personState.personName}
           disableOnChangeFullName={
             this.state.personState && this.state.personState.disableOnChangeFullName
           }
           disableOnChangeOtherName={
             this.state.personState && this.state.personState.disableOnChangeOtherName
+          }
+          showNewPersonName={
+            this.state.personState && this.state.personState.showNewPersonName
           }
           onChangePerson={(suggestion: personDet) => {
             this.setState((cs: CollectingEventState) => {
@@ -1017,7 +1008,7 @@ export class CollectingEventComponent extends React.Component<
               const newPersonName: PersonNameForCollectingEvent = {
                 personUuid: suggestion ? suggestion.personUuid : '',
                 personNameUuid: suggestion ? suggestion.personNameUuid : '',
-                nameString: suggestion ? suggestion.name : '',
+                name: suggestion ? suggestion.name : '',
                 roleId: 15
               };
               console.log('ANURADHA RETURNED SUGGESSTION ', newPersonName);
@@ -1051,7 +1042,7 @@ export class CollectingEventComponent extends React.Component<
 
               const newPersonNames = [
                 ...currentPersonNames.slice(0, index),
-                currentPersonName ? currentPersonName : { nameString: '' },
+                currentPersonName ? currentPersonName : { name: '' },
                 ...currentPersonNames.slice(index + 1)
               ];
 
@@ -1084,7 +1075,6 @@ export class CollectingEventComponent extends React.Component<
                 currentPersonName.length === 1
                   ? undefined
                   : [...currentPersonName.slice(0, i), ...currentPersonName.slice(i + 1)];
-
               const newPersonState: PersonState = cs.personState
                 ? {
                     ...cs.personState,
@@ -1094,7 +1084,6 @@ export class CollectingEventComponent extends React.Component<
                     personNames: newPersonNames,
                     editState: 'Editing'
                   };
-
               const newEventState = {
                 ...cs,
                 personState: newPersonState
@@ -1104,43 +1093,72 @@ export class CollectingEventComponent extends React.Component<
           }}
           onCreatePersonName={(appSession: AppSession) => {
             console.log('Anuradha hit save ', this.state);
-            return this.state;
-            /* this.props.addPersonName &&
+            this.props.addPersonName &&
               this.props.addPersonName()({
-                data: this.state,
+                data: (this.state &&
+                  this.state.personState &&
+                  this.state.personState.editingPersonName) || { name: '' },
                 token: appSession.accessToken,
                 collectionId: appSession.collectionId,
-                callback: (res: any) => console.log('call back ====> ', res)
-              }) */
+                callback: {
+                  onComplete: (res: AjaxResponse) => {
+                    this.setState((ps: CollectingEventState) => {
+                      const newPersonNames =
+                        ps.personState && ps.personState.personNames
+                          ? ps.personState.personNames
+                          : [];
+                      const tempPersonNames = newPersonNames.concat(res.response);
+                      const currStatus =
+                        ps.personState && ps.personState.showNewPersonName;
+                      const newPersonState: PersonState = ps.personState
+                        ? {
+                            ...ps.personState,
+                            personNames: tempPersonNames,
+                            editState: 'Editing',
+                            personName: undefined,
+                            editingPersonName: undefined,
+                            showNewPersonName: !currStatus
+                          }
+                        : {
+                            editState: 'Editing',
+                            personName: undefined,
+                            editingPersonName: undefined,
+                            showNewPersonName: false
+                          };
+
+                      const newEventState = {
+                        ...ps,
+                        personState: newPersonState
+                      };
+                      return newEventState;
+                    });
+                  }
+                }
+              });
           }}
           onChangeFullName={(fieldName: string) => (value: string) => {
             this.setState((ps: CollectingEventState) => {
-              console.log('ANURADHA in onChangeFullName : ', fieldName, value);
-              console.log('onChangeFullName = CollectingEventComp', ps);
               const lastName =
                 fieldName === 'lastName'
                   ? value
-                  : (ps.personState &&
-                      ps.personState.personName &&
-                      ps.personState.personName.lastName) ||
-                    '';
+                  : ps.personState &&
+                    ps.personState.editingPersonName &&
+                    ps.personState.editingPersonName.lastName;
               const title =
                 fieldName === 'title'
                   ? value
-                  : (ps.personState &&
-                      ps.personState.personName &&
-                      ps.personState.personName.title) ||
-                    '';
+                  : ps.personState &&
+                    ps.personState.editingPersonName &&
+                    ps.personState.editingPersonName.title;
               const firstName =
                 fieldName === 'firstName'
                   ? value
-                  : (ps.personState &&
-                      ps.personState.personName &&
-                      ps.personState.personName.firstName) ||
-                    '';
+                  : ps.personState &&
+                    ps.personState.editingPersonName &&
+                    ps.personState.editingPersonName.firstName;
               const nameString = `${lastName || ''}${
                 title || firstName ? ', ' : ''
-              }${title || ''}${title ? ' ' : ''}${firstName || ''}`;
+              }${title || ''}${title ? ' ' : ''}${firstName}`;
 
               const disableOnChangeFullName =
                 lastName || title || firstName ? true : false;
@@ -1154,21 +1172,21 @@ export class CollectingEventComponent extends React.Component<
                 }
               }
 
-              const newPersonName =
-                ps && ps.personState && ps.personState.personName
+              const newEditPersonName =
+                ps.personState && ps.personState.editingPersonName
                   ? {
-                      ...ps.personState.personName,
-                      nameString,
+                      ...ps.personState.editingPersonName,
+                      name: nameString,
                       editState: 'Editing',
                       [fieldName]: value
                     }
                   : {
-                      nameString: ''
+                      name: ''
                     };
               const newPersonState: PersonState = ps.personState
                 ? {
                     ...ps.personState,
-                    personName: newPersonName,
+                    editingPersonName: newEditPersonName,
                     editState: 'Editing',
                     disableOnChangeFullName: disableOnChangeFullName,
                     disableOnChangeOtherName: disableOnChangeOtherName
@@ -1181,6 +1199,26 @@ export class CollectingEventComponent extends React.Component<
 
               const newEventState = {
                 ...ps,
+                personState: newPersonState
+              };
+              return newEventState;
+            });
+          }}
+          onClickNewPersonName={() => {
+            this.setState((cs: CollectingEventState) => {
+              const currStatus = cs.personState && cs.personState.showNewPersonName;
+              const newPersonState: PersonState =
+                cs && cs.personState
+                  ? {
+                      ...cs.personState,
+                      showNewPersonName: !currStatus
+                    }
+                  : {
+                      showNewPersonName: false
+                    };
+
+              const newEventState = {
+                ...cs,
                 personState: newPersonState
               };
               return newEventState;

@@ -176,7 +176,40 @@ export interface PersonName {
   readonly personNameUuid?: string;
 }
 
-export class InputPersonName implements PersonName {
+export interface inputPersonName {
+  readonly firstName?: string;
+  readonly lastName?: string;
+  readonly title?: string;
+  readonly name: string;
+  readonly status?: string;
+  readonly personNameUuid?: string;
+  readonly concatPersonName?: string;
+  readonly isDeleted?: boolean;
+}
+
+export interface outputPersonName {
+  firstName?: string;
+  lastName?: string;
+  title?: string;
+  name: string;
+  status?: string;
+  personNameUuid?: string;
+  concatPersonName?: string;
+  isDeleted?: boolean;
+}
+
+/* export type PersonNameState = {
+  name: string,
+  firstName?: string,
+  lastName?: string,
+  title?: string,
+  status?: string,
+  personNameUuid?: string,
+  concatPersonName?: string,
+  isDeleted?: boolean
+}; */
+
+export class InputPersonName implements inputPersonName {
   constructor(
     public name: string,
     public firstName?: string,

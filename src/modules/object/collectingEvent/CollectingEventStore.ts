@@ -21,19 +21,18 @@ import { KEEP_ALIVE } from '../../../stores/constants';
 import { createStore } from 'react-rxjs';
 import { toFrontend } from '../collectingEvent/CollectingEventComponent';
 import {
-  /*  addPersonName,,
-  getPersonName */
-  InputPersonName
+  addPersonName,
+  getPersonName,
+  InputPersonName,
+  inputPersonName
 } from '../../../models/object/person';
-//import { AddPersonNameState } from '../person/PersonNameComponent';
-import { PersonName } from '../person/PersonComponent';
+import { PersonState } from './PersonComponent';
 
 export type CollectingEventStoreState = {
   localState?: CollectingEventState;
   collectingEvent?: InputCollectingEvent;
   collectingEventList?: Array<InputCollectingEvent>;
-  personName?: InputPersonName;
-  //personNameState?: PersonName;
+  personState?: PersonState;
 };
 export type CollectingEventMethod = {
   methodId: number;
@@ -65,6 +64,8 @@ export type EditCollectingEventProps = CommonParams & {
   id: string;
 };
 export type EditPlaceProps = CommonParams & { id: string; data: InputPlace };
+export type AddPersonNameProps = CommonParams & { data: inputPersonName };
+export type GetPersonNameProps = CommonParams & { id: string };
 
 export const toBackend: ((p: CollectingEventState) => InputCollectingEvent) = (
   p: CollectingEventState
@@ -92,10 +93,10 @@ export const toBackend: ((p: CollectingEventState) => InputCollectingEvent) = (
   return c;
 };
 
-export const toBackendPersonName: ((p: PersonName) => InputPersonName) = (
-  p: PersonName
+export const toBackendPersonName: ((p: inputPersonName) => InputPersonName) = (
+  p: inputPersonName
 ) => {
-  const c = new InputPersonName(p.nameString, p.firstName, p.lastName, p.title);
+  const c = new InputPersonName(p.name, p.firstName, p.lastName, p.title);
   console.log('to backend ', c);
   return c;
 };
@@ -230,7 +231,7 @@ const editEventPlaceRevisionData = (ajaxPost: AjaxPost<Star>) => (
       callback: props.callback
     });
   });
-/*
+
 const addPersonNameData = (ajaxGet: AjaxGet<Star>, ajaxPost: AjaxPost<Star>) => (
   props: AddPersonNameProps
 ) =>
@@ -238,8 +239,8 @@ const addPersonNameData = (ajaxGet: AjaxGet<Star>, ajaxPost: AjaxPost<Star>) => 
     .flatMap(props =>
       addPersonName(ajaxPost)({
         data: toBackendPersonName(props.data),
-        token: props.token,
-        callback: props.callback
+        token: props.token /* ,
+        callback: props.callback */
       })
     )
     .do(res => console.log('((((=====)))) ', res.personNameUuid))
@@ -247,14 +248,16 @@ const addPersonNameData = (ajaxGet: AjaxGet<Star>, ajaxPost: AjaxPost<Star>) => 
       return getPersonNameFromUuid(ajaxGet)({
         id: res.personNameUuid || '',
         collectionId: props.collectionId,
-        token: props.token
+        token: props.token,
+        callback: props.callback
       });
-    });
+    })
+    .do(r => console.log('Return from get personNameFromUuid ', r));
 
- const getPersonNameFromUuid = (ajaxGet: AjaxGet<Star>) => (props: GetPersonNameProps) =>
+const getPersonNameFromUuid = (ajaxGet: AjaxGet<Star>) => (props: GetPersonNameProps) =>
   Observable.of(props).flatMap(props =>
     getPersonName(ajaxGet)({ id: props.id, token: props.token, callback: props.callback })
-  ); */
+  );
 export const addCollectingEvent$: Subject<
   AddCollectingEventProps & { ajaxPost: AjaxPost<Star> }
 > = createAction('addCollectingEvent$');
@@ -297,13 +300,13 @@ export const editEventMetaData$: Subject<
   }
 > = createAction('editEventMetaData$');
 
-/* export const addPersonName$: Subject<
+export const addPersonName$: Subject<
   AddPersonNameProps & { ajaxPost: AjaxPost<Star> }
 > = createAction('addPersonName$');
 
 export const getPersonName$: Subject<
   GetPersonNameProps & { ajaxGet: AjaxGet<Star> }
-> = createAction('getPersonName$'); */
+> = createAction('getPersonName$');
 
 type Actions = {
   getCollectingEvent$: Subject<GetCollectingEventProps>;
@@ -314,6 +317,8 @@ type Actions = {
   editEventMetaData$: Subject<EditCollectingEventProps>;
   setDisabledState$: Subject<{ fieldName: string; value: boolean }>;
   setDraftState$: Subject<{ subState?: string; fieldName: string; value: boolean }>;
+  addPersonName$: Subject<AddPersonNameProps>;
+  getPersonName$: Subject<GetPersonNameProps>;
 };
 
 export const reducer$ = (
@@ -387,15 +392,24 @@ export const reducer$ = (
           ...state
         })
       ),
-    /* actions.addPersonName$
+    actions.addPersonName$
       .switchMap(addPersonNameData(ajaxGet, ajaxPost))
       .map((o: InputPersonName) => (state: CollectingEventStoreState) => {
+        const newPersonNames =
+          state.personState && state.personState.personNames
+            ? state.personState.personNames
+            : [];
+        const tempPersonNames = newPersonNames.concat(o);
         console.log('I map i reducer: ', o);
         return {
           ...state,
-          personName: o
+          personState: {
+            ...state.personState,
+            personName: o,
+            personNames: tempPersonNames
+          }
         };
-      }), */
+      }),
     actions.editEventMetaData$
       .switchMap(editEventMetaData(ajaxPost))
       .map(() => (state: CollectingEventStoreState) => ({
@@ -413,14 +427,14 @@ export const store$ = (
   actions$: Actions = {
     getCollectingEvent$,
     addCollectingEvent$,
-    /*  addPersonName$,
-    getPersonName$ */
     editEventDateRevision$,
     editEventPlaceRevision$,
     editEventAttributesRevision$,
     setDisabledState$,
     setDraftState$,
-    editEventMetaData$
+    editEventMetaData$,
+    addPersonName$,
+    getPersonName$
   },
   ajaxGet: AjaxGet<Star> = simpleGet,
   ajaxPost: AjaxPost<Star> = simplePost,
