@@ -75,10 +75,90 @@ export const ViewEventMetaData = (props: EventEditMetadataProps) => {
 
 const EventMetadata = (props: EventMetadataProps) => {
   return (
-    <div className="container-fluid panel-group">
+    <div className="container-fluid">
+      <form className="form-horizontal">
+        <div className="form-group">
+          <label className="control-label col-md-1" htmlFor="nameInput">
+            Name
+          </label>
+          <div className="col-md-4">
+            <input
+              type="text"
+              className="form-control"
+              id="nameInput"
+              placeholder="name"
+              value={props.name || ''}
+              disabled={props.readOnly}
+              onChange={e => props.onChangeEventMetaData('name')(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="control-label col-md-1" htmlFor="dateInput">
+            Date
+          </label>
+          <div className="col-md-2">
+            <DatePicker
+              onClear={props.onClearBornDate}
+              onChange={props.onChangeBornDate}
+              value={props.eventDateFrom || ''}
+              disabled={props.readOnly}
+            />
+          </div>
+          <div className="col-md-2">
+            <DatePicker
+              onClear={props.onClearDeathDate}
+              onChange={props.onChangeDeathDate}
+              value={props.eventDateTo || ''}
+              disabled={props.readOnly}
+            />
+          </div>
+
+          <div className="col-md-3">
+            <input
+              type="text"
+              className="form-control"
+              id={'txtVerbatimDate'}
+              placeholder="Verbatim date"
+              value={props.eventDateVerbatim || ''}
+              onChange={e => props.onChangeVerbatimDate(e.target.value)}
+              disabled={props.readOnly}
+            />
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="control-label col-md-1" htmlFor="eventNote">
+            Note
+          </label>
+
+          <div className="col-md-4">
+            <textarea
+              rows={4}
+              className="form-control"
+              id="eventNote"
+              value={props.note || ''}
+              disabled={props.readOnly}
+              onChange={(v: React.ChangeEvent<HTMLTextAreaElement>) =>
+                props.onChangeEventMetaData('note')(v.target.value)
+              }
+            />
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+
+  return (
+    <div className="container-fluid panel-group" style={{ alignItems: 'center' }}>
       <div className="row">
-        <div className="col-md-6 form-group">
-          <label htmlFor="txtInputProject">Name </label>
+        <div
+          className="col-md-2"
+          style={{ textAlign: 'center', justifyContent: 'end', marginRight: '3px' }}
+        >
+          <b>Name</b>
+        </div>
+        <div className="col-md-5">
+          <label htmlFor="txtInputProject">Name</label>
           <input
             type="text"
             className="form-control"
@@ -89,7 +169,7 @@ const EventMetadata = (props: EventMetadataProps) => {
           />
         </div>
       </div>
-      <div className="row form-group">
+      <div className="row">
         <div className="col-md-3" id="dateFrom">
           <label htmlFor="dateFrom">From Date </label>
           <DatePicker
@@ -120,7 +200,7 @@ const EventMetadata = (props: EventMetadataProps) => {
           />
         </div>
       </div>
-      <div className="row form-group">
+      <div className="row">
         <div className="col-md-3">
           <label htmlFor="collectingMethod">Metode</label>
           <select
@@ -151,7 +231,7 @@ const EventMetadata = (props: EventMetadataProps) => {
           </select>
         </div>
       </div>
-      <div className="row form-group">
+      <div className="row">
         <div className="col-md-6">
           <label htmlFor="methodDescription">Beskrivelse av metode </label>
           <textarea

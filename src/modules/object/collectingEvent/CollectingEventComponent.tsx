@@ -322,7 +322,34 @@ export class CollectingEventComponent extends React.Component<
     this.addAndSaveCollecingEvent = this.addAndSaveCollecingEvent.bind(this);
     this.state =
       props.store && props.store.localState
-        ? props.store.localState
+        ? {
+            ...props.store.localState,
+            placeState: props.store.localState.placeState
+              ? {
+                  ...props.store.localState.placeState,
+                  selectedCountry: localStorage['selectedCountry']
+                }
+              : {
+                  admPlace: null,
+                  editingInputCoordinate: {
+                    coordinateType: 'MGRS',
+                    datum: 'WGS84',
+                    coordinateString: '',
+                    coordinateGeometry: 'point'
+                  },
+                  selectedCountry: localStorage['selectedCountry'],
+                  editingCoordinateAttribute: {
+                    altitudeUnit: 'Meters',
+                    depthUnit: 'Meters',
+                    coordinateCa: false,
+                    addedLater: false,
+                    altitudeCa: false,
+                    depthCa: false
+                  },
+                  coordinateInvalid: false,
+                  editState: 'Editing'
+                }
+          }
         : {
             eventData: new EventData(
               '',
@@ -353,6 +380,7 @@ export class CollectingEventComponent extends React.Component<
                 coordinateString: '',
                 coordinateGeometry: 'point'
               },
+              selectedCountry: localStorage['selectedCountry'],
               editingCoordinateAttribute: {
                 altitudeUnit: 'Meters',
                 depthUnit: 'Meters',
@@ -477,6 +505,7 @@ export class CollectingEventComponent extends React.Component<
           countries={this.props.predefinedCollectingEventValues.countries.sort()}
           onSelectCountry={(e: React.ChangeEvent<HTMLSelectElement>) => {
             const v = e.target.value;
+            localStorage['selectedCountry'] = v;
             this.setState((ps: CollectingEventState) => ({
               ...ps,
               placeState: { ...ps.placeState, selectedCountry: v }
