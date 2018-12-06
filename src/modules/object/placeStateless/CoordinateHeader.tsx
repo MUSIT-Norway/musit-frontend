@@ -6,7 +6,6 @@ import { CoordinateProps } from '../placeStateless/PlaceComponent';
 
 const CoordinateHeader = (props: CoordinateProps) => {
   switch (props.editingInputCoordinate && props.editingInputCoordinate.coordinateType) {
-    //props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateType
     case 'UTM': {
       return <UTMCoordinateComponent {...props} />;
     }

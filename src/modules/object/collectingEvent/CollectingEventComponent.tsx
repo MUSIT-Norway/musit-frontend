@@ -3,7 +3,11 @@ import { musitCoodinateValidate } from '../../../shared/util';
 import CollapseComponent from '../components/Collapse';
 import EventMetadata, { ViewEventMetaData } from './EventMetadata';
 import { formatISOString } from '../../../shared/util';
-import { InputCoordinate, InputCoordinateAttribute } from '../../../models/object/place';
+import {
+  InputCoordinate,
+  InputCoordinateAttribute,
+  DerivedCoordinate
+} from '../../../models/object/place';
 import PlaceComponent, {
   AdmPlace,
   PlaceState,
@@ -20,7 +24,8 @@ import {
   PredefinedCollectingEventValues,
   CollectingEventMethod,
   EditPlaceProps,
-  EditCollectingEventProps
+  EditCollectingEventProps,
+  EditPersonEventProps
 } from './CollectingEventStore';
 import { AppSession } from '../../../types/appSession';
 import { History } from 'history';
@@ -40,7 +45,7 @@ import PersonComponent from './PersonComponent';
 import { personDet } from '../../../models/object/classHist';
 import { AjaxPost } from 'src/types/ajax';
 import { PersonNameForCollectingEvent, PersonState } from './PersonComponent';
-//import { inputPersonName } from '../../../models/object/person';
+//import { InputPersonName } from '../../../models/object/person';
 
 export type EventMetadataProps = EventData & {
   onClickSave: () => void;
@@ -71,11 +76,6 @@ export type EventUuid = Uuid;
 export type RoleId = number;
 export type PersonUuid = Uuid;
 export type PersonNameUuid = Uuid;
-
-export type ActorsAndRelation = {
-  actorUuid: Uuid;
-  relation: RoleId;
-};
 
 export interface EventData {
   name: string;
@@ -173,6 +173,9 @@ export type CollectingProps = {
   editEventMetaData?: (
     ajaxPost?: AjaxPost<any>
   ) => (props: EditCollectingEventProps) => void;
+  editEventPersonRevision?: (
+    ajaxPost?: AjaxPost<any>
+  ) => (props: EditPersonEventProps) => void;
   editEventAttributesRevision?: (
     ajaxPost?: AjaxPost<any>
   ) => (props: EditCollectingEventProps) => void;
@@ -257,10 +260,22 @@ export const toFrontend: (p: OutputCollectingEvent) => CollectingEventState = (
         innP.eventDateTo,
         innP.eventDateVerbatim
       ),
+      personState: innP.relatedActors
+        ? {
+            personNames: innP.relatedActors.map((r: ActorsAndRelation) => ({
+              personUuid: r.actorUuid,
+              personNameUuid: r.personNameUuid,
+              name: r.name,
+              roleId: r.roleId
+            }))
+          }
+        : undefined,
       placeState: innP.place
         ? {
             admPlace: { ...innP.place.admPlace },
-            editingInputCoordinate: { ...innP.place.coordinate },
+            editingInputCoordinate: innP.place.coordinate
+              ? { ...innP.place.coordinate }
+              : undefined,
             editingCoordinateAttribute: { ...innP.place.coordinateAttributes },
             editingAttributes: { ...innP.place.attributes },
             coordinateInvalid: false,
@@ -391,14 +406,7 @@ export class CollectingEventComponent extends React.Component<
             },
             personState: {
               showNewPersonName: false,
-              editState: 'Editing',
-              personName: {
-                name: ''
-              },
-              editingPersonName: {
-                name: ''
-              },
-              personNames: []
+              editState: 'Editing'
             }
           };
   }
@@ -439,9 +447,10 @@ export class CollectingEventComponent extends React.Component<
         this.props.appSession,
         this.state.eventData.eventUuid
       );
+
       const props: EditPlaceProps = {
         id: this.state.eventData.eventUuid,
-        data: toPlaceBackend(place),
+        data: { ...toPlaceBackend(place), ...toEventDataBackend(this.state) },
         token: this.props.appSession.accessToken,
         collectionId: this.props.appSession.collectionId,
         callback: {
@@ -477,7 +486,30 @@ export class CollectingEventComponent extends React.Component<
     }
   }
 
-  savePerson(personState: PersonState) {}
+  savePerson(personState: PersonState) {
+    if (
+      this.props.editEventPersonRevision &&
+      personState &&
+      personState.personNames &&
+      this.state.eventData.relatedActors
+    ) {
+      const URL = config.magasin.urls.client.collectingEvent.view(
+        this.props.appSession,
+        this.state.eventData.eventUuid
+      );
+
+      const props: EditPersonEventProps = {
+        id: this.state.eventData.eventUuid,
+        data: this.state.eventData.relatedActors,
+        token: this.props.appSession.accessToken,
+        collectionId: this.props.appSession.collectionId,
+        callback: {
+          onComplete: () => this.props.history.replace(URL)
+        }
+      };
+      this.props.editEventPersonRevision()(props);
+    }
+  }
 
   render() {
     console.log('STATE----->', this.state);
@@ -506,8 +538,66 @@ export class CollectingEventComponent extends React.Component<
       <div>
         <PlaceComponent
           {...this.state.placeState}
+          toggleShowMap={(e: React.MouseEvent<HTMLButtonElement>) => {
+            e.preventDefault();
+            this.setState((p: CollectingEventState) => {
+              let derivedCoordinate: DerivedCoordinate | undefined;
+
+              const editingCoordinate = p.placeState.editingInputCoordinate;
+              if (editingCoordinate) {
+                derivedCoordinate =
+                  editingCoordinate.coordinateType === 'MGRS'
+                    ? coordMGRSStrToDerived(
+                        editingCoordinate.coordinateString || '',
+                        'MGRS',
+                        editingCoordinate.datum,
+                        editingCoordinate.zone,
+                        editingCoordinate.bend
+                      )
+                    : editingCoordinate.coordinateType === 'LAT/LONG'
+                      ? coordLatLongStrToDerived(
+                          editingCoordinate.coordinateString || '',
+                          'LAT/LONG',
+                          editingCoordinate.datum
+                        )
+                      : editingCoordinate.coordinateType === 'UTM'
+                        ? coordUTMStrToDerived(
+                            editingCoordinate.coordinateString || '',
+                            'MGRS',
+                            editingCoordinate.datum,
+                            editingCoordinate.zone,
+                            editingCoordinate.bend
+                          )
+                        : undefined;
+              }
+
+              return {
+                ...p,
+                placeState: {
+                  ...p.placeState,
+                  showMap: p.placeState.showMap ? false : true,
+                  editingInputCoordinate: p.placeState.editingInputCoordinate
+                    ? {
+                        ...p.placeState.editingInputCoordinate,
+                        derivedCoordinate: derivedCoordinate
+                      }
+                    : undefined
+                }
+              };
+            });
+          }}
           showButtonRow={this.props.addStateHidden}
           collectingEventUUid={this.state.eventData.eventUuid}
+          methodId={this.state.eventData.methodId}
+          onChangeMethod={(methodId: string) => {
+            this.setState((ps: CollectingEventState) => ({
+              ...ps,
+              eventData: { ...ps.eventData, methodId: Number.parseInt(methodId) }
+            }));
+          }}
+          collectingEventMethods={
+            this.props.predefinedCollectingEventValues.collectingMethods || []
+          }
           appSession={this.props.appSession}
           countries={this.props.predefinedCollectingEventValues.countries.sort()}
           onSelectCountry={(e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -888,7 +978,7 @@ export class CollectingEventComponent extends React.Component<
                     coordinateGeometry: coordinateGeometry,
                     [fieldName]: value
                   }
-                : { [fieldName]: value };
+                : { datum: 'WGS84', [fieldName]: value };
 
               const newPlaceState: PlaceState = {
                 ...cs.placeState,
@@ -1116,6 +1206,29 @@ export class CollectingEventComponent extends React.Component<
           showNewPersonName={
             this.state.personState && this.state.personState.showNewPersonName
           }
+          onClickEdit={() => {
+            const URL =
+              this.state.eventData && this.state.eventData.eventUuid
+                ? config.magasin.urls.client.collectingEvent.edit(
+                    this.props.appSession,
+                    this.state.eventData.eventUuid
+                  )
+                : undefined;
+            if (URL) {
+              localStorage.clear();
+              localStorage.setItem('editComponent', 'person');
+              this.props.history.push(URL);
+            }
+          }}
+          onClickSave={() => {
+            if (this.props.addCollectingEvent) {
+              this.addAndSaveCollecingEvent();
+            } else {
+              if (this.state.personState) {
+                this.savePerson(this.state.personState);
+              }
+            }
+          }}
           onChangePerson={(suggestion: personDet) => {
             this.setState((cs: CollectingEventState) => {
               console.log('ANURADHA RETURNED cs ', cs);
@@ -1123,7 +1236,7 @@ export class CollectingEventComponent extends React.Component<
                 personUuid: suggestion ? suggestion.personUuid : '',
                 personNameUuid: suggestion ? suggestion.personNameUuid : '',
                 name: suggestion ? suggestion.name : '',
-                roleId: 15
+                roleId: 11
               };
               console.log('ANURADHA RETURNED SUGGESSTION ', newPersonName);
 
@@ -1142,7 +1255,6 @@ export class CollectingEventComponent extends React.Component<
           }}
           onAddPerson={() => {
             this.setState((cs: CollectingEventState) => {
-              console.log('ANURADHA RETURNED onAdd cs ', cs);
               const index =
                 cs.personState && cs.personState.personNames
                   ? cs.personState.personNames.length
@@ -1154,11 +1266,13 @@ export class CollectingEventComponent extends React.Component<
 
               const currentPersonName = cs.personState && cs.personState.personName;
 
-              const newPersonNames = [
-                ...currentPersonNames.slice(0, index),
-                currentPersonName ? currentPersonName : { name: '' },
-                ...currentPersonNames.slice(index + 1)
-              ];
+              const newPersonNames = currentPersonName
+                ? [
+                    ...currentPersonNames.slice(0, index),
+                    currentPersonName,
+                    ...currentPersonNames.slice(index + 1)
+                  ]
+                : undefined;
 
               const newPersonState: PersonState =
                 cs && cs.personState
@@ -1171,8 +1285,20 @@ export class CollectingEventComponent extends React.Component<
                       editState: 'Editing'
                     };
 
-              const newEventState = {
+              const relatedActorsList: ActorsAndRelation[] | undefined =
+                newPersonNames &&
+                newPersonNames.map((p: PersonNameForCollectingEvent) => ({
+                  actorUuid: p.personUuid,
+                  personNameUuid: p.personNameUuid,
+                  roleId: p.roleId,
+                  name: p.name
+                }));
+              const newEventState: CollectingEventState = {
                 ...cs,
+                eventData: {
+                  ...cs.eventData,
+                  relatedActors: relatedActorsList
+                },
                 personState: newPersonState
               };
               return newEventState;
@@ -1222,6 +1348,15 @@ export class CollectingEventComponent extends React.Component<
                           ? ps.personState.personNames
                           : [];
                       const tempPersonNames = newPersonNames.concat(res.response);
+                      const newRelatedActors: ActorsAndRelation = {
+                        actorUuid: undefined,
+                        personNameUuid: res.response.personNameUuid,
+                        name:
+                          ps.personState && ps.personState.editingPersonName
+                            ? ps.personState.editingPersonName.name
+                            : '',
+                        roleId: 11
+                      };
                       const currStatus =
                         ps.personState && ps.personState.showNewPersonName;
                       const newPersonState: PersonState = ps.personState
@@ -1242,6 +1377,15 @@ export class CollectingEventComponent extends React.Component<
 
                       const newEventState = {
                         ...ps,
+                        eventData: {
+                          ...ps.eventData,
+                          relatedActors: [
+                            ...(ps.eventData.relatedActors
+                              ? ps.eventData.relatedActors
+                              : []),
+                            newRelatedActors
+                          ]
+                        },
                         personState: newPersonState
                       };
                       return newEventState;
@@ -1251,6 +1395,7 @@ export class CollectingEventComponent extends React.Component<
               });
           }}
           onChangeFullName={(fieldName: string) => (value: string) => {
+            console.log('fieldName', value);
             this.setState((ps: CollectingEventState) => {
               const lastName =
                 fieldName === 'lastName'
@@ -1330,9 +1475,19 @@ export class CollectingEventComponent extends React.Component<
                   : {
                       showNewPersonName: false
                     };
+              const newRelatedActors: ActorsAndRelation[] | undefined =
+                newPersonState && newPersonState.personNames
+                  ? newPersonState.personNames.map((r: PersonNameForCollectingEvent) => ({
+                      actorUuid: r.personUuid,
+                      personNameUuid: r.personNameUuid,
+                      name: r.name,
+                      roleId: r.roleId
+                    }))
+                  : undefined;
 
               const newEventState = {
                 ...cs,
+                eventData: { ...cs.eventData, relatedActors: newRelatedActors },
                 personState: newPersonState
               };
               return newEventState;

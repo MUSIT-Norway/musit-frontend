@@ -92,35 +92,6 @@ const EventMetadata = (props: EventMetadataProps) => {
               onChange={e => props.onChangeEventMetaData('name')(e.target.value)}
             />
           </div>
-          <div className="col-md-3">
-            <select
-              className="form-control"
-              id="collectingMethod"
-              defaultValue={undefined}
-              placeholder="Method"
-              disabled={props.readOnly}
-              value={props.methodId}
-              onChange={e => {
-                props.onChangeEventMetaData('methodId')(e.target.value);
-              }}
-            >
-              <option value={undefined}>{'Select value'}</option>
-              {props.collectingEventMethods ? (
-                props.collectingEventMethods.map(
-                  (
-                    { methodId, method }: { methodId: number; method: string },
-                    i: number
-                  ) => (
-                    <option key={`optionRow_${i}`} value={methodId}>
-                      {method}
-                    </option>
-                  )
-                )
-              ) : (
-                <option key={`optionRow_${1}`}>{'No data'}</option>
-              )}
-            </select>
-          </div>
         </div>
         <div className="form-group">
           <label className="control-label col-md-2" htmlFor="dateInput">

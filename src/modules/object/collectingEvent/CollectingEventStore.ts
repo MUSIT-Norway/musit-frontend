@@ -6,10 +6,17 @@ import {
   OutputCollectingEvent,
   editEventDateRevision,
   editEventPlaceRevision,
+  editEventPersonRevision,
   editEventAttributesRevision,
-  InputDateRevision
+  InputDateRevision,
+  ActorsAndRelation
 } from '../../../models/object/collectingEvent';
-import { addPlace, InputPlace, inputPlace } from '../../../models/object/place';
+import {
+  addPlace,
+  InputPlace,
+  inputPlace,
+  InputPlaceWithUuid
+} from '../../../models/object/place';
 import { CollectingEventState } from './CollectingEventComponent';
 import { Callback, AjaxGet, AjaxPost, AjaxPut } from '../../../types/ajax';
 import { Star } from '../../../types/common';
@@ -23,7 +30,6 @@ import { toFrontend } from '../collectingEvent/CollectingEventComponent';
 import { AdmPlace } from '../placeStateless/PlaceComponent';
 import { PersonState } from './PersonComponent';
 import {
-  inputPersonName,
   InputPersonName,
   getPersonName,
   addPersonName
@@ -65,9 +71,17 @@ export type EditCollectingEventProps = CommonParams & {
   data: InputCollectingEvent;
   id: string;
 };
-export type EditPlaceProps = CommonParams & { id: string; data: InputPlace };
-export type AddPersonNameProps = CommonParams & { data: inputPersonName };
+export type EditPlaceProps = CommonParams & {
+  id: string;
+  data: InputPlaceWithUuid & InputCollectingEvent;
+};
+export type AddPersonNameProps = CommonParams & { data: InputPersonName };
 export type GetPersonNameProps = CommonParams & { id: string };
+
+export type EditPersonEventProps = CommonParams & {
+  id: string;
+  data: ActorsAndRelation[];
+};
 
 export const toBackend: ((p: CollectingEventState) => InputCollectingEvent) = (
   p: CollectingEventState
@@ -95,12 +109,10 @@ export const toBackend: ((p: CollectingEventState) => InputCollectingEvent) = (
   return c;
 };
 
-export const toBackendPersonName: ((p: inputPersonName) => InputPersonName) = (
-  p: inputPersonName
+export const toBackendPersonName: ((p: InputPersonName) => InputPersonName) = (
+  p: InputPersonName
 ) => {
-  const c = new InputPersonName(p.name, p.firstName, p.lastName, p.title);
-  console.log('to backend ', c);
-  return c;
+  return p;
 };
 
 const getCollectingEventData = (ajaxGet: AjaxGet<Star>) => (
@@ -234,6 +246,18 @@ const editEventPlaceRevisionData = (ajaxPost: AjaxPost<Star>) => (
     });
   });
 
+const editPersonRevisionData = (ajaxPost: AjaxPost<Star>) => (
+  props: EditPersonEventProps
+) =>
+  Observable.of(props).flatMap(props => {
+    return editEventPersonRevision(ajaxPost)({
+      id: props.id,
+      data: props.data,
+      token: props.token,
+      callback: props.callback
+    });
+  });
+
 const addPersonNameData = (ajaxGet: AjaxGet<Star>, ajaxPost: AjaxPost<Star>) => (
   props: AddPersonNameProps
 ) =>
@@ -291,6 +315,12 @@ export const editEventPlaceRevision$: Subject<
   }
 > = createAction('editEventPlaceRevision$');
 
+export const editEventPersonRevision$: Subject<
+  EditPersonEventProps & {
+    ajaxPost: AjaxPost<Star>;
+  }
+> = createAction('editEventPlaceRevision$');
+
 export const editEventAttributesRevision$: Subject<
   EditCollectingEventProps & {
     ajaxPost: AjaxPost<Star>;
@@ -313,6 +343,7 @@ export const getPersonName$: Subject<
 type Actions = {
   getCollectingEvent$: Subject<GetCollectingEventProps>;
   addCollectingEvent$: Subject<AddCollectingEventProps>;
+  editEventPersonRevision$: Subject<EditPersonEventProps>;
   editEventDateRevision$: Subject<EditCollectingEventProps>;
   editEventAttributesRevision$: Subject<EditCollectingEventProps>;
   editEventPlaceRevision$: Subject<EditPlaceProps>;
@@ -385,6 +416,11 @@ export const reducer$ = (
           ...state
         })
       ),
+    actions.editEventPersonRevision$
+      .switchMap(editPersonRevisionData(ajaxPost))
+      .map(() => (state: CollectingEventStoreState) => ({
+        ...state
+      })),
     actions.editEventAttributesRevision$
       .switchMap(editEventAttributesRevisionData(ajaxPost))
       .map(
@@ -401,8 +437,7 @@ export const reducer$ = (
           state.personState && state.personState.personNames
             ? state.personState.personNames
             : [];
-        const tempPersonNames = newPersonNames.concat(o);
-        console.log('I map i reducer: ', o);
+        const tempPersonNames = [...newPersonNames, { ...o, roleId: 11 }];
         return {
           ...state,
           personState: {
@@ -431,6 +466,7 @@ export const store$ = (
     addCollectingEvent$,
     editEventDateRevision$,
     editEventPlaceRevision$,
+    editEventPersonRevision$,
     editEventAttributesRevision$,
     setDisabledState$,
     setDraftState$,

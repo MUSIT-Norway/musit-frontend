@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { inputPersonName } from '../../../models/object/person';
+import { InputPersonName } from '../../../models/object/person';
 import { AppSession } from 'src/types/appSession';
 import { History } from 'history';
 
 type PersonNameProps = {
-  //personName?: inputPersonName;
-  editingPersonName?: inputPersonName;
+  //personName?: InputPersonName;
+  editingPersonName?: InputPersonName;
   disableOnChangeFullName?: boolean;
   disableOnChangeOtherName?: boolean;
   appSession: AppSession;
@@ -84,7 +84,7 @@ export const PersonNameComponent = (props: PersonNameProps) => {
             id="name"
             onChange={e => {
               e.preventDefault();
-              props.onChangeFullName('nameString')(e.target.value);
+              props.onChangeFullName('name')(e.target.value);
             }}
             disabled={props.disableOnChangeFullName}
           />

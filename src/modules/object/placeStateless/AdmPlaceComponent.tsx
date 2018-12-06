@@ -2,10 +2,14 @@ import * as React from 'react';
 import { PlaceState, AdmPlace } from '../placeStateless/PlaceComponent';
 import AdmplaceSuggest from '../../../components/suggest/AdmPlaceSuggest';
 import { AppSession } from 'src/types/appSession';
+import { CollectingEventMethod } from '../collectingEvent/CollectingEventStore';
 import { History } from 'history';
 
 const AdmPlaceComponent = (
   props: PlaceState & {
+    methodId?: number;
+    collectingEventMethods: CollectingEventMethod[];
+    onChangeMethod: (methodId: string) => void;
     onChange: (value: AdmPlace) => void;
     onChangeOthers: (field: string) => (value: string) => void;
     onSelectCountry: (e: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -209,6 +213,41 @@ const AdmPlaceComponent = (
               id={'txtInputShip'}
               value={props.editingAttributes && props.editingAttributes.ship}
             />
+          </div>
+        </div>
+        <div className="form-group">
+          {' '}
+          <label className="control-label col-md-2" htmlFor="collectingMethod">
+            Collecting method
+          </label>
+          <div className="col-md-3">
+            <select
+              className="form-control"
+              id="collectingMethod"
+              defaultValue={undefined}
+              placeholder="Method"
+              disabled={props.readOnly}
+              value={props.methodId}
+              onChange={e => {
+                props.onChangeMethod(e.target.value);
+              }}
+            >
+              <option value={undefined}>{'Select value'}</option>
+              {props.collectingEventMethods ? (
+                props.collectingEventMethods.map(
+                  (
+                    { methodId, method }: { methodId: number; method: string },
+                    i: number
+                  ) => (
+                    <option key={`optionRow_${i}`} value={methodId}>
+                      {method}
+                    </option>
+                  )
+                )
+              ) : (
+                <option key={`optionRow_${1}`}>{'No data'}</option>
+              )}
+            </select>
           </div>
         </div>
       </form>

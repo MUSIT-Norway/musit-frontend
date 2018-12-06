@@ -113,7 +113,7 @@ export class AdmPlaceSuggestion extends React.Component<
         renderSuggestion={(suggestion: AdmPlace) => this.props.renderFunc(suggestion)}
         inputProps={{
           ...(this.AdmPlaceProps as TODO),
-          value: this.state.value || this.props.value,
+          value: this.state.value,
           disabled: this.state.disabled ? this.state.disabled : false
         }}
         shouldRenderSuggestions={v => v !== 'undefined'}

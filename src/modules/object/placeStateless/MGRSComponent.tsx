@@ -17,7 +17,6 @@ const MGRSComponent = (props: CoordinateProps) => {
               value={
                 props.editingInputCoordinate &&
                 props.editingInputCoordinate.coordinateType
-                //props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateType
               }
               onChange={e => {
                 props.onChangeCoordinateText('coordinateType')(e.target.value);
@@ -40,10 +39,7 @@ const MGRSComponent = (props: CoordinateProps) => {
           <div className="col-md-2">
             <select
               className="form-control"
-              value={
-                props.editingInputCoordinate && props.editingInputCoordinate.datum
-                //props.getCurrentCoordinate(props.coordinateHistoryIndeks).datum
-              }
+              value={props.editingInputCoordinate && props.editingInputCoordinate.datum}
               id="datum"
               disabled={props.readOnly}
               placeholder="Datum"
@@ -72,10 +68,7 @@ const MGRSComponent = (props: CoordinateProps) => {
               onChange={e => {
                 props.onChangeCoordinateText('zone')(e.target.value);
               }}
-              value={
-                props.editingInputCoordinate && props.editingInputCoordinate.zone
-                // props.getCurrentCoordinate(props.coordinateHistoryIndeks).utmZone
-              }
+              value={props.editingInputCoordinate && props.editingInputCoordinate.zone}
             />
           </div>
           <div className="col-md-2">
@@ -88,10 +81,7 @@ const MGRSComponent = (props: CoordinateProps) => {
               onChange={e => {
                 props.onChangeCoordinateText('bend')(e.target.value);
               }}
-              value={
-                props.editingInputCoordinate && props.editingInputCoordinate.bend
-                //props.getCurrentCoordinate(props.coordinateHistoryIndeks).mgrsBand
-              }
+              value={props.editingInputCoordinate && props.editingInputCoordinate.bend}
             />
           </div>
         </div>
@@ -117,7 +107,6 @@ const MGRSComponent = (props: CoordinateProps) => {
                 value={
                   props.editingInputCoordinate &&
                   props.editingInputCoordinate.coordinateString
-                  //props.getCurrentCoordinate(props.coordinateHistoryIndeks).coordinateString
                 }
                 onChange={e => {
                   const v = e.target.value.toUpperCase();
@@ -125,6 +114,13 @@ const MGRSComponent = (props: CoordinateProps) => {
                 }}
               />
             </div>
+
+            {props.editingInputCoordinate &&
+              props.editingInputCoordinate.coordinateString && (
+                <button className="btn btn-default" onClick={props.toggleShowMap}>
+                  {props.showMap ? 'Hide map' : 'Show map'}
+                </button>
+              )}
           </div>
         </div>
       </form>

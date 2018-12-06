@@ -5,9 +5,10 @@ import { AppSession } from '../../../types/appSession';
 import { History } from 'history';
 import { personDet } from '../../../models/object/classHist';
 import { PersonNameComponent } from '../person/PersonNameComponent';
-import { inputPersonName } from '../../../models/object/person';
+import { OutputPersonName, InputPersonName } from '../../../models/object/person';
 
 import { EditState, NonEditState } from '../types';
+import EditAndSaveButtons from '../components/EditAndSaveButtons';
 
 const personNameAsString = (n: ActorsAndRelation) => {
   return (
@@ -15,40 +16,32 @@ const personNameAsString = (n: ActorsAndRelation) => {
   );
 };
 
-export type PersonNameForCollectingEvent = inputPersonName & {
+export type PersonNameForCollectingEvent = OutputPersonName & {
   personUuid?: string;
-  roleId?: number;
+  roleId: number;
 };
 export interface PersonState {
   personName?: PersonNameForCollectingEvent;
-  personsNames?: PersonNameForCollectingEvent[];
-  editingPersonName?: PersonNameForCollectingEvent;
+  personNames?: PersonNameForCollectingEvent[];
+  editingPersonName?: InputPersonName;
   editState?: EditState | NonEditState;
   disableOnChangeFullName?: boolean;
   disableOnChangeOtherName?: boolean;
   showNewPersonName?: boolean;
 }
 
-export class PersonState implements PersonState {
-  public personName?: PersonNameForCollectingEvent;
-  public personNames?: PersonNameForCollectingEvent[];
-  public editingPersonName?: PersonNameForCollectingEvent;
-  public editState?: EditState | NonEditState;
-  public disableOnChangeFullName?: boolean;
-  public disableOnChangeOtherName?: boolean;
-  public showNewPersonName?: boolean;
-}
-
 export type PersonProps = {
-  personNames?: inputPersonName[];
+  personNames?: OutputPersonName[];
   disabled: boolean;
   value?: string;
   appSession: AppSession;
   history: History;
+  onClickSave: () => void;
+  onClickEdit: () => void;
   onChangePerson: (suggestion: personDet) => void;
   onAddPerson: () => void;
   onDeletePerson: (i: number) => void;
-  editingPersonName?: inputPersonName;
+  editingPersonName?: InputPersonName;
   disableOnChangeFullName?: boolean;
   disableOnChangeOtherName?: boolean;
   showNewPersonName?: boolean;
@@ -84,7 +77,7 @@ const PersonComponent = (props: PersonProps) => {
           </div>
           <div className="col-md-1">
             <button
-              className="btn btn-default btn-xs"
+              className="btn btn-default"
               onClick={e => {
                 e.preventDefault();
                 props.onAddPerson();
@@ -94,16 +87,21 @@ const PersonComponent = (props: PersonProps) => {
               Legg til person
             </button>
           </div>
-          <div className="col-md-1">
+        </div>
+        <div className="form-group">
+          <label className="control-label col-md-2" htmlFor="btnNewPersonname">
+            Fant du ikke personnavnet?
+          </label>
+          <div className="col-md-2">
             <button
-              className="btn btn-default btn-xs"
+              id="btnNewPersonname"
+              className="btn btn-default btn-sm"
               onClick={e => {
                 e.preventDefault();
                 props.onClickNewPersonName();
               }}
             >
-              {' '}
-              Opprett ny person
+              {props.showNewPersonName ? 'Klikk for å skjule' : 'Lag nytt personnavn'}
             </button>
           </div>
         </div>
@@ -130,7 +128,7 @@ const PersonComponent = (props: PersonProps) => {
               </thead>
               <tbody>
                 {props.personNames &&
-                  props.personNames.map((d: inputPersonName, i: number) => (
+                  props.personNames.map((d: InputPersonName, i: number) => (
                     <div key={`det-row-${i}`}>
                       <tr>
                         <td className="col-md-5">
@@ -167,6 +165,20 @@ const PersonComponent = (props: PersonProps) => {
             </table>
           </div>
         </div>
+        <EditAndSaveButtons
+          onClickCancel={() => {}}
+          onClickEdit={props.onClickEdit}
+          onClickSave={props.onClickSave}
+          onClickDraft={() => {}}
+          editButtonState={{ visible: true, disabled: false }}
+          saveButtonState={{ visible: true, disabled: false }}
+          cancelButtonState={{ visible: true, disabled: false }}
+          draftButtonState={{ visible: true, disabled: false }}
+          saveButtonText={'Save'}
+          draftButtonText={'Utkast'}
+          editButtonText={'Endre'}
+          cancelButtonText={'Avbryt'}
+        />
       </form>
     </div>
   );

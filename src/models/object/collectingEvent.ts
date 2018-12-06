@@ -18,12 +18,18 @@ export type PersonNameUuid = Uuid;
 
 export type ActorsAndRelation = {
   actorUuid?: PersonUuid;
-  roleId?: RoleId;
+  roleId: RoleId;
   roleText?: string;
-  name?: string;
-  personNameUuid?: PersonNameUuid;
+  name: string;
+  personNameUuid: PersonNameUuid;
 };
 
+export interface InputActorAndRelation {
+  actorUuid?: PersonUuid;
+  roleId: RoleId;
+  name: string;
+  personNameUuid: PersonNameUuid;
+}
 export type Person = {
   collections?: Collection[];
   firstName?: string;
@@ -278,16 +284,36 @@ export const editEventPlaceRevision: (
   props: {
     id: string;
     token: string;
-    data: InputPlaceWithUuid;
+    data: InputPlaceWithUuid & InputCollectingEvent;
     callback?: Callback<Star>;
   }
-) => Observable<InputPlaceWithUuid> = (ajaxPost = simplePost) => ({
+) => Observable<[Observable<InputPlaceWithUuid>, Observable<InputCollectingEvent>]> = (
+  ajaxPost = simplePost
+) => ({ id, data, token, callback }) => {
+  const placeURL = Config.api.collectingEvent.editEvent.eventPlaceRevision(id);
+  const eventURL = Config.api.collectingEvent.editEvent.eventAttributesRevision(id);
+  return Observable.forkJoin(
+    ajaxPost(placeURL, data, token, callback).map(({ response }) => response),
+    ajaxPost(eventURL, data, token, callback).map(({ response }) => response)
+  );
+};
+
+export const editEventPersonRevision: (
+  ajaxPost: AjaxPost<Star>
+) => (
+  props: {
+    id: string;
+    token: string;
+    data: ActorsAndRelation[];
+    callback?: Callback<Star>;
+  }
+) => Observable<InputActorAndRelation[]> = (ajaxPost = simplePost) => ({
   id,
   data,
   token,
   callback
 }) => {
-  const URL = Config.api.collectingEvent.editEvent.eventPlaceRevision(id);
+  const URL = Config.api.collectingEvent.editEvent.eventPersonRevision(id);
   return ajaxPost(URL, data, token, callback).map(({ response }) => response);
 };
 

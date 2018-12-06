@@ -15,6 +15,7 @@ import { EditState, NonEditState } from '../types';
 import EditAndSaveButtons from '../components/EditAndSaveButtons';
 import config from '../../../config';
 import * as Geodesy from 'geodesy';
+import { CollectingEventMethod } from '../collectingEvent/CollectingEventStore';
 
 export type CoordinateRevisionType =
   | 'newCoordinate'
@@ -41,6 +42,8 @@ export type CoordinateProps = {
     coordinateGeometryTypes: { geometry: string }[] | null;
     coordinateTypes: { type_text: string }[] | null;
   };
+  showMap?: boolean;
+  toggleShowMap: (e: React.MouseEvent<HTMLButtonElement>) => void;
   editingCoordinateAttribute?: InputCoordinateAttribute;
   editingAttributes?: MarinePlaceAttribute;
   editCoordinateMode: boolean;
@@ -102,6 +105,7 @@ export interface PlaceState {
   coordinateCollapsed?: boolean;
   altitudeCollapsed?: boolean;
   editState: EditState | NonEditState;
+  showMap?: boolean;
 }
 
 export class PlaceState implements PlaceState {
@@ -116,6 +120,7 @@ export class PlaceState implements PlaceState {
   coordinateCollapsed?: boolean;
   altitudeCollapsed?: boolean;
   editState: EditState | NonEditState;
+  showMap?: boolean;
   constructor(
     admPlace: AdmPlace,
     editingInputCoordinate: InputCoordinate,
@@ -127,7 +132,8 @@ export class PlaceState implements PlaceState {
     editCoordinateMode?: boolean,
     coordinateCollapsed?: boolean,
     altitudeCollapsed?: boolean,
-    placeUuid?: PlaceUuid
+    placeUuid?: PlaceUuid,
+    showMap?: boolean
   ) {
     this.admPlace = admPlace;
     this.editingInputCoordinate = editingInputCoordinate;
@@ -139,6 +145,7 @@ export class PlaceState implements PlaceState {
     this.altitudeCollapsed = altitudeCollapsed;
     this.placeUuid = placeUuid;
     this.selectedCountry = selectedCountry;
+    this.showMap = showMap;
   }
 }
 
@@ -316,13 +323,15 @@ export const toPlaceBackend: (placeState: PlaceState) => InputPlace = (
 ) => {
   return {
     admPlaceUuid: placeState.admPlace ? placeState.admPlace.admPlaceUuid : undefined,
-    coordinate: {
-      ...placeState.editingInputCoordinate,
-      zone:
-        placeState.editingInputCoordinate && placeState.editingInputCoordinate.zone
-          ? placeState.editingInputCoordinate.zone.toString()
-          : undefined
-    },
+    coordinate: placeState.editingInputCoordinate
+      ? {
+          ...placeState.editingInputCoordinate,
+          zone:
+            placeState.editingInputCoordinate && placeState.editingInputCoordinate.zone
+              ? placeState.editingInputCoordinate.zone.toString()
+              : undefined
+        }
+      : undefined,
     coordinateAttributes: placeState.editingCoordinateAttribute,
     attributes: placeState.editingAttributes
   };
@@ -549,7 +558,8 @@ export const PlaceView = (props: PlaceState & { onClickEdit: () => void }) => {
               {props.editingInputCoordinate &&
               props.editingInputCoordinate.coordinateType === 'MGRS'
                 ? 'MGRS'
-                : props.editingInputCoordinate && props.editingInputCoordinate === 'UTM'
+                : props.editingInputCoordinate &&
+                  props.editingInputCoordinate.coordinateType === 'UTM'
                   ? 'UTM'
                   : props.editingInputCoordinate &&
                     props.editingInputCoordinate.coordinateType === 'LAT/LONG'
@@ -586,12 +596,15 @@ export const PlaceView = (props: PlaceState & { onClickEdit: () => void }) => {
 
 const PlaceComponent = (
   props: PlaceState & {
+    toggleShowMap: (e: React.MouseEvent<HTMLButtonElement>) => void;
     onChangeAdmPlace: (value: AdmPlace) => void;
     onChangeOthers: (field: string) => (value: string) => void;
     getAdmPlaceData: (field: string) => (a: AdmPlace) => string;
     setDraftState: (fieldName: string, value: boolean) => void;
     onSelectCountry: (e: React.ChangeEvent<HTMLSelectElement>) => void;
     setEditMode: () => void;
+    methodId?: number;
+    onChangeMethod: (methodId: string) => void;
     appSession: AppSession;
     history: History;
     readOnly?: boolean;
@@ -599,11 +612,12 @@ const PlaceComponent = (
     showButtonRow?: boolean;
     collectingEventUUid?: string;
     countries: AdmPlace[];
+    collectingEventMethods: CollectingEventMethod[];
   } & CoordinateProps
 ) => {
   return (
     <div className="container-fluid panel-group">
-      <div className="row form-group">
+      <div className="form-group">
         <AdmPlaceComponent
           {...props}
           onChangeOthers={props.onChangeOthers}
@@ -612,32 +626,37 @@ const PlaceComponent = (
           readOnly={props.readOnly || false}
         />
         <CoordinateHeader {...props} />
-        {props.editingInputCoordinate &&
-          props.editingInputCoordinate.derivedCoordinate && (
-            <Map
-              style={{
-                height: '40vh',
-                width: '60%'
-              }}
-              coord={
-                props.editingInputCoordinate &&
-                props.editingInputCoordinate.derivedCoordinate
-                  ? {
-                      lat:
-                        props.editingInputCoordinate &&
-                        props.editingInputCoordinate.derivedCoordinate &&
-                        props.editingInputCoordinate.derivedCoordinate.lat,
-                      lng:
-                        props.editingInputCoordinate &&
-                        props.editingInputCoordinate.derivedCoordinate &&
-                        props.editingInputCoordinate.derivedCoordinate.lng
-                    }
-                  : undefined
-              }
-            />
-          )}
+        <div className="col-md-10 col-md-offset-2">
+          {props.editingInputCoordinate &&
+            props.editingInputCoordinate.derivedCoordinate &&
+            props.showMap && (
+              <Map
+                style={{
+                  height: '40vh',
+                  width: '60%'
+                }}
+                coord={
+                  props.editingInputCoordinate &&
+                  props.editingInputCoordinate.derivedCoordinate
+                    ? {
+                        lat:
+                          props.editingInputCoordinate &&
+                          props.editingInputCoordinate.derivedCoordinate &&
+                          props.editingInputCoordinate.derivedCoordinate.lat,
+                        lng:
+                          props.editingInputCoordinate &&
+                          props.editingInputCoordinate.derivedCoordinate &&
+                          props.editingInputCoordinate.derivedCoordinate.lng
+                      }
+                    : undefined
+                }
+              />
+            )}
+        </div>
+        <div className="row">
+          <div className="col-md-12" />
+        </div>
         <CoordinateComponent {...props} />
-
         {props.showButtonRow && (
           <EditAndSaveButtons
             onClickCancel={() => {}}

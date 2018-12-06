@@ -150,7 +150,7 @@ export type DerivedCoordinate = {
 export interface InputCoordinate {
   coordinateUuid?: CoordinateUuid;
   coordinateType?: string;
-  datum?: string;
+  datum: 'WGS84' | 'ED50';
   zone?: string;
   bend?: string;
   coordinateString?: string;
