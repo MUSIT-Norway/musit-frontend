@@ -438,7 +438,7 @@ export const PlaceView = (props: PlaceState & { onClickEdit: () => void }) => {
           </div>
         </div>
         <div className="form-group">
-          <div className="col-md-3">
+          <div className="col-md-6">
             <label className="control-label" htmlFor="lokalitet">
               Lokalitet
             </label>
@@ -446,7 +446,7 @@ export const PlaceView = (props: PlaceState & { onClickEdit: () => void }) => {
               {props.editingAttributes ? props.editingAttributes.locality : ''}
             </div>
           </div>
-          <div className="col-md-3">
+          <div className="col-md-6">
             <label className="control-label" htmlFor="ecology">
               Økologi
             </label>
@@ -454,7 +454,10 @@ export const PlaceView = (props: PlaceState & { onClickEdit: () => void }) => {
               {props.editingAttributes ? props.editingAttributes.ecology : ''}
             </div>
           </div>
-          <div className="col-md-2">
+        </div>
+
+        <div className="form-group">
+          <div className="col-md-3">
             <label className="control-label" htmlFor="station">
               Station
             </label>
@@ -462,7 +465,7 @@ export const PlaceView = (props: PlaceState & { onClickEdit: () => void }) => {
               {props.editingAttributes ? props.editingAttributes.station : ''}
             </div>
           </div>
-          <div className="col-md-2">
+          <div className="col-md-3">
             <label className="control-label" htmlFor="sample">
               Sample
             </label>
@@ -470,7 +473,7 @@ export const PlaceView = (props: PlaceState & { onClickEdit: () => void }) => {
               {props.editingAttributes ? props.editingAttributes.sample : ''}
             </div>
           </div>
-          <div className="col-md-2">
+          <div className="col-md-3">
             <label className="control-label" htmlFor="ship">
               Ship
             </label>
@@ -480,7 +483,7 @@ export const PlaceView = (props: PlaceState & { onClickEdit: () => void }) => {
           </div>
         </div>
         <hr />
-        <div className="form-group row">
+        <div className="form-group">
           {props.editingInputCoordinate &&
           props.editingInputCoordinate.coordinateType === 'LAT/LONG' ? (
             <div className="col-md-2">
@@ -505,7 +508,8 @@ export const PlaceView = (props: PlaceState & { onClickEdit: () => void }) => {
               </div>
             </div>
           )}
-
+        </div>
+        <div className="form-group">
           <div className="col-md-3">
             <label className="control-label" htmlFor="coordSource">
               Coordinate source
