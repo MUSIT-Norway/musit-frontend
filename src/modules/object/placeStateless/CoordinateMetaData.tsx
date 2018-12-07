@@ -108,6 +108,27 @@ const CoordinateMetaData = (props: CoordinateProps) => {
               id="accuracy"
             />
           </div>
+          <div className="col-md-2">
+            <div className="checkbox" id="coordinateAddedLater">
+              <CheckBox
+                id={'checkBoxCoordinateCa'}
+                viewMode={props.readOnly}
+                checked={
+                  props.editingCoordinateAttribute &&
+                  props.editingCoordinateAttribute.coordinateCa
+                    ? true
+                    : false
+                }
+                displayValue="Ca coordinate"
+                onChange={() => {
+                  props.editingCoordinateAttribute &&
+                  props.editingCoordinateAttribute.coordinateCa
+                    ? props.onChangeCheckBoxBoolean('coordinateCa')(false)
+                    : props.onChangeCheckBoxBoolean('coordinateCa')(true);
+                }}
+              />
+            </div>
+          </div>
         </div>
       </form>
     </div>

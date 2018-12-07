@@ -266,7 +266,7 @@ export const musitCoodinateValidate = (coordinateType?: string) => (value: strin
       return false;
     }
   } else {
-    return false;
+    return true;
   }
 };
 

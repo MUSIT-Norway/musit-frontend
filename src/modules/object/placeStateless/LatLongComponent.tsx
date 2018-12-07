@@ -89,22 +89,29 @@ const LatLongComponent = (props: CoordinateProps) => {
           <label className="control-label col-md-2" htmlFor="coordinatString">
             Coordinate string{' '}
           </label>
-          <div className="col-md-6">
-            <input
-              type="text"
-              className="form-control"
-              id="coordinatString"
-              disabled={props.readOnly}
-              onKeyPress={props.onCoordinateLatLonKeyPress}
-              onChange={e => {
-                props.onChangeCoordinateText('coordinateString')(e.target.value);
-              }}
-              value={
-                props.editingInputCoordinate &&
-                props.editingInputCoordinate.coordinateString
-              }
-            />
-
+          <div
+            className={
+              props.coordinateInvalid
+                ? 'row form-group has-warning '
+                : 'row form-group has-success  '
+            }
+          >
+            <div className="col-md-6">
+              <input
+                type="text"
+                className="form-control"
+                id="coordinatString"
+                disabled={props.readOnly}
+                onKeyPress={props.onCoordinateLatLonKeyPress}
+                onChange={e => {
+                  props.onChangeCoordinateText('coordinateString')(e.target.value);
+                }}
+                value={
+                  props.editingInputCoordinate &&
+                  props.editingInputCoordinate.coordinateString
+                }
+              />
+            </div>
             {props.editingInputCoordinate &&
               props.editingInputCoordinate.coordinateString && (
                 <button className="btn btn-default" onClick={props.toggleShowMap}>

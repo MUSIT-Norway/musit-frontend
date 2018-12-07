@@ -173,7 +173,7 @@ const PersonComponent = (props: PersonProps) => {
           editButtonState={{ visible: true, disabled: false }}
           saveButtonState={{ visible: true, disabled: false }}
           cancelButtonState={{ visible: true, disabled: false }}
-          draftButtonState={{ visible: true, disabled: false }}
+          draftButtonState={{ visible: false, disabled: false }}
           saveButtonText={'Save'}
           draftButtonText={'Utkast'}
           editButtonText={'Endre'}

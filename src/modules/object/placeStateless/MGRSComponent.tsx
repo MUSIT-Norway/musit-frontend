@@ -87,7 +87,7 @@ const MGRSComponent = (props: CoordinateProps) => {
         </div>
 
         <div className="form-group">
-          <label className="control-label col-md-2" htmlFor="datum">
+          <label className="control-label col-md-2" htmlFor="MGRSCoordinateString">
             Coordinate string{' '}
           </label>
           <div
