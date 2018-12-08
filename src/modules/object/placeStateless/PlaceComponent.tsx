@@ -9,6 +9,7 @@ import CoordinateComponent from './CoordinateComponent';
 import CoordinateHeader from './CoordinateHeader';
 import AdmPlaceComponent from './AdmPlaceComponent';
 import Map from '../mapcomponent/MapComponent';
+import CoordinateFormats from './CoordinateFormats';
 import { AppSession } from 'src/types/appSession';
 import { History } from 'history';
 import { EditState, NonEditState } from '../types';
@@ -102,6 +103,7 @@ export interface PlaceState {
   editingAttributes?: MarinePlaceAttribute;
   editCoordinateMode?: boolean;
   coordinateInvalid: boolean;
+  showCoordinateFormat: boolean;
   coordinateCollapsed?: boolean;
   altitudeCollapsed?: boolean;
   editState: EditState | NonEditState;
@@ -117,6 +119,7 @@ export class PlaceState implements PlaceState {
   editingAttributes?: MarinePlaceAttribute;
   editCoordinateMode?: boolean;
   coordinateInvalid: boolean;
+  showCoordinateFormat: boolean;
   coordinateCollapsed?: boolean;
   altitudeCollapsed?: boolean;
   editState: EditState | NonEditState;
@@ -225,7 +228,7 @@ export const coordUTMStrToDerived: (
   NS?: string
 ) => DerivedCoordinate | undefined = (coordStr, coordType, datum, zone, NS) => {
   if (coordType === 'UTM' && coordStr) {
-    const coordArr = coordStr.match(/\d+((\,|\.)\d+)?/g);
+    const coordArr = coordStr.match(/\d+((\,|\s+)\d+)?/g);
     console.log('ARR', coordArr);
     let easting;
     let northing;
@@ -598,30 +601,34 @@ const PlaceComponent = (
         <CoordinateHeader {...props} />
         <div className="col-md-10 col-md-offset-2">
           {props.editingInputCoordinate &&
-            props.editingInputCoordinate.derivedCoordinate &&
-            props.showMap && (
-              <Map
-                style={{
-                  height: '40vh',
-                  width: '60%'
-                }}
-                coord={
-                  props.editingInputCoordinate &&
-                  props.editingInputCoordinate.derivedCoordinate
-                    ? {
-                        lat:
-                          props.editingInputCoordinate &&
-                          props.editingInputCoordinate.derivedCoordinate &&
-                          props.editingInputCoordinate.derivedCoordinate.lat,
-                        lng:
-                          props.editingInputCoordinate &&
-                          props.editingInputCoordinate.derivedCoordinate &&
-                          props.editingInputCoordinate.derivedCoordinate.lng
-                      }
-                    : undefined
-                }
-              />
-            )}
+          props.editingInputCoordinate.derivedCoordinate &&
+          props.showMap ? (
+            <Map
+              style={{
+                height: '40vh',
+                width: '60%'
+              }}
+              coord={
+                props.editingInputCoordinate &&
+                props.editingInputCoordinate.derivedCoordinate
+                  ? {
+                      lat:
+                        props.editingInputCoordinate &&
+                        props.editingInputCoordinate.derivedCoordinate &&
+                        props.editingInputCoordinate.derivedCoordinate.lat,
+                      lng:
+                        props.editingInputCoordinate &&
+                        props.editingInputCoordinate.derivedCoordinate &&
+                        props.editingInputCoordinate.derivedCoordinate.lng
+                    }
+                  : undefined
+              }
+            />
+          ) : props.coordinateInvalid && props.showCoordinateFormat ? (
+            <CoordinateFormats />
+          ) : (
+            <div />
+          )}
         </div>
         <div className="row">
           <div className="col-md-12" />

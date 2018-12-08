@@ -276,13 +276,19 @@ export const toFrontend: (p: OutputCollectingEvent) => CollectingEventState = (
             editingInputCoordinate: innP.place.coordinate
               ? { ...innP.place.coordinate }
               : undefined,
+            showCoordinateFormat: false,
             editingCoordinateAttribute: { ...innP.place.coordinateAttributes },
             editingAttributes: { ...innP.place.attributes },
             coordinateInvalid: false,
             editState: 'Not editing',
             placeUuid: innP.place.placeUuid
           }
-        : { admPlace: null, coordinateInvalid: false, editState: 'Not editing' }
+        : {
+            admPlace: null,
+            showCoordinateFormat: false,
+            coordinateInvalid: false,
+            editState: 'Not editing'
+          }
     };
 
     console.log('TOFrontEnd: after format ', r);
@@ -301,6 +307,7 @@ export const toFrontend: (p: OutputCollectingEvent) => CollectingEventState = (
 
     placeState: {
       admPlace: null,
+      showCoordinateFormat: false,
       editingInputCoordinate: {
         coordinateType: 'MGRS',
         datum: 'WGS84',
@@ -343,6 +350,7 @@ export class CollectingEventComponent extends React.Component<
                 }
               : {
                   admPlace: null,
+                  showCoordinateFormat: false,
                   editingInputCoordinate: {
                     coordinateType: 'MGRS',
                     datum: 'WGS84',
@@ -386,6 +394,7 @@ export class CollectingEventComponent extends React.Component<
 
             placeState: {
               admPlace: null,
+              showCoordinateFormat: false,
               editingInputCoordinate: {
                 coordinateType: 'MGRS',
                 datum: 'WGS84',
@@ -544,9 +553,11 @@ export class CollectingEventComponent extends React.Component<
               let derivedCoordinate: DerivedCoordinate | undefined;
 
               const editingCoordinate = p.placeState.editingInputCoordinate;
-              if (editingCoordinate) {
+              if (editingCoordinate && !this.state.placeState.coordinateInvalid) {
                 derivedCoordinate =
-                  editingCoordinate.coordinateType === 'MGRS'
+                  editingCoordinate.coordinateType === 'MGRS' &&
+                  editingCoordinate.bend &&
+                  editingCoordinate.zone
                     ? coordMGRSStrToDerived(
                         editingCoordinate.coordinateString || '',
                         'MGRS',
@@ -560,7 +571,9 @@ export class CollectingEventComponent extends React.Component<
                           'LAT/LONG',
                           editingCoordinate.datum
                         )
-                      : editingCoordinate.coordinateType === 'UTM'
+                      : editingCoordinate.coordinateType === 'UTM' &&
+                        editingCoordinate.bend &&
+                        editingCoordinate.zone
                         ? coordUTMStrToDerived(
                             editingCoordinate.coordinateString || '',
                             'MGRS',
@@ -627,6 +640,7 @@ export class CollectingEventComponent extends React.Component<
                   this.state.placeState.editingInputCoordinate &&
                   coordStr &&
                   this.state.placeState.editingInputCoordinate.datum &&
+                  !this.state.placeState.coordinateInvalid &&
                   this.state.placeState.editingInputCoordinate.coordinateType
                     ? coordLatLongStrToDerived(
                         coordStr,
@@ -634,10 +648,13 @@ export class CollectingEventComponent extends React.Component<
                         datum
                       )
                     : undefined;
+                const showCoordinateFormat = derivedCoordinate ? false : true;
+
                 this.setState((ps: CollectingEventState) => ({
                   ...ps,
                   placeState: {
                     ...ps.placeState,
+                    showCoordinateFormat,
                     editingInputCoordinate: ps.placeState.editingInputCoordinate
                       ? {
                           ...ps.placeState.editingInputCoordinate,
@@ -667,6 +684,7 @@ export class CollectingEventComponent extends React.Component<
                 const derivedCoordinate =
                   this.state.placeState.editingInputCoordinate &&
                   coordStr &&
+                  !this.state.placeState.coordinateInvalid &&
                   this.state.placeState.editingInputCoordinate.datum &&
                   this.state.placeState.editingInputCoordinate.coordinateType
                     ? coordUTMStrToDerived(
@@ -681,10 +699,13 @@ export class CollectingEventComponent extends React.Component<
                           : undefined
                       )
                     : undefined;
+                    const showCoordinateFormat = derivedCoordinate ? false : true;
+
                 this.setState((ps: CollectingEventState) => ({
                   ...ps,
                   placeState: {
                     ...ps.placeState,
+                    showCoordinateFormat,
                     editingInputCoordinate: ps.placeState.editingInputCoordinate
                       ? {
                           ...ps.placeState.editingInputCoordinate,
@@ -718,6 +739,7 @@ export class CollectingEventComponent extends React.Component<
                 const derivedCoordinate =
                   this.state.placeState.editingInputCoordinate &&
                   coordStr &&
+                  !this.state.placeState.coordinateInvalid &&
                   this.state.placeState.editingInputCoordinate.datum &&
                   this.state.placeState.editingInputCoordinate.coordinateType
                     ? coordMGRSStrToDerived(
@@ -728,10 +750,12 @@ export class CollectingEventComponent extends React.Component<
                         this.state.placeState.editingInputCoordinate.bend
                       )
                     : undefined;
+                 const showCoordinateFormat = derivedCoordinate ? false : true;
                 this.setState((ps: CollectingEventState) => ({
                   ...ps,
                   placeState: {
                     ...ps.placeState,
+                    showCoordinateFormat,
                     editingInputCoordinate: ps.placeState.editingInputCoordinate
                       ? {
                           ...ps.placeState.editingInputCoordinate,
@@ -931,6 +955,7 @@ export class CollectingEventComponent extends React.Component<
           onChangeCoordinateText={(fieldName: string) => (value: string) => {
             this.setState((cs: CollectingEventState) => {
               let newCoordinateInvalid: boolean = false;
+              const i_val = fieldName === 'bend' ? value.toUpperCase() : value;
 
               if (fieldName === 'coordinateString') {
                 newCoordinateInvalid = !musitCoodinateValidate(
@@ -976,9 +1001,9 @@ export class CollectingEventComponent extends React.Component<
                     bend: band,
                     zone: zone,
                     coordinateGeometry: coordinateGeometry,
-                    [fieldName]: value
+                    [fieldName]: i_val
                   }
-                : { datum: 'WGS84', [fieldName]: value };
+                : { datum: 'WGS84', [fieldName]: i_val };
 
               const newPlaceState: PlaceState = {
                 ...cs.placeState,
