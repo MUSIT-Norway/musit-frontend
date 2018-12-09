@@ -973,6 +973,19 @@ export class CollectingEventComponent extends React.Component<
                     cs.placeState.editingInputCoordinate.coordinateType
                 )(value);
               }
+              if (
+                fieldName === 'coordinateType' &&
+                cs.placeState.editingInputCoordinate &&
+                cs.placeState.editingInputCoordinate.coordinateString
+              ) {
+                newCoordinateInvalid = !musitCoodinateValidate(
+                  cs.placeState.editingInputCoordinate &&
+                    cs.placeState.editingInputCoordinate.coordinateType
+                )(
+                  cs.placeState.editingInputCoordinate &&
+                    cs.placeState.editingInputCoordinate.coordinateString
+                );
+              }
               const ps = cs.placeState;
               const band =
                 ((value === 'MGRS' || value === 'UTM') &&
