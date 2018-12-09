@@ -3,6 +3,7 @@ import { musitCoodinateValidate } from '../../../shared/util';
 import CollapseComponent from '../components/Collapse';
 import EventMetadata, { ViewEventMetaData } from './EventMetadata';
 import { formatISOString } from '../../../shared/util';
+import { emitError } from '../../../shared/errors';
 import {
   InputCoordinate,
   InputCoordinateAttribute,
@@ -648,7 +649,10 @@ export class CollectingEventComponent extends React.Component<
                         datum
                       )
                     : undefined;
-                const showCoordinateFormat = derivedCoordinate ? false : true;
+                const showCoordinateFormat = false;
+                if (this.state.placeState.coordinateInvalid) {
+                  emitError({ type: 'latLongError', message: '' });
+                }
 
                 this.setState((ps: CollectingEventState) => ({
                   ...ps,
@@ -699,7 +703,10 @@ export class CollectingEventComponent extends React.Component<
                           : undefined
                       )
                     : undefined;
-                    const showCoordinateFormat = derivedCoordinate ? false : true;
+                const showCoordinateFormat = false;
+                if (this.state.placeState.coordinateInvalid) {
+                  emitError({ type: 'utmError', message: '' });
+                }
 
                 this.setState((ps: CollectingEventState) => ({
                   ...ps,
@@ -750,7 +757,10 @@ export class CollectingEventComponent extends React.Component<
                         this.state.placeState.editingInputCoordinate.bend
                       )
                     : undefined;
-                 const showCoordinateFormat = derivedCoordinate ? false : true;
+                const showCoordinateFormat = false;
+                if (this.state.placeState.coordinateInvalid) {
+                  emitError({ type: 'mgrsError', message: '' });
+                }
                 this.setState((ps: CollectingEventState) => ({
                   ...ps,
                   placeState: {

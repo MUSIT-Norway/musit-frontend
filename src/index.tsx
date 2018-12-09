@@ -28,7 +28,7 @@ import { TODO } from './types/common';
 //let {provide} = require('react-rxjs/dist/RxProvide');
 
 const notificationSystem = ReactDOM.render(
-  <NotificationSystem />,
+  <NotificationSystem allowHTML={true} />,
   document.getElementById('errors')
 ) as any; //TODO!
 notification$.subscribe(origEvent => {
@@ -43,8 +43,8 @@ notification$.subscribe(origEvent => {
     ...event,
     position: 'tc',
     children: (
-      <div style={{ margin: '30px' }}>
-        <p>{event.body}</p>
+      <div style={{ margin: '15px' }}>
+        {event.body.split('\n').map((i: string) => <p>{i}</p>)}
       </div>
     )
   });
