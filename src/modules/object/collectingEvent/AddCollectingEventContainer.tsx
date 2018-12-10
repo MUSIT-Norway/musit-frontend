@@ -7,7 +7,11 @@ import { loadPredefinedCollectingEventValues } from '../../../stores/loadPredefi
 import predefinedCollectingEventValues$ from '../../../stores/predefinedCollectingEventValues';
 import store$, {
   addCollectingEvent$,
-  AddCollectingEventProps
+  AddCollectingEventProps,
+  setDisabledState$,
+  setDraftState$,
+  addPersonName$,
+  AddPersonNameProps
 } from './CollectingEventStore';
 import { History } from 'history';
 import { AjaxPost } from '../../../types/ajax';
@@ -27,21 +31,42 @@ const combinedStore$ = createStore(
   )
 );
 
-const addCollectingEventProps = (combinedStore: any, upstream: { history: History }) => ({
-  ...combinedStore,
-  ...upstream,
-  store: { ...combinedStore, localState: undefined },
-  addCollectingEvent: (ajaxPost: AjaxPost<any>) => (props: AddCollectingEventProps) =>
-    addCollectingEvent$.next({
-      data: props.data,
-      token: props.token,
-      collectionId: props.collectionId,
-      ajaxPost,
-      callback: props.callback
-    })
-});
+const addCollectingEventProps = (combinedStore: any, upstream: { history: History }) => {
+  console.log('addCollectingEventProps -xxxxxxxxxxxxxxxxxxxxxx');
+  return {
+    ...combinedStore,
+    ...upstream,
+    store: { ...combinedStore, localState: undefined },
+    eventDataReadOnly: false,
+    placeReadOnly: false,
+    personReadOnly: false,
+    addStateHidden: true,
+    setDisabledState: (fieldName: string) => (value: boolean) =>
+      setDisabledState$.next({ fieldName, value }),
+    setDraftState: (subState?: string) => (fieldName: string) => (value: boolean) =>
+      setDraftState$.next({ subState: subState, fieldName: fieldName, value: value }),
+    addCollectingEvent: (ajaxPost: AjaxPost<any>) => (props: AddCollectingEventProps) =>
+      addCollectingEvent$.next({
+        data: props.data,
+        token: props.token,
+        collectionId: props.collectionId,
+        ajaxPost,
+        callback: props.callback
+      }),
+    addPersonName: (ajaxPost: AjaxPost<any>) => (props: AddPersonNameProps) =>
+      addPersonName$.next({
+        data: props.data,
+        token: props.token,
+        collectionId: props.collectionId,
+        ajaxPost,
+        callback: props.callback
+      })
+  };
+};
 
-export const onMountProps = () => (props: any) => {};
+export const onMountProps = () => (props: any) => {
+  console.log('onMountProps ------>', props);
+};
 
 export const onUnmount = () => (props: any) => {};
 

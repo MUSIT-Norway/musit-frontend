@@ -144,6 +144,39 @@ const handleError: TODO = new Subject().map((event: TODO) => {
         title: I18n.t('musit.errorMainMessages.applicationError'),
         message: error.message
       };
+    case 'latLongError':
+      return {
+        level: 'error',
+        title: 'Illegal coordinate',
+        message:
+          'Legal formats are: \n' +
+          'DMS 60 10 23N 10 23 13E \n' +
+          'No space before N/S and E/W)\n' +
+          'M and S can be omitted  (69 34N 19E) \n' +
+          'Decimal degrees: \n' +
+          '60.234 10.233 (N/S is first number, and E/W is last number\n' +
+          'Negative numbers are interpreted as South og West'
+      };
+    case 'utmError':
+      return {
+        level: 'error',
+        title: 'Illegal coordinate',
+        message:
+          'Legal formats are: \n' +
+          'E/W N/S\n' +
+          'First number is E/W and second is N/S\n' +
+          'E/W and N/S are separated by space or ","'
+      };
+    case 'mgrsError':
+      return {
+        level: 'error',
+        title: 'Illegal coordinate',
+        message:
+          'Legal formats are: \n' +
+          'NM 3453,3434 or NM-NN 343-432, 345 or NM 432, 345-455\n' +
+          'Easting and Northing is separated by ","\n' +
+          'Legal number of digits are 1 - 5'
+      };
     default:
       customMessage = event.message;
       eMsg = getErrorMessage(error);

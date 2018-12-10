@@ -33,6 +33,7 @@ export type PersonName = {
   firstName?: string;
   lastName?: string;
   nameString: string;
+  personNameUuid?: string;
 };
 
 export type ExternalId = {

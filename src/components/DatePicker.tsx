@@ -18,6 +18,7 @@ interface MusitDatePickerProps {
   onClear: Function; //PropTypes.func.isRequired,
   disabled?: boolean; //PropTypes.bool
   defaultValue?: string;
+  placeHolder?: string;
 }
 
 /* Old:

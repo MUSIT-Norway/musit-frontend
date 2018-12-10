@@ -259,15 +259,24 @@ export const musitCoodinateValidate = (coordinateType?: string) => (value: strin
       /^[A-Z]{2}(-[A-Z]{2})?\s((\d{1}(-\d{1})?,\d{1}(-\d{1})?)|(\d{2}(-\d{2})?,\d{2}(-\d{2})?)|(\d{3}(-\d{3})?,\d{3}(-\d{3})?)|(\d{4}(-\d{4})?,\d{4}(-\d{4})?)||(\d{5}(-\d{5})?,\d{5}(-\d{5})?))$/,
       'i'
     ); // LL-LK 234-345, 234-456
-    const coorRegexMGRS2 = new RegExp(/^[A-Z]{2}(\d{2}|\d{4}|\d{6}|\d{8}|\d{10})$/, 'i'); //LL2345656789
-    if (coorRegexMGRS1.test(value) || coorRegexMGRS2.test(value)) {
+    //    const coorRegexMGRS2 = new RegExp(/^[A-Z]{2}(\d{2}|\d{4}|\d{6}|\d{8}|\d{10})$/, 'i'); //LL2345656789
+    if (coorRegexMGRS1.test(value)) {
       return true;
     } else {
       return false;
     }
-  } else {
-    return false;
   }
+  if (coordinateType === 'LAT/LONG') {
+    const r1 = new RegExp(/^\d+(\s+\d+(\s+\d+)?)?(N|S)\s+\d+(\s+\d+(\s+\d+)?)?(E|W)$/);
+    const r2 = new RegExp(/^\-?\d+(\.\d+)?\s+\-?\d+(\.\d+)?$/);
+    return r1.test(value) || r2.test(value);
+  }
+
+  if (coordinateType === 'UTM') {
+    const r1 = new RegExp(/^\d+(\s+|\,)\d+$/);
+    return r1.test(value);
+  }
+  return true;
 };
 
 export const validatePositiveInteger = (count: string) => {

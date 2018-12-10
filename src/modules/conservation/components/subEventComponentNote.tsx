@@ -76,7 +76,7 @@ export default function SubEventComponentNote(props: SubEventComponentNoteProps)
                   return props.appSession.language.isEn ? role.enRole : role.noRole;
                 }}
                 roles={props.roleList ? props.roleList.map(e => e.roleId) : []}
-                showDateForRole={(roleName: string) => [].some(e => e === roleName)} //TODO: Check whether some roles should have dates displayed
+                showDateForRole={(roleName: number) => [1].some(e => e === roleName)} //TODO: Check whether some roles should have dates displayed
               />
             )}
           </div>

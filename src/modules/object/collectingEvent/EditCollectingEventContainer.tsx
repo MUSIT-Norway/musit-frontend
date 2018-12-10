@@ -3,15 +3,25 @@ import { Observable } from 'rxjs';
 import { flowRight } from 'lodash';
 import lifeCycle from '../../../shared/lifeCycle';
 import appSession$ from '../../../stores/appSession';
+import { AppSession } from '../../../types/appSession';
 import { loadPredefinedCollectingEventValues } from '../../../stores/loadPredefinedCollectingEventValues';
 import predefinedCollectingEventValues$ from '../../../stores/predefinedCollectingEventValues';
 import store$, {
-  editEventDateRivision$,
-  editEventPlaceRivision$,
-  EditCollectingEventProps
+  editEventDateRevision$,
+  editEventAttributesRevision$,
+  editEventPlaceRevision$,
+  editEventMetaData$,
+  EditCollectingEventProps,
+  EditPlaceProps,
+  getCollectingEvent$,
+  setDisabledState$,
+  setDraftState$,
+  EditPersonEventProps,
+  editEventPersonRevision$
 } from './CollectingEventStore';
 import { History } from 'history';
-import { AjaxPut } from '../../../types/ajax';
+import { AjaxPost } from '../../../types/ajax';
+import { simpleGet } from '../../../shared/RxAjax';
 import { CollectingEventComponent } from './CollectingEventComponent';
 
 const combinedStore$ = createStore(
@@ -28,42 +38,94 @@ const combinedStore$ = createStore(
   )
 );
 
-const editCollectingEventProps = (
-  combinedStore: any,
-  upstream: { history: History }
-) => ({
-  ...combinedStore,
-  ...upstream,
-  store: { ...combinedStore, localState: undefined },
-  editEventDateRivision: (ajaxPut: AjaxPut<any>) => (props: EditCollectingEventProps) => {
-    editEventDateRivision$.next({
-      id: props.id,
-      data: props.data,
-      token: props.token,
-      collectionId: props.collectionId,
-      ajaxPut,
-      callback: props.callback
-    });
-  },
-  editEventPlaceRivision: (ajaxPut: AjaxPut<any>) => (
-    props: EditCollectingEventProps
-  ) => {
-    editEventPlaceRivision$.next({
-      id: props.id,
-      data: props.data,
-      token: props.token,
-      collectionId: props.collectionId,
-      ajaxPut,
-      callback: props.callback
-    });
-  }
-});
+const editCollectingEventProps = (combinedStore: any, upstream: { history: History }) => {
+  return {
+    ...combinedStore,
+    ...upstream,
+    eventDataReadOnly:
+      localStorage.getItem('editComponent') === 'eventMetaData' ? false : true,
+    placeReadOnly: localStorage.getItem('editComponent') === 'place' ? false : true,
+    personReadOnly: localStorage.getItem('editComponent') === 'person' ? false : true,
+    addStateHidden: true,
+    store: { ...combinedStore, localState: combinedStore.store.localState },
 
-export const onMountProps = () => (props: any) => {};
+    getCollectingEvent: (ajaxGet = simpleGet) => (appSession: AppSession, id: string) =>
+      getCollectingEvent$.next({
+        id: id,
+        collectionId: appSession.collectionId,
+        token: appSession.accessToken,
+        ajaxGet
+      }),
+    setDisabledState: (fieldName: string) => (value: boolean) =>
+      setDisabledState$.next({ fieldName, value }),
+    setDraftState: (subState?: string) => (fieldName: string) => (value: boolean) =>
+      setDraftState$.next({ subState: subState, fieldName: fieldName, value: value }),
+    editEventDateRevision: (ajaxPost: AjaxPost<any>) => (
+      props: EditCollectingEventProps
+    ) => {
+      editEventDateRevision$.next({
+        id: props.id,
+        data: props.data,
+        token: props.token,
+        collectionId: props.collectionId,
+        ajaxPost,
+        callback: props.callback
+      });
+    },
+    editEventMetaData: (ajaxPost: AjaxPost<any>) => (props: EditCollectingEventProps) => {
+      editEventMetaData$.next({
+        id: props.id,
+        data: props.data,
+        token: props.token,
+        collectionId: props.collectionId,
+        ajaxPost,
+        callback: props.callback
+      });
+    },
+    editEventAttributesRevision: (ajaxPost: AjaxPost<any>) => (
+      props: EditCollectingEventProps
+    ) => {
+      editEventAttributesRevision$.next({
+        id: props.id,
+        data: props.data,
+        token: props.token,
+        collectionId: props.collectionId,
+        ajaxPost,
+        callback: props.callback
+      });
+    },
+    editEventPersonRevision: (ajaxPost: AjaxPost<any>) => (
+      props: EditPersonEventProps
+    ) => {
+      editEventPersonRevision$.next({
+        id: props.id,
+        data: props.data,
+        token: props.token,
+        collectionId: props.collectionId,
+        ajaxPost,
+        callback: props.callback
+      });
+    },
+    editEventPlaceRevision: (ajaxPost: AjaxPost<any>) => (props: EditPlaceProps) => {
+      editEventPlaceRevision$.next({
+        id: props.id,
+        data: props.data,
+        token: props.token,
+        collectionId: props.collectionId,
+        ajaxPost,
+        callback: props.callback
+      });
+    }
+  };
+};
+
+export const onMountProps = () => (props: any) => {
+  props.getCollectingEvent()(props.appSession, props.match.params.id);
+};
 
 export const onUnmount = () => (props: any) => {};
 
-const ManageCollectingEventsComponent = lifeCycle({
+const ManageCollectingEventComponent = lifeCycle({
   onMount: onMountProps(),
   onUnmount
 })(CollectingEventComponent);
@@ -71,4 +133,4 @@ const ManageCollectingEventsComponent = lifeCycle({
 export default flowRight([
   inject(combinedStore$, editCollectingEventProps),
   loadPredefinedCollectingEventValues
-])(ManageCollectingEventsComponent);
+])(ManageCollectingEventComponent);
