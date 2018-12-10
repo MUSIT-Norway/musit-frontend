@@ -60,6 +60,7 @@ export type EventMetadataProps = EventData & {
   onSetReadOnlyState?: (value: boolean) => void;
   setDraftState: (fieldName: string, value: boolean) => void;
   readOnly?: boolean;
+  formInvalid: boolean;
   isDraft?: boolean;
   showButtonRows?: boolean;
   collectingEventUuid?: string;
@@ -339,6 +340,7 @@ export class CollectingEventComponent extends React.Component<
     this.savePlace = this.savePlace.bind(this);
     this.saveEvent = this.saveEvent.bind(this);
     this.savePerson = this.savePerson.bind(this);
+    this.formInvalid = this.formInvalid.bind(this);
     this.addAndSaveCollecingEvent = this.addAndSaveCollecingEvent.bind(this);
     this.state =
       props.store && props.store.localState
@@ -449,6 +451,10 @@ export class CollectingEventComponent extends React.Component<
       });
   }
 
+  formInvalid() {
+    return this.state.eventData.methodId ? false : true;
+  }
+
   savePlace(place: PlaceState) {
     console.log(place, this.state.placeState.placeUuid);
 
@@ -548,6 +554,7 @@ export class CollectingEventComponent extends React.Component<
       <div>
         <PlaceComponent
           {...this.state.placeState}
+          formInvalid={this.formInvalid()}
           toggleShowMap={(e: React.MouseEvent<HTMLButtonElement>) => {
             e.preventDefault();
             this.setState((p: CollectingEventState) => {
@@ -1140,6 +1147,7 @@ export class CollectingEventComponent extends React.Component<
       <div>
         <EventMetadata
           {...this.state.eventData}
+          formInvalid={this.formInvalid()}
           history={this.props.history}
           onClickSave={() => {
             if (this.props.addCollectingEvent) {
@@ -1245,6 +1253,7 @@ export class CollectingEventComponent extends React.Component<
           personNames={
             this.state && this.state.personState ? this.state.personState.personNames : []
           }
+          formInvalid={this.formInvalid()}
           disableOnChangeFullName={
             this.state.personState && this.state.personState.disableOnChangeFullName
           }

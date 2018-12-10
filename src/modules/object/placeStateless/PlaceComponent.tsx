@@ -577,6 +577,7 @@ const PlaceComponent = (
     onSelectCountry: (e: React.ChangeEvent<HTMLSelectElement>) => void;
     setEditMode: () => void;
     methodId?: number;
+    formInvalid: boolean;
     onChangeMethod: (methodId: string) => void;
     appSession: AppSession;
     history: History;
@@ -662,7 +663,9 @@ const PlaceComponent = (
             }}
             saveButtonState={{
               visible: true,
-              disabled: props.readOnly ? true : props.editState === 'Not editing' || false
+              disabled: props.readOnly
+                ? true
+                : props.editState === 'Not editing' || props.formInvalid
             }}
             saveButtonText="Lagre"
             draftButtonText="Lagre utkast"

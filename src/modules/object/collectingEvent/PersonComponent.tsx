@@ -32,6 +32,7 @@ export interface PersonState {
 
 export type PersonProps = {
   personNames?: OutputPersonName[];
+  formInvalid: boolean;
   disabled: boolean;
   value?: string;
   appSession: AppSession;
@@ -177,7 +178,7 @@ const PersonComponent = (props: PersonProps) => {
           onClickSave={props.onClickSave}
           onClickDraft={() => {}}
           editButtonState={{ visible: true, disabled: false }}
-          saveButtonState={{ visible: true, disabled: false }}
+          saveButtonState={{ visible: true, disabled: props.formInvalid }}
           cancelButtonState={{ visible: true, disabled: false }}
           draftButtonState={{ visible: false, disabled: false }}
           saveButtonText={'Save'}

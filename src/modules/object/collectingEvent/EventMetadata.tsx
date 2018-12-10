@@ -169,7 +169,9 @@ const EventMetadata = (props: EventMetadataProps) => {
           }}
           saveButtonState={{
             visible: true,
-            disabled: props.readOnly ? true : props.editState === 'Not editing' || false
+            disabled: props.readOnly
+              ? true
+              : props.editState === 'Not editing' || props.formInvalid
           }}
           draftButtonState={{
             visible: props.isDraft ? true : false,
