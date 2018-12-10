@@ -4,6 +4,7 @@ import AdmplaceSuggest from '../../../components/suggest/AdmPlaceSuggest';
 import { AppSession } from 'src/types/appSession';
 import { CollectingEventMethod } from '../collectingEvent/CollectingEventStore';
 import { History } from 'history';
+import { capitalize } from 'lodash';
 
 const AdmPlaceComponent = (
   props: PlaceState & {
@@ -215,7 +216,7 @@ const AdmPlaceComponent = (
             />
           </div>
         </div>
-        <div className="form-group">
+        <div className={`form-group ${props.methodId ? 'has-success' : 'has-warning'}`}>
           {' '}
           <label className="control-label col-md-2" htmlFor="collectingMethod">
             Collecting method
@@ -224,7 +225,6 @@ const AdmPlaceComponent = (
             <select
               className="form-control"
               id="collectingMethod"
-              defaultValue={undefined}
               placeholder="Method"
               disabled={props.readOnly}
               value={props.methodId}
@@ -238,11 +238,14 @@ const AdmPlaceComponent = (
                   (
                     { methodId, method }: { methodId: number; method: string },
                     i: number
-                  ) => (
-                    <option key={`optionRow_${i}`} value={methodId}>
-                      {method}
-                    </option>
-                  )
+                  ) => {
+                    const m = capitalize(method);
+                    return (
+                      <option key={`optionRow_${i}`} value={methodId}>
+                        {m}
+                      </option>
+                    );
+                  }
                 )
               ) : (
                 <option key={`optionRow_${1}`}>{'No data'}</option>

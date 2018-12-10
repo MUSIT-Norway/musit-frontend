@@ -78,6 +78,7 @@ const PersonComponent = (props: PersonProps) => {
           <div className="col-md-1">
             <button
               className="btn btn-default"
+              disabled={props.disabled}
               onClick={e => {
                 e.preventDefault();
                 props.onAddPerson();
@@ -95,6 +96,7 @@ const PersonComponent = (props: PersonProps) => {
           <div className="col-md-2">
             <button
               id="btnNewPersonname"
+              disabled={props.disabled}
               className="btn btn-default btn-sm"
               onClick={e => {
                 e.preventDefault();
@@ -148,15 +150,19 @@ const PersonComponent = (props: PersonProps) => {
                           />
                         </td>
                         <td className="col-md-1">
-                          <a
-                            href=""
-                            onClick={e => {
-                              e.preventDefault();
-                              props.onDeletePerson(i);
-                            }}
-                          >
-                            Delete
-                          </a>
+                          {props.disabled ? (
+                            'Delete'
+                          ) : (
+                            <a
+                              href=""
+                              onClick={e => {
+                                e.preventDefault();
+                                props.onDeletePerson(i);
+                              }}
+                            >
+                              Delete
+                            </a>
+                          )}
                         </td>
                       </tr>
                     </div>

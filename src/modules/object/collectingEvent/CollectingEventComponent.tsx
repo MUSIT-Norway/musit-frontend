@@ -300,7 +300,7 @@ export const toFrontend: (p: OutputCollectingEvent) => CollectingEventState = (
       name: '',
       eventUuid: '',
       eventType: 6,
-      methodId: 4,
+      methodId: undefined,
       museumId: 5,
       collectionId: 10,
       editState: 'Not editing'
@@ -379,7 +379,7 @@ export class CollectingEventComponent extends React.Component<
               4,
               5,
               'Editing',
-              10,
+              undefined,
               undefined,
               undefined,
               undefined,
@@ -1279,7 +1279,6 @@ export class CollectingEventComponent extends React.Component<
           }}
           onChangePerson={(suggestion: personDet) => {
             this.setState((cs: CollectingEventState) => {
-              console.log('ANURADHA RETURNED cs ', cs);
               const newPersonName: PersonNameForCollectingEvent = {
                 personUuid: suggestion ? suggestion.personUuid : '',
                 personNameUuid: suggestion ? suggestion.personNameUuid : '',
@@ -1354,7 +1353,6 @@ export class CollectingEventComponent extends React.Component<
           }}
           onDeletePerson={(i: number) => {
             this.setState((cs: CollectingEventState) => {
-              console.log('ANURADHA RETURNED onAdd cs ', cs);
               const currentPersonName =
                 cs.personState && cs.personState.personNames
                   ? cs.personState.personNames
@@ -1372,8 +1370,21 @@ export class CollectingEventComponent extends React.Component<
                     personNames: newPersonNames,
                     editState: 'Editing'
                   };
+
+              const relatedActorsList: ActorsAndRelation[] | undefined =
+                newPersonNames &&
+                newPersonNames.map((p: PersonNameForCollectingEvent) => ({
+                  actorUuid: p.personUuid,
+                  personNameUuid: p.personNameUuid,
+                  roleId: p.roleId,
+                  name: p.name
+                }));
               const newEventState = {
                 ...cs,
+                eventData: {
+                  ...cs.eventData,
+                  relatedActors: relatedActorsList
+                },
                 personState: newPersonState
               };
               return newEventState;
