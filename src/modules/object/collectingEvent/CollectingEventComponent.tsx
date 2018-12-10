@@ -614,7 +614,7 @@ export class CollectingEventComponent extends React.Component<
             this.setState((ps: CollectingEventState) => ({
               ...ps,
               eventData: { ...ps.eventData, methodId: Number.parseInt(methodId) },
-              placeState: {...ps.placeState,editState: 'Editing'}
+              placeState: { ...ps.placeState, editState: 'Editing' }
             }));
           }}
           collectingEventMethods={
