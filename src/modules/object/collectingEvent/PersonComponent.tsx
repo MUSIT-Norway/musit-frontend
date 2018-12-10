@@ -51,6 +51,30 @@ export type PersonProps = {
   onClickNewPersonName: () => void;
 };
 
+export const ViewPersonComponent = (props: {
+  personNames: PersonNameForCollectingEvent[] | undefined;
+}) => {
+  return (
+    <div className="container-fluid">
+      <table className="table table-condensed">
+        <thead>
+          <th>Uuid</th>
+          <th>Name</th>
+        </thead>
+        <tbody>
+          {props.personNames &&
+            props.personNames.map((p: OutputPersonName, i: number) => (
+              <tr key={`pn-${i}`}>
+                <td>{p.personNameUuid}</td>
+                <td>{p.name}</td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
 const PersonComponent = (props: PersonProps) => {
   return (
     <div className="container-fluid">

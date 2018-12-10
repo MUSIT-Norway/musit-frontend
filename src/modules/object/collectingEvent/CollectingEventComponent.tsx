@@ -42,7 +42,7 @@ import { AjaxResponse } from 'rxjs';
 import config from '../../../config';
 import { EditState, NonEditState, RevisionState, DraftState } from '../types';
 import EditAndSaveButtons from '../components/EditAndSaveButtons';
-import PersonComponent from './PersonComponent';
+import PersonComponent, { ViewPersonComponent } from './PersonComponent';
 import { personDet } from '../../../models/object/classHist';
 import { AjaxPost } from 'src/types/ajax';
 import { PersonNameForCollectingEvent, PersonState } from './PersonComponent';
@@ -529,6 +529,16 @@ export class CollectingEventComponent extends React.Component<
 
   render() {
     console.log('STATE----->', this.state);
+    const PersonViewComponent = this.state.personState ? (
+      <div>
+        {' '}
+        <ViewPersonComponent
+          personNames={this.state.personState ? this.state.personState.personNames : []}
+        />
+      </div>
+    ) : (
+      <div />
+    );
     const PlaceViewComponent = (
       <div>
         <PlaceView
@@ -1580,14 +1590,17 @@ export class CollectingEventComponent extends React.Component<
             collapsed={this.props.eventDataCollapsed}
             showHead={this.state.eventData.eventUuid ? true : false}
           />
-          {
-            <CollapseComponent
-              Head={<div />}
-              heading="Person"
-              Body={PersonComponentBody}
-              readOnly={this.props.personReadOnly}
-            />
-          }{' '}
+          <br />
+          <CollapseComponent
+            Head={PersonViewComponent}
+            heading="Person"
+            Body={PersonComponentBody}
+            readOnly={this.props.personReadOnly}
+            collapsed={this.props.personCollapsed}
+            showHead={
+              this.state.personState && this.state.personState.personNames ? true : false
+            }
+          />
           <br />
           <CollapseComponent
             heading="Place"
