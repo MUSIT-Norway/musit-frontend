@@ -996,10 +996,7 @@ export class CollectingEventComponent extends React.Component<
                 cs.placeState.editingInputCoordinate &&
                 cs.placeState.editingInputCoordinate.coordinateString
               ) {
-                newCoordinateInvalid = !musitCoodinateValidate(
-                  cs.placeState.editingInputCoordinate &&
-                    cs.placeState.editingInputCoordinate.coordinateType
-                )(
+                newCoordinateInvalid = !musitCoodinateValidate(value)(
                   cs.placeState.editingInputCoordinate &&
                     cs.placeState.editingInputCoordinate.coordinateString
                 );
