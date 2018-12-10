@@ -613,7 +613,8 @@ export class CollectingEventComponent extends React.Component<
           onChangeMethod={(methodId: string) => {
             this.setState((ps: CollectingEventState) => ({
               ...ps,
-              eventData: { ...ps.eventData, methodId: Number.parseInt(methodId) }
+              eventData: { ...ps.eventData, methodId: Number.parseInt(methodId) },
+              placeState: {...ps.placeState,editState: 'Editing'}
             }));
           }}
           collectingEventMethods={
