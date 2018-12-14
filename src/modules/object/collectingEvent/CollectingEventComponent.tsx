@@ -32,11 +32,12 @@ import { AppSession } from '../../../types/appSession';
 import { History } from 'history';
 import * as Geodesy from 'geodesy';
 import {
-  OutputCollectingEvent,
+  OutputEvent,
   ActorsAndRelation,
   EventUuid,
   PersonUuid,
-  InputCollectingEvent
+  InputEvent,
+  CollectingEvent
 } from '../../../models/object/collectingEvent';
 import { AjaxResponse } from 'rxjs';
 import config from '../../../config';
@@ -228,31 +229,47 @@ export default (props: CollectingProps) => (
   />
 );
 
-export const toEventDataBackend: (p: CollectingEventState) => InputCollectingEvent = (
+export const toEventDataBackend: (p: CollectingEventState) => InputEvent = (
   p: CollectingEventState
 ) => {
-  return p.eventData;
+  return new CollectingEvent(
+    p.eventData.eventUuid,
+    p.eventData.eventType,
+    p.eventData.museumId,
+    p.eventData.collectionId,
+    p.eventData.name,
+    p.eventData.methodId,
+    p.eventData.method,
+    p.eventData.methodDescription,
+    p.eventData.note,
+    p.eventData.partOf,
+    p.eventData.createdBy,
+    p.eventData.createdDate,
+    p.eventData.relatedActors,
+    p.eventData.eventDateFrom,
+    p.eventData.eventDateTo,
+    p.eventData.eventDateVerbatim,
+    p.placeState.placeUuid
+  );
 };
 
-export const toFrontend: (p: OutputCollectingEvent) => CollectingEventState = (
-  p: OutputCollectingEvent
-) => {
-  const innP: OutputCollectingEvent = p;
+export const toFrontend: (p: OutputEvent) => CollectingEventState = (p: OutputEvent) => {
+  const innP: OutputEvent = p;
 
   console.log('TOFrontEnd: ', p);
   if (innP) {
     const r: CollectingEventState = {
       eventData: new EventData(
-        innP.name,
+        (innP.attributes && innP.attributes.name) || 'Dummy',
         innP.eventUuid,
-        innP.eventType,
+        innP.eventTypeId,
         innP.museumId,
         innP.collectionId,
         'Not editing',
-        innP.methodId,
-        innP.method,
-        innP.methodDescription,
-        innP.note,
+        innP.attributes && innP.attributes.methodId,
+        innP.attributes && innP.attributes.method,
+        undefined,
+        innP.attributes && innP.attributes.note,
         innP.partOf,
         innP.createdBy,
         innP.createdDate,
@@ -466,7 +483,7 @@ export class CollectingEventComponent extends React.Component<
 
       const props: EditPlaceProps = {
         id: this.state.eventData.eventUuid,
-        data: { ...toPlaceBackend(place), ...toEventDataBackend(this.state) },
+        data: { ...toPlaceBackend(place), methodId: this.state.eventData.methodId },
         token: this.props.appSession.accessToken,
         collectionId: this.props.appSession.collectionId,
         callback: {
