@@ -643,6 +643,7 @@ const getCollections = (props: OutputPerson) => {
 };
 const SynSearch = (props: SynProps) => {
   console.log('PersonList: ', props.personList);
+  console.log('SynPerson: ', props.synPerson);
   return (
     <div className="container-fluid">
       <div className="row">

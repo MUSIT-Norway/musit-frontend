@@ -301,9 +301,10 @@ export default class SearchPersonComponent extends React.Component<
   }
 
   render() {
-    const persons = this.props.store.personList
-      ? this.props.store.personList.sort((p1, p2) => (p1.name < p2.name ? -1 : 1))
-      : [];
+    const persons =
+      this.props.store.personList && this.state.searchString
+        ? this.props.store.personList.sort((p1, p2) => (p1.name < p2.name ? -1 : 1))
+        : [];
     const activePage =
       this.state.activePage > persons.length - 1
         ? persons.length - 1
