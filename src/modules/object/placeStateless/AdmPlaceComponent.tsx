@@ -216,7 +216,7 @@ const AdmPlaceComponent = (
             />
           </div>
         </div>
-        <div className={`form-group ${props.methodId ? 'has-success' : 'has-warning'}`}>
+        <div className={`form-group`}>
           {' '}
           <label className="control-label col-md-2" htmlFor="collectingMethod">
             Collecting method

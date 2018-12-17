@@ -469,7 +469,7 @@ export class CollectingEventComponent extends React.Component<
   }
 
   formInvalid() {
-    return this.state.eventData.methodId ? false : true;
+    return false;
   }
 
   savePlace(place: PlaceState) {

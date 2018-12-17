@@ -172,9 +172,9 @@ const editEventMetaData = (ajaxPost: AjaxPost<Star>) => (
   props: EditCollectingEventProps
 ) => {
   const inputDateRevision = new InputDateRevision(
-    props.data && props.data.eventDateFrom ? props.data.eventDateFrom : '',
-    props.data && props.data.eventDateTo ? props.data.eventDateTo : '',
-    props.data && props.data.eventDateVerbatim ? props.data.eventDateVerbatim : ''
+    props.data && props.data.eventDateFrom ? props.data.eventDateFrom : undefined,
+    props.data && props.data.eventDateTo ? props.data.eventDateTo : undefined,
+    props.data && props.data.eventDateVerbatim ? props.data.eventDateVerbatim : undefined
   );
   const inputEventAttributes: CollectingEventAttributes | undefined = props.data
     .attributes
