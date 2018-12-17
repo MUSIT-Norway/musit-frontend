@@ -36,7 +36,6 @@ import {
   getPersonName,
   addPersonName
 } from '../../../models/object/person';
-import { appSession } from 'src/testutils/sampleDataForTest';
 
 export type CollectingEventStoreState = {
   localState?: CollectingEventState;
@@ -59,7 +58,7 @@ export type PredefinedCollectingEventValues = {
 export const initialCollectingEventState = {
   collectingEvent: {
     eventTypeId: 6,
-    museumId: appSession.museumId,
+    museumId: 99,
     collectionId: 0
   }
 };

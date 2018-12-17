@@ -70,8 +70,8 @@ export interface InputEvent {
 export interface InputEvent {
   eventUuid?: EventUuid;
   eventTypeId: number;
-  museumId: number;
-  collectionId: number;
+  museumId?: number;
+  collectionId?: number;
   //note?: string;
   partOf?: EventUuid;
   relatedActors?: InputActorAndRelation[];
