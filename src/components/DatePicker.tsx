@@ -6,7 +6,6 @@ import { DATE_FORMAT_DISPLAY } from '../shared/util';
 import * as DatePicker from 'react-16-bootstrap-date-picker';
 import { TODO } from 'src/types/common';
 
-
 export const getNow = () => {
   return formatISOString(new Date());
 };

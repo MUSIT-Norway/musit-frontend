@@ -54,9 +54,9 @@ export type PersonProps = {
 const PersonComponent = (props: PersonProps) => {
   return (
     <div className="container-fluid">
-      <form className="form-horizontal">
-        {' '}
-        <div className="form-group">
+      {' '}
+      <div className="form-group">
+        <div className="row">
           <label
             className="control-label col-md-2"
             htmlFor="PersonNameSuggestCollectingEvent"
@@ -90,24 +90,26 @@ const PersonComponent = (props: PersonProps) => {
             </button>
           </div>
         </div>
-        <div className="form-group">
-          <label className="control-label col-md-2" htmlFor="btnNewPersonname">
-            Fant du ikke personnavnet?
-          </label>
-          <div className="col-md-2">
-            <button
-              id="btnNewPersonname"
-              disabled={props.disabled}
-              className="btn btn-default btn-sm"
-              onClick={e => {
-                e.preventDefault();
-                props.onClickNewPersonName();
-              }}
-            >
-              {props.showNewPersonName ? 'Klikk for å skjule' : 'Lag nytt personnavn'}
-            </button>
-          </div>
+      </div>
+      <div className="row">
+        <label className="control-label col-md-2" htmlFor="btnNewPersonname">
+          Fant du ikke personnavnet?
+        </label>
+        <div className="col-md-2">
+          <button
+            id="btnNewPersonname"
+            disabled={props.disabled}
+            className="btn btn-default btn-sm"
+            onClick={e => {
+              e.preventDefault();
+              props.onClickNewPersonName();
+            }}
+          >
+            {props.showNewPersonName ? 'Klikk for å skjule' : 'Lag nytt personnavn'}
+          </button>
         </div>
+      </div>
+      <div className="row">
         {props.showNewPersonName && (
           <PersonNameComponent
             editingPersonName={props.editingPersonName}
@@ -119,74 +121,74 @@ const PersonComponent = (props: PersonProps) => {
             onChangeFullName={props.onChangeFullName}
           />
         )}
-        <div className="form-group">
-          <div className="col-md-10 col-md-offset-2">
-            <table className="table table-condensed table-hover">
-              <thead>
-                <tr>
-                  <th>Personer i denne hendelsen</th>
-                  <th />
-                  <th />
-                </tr>
-              </thead>
-              <tbody>
-                {props.personNames &&
-                  props.personNames.map((d: InputPersonName, i: number) => (
-                    <div key={`det-row-${i}`}>
-                      <tr>
-                        <td className="col-md-5">
-                          <input
-                            type="text"
-                            className="form-control"
-                            disabled={true}
-                            value={d.name}
-                          />
-                        </td>
-                        <td className="col-md-5">
-                          <input
-                            type="text"
-                            className="form-control"
-                            disabled={true}
-                            value={d.personNameUuid}
-                          />
-                        </td>
-                        <td className="col-md-1">
-                          {props.disabled ? (
-                            'Delete'
-                          ) : (
-                            <a
-                              href=""
-                              onClick={e => {
-                                e.preventDefault();
-                                props.onDeletePerson(i);
-                              }}
-                            >
-                              Delete
-                            </a>
-                          )}
-                        </td>
-                      </tr>
-                    </div>
-                  ))}
-              </tbody>
-            </table>
-          </div>
+      </div>
+      <div className="row">
+        <div className="col-md-10 col-md-offset-2">
+          <table className="table table-condensed table-hover">
+            <thead>
+              <tr>
+                <th>Personer i denne hendelsen</th>
+                <th />
+                <th />
+              </tr>
+            </thead>
+            <tbody>
+              {props.personNames &&
+                props.personNames.map((d: InputPersonName, i: number) => (
+                  <div key={`det-row-${i}`}>
+                    <tr>
+                      <td className="col-md-5">
+                        <input
+                          type="text"
+                          className="form-control"
+                          disabled={true}
+                          value={d.name}
+                        />
+                      </td>
+                      <td className="col-md-5">
+                        <input
+                          type="text"
+                          className="form-control"
+                          disabled={true}
+                          value={d.personNameUuid}
+                        />
+                      </td>
+                      <td className="col-md-1">
+                        {props.disabled ? (
+                          'Delete'
+                        ) : (
+                          <a
+                            href=""
+                            onClick={e => {
+                              e.preventDefault();
+                              props.onDeletePerson(i);
+                            }}
+                          >
+                            Delete
+                          </a>
+                        )}
+                      </td>
+                    </tr>
+                  </div>
+                ))}
+            </tbody>
+          </table>
         </div>
-        <EditAndSaveButtons
-          onClickCancel={() => {}}
-          onClickEdit={props.onClickEdit}
-          onClickSave={props.onClickSave}
-          onClickDraft={() => {}}
-          editButtonState={{ visible: true, disabled: false }}
-          saveButtonState={{ visible: true, disabled: props.formInvalid }}
-          cancelButtonState={{ visible: true, disabled: false }}
-          draftButtonState={{ visible: false, disabled: false }}
-          saveButtonText={'Save'}
-          draftButtonText={'Utkast'}
-          editButtonText={'Endre'}
-          cancelButtonText={'Avbryt'}
-        />
-      </form>
+      </div>
+      <EditAndSaveButtons
+        onClickCancel={() => {}}
+        onClickEdit={props.onClickEdit}
+        onClickSave={props.onClickSave}
+        onClickDraft={() => {}}
+        editButtonState={{ visible: true, disabled: false }}
+        saveButtonState={{ visible: true, disabled: props.formInvalid }}
+        cancelButtonState={{ visible: true, disabled: false }}
+        draftButtonState={{ visible: false, disabled: false }}
+        saveButtonText={'Save'}
+        draftButtonText={'Utkast'}
+        editButtonText={'Endre'}
+        cancelButtonText={'Avbryt'}
+      />
     </div>
   );
 };
