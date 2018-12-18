@@ -195,20 +195,22 @@ const PersonComponent = (props: PersonProps) => {
           </table>
         </div>
       </div>
-      <EditAndSaveButtons
-        onClickCancel={() => {}}
-        onClickEdit={props.onClickEdit}
-        onClickSave={props.onClickSave}
-        onClickDraft={() => {}}
-        editButtonState={{ visible: true, disabled: false }}
-        saveButtonState={{ visible: true, disabled: props.formInvalid }}
-        cancelButtonState={{ visible: true, disabled: false }}
-        draftButtonState={{ visible: false, disabled: false }}
-        saveButtonText={'Save'}
-        draftButtonText={'Utkast'}
-        editButtonText={'Endre'}
-        cancelButtonText={'Avbryt'}
-      />
+      <div className="row">
+        <EditAndSaveButtons
+          onClickCancel={() => {}}
+          onClickEdit={props.onClickEdit}
+          onClickSave={props.onClickSave}
+          onClickDraft={() => {}}
+          editButtonState={{ visible: true, disabled: false }}
+          saveButtonState={{ visible: true, disabled: props.formInvalid }}
+          cancelButtonState={{ visible: true, disabled: false }}
+          draftButtonState={{ visible: false, disabled: false }}
+          saveButtonText={'Save'}
+          draftButtonText={'Utkast'}
+          editButtonText={'Endre'}
+          cancelButtonText={'Avbryt'}
+        />
+      </div>
     </div>
   );
 };
