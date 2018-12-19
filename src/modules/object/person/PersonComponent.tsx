@@ -23,7 +23,7 @@ import {
   dataBaseValues
 } from '../person/mockdata/data';
 import { groupBy, maxBy, minBy } from 'lodash';
-import { formatISOString } from '../../../shared/util';
+import { formatISOString, maybeFormatISOString } from '../../../shared/util';
 import * as moment from 'moment';
 
 export type CombinedStore = { store: PersonStoreState; appSession: AppSession };
@@ -1035,8 +1035,8 @@ export const toFrontend: (p: OutputPerson) => PersonState = (p: OutputPerson) =>
           personNameUuid: p.personNameUuid
         })),
       undefined,
-      innP.personAttribute && innP.personAttribute.bornDate,
-      innP.personAttribute && innP.personAttribute.deathDate,
+      maybeFormatISOString(innP.personAttribute && innP.personAttribute.bornDate),
+      maybeFormatISOString(innP.personAttribute && innP.personAttribute.deathDate),
       innP.personAttribute && innP.personAttribute.verbatimDate,
       undefined,
       undefined,

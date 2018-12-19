@@ -71,8 +71,13 @@ export const parseUTCDate = (dateStr: string) => {
 export const parseISODate = (dateStr: string) => {
   return moment(new Date(dateStr));
 };
-export const formatISOString = (d: Date) => {
+export const formatISOString = (d: Date | string) => {
   return moment(d).format('YYYY-MM-DDT00:00:00.000Z');
+};
+
+export const maybeFormatISOString = (d?: Date | string) => {
+  return d ? formatISOString(d) : d;
+  // moment(d).format('YYYY-MM-DDT00:00:00.000Z');
 };
 
 export const parseFloatFromString = (value: string): number => {

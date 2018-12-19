@@ -2,7 +2,7 @@ import * as React from 'react';
 import { musitCoodinateValidate } from '../../../shared/util';
 import CollapseComponent from '../components/Collapse';
 import EventMetadata, { ViewEventMetaData } from './EventMetadata';
-import { formatISOString } from '../../../shared/util';
+import { formatISOString, maybeFormatISOString } from '../../../shared/util';
 import { emitError } from '../../../shared/errors';
 import {
   InputCoordinate,
@@ -275,8 +275,8 @@ export const toFrontend: (p: OutputEvent) => CollectingEventState = (p: OutputEv
         innP.createdDate,
         innP.relatedActors,
         undefined,
-        innP.eventDateFrom,
-        innP.eventDateTo,
+        maybeFormatISOString(innP.eventDateFrom),
+        maybeFormatISOString(innP.eventDateTo),
         innP.eventDateVerbatim
       ),
       personState: innP.relatedActors
