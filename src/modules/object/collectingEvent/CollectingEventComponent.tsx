@@ -582,6 +582,7 @@ export class CollectingEventComponent extends React.Component<
         <PlaceComponent
           {...this.state.placeState}
           formInvalid={this.formInvalid()}
+          nameEmpty={this.state.eventData.name === '' ? true : false}
           toggleShowMap={(e: React.MouseEvent<HTMLButtonElement>) => {
             e.preventDefault();
             this.setState((p: CollectingEventState) => {
@@ -1288,6 +1289,7 @@ export class CollectingEventComponent extends React.Component<
           showNewPersonName={
             this.state.personState && this.state.personState.showNewPersonName
           }
+          nameEmpty={this.state.eventData.name === '' ? true : false}
           onClickEdit={() => {
             const URL =
               this.state.eventData && this.state.eventData.eventUuid
@@ -1319,8 +1321,6 @@ export class CollectingEventComponent extends React.Component<
                 name: suggestion ? suggestion.name : '',
                 roleId: 11
               };
-              console.log('ANURADHA RETURNED SUGGESSTION ', newPersonName);
-
               const newPersonState: PersonState = {
                 ...cs.personState,
                 personName: newPersonName,
@@ -1425,7 +1425,6 @@ export class CollectingEventComponent extends React.Component<
             });
           }}
           onCreatePersonName={(appSession: AppSession) => {
-            console.log('Anuradha hit save ', this.state);
             this.props.addPersonName &&
               this.props.addPersonName()({
                 data: (this.state &&
@@ -1661,6 +1660,11 @@ export class CollectingEventComponent extends React.Component<
               editButtonText="Endre"
               cancelButtonText="Avbryt"
               draftButtonText="Lagre utkast"
+              nameEmpty={
+                this.props.editEventMetaData && this.props.editEventMetaData.name === ''
+                  ? true
+                  : false
+              }
             />
           ) : (
             <div />

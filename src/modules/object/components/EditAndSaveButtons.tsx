@@ -13,6 +13,7 @@ export type EditAndSaveButtonProps = {
   draftButtonText: string;
   editButtonText: string;
   cancelButtonText: string;
+  nameEmpty: boolean;
 };
 
 const EditAndSaveButtons = (props: EditAndSaveButtonProps) => {
@@ -53,7 +54,7 @@ const EditAndSaveButtons = (props: EditAndSaveButtonProps) => {
           type="button"
           className="btn btn-success"
           onClick={props.onClickSave}
-          disabled={props.saveButtonState.disabled}
+          disabled={props.saveButtonState.disabled || props.nameEmpty}
         >
           {props.saveButtonText}
         </button>

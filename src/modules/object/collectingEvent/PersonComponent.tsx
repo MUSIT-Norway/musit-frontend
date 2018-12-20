@@ -49,6 +49,7 @@ export type PersonProps = {
   onChangeFullName: (fieldName: string) => (newValue: string) => void;
   onCreatePersonName: Function;
   onClickNewPersonName: () => void;
+  nameEmpty: boolean;
 };
 
 export const ViewPersonComponent = (props: {
@@ -196,6 +197,7 @@ const PersonComponent = (props: PersonProps) => {
         </div>
       </div>
       <div className="row">
+        {console.log('Anuradha nameEmpty personComponent', props.nameEmpty)}
         <EditAndSaveButtons
           onClickCancel={() => {}}
           onClickEdit={props.onClickEdit}
@@ -209,6 +211,7 @@ const PersonComponent = (props: PersonProps) => {
           draftButtonText={'Utkast'}
           editButtonText={'Endre'}
           cancelButtonText={'Avbryt'}
+          nameEmpty={props.nameEmpty}
         />
       </div>
     </div>

@@ -609,6 +609,7 @@ const PlaceComponent = (
     collectingEventUUid?: string;
     countries: AdmPlace[];
     collectingEventMethods: CollectingEventMethod[];
+    nameEmpty: boolean;
   } & CoordinateProps
 ) => {
   return (
@@ -693,6 +694,7 @@ const PlaceComponent = (
             draftButtonText="Lagre utkast"
             editButtonText="Endre"
             cancelButtonText="Avbryt"
+            nameEmpty={props.nameEmpty}
           />
         )}
       </div>

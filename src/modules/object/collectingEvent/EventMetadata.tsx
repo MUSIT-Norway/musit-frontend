@@ -81,16 +81,24 @@ const EventMetadata = (props: EventMetadataProps) => {
           <label className="control-label col-md-2" htmlFor="nameInput">
             Name
           </label>
-          <div className="col-md-4">
-            <input
-              type="text"
-              className="form-control"
-              id="nameInput"
-              placeholder="name"
-              value={props.name || ''}
-              disabled={props.readOnly}
-              onChange={e => props.onChangeEventMetaData('name')(e.target.value)}
-            />
+          <div
+            className={
+              props.name === ''
+                ? 'row form-group has-warning '
+                : 'row form-group has-success  '
+            }
+          >
+            <div className="col-md-4">
+              <input
+                type="text"
+                className="form-control"
+                id="nameInput"
+                placeholder="name"
+                value={props.name || ''}
+                disabled={props.readOnly}
+                onChange={e => props.onChangeEventMetaData('name')(e.target.value)}
+              />
+            </div>
           </div>
         </div>
         <div className="form-group">
@@ -181,6 +189,7 @@ const EventMetadata = (props: EventMetadataProps) => {
           editButtonText="Endre"
           cancelButtonText="Avbryt"
           draftButtonText="Lagre utkast"
+          nameEmpty={props && props.name === '' ? true : false}
         />
       )}
     </div>
@@ -319,6 +328,7 @@ const EventMetadata = (props: EventMetadataProps) => {
           editButtonText="Endre"
           cancelButtonText="Avbryt"
           draftButtonText="Lagre utkast"
+          nameEmpty={props && props.name === '' ? true : false}
         />
       )}
     </div>
