@@ -211,7 +211,7 @@ const PersonComponent = (props: PersonProps) => {
           draftButtonText={'Utkast'}
           editButtonText={'Endre'}
           cancelButtonText={'Avbryt'}
-          nameEmpty={props.nameEmpty}
+          nameEmpty={props.nameEmpty || props.disabled}
         />
       </div>
     </div>

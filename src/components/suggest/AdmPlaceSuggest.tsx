@@ -67,9 +67,9 @@ export class AdmPlaceSuggestion extends React.Component<
     };
   }
   componentWillReceiveProps(next: AdmPlaceSuggestProps) {
-    /*  if (next.value !== this.props.value) {
-      this.setState(ps => ({ ...ps, value: next.value, disabled: true }));
-    } */
+    if (next.value !== this.props.value) {
+      this.setState(ps => ({ ...ps, value: next.value }));
+    }
     if (next.disabled !== this.props.disabled) {
       this.setState(ps => ({ ...ps, disabled: false }));
     }
