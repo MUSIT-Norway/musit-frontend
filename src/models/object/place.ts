@@ -98,6 +98,15 @@ export const loadGeometryTypes: (
   return ajaxGet(URL, token, callback).map(({ response }) => response);
 };
 
+export const loadCountries: (
+  ajaxGet: AjaxGet<Star>
+) => (props: { token: string; callback?: Callback<Star> }) => Observable<Star> = (
+  ajaxGet = simpleGet
+) => ({ token, callback }) => {
+  const URL = Config.api.places.loadAdmPlaceWithType('land');
+  return ajaxGet(URL, token, callback).map(({ response }) => response);
+};
+
 export interface InputPlaceWithUuid {
   placeUuid?: PlaceUuid;
   admPlaceUuid?: AdmPlaceUuid;
@@ -127,14 +136,26 @@ export interface DbAdmPlace {
   fullPath: string;
 }
 
+export type DerivedCoordinate = {
+  lat: number;
+  lng: number;
+  utm33X?: number;
+  utm33Y?: number;
+  utmX?: number;
+  utmY?: number;
+  d1?: string;
+  d2?: string;
+};
+
 export interface InputCoordinate {
   coordinateUuid?: CoordinateUuid;
   coordinateType?: string;
-  datum?: string;
+  datum: 'WGS84' | 'ED50';
   zone?: string;
   bend?: string;
   coordinateString?: string;
   coordinateGeometry?: string;
+  derivedCoordinate?: DerivedCoordinate;
 }
 
 export interface InputCoordinateAttribute {

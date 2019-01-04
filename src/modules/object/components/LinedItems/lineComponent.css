@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  justify-content: center;
+  flex-flow: row;
+}
+
+.item {
+  align-content: center;
+  justify-content: left;
+}
+.label {
+  justify-content: right;
+}

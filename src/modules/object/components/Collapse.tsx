@@ -2,30 +2,38 @@ import * as React from 'react';
 import * as FontAwesome from 'react-fontawesome';
 
 type CollapseState = { collapsed: Boolean };
-type CollapseProps<B> = {
-  head: string;
+type CollapseProps<A, B> = {
+  heading?: string;
+  Head: JSX.Element;
   Body: JSX.Element;
+  headProps?: A;
   bodyProps?: B;
   readOnly?: boolean;
   collapsed?: boolean;
+  showHead?: boolean;
 };
 
-export default class CollapseComponent<B> extends React.Component<
-  CollapseProps<B>,
+export default class CollapseComponent<A, B> extends React.Component<
+  CollapseProps<A, B>,
   CollapseState
 > {
-  constructor(props: CollapseProps<B>) {
+  constructor(props: CollapseProps<A, B>) {
     super(props);
     this.state = { collapsed: props.collapsed || false };
   }
   render() {
-    const { head, Body } = this.props;
+    const { Head, Body } = this.props;
     return (
       <div
         className="container-fluid"
         style={{ borderStyle: 'solid', borderWidth: 'thin' }}
       >
-        <h3>{head}</h3>
+        {this.props.heading && (
+          <div className="page-header">
+            <h3>{this.props.heading}</h3>
+          </div>
+        )}
+        {this.state.collapsed && this.props.showHead && Head}
         <button
           data-toggle="tooltip"
           style={{ float: 'right' }}

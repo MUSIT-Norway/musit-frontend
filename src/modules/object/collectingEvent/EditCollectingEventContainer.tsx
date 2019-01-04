@@ -12,10 +12,13 @@ import store$, {
   editEventPlaceRevision$,
   editEventMetaData$,
   EditCollectingEventProps,
+  EditEventAttributesProps,
   EditPlaceProps,
   getCollectingEvent$,
   setDisabledState$,
-  setDraftState$
+  setDraftState$,
+  EditPersonEventProps,
+  editEventPersonRevision$
 } from './CollectingEventStore';
 import { History } from 'history';
 import { AjaxPost } from '../../../types/ajax';
@@ -81,9 +84,21 @@ const editCollectingEventProps = (combinedStore: any, upstream: { history: Histo
       });
     },
     editEventAttributesRevision: (ajaxPost: AjaxPost<any>) => (
-      props: EditCollectingEventProps
+      props: EditEventAttributesProps
     ) => {
       editEventAttributesRevision$.next({
+        id: props.id,
+        data: props.data,
+        token: props.token,
+        collectionId: props.collectionId,
+        ajaxPost,
+        callback: props.callback
+      });
+    },
+    editEventPersonRevision: (ajaxPost: AjaxPost<any>) => (
+      props: EditPersonEventProps
+    ) => {
+      editEventPersonRevision$.next({
         id: props.id,
         data: props.data,
         token: props.token,

@@ -1,4 +1,3 @@
-// @flow
 import { AppSession } from '../types/appSession';
 import {
   History,

@@ -18,12 +18,18 @@ export type PersonNameUuid = Uuid;
 
 export type ActorsAndRelation = {
   actorUuid?: PersonUuid;
-  roleId?: RoleId;
+  roleId: RoleId;
   roleText?: string;
-  name?: string;
-  personNameUuid?: PersonNameUuid;
+  name: string;
+  personNameUuid: PersonNameUuid;
 };
 
+export interface InputActorAndRelation {
+  actorUuid?: PersonUuid;
+  roleId: RoleId;
+  name: string;
+  personNameUuid: PersonNameUuid;
+}
 export type Person = {
   collections?: Collection[];
   firstName?: string;
@@ -44,7 +50,7 @@ export type PersonAttribute = {
   url?: string;
   verbatimDate?: string;
 };
-
+/* 
 export interface InputEvent {
   eventUuid?: EventUuid;
   eventType: number;
@@ -59,6 +65,31 @@ export interface InputEvent {
   eventDateTo?: string;
   eventDateVerbatim?: string;
   placeUuid?: Uuid;
+} */
+
+export interface InputEvent {
+  eventUuid?: EventUuid;
+  eventTypeId: number;
+  museumId?: number;
+  collectionId?: number;
+  //note?: string;
+  partOf?: EventUuid;
+  relatedActors?: InputActorAndRelation[];
+  eventDateFrom?: string;
+  eventDateTo?: string;
+  eventDateVerbatim?: string;
+  placeUuid?: Uuid;
+  attributes?: CollectingEventAttributes;
+  revisionOf?: EventUuid;
+}
+
+export type EventAttributes = object; //We know nothing of the attributes on the generic level!
+
+export interface CollectingEventAttributes extends EventAttributes {
+  name: string;
+  methodId?: number;
+  method?: string;
+  note?: string;
 }
 
 export interface InputCollectingEvent extends InputEvent {
@@ -78,7 +109,7 @@ export interface OutActorAndRelation {
 
 export interface OutputEvent {
   eventUuid: EventUuid;
-  eventType: number;
+  eventTypeId: number;
   museumId: number;
   collectionId: number;
   note?: string;
@@ -90,13 +121,7 @@ export interface OutputEvent {
   eventDateTo?: string;
   eventDateVerbatim?: string;
   place?: OutPlace;
-}
-
-export interface OutputCollectingEvent extends OutputEvent {
-  name: string;
-  methodId?: number;
-  method?: string;
-  methodDescription?: string;
+  attributes?: CollectingEventAttributes;
 }
 
 export interface OutPlaceAndRelation {
@@ -120,31 +145,30 @@ export class InputPlaceAndRelation implements InputPlaceAndRelation {
 }
 
 export interface InputDateRevision {
-  eventDateFrom: string;
-  eventDateTo: string;
-  eventDateVerbatim: string;
+  eventDateFrom?: string;
+  eventDateTo?: string;
+  eventDateVerbatim?: string;
 }
 
 export class InputDateRevision implements InputDateRevision {
-  eventDateFrom: string;
-  eventDateTo: string;
-  eventDateVerbatim: string;
-  constructor(eventDateFrom: string, eventDateTo: string, eventDateVerbatim: string) {
+  eventDateFrom?: string;
+  eventDateTo?: string;
+  eventDateVerbatim?: string;
+  constructor(eventDateFrom?: string, eventDateTo?: string, eventDateVerbatim?: string) {
     this.eventDateFrom = eventDateFrom;
     this.eventDateTo = eventDateTo;
     this.eventDateVerbatim = eventDateVerbatim;
   }
 }
 
-export class CollectingEvent implements InputCollectingEvent {
-  name: string;
+export class CollectingEvent implements InputEvent {
   methodId?: number;
   method?: string;
   methodDescription?: string;
   eventUuid: EventUuid;
-  eventType: number;
-  museumId?: number;
-  collectionId?: number;
+  eventTypeId: number;
+  museumId: number;
+  collectionId: number;
   note?: string;
   partOf?: EventUuid;
   createdBy?: PersonUuid; // Person;
@@ -154,16 +178,17 @@ export class CollectingEvent implements InputCollectingEvent {
   eventDateTo?: string;
   eventDateVerbatim?: string;
   placeUuid?: Uuid;
+  attributes?: CollectingEventAttributes;
 
   constructor(
-    name: string,
     eventUuid: EventUuid,
-    eventType: number,
+    eventTypeId: number,
+    museumId: number,
+    collectionId: number,
+    name: string,
     methodId?: number,
     method?: string,
     methodDescription?: string,
-    museumId?: number,
-    collectionId?: number,
     note?: string,
     partOf?: EventUuid,
     createdBy?: PersonUuid, //Person,
@@ -174,13 +199,12 @@ export class CollectingEvent implements InputCollectingEvent {
     eventDateVerbatim?: string,
     placeUuid?: Uuid
   ) {
-    this.name = name;
     this.eventUuid = eventUuid;
-    this.eventType = eventType;
-    (this.methodId = methodId),
-      (this.method = method),
-      (this.methodDescription = methodDescription),
-      (this.museumId = museumId);
+    this.eventTypeId = eventTypeId;
+    this.methodId = methodId;
+    this.method = method;
+    this.methodDescription = methodDescription;
+    this.museumId = museumId;
     this.collectionId = collectionId;
     this.note = note;
     this.partOf = partOf;
@@ -191,6 +215,12 @@ export class CollectingEvent implements InputCollectingEvent {
     this.eventDateTo = eventDateTo;
     this.eventDateVerbatim = eventDateVerbatim;
     this.placeUuid = placeUuid;
+    this.attributes = {
+      methodId: methodId,
+      method: method,
+      note: note,
+      name: name
+    };
   }
 }
 export const getCollectingEvent: (
@@ -201,11 +231,7 @@ export const getCollectingEvent: (
     token: string;
     callback?: Callback<Star>;
   }
-) => Observable<InputCollectingEvent> = (ajaxGet = simpleGet) => ({
-  id,
-  token,
-  callback
-}) => {
+) => Observable<OutputEvent> = (ajaxGet = simpleGet) => ({ id, token, callback }) => {
   const URL = Config.api.collectingEvent.getEvent(id);
   console.log('URL', URL);
   return ajaxGet(URL, token, callback)
@@ -218,14 +244,10 @@ export const addCollectingEvent: (
 ) => (
   props: {
     token: string;
-    data: InputCollectingEvent;
+    data: InputEvent;
     callback?: Callback<Star>;
   }
-) => Observable<InputCollectingEvent> = (ajaxPost = simplePost) => ({
-  data,
-  token,
-  callback
-}) => {
+) => Observable<InputEvent> = (ajaxPost = simplePost) => ({ data, token, callback }) => {
   const URL = Config.api.collectingEvent.addEventUrl;
   return ajaxPost(URL, data, token, callback).map(({ response }) => response);
 };
@@ -257,10 +279,10 @@ export const editEventAttributesRevision: (
   props: {
     id: string;
     token: string;
-    data: InputCollectingEvent;
+    data: CollectingEventAttributes;
     callback?: Callback<Star>;
   }
-) => Observable<InputCollectingEvent> = (ajaxPost = simplePost) => ({
+) => Observable<CollectingEventAttributes> = (ajaxPost = simplePost) => ({
   id,
   data,
   token,
@@ -278,16 +300,36 @@ export const editEventPlaceRevision: (
   props: {
     id: string;
     token: string;
-    data: InputPlaceWithUuid;
+    data: InputPlaceWithUuid & { methodId?: number };
     callback?: Callback<Star>;
   }
-) => Observable<InputPlaceWithUuid> = (ajaxPost = simplePost) => ({
+) => Observable<[Observable<InputPlaceWithUuid>, Observable<InputCollectingEvent>]> = (
+  ajaxPost = simplePost
+) => ({ id, data, token, callback }) => {
+  const placeURL = Config.api.collectingEvent.editEvent.eventPlaceRevision(id);
+  const eventURL = Config.api.collectingEvent.editEvent.eventAttributesRevision(id);
+  return Observable.forkJoin(
+    ajaxPost(placeURL, data, token, callback).map(({ response }) => response),
+    ajaxPost(eventURL, data, token, callback).map(({ response }) => response)
+  );
+};
+
+export const editEventPersonRevision: (
+  ajaxPost: AjaxPost<Star>
+) => (
+  props: {
+    id: string;
+    token: string;
+    data: ActorsAndRelation[];
+    callback?: Callback<Star>;
+  }
+) => Observable<InputActorAndRelation[]> = (ajaxPost = simplePost) => ({
   id,
   data,
   token,
   callback
 }) => {
-  const URL = Config.api.collectingEvent.editEvent.eventPlaceRevision(id);
+  const URL = Config.api.collectingEvent.editEvent.eventPersonRevision(id);
   return ajaxPost(URL, data, token, callback).map(({ response }) => response);
 };
 

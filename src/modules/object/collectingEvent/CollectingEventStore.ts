@@ -3,13 +3,22 @@ import {
   addCollectingEvent,
   CollectingEvent,
   InputCollectingEvent,
-  OutputCollectingEvent,
+  OutputEvent,
   editEventDateRevision,
   editEventPlaceRevision,
+  editEventPersonRevision,
   editEventAttributesRevision,
-  InputDateRevision
+  CollectingEventAttributes,
+  InputDateRevision,
+  ActorsAndRelation,
+  InputEvent
 } from '../../../models/object/collectingEvent';
-import { addPlace, InputPlace, inputPlace } from '../../../models/object/place';
+import {
+  addPlace,
+  InputPlace,
+  inputPlace,
+  InputPlaceWithUuid
+} from '../../../models/object/place';
 import { CollectingEventState } from './CollectingEventComponent';
 import { Callback, AjaxGet, AjaxPost, AjaxPut } from '../../../types/ajax';
 import { Star } from '../../../types/common';
@@ -20,11 +29,19 @@ import { simpleGet, simplePost, simplePut } from '../../../shared/RxAjax';
 import { KEEP_ALIVE } from '../../../stores/constants';
 import { createStore } from 'react-rxjs';
 import { toFrontend } from '../collectingEvent/CollectingEventComponent';
+import { AdmPlace } from '../placeStateless/PlaceComponent';
+import { PersonState } from './PersonComponent';
+import {
+  InputPersonName,
+  getPersonName,
+  addPersonName
+} from '../../../models/object/person';
 
 export type CollectingEventStoreState = {
   localState?: CollectingEventState;
-  collectingEvent?: InputCollectingEvent;
-  collectingEventList?: Array<InputCollectingEvent>;
+  collectingEvent?: InputEvent;
+  collectingEventList?: Array<InputEvent>;
+  personState?: PersonState;
 };
 export type CollectingEventMethod = {
   methodId: number;
@@ -36,11 +53,13 @@ export type PredefinedCollectingEventValues = {
   coordinateSources: { source: string }[] | null;
   geometryTypes: { geometry: string }[] | null;
   collectingMethods: CollectingEventMethod[] | null;
+  countries: AdmPlace[];
 };
 export const initialCollectingEventState = {
   collectingEvent: {
-    eventType: 6,
-    name: ''
+    eventTypeId: 6,
+    museumId: 99,
+    collectionId: 0
   }
 };
 export type CommonParams = {
@@ -52,23 +71,39 @@ export type CommonParams = {
 export type GetCollectingEventProps = CommonParams & { id: string };
 export type AddCollectingEventProps = CommonParams & { data: CollectingEventState };
 export type EditCollectingEventProps = CommonParams & {
-  data: InputCollectingEvent;
+  data: InputEvent;
   id: string;
 };
-export type EditPlaceProps = CommonParams & { id: string; data: InputPlace };
 
-export const toBackend: ((p: CollectingEventState) => InputCollectingEvent) = (
+export type EditEventAttributesProps = CommonParams & {
+  data: CollectingEventAttributes;
+  id: string;
+};
+export type EditPlaceProps = CommonParams & {
+  id: string;
+  data: InputPlaceWithUuid & { methodId?: number };
+};
+
+export type AddPersonNameProps = CommonParams & { data: InputPersonName };
+export type GetPersonNameProps = CommonParams & { id: string };
+
+export type EditPersonEventProps = CommonParams & {
+  id: string;
+  data: ActorsAndRelation[];
+};
+
+export const toBackend: ((p: CollectingEventState) => InputEvent) = (
   p: CollectingEventState
 ) => {
   const c = new CollectingEvent(
-    p.eventData.name,
     p.eventData.eventUuid,
     p.eventData.eventType,
+    p.eventData.museumId,
+    p.eventData.collectionId,
+    p.eventData.name,
     p.eventData.methodId,
     p.eventData.method,
     p.eventData.methodDescription,
-    p.eventData.museumId,
-    p.eventData.collectionId,
     p.eventData.note,
     p.eventData.partOf,
     p.eventData.createdBy,
@@ -81,6 +116,12 @@ export const toBackend: ((p: CollectingEventState) => InputCollectingEvent) = (
   );
   console.log('to backend ', c);
   return c;
+};
+
+export const toBackendPersonName: ((p: InputPersonName) => InputPersonName) = (
+  p: InputPersonName
+) => {
+  return p;
 };
 
 const getCollectingEventData = (ajaxGet: AjaxGet<Star>) => (
@@ -130,29 +171,32 @@ const editEventMetaData = (ajaxPost: AjaxPost<Star>) => (
   props: EditCollectingEventProps
 ) => {
   const inputDateRevision = new InputDateRevision(
-    props.data && props.data.eventDateFrom ? props.data.eventDateFrom : '',
-    props.data && props.data.eventDateTo ? props.data.eventDateTo : '',
-    props.data && props.data.eventDateVerbatim ? props.data.eventDateVerbatim : ''
+    props.data && props.data.eventDateFrom ? props.data.eventDateFrom : undefined,
+    props.data && props.data.eventDateTo ? props.data.eventDateTo : undefined,
+    props.data && props.data.eventDateVerbatim ? props.data.eventDateVerbatim : undefined
   );
-  const inputEventAttributes: InputCollectingEvent = {
-    name: props.data.name,
-    eventType: props.data.eventType,
-    method: props.data.method,
-    methodId: props.data.methodId,
-    methodDescription: props.data.methodDescription,
-    note: props.data.note
-  };
+  const inputEventAttributes: CollectingEventAttributes | undefined = props.data
+    .attributes
+    ? {
+        name: props.data.attributes.name,
+        method: props.data.attributes.method,
+        methodId: props.data.attributes.methodId,
+        note: props.data.attributes && props.data.attributes.note
+      }
+    : undefined;
   return Observable.forkJoin(
     editEventDateRevision(ajaxPost)({
       id: props.id,
       data: inputDateRevision,
       token: props.token
     }),
-    editEventAttributesRevision(ajaxPost)({
-      id: props.id,
-      data: inputEventAttributes,
-      token: props.token
-    })
+    inputEventAttributes
+      ? editEventAttributesRevision(ajaxPost)({
+          id: props.id,
+          data: inputEventAttributes,
+          token: props.token
+        })
+      : Observable.empty()
   )
     .last()
     .toPromise()
@@ -168,35 +212,29 @@ const editEventDateRevisionData = (ajaxPost: AjaxPost<Star>) => (
   props: EditCollectingEventProps
 ) =>
   Observable.of(props).flatMap(props => {
-    const inputPlaceAndRevision = new InputDateRevision(
-      props.data && props.data.eventDateFrom ? props.data.eventDateFrom : '',
-      props.data && props.data.eventDateTo ? props.data.eventDateTo : '',
-      props.data && props.data.eventDateVerbatim ? props.data.eventDateVerbatim : ''
+    const inputDateRevision = new InputDateRevision(
+      props.data && props.data.eventDateFrom ? props.data.eventDateFrom : undefined,
+      props.data && props.data.eventDateTo ? props.data.eventDateTo : undefined,
+      props.data && props.data.eventDateVerbatim
+        ? props.data.eventDateVerbatim
+        : undefined
     );
 
     return editEventDateRevision(ajaxPost)({
       id: props.id,
-      data: inputPlaceAndRevision,
+      data: inputDateRevision,
       token: props.token,
       callback: props.callback
     });
   });
 
 const editEventAttributesRevisionData = (ajaxPost: AjaxPost<Star>) => (
-  props: EditCollectingEventProps
+  props: EditEventAttributesProps
 ) =>
   Observable.of(props).flatMap(props => {
-    const inputEventAttributes: InputCollectingEvent = {
-      name: props.data.name,
-      eventType: props.data.eventType,
-      method: props.data.method,
-      methodId: props.data.methodId,
-      methodDescription: props.data.methodDescription,
-      note: props.data.note
-    };
     return editEventAttributesRevision(ajaxPost)({
       id: props.id,
-      data: inputEventAttributes,
+      data: props.data,
       token: props.token,
       callback: props.callback
     });
@@ -214,6 +252,44 @@ const editEventPlaceRevisionData = (ajaxPost: AjaxPost<Star>) => (
     });
   });
 
+const editPersonRevisionData = (ajaxPost: AjaxPost<Star>) => (
+  props: EditPersonEventProps
+) =>
+  Observable.of(props).flatMap(props => {
+    return editEventPersonRevision(ajaxPost)({
+      id: props.id,
+      data: props.data,
+      token: props.token,
+      callback: props.callback
+    });
+  });
+
+const addPersonNameData = (ajaxGet: AjaxGet<Star>, ajaxPost: AjaxPost<Star>) => (
+  props: AddPersonNameProps
+) =>
+  Observable.of(props)
+    .flatMap(props =>
+      addPersonName(ajaxPost)({
+        data: toBackendPersonName(props.data),
+        token: props.token /* ,
+        callback: props.callback */
+      })
+    )
+    .do(res => console.log('((((=====)))) ', res.personNameUuid))
+    .flatMap(res => {
+      return getPersonNameFromUuid(ajaxGet)({
+        id: res.personNameUuid || '',
+        collectionId: props.collectionId,
+        token: props.token,
+        callback: props.callback
+      });
+    })
+    .do(r => console.log('Return from get personNameFromUuid ', r));
+
+const getPersonNameFromUuid = (ajaxGet: AjaxGet<Star>) => (props: GetPersonNameProps) =>
+  Observable.of(props).flatMap(props =>
+    getPersonName(ajaxGet)({ id: props.id, token: props.token, callback: props.callback })
+  );
 export const addCollectingEvent$: Subject<
   AddCollectingEventProps & { ajaxPost: AjaxPost<Star> }
 > = createAction('addCollectingEvent$');
@@ -245,8 +321,14 @@ export const editEventPlaceRevision$: Subject<
   }
 > = createAction('editEventPlaceRevision$');
 
+export const editEventPersonRevision$: Subject<
+  EditPersonEventProps & {
+    ajaxPost: AjaxPost<Star>;
+  }
+> = createAction('editEventPlaceRevision$');
+
 export const editEventAttributesRevision$: Subject<
-  EditCollectingEventProps & {
+  EditEventAttributesProps & {
     ajaxPost: AjaxPost<Star>;
   }
 > = createAction('editEventAttributesRevision$');
@@ -256,15 +338,26 @@ export const editEventMetaData$: Subject<
   }
 > = createAction('editEventMetaData$');
 
+export const addPersonName$: Subject<
+  AddPersonNameProps & { ajaxPost: AjaxPost<Star> }
+> = createAction('addPersonName$');
+
+export const getPersonName$: Subject<
+  GetPersonNameProps & { ajaxGet: AjaxGet<Star> }
+> = createAction('getPersonName$');
+
 type Actions = {
   getCollectingEvent$: Subject<GetCollectingEventProps>;
   addCollectingEvent$: Subject<AddCollectingEventProps>;
+  editEventPersonRevision$: Subject<EditPersonEventProps>;
   editEventDateRevision$: Subject<EditCollectingEventProps>;
-  editEventAttributesRevision$: Subject<EditCollectingEventProps>;
+  editEventAttributesRevision$: Subject<EditEventAttributesProps>;
   editEventPlaceRevision$: Subject<EditPlaceProps>;
   editEventMetaData$: Subject<EditCollectingEventProps>;
   setDisabledState$: Subject<{ fieldName: string; value: boolean }>;
   setDraftState$: Subject<{ subState?: string; fieldName: string; value: boolean }>;
+  addPersonName$: Subject<AddPersonNameProps>;
+  getPersonName$: Subject<GetPersonNameProps>;
 };
 
 export const reducer$ = (
@@ -304,9 +397,9 @@ export const reducer$ = (
     ),
     actions.getCollectingEvent$
       .switchMap(getCollectingEventData(ajaxGet))
-      .map((outEvent: OutputCollectingEvent) => (state: CollectingEventStoreState) => ({
+      .map((outEvent: OutputEvent) => (state: CollectingEventStoreState) => ({
         ...state,
-        eventState: outEvent,
+        collectingEvent: outEvent,
         localState: toFrontend(outEvent)
       })),
     actions.addCollectingEvent$
@@ -329,15 +422,33 @@ export const reducer$ = (
           ...state
         })
       ),
+    actions.editEventPersonRevision$
+      .switchMap(editPersonRevisionData(ajaxPost))
+      .map(() => (state: CollectingEventStoreState) => ({
+        ...state
+      })),
     actions.editEventAttributesRevision$
       .switchMap(editEventAttributesRevisionData(ajaxPost))
-      .map(
-        (collectingEvent: InputCollectingEvent) => (
-          state: CollectingEventStoreState
-        ) => ({
-          ...state
-        })
-      ),
+      .map(() => (state: CollectingEventStoreState) => ({
+        ...state
+      })),
+    actions.addPersonName$
+      .switchMap(addPersonNameData(ajaxGet, ajaxPost))
+      .map((o: InputPersonName) => (state: CollectingEventStoreState) => {
+        const newPersonNames =
+          state.personState && state.personState.personNames
+            ? state.personState.personNames
+            : [];
+        const tempPersonNames = [...newPersonNames, { ...o, roleId: 11 }];
+        return {
+          ...state,
+          personState: {
+            ...state.personState,
+            personName: o,
+            personNames: tempPersonNames
+          }
+        };
+      }),
     actions.editEventMetaData$
       .switchMap(editEventMetaData(ajaxPost))
       .map(() => (state: CollectingEventStoreState) => ({
@@ -357,10 +468,13 @@ export const store$ = (
     addCollectingEvent$,
     editEventDateRevision$,
     editEventPlaceRevision$,
+    editEventPersonRevision$,
     editEventAttributesRevision$,
     setDisabledState$,
     setDraftState$,
-    editEventMetaData$
+    editEventMetaData$,
+    addPersonName$,
+    getPersonName$
   },
   ajaxGet: AjaxGet<Star> = simpleGet,
   ajaxPost: AjaxPost<Star> = simplePost,

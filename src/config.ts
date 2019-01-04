@@ -47,13 +47,16 @@ export default {
       getDatumURL: '/api/place/coordinatedatums',
       getCoordinateSourceURL: '/api/place/coordinatesources',
       getCoordinateTypesURL: '/api/place/coordinatetypes',
-      getCoordinateGeometriesURL: '/api/place/coordinategeometries'
+      getCoordinateGeometriesURL: '/api/place/coordinategeometries',
+      loadAdmPlaceWithType: (type: string) => `/api/place/admPlaces?type=${type}`
     },
     collectingEvent: {
       addEventUrl: '/api/event/events',
       getCollectingEventMethods: '/api/event/collectingmethods',
       getEvent: (eventUuid: string) => `/api/event/events/${eventUuid}`,
       editEvent: {
+        eventPersonRevision: (eventUuid: string) =>
+          `/api/event/events/${eventUuid}/personRevisions`,
         eventDateRevision: (eventUuid: string) =>
           `/api/event/events/${eventUuid}/dateRevisions`,
         eventPlaceRevision: (eventUuid: string) =>

@@ -9,10 +9,11 @@ import {
   searchPersonName,
   mergePerson,
   //MergePerson,
-  Person,
-  addPersonName,
-  InputPersonName,
-  getPersonName
+  Person
+  // ,
+  // addPersonName,
+  // InputPersonName,
+  // getPersonName
 } from '../../../models/object/person';
 import { Observable, Subject } from 'rxjs';
 import { Callback, AjaxGet, AjaxPost, AjaxPut } from '../../../types/ajax';
@@ -22,14 +23,14 @@ import { createAction } from '../../../shared/react-rxjs-patch';
 import { Reducer } from 'react-rxjs';
 import { Star } from '../../../types/common';
 import { PersonState, toFrontend, SynonymType } from './PersonComponent';
-import { AddPersonNameState } from './PersonName';
+//import { AddPersonNameState } from './PersonNameComponent';
 
 export type PersonStoreState = {
   localState?: PersonState;
   person?: InputPerson | OutputPerson;
   personList?: Array<OutputPerson>;
-  personName?: InputPersonName;
-  personNameState?: AddPersonNameState;
+  // personName?: InputPersonName;
+  // personNameState?: AddPersonNameState;
 };
 
 export const initialPersonState = {
@@ -79,7 +80,7 @@ export const toBackend: ((p: PersonState) => InputPerson) = (p: PersonState) => 
   return c;
 };
 
-export const toBackendPersonName: ((p: AddPersonNameState) => InputPersonName) = (
+/* export const toBackendPersonName: ((p: AddPersonNameState) => InputPersonName) = (
   p: AddPersonNameState
 ) => {
   const c = new InputPersonName(
@@ -92,7 +93,7 @@ export const toBackendPersonName: ((p: AddPersonNameState) => InputPersonName) =
   );
   console.log('to backend ', c);
   return c;
-};
+}; */
 
 export type GetPersonProps = CommonParams & { id: string };
 export type AddPersonProps = CommonParams & { data: PersonState };
@@ -107,8 +108,8 @@ export type MergePersonProps = CommonParams & {
 
 export type GetPersonsFromPersonNameProps = CommonParams & { name: string };
 
-export type AddPersonNameProps = CommonParams & { data: AddPersonNameState };
-export type GetPersonNameProps = CommonParams & { id: string };
+// export type AddPersonNameProps = CommonParams & { data: AddPersonNameState };
+// export type GetPersonNameProps = CommonParams & { id: string };
 
 const getPersonById = (ajaxGet: AjaxGet<Star>) => (props: GetPersonProps) =>
   Observable.of(props).flatMap(props =>
@@ -173,7 +174,7 @@ const mergePersonData = (ajaxPost: AjaxPost<Star>) => (props: MergePersonProps) 
       callback: props.callback
     })
   );
-const addPersonNameData = (ajaxGet: AjaxGet<Star>, ajaxPost: AjaxPost<Star>) => (
+/* const addPersonNameData = (ajaxGet: AjaxGet<Star>, ajaxPost: AjaxPost<Star>) => (
   props: AddPersonNameProps
 ) =>
   Observable.of(props)
@@ -192,16 +193,11 @@ const addPersonNameData = (ajaxGet: AjaxGet<Star>, ajaxPost: AjaxPost<Star>) => 
         token: props.token
       });
     });
-
-/*
-        .flatMap(({personNameUuid}) => personNameUuid ? 
-    getPersonNameFromUuid(ajaxGet)({id: personNameUuid ||'', 
-    collectionId: props.collectionId,token: props.token}) : Observable.empty())
-     */
-const getPersonNameFromUuid = (ajaxGet: AjaxGet<Star>) => (props: GetPersonNameProps) =>
+ */
+/* const getPersonNameFromUuid = (ajaxGet: AjaxGet<Star>) => (props: GetPersonNameProps) =>
   Observable.of(props).flatMap(props =>
     getPersonName(ajaxGet)({ id: props.id, token: props.token, callback: props.callback })
-  );
+  ); */
 
 export const getEnrichedPersonsFromPersonName$: Subject<
   GetPersonsFromPersonNameProps & { ajaxGet: AjaxGet<Star> }
@@ -233,10 +229,10 @@ export const mergePerson$: Subject<
   }
 > = createAction('mergePerson$');
 
-export const addPersonName$: Subject<
+/* export const addPersonName$: Subject<
   AddPersonNameProps & { ajaxPost: AjaxPost<Star> }
 > = createAction('addPersonName$');
-
+ */
 export const getPersonName$: Subject<
   GetPersonProps & { ajaxGet: AjaxGet<Star> }
 > = createAction('getPersonName$');
@@ -249,8 +245,8 @@ type Actions = {
   getPersonsFromPersonName$: Subject<GetPersonsFromPersonNameProps>;
   getEnrichedPersonsFromPersonName$: Subject<GetPersonsFromPersonNameProps>;
   mergePerson$: Subject<MergePersonProps>;
-  addPersonName$: Subject<AddPersonNameProps>;
-  getPersonName$: Subject<GetPersonNameProps>;
+  // addPersonName$: Subject<AddPersonNameProps>;
+  // getPersonName$: Subject<GetPersonNameProps>;
 };
 
 export const reducer$ = (
@@ -292,7 +288,8 @@ export const reducer$ = (
       .map((person: InputPerson) => (state: PersonStoreState) => ({ ...state, person })),
     actions.mergePerson$
       .switchMap(mergePersonData(ajaxPost))
-      .map(() => (state: PersonStoreState) => ({ ...state })),
+      .map(() => (state: PersonStoreState) => ({ ...state }))
+    /* ,
     actions.addPersonName$
       .switchMap(addPersonNameData(ajaxGet, ajaxPost))
       .map((o: InputPersonName) => (state: PersonStoreState) => {
@@ -304,7 +301,7 @@ export const reducer$ = (
             personName: o
           }
         };
-      })
+      }) */
   );
 };
 
@@ -316,9 +313,9 @@ export const store$ = (
     addPerson$,
     editPerson$,
     getPersonsFromPersonName$,
-    mergePerson$,
-    addPersonName$,
-    getPersonName$
+    mergePerson$
+    // addPersonName$,
+    // getPersonName$
   },
   ajaxGet: AjaxGet<Star> = simpleGet,
   ajaxPost: AjaxPost<Star> = simplePost,

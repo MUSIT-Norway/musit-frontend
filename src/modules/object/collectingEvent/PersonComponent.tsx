@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { PersonNameSuggest } from '../../../components/suggest/PersonNameSuggest';
-//import { EventMetadataProps} from './CollectingEventComponent';
 import { ActorsAndRelation } from '../../../models/object/collectingEvent';
 import { AppSession } from '../../../types/appSession';
 import { History } from 'history';
 import { personDet } from '../../../models/object/classHist';
-import config from '../../../config';
-//import * as FontAwesome from 'react-fontawesome';
+import { PersonNameComponent } from '../person/PersonNameComponent';
+import { OutputPersonName, InputPersonName } from '../../../models/object/person';
+
+import { EditState, NonEditState } from '../types';
+import EditAndSaveButtons from '../components/EditAndSaveButtons';
 
 const personNameAsString = (n: ActorsAndRelation) => {
   return (
@@ -14,22 +16,78 @@ const personNameAsString = (n: ActorsAndRelation) => {
   );
 };
 
+export type PersonNameForCollectingEvent = OutputPersonName & {
+  personUuid?: string;
+  roleId: number;
+};
+export interface PersonState {
+  personName?: PersonNameForCollectingEvent;
+  personNames?: PersonNameForCollectingEvent[];
+  editingPersonName?: InputPersonName;
+  editState?: EditState | NonEditState;
+  disableOnChangeFullName?: boolean;
+  disableOnChangeOtherName?: boolean;
+  showNewPersonName?: boolean;
+}
+
 export type PersonProps = {
-  actorsAndRelation?: ActorsAndRelation[];
+  personNames?: OutputPersonName[];
+  formInvalid: boolean;
   disabled: boolean;
   value?: string;
   appSession: AppSession;
   history: History;
+  onClickSave: () => void;
+  onClickEdit: () => void;
   onChangePerson: (suggestion: personDet) => void;
   onAddPerson: () => void;
   onDeletePerson: (i: number) => void;
+  editingPersonName?: InputPersonName;
+  disableOnChangeFullName?: boolean;
+  disableOnChangeOtherName?: boolean;
+  showNewPersonName?: boolean;
+  onChangeFullName: (fieldName: string) => (newValue: string) => void;
+  onCreatePersonName: Function;
+  onClickNewPersonName: () => void;
+  nameEmpty: boolean;
+};
+
+export const ViewPersonComponent = (props: {
+  personNames: PersonNameForCollectingEvent[] | undefined;
+}) => {
+  return (
+    <div className="container-fluid">
+      <table className="table table-condensed">
+        <thead>
+          <th>Uuid</th>
+          <th>Name</th>
+        </thead>
+        <tbody>
+          {props.personNames &&
+            props.personNames.map((p: OutputPersonName, i: number) => (
+              <tr key={`pn-${i}`}>
+                <td>{p.personNameUuid}</td>
+                <td>{p.name}</td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
+    </div>
+  );
 };
 
 const PersonComponent = (props: PersonProps) => {
   return (
-    <div>
-      <div className="row form-group">
-        <div className="col-md-10">
+    <div className="container-fluid">
+      {' '}
+      <div className="row">
+        <label
+          className="control-label col-md-2"
+          htmlFor="PersonNameSuggestCollectingEvent"
+        >
+          Person name
+        </label>
+        <div className="col-md-6">
           <PersonNameSuggest
             id="PersonNameSuggestCollectingEvent"
             disabled={props.disabled}
@@ -39,13 +97,13 @@ const PersonComponent = (props: PersonProps) => {
             appSession={props.appSession}
             onChange={props.onChangePerson}
             history={props.history}
-            labelText="Leg (person name)"
             hideCreateNewPerson={true}
           />
         </div>
-        <div className="col-md-2">
+        <div className="col-md-1">
           <button
-            className="btn btn-default form-control"
+            className="btn btn-default"
+            disabled={props.disabled}
             onClick={e => {
               e.preventDefault();
               props.onAddPerson();
@@ -56,8 +114,37 @@ const PersonComponent = (props: PersonProps) => {
           </button>
         </div>
       </div>
-      <div className="row form-group">
-        <div className="col-md-12">
+      <div className="row">
+        <label className="control-label col-md-2" htmlFor="btnNewPersonname">
+          Fant du ikke personnavnet?
+        </label>
+        <div className="col-md-2">
+          <button
+            id="btnNewPersonname"
+            disabled={props.disabled}
+            className="btn btn-default btn-sm"
+            onClick={e => {
+              e.preventDefault();
+              props.onClickNewPersonName();
+            }}
+          >
+            {props.showNewPersonName ? 'Klikk for å skjule' : 'Lag nytt personnavn'}
+          </button>
+        </div>
+      </div>
+      {props.showNewPersonName && (
+        <PersonNameComponent
+          editingPersonName={props.editingPersonName}
+          disableOnChangeFullName={props.disableOnChangeFullName}
+          disableOnChangeOtherName={props.disableOnChangeOtherName}
+          appSession={props.appSession}
+          history={props.history}
+          onCreatePersonName={props.onCreatePersonName}
+          onChangeFullName={props.onChangeFullName}
+        />
+      )}
+      <div className="row">
+        <div className="col-md-10 col-md-offset-2">
           <table className="table table-condensed table-hover">
             <thead>
               <tr>
@@ -67,8 +154,8 @@ const PersonComponent = (props: PersonProps) => {
               </tr>
             </thead>
             <tbody>
-              {props.actorsAndRelation &&
-                props.actorsAndRelation.map((d: ActorsAndRelation, i: number) => (
+              {props.personNames &&
+                props.personNames.map((d: InputPersonName, i: number) => (
                   <div key={`det-row-${i}`}>
                     <tr>
                       <td className="col-md-5">
@@ -87,27 +174,20 @@ const PersonComponent = (props: PersonProps) => {
                           value={d.personNameUuid}
                         />
                       </td>
-                      {/* <td className="col-md-1">
-                        <a
-                          href=""
-                          onClick={e => {
-                            e.preventDefault();
-                            //props.setDetEditingIndex(i);
-                          }}
-                        >
-                          <FontAwesome name="edit" />
-                        </a>
-                      </td> */}
                       <td className="col-md-1">
-                        <a
-                          href=""
-                          onClick={e => {
-                            e.preventDefault();
-                            props.onDeletePerson(i);
-                          }}
-                        >
-                          Delete
-                        </a>
+                        {props.disabled ? (
+                          'Delete'
+                        ) : (
+                          <a
+                            href=""
+                            onClick={e => {
+                              e.preventDefault();
+                              props.onDeletePerson(i);
+                            }}
+                          >
+                            Delete
+                          </a>
+                        )}
                       </td>
                     </tr>
                   </div>
@@ -116,26 +196,24 @@ const PersonComponent = (props: PersonProps) => {
           </table>
         </div>
       </div>
-      <div className="row form-group">
-        <div className="col-md-2">
-          <button
-            className="btn btn-default form-control"
-            onClick={e => {
-              let url: string;
-              url = config.magasin.urls.client.person.addNewPersonNameBlank(
-                props.appSession
-              );
-              e.preventDefault();
-              props.history && props.history.push(url);
-            }}
-          >
-            {' '}
-            Opprett ny person
-          </button>
-        </div>
+      <div className="row">
+        {console.log('Anuradha nameEmpty personComponent', props.nameEmpty)}
+        <EditAndSaveButtons
+          onClickCancel={() => {}}
+          onClickEdit={props.onClickEdit}
+          onClickSave={props.onClickSave}
+          onClickDraft={() => {}}
+          editButtonState={{ visible: true, disabled: false }}
+          saveButtonState={{ visible: true, disabled: props.formInvalid }}
+          cancelButtonState={{ visible: true, disabled: false }}
+          draftButtonState={{ visible: false, disabled: false }}
+          saveButtonText={'Save'}
+          draftButtonText={'Utkast'}
+          editButtonText={'Endre'}
+          cancelButtonText={'Avbryt'}
+          nameEmpty={props.nameEmpty || props.disabled}
+        />
       </div>
-
-      <div className="row form-group" />
     </div>
   );
 };

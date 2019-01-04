@@ -38,8 +38,11 @@ export default class RxContainer<T> extends React.Component<RxContainerProps<T>>
 
   componentDidMount() {
     this.subscription = this.props.observable.subscribe((props: TODO) => {
+      console.log('DEVTOOLS');
       if (this.devTools) {
+        console.log('DEVTOOLS', props, this.devTools);
         this.devTools.send('update', props);
+        console.log('DEVTOOLS', props, this.devTools);
       }
       this.setState({ props });
     });

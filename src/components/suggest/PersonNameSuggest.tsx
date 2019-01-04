@@ -25,6 +25,7 @@ export interface PersonNameSuggestComponentProps {
   history: History;
   labelText?: string;
   hideCreateNewPerson?: boolean;
+  horizontal?: boolean;
 }
 
 /* Old:
@@ -97,9 +98,8 @@ export class PersonNameSuggestComponent extends React.Component<
   render() {
     return (
       <div>
-        <div className={this.props.hideCreateNewPerson ? 'col-md-12' : 'col-md-9'}>
+        <form className="form-horizontal">
           <div className="form-group">
-            <label htmlFor="personName">{this.props.labelText}</label>
             <Autosuggest
               suggestions={(this.props.suggest.data || []).sort(
                 (a: PersonNameSuggestion, b: PersonNameSuggestion) => {
@@ -131,33 +131,33 @@ export class PersonNameSuggestComponent extends React.Component<
               }}
             />
           </div>
-        </div>
-        {!this.props.hideCreateNewPerson && (
-          <div className={this.props.hideCreateNewPerson ? 'col-md-0' : 'col-md-3'}>
-            <label htmlFor="btnAddPerson">Create new</label>
-            <button
-              className="btn btn-default form-control"
-              disabled={this.state && this.state.disabled ? true : false}
-              onClick={e => {
-                let url: string;
-                if (this.state && this.state.value === '') {
-                  url = config.magasin.urls.client.person.addNewPersonNameBlank(
-                    this.props.appSession
-                  );
-                } else {
-                  url = config.magasin.urls.client.person.addNewPersonName(
-                    this.props.appSession,
-                    this.state.value ? this.state.value : ''
-                  );
-                }
-                e.preventDefault();
-                this.props.history && this.props.history.push(url);
-              }}
-            >
-              <FontAwesome name="user-plus" />
-            </button>
-          </div>
-        )}
+          {!this.props.hideCreateNewPerson && (
+            <div className={this.props.hideCreateNewPerson ? 'col-md-0' : 'col-md-3'}>
+              <label htmlFor="btnAddPerson">Create new</label>
+              <button
+                className="btn btn-default form-control"
+                disabled={this.state && this.state.disabled ? true : false}
+                onClick={e => {
+                  let url: string;
+                  if (this.state && this.state.value === '') {
+                    url = config.magasin.urls.client.person.addNewPersonNameBlank(
+                      this.props.appSession
+                    );
+                  } else {
+                    url = config.magasin.urls.client.person.addNewPersonName(
+                      this.props.appSession,
+                      this.state.value ? this.state.value : ''
+                    );
+                  }
+                  e.preventDefault();
+                  this.props.history && this.props.history.push(url);
+                }}
+              >
+                <FontAwesome name="user-plus" />
+              </button>
+            </div>
+          )}
+        </form>
       </div>
     );
   }
