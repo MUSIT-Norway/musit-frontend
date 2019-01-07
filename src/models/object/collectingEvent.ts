@@ -307,15 +307,12 @@ export const editEventPlaceRevision: (
   ajaxPost = simplePost
 ) => ({ id, data, token, callback }) => {
   const placeURL = Config.api.collectingEvent.editEvent.eventPlaceRevision(id);
-  /*
-  //Comment: Anuradha - No need to update eventMeta data since we only changing the place date
-   const eventURL = Config.api.collectingEvent.editEvent.eventAttributesRevision(id);
-   return Observable.forkJoin(
+
+  const eventURL = Config.api.collectingEvent.editEvent.eventAttributesRevision(id);
+  return Observable.forkJoin(
     ajaxPost(placeURL, data, token, callback).map(({ response }) => response),
     ajaxPost(eventURL, data, token, callback).map(({ response }) => response)
-  ); 
-  */
-  return ajaxPost(placeURL, data, token, callback).map(({ response }) => response);
+  );
 };
 
 export const editEventPersonRevision: (
