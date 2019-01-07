@@ -286,7 +286,8 @@ export const toFrontend: (p: OutputEvent) => CollectingEventState = (p: OutputEv
               personNameUuid: r.personNameUuid,
               name: r.name,
               roleId: r.roleId
-            }))
+            })),
+            editState: 'Not editing'
           }
         : undefined,
       placeState: innP.place
@@ -515,6 +516,7 @@ export class CollectingEventComponent extends React.Component<
         }
       };
 
+      console.log('ANU 44fsfujjj444hhh: calling editEventMetaDate');
       this.props.editEventMetaData()(props);
     }
   }
@@ -868,6 +870,7 @@ export class CollectingEventComponent extends React.Component<
           getAdmPlaceData={(field: string) => (a: AdmPlace) => {
             const arrayPlaces = a.path ? a.path.split(':') : undefined;
             let PlaceString: string = '';
+            console.log('Anuradha getAdmPlaceDate ', arrayPlaces);
 
             if (field === 'Kommune') {
               PlaceString = arrayPlaces ? arrayPlaces[5] : '';
@@ -1273,6 +1276,7 @@ export class CollectingEventComponent extends React.Component<
         <PersonComponent
           {...this.state}
           disabled={this.props.personReadOnly ? this.props.personReadOnly : false}
+          readOnly={this.props.personReadOnly ? this.props.personReadOnly : false}
           value={''}
           appSession={this.props.appSession}
           history={this.props.history}
