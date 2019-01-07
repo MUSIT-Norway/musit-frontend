@@ -16,6 +16,8 @@ node {
         sh 'git --version'
         sh 'git remote -v'
         sh 'git branch -avv'
+        sh 'pwd'
+        sh 'ls -al ~/.ssh'
         sh 'git remote show origin'
         
     }
