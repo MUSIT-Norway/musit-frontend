@@ -15,7 +15,6 @@ import { History } from 'history';
 import config from '../../../config';
 import { AjaxResponse } from 'rxjs';
 import { AjaxGet } from '../../../types/ajax';
-import { emitError } from '../../../shared/errors';
 import {
   museumAndCollections,
   museum,
@@ -188,13 +187,9 @@ export type PersonProps = PersonState & {
   personSearchList: OutputPerson[];
   onChangeVerbatimDate: (newDate?: string) => void;
   heading?: string;
-  standAlone?: boolean;
+  //standAlone?: boolean;
   readOnly?: boolean;
   editingIndexSynonyms?: number;
-  setEditingIndexSynonyms: (i: number) => void;
-  onClickSavePersonName: () => void;
-  onClickAddPersonName: () => void;
-  onDeleteSynonyms: (i: number) => (e: React.SyntheticEvent<HTMLAnchorElement>) => void;
   onAddPersonAsSynonym: (p: OutputPerson) => void;
   onRemovePersonAsSynonym: () => void;
   onClickMerge: Function;
@@ -206,19 +201,7 @@ export type PersonProps = PersonState & {
   ) => (s: GetPersonsFromPersonNameProps) => void;
 };
 
-const Synonyms = (props: {
-  editingIndex?: number;
-  synonyms?: SynonymType[];
-  editSynonym?: PersonName;
-  standAlone?: boolean;
-  readOnly?: boolean;
-  editingIndexSynonyms?: number;
-  onAdd: (event: React.SyntheticEvent<HTMLButtonElement>) => void;
-  onSave: (event: React.SyntheticEvent<HTMLButtonElement>) => void;
-  onChange: (field: string) => (value: string) => void;
-  onDelete: (i: number) => (e: React.SyntheticEvent<HTMLAnchorElement>) => void;
-  setEditingIndexSynonyms: (i: number) => void;
-}) => (
+const Synonyms = (props: { synonyms?: SynonymType[]; readOnly?: boolean }) => (
   <div>
     <div className="panel-heading">
       <div className="panel-title">
@@ -248,9 +231,6 @@ const Synonyms = (props: {
                     <th className="col-md-4">
                       <b>Navn</b>
                     </th>
-                    <th className="col-md-2">
-                      <b />
-                    </th>
                   </tr>
                 </thead>
                 <tbody id="synonymsTableBody">
@@ -262,13 +242,6 @@ const Synonyms = (props: {
                         <td className="col-md-2">{e.firstName}</td>
                         <td className="col-md-2">{e.lastName}</td>
                         <td className="col-md-4">{e.nameString}</td>
-                        {!props.readOnly && (
-                          <td className="col-md-2">
-                            <a href="" onClick={props.onDelete(i)}>
-                              Delete
-                            </a>
-                          </td>
-                        )}
                       </tr>
                     ))}
                 </tbody>
@@ -276,80 +249,7 @@ const Synonyms = (props: {
             </div>
           </div>
         )}
-      {props.editingIndexSynonyms !== undefined && (
-        <div>
-          <div className="row">
-            <div className="col-sm-2 form-group">
-              <b>Tittel</b>
-            </div>
-            <div className="col-sm-2 form-group">
-              <b>Fornavn</b>
-            </div>
-            <div className="col-sm-2 form-group">
-              <b>Etternavn</b>
-            </div>
-            <div className="col-sm-4 form-group">
-              <b>Navn</b>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-sm-2 form-group">
-              <input
-                id="synonymTitle"
-                className="form-control"
-                value={props.editSynonym && props.editSynonym.title}
-                onChange={e => props.onChange('title')(e.target.value)}
-              />
-            </div>
-            <div className="col-sm-2 form-group">
-              <input
-                id="synonymFirstName"
-                className="form-control"
-                value={props.editSynonym && props.editSynonym.firstName}
-                onChange={e => props.onChange('firstName')(e.target.value)}
-              />
-            </div>
-            <div className="col-sm-2 form-group">
-              <input
-                id="synonymLastName"
-                className="form-control"
-                value={props.editSynonym && props.editSynonym.lastName}
-                onChange={e => props.onChange('lastName')(e.target.value)}
-              />
-            </div>
-            <div className="col-sm-4 form-group">
-              <input
-                className="form-control"
-                value={props.editSynonym && props.editSynonym.nameString}
-                onChange={e => props.onChange('nameString')(e.target.value)}
-              />
-            </div>
-          </div>
-        </div>
-      )}
     </div>
-    {!props.readOnly && (
-      <div>
-        <button
-          id="addSynonym"
-          type="button"
-          className="btn btn-default"
-          onClick={props.onAdd}
-          disabled={props.editingIndexSynonyms !== undefined}
-        >
-          Add new synonym
-        </button>
-        <button
-          id="saveSynonym"
-          type="button"
-          className="btn btn-primary"
-          onClick={props.onSave}
-          disabled={props.editingIndexSynonyms === undefined}
-        >
-          Save synonym
-        </button>
-      </div>
-    )}
   </div>
 );
 
@@ -927,18 +827,7 @@ export const PersonPage = (props: PersonProps) => {
               </div>
             </div>
             <div className="well well-sm">
-              <Synonyms
-                synonyms={props.synonyms}
-                editSynonym={props.editSynonym}
-                standAlone={props.standAlone}
-                editingIndexSynonyms={props.editingIndexSynonyms}
-                onAdd={props.onClickAddPersonName}
-                onSave={props.onClickSavePersonName}
-                onChange={props.onChangePersonName}
-                onDelete={props.onDeleteSynonyms}
-                setEditingIndexSynonyms={props.setEditingIndexSynonyms}
-                readOnly={props.readOnly}
-              />
+              <Synonyms synonyms={props.synonyms} readOnly={props.readOnly} />
             </div>
             <div className="well well-sm">
               <ExternalIDStrings
@@ -1086,8 +975,6 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
           uuid={this.state.uuid}
           appSession={this.props.appSession}
           personSearchList={this.props.store.personList || []}
-          standAlone
-          personToMergeSyn={this.state.personToMergeSyn}
           getEnrichedPersonsFromName={this.props.getEnrichedPersonsFromName}
           onClickSearch={() =>
             this.props.getEnrichedPersonsFromName()({
@@ -1255,105 +1142,6 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
             console.log(fieldName, newValue);
           }}
           editingIndexSynonyms={this.state.editingIndexSynonyms}
-          setEditingIndexSynonyms={(index: number) => {
-            this.setState((ps: PersonState) => {
-              const editingItem = ps.synonyms && ps.synonyms[index];
-              const upgragedSynonym = {
-                ...ps,
-                editingIndexSynonyms: index,
-                editSynonym: editingItem
-              };
-              return upgragedSynonym;
-            });
-          }}
-          onClickAddPersonName={() => {
-            this.setState((ps: PersonState) => {
-              const editIndex = (ps.synonyms || []).length
-                ? (ps.synonyms || []).length
-                : 0;
-              return {
-                ...ps,
-                editingIndexSynonyms: editIndex,
-                editSynonym: undefined
-              };
-            });
-          }}
-          onClickSavePersonName={() => {
-            this.setState((ps: PersonState) => {
-              const editIndex = ps.editingIndexSynonyms ? ps.editingIndexSynonyms : 0;
-              const editItem = ps.editSynonym || { nameString: '', status: 'NEW' };
-              const currentSynonyms = ps.synonyms || [];
-              const duplicateNames = currentSynonyms.filter(
-                e => e.nameString === editItem.nameString
-              );
-              if (duplicateNames.length > 0) {
-                emitError({
-                  response: {
-                    body: {
-                      message: 'Duplicate synonym found'
-                    }
-                  }
-                });
-                return {
-                  ...ps
-                };
-              } else {
-                const nextSynonyms = currentSynonyms
-                  ? [
-                      ...currentSynonyms.slice(0, editIndex),
-                      editItem,
-                      ...currentSynonyms.slice(editIndex + 1)
-                    ]
-                  : currentSynonyms;
-                return {
-                  ...ps,
-                  synonyms: nextSynonyms,
-                  editingIndexSynonyms: undefined,
-                  editSynonym: undefined
-                };
-              }
-            });
-          }}
-          onDeleteSynonyms={(index: number) => (
-            e: React.SyntheticEvent<HTMLAnchorElement>
-          ) => {
-            e.preventDefault();
-            this.setState((p: PersonState) => {
-              const delSyn: SynonymType = p.synonyms
-                ? p.synonyms[index]
-                : { nameString: '', status: 'NEW' };
-              const currentStatus = delSyn.status;
-              if (currentStatus === 'UNCHANGED') {
-                const updSyn: SynonymType = delSyn
-                  ? {
-                      ...delSyn,
-                      status: 'DEL'
-                    }
-                  : { nameString: '', status: 'UNCHANGED' };
-                const currentSynonyms: SynonymType[] = p.synonyms || [];
-                const nextSynonyms: SynonymType[] = currentSynonyms
-                  ? [
-                      ...currentSynonyms.slice(0, index),
-                      updSyn,
-                      ...currentSynonyms.slice(index + 1)
-                    ]
-                  : currentSynonyms;
-                return {
-                  ...p,
-                  synonyms: nextSynonyms
-                };
-              } else {
-                const currentSynonyms: SynonymType[] = p.synonyms || [];
-                const nextSynonyms: SynonymType[] = currentSynonyms
-                  .slice(0, index)
-                  .concat(currentSynonyms.slice(index + 1));
-                return {
-                  ...p,
-                  synonyms: nextSynonyms
-                };
-              }
-            });
-          }}
           dataBaseValues={dataBaseValues}
           onAddExternalId={() => {
             this.setState((ps: PersonState) => {
