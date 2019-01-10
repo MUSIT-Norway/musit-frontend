@@ -18,7 +18,7 @@ node {
         sh 'git branch -avv'
         sh 'pwd'
         sh 'ls -al ~/.ssh'
-        #sh 'git remote show origin'
+        //sh 'git remote show origin'
         sh 'git fetch git@github.com:MUSIT-Norway/musit-frontend.git jenkinstest'
         
     }
