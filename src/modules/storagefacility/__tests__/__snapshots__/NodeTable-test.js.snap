@@ -28,7 +28,9 @@ exports[`NodeTable should render properly  1`] = `
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr
+            key="0"
+          >
             <td>
               <a
                 className="onClickName"
@@ -48,7 +50,9 @@ exports[`NodeTable should render properly  1`] = `
             <td />
             <td />
           </tr>
-          <tr>
+          <tr
+            key="1"
+          >
             <td>
               <a
                 className="onClickName"
@@ -68,7 +72,9 @@ exports[`NodeTable should render properly  1`] = `
             <td />
             <td />
           </tr>
-          <tr>
+          <tr
+            key="2"
+          >
             <td>
               <a
                 className="onClickName"
@@ -133,7 +139,9 @@ exports[`NodeTable should render properly  1`] = `
               </a>
             </td>
           </tr>
-          <tr>
+          <tr
+            key="3"
+          >
             <td>
               <a
                 className="onClickName"
@@ -198,7 +206,9 @@ exports[`NodeTable should render properly  1`] = `
               </a>
             </td>
           </tr>
-          <tr>
+          <tr
+            key="4"
+          >
             <td>
               <a
                 className="onClickName"

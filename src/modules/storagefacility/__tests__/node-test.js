@@ -4,6 +4,11 @@ import React from 'react';
 import NodeLeftMenuComponent from '../TableLeftMenu';
 import NodeDetails from '../NodeDetails';
 import { appSession } from '../../../testutils/sampleDataForTest';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
+
 describe('NodeLeftMenuComponent', () => {
   it('renders properly', () => {
     const wrapper = shallow(

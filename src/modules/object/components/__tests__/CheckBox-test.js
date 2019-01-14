@@ -4,6 +4,11 @@ import { CheckBox } from '../CheckBox';
 import { shallowToJson } from 'enzyme-to-json';
 import sinon from 'sinon';
 
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
+
 describe('Test for checkBox component.', () => {
   it('Snapshot test for checkBox component', () => {
     const checkbox = shallow(
@@ -21,7 +26,7 @@ describe('Test for checkBox component.', () => {
     comp.simulate('change');
 
     expect(onChange.calledOnce).toBe(true);
-    expect(comp.node.props.id).toBe('TestId2');
+    expect(comp.getElement().props.id).toBe('TestId2');
   });
 
   it('Render CheckBox text', () => {

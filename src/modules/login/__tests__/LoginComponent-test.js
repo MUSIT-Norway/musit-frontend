@@ -6,6 +6,10 @@ import LoginComponentEn from '../LoginComponent_en.html';
 import LoginComponentNo from '../LoginComponent_no.html';
 import LoginButton from '../LoginButton';
 import sinon from 'sinon';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('LoginPage', () => {
   it('should render norwegian text', () => {

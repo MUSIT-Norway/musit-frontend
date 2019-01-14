@@ -17,6 +17,7 @@ exports[`ModalNodeGrid should match snapshot 1`] = `
       <tbody>
         <tr
           id="0"
+          key="0"
         >
           <td
             id="0_Eske"
@@ -39,6 +40,7 @@ exports[`ModalNodeGrid should match snapshot 1`] = `
         </tr>
         <tr
           id="1"
+          key="1"
         >
           <td
             id="1_Box"
@@ -61,6 +63,7 @@ exports[`ModalNodeGrid should match snapshot 1`] = `
         </tr>
         <tr
           id="2"
+          key="2"
         >
           <td
             id="2_Room"

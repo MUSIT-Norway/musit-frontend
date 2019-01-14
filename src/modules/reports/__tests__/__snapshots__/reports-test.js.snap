@@ -142,7 +142,9 @@ exports[`Reports overview should display correctly 1`] = `
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr
+                key="0"
+              >
                 <td>
                   <a
                     href="/museum/99/collections/1234/reports/kdreport"

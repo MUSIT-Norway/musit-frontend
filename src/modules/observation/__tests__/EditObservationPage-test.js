@@ -2,6 +2,10 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import sinon from 'sinon';
 import { EditObservationPage } from '../EditObservationPage';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('Render edit observation page', () => {
   it('should set default date and have correct date format', () => {

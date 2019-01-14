@@ -6,6 +6,10 @@ import sinon from 'sinon';
 import FormDescriptionAttribute from '../FormDescriptionAttribute';
 import DescriptionAttributeInput from '../DescriptionAttributeInput';
 import DescriptionAttributeSelect from '../DescriptionAttributeSelect';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('FormDescriptionAttribute', () => {
   it('should render DescriptionAttributeInput if no allowedValues', () => {

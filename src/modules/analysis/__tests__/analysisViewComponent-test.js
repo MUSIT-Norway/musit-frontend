@@ -11,6 +11,10 @@ import {
   analysisForm
 } from '../../../testutils/sampleDataForTest';
 import { initialState } from '../../../stores/predefined';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 const objectsData = [
   createAnalysisEventWithObject(
@@ -139,12 +143,12 @@ describe('AnalysisViewComponent with extra attribute types', () => {
     );
 
     expect(
-      wrapper.find('#avc--extraDescriptionAttributesTypes > li').getNodes()[0].props
+      wrapper.find('#avc--extraDescriptionAttributesTypes > li').getElements()[0].props
         .children.props.en
     ).toBe('Lead 210 Pb');
     wrapper
       .find('#avc--extraDescriptionAttributesTypes > li')
-      .getNodes()
+      .getElements()
       .map((list, i) => {
         expect(list.props.children.props.en).toBe(
           extraAttributeTypes[0].allowedValues[i].enLabel

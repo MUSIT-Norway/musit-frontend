@@ -12,6 +12,10 @@ import { Observable } from 'rxjs';
 import { createStore } from 'react-rxjs';
 
 import MusitTestScheduler from '../../testutils/MusitTestScheduler';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('scannerWrapper', () => {
   it('should provide toggleScanner to child component', () => {

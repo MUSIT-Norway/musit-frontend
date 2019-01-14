@@ -113,11 +113,13 @@ exports[`PrintTemplateComponent should display correctly 1`] = `
         Velg etikettmal
       </option>
       <option
+        key="0"
         value={1}
       >
         Label-1 70mm x 37mm
       </option>
       <option
+        key="1"
         value={4}
       >
         Label-2 105mm x 74mm

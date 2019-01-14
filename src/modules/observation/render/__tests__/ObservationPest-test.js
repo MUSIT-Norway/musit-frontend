@@ -5,6 +5,10 @@ import React from 'react';
 import ObservationPest from '../ObservationPest';
 import ObservationDoubleTextAreaComponent from '../ObservationDoubleTextAreaComponent';
 import { ControlLabel } from 'react-bootstrap';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('ObservationPest', () => {
   it('renders observations', () => {

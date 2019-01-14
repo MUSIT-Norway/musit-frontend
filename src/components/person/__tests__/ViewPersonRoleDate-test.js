@@ -2,6 +2,10 @@
 import ViewPersonRoleDate from '../ViewPersonRoleDate';
 import { shallow } from 'enzyme';
 import React from 'react';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('ViewPersonRoleDate', () => {
   it('should match snapshot', () => {

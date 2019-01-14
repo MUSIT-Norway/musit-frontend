@@ -260,10 +260,11 @@ exports[`NodePanel should render properly  1`] = `
   breadcrumb={
     <Breadcrumb
       disabled={true}
+      node={undefined}
     />
   }
   content={
-    <Component
+    <Unknown
       component="div"
       loaded={false}
       loadedClassName="loadedContent"
@@ -295,6 +296,7 @@ exports[`NodePanel should render properly  1`] = `
                     }
                   }
                 >
+                  
                   Egenskaper
                 </h4>
                 <Grid
@@ -435,7 +437,7 @@ exports[`NodePanel should render properly  1`] = `
                           <div
                             className="col-sm-8"
                           >
-                            <Component
+                            <Unknown
                               id="addressField"
                               onChange={[Function]}
                               placeHolder="Find address"
@@ -899,7 +901,7 @@ exports[`NodePanel should render properly  1`] = `
           </Col>
         </Row>
       </Grid>
-    </Component>
+    </Unknown>
   }
   leftMenu={
     <div

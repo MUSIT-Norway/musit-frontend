@@ -4,6 +4,11 @@ import React from 'react';
 import Cancel from '../cancel';
 import Submit from '../submit';
 
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
+
 describe('Cancel', () => {
   it('should match snapshot', () => {
     const wrapper = shallow(<Cancel label="Cancel button" />);

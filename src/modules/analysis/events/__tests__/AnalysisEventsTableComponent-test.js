@@ -5,6 +5,10 @@ import sinon from 'sinon';
 import AnalysisEventTableComponent from '../AnalysisEventsTableComponent';
 import type { AnalysisCollectionExtended } from '../analysisEventsStore';
 import { I18n } from 'react-i18nify';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('AnalysisEventTableComponent', () => {
   const language = { isEn: true, isNo: false };

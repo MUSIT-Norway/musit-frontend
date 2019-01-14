@@ -3,6 +3,10 @@ import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import SampleViewComponent from '../SampleViewComponent';
 import { appSession } from '../../../testutils/sampleDataForTest';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('AnalysisSampleFormPageView', () => {
   it('should display correctly', () => {

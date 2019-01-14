@@ -5,6 +5,10 @@ import { getAnalysisTypeTerm } from '../shared/getters';
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import { appSession, analysisForm, history } from '../../../testutils/sampleDataForTest';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 const identity = function<T>(i: T): T {
   return i;

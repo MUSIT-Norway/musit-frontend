@@ -5,6 +5,11 @@ import { shallow } from 'enzyme';
 
 import { MusitI18n } from '../MusitI18n';
 
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
+
 describe('MusitI18n', () => {
   it('should render english text', () => {
     const Comp = shallow(

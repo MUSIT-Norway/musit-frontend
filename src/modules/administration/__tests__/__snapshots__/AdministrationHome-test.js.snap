@@ -25,7 +25,9 @@ exports[`Administration should render Administration 1`] = `
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr
+        key="0"
+      >
         <td>
           <a
             href="/museum/99/collections/1234/administration/analysistypes"
@@ -38,7 +40,9 @@ exports[`Administration should render Administration 1`] = `
           Analysetyper for analyse
         </td>
       </tr>
-      <tr>
+      <tr
+        key="1"
+      >
         <td>
           <a
             href="/museum/99/collections/1234/administration/analysisplaces"
@@ -51,7 +55,9 @@ exports[`Administration should render Administration 1`] = `
           Analysesteder for analyse
         </td>
       </tr>
-      <tr>
+      <tr
+        key="2"
+      >
         <td>
           <a
             href="/museum/99/collections/1234/administration/sampletypes"

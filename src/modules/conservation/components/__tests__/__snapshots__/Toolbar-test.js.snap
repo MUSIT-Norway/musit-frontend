@@ -11,6 +11,7 @@ exports[`Test Toolbar Test Toobbar is created 1`] = `
 >
   <button
     className="btn btn-primary"
+    key="btn-delete"
     style={
       Object {
         "marginRight": 55,
@@ -28,6 +29,7 @@ exports[`Test Toolbar Test Toobbar is created 1`] = `
   >
     <button
       className="btn-link"
+      key="btn-cancel"
       style={
         Object {
           "marginRight": 40,
@@ -38,6 +40,7 @@ exports[`Test Toolbar Test Toobbar is created 1`] = `
     </button>
     <button
       className="btn btn-primary"
+      key="btn-save"
     >
       Lagre
     </button>

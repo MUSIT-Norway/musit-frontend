@@ -49,6 +49,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
     </div>
     <div
       className="form-group"
+      key="0"
     >
       <label
         className="control-label col-md-2"

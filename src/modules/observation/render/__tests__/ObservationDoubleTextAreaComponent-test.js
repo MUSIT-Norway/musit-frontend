@@ -3,6 +3,10 @@ import MusitTextArea from '../../../../components/formfields/musittextarea';
 import React from 'react';
 import ObservationDoubleTextAreaComponent from '../ObservationDoubleTextAreaComponent';
 import { ControlLabel } from 'react-bootstrap';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('ObservationDoubleTextAreaComponent', () => {
   it('renders two textareas', () => {

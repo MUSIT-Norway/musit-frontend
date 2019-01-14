@@ -3,6 +3,10 @@ import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import sinon from 'sinon';
 import { AppComponent } from '../AppComponent';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('AppComponent', () => {
   it('remders', () => {

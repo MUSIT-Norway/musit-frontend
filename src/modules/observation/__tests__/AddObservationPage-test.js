@@ -3,6 +3,11 @@ import React from 'react';
 import sinon from 'sinon';
 import { AddObservationPage } from '../AddObservationPage';
 
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
+
 describe('Render add observation page', () => {
   it('should set default date and have correct date format', () => {
     const addObservation = sinon.spy();

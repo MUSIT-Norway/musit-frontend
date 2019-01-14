@@ -4,6 +4,10 @@ import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import sinon from 'sinon';
 import DescriptionAttributeSelect from '../DescriptionAttributeSelect';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('DescriptionAttributeSelect', () => {
   it('should pass through change event', () => {
@@ -73,11 +77,11 @@ it('should render allowedValues', () => {
   );
   const options = wrapper.find('option');
   expect(options.length).toBe(3);
-  expect(options.getNodes()[1].props.value).toBe(1);
-  expect(options.getNodes()[1].props.children.props.en).toBe('Fish');
-  expect(options.getNodes()[1].props.children.props.no).toBe('Fisk');
-  expect(options.getNodes()[2].props.value).toBe(2);
-  expect(options.getNodes()[2].props.children.props.en).toBe('car');
-  expect(options.getNodes()[2].props.children.props.no).toBe('bil');
+  expect(options.getElements()[1].props.value).toBe(1);
+  expect(options.getElements()[1].props.children.props.en).toBe('Fish');
+  expect(options.getElements()[1].props.children.props.no).toBe('Fisk');
+  expect(options.getElements()[2].props.value).toBe(2);
+  expect(options.getElements()[2].props.children.props.en).toBe('car');
+  expect(options.getElements()[2].props.children.props.no).toBe('bil');
   expect(wrapper.find('select').props().name).toEqual('key');
 });

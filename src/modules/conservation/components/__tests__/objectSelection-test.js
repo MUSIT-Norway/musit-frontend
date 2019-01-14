@@ -4,6 +4,10 @@ import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import ObjectSelection from '../objectSelection';
 import sinon from 'sinon';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('ObjectSelection', () => {
   const mainEvent = [

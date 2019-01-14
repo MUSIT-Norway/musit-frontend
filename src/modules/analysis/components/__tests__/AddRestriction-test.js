@@ -7,7 +7,10 @@ import { appSession } from '../../../../testutils/sampleDataForTest';
 import DatePicker from '../../../../components/DatePicker';
 import { formatISOString } from '../../../../shared/util';
 import StatefulActorSuggest from '../StatefulActorSuggest';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 
+Enzyme.configure({ adapter: new Adapter() });
 describe('AddRestriction', () => {
   describe('reason', () => {
     const restriction = {

@@ -54,6 +54,7 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           Name
         </th>
         <th
+          key="0"
           style={
             Object {
               "textAlign": "center",
@@ -63,6 +64,7 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           Alger
         </th>
         <th
+          key="1"
           style={
             Object {
               "textAlign": "center",
@@ -72,6 +74,7 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           Arkeologi
         </th>
         <th
+          key="2"
           style={
             Object {
               "textAlign": "center",
@@ -81,6 +84,7 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           Entomologi
         </th>
         <th
+          key="3"
           style={
             Object {
               "textAlign": "center",
@@ -90,6 +94,7 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           Etnografi
         </th>
         <th
+          key="4"
           style={
             Object {
               "textAlign": "center",
@@ -99,6 +104,7 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           Karplanter
         </th>
         <th
+          key="5"
           style={
             Object {
               "textAlign": "center",
@@ -108,6 +114,7 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           Lav
         </th>
         <th
+          key="6"
           style={
             Object {
               "textAlign": "center",
@@ -117,6 +124,7 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           Marine evertebrater
         </th>
         <th
+          key="7"
           style={
             Object {
               "textAlign": "center",
@@ -126,6 +134,7 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           Mose
         </th>
         <th
+          key="8"
           style={
             Object {
               "textAlign": "center",
@@ -135,6 +144,7 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           Numismatikk
         </th>
         <th
+          key="9"
           style={
             Object {
               "textAlign": "center",
@@ -146,11 +156,14 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr
+        key="0"
+      >
         <td>
           3D-skanning, laser
         </td>
         <td
+          key="1d8dd4e6-1527-439c-ac86-fc315e0ce852"
           style={
             Object {
               "textAlign": "center",
@@ -164,6 +177,7 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           />
         </td>
         <td
+          key="2e4f2455-1b3b-4a04-80a1-ba92715ff613"
           style={
             Object {
               "textAlign": "center",
@@ -177,6 +191,7 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           />
         </td>
         <td
+          key="ba3d4d30-810b-4c07-81b3-37751f2196f0"
           style={
             Object {
               "textAlign": "center",
@@ -190,6 +205,7 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           />
         </td>
         <td
+          key="88b35138-24b5-4e62-bae4-de80fae7df82"
           style={
             Object {
               "textAlign": "center",
@@ -203,6 +219,7 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           />
         </td>
         <td
+          key="7352794d-4973-447b-b84e-2635cafe910a"
           style={
             Object {
               "textAlign": "center",
@@ -216,6 +233,7 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           />
         </td>
         <td
+          key="fcb4c598-8b05-4095-ac00-ce66247be38a"
           style={
             Object {
               "textAlign": "center",
@@ -229,6 +247,7 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           />
         </td>
         <td
+          key="ef4dc066-b6f8-4155-89f8-7aa9aeeb2dc4"
           style={
             Object {
               "textAlign": "center",
@@ -242,6 +261,7 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           />
         </td>
         <td
+          key="d0dd5ad3-c22f-4ea0-8b52-dc5b0e17aa24"
           style={
             Object {
               "textAlign": "center",
@@ -255,6 +275,7 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           />
         </td>
         <td
+          key="8bbdf9b3-56d1-479a-9509-2ea82842e8f8"
           style={
             Object {
               "textAlign": "center",
@@ -268,6 +289,7 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           />
         </td>
         <td
+          key="23ca0166-5f9e-44c2-ab0d-b4cdd704af07"
           style={
             Object {
               "textAlign": "center",
@@ -292,11 +314,14 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           </button>
         </td>
       </tr>
-      <tr>
+      <tr
+        key="1"
+      >
         <td>
           3D-skanning, strukturert lys
         </td>
         <td
+          key="1d8dd4e6-1527-439c-ac86-fc315e0ce852"
           style={
             Object {
               "textAlign": "center",
@@ -310,6 +335,7 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           />
         </td>
         <td
+          key="2e4f2455-1b3b-4a04-80a1-ba92715ff613"
           style={
             Object {
               "textAlign": "center",
@@ -323,6 +349,7 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           />
         </td>
         <td
+          key="ba3d4d30-810b-4c07-81b3-37751f2196f0"
           style={
             Object {
               "textAlign": "center",
@@ -336,6 +363,7 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           />
         </td>
         <td
+          key="88b35138-24b5-4e62-bae4-de80fae7df82"
           style={
             Object {
               "textAlign": "center",
@@ -349,6 +377,7 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           />
         </td>
         <td
+          key="7352794d-4973-447b-b84e-2635cafe910a"
           style={
             Object {
               "textAlign": "center",
@@ -362,6 +391,7 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           />
         </td>
         <td
+          key="fcb4c598-8b05-4095-ac00-ce66247be38a"
           style={
             Object {
               "textAlign": "center",
@@ -375,6 +405,7 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           />
         </td>
         <td
+          key="ef4dc066-b6f8-4155-89f8-7aa9aeeb2dc4"
           style={
             Object {
               "textAlign": "center",
@@ -388,6 +419,7 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           />
         </td>
         <td
+          key="d0dd5ad3-c22f-4ea0-8b52-dc5b0e17aa24"
           style={
             Object {
               "textAlign": "center",
@@ -401,6 +433,7 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           />
         </td>
         <td
+          key="8bbdf9b3-56d1-479a-9509-2ea82842e8f8"
           style={
             Object {
               "textAlign": "center",
@@ -414,6 +447,7 @@ exports[`AnalysisTypesComponent should render properly 1`] = `
           />
         </td>
         <td
+          key="23ca0166-5f9e-44c2-ab0d-b4cdd704af07"
           style={
             Object {
               "textAlign": "center",
