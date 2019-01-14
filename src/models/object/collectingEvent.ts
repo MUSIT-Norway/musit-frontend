@@ -307,6 +307,7 @@ export const editEventPlaceRevision: (
   ajaxPost = simplePost
 ) => ({ id, data, token, callback }) => {
   const placeURL = Config.api.collectingEvent.editEvent.eventPlaceRevision(id);
+
   const eventURL = Config.api.collectingEvent.editEvent.eventAttributesRevision(id);
   return Observable.forkJoin(
     ajaxPost(placeURL, data, token, callback).map(({ response }) => response),

@@ -65,6 +65,7 @@ export type PersonProps = {
   onCreatePersonName: Function;
   onClickNewPersonName: () => void;
   nameEmpty: boolean;
+  readOnly?: boolean;
 };
 
 export const ViewPersonComponent = (props: {
@@ -212,17 +213,17 @@ const PersonComponent = (props: PersonProps) => {
         </div>
       </div>
       <div className="row">
-        {console.log('Anuradha nameEmpty personComponent', props.nameEmpty)}
+        {console.log('Anuradha nameEmpty test personComponent', props.nameEmpty)}
         <EditAndSaveButtons
           onClickCancel={() => {}}
           onClickEdit={props.onClickEdit}
           onClickSave={props.onClickSave}
           onClickDraft={() => {}}
-          editButtonState={{ visible: true, disabled: false }}
+          editButtonState={{ visible: true, disabled: props.readOnly ? false : true }}
           saveButtonState={{ visible: true, disabled: props.formInvalid }}
           cancelButtonState={{ visible: true, disabled: false }}
           draftButtonState={{ visible: false, disabled: false }}
-          saveButtonText={'Save'}
+          saveButtonText={'Lagre'}
           draftButtonText={'Utkast'}
           editButtonText={'Endre'}
           cancelButtonText={'Avbryt'}
