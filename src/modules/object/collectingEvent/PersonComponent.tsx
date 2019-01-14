@@ -1,6 +1,9 @@
 import * as React from 'react';
-import { PersonNameSuggest } from '../../../components/suggest/PersonNameSuggest';
-import { ActorsAndRelation } from '../../../models/object/collectingEvent';
+import {
+  PersonNameSuggest,
+  PersonNameSuggestion
+} from '../../../components/suggest/PersonNameSuggest';
+//import { ActorsAndRelation } from '../../../models/object/collectingEvent';
 import { AppSession } from '../../../types/appSession';
 import { History } from 'history';
 import { personDet } from '../../../models/object/classHist';
@@ -10,9 +13,21 @@ import { OutputPersonName, InputPersonName } from '../../../models/object/person
 import { EditState, NonEditState } from '../types';
 import EditAndSaveButtons from '../components/EditAndSaveButtons';
 
-const personNameAsString = (n: ActorsAndRelation) => {
+const personNameAsString = (n: PersonNameSuggestion) => {
+  console.log('PersonName suggesstions ', n);
   return (
-    <span className="suggestion-content">{n.name ? 'Full Name: ' + n.name : ''}</span>
+    <span className="suggestion-content">
+      {n
+        ? 'Person: ' +
+          n.displayPersonName +
+          ' Uuid:' +
+          n.personUuid +
+          '  ' +
+          ' Person Name: ' +
+          ' ' +
+          n.name
+        : ''}
+    </span>
   );
 };
 
