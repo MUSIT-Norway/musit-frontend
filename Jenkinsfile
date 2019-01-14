@@ -20,6 +20,9 @@ node {
         sh 'ls -al ~/.ssh'
         sh 'whoami'
         sh 'ls -al'
+        echo "Testing secret $TestSecret"
+        echo "${env}"
+
         //sh 'git remote show origin'
         //sh 'git fetch git@github.com:MUSIT-Norway/musit-frontend.git jenkinstest'
         
