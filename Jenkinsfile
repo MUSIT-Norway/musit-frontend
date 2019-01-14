@@ -21,7 +21,7 @@ node {
         sh 'whoami'
         sh 'ls -al'
         //echo "Testing secret $TestSecret"
-        echo "${env}"
+        echo "${env.TestSecret}"
 
         //sh 'git remote show origin'
         //sh 'git fetch git@github.com:MUSIT-Norway/musit-frontend.git jenkinstest'
