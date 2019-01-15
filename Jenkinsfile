@@ -27,6 +27,9 @@ node {
         }
         withCredentials([string(credentialsId: 'TestSecret', variable: 'TEST_SECRET')]) {
             echo TEST_SECRET
+            echo '$TEST_SECRET'
+            echo '$test_secret'
+            echo '$test_secret2'
             sh 'echo $TEST_SECRET'
             if(TEST_SECRET == "Secret Test") {
                 echo "OK"
@@ -37,6 +40,9 @@ node {
             }
             // some block
         }
+        echo '$TEST_SECRET'
+        echo '$test_secret'
+
 
         echo env.DISABLE_AUTH
         sh 'echo $DISABLE_AUTH'
