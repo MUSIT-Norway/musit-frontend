@@ -20,16 +20,21 @@ node {
         echo env.DISABLE_AUTH
         withEnv(["DISABLE_AUTH=true"]) {
             echo env.DISABLE_AUTH
-       }
+        }
         withEnv(["DISABLE_AUTH=false"]) {
             echo env.DISABLE_AUTH
             sh 'echo $DISABLE_AUTH'
-       }
-       echo env.DISABLE_AUTH
-       sh 'echo $DISABLE_AUTH'
+        }
+        echo env.DISABLE_AUTH
+        sh 'echo $DISABLE_AUTH'
+        echo env.TestSecret
+        echo env.TESTSECRET
+        sh 'echo $TestSecret'
+        sh 'echo $TESTSECRET'
        
         echo env.GIT_PREVIOUS_COMMIT
         echo "${scmVars}"
+
 
         echo "deployJenkinstest: ${deployJenkinstest}"
         sh 'pwd'
