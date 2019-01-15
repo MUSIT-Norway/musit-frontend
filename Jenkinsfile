@@ -24,10 +24,9 @@ node {
         withEnv(["DISABLE_AUTH=false"]) {
             echo env.DISABLE_AUTH
        }
+       echo env.DISABLE_AUTH
+       sh 'echo $DISABLE_AUTH'
        
-        echo "${currentBuild.result}"
-
-        sh 'echo '
         echo env.GIT_PREVIOUS_COMMIT
         echo "${scmVars}"
 
