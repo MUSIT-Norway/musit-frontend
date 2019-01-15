@@ -25,6 +25,17 @@ node {
             echo env.DISABLE_AUTH
             sh 'echo $DISABLE_AUTH'
         }
+        withCredentials([string(credentialsId: 'TestSecret', variable: 'TEST_SECRET')]) {
+            echo TEST_SECRET
+            // some block
+        }
+
+
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: '<CREDENTIAL_ID>',
+                    usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+
+println(env.USERNAME)
+  }
         echo env.DISABLE_AUTH
         sh 'echo $DISABLE_AUTH'
         echo env.TestSecret
