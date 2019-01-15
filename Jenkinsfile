@@ -17,6 +17,7 @@ node {
         echo "scmVars.GIT_BRANCH: ${scmVars.GIT_BRANCH}"
         echo scmVars.GIT_PREVIOUS_COMMIT
         echo "Test withEnv"
+        echo env.DISABLE_AUTH
         withEnv(["DISABLE_AUTH=true"]) {
             echo env.DISABLE_AUTH
        }
@@ -24,7 +25,7 @@ node {
             echo env.DISABLE_AUTH
        }
        
-        echo currentBuild
+        echo "${currentBuild.result}"
 
         sh 'echo '
         echo env.GIT_PREVIOUS_COMMIT
