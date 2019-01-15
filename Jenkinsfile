@@ -29,7 +29,6 @@ node {
             echo TEST_SECRET
             echo "$TEST_SECRET"
             echo "$test_secret"
-            echo "$test_secret2"
             sh "echo $TEST_SECRET"
             if(TEST_SECRET == "Secret Test") {
                 echo "OK"
