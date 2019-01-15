@@ -23,6 +23,7 @@ node {
        }
         withEnv(["DISABLE_AUTH=false"]) {
             echo env.DISABLE_AUTH
+            sh 'echo $DISABLE_AUTH'
        }
        echo env.DISABLE_AUTH
        sh 'echo $DISABLE_AUTH'
