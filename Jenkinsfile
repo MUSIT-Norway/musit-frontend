@@ -32,6 +32,8 @@ node {
             echo "$TEST_SECRET"
             echo "$test_secret"
             sh "echo $TEST_SECRET"
+            sh "ls $TEST_SECRET"
+            sh "ls ${TEST_SECRET}"
             if(TEST_SECRET == "Secret") {
                 echo "OK"
             }
@@ -41,6 +43,11 @@ node {
             }
             // some block
         }
+        // withCredentials([string(credentialsId: 'GitHubMirrorToken', variable: 'GIT_HUB_MIRROR_TOKEN')]) {
+        //     echo "push to github"
+        //     sh "git push https://git:${GIT_HUB_MIRROR_TOKEN}@github.com/MUSIT-Norway/musit-frontend.git HEAD:jenkinstest2"
+
+        // }
         
         echo mysecret
 
