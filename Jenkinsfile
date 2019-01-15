@@ -5,10 +5,17 @@ def deployJenkinstest = false
 node {
     stage('Checkout') {
         scmVars = checkout(scm)
-        echo "scmVars.GIT_COMMIT: ${scmVars.GIT_COMMIT}"
-        echo "scmVars.GIT_BRANCH: ${scmVars.GIT_BRANCH}"
         commithash = scmVars.GIT_COMMIT
         branchname = scmVars.GIT_BRANCH
+
+        echo env.BRANCH_NAME
+        sh 'echo $BRANCH_NAME'
+        echo scmVars.GIT_COMMIT
+        echo "scmVars.GIT_COMMIT: ${scmVars.GIT_COMMIT}"
+        echo "scmVars.GIT_BRANCH: ${scmVars.GIT_BRANCH}"
+        echo scmVars.GIT_PREVIOUS_COMMIT
+        echo env.GIT_PREVIOUS_COMMIT
+
         echo "${scmVars}"
         echo "deployJenkinstest: ${deployJenkinstest}"
         sh 'pwd'
@@ -20,11 +27,6 @@ node {
         //sh 'ls -al ~/.ssh'
         sh 'whoami'
         //sh 'ls -al'
-        echo env.BRANCH_NAME
-        sh 'echo $BRANCH_NAME'
-        echo scmVars.GIT_COMMIT
-        echo scmVars.GIT_PREVIOUS_COMMIT
-        echo env.GIT_PREVIOUS_COMMIT
 
         //echo "Testing secret $TestSecret"
         //echo "${env.TestSecret}"
