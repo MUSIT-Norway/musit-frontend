@@ -27,7 +27,8 @@ node {
         }
         withCredentials([string(credentialsId: 'TestSecret', variable: 'TEST_SECRET')]) {
             echo TEST_SECRET
-            if(TEST_SECRET == "SecretTest") {
+            sh 'echo $TEST_SECRET'
+            if(TEST_SECRET == "Secret Test") {
                 echo "OK"
             }
             else
