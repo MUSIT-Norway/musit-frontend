@@ -22,7 +22,8 @@ node {
         sh 'ls -al'
         echo env.BRANCH_NAME
         sh 'echo $BRANCH_NAME'
-        
+        echo env.GIT_PREVIOUS_COMMIT
+
         //echo "Testing secret $TestSecret"
         //echo "${env.TestSecret}"
 
