@@ -9,14 +9,27 @@ node {
         branchname = scmVars.GIT_BRANCH
 
         echo env.BRANCH_NAME
+        echo BRANCH_NAME
         sh 'echo $BRANCH_NAME'
+
         echo scmVars.GIT_COMMIT
         echo "scmVars.GIT_COMMIT: ${scmVars.GIT_COMMIT}"
         echo "scmVars.GIT_BRANCH: ${scmVars.GIT_BRANCH}"
         echo scmVars.GIT_PREVIOUS_COMMIT
-        echo env.GIT_PREVIOUS_COMMIT
+        echo "Test withEnv"
+        withEnv(["DISABLE_AUTH=true"]) {
+            echo env.DISABLE_AUTH
+       }
+        withEnv(["DISABLE_AUTH=false"]) {
+            echo env.DISABLE_AUTH
+       }
+       
+        echo currentBuild
 
+        sh 'echo '
+        echo env.GIT_PREVIOUS_COMMIT
         echo "${scmVars}"
+
         echo "deployJenkinstest: ${deployJenkinstest}"
         sh 'pwd'
         //sh 'ls -al'
