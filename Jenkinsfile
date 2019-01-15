@@ -12,16 +12,18 @@ node {
         echo "${scmVars}"
         echo "deployJenkinstest: ${deployJenkinstest}"
         sh 'pwd'
-        sh 'ls -al'
+        //sh 'ls -al'
         sh 'git --version'
         sh 'git remote -v'
         sh 'git branch -avv'
         sh 'pwd'
-        sh 'ls -al ~/.ssh'
+        //sh 'ls -al ~/.ssh'
         sh 'whoami'
-        sh 'ls -al'
+        //sh 'ls -al'
         echo env.BRANCH_NAME
         sh 'echo $BRANCH_NAME'
+        echo scmVars.GIT_COMMIT
+        echo scmVars.GIT_PREVIOUS_COMMIT
         echo env.GIT_PREVIOUS_COMMIT
 
         //echo "Testing secret $TestSecret"
