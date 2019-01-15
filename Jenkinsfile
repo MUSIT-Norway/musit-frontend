@@ -27,15 +27,16 @@ node {
         }
         withCredentials([string(credentialsId: 'TestSecret', variable: 'TEST_SECRET')]) {
             echo TEST_SECRET
+            if(TEST_SECRET == "SecretTest") {
+                echo "OK"
+            }
+            else
+            {
+                echo "No match"
+            }
             // some block
         }
 
-
-        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: '<CREDENTIAL_ID>',
-                    usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-
-println(env.USERNAME)
-  }
         echo env.DISABLE_AUTH
         sh 'echo $DISABLE_AUTH'
         echo env.TestSecret
