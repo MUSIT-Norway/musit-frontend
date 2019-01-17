@@ -10,7 +10,7 @@ import { personDet } from '../../../models/object/classHist';
 import { PersonNameComponent } from '../person/PersonNameComponent';
 import { OutputPersonName, InputPersonName } from '../../../models/object/person';
 
-import { EditState, NonEditState } from '../types';
+import { EditState, NonEditState, PersonSelectedMode } from '../types';
 import EditAndSaveButtons from '../components/EditAndSaveButtons';
 
 const personNameAsString = (n: PersonNameSuggestion) => {
@@ -42,7 +42,8 @@ export interface PersonState {
   editState?: EditState | NonEditState;
   disableOnChangeFullName?: boolean;
   disableOnChangeOtherName?: boolean;
-  showNewPersonName?: boolean;
+  showMoreInfo?: boolean;
+  personSelectedMode?: PersonSelectedMode;
 }
 
 export type PersonProps = {
@@ -60,7 +61,7 @@ export type PersonProps = {
   editingPersonName?: InputPersonName;
   disableOnChangeFullName?: boolean;
   disableOnChangeOtherName?: boolean;
-  showNewPersonName?: boolean;
+  showMoreInfo?: boolean;
   onChangeFullName: (fieldName: string) => (newValue: string) => void;
   onCreatePersonName: Function;
   onClickNewPersonName: () => void;
@@ -143,12 +144,12 @@ const PersonComponent = (props: PersonProps) => {
               props.onClickNewPersonName();
             }}
           >
-            {props.showNewPersonName ? 'Mindre informasjon' : 'Mer informasjon'}
+            {props.showMoreInfo ? 'Mindre informasjon' : 'Mer informasjon'}
           </button>
         </div>
       </div>
       <div className="row">
-        {props.showNewPersonName && (
+        {props.showMoreInfo && (
           <PersonNameComponent
             editingPersonName={props.editingPersonName}
             disableOnChangeFullName={props.disableOnChangeFullName}

@@ -41,7 +41,7 @@ import {
 } from '../../../models/object/collectingEvent';
 import { AjaxResponse } from 'rxjs';
 import config from '../../../config';
-import { EditState, NonEditState, RevisionState, DraftState } from '../types';
+import { EditState, NonEditState, RevisionState, DraftState, PersonSelectedMode } from '../types';
 import EditAndSaveButtons from '../components/EditAndSaveButtons';
 import PersonComponent, { ViewPersonComponent } from './PersonComponent';
 //import { personDet } from '../../../models/object/classHist';
@@ -436,7 +436,7 @@ export class CollectingEventComponent extends React.Component<
               editState: 'Editing'
             },
             personState: {
-              showNewPersonName: false,
+              showMoreInfo: false,
               editState: 'Editing'
             }
           };
@@ -1288,8 +1288,8 @@ export class CollectingEventComponent extends React.Component<
           disableOnChangeOtherName={
             this.state.personState && this.state.personState.disableOnChangeOtherName
           }
-          showNewPersonName={
-            this.state.personState && this.state.personState.showNewPersonName
+          showMoreInfo={
+            this.state.personState && this.state.personState.showMoreInfo
           }
           nameEmpty={this.state.eventData.name === '' ? true : false}
           onClickEdit={() => {
@@ -1327,10 +1327,18 @@ export class CollectingEventComponent extends React.Component<
 
               console.log('Person Selected ', suggestion.personName);
 
+              const newPersonSelectedMode: PersonSelectedMode = newPersonName.name === newPersonName.concatPersonName ?
+                                             'Person' : 
+                                             newPersonName.personUuid === '' ?
+                                             'PersonNameOnly' : 'PersonName';
+
+              console.log('############## PersonSelectedMode ' , newPersonSelectedMode);
+
               const newPersonState: PersonState = {
                 ...cs.personState,
                 personName: newPersonName,
-                editState: 'Editing'
+                editState: 'Editing',
+                personSelectedMode: newPersonSelectedMode
               };
 
               const newEventState = {
@@ -1352,7 +1360,7 @@ export class CollectingEventComponent extends React.Component<
                   : [];
 
               const currentPersonName = cs.personState && cs.personState.personName;
-
+              
               const newPersonNames = currentPersonName
                 ? [
                     ...currentPersonNames.slice(0, index),
@@ -1404,11 +1412,13 @@ export class CollectingEventComponent extends React.Component<
               const newPersonState: PersonState = cs.personState
                 ? {
                     ...cs.personState,
-                    personNames: newPersonNames
+                    personNames: newPersonNames,
+                    personSelectedMode: undefined
                   }
                 : {
                     personNames: newPersonNames,
-                    editState: 'Editing'
+                    editState: 'Editing',
+                    personSelectedMode: undefined
                   };
 
               const relatedActorsList: ActorsAndRelation[] | undefined =
@@ -1456,7 +1466,7 @@ export class CollectingEventComponent extends React.Component<
                         roleId: 11
                       };
                       const currStatus =
-                        ps.personState && ps.personState.showNewPersonName;
+                        ps.personState && ps.personState.showMoreInfo;
                       const newPersonState: PersonState = ps.personState
                         ? {
                             ...ps.personState,
@@ -1464,13 +1474,13 @@ export class CollectingEventComponent extends React.Component<
                             editState: 'Editing',
                             personName: undefined,
                             editingPersonName: undefined,
-                            showNewPersonName: !currStatus
+                            showMoreInfo: !currStatus
                           }
                         : {
                             editState: 'Editing',
                             personName: undefined,
                             editingPersonName: undefined,
-                            showNewPersonName: false
+                            showMoreInfo: false
                           };
 
                       const newEventState = {
@@ -1563,15 +1573,15 @@ export class CollectingEventComponent extends React.Component<
           }}
           onClickNewPersonName={() => {
             this.setState((cs: CollectingEventState) => {
-              const currStatus = cs.personState && cs.personState.showNewPersonName;
+              const currStatus = cs.personState && cs.personState.showMoreInfo;
               const newPersonState: PersonState =
                 cs && cs.personState
                   ? {
                       ...cs.personState,
-                      showNewPersonName: !currStatus
+                      showMoreInfo: !currStatus
                     }
                   : {
-                      showNewPersonName: false
+                      showMoreInfo: false
                     };
               const newRelatedActors: ActorsAndRelation[] | undefined =
                 newPersonState && newPersonState.personNames

@@ -3,6 +3,7 @@ import { InputPersonName } from '../../../models/object/person';
 import { AppSession } from 'src/types/appSession';
 import { History } from 'history';
 
+
 type PersonNameProps = {
   //personName?: InputPersonName;
   editingPersonName?: InputPersonName;
@@ -36,31 +37,12 @@ export const PersonNameComponent = (props: PersonNameProps) => {
           />
         </div>
         <div className="col-sm-4">
-          <input
-            value=""
-            type="text"
-            className="form-control"
-            id="serchPerson"
-            /*   onChange={e => {
-                e.preventDefault();
-                props.onChangeFullName('title')(e.target.value);
-              }}  */
-            disabled={props.disableOnChangeOtherName}
-          />
+         
+         {/* Autosuggest for Person */}
+         
+
         </div>
-        <div className="col-sm-1">
-          <button
-            id="btnSerchPerson"
-            className="btn"
-            /* disabled={props.synPerson.personUuid ? false : true}
-                onClick={e => {
-                  e.preventDefault();
-                  props.onRemovePersonAsSynonym();
-                }}  */
-          >
-            Search Person
-          </button>
-        </div>
+        
       </div>
       <div className="form-group">
         <label className="control-label col-md-2" htmlFor="first-name">
