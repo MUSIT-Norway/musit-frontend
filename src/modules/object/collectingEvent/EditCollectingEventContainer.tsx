@@ -98,6 +98,7 @@ const editCollectingEventProps = (combinedStore: any, upstream: { history: Histo
     editEventPersonRevision: (ajaxPost: AjaxPost<any>) => (
       props: EditPersonEventProps
     ) => {
+      console.log('IN editEventPersonRevision ', props.data);
       editEventPersonRevision$.next({
         id: props.id,
         data: props.data,

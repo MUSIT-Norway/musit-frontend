@@ -131,7 +131,7 @@ export class PersonNameSuggestComponent extends React.Component<
             newList.push({
               personName: suggestions[i].personName,
               displayPersonName: suggestions[i].personName + ' (' + j + ') ',
-              personUuid: suggestions[i].personUuid.split('-')[0],
+              personUuid: suggestions[i].personUuid,
               personNameUuid: suggestions[i].personNameUuid,
               name: suggestions[i].name,
               firstName: suggestions[i].firstName,
@@ -144,7 +144,7 @@ export class PersonNameSuggestComponent extends React.Component<
             newList.push({
               personName: suggestions[i].personName,
               displayPersonName: suggestions[i].personName + ' (' + j + ') ',
-              personUuid: suggestions[i].personUuid.split('-')[0],
+              personUuid: suggestions[i].personUuid,
               personNameUuid: suggestions[j].personNameUuid,
               name: suggestions[j].name,
               firstName: suggestions[j].firstName,

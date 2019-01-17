@@ -21,7 +21,7 @@ const personNameAsString = (n: PersonNameSuggestion) => {
         ? 'Person: ' +
           n.displayPersonName +
           ' Uuid:' +
-          n.personUuid +
+          n.personUuid.split('-')[0] +
           '  ' +
           ' Person Name: ' +
           ' ' +
@@ -94,8 +94,7 @@ export const ViewPersonComponent = (props: {
 
 const PersonComponent = (props: PersonProps) => {
   return (
-    <div className="container-fluid">
-      {' '}
+    <div>
       <div className="row">
         <label
           className="control-label col-md-2"
@@ -103,7 +102,7 @@ const PersonComponent = (props: PersonProps) => {
         >
           Person name
         </label>
-        <div className="col-md-6">
+        <div className="col-md-8">
           <PersonNameSuggest
             id="PersonNameSuggestCollectingEvent"
             disabled={props.disabled}
@@ -144,73 +143,89 @@ const PersonComponent = (props: PersonProps) => {
               props.onClickNewPersonName();
             }}
           >
-            {props.showNewPersonName ? 'Klikk for å skjule' : 'Lag nytt personnavn'}
+            {props.showNewPersonName ? 'Mindre informasjon' : 'Mer informasjon'}
           </button>
         </div>
       </div>
-      {props.showNewPersonName && (
-        <PersonNameComponent
-          editingPersonName={props.editingPersonName}
-          disableOnChangeFullName={props.disableOnChangeFullName}
-          disableOnChangeOtherName={props.disableOnChangeOtherName}
-          appSession={props.appSession}
-          history={props.history}
-          onCreatePersonName={props.onCreatePersonName}
-          onChangeFullName={props.onChangeFullName}
-        />
-      )}
       <div className="row">
-        <div className="col-md-10 col-md-offset-2">
-          <table className="table table-condensed table-hover">
-            <thead>
-              <tr>
-                <th>Personer i denne hendelsen</th>
-                <th />
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              {props.personNames &&
-                props.personNames.map((d: InputPersonName, i: number) => (
-                  <div key={`det-row-${i}`}>
-                    <tr>
-                      <td className="col-md-5">
-                        <input
-                          type="text"
-                          className="form-control"
-                          disabled={true}
-                          value={d.name}
-                        />
-                      </td>
-                      <td className="col-md-5">
-                        <input
-                          type="text"
-                          className="form-control"
-                          disabled={true}
-                          value={d.personNameUuid}
-                        />
-                      </td>
-                      <td className="col-md-1">
-                        {props.disabled ? (
-                          'Delete'
-                        ) : (
-                          <a
-                            href=""
-                            onClick={e => {
-                              e.preventDefault();
-                              props.onDeletePerson(i);
-                            }}
-                          >
-                            Delete
-                          </a>
-                        )}
-                      </td>
-                    </tr>
-                  </div>
-                ))}
-            </tbody>
-          </table>
-        </div>
+        {props.showNewPersonName && (
+          <PersonNameComponent
+            editingPersonName={props.editingPersonName}
+            disableOnChangeFullName={props.disableOnChangeFullName}
+            disableOnChangeOtherName={props.disableOnChangeOtherName}
+            appSession={props.appSession}
+            history={props.history}
+            onCreatePersonName={props.onCreatePersonName}
+            onChangeFullName={props.onChangeFullName}
+          />
+        )}
+      </div>
+      <div className="row grid">
+        <table className="table">
+          <thead>
+            <tr>
+              <th className="col-md-4">Person </th>
+              <th className="col-md-1">Person UUID</th>
+              <th className="col-md-4">Person Name</th>
+              <th className="col-md-2">Person Name UUID</th>
+              <th className="col-md-1" />
+            </tr>
+          </thead>
+          <tbody>
+            {props.personNames &&
+              props.personNames.map((d: PersonNameForCollectingEvent, i: number) => (
+                <tr key={`det-row-${i}`}>
+                  <td className="col-md-4">
+                    <input
+                      type="text"
+                      className=" form-control"
+                      disabled={true}
+                      value={d.concatPersonName}
+                    />
+                  </td>
+                  <td className="col-md-1">
+                    <input
+                      type="text"
+                      className="form-control"
+                      disabled={true}
+                      value={d.personUuid}
+                    />
+                  </td>
+                  <td className="col-md-4">
+                    <input
+                      type="text"
+                      className="form-control"
+                      disabled={true}
+                      value={d.name}
+                    />
+                  </td>
+                  <td className="col-md-2">
+                    <input
+                      type="text"
+                      className="form-control"
+                      disabled={true}
+                      value={d.personNameUuid}
+                    />
+                  </td>
+                  <td className="col-md-1">
+                    {props.disabled ? (
+                      'Delete'
+                    ) : (
+                      <a
+                        href=""
+                        onClick={e => {
+                          e.preventDefault();
+                          props.onDeletePerson(i);
+                        }}
+                      >
+                        Delete
+                      </a>
+                    )}
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
       </div>
       <div className="row">
         {console.log('Anuradha nameEmpty test personComponent', props.nameEmpty)}
