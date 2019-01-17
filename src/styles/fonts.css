@@ -2,7 +2,7 @@
     font-family: "untitled-font-1";
     src: url("untitled-font-1.eot");
     src: url("untitled-font-1.eot?#iefix") format("embedded-opentype"),
-    r format("woff"),
+    url("untitled-font-1.woff") format("woff"),
     url("untitled-font-1.ttf") format("truetype"),
     url("untitled-font-1.svg#untitled-font-1") format("svg");
     font-weight: normal;
