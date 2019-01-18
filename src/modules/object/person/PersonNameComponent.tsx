@@ -3,7 +3,6 @@ import { InputPersonName } from '../../../models/object/person';
 import { AppSession } from 'src/types/appSession';
 import { History } from 'history';
 
-
 type PersonNameProps = {
   //personName?: InputPersonName;
   editingPersonName?: InputPersonName;
@@ -36,13 +35,7 @@ export const PersonNameComponent = (props: PersonNameProps) => {
             disabled={props.disableOnChangeOtherName}
           />
         </div>
-        <div className="col-sm-4">
-         
-         {/* Autosuggest for Person */}
-         
-
-        </div>
-        
+        <div className="col-sm-4">{/* Autosuggest for Person */}</div>
       </div>
       <div className="form-group">
         <label className="control-label col-md-2" htmlFor="first-name">

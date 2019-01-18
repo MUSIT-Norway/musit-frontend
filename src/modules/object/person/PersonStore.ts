@@ -66,7 +66,7 @@ export const toBackend: ((p: PersonState) => InputPerson) = (p: PersonState) => 
     p.url,
     changedSynonyms
       ? changedSynonyms.map((p: SynonymType) => ({
-          personNameUuid: p.status === 'DEL' ? p.personNameUuid : '',
+          actorNameUuid: p.status === 'DEL' ? p.actorNameUuid : '',
           firstName: p.firstName,
           lastName: p.lastName,
           title: p.title,
@@ -158,7 +158,7 @@ const searchEnrichedPersonsFromName = (ajaxGet: AjaxGet<Star>) => (
       if (p) {
         return p.map((p: OutputPerson) => ({
           ...p,
-          eventData: getPersonAttributesFromEvents(p.personUuid)
+          eventData: getPersonAttributesFromEvents(p.actorUuid)
         }));
       }
       return [];
@@ -185,10 +185,10 @@ const mergePersonData = (ajaxPost: AjaxPost<Star>) => (props: MergePersonProps) 
         callback: props.callback
       })
     )
-    .do(res => console.log('((((=====)))) ', res.personNameUuid))
+    .do(res => console.log('((((=====)))) ', res.actorNameUuid))
     .flatMap(res => {
       return getPersonNameFromUuid(ajaxGet)({
-        id: res.personNameUuid || '',
+        id: res.actorNameUuid || '',
         collectionId: props.collectionId,
         token: props.token
       });

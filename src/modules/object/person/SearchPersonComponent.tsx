@@ -185,7 +185,7 @@ const PersonTable = (props: {
                       onClick={e => {
                         const url = config.magasin.urls.client.person.viewPerson(
                           props.appSession,
-                          p.personUuid ? p.personUuid : '' //  r.response.personUuid  //
+                          p.actorUuid ? p.actorUuid : '' //  r.response.actorUuid  //
                         );
                         e.preventDefault();
                         props.history && props.history.push(url);

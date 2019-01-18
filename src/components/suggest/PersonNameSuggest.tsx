@@ -53,9 +53,9 @@ export interface PersonNameSuggestion {
   lastName?: string;
   title?: string;
   name: string;
-  personUuid: string;
-  personNameUuid: string;
-  personName: string;
+  actorUuid: string;
+  actorNameUuid: string;
+  defaultName: string;
   displayPersonName?: string;
 }
 
@@ -102,7 +102,7 @@ export class PersonNameSuggestComponent extends React.Component<
 
   getFormatedDisplaySuggestions(suggestions: PersonNameSuggestion[]) {
     const personList = suggestions.filter((suggestion: PersonNameSuggestion) => {
-      return suggestion.personName === suggestion.name;
+      return suggestion.defaultName === suggestion.name;
     });
 
     let i,
@@ -111,41 +111,41 @@ export class PersonNameSuggestComponent extends React.Component<
 
     for (i = 0; i < personList.length; i++) {
       for (j = 0; j < suggestions.length; j++) {
-        if (personList[i].personUuid === '') {
+        if (personList[i].actorUuid === '') {
           // PersonName only
           console.log('######## PR CASE 01');
           newList.push({
-            personName: suggestions[i].personName,
-            displayPersonName: suggestions[i].personName + ' (' + j + ') ',
-            personUuid: suggestions[i].personUuid,
-            personNameUuid: suggestions[i].personNameUuid,
+            defaultName: suggestions[i].defaultName,
+            displayPersonName: suggestions[i].defaultName + ' (' + j + ') ',
+            actorUuid: suggestions[i].actorUuid,
+            actorNameUuid: suggestions[i].actorNameUuid,
             name: suggestions[i].name,
             firstName: suggestions[i].firstName,
             lastName: suggestions[i].lastName,
             title: suggestions[i].title
           });
-        } else if (personList[i].personUuid === suggestions[j].personUuid) {
-          if (personList[i].personName === suggestions[j].name) {
+        } else if (personList[i].actorUuid === suggestions[j].actorUuid) {
+          if (personList[i].defaultName === suggestions[j].name) {
             // Person exist
             console.log('######## PR CASE 02');
             newList.push({
-              personName: suggestions[i].personName,
-              displayPersonName: suggestions[i].personName + ' (' + j + ') ',
-              personUuid: suggestions[i].personUuid,
-              personNameUuid: suggestions[i].personNameUuid,
+              defaultName: suggestions[i].defaultName,
+              displayPersonName: suggestions[i].defaultName + ' (' + j + ') ',
+              actorUuid: suggestions[i].actorUuid,
+              actorNameUuid: suggestions[i].actorNameUuid,
               name: suggestions[i].name,
               firstName: suggestions[i].firstName,
               lastName: suggestions[i].lastName,
               title: suggestions[i].title
             });
-          } else if (personList[i].personName !== suggestions[j].name) {
+          } else if (personList[i].defaultName !== suggestions[j].name) {
             // Person and synonym for the Person
             console.log('######## PR CASE 03');
             newList.push({
-              personName: suggestions[i].personName,
-              displayPersonName: suggestions[i].personName + ' (' + j + ') ',
-              personUuid: suggestions[i].personUuid,
-              personNameUuid: suggestions[j].personNameUuid,
+              defaultName: suggestions[i].defaultName,
+              displayPersonName: suggestions[i].defaultName + ' (' + j + ') ',
+              actorUuid: suggestions[i].actorUuid,
+              actorNameUuid: suggestions[j].actorNameUuid,
               name: suggestions[j].name,
               firstName: suggestions[j].firstName,
               lastName: suggestions[j].lastName,
@@ -168,7 +168,7 @@ export class PersonNameSuggestComponent extends React.Component<
               suggestions={this.getFormatedDisplaySuggestions(
                 this.props.suggest.data || []
               ).sort((a: PersonNameSuggestion, b: PersonNameSuggestion) => {
-                if (a.personName <= b.personName) {
+                if (a.defaultName <= b.defaultName) {
                   return -1;
                 }
                 return 1;

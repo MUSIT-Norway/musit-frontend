@@ -29,7 +29,7 @@ interface PersonSynonymSuggestComponentState {
 }
 
 export interface PersonSynonymSuggestion {
-  personUuid: string;
+  actorUuid: string;
   firstName?: string;
   lastName?: string;
   title?: string;
@@ -41,7 +41,7 @@ export interface PersonSynonymSuggestion {
   }[];
   synonyms: [
     {
-      personNameUuid: string;
+      actorNameUuid: string;
       firstName: string;
       lastName: string;
       name: string;
@@ -108,7 +108,7 @@ export class PersonSynonymSuggestComponent extends React.Component<
             <Autosuggest
               suggestions={uniqBy(
                 this.props.suggest.data || [],
-                (p: PersonSynonymSuggestion) => p.personUuid
+                (p: PersonSynonymSuggestion) => p.actorUuid
               )
                 .sort((a: PersonSynonymSuggestion, b: PersonSynonymSuggestion) => {
                   if (a.name <= b.name) {
@@ -118,7 +118,7 @@ export class PersonSynonymSuggestComponent extends React.Component<
                 })
                 .map((p: PersonSynonymSuggestion) => ({
                   ...p,
-                  eventData: getPersonAttributesFromEvents(p.personUuid),
+                  eventData: getPersonAttributesFromEvents(p.actorUuid),
                   aggSyn: p.synonyms
                     ? `[${p.synonyms.reduce(
                         (p, c) => `${p !== '' ? p + ';' : ''} ${c.name}`,

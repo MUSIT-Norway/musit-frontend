@@ -21,7 +21,7 @@ const personNameAsString = (n: PersonNameSuggestion) => {
         ? 'Person: ' +
           n.displayPersonName +
           ' Uuid:' +
-          n.personUuid.split('-')[0] +
+          n.actorUuid.split('-')[0] +
           '  ' +
           ' Person Name: ' +
           ' ' +
@@ -32,7 +32,7 @@ const personNameAsString = (n: PersonNameSuggestion) => {
 };
 
 export type PersonNameForCollectingEvent = OutputPersonName & {
-  personUuid?: string;
+  actorUuid?: string;
   roleId: number;
 };
 export interface PersonState {
@@ -83,7 +83,7 @@ export const ViewPersonComponent = (props: {
           {props.personNames &&
             props.personNames.map((p: OutputPersonName, i: number) => (
               <tr key={`pn-${i}`}>
-                <td>{p.personNameUuid}</td>
+                <td>{p.actorNameUuid}</td>
                 <td>{p.name}</td>
               </tr>
             ))}
@@ -181,7 +181,7 @@ const PersonComponent = (props: PersonProps) => {
                       type="text"
                       className=" form-control"
                       disabled={true}
-                      value={d.concatPersonName}
+                      value={d.defaultName}
                     />
                   </td>
                   <td className="col-md-1">
@@ -189,7 +189,7 @@ const PersonComponent = (props: PersonProps) => {
                       type="text"
                       className="form-control"
                       disabled={true}
-                      value={d.personUuid}
+                      value={d.actorUuid}
                     />
                   </td>
                   <td className="col-md-4">
@@ -205,7 +205,7 @@ const PersonComponent = (props: PersonProps) => {
                       type="text"
                       className="form-control"
                       disabled={true}
-                      value={d.personNameUuid}
+                      value={d.actorNameUuid}
                     />
                   </td>
                   <td className="col-md-1">

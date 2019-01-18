@@ -42,8 +42,8 @@ export interface personDet {
   lastName?: string;
   title?: string;
   name: string;
-  personUuid: string;
-  personNameUuid: string;
+  actorUuid: string;
+  actorNameUuid: string;
 }
 
 export interface ClassEvent {
