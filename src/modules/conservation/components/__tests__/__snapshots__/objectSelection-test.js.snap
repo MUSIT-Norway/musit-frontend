@@ -33,6 +33,7 @@ exports[`ObjectSelection should render ObjectSelection as read only 1`] = `
     </thead>
     <tbody>
       <tr
+        key="objectRow_0"
         onClick={[Function]}
       >
         <td
@@ -51,6 +52,7 @@ exports[`ObjectSelection should render ObjectSelection as read only 1`] = `
         </td>
       </tr>
       <tr
+        key="objectRow_1"
         onClick={[Function]}
       >
         <td
@@ -114,6 +116,7 @@ exports[`ObjectSelection should render ObjectSelection for add and edit 1`] = `
     </thead>
     <tbody>
       <tr
+        key="objectRow_0"
         onClick={[Function]}
       >
         <td
@@ -139,6 +142,7 @@ exports[`ObjectSelection should render ObjectSelection for add and edit 1`] = `
         </td>
       </tr>
       <tr
+        key="objectRow_1"
         onClick={[Function]}
       >
         <td
@@ -164,6 +168,7 @@ exports[`ObjectSelection should render ObjectSelection for add and edit 1`] = `
         </td>
       </tr>
       <tr
+        key="objectRow_2"
         onClick={[Function]}
       >
         <td

@@ -4,6 +4,10 @@ import { shallow } from 'enzyme';
 import FontAwesome from 'react-fontawesome';
 import { MusitField } from '../../formfields';
 import { Button } from 'react-bootstrap';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('Toolbar', () => {
   const leftLabel = 'Left';

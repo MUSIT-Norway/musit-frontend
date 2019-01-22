@@ -5,6 +5,11 @@ import ImportVerificationTableComponent from '../ImportVerificationTableComponen
 
 import type { ResultExchangeTemplates } from '../exchangeTemplate';
 
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
+
 describe('ImportVerificationTableComponent', () => {
   it('should not render table if "results" is empty', () => {
     const Comp = shallow(

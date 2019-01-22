@@ -3,6 +3,7 @@
 exports[`TableData should render properly  1`] = `
 <tr
   className="mainObject"
+  key="1"
   onClick={[Function]}
 >
   <td

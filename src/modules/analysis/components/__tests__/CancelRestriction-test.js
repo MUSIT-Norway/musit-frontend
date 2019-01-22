@@ -7,6 +7,10 @@ import sinon from 'sinon';
 import { appSession } from '../../../../testutils/sampleDataForTest';
 import { FormElement } from '../../../../forms/components';
 import StatefulActorSuggest from '../StatefulActorSuggest';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 const restriction = {
   reason: 'Initial reason',

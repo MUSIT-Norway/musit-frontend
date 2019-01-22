@@ -10,6 +10,10 @@ import {
   createField
 } from '../../../testutils/sampleDataForTest';
 import { createEnLangAppSessionContext } from '../../../testutils/appSessionContext';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('AnalysisSampleFormPageAdd', () => {
   it('should render with no parent sample object', () => {

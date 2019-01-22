@@ -44,10 +44,11 @@ import config from '../../../config';
 import { EditState, NonEditState, RevisionState, DraftState } from '../types';
 import EditAndSaveButtons from '../components/EditAndSaveButtons';
 import PersonComponent, { ViewPersonComponent } from './PersonComponent';
-import { personDet } from '../../../models/object/classHist';
+//import { personDet } from '../../../models/object/classHist';
 import { AjaxPost } from 'src/types/ajax';
 import { PersonNameForCollectingEvent, PersonState } from './PersonComponent';
 //import { InputPersonName } from '../../../models/object/person';
+import { PersonNameSuggestion } from '../../../components/suggest/PersonNameSuggest';
 
 export type EventMetadataProps = EventData & {
   onClickSave: () => void;
@@ -286,7 +287,8 @@ export const toFrontend: (p: OutputEvent) => CollectingEventState = (p: OutputEv
               personNameUuid: r.personNameUuid,
               name: r.name,
               roleId: r.roleId
-            }))
+            })),
+            editState: 'Not editing'
           }
         : undefined,
       placeState: innP.place
@@ -515,25 +517,23 @@ export class CollectingEventComponent extends React.Component<
         }
       };
 
+      console.log('ANU: calling editEventMetaDate');
       this.props.editEventMetaData()(props);
     }
   }
 
   savePerson(personState: PersonState) {
-    if (
-      this.props.editEventPersonRevision &&
-      personState &&
-      personState.personNames &&
-      this.state.eventData.relatedActors
-    ) {
+    if (this.props.editEventPersonRevision && personState) {
       const URL = config.magasin.urls.client.collectingEvent.view(
         this.props.appSession,
         this.state.eventData.eventUuid
       );
-
+      console.log('ANU : calling savePerson');
       const props: EditPersonEventProps = {
         id: this.state.eventData.eventUuid,
-        data: this.state.eventData.relatedActors,
+        data: this.state.eventData.relatedActors
+          ? this.state.eventData.relatedActors
+          : [],
         token: this.props.appSession.accessToken,
         collectionId: this.props.appSession.collectionId,
         callback: {
@@ -868,6 +868,7 @@ export class CollectingEventComponent extends React.Component<
           getAdmPlaceData={(field: string) => (a: AdmPlace) => {
             const arrayPlaces = a.path ? a.path.split(':') : undefined;
             let PlaceString: string = '';
+            console.log('Anuradha getAdmPlaceDate ', arrayPlaces);
 
             if (field === 'Kommune') {
               PlaceString = arrayPlaces ? arrayPlaces[5] : '';
@@ -1273,6 +1274,7 @@ export class CollectingEventComponent extends React.Component<
         <PersonComponent
           {...this.state}
           disabled={this.props.personReadOnly ? this.props.personReadOnly : false}
+          readOnly={this.props.personReadOnly ? this.props.personReadOnly : false}
           value={''}
           appSession={this.props.appSession}
           history={this.props.history}
@@ -1313,14 +1315,18 @@ export class CollectingEventComponent extends React.Component<
               }
             }
           }}
-          onChangePerson={(suggestion: personDet) => {
+          onChangePerson={(suggestion: PersonNameSuggestion) => {
             this.setState((cs: CollectingEventState) => {
               const newPersonName: PersonNameForCollectingEvent = {
                 personUuid: suggestion ? suggestion.personUuid : '',
                 personNameUuid: suggestion ? suggestion.personNameUuid : '',
                 name: suggestion ? suggestion.name : '',
-                roleId: 11
+                roleId: 11,
+                concatPersonName: suggestion.personName
               };
+
+              console.log('Person Selected ', suggestion.personName);
+
               const newPersonState: PersonState = {
                 ...cs.personState,
                 personName: newPersonName,

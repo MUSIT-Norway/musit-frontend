@@ -6,7 +6,10 @@ import { shallowToJson } from 'enzyme-to-json';
 import sinon from 'sinon';
 import { appSession } from '../../../../testutils/sampleDataForTest';
 import CancelRestriction from '../CancelRestriction';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 
+Enzyme.configure({ adapter: new Adapter() });
 const restriction = {
   reason: 'Initial reason',
   expirationDate: '2017-08-21T08:17:03+00:00',

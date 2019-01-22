@@ -68,6 +68,7 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
     }
   >
     <Tr
+      key="0"
       onClick={[Function]}
     >
       <Td
@@ -113,6 +114,7 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       </Td>
     </Tr>
     <Tr
+      key="1"
       onClick={[Function]}
     >
       <Td
@@ -134,7 +136,9 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       />
       <Td
         column="hasAnalyse"
-      />
+      >
+        <Component />
+      </Td>
       <Td
         column="storageMedium"
       />

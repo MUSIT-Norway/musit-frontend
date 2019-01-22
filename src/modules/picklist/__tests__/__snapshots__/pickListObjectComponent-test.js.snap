@@ -402,6 +402,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                 <tbody>
                   <tr
                     className="mainObject"
+                    key="0"
                   >
                     <td
                       style={
@@ -520,7 +521,9 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                                      / 
                                   </span>
                                 </OverlayTrigger>
-                                <span>
+                                <span
+                                  key="0"
+                                >
                                   <OverlayTrigger
                                     defaultOverlayShown={false}
                                     overlay={
@@ -577,6 +580,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                   </tr>
                   <tr
                     className="childObject"
+                    key="1"
                   >
                     <td
                       style={
@@ -696,7 +700,9 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                                      / 
                                   </span>
                                 </OverlayTrigger>
-                                <span>
+                                <span
+                                  key="0"
+                                >
                                   <OverlayTrigger
                                     defaultOverlayShown={false}
                                     overlay={
@@ -745,7 +751,9 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                                     </span>
                                   </OverlayTrigger>
                                 </span>
-                                <span>
+                                <span
+                                  key="1"
+                                >
                                   <OverlayTrigger
                                     defaultOverlayShown={false}
                                     overlay={
@@ -802,6 +810,7 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                   </tr>
                   <tr
                     className="mainObject"
+                    key="2"
                   >
                     <td
                       style={
@@ -921,7 +930,9 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                                      / 
                                   </span>
                                 </OverlayTrigger>
-                                <span>
+                                <span
+                                  key="0"
+                                >
                                   <OverlayTrigger
                                     defaultOverlayShown={false}
                                     overlay={
@@ -970,7 +981,9 @@ exports[`PickListComponent for objects Should not fail horribly 1`] = `
                                     </span>
                                   </OverlayTrigger>
                                 </span>
-                                <span>
+                                <span
+                                  key="1"
+                                >
                                   <OverlayTrigger
                                     defaultOverlayShown={false}
                                     overlay={
@@ -1239,6 +1252,7 @@ exports[`PickListComponent for objects should display component (objects) correc
         <tbody>
           <tr
             className="mainObject"
+            key="0"
           >
             <td
               style={
@@ -1308,6 +1322,7 @@ exports[`PickListComponent for objects should display component (objects) correc
           </tr>
           <tr
             className="childObject"
+            key="1"
           >
             <td
               style={
@@ -1378,6 +1393,7 @@ exports[`PickListComponent for objects should display component (objects) correc
           </tr>
           <tr
             className="mainObject"
+            key="2"
           >
             <td
               style={

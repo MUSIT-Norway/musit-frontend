@@ -5,6 +5,10 @@ import sinon from 'sinon';
 import NodeGrid from '../NodeTable';
 import { expect as e } from 'chai';
 import { appSession } from '../../../testutils/sampleDataForTest';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('NodeTable', () => {
   const tableData = [

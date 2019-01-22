@@ -3,6 +3,10 @@ import PersonRoleDate from '../PersonRoleDate';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { appSession } from '../../../testutils/sampleDataForTest';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('PersonRoleDate', () => {
   it('should match snapshot', () => {

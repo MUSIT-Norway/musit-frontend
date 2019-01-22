@@ -5,6 +5,10 @@ import sinon from 'sinon';
 import Pagination from '../pagination';
 
 import type { Paging } from '../../searchStore';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('Pagination', () => {
   describe('render', () => {

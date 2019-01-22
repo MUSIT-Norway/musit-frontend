@@ -198,6 +198,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
               <tbody>
                 <tr
                   id="1_2017-01-01T09:42:52+00:00"
+                  key="0"
                   onClick={[Function]}
                   style={
                     Object {
@@ -223,6 +224,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                   >
                     <span
                       className="icon icon-musitlightingcondicon"
+                      key="6"
                       style={
                         Object {
                           "color": "darkgray",
@@ -250,6 +252,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                 </tr>
                 <tr
                   id="1_2017-01-01T09:42:52+00:00"
+                  key="1"
                   onClick={[Function]}
                   style={
                     Object {
@@ -275,6 +278,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                   >
                     <span
                       className="icon icon-musittemperatureicon"
+                      key="6"
                       style={
                         Object {
                           "color": "darkgray",
@@ -300,6 +304,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                 </tr>
                 <tr
                   id="1_2017-01-01T09:42:52+00:00"
+                  key="2"
                   onClick={[Function]}
                   style={
                     Object {
@@ -325,6 +330,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                   >
                     <span
                       className="icon icon-musithypoxicairicon"
+                      key="6"
                       style={
                         Object {
                           "color": "darkgray",
@@ -352,6 +358,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                 </tr>
                 <tr
                   id="1_2017-01-01T09:42:52+00:00"
+                  key="3"
                   onClick={[Function]}
                   style={
                     Object {
@@ -377,6 +384,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                   >
                     <span
                       className="icon icon-musitrelhumidityicon"
+                      key="6"
                       style={
                         Object {
                           "color": "darkgray",
@@ -404,6 +412,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                 </tr>
                 <tr
                   id="1_2017-01-01T09:42:52+00:00"
+                  key="4"
                   onClick={[Function]}
                   style={
                     Object {
@@ -429,6 +438,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                   >
                     <span
                       className="icon icon-musitcleaningicon"
+                      key="6"
                       style={
                         Object {
                           "color": "darkgray",
@@ -456,6 +466,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                 </tr>
                 <tr
                   id="1_2017-01-01T09:42:52+00:00"
+                  key="5"
                   onClick={[Function]}
                   style={
                     Object {
@@ -481,6 +492,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                   >
                     <span
                       className="icon icon-musitmoldicon"
+                      key="6"
                       style={
                         Object {
                           "color": "darkgray",
@@ -508,6 +520,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                 </tr>
                 <tr
                   id="1_2017-01-01T09:42:52+00:00"
+                  key="6"
                   onClick={[Function]}
                   style={
                     Object {
@@ -533,6 +546,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                   >
                     <span
                       className="icon icon-musitalcoholicon"
+                      key="6"
                       style={
                         Object {
                           "color": "darkgray",
@@ -560,6 +574,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                 </tr>
                 <tr
                   id="1_2017-01-01T09:42:52+00:00"
+                  key="7"
                   onClick={[Function]}
                   style={
                     Object {
@@ -585,6 +600,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                   >
                     <span
                       className="icon icon-musitgasicon"
+                      key="6"
                       style={
                         Object {
                           "color": "darkgray",
@@ -612,6 +628,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                 </tr>
                 <tr
                   id="1_2017-01-01T09:42:52+00:00"
+                  key="8"
                   onClick={[Function]}
                   style={
                     Object {
@@ -637,6 +654,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                   >
                     <span
                       className="icon icon-musitwaterdamageicon"
+                      key="6"
                       style={
                         Object {
                           "color": "darkgray",
@@ -664,6 +682,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                 </tr>
                 <tr
                   id="1_2017-01-01T09:42:52+00:00"
+                  key="9"
                   onClick={[Function]}
                   style={
                     Object {
@@ -689,6 +708,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                   >
                     <span
                       className="icon icon-musitfireprotectionicon"
+                      key="6"
                       style={
                         Object {
                           "color": "darkgray",
@@ -716,6 +736,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                 </tr>
                 <tr
                   id="1_2017-01-01T09:42:52+00:00"
+                  key="10"
                   onClick={[Function]}
                   style={
                     Object {
@@ -741,6 +762,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                   >
                     <span
                       className="icon icon-musittheftprotectionicon"
+                      key="6"
                       style={
                         Object {
                           "color": "darkgray",
@@ -768,6 +790,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                 </tr>
                 <tr
                   id="1_2017-01-01T09:42:52+00:00"
+                  key="11"
                   onClick={[Function]}
                   style={
                     Object {
@@ -793,6 +816,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                   >
                     <span
                       className="icon icon-musitperimetersecurityicon"
+                      key="6"
                       style={
                         Object {
                           "color": "darkgray",
@@ -820,6 +844,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                 </tr>
                 <tr
                   id="1_2017-01-01T09:42:52+00:00"
+                  key="12"
                   onClick={[Function]}
                   style={
                     Object {
@@ -845,6 +870,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                   >
                     <span
                       className="icon icon-musitpesticon"
+                      key="6"
                       style={
                         Object {
                           "color": "darkgray",

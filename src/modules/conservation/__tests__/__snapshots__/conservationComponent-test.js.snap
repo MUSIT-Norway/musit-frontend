@@ -22,6 +22,7 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
   <button
     className="btn btn-primary"
     disabled={true}
+    key="btn-edit"
     onClick={
       Object {
         "actorsAndRoles": Object {
@@ -1772,6 +1773,7 @@ exports[`ConservationComponent add page should render add page properly 1`] = `
   <button
     className="btn btn-default"
     disabled={true}
+    key="btn-createSubEvents"
     onClick={[Function]}
   >
     Opprett delhendelse
@@ -1828,6 +1830,7 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
   <button
     className="btn btn-primary"
     disabled={false}
+    key="btn-report"
     onClick={[Function]}
     style={
       Object {
@@ -1863,6 +1866,7 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
   <button
     className="btn btn-primary"
     disabled={false}
+    key="btn-edit"
     onClick={
       Object {
         "actorsAndRoles": Object {
@@ -4840,6 +4844,7 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
         <button
           className="btn btn-default btn-md"
           disabled={false}
+          key="btn-toggleExpanded"
           onClick={true}
           type="button"
         >
@@ -5145,6 +5150,7 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
           getStatusTextFromErrors=""
           index={0}
           isFormValid={true}
+          key="treatment_0"
           keywords={
             Array [
               Object {
@@ -7701,6 +7707,7 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
           getStatusTextFromErrors=""
           index={1}
           isFormValid={true}
+          key="techincalDescription_1"
           onAddAffectedThings={
             Array [
               Object {
@@ -9830,6 +9837,7 @@ exports[`ConservationComponent edit page should render edit page properly 1`] = 
   <button
     className="btn btn-default"
     disabled={true}
+    key="btn-createSubEvents"
     onClick={[Function]}
   >
     Opprett delhendelse

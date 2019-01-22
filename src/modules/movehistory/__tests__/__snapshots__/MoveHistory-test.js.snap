@@ -37,7 +37,9 @@ exports[`MoveHistory should match snapshot 1`] = `
           }
         }
       >
-        <tr>
+        <tr
+          key="0"
+        >
           <td>
              20.01.2017
           </td>
@@ -51,7 +53,9 @@ exports[`MoveHistory should match snapshot 1`] = `
              Rull
           </td>
         </tr>
-        <tr>
+        <tr
+          key="1"
+        >
           <td>
              20.01.2017
           </td>
@@ -65,7 +69,9 @@ exports[`MoveHistory should match snapshot 1`] = `
              Rull
           </td>
         </tr>
-        <tr>
+        <tr
+          key="2"
+        >
           <td>
              20.01.2017
           </td>

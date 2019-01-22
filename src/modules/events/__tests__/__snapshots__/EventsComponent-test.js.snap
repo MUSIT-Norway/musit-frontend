@@ -164,7 +164,9 @@ exports[`EventsComponent should render a table of events 1`] = `
       ]
     }
   >
-    <Tr>
+    <Tr
+      key="0"
+    >
       <Td
         column="id"
       />
@@ -196,7 +198,9 @@ exports[`EventsComponent should render a table of events 1`] = `
         Les mer
       </Td>
     </Tr>
-    <Tr>
+    <Tr
+      key="1"
+    >
       <Td
         column="id"
       />
@@ -228,7 +232,9 @@ exports[`EventsComponent should render a table of events 1`] = `
         Les mer
       </Td>
     </Tr>
-    <Tr>
+    <Tr
+      key="2"
+    >
       <Td
         column="id"
       />

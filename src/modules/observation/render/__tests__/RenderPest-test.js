@@ -1,6 +1,10 @@
 import { render } from 'enzyme';
 import React from 'react';
 import { RenderPest } from '..';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('RenderPest', () => {
   let wrapper;

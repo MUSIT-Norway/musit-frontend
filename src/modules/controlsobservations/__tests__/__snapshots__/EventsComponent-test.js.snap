@@ -5,6 +5,7 @@ exports[`EventsComponent Check it renders when not loaded 1`] = `
   breadcrumb={
     <Breadcrumb
       allActive={true}
+      node={undefined}
       onClickCrumb={[Function]}
     />
   }
@@ -49,6 +50,7 @@ exports[`EventsComponent Check it renders. 1`] = `
   breadcrumb={
     <Breadcrumb
       allActive={true}
+      node={undefined}
       onClickCrumb={[Function]}
     />
   }

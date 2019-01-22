@@ -3,6 +3,11 @@ import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import Breadcrumb from '../Breadcrumb';
 
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
+
 describe('StorageUnitsContainer_Breadcrumb_test', () => {
   it('Breadcrumb first element should have name "Museum": ', () => {
     const nodes = [

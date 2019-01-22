@@ -5,6 +5,10 @@ import { shallowToJson } from 'enzyme-to-json';
 import ObjectAndSampleDetails from '../ObjectAndSampleDetails';
 import { history, appSession, sample } from '../../../../testutils/sampleDataForTest';
 import NavigateToObject from '../../../../components/navigations/NavigateToObject';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('ObjectAndSampleDetails', () => {
   it('should not be null', () => {

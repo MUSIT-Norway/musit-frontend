@@ -8,6 +8,10 @@ import Export from '../../../../components/spreadsheet/ExportSpreadsheetComponen
 import Import from '../../../../components/spreadsheet/ImportSpreadsheetComponent';
 
 import type { StoreState } from '../analysisExchangeStore';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('AnalysisResultExchangeComponent', () => {
   const emptyStore = (): StoreState => ({

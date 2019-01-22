@@ -48,13 +48,15 @@ export interface PersonNameSuggestComponentState {
   disabled: Boolean;
 }
 
-interface PersonNameSuggestion {
+export interface PersonNameSuggestion {
   firstName: string;
   lastName?: string;
   title?: string;
   name: string;
   personUuid: string;
   personNameUuid: string;
+  personName: string;
+  displayPersonName?: string;
 }
 
 export class PersonNameSuggestComponent extends React.Component<
@@ -68,6 +70,8 @@ export class PersonNameSuggestComponent extends React.Component<
       value: this.props.value,
       disabled: this.props && this.props.disabled ? true : false
     };
+
+    this.getFormatedDisplaySuggestions = this.getFormatedDisplaySuggestions.bind(this);
   }
   componentWillReceiveProps(next: PersonNameSuggestComponentProps) {
     if (next.value !== this.props.value) {
@@ -95,28 +99,89 @@ export class PersonNameSuggestComponent extends React.Component<
       this.props.update({ update, museumId, token });
     }
   }
+
+  getFormatedDisplaySuggestions(suggestions: PersonNameSuggestion[]) {
+    const personList = suggestions.filter((suggestion: PersonNameSuggestion) => {
+      return suggestion.personName === suggestion.name;
+    });
+
+    let i,
+      j = 0;
+    let newList: PersonNameSuggestion[] = [];
+
+    for (i = 0; i < personList.length; i++) {
+      for (j = 0; j < suggestions.length; j++) {
+        if (personList[i].personUuid === '') {
+          // PersonName only
+          console.log('######## PR CASE 01');
+          newList.push({
+            personName: suggestions[i].personName,
+            displayPersonName: suggestions[i].personName + ' (' + j + ') ',
+            personUuid: suggestions[i].personUuid,
+            personNameUuid: suggestions[i].personNameUuid,
+            name: suggestions[i].name,
+            firstName: suggestions[i].firstName,
+            lastName: suggestions[i].lastName,
+            title: suggestions[i].title
+          });
+        } else if (personList[i].personUuid === suggestions[j].personUuid) {
+          if (personList[i].personName === suggestions[j].name) {
+            // Person exist
+            console.log('######## PR CASE 02');
+            newList.push({
+              personName: suggestions[i].personName,
+              displayPersonName: suggestions[i].personName + ' (' + j + ') ',
+              personUuid: suggestions[i].personUuid,
+              personNameUuid: suggestions[i].personNameUuid,
+              name: suggestions[i].name,
+              firstName: suggestions[i].firstName,
+              lastName: suggestions[i].lastName,
+              title: suggestions[i].title
+            });
+          } else if (personList[i].personName !== suggestions[j].name) {
+            // Person and synonym for the Person
+            console.log('######## PR CASE 03');
+            newList.push({
+              personName: suggestions[i].personName,
+              displayPersonName: suggestions[i].personName + ' (' + j + ') ',
+              personUuid: suggestions[i].personUuid,
+              personNameUuid: suggestions[j].personNameUuid,
+              name: suggestions[j].name,
+              firstName: suggestions[j].firstName,
+              lastName: suggestions[j].lastName,
+              title: suggestions[j].title
+            });
+          }
+        }
+      }
+    }
+
+    return newList;
+  }
+
   render() {
     return (
       <div>
         <form className="form-horizontal">
           <div className="form-group">
             <Autosuggest
-              suggestions={(this.props.suggest.data || []).sort(
-                (a: PersonNameSuggestion, b: PersonNameSuggestion) => {
-                  if (a.name <= b.name) {
-                    return -1;
-                  }
-                  return 1;
+              suggestions={this.getFormatedDisplaySuggestions(
+                this.props.suggest.data || []
+              ).sort((a: PersonNameSuggestion, b: PersonNameSuggestion) => {
+                if (a.personName <= b.personName) {
+                  return -1;
                 }
-              )}
+                return 1;
+              })}
               onSuggestionsFetchRequested={this.requestSuggestionUpdate}
               onSuggestionsClearRequested={() =>
                 this.setState(() => ({ suggestions: [] }))
               }
               getSuggestionValue={(suggestion: personDet) => suggestion.name}
-              renderSuggestion={(suggestion: PersonNameSuggestion) =>
-                this.props.renderFunc(suggestion)
-              }
+              renderSuggestion={(suggestion: PersonNameSuggestion) => {
+                console.log('PersonName suggesstions ', suggestion);
+                return this.props.renderFunc(suggestion);
+              }}
               inputProps={{
                 ...(this.PersonNameProps as TODO),
                 value: this.state.value,

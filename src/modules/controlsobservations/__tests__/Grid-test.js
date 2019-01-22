@@ -2,6 +2,10 @@ import { mount } from 'enzyme';
 import { mountToJson } from 'enzyme-to-json';
 import React from 'react';
 import ObservationControlGrid from '../EventsGrid';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('ObservationControlGrid', () => {
   it('Check the 1st row Date value', () => {

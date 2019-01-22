@@ -140,7 +140,9 @@ exports[`PickListComponent for nodes should display component (nodes) correctly 
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr
+            key="0"
+          >
             <td
               style={
                 Object {
@@ -193,7 +195,9 @@ exports[`PickListComponent for nodes should display component (nodes) correctly 
               </span>
             </td>
           </tr>
-          <tr>
+          <tr
+            key="1"
+          >
             <td
               style={
                 Object {
@@ -247,7 +251,9 @@ exports[`PickListComponent for nodes should display component (nodes) correctly 
               </span>
             </td>
           </tr>
-          <tr>
+          <tr
+            key="2"
+          >
             <td
               style={
                 Object {
@@ -301,7 +307,9 @@ exports[`PickListComponent for nodes should display component (nodes) correctly 
               </span>
             </td>
           </tr>
-          <tr>
+          <tr
+            key="3"
+          >
             <td
               style={
                 Object {

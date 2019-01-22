@@ -4,6 +4,10 @@ import React from 'react';
 import { TermsAndConditions } from '../TermsAndConditions';
 import TermsAndConditionsEn from '../TermsAndConditions_en.html';
 import TermsAndConditionsNo from '../TermsAndConditions_no.html';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('TermsAndConditions', () => {
   it('should render norwegian text', () => {

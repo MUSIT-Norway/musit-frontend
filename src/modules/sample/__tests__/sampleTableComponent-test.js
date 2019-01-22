@@ -3,6 +3,10 @@ import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import SampleTableComponent from '../components/SampleTable';
 import moment from 'moment';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('EventTableComponent', () => {
   it('should render header, body and footer', () => {

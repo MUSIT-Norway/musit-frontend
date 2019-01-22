@@ -5,6 +5,10 @@ import { PickListComponent } from '../PickListComponent';
 import { expect as e } from 'chai';
 import sinon from 'sinon';
 import { appSession } from '../../../testutils/sampleDataForTest';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('PickListComponent for objects', () => {
   const history = {

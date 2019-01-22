@@ -4,6 +4,10 @@ import React from 'react';
 import { AboutPage } from '../AboutPage';
 import AboutPageEn from '../AboutPage_en.html';
 import AboutPageNo from '../AboutPage_no.html';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('AboutPage', () => {
   it('should render norwegian text', () => {

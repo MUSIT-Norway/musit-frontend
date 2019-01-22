@@ -4,6 +4,10 @@ import sinon from 'sinon';
 import UserAccount from '../UserAccount';
 import { MenuItem } from 'react-bootstrap';
 import startWith from 'lodash/startsWith';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('UserAccount', () => {
   it('should not render duplicate menu elements for museum', () => {

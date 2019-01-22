@@ -4,6 +4,10 @@ import React from 'react';
 import ModalNodeGrid from '../ModalMoveHistoryGrid';
 import { MoveHistoryComponent } from '../MoveHistoryComponent';
 import sinon from 'sinon';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('MoveHistoryComponent', () => {
   it('should call clear and load', () => {

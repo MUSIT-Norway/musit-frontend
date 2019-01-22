@@ -4,6 +4,10 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
 import AnalysisInputFormComponent from '../AnalysisInputFormComponent';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('AnalysisInputFormComponent', () => {
   it('should trigger events on input change', () => {
