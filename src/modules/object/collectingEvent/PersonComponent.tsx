@@ -3,7 +3,6 @@ import {
   PersonNameSuggest,
   PersonNameSuggestion
 } from '../../../components/suggest/PersonNameSuggest';
-//import { ActorsAndRelation } from '../../../models/object/collectingEvent';
 import { AppSession } from '../../../types/appSession';
 import { History } from 'history';
 import { personDet } from '../../../models/object/classHist';
@@ -12,6 +11,7 @@ import { OutputPersonName, InputPersonName } from '../../../models/object/person
 
 import { EditState, NonEditState, PersonSelectedMode } from '../types';
 import EditAndSaveButtons from '../components/EditAndSaveButtons';
+import { PersonState } from '../person/PersonComponent';
 
 const personNameAsString = (n: PersonNameSuggestion) => {
   console.log('PersonName suggesstions ', n);
@@ -56,6 +56,7 @@ export type PersonProps = {
   onClickSave: () => void;
   onClickEdit: () => void;
   onChangePerson: (suggestion: personDet) => void;
+  onChangeSecondPerson: (suggestion: PersonNameSuggestion) => void;
   onAddPerson: () => void;
   onDeletePerson: (i: number) => void;
   editingPersonName?: InputPersonName;
@@ -158,6 +159,7 @@ const PersonComponent = (props: PersonProps) => {
             history={props.history}
             onCreatePersonName={props.onCreatePersonName}
             onChangeFullName={props.onChangeFullName}
+            onChangeSecondPerson={props.onChangeSecondPerson}
           />
         )}
       </div>

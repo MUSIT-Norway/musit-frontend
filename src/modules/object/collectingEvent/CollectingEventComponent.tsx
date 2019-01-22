@@ -293,7 +293,7 @@ export const toFrontend: (p: OutputEvent) => CollectingEventState = (p: OutputEv
               actorNameUuid: r.actorNameUuid,
               name: r.name,
               roleId: r.roleId,
-              defaultName: r.current_name
+              defaultName: r.defaultName
             })),
             editState: 'Not editing'
           }
@@ -1330,18 +1330,7 @@ export class CollectingEventComponent extends React.Component<
                 roleId: 11,
                 defaultName: suggestion.defaultName
               };
-
-              console.log('Person Selected ', suggestion.defaultName);
-
-              const newPersonSelectedMode: PersonSelectedMode =
-                newPersonName.name === newPersonName.defaultName
-                  ? 'Person'
-                  : newPersonName.actorUuid === ''
-                    ? 'PersonNameOnly'
-                    : 'PersonName';
-
-              console.log('############## PersonSelectedMode ', newPersonSelectedMode);
-
+              const newPersonSelectedMode: PersonSelectedMode = 'PersonName';
               const newPersonState: PersonState = {
                 ...cs.personState,
                 personName: newPersonName,
@@ -1349,6 +1338,40 @@ export class CollectingEventComponent extends React.Component<
                 personSelectedMode: newPersonSelectedMode
               };
 
+              const newEventState = {
+                ...cs,
+                personState: newPersonState
+              };
+              return newEventState;
+            });
+          }}
+          onChangeSecondPerson={(suggestion: PersonNameSuggestion) => {
+            this.setState((cs: CollectingEventState) => {
+              const newActorId = suggestion.actorUuid;
+              const newDefaultName = suggestion.name;
+              const orgActorNameUuid =
+                (cs.personState &&
+                  cs.personState.personName &&
+                  cs.personState.personName.actorNameUuid) ||
+                '';
+              const orgActorName =
+                (cs.personState &&
+                  cs.personState.personName &&
+                  cs.personState.personName.name) ||
+                '';
+
+              const mergePersonToPersonName: PersonNameForCollectingEvent = {
+                actorUuid: newActorId,
+                defaultName: newDefaultName,
+                actorNameUuid: orgActorNameUuid,
+                name: orgActorName,
+                roleId: 11
+              };
+              const newPersonState: PersonState = {
+                ...cs.personState,
+                personName: mergePersonToPersonName,
+                editState: 'Editing'
+              };
               const newEventState = {
                 ...cs,
                 personState: newPersonState

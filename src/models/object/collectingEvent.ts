@@ -18,7 +18,7 @@ export type PersonNameUuid = Uuid;
 
 export type ActorsAndRelation = {
   actorUuid?: PersonUuid;
-  current_name?: string;
+  defaultName?: string;
   roleId: RoleId;
   roleText?: string;
   name: string;
