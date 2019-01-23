@@ -66,14 +66,8 @@ node {
         }
 
         stage('Delete old images') {
-            sh 'docker images'
-            sh 'docker ps -a'
-
-            sh 'docker images harbor.uio.no:443/musit/webpack --filter "before=harbor.uio.no:443/musit/webpack:latest"'
-            sh 'docker images harbor.uio.no:443/musit/webpack --filter "before=harbor.uio.no:443/musit/webpack:latest" -q --no-trunc | xargs --no-run-if-empty docker rmi'
-
-            sh 'docker images --filter "dangling=true" --no-trunc'
-            sh 'docker images --filter "dangling=true" -q --no-trunc | xargs --no-run-if-empty docker rmi'
+            def docker-images-cleanup = "jenkins/docker-images-cleanup.sh"
+            sh docker-images-cleanup
         }
 
         stage('Mirror to GitHub') {
