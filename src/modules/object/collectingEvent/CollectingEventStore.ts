@@ -126,14 +126,16 @@ export const toBackendPersonName: ((p: InputPersonName) => InputPersonName) = (
 
 const getCollectingEventData = (ajaxGet: AjaxGet<Star>) => (
   props: GetCollectingEventProps
-) =>
-  Observable.of(props).flatMap(props =>
+) => {
+  console.log('#### In getCollectingEventData ', props);
+  return Observable.of(props).flatMap(props =>
     getCollectingEvent(ajaxGet)({
       id: props.id,
       token: props.token,
       callback: props.callback
     })
   );
+};
 
 const addCollectingEventData = (ajaxPost: AjaxPost<Star>) => (
   props: AddCollectingEventProps
@@ -275,10 +277,10 @@ const addPersonNameData = (ajaxGet: AjaxGet<Star>, ajaxPost: AjaxPost<Star>) => 
         callback: props.callback */
       })
     )
-    .do(res => console.log('((((=====)))) ', res.personNameUuid))
+    .do(res => console.log('((((=====)))) ', res.actorNameUuid))
     .flatMap(res => {
       return getPersonNameFromUuid(ajaxGet)({
-        id: res.personNameUuid || '',
+        id: res.actorNameUuid || '',
         collectionId: props.collectionId,
         token: props.token,
         callback: props.callback

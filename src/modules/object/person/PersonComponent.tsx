@@ -32,7 +32,7 @@ export type PersonName = {
   firstName?: string;
   lastName?: string;
   nameString: string;
-  personNameUuid?: string;
+  actorNameUuid?: string;
 };
 
 export type ExternalId = {
@@ -61,7 +61,7 @@ export type Collection = {
 export type SynonymStatus = 'NEW' | 'DEL' | 'UNCHANGED';
 
 export type SynonymType = {
-  personNameUuid?: string;
+  actorNameUuid?: string;
   title?: string;
   firstName?: string;
   lastName?: string;
@@ -74,8 +74,8 @@ export interface PersonDet {
   lastName?: string;
   title?: string;
   name: string;
-  personUuid: string;
-  personNameUuid: string;
+  actorUuid: string;
+  actorNameUuid: string;
 }
 
 export interface PersonState {
@@ -460,7 +460,7 @@ const SynDisplay = (props: {
               <button
                 id="btnCancel"
                 className="btn btn-link"
-                disabled={props.synPerson.personUuid ? false : true}
+                disabled={props.synPerson.actorUuid ? false : true}
                 onClick={e => {
                   e.preventDefault();
                   props.onRemovePersonAsSynonym();
@@ -472,7 +472,7 @@ const SynDisplay = (props: {
                 id="btnConfirm"
                 data-toggle="tooltip"
                 title={
-                  props.synPerson.personUuid !== ''
+                  props.synPerson.actorUuid !== ''
                     ? props.personToMergeSyn
                       ? 'Cannot Merge a Person with Same ID'
                       : 'Search Person to Synonimize'
@@ -859,7 +859,7 @@ export const PersonPage = (props: PersonProps) => {
                     props.personToSynonymize
                       ? props.personToSynonymize
                       : {
-                          personUuid: '',
+                          actorUuid: '',
                           name: '',
                           collections: [],
                           personToMergeSyn: false
@@ -911,7 +911,7 @@ export const toFrontend: (p: OutputPerson) => PersonState = (p: OutputPerson) =>
       innP.personAttribute ? innP.personAttribute.legalEntityType : '',
       innP.collections,
       undefined,
-      innP.personUuid,
+      innP.actorUuid,
       innP.personAttribute && innP.personAttribute.url,
       innP.personAttribute && innP.personAttribute.externalIds,
       innP.synonyms &&
@@ -921,7 +921,7 @@ export const toFrontend: (p: OutputPerson) => PersonState = (p: OutputPerson) =>
           lastName: p.lastName,
           title: p.title,
           status: 'UNCHANGED',
-          personNameUuid: p.personNameUuid
+          actorNameUuid: p.actorNameUuid
         })),
       undefined,
       maybeFormatISOString(innP.personAttribute && innP.personAttribute.bornDate),
@@ -939,7 +939,7 @@ export const toFrontend: (p: OutputPerson) => PersonState = (p: OutputPerson) =>
     legalEntityType: 'Person',
     synState: 'SEARCH',
     personSearchString: '',
-    personsToSynonymize: { personUuid: '', name: '' },
+    personsToSynonymize: { actorUuid: '', name: '' },
     personToMergeSyn: true
   };
 };
@@ -987,7 +987,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
           onAddPersonAsSynonym={(p: OutputPerson) => {
             console.log('OnAddPersonAsSynonym', p);
             this.setState((ps: PersonState) => {
-              const tempsynToPerson = p.personUuid === this.state.uuid ? true : false;
+              const tempsynToPerson = p.actorUuid === this.state.uuid ? true : false;
               return {
                 ...ps,
                 personToSynonymize: p,
@@ -998,7 +998,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
           onRemovePersonAsSynonym={() => {
             this.setState((p: PersonState) => {
               const newPerToSyn: OutputPerson = {
-                personUuid: '',
+                actorUuid: '',
                 name: '',
                 collections: p.collections,
                 personToMergeSyn: p.personToMergeSyn || false
@@ -1022,7 +1022,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
                 this.props.mergePerson()({
                   id: this.state.uuid,
                   data: this.state.personToSynonymize && {
-                    personUuid: this.state.personToSynonymize.personUuid
+                    actorUuid: this.state.personToSynonymize.actorUuid
                   },
                   token: appSession.accessToken,
                   collectionId: appSession.collectionId,
@@ -1030,7 +1030,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
                     onComplete: (r: AjaxResponse) => {
                       const url = config.magasin.urls.client.person.viewPerson(
                         appSession,
-                        this.state.uuid ? this.state.uuid : '' //  r.response.personUuid  //
+                        this.state.uuid ? this.state.uuid : '' //  r.response.actorUuid  //
                       );
                       this.props.history && this.props.history.push(url);
                     } /* ,
@@ -1046,7 +1046,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
               if (this.state.uuid) {
                 const url = config.magasin.urls.client.person.viewPerson(
                   appSession,
-                  this.state.uuid ? this.state.uuid : '' //  r.response.personUuid  //
+                  this.state.uuid ? this.state.uuid : '' //  r.response.actorUuid  //
                 );
                 this.props.history && this.props.history.push(url);
               } else {
@@ -1073,7 +1073,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
                       onComplete: (r: AjaxResponse) => {
                         const url = config.magasin.urls.client.person.viewPerson(
                           appSession,
-                          this.state.uuid ? this.state.uuid : '' //  r.response.personUuid  //
+                          this.state.uuid ? this.state.uuid : '' //  r.response.actorUuid  //
                         );
                         this.props.history && this.props.history.push(url);
                       } /* ,
@@ -1092,7 +1092,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
                       onComplete: (r: AjaxResponse) => {
                         const url = config.magasin.urls.client.person.viewPerson(
                           appSession,
-                          r.response.personUuid
+                          r.response.actorUuid
                         );
                         this.props.history && this.props.history.replace(url);
                       } /* ,
@@ -1108,7 +1108,7 @@ export class Person extends React.Component<PersonComponentProps, PersonState> {
           personToSynonymize={
             this.state.personToSynonymize
               ? this.state.personToSynonymize
-              : { personUuid: '', name: '', collections: [], personToMergeSyn: false }
+              : { actorUuid: '', name: '', collections: [], personToMergeSyn: false }
           }
           collections={this.state.collections}
           bornDate={this.state.bornDate}

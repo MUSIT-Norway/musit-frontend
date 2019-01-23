@@ -3,15 +3,15 @@ import {
   PersonNameSuggest,
   PersonNameSuggestion
 } from '../../../components/suggest/PersonNameSuggest';
-//import { ActorsAndRelation } from '../../../models/object/collectingEvent';
 import { AppSession } from '../../../types/appSession';
 import { History } from 'history';
 import { personDet } from '../../../models/object/classHist';
 import { PersonNameComponent } from '../person/PersonNameComponent';
 import { OutputPersonName, InputPersonName } from '../../../models/object/person';
 
-import { EditState, NonEditState } from '../types';
+import { EditState, NonEditState, PersonSelectedMode } from '../types';
 import EditAndSaveButtons from '../components/EditAndSaveButtons';
+import { PersonState } from '../person/PersonComponent';
 
 const personNameAsString = (n: PersonNameSuggestion) => {
   console.log('PersonName suggesstions ', n);
@@ -21,7 +21,7 @@ const personNameAsString = (n: PersonNameSuggestion) => {
         ? 'Person: ' +
           n.displayPersonName +
           ' Uuid:' +
-          n.personUuid.split('-')[0] +
+          n.actorUuid.split('-')[0] +
           '  ' +
           ' Person Name: ' +
           ' ' +
@@ -32,7 +32,7 @@ const personNameAsString = (n: PersonNameSuggestion) => {
 };
 
 export type PersonNameForCollectingEvent = OutputPersonName & {
-  personUuid?: string;
+  actorUuid?: string;
   roleId: number;
 };
 export interface PersonState {
@@ -42,7 +42,8 @@ export interface PersonState {
   editState?: EditState | NonEditState;
   disableOnChangeFullName?: boolean;
   disableOnChangeOtherName?: boolean;
-  showNewPersonName?: boolean;
+  showMoreInfo?: boolean;
+  personSelectedMode?: PersonSelectedMode;
 }
 
 export type PersonProps = {
@@ -55,12 +56,13 @@ export type PersonProps = {
   onClickSave: () => void;
   onClickEdit: () => void;
   onChangePerson: (suggestion: personDet) => void;
+  onChangeSecondPerson: (suggestion: PersonNameSuggestion) => void;
   onAddPerson: () => void;
   onDeletePerson: (i: number) => void;
   editingPersonName?: InputPersonName;
   disableOnChangeFullName?: boolean;
   disableOnChangeOtherName?: boolean;
-  showNewPersonName?: boolean;
+  showMoreInfo?: boolean;
   onChangeFullName: (fieldName: string) => (newValue: string) => void;
   onCreatePersonName: Function;
   onClickNewPersonName: () => void;
@@ -82,7 +84,7 @@ export const ViewPersonComponent = (props: {
           {props.personNames &&
             props.personNames.map((p: OutputPersonName, i: number) => (
               <tr key={`pn-${i}`}>
-                <td>{p.personNameUuid}</td>
+                <td>{p.actorNameUuid}</td>
                 <td>{p.name}</td>
               </tr>
             ))}
@@ -143,12 +145,12 @@ const PersonComponent = (props: PersonProps) => {
               props.onClickNewPersonName();
             }}
           >
-            {props.showNewPersonName ? 'Mindre informasjon' : 'Mer informasjon'}
+            {props.showMoreInfo ? 'Mindre informasjon' : 'Mer informasjon'}
           </button>
         </div>
       </div>
       <div className="row">
-        {props.showNewPersonName && (
+        {props.showMoreInfo && (
           <PersonNameComponent
             editingPersonName={props.editingPersonName}
             disableOnChangeFullName={props.disableOnChangeFullName}
@@ -157,6 +159,7 @@ const PersonComponent = (props: PersonProps) => {
             history={props.history}
             onCreatePersonName={props.onCreatePersonName}
             onChangeFullName={props.onChangeFullName}
+            onChangeSecondPerson={props.onChangeSecondPerson}
           />
         )}
       </div>
@@ -180,7 +183,7 @@ const PersonComponent = (props: PersonProps) => {
                       type="text"
                       className=" form-control"
                       disabled={true}
-                      value={d.concatPersonName}
+                      value={d.defaultName}
                     />
                   </td>
                   <td className="col-md-1">
@@ -188,7 +191,7 @@ const PersonComponent = (props: PersonProps) => {
                       type="text"
                       className="form-control"
                       disabled={true}
-                      value={d.personUuid}
+                      value={d.actorUuid}
                     />
                   </td>
                   <td className="col-md-4">
@@ -204,7 +207,7 @@ const PersonComponent = (props: PersonProps) => {
                       type="text"
                       className="form-control"
                       disabled={true}
-                      value={d.personNameUuid}
+                      value={d.actorNameUuid}
                     />
                   </td>
                   <td className="col-md-1">

@@ -5,7 +5,7 @@ import { Callback, AjaxGet, AjaxPost, AjaxPut } from '../../types/ajax';
 import { Star } from '../../types/common';
 
 export type SynPerson = {
-  personUuid?: string;
+  actorUuid?: string;
   firstName?: string;
   lastName?: string;
   title?: string;
@@ -17,7 +17,7 @@ export type SynPerson = {
   };
   synonyms?: [
     {
-      personNameUuid: string;
+      actorNameUuid: string;
       firstName: string;
       lastName: string;
       name: string;
@@ -43,7 +43,7 @@ export interface InputPerson {
 }
 
 export interface OutputPerson {
-  personUuid: string;
+  actorUuid: string;
   firstName?: string;
   lastName?: string;
   title?: string;
@@ -57,7 +57,7 @@ export interface OutputPerson {
 }
 
 export interface MergePerson {
-  personUuid: string;
+  actorUuid: string;
 }
 
 export interface PersonName {
@@ -66,7 +66,7 @@ export interface PersonName {
   readonly title?: string;
   readonly name: string;
   readonly status?: string;
-  readonly personNameUuid?: string;
+  readonly actorNameUuid?: string;
 }
 
 export interface InputPersonName {
@@ -75,7 +75,7 @@ export interface InputPersonName {
   readonly title?: string;
   readonly name: string;
   readonly status?: string;
-  readonly personNameUuid?: string;
+  readonly actorNameUuid?: string;
   readonly concatPersonName?: string;
   readonly isDeleted?: boolean;
 }
@@ -86,8 +86,8 @@ export interface OutputPersonName {
   title?: string;
   name: string;
   status?: string;
-  personNameUuid: string;
-  concatPersonName?: string;
+  actorNameUuid: string;
+  defaultName?: string;
   isDeleted?: boolean;
 }
 
@@ -97,7 +97,7 @@ export interface OutputPersonName {
   lastName?: string,
   title?: string,
   status?: string,
-  personNameUuid?: string,
+  actorNameUuid?: string,
   concatPersonName?: string,
   isDeleted?: boolean
 }; */
@@ -107,9 +107,9 @@ export interface outPersonName {
   lastName?: string;
   title?: string;
   name: string;
-  concatPersonName?: string;
+  defaultName?: string;
   isDeleted?: boolean;
-  personNameUuid?: string;
+  actorNameUuid?: string;
 }
 
 export interface Collection {
@@ -474,6 +474,6 @@ export const mergePerson: (
     callback?: Callback<Star>;
   }
 ) => Observable<string> = (ajaxPost = simplePost) => ({ id, data, token, callback }) => {
-  const URL = Config.api.persons.mergeUrl(id)(data.personUuid);
+  const URL = Config.api.persons.mergeUrl(id)(data.actorUuid);
   return ajaxPost(URL, data, token, callback).map(({ response }) => response);
 };

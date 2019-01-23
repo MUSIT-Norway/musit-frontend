@@ -28,17 +28,17 @@ export default {
   },
   api: {
     persons: {
-      editUrl: (personUuid: string) => `/api/person/persons/${personUuid}`,
+      editUrl: (actorUuid: string) => `/api/person/persons/${actorUuid}`,
       addUrl: '/api/person/persons',
-      getUrl: (personUuid: string) => `/api/person/persons/${personUuid}`,
+      getUrl: (actorUuid: string) => `/api/person/persons/${actorUuid}`,
       searchUrl: (personName: string) => `/api/person/personNames?search=${personName}`,
       searchPersonBySynonymOrName: (personName: string) =>
         `/api/person/persons?search=${personName}`,
-      mergeUrl: (personUuid: string) => (personUuidToSyn: string) =>
-        `/api/person/persons/${personUuid}/merge/${personUuidToSyn}`,
+      mergeUrl: (actorUuid: string) => (actorUuidToSyn: string) =>
+        `/api/person/persons/${actorUuid}/merge/${actorUuidToSyn}`,
       addPersonNameUrl: '/api/person/personnames',
-      getPersonNameUrl: (personNameUuid: string) =>
-        `/api/person/personNames/${personNameUuid}`
+      getPersonNameUrl: (actorNameUuid: string) =>
+        `/api/person/personNames/${actorNameUuid}`
     },
     places: {
       addPlaceUrl: '/api/place/places',

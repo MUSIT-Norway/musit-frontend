@@ -10,7 +10,7 @@ import { History } from 'history';
 // Datastructure
 export interface IPersonName {
   personNameId?: string;
-  personUuid?: string;
+  actorUuid?: string;
   personName?: string;
 }
 
@@ -882,8 +882,8 @@ export default class ClassificationComponent extends React.Component<Props, ISta
                     const newDet = new Det({
                       ...currentDet,
                       editingDet: {
-                        personNameId: suggestion ? suggestion.personNameUuid : '',
-                        personUuid: suggestion ? suggestion.personUuid : '',
+                        personNameId: suggestion ? suggestion.actorNameUuid : '',
+                        actorUuid: suggestion ? suggestion.actorUuid : '',
                         personName: suggestion ? suggestion.name : ''
                       }
                     });

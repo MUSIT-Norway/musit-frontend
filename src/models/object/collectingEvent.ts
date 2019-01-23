@@ -18,17 +18,18 @@ export type PersonNameUuid = Uuid;
 
 export type ActorsAndRelation = {
   actorUuid?: PersonUuid;
+  defaultName?: string;
   roleId: RoleId;
   roleText?: string;
   name: string;
-  personNameUuid: PersonNameUuid;
+  actorNameUuid: PersonNameUuid;
 };
 
 export interface InputActorAndRelation {
   actorUuid?: PersonUuid;
   roleId: RoleId;
   name: string;
-  personNameUuid: PersonNameUuid;
+  actorNameUuid: PersonNameUuid;
 }
 export type Person = {
   collections?: Collection[];
@@ -36,7 +37,7 @@ export type Person = {
   lastName?: string;
   name: string;
   personAttribute?: PersonAttribute;
-  personUuid: PersonUuid;
+  actorUuid: PersonUuid;
   synonyms?: SynonymType[];
   title?: string;
 };
@@ -104,7 +105,7 @@ export interface OutActorAndRelation {
   roleId: RoleId;
   roleText: string;
   name: string;
-  personNameUuid: PersonNameUuid;
+  actorNameUuid: PersonNameUuid;
 }
 
 export interface OutputEvent {
@@ -249,7 +250,9 @@ export const addCollectingEvent: (
   }
 ) => Observable<InputEvent> = (ajaxPost = simplePost) => ({ data, token, callback }) => {
   const URL = Config.api.collectingEvent.addEventUrl;
-  return ajaxPost(URL, data, token, callback).map(({ response }) => response);
+  return ajaxPost(URL, data, token, callback)
+    .map(({ response }) => response)
+    .do(r => console.log('##### DO addCollectingEvent', r, callback));
 };
 
 export const editEventDateRevision: (

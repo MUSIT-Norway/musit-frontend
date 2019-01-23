@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { InputPersonName } from '../../../models/object/person';
-import { AppSession } from 'src/types/appSession';
+import { AppSession } from '../../../types/appSession';
 import { History } from 'history';
+import { PersonOrPersonNameSuggest } from '../../../components/suggest/PersonOrPersonNameSuggest';
+import { PersonNameSuggestion } from '../../../components/suggest/PersonNameSuggest';
 
 type PersonNameProps = {
   //personName?: InputPersonName;
@@ -13,11 +15,54 @@ type PersonNameProps = {
   onChangeFullName: (fieldName: string) => (newValue: string) => void;
   onCreatePersonName: Function;
   addPersonName?: Function;
+  value?: string;
+  onChangeSecondPerson: (suggestion: PersonNameSuggestion) => void;
+};
+
+const personNameAsString = (n: PersonNameSuggestion) => {
+  return (
+    <span className="suggestion-content">
+      {n
+        ? 'Person: ' +
+          n.name +
+          ' Uuid:' +
+          n.actorUuid.split('-')[0] +
+          '  ' +
+          ' Person Name: ' +
+          ' ' +
+          n.name
+        : ''}
+    </span>
+  );
 };
 
 export const PersonNameComponent = (props: PersonNameProps) => {
   return (
     <form className="form-horizontal">
+      <div className="form-group">
+        <label className="control-label col-md-2" htmlFor="SearchPersonOrPersonName">
+          Search Person{' '}
+        </label>
+        <div className="col-sm-5">
+          <PersonOrPersonNameSuggest
+            id="PersonNameSuggestCollectingEvent"
+            disabled={false}
+            value={props.value ? props.value : ''}
+            renderFunc={personNameAsString}
+            placeHolder="Person"
+            appSession={props.appSession}
+            onChange={props.onChangeSecondPerson}
+            history={props.history}
+          />
+        </div>
+      </div>
+      <div>{''} </div>
+      <div>{''} </div>
+      <div className="row">
+        <label className="control-label col-md-2" htmlFor="btnNewPersonname">
+          Create a New Person
+        </label>
+      </div>
       <div className="form-group">
         <label className="control-label col-md-2" htmlFor="title">
           Title
@@ -34,32 +79,6 @@ export const PersonNameComponent = (props: PersonNameProps) => {
             }}
             disabled={props.disableOnChangeOtherName}
           />
-        </div>
-        <div className="col-sm-4">
-          <input
-            value=""
-            type="text"
-            className="form-control"
-            id="serchPerson"
-            /*   onChange={e => {
-                e.preventDefault();
-                props.onChangeFullName('title')(e.target.value);
-              }}  */
-            disabled={props.disableOnChangeOtherName}
-          />
-        </div>
-        <div className="col-sm-1">
-          <button
-            id="btnSerchPerson"
-            className="btn"
-            /* disabled={props.synPerson.personUuid ? false : true}
-                onClick={e => {
-                  e.preventDefault();
-                  props.onRemovePersonAsSynonym();
-                }}  */
-          >
-            Search Person
-          </button>
         </div>
       </div>
       <div className="form-group">
@@ -116,7 +135,12 @@ export const PersonNameComponent = (props: PersonNameProps) => {
           />
         </div>
         <div className="col-med-1">
-          <button id="btnCreatePerson" data-toggle="tooltip" title="" className="btn">
+          <button
+            id="btnCreatePerson"
+            data-toggle="tooltip"
+            title=""
+            className="btn btn-default"
+          >
             Create Person
           </button>
         </div>
