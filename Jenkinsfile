@@ -34,7 +34,7 @@ node {
         }
     }
 
-    if (gitBranch == "master" || gitBranch == "jenkinstest") {
+    if (gitBranch == "master") {
         stage('Build') {
             echo "Build images for branch ${gitBranch}"
             echo "Tag: ${buildTag}"
@@ -57,7 +57,7 @@ node {
         if (gitBranch == "master") {
 
             stage('Publish to harbor') {
-                echo "Push ${gitBranch} to harbor (not implemented yet)"
+                echo "Push ${gitBranch} to harbor"
                 echo "Tag: ${buildTag}"
                 sh "docker push harbor.uio.no:443/musit/webpack"
                 sh "docker push harbor.uio.no:443/musit/webpack:utv"
