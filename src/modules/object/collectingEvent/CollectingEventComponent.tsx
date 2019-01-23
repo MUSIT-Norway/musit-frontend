@@ -295,7 +295,8 @@ export const toFrontend: (p: OutputEvent) => CollectingEventState = (p: OutputEv
               roleId: r.roleId,
               defaultName: r.defaultName
             })),
-            editState: 'Not editing'
+            editState: 'Not editing',
+            personSelectedMode: 'NoPersonName'
           }
         : undefined,
       placeState: innP.place
@@ -554,6 +555,10 @@ export class CollectingEventComponent extends React.Component<
 
   render() {
     console.log('STATE----->', this.state);
+    console.log(
+      'STATE PersonSelectedMode----->',
+      this.state && this.state.personState && this.state.personState.personSelectedMode
+    );
     const PersonViewComponent = this.state.personState ? (
       <div>
         {' '}
@@ -1347,6 +1352,16 @@ export class CollectingEventComponent extends React.Component<
           }}
           onChangeSecondPerson={(suggestion: PersonNameSuggestion) => {
             this.setState((cs: CollectingEventState) => {
+              const personSelectedMode =
+                cs && cs.personState && cs.personState.personSelectedMode;
+
+              let newPersonSelectedMode: PersonSelectedMode =
+                personSelectedMode === 'PersonName'
+                  ? 'PersonAndPersonName'
+                  : personSelectedMode === 'NoPersonName'
+                    ? 'Person'
+                    : 'NA';
+
               const newActorId = suggestion.actorUuid;
               const newDefaultName = suggestion.name;
               const orgActorNameUuid =
@@ -1360,6 +1375,14 @@ export class CollectingEventComponent extends React.Component<
                   cs.personState.personName.name) ||
                 '';
 
+              const editPerson: PersonNameForCollectingEvent = {
+                actorUuid: suggestion ? suggestion.actorUuid : '',
+                actorNameUuid: suggestion ? suggestion.actorNameUuid : '',
+                defaultName: suggestion ? suggestion.name : '',
+                roleId: 11,
+                name: ''
+              };
+
               const mergePersonToPersonName: PersonNameForCollectingEvent = {
                 actorUuid: newActorId,
                 defaultName: newDefaultName,
@@ -1370,7 +1393,9 @@ export class CollectingEventComponent extends React.Component<
               const newPersonState: PersonState = {
                 ...cs.personState,
                 personName: mergePersonToPersonName,
-                editState: 'Editing'
+                editingPerson: editPerson,
+                editState: 'Editing',
+                personSelectedMode: newPersonSelectedMode
               };
               const newEventState = {
                 ...cs,
@@ -1405,10 +1430,12 @@ export class CollectingEventComponent extends React.Component<
                   ? {
                       ...cs.personState,
                       personNames: newPersonNames,
-                      editState: 'Editing'
+                      editState: 'Editing',
+                      personSelectedMode: 'NoPersonName'
                     }
                   : {
-                      editState: 'Editing'
+                      editState: 'Editing',
+                      personSelectedMode: 'NoPersonName'
                     };
 
               const relatedActorsList: ActorsAndRelation[] | undefined =
@@ -1444,12 +1471,12 @@ export class CollectingEventComponent extends React.Component<
                 ? {
                     ...cs.personState,
                     personNames: newPersonNames,
-                    personSelectedMode: undefined
+                    personSelectedMode: 'NoPersonName'
                   }
                 : {
                     personNames: newPersonNames,
                     editState: 'Editing',
-                    personSelectedMode: undefined
+                    personSelectedMode: 'NoPersonName'
                   };
 
               const relatedActorsList: ActorsAndRelation[] | undefined =
@@ -1482,47 +1509,72 @@ export class CollectingEventComponent extends React.Component<
                 callback: {
                   onComplete: (res: AjaxResponse) => {
                     this.setState((ps: CollectingEventState) => {
-                      const newPersonNames =
+                      const index =
+                        ps.personState && ps.personState.personNames
+                          ? ps.personState.personNames.length
+                          : 0;
+                      const currentPersonNames =
                         ps.personState && ps.personState.personNames
                           ? ps.personState.personNames
                           : [];
-                      const tempPersonNames = newPersonNames.concat(res.response);
-                      const newRelatedActors: ActorsAndRelation = {
-                        actorUuid: undefined,
-                        actorNameUuid: res.response.actorNameUuid,
-                        name:
-                          ps.personState && ps.personState.editingPersonName
-                            ? ps.personState.editingPersonName.name
-                            : '',
+
+                      const newPersonName: ActorsAndRelation = {
+                        actorUuid:
+                          ps &&
+                          ps.personState &&
+                          ps.personState.editingPerson &&
+                          ps.personState.editingPerson.actorUuid,
+                        defaultName:
+                          ps &&
+                          ps.personState &&
+                          ps.personState.editingPerson &&
+                          ps.personState.editingPerson.defaultName,
+                        actorNameUuid: res.response.personNameUuid,
+                        name: res.response.name,
                         roleId: 11
                       };
+
+                      const newPersonNames = newPersonName
+                        ? [
+                            ...currentPersonNames.slice(0, index),
+                            newPersonName,
+                            ...currentPersonNames.slice(index + 1)
+                          ]
+                        : undefined;
+
                       const currStatus = ps.personState && ps.personState.showMoreInfo;
                       const newPersonState: PersonState = ps.personState
                         ? {
                             ...ps.personState,
-                            personNames: tempPersonNames,
+                            personNames: newPersonNames,
                             editState: 'Editing',
-                            personName: undefined,
+                            personName: newPersonName,
                             editingPersonName: undefined,
-                            showMoreInfo: !currStatus
+                            showMoreInfo: !currStatus,
+                            personSelectedMode: 'NoPersonName'
                           }
                         : {
                             editState: 'Editing',
                             personName: undefined,
                             editingPersonName: undefined,
-                            showMoreInfo: false
+                            showMoreInfo: false,
+                            personSelectedMode: 'NoPersonName'
                           };
+
+                      const relatedActorsList: ActorsAndRelation[] | undefined =
+                        newPersonNames &&
+                        newPersonNames.map((p: PersonNameForCollectingEvent) => ({
+                          actorUuid: p.actorUuid,
+                          actorNameUuid: p.actorNameUuid,
+                          roleId: p.roleId,
+                          name: p.name
+                        }));
 
                       const newEventState = {
                         ...ps,
                         eventData: {
                           ...ps.eventData,
-                          relatedActors: [
-                            ...(ps.eventData.relatedActors
-                              ? ps.eventData.relatedActors
-                              : []),
-                            newRelatedActors
-                          ]
+                          relatedActors: relatedActorsList
                         },
                         personState: newPersonState
                       };
@@ -1535,6 +1587,18 @@ export class CollectingEventComponent extends React.Component<
           onChangeFullName={(fieldName: string) => (value: string) => {
             console.log('fieldName', value);
             this.setState((ps: CollectingEventState) => {
+              const personSelectedMode =
+                ps && ps.personState && ps.personState.personSelectedMode;
+              let newPersonSelectedMode: PersonSelectedMode = 'NoPersonName';
+
+              if (personSelectedMode === 'Person') {
+                newPersonSelectedMode = 'NewPersonName';
+              } else if (personSelectedMode === 'NoPersonName') {
+                newPersonSelectedMode = 'NewPerson';
+              } else if (personSelectedMode === 'NewPerson') {
+                newPersonSelectedMode = 'NewPerson';
+              }
+
               const lastName =
                 fieldName === 'lastName'
                   ? value
@@ -1553,6 +1617,7 @@ export class CollectingEventComponent extends React.Component<
                   : ps.personState &&
                     ps.personState.editingPersonName &&
                     ps.personState.editingPersonName.firstName;
+
               const nameString = `${lastName || ''}${
                 title || firstName ? ', ' : ''
               }${title || ''}${title ? ' ' : ''}${firstName}`;
@@ -1567,6 +1632,16 @@ export class CollectingEventComponent extends React.Component<
                 if (value === '') {
                   disableOnChangeOtherName = false;
                 }
+              }
+
+              if (!disableOnChangeFullName && !disableOnChangeOtherName) {
+                newPersonSelectedMode =
+                  ps &&
+                  ps.personState &&
+                  ps.personState.editingPerson &&
+                  ps.personState.editingPerson.actorUuid
+                    ? 'Person'
+                    : 'NewPerson';
               }
 
               const newEditPersonName =
@@ -1586,12 +1661,14 @@ export class CollectingEventComponent extends React.Component<
                     editingPersonName: newEditPersonName,
                     editState: 'Editing',
                     disableOnChangeFullName: disableOnChangeFullName,
-                    disableOnChangeOtherName: disableOnChangeOtherName
+                    disableOnChangeOtherName: disableOnChangeOtherName,
+                    personSelectedMode: newPersonSelectedMode
                   }
                 : {
                     editState: 'Editing',
                     disableOnChangeFullName: disableOnChangeFullName,
-                    disableOnChangeOtherName: disableOnChangeOtherName
+                    disableOnChangeOtherName: disableOnChangeOtherName,
+                    personSelectedMode: 'NoPersonName'
                   };
 
               const newEventState = {
@@ -1601,31 +1678,29 @@ export class CollectingEventComponent extends React.Component<
               return newEventState;
             });
           }}
-          onClickNewPersonName={() => {
+          onClickMoreInfo={() => {
             this.setState((cs: CollectingEventState) => {
               const currStatus = cs.personState && cs.personState.showMoreInfo;
+              const newPersonSelectedMode =
+                cs.personState &&
+                cs.personState.personName &&
+                cs.personState.personName.name
+                  ? 'PersonName'
+                  : 'NoPersonName';
+
               const newPersonState: PersonState =
                 cs && cs.personState
                   ? {
                       ...cs.personState,
-                      showMoreInfo: !currStatus
+                      showMoreInfo: !currStatus,
+                      personSelectedMode: newPersonSelectedMode
                     }
                   : {
                       showMoreInfo: false
                     };
-              const newRelatedActors: ActorsAndRelation[] | undefined =
-                newPersonState && newPersonState.personNames
-                  ? newPersonState.personNames.map((r: PersonNameForCollectingEvent) => ({
-                      actorUuid: r.actorUuid,
-                      actorNameUuid: r.actorNameUuid,
-                      name: r.name,
-                      roleId: r.roleId
-                    }))
-                  : undefined;
 
               const newEventState = {
                 ...cs,
-                eventData: { ...cs.eventData, relatedActors: newRelatedActors },
                 personState: newPersonState
               };
               return newEventState;

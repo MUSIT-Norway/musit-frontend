@@ -129,19 +129,23 @@ export const PersonNameComponent = (props: PersonNameProps) => {
             id="name"
             onChange={e => {
               e.preventDefault();
-              props.onChangeFullName('name')(e.target.value);
+              props.onChangeFullName('nameString')(e.target.value);
             }}
             disabled={props.disableOnChangeFullName}
           />
         </div>
         <div className="col-med-1">
           <button
-            id="btnCreatePerson"
+            id="btnCreatePersonName"
             data-toggle="tooltip"
             title=""
             className="btn btn-default"
+            onClick={e => {
+              e.preventDefault();
+              props.onCreatePersonName(props.appSession);
+            }}
           >
-            Create Person
+            Create Person Name
           </button>
         </div>
       </div>

@@ -277,7 +277,7 @@ const addPersonNameData = (ajaxGet: AjaxGet<Star>, ajaxPost: AjaxPost<Star>) => 
         callback: props.callback */
       })
     )
-    .do(res => console.log('((((=====)))) ', res.actorNameUuid))
+    .do(res => console.log('((((=====)))) ', res))
     .flatMap(res => {
       return getPersonNameFromUuid(ajaxGet)({
         id: res.actorNameUuid || '',

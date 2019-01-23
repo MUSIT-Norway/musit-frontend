@@ -44,6 +44,7 @@ export interface PersonState {
   disableOnChangeOtherName?: boolean;
   showMoreInfo?: boolean;
   personSelectedMode?: PersonSelectedMode;
+  editingPerson?: PersonNameForCollectingEvent;
 }
 
 export type PersonProps = {
@@ -65,7 +66,7 @@ export type PersonProps = {
   showMoreInfo?: boolean;
   onChangeFullName: (fieldName: string) => (newValue: string) => void;
   onCreatePersonName: Function;
-  onClickNewPersonName: () => void;
+  onClickMoreInfo: () => void;
   nameEmpty: boolean;
   readOnly?: boolean;
 };
@@ -142,7 +143,7 @@ const PersonComponent = (props: PersonProps) => {
             className="btn btn-default btn-sm"
             onClick={e => {
               e.preventDefault();
-              props.onClickNewPersonName();
+              props.onClickMoreInfo();
             }}
           >
             {props.showMoreInfo ? 'Mindre informasjon' : 'Mer informasjon'}
