@@ -66,8 +66,8 @@ node {
         }
 
         stage('Delete old images') {
-            def docker-images-cleanup = "jenkins/docker-images-cleanup.sh"
-            sh docker-images-cleanup
+            def dockerImagesCleanup = "jenkins/docker-images-cleanup.sh"
+            sh dockerImagesCleanup
         }
 
         stage('Mirror to GitHub') {
