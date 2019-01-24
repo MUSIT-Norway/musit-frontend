@@ -52,9 +52,10 @@ import EditAndSaveButtons from '../components/EditAndSaveButtons';
 import PersonComponent, { ViewPersonComponent } from './PersonComponent';
 //import { personDet } from '../../../models/object/classHist';
 import { AjaxPost } from 'src/types/ajax';
-import { PersonNameForCollectingEvent, PersonState } from './PersonComponent';
+import { PersonState } from './PersonComponent';
 //import { InputPersonName } from '../../../models/object/person';
 import { PersonNameSuggestion } from '../../../components/suggest/PersonNameSuggest';
+import { PersonNameForCollectingEvent } from '../../../models/object/person';
 
 export type EventMetadataProps = EventData & {
   onClickSave: () => void;
@@ -210,6 +211,7 @@ export type CollectingProps = {
   isDraft?: boolean;
   saveState?: DraftState | RevisionState;
   addPersonName: Function;
+  addPerson: Function;
 };
 
 export default (props: CollectingProps) => (
@@ -233,6 +235,7 @@ export default (props: CollectingProps) => (
     addStateHidden={props.addStateHidden}
     saveState={props.saveState}
     addPersonName={props.addPersonName}
+    addPerson={props.addPerson}
   />
 );
 
@@ -1291,6 +1294,11 @@ export class CollectingEventComponent extends React.Component<
           value={''}
           appSession={this.props.appSession}
           history={this.props.history}
+          personSelectedMode={
+            this.state &&
+            this.state.personState &&
+            this.state.personState.personSelectedMode
+          }
           personNames={
             this.state && this.state.personState ? this.state.personState.personNames : []
           }
@@ -1499,102 +1507,187 @@ export class CollectingEventComponent extends React.Component<
             });
           }}
           onCreatePersonName={(appSession: AppSession) => {
-            this.props.addPersonName &&
-              this.props.addPersonName()({
-                data: (this.state &&
-                  this.state.personState &&
-                  this.state.personState.editingPersonName) || { name: '' },
-                token: appSession.accessToken,
-                collectionId: appSession.collectionId,
-                callback: {
-                  onComplete: (res: AjaxResponse) => {
-                    this.setState((ps: CollectingEventState) => {
-                      const index =
-                        ps.personState && ps.personState.personNames
-                          ? ps.personState.personNames.length
-                          : 0;
-                      const currentPersonNames =
-                        ps.personState && ps.personState.personNames
-                          ? ps.personState.personNames
-                          : [];
+            if (
+              this.state.personState &&
+              this.state.personState.personSelectedMode === 'NewPersonName'
+            ) {
+              this.props.addPersonName &&
+                this.props.addPersonName()({
+                  data: (this.state &&
+                    this.state.personState &&
+                    this.state.personState.editingPersonName) || { name: '' },
+                  token: appSession.accessToken,
+                  collectionId: appSession.collectionId,
+                  callback: {
+                    onComplete: (res: AjaxResponse) => {
+                      this.setState((ps: CollectingEventState) => {
+                        const index =
+                          ps.personState && ps.personState.personNames
+                            ? ps.personState.personNames.length
+                            : 0;
+                        const currentPersonNames =
+                          ps.personState && ps.personState.personNames
+                            ? ps.personState.personNames
+                            : [];
 
-                      const newPersonName: ActorsAndRelation = {
-                        actorUuid:
-                          ps &&
-                          ps.personState &&
-                          ps.personState.editingPerson &&
-                          ps.personState.editingPerson.actorUuid,
-                        defaultName:
-                          ps &&
-                          ps.personState &&
-                          ps.personState.editingPerson &&
-                          ps.personState.editingPerson.defaultName,
-                        actorNameUuid: res.response.personNameUuid,
-                        name: res.response.name,
-                        roleId: 11
-                      };
+                        const newPersonName: ActorsAndRelation = {
+                          actorUuid:
+                            ps &&
+                            ps.personState &&
+                            ps.personState.editingPerson &&
+                            ps.personState.editingPerson.actorUuid,
+                          defaultName:
+                            ps &&
+                            ps.personState &&
+                            ps.personState.editingPerson &&
+                            ps.personState.editingPerson.defaultName,
+                          actorNameUuid: res.response.personNameUuid,
+                          name: res.response.name,
+                          roleId: 11
+                        };
 
-                      const newPersonNames = newPersonName
-                        ? [
-                            ...currentPersonNames.slice(0, index),
-                            newPersonName,
-                            ...currentPersonNames.slice(index + 1)
-                          ]
-                        : undefined;
+                        const newPersonNames = newPersonName
+                          ? [
+                              ...currentPersonNames.slice(0, index),
+                              newPersonName,
+                              ...currentPersonNames.slice(index + 1)
+                            ]
+                          : undefined;
 
-                      const currStatus = ps.personState && ps.personState.showMoreInfo;
-                      const newPersonState: PersonState = ps.personState
-                        ? {
-                            ...ps.personState,
-                            personNames: newPersonNames,
-                            editState: 'Editing',
-                            personName: newPersonName,
-                            editingPersonName: undefined,
-                            showMoreInfo: !currStatus,
-                            personSelectedMode: 'NoPersonName'
-                          }
-                        : {
-                            editState: 'Editing',
-                            personName: undefined,
-                            editingPersonName: undefined,
-                            showMoreInfo: false,
-                            personSelectedMode: 'NoPersonName'
-                          };
+                        const currStatus = ps.personState && ps.personState.showMoreInfo;
+                        const newPersonState: PersonState = ps.personState
+                          ? {
+                              ...ps.personState,
+                              personNames: newPersonNames,
+                              editState: 'Editing',
+                              personName: newPersonName,
+                              editingPersonName: undefined,
+                              showMoreInfo: !currStatus,
+                              personSelectedMode: 'NoPersonName'
+                            }
+                          : {
+                              editState: 'Editing',
+                              personName: undefined,
+                              editingPersonName: undefined,
+                              showMoreInfo: false,
+                              personSelectedMode: 'NoPersonName'
+                            };
 
-                      const relatedActorsList: ActorsAndRelation[] | undefined =
-                        newPersonNames &&
-                        newPersonNames.map((p: PersonNameForCollectingEvent) => ({
-                          actorUuid: p.actorUuid,
-                          actorNameUuid: p.actorNameUuid,
-                          roleId: p.roleId,
-                          name: p.name
-                        }));
+                        const relatedActorsList: ActorsAndRelation[] | undefined =
+                          newPersonNames &&
+                          newPersonNames.map((p: PersonNameForCollectingEvent) => ({
+                            actorUuid: p.actorUuid,
+                            actorNameUuid: p.actorNameUuid,
+                            roleId: p.roleId,
+                            name: p.name
+                          }));
 
-                      const newEventState = {
-                        ...ps,
-                        eventData: {
-                          ...ps.eventData,
-                          relatedActors: relatedActorsList
-                        },
-                        personState: newPersonState
-                      };
-                      return newEventState;
-                    });
+                        const newEventState = {
+                          ...ps,
+                          eventData: {
+                            ...ps.eventData,
+                            relatedActors: relatedActorsList
+                          },
+                          personState: newPersonState
+                        };
+                        return newEventState;
+                      });
+                    }
                   }
-                }
-              });
+                });
+            } else {
+              this.props.addPerson &&
+                this.props.addPerson()({
+                  data: (this.state &&
+                    this.state.personState &&
+                    this.state.personState.editingPersonName) || { name: '' },
+                  token: appSession.accessToken,
+                  collectionId: appSession.collectionId,
+                  callback: {
+                    onComplete: (res: AjaxResponse) => {
+                      this.setState((ps: CollectingEventState) => {
+                        const index =
+                          ps.personState && ps.personState.personNames
+                            ? ps.personState.personNames.length
+                            : 0;
+                        const currentPersonNames =
+                          ps.personState && ps.personState.personNames
+                            ? ps.personState.personNames
+                            : [];
+
+                        const newPersonName: ActorsAndRelation = {
+                          actorUuid: res.response.actorUuid,
+                          defaultName: res.response.name,
+                          actorNameUuid: res.response.actorNameUuid,
+                          name: res.response.name,
+                          roleId: 11
+                        };
+
+                        const newPersonNames = newPersonName
+                          ? [
+                              ...currentPersonNames.slice(0, index),
+                              newPersonName,
+                              ...currentPersonNames.slice(index + 1)
+                            ]
+                          : undefined;
+
+                        const currStatus = ps.personState && ps.personState.showMoreInfo;
+                        const newPersonState: PersonState = ps.personState
+                          ? {
+                              ...ps.personState,
+                              personNames: newPersonNames,
+                              editState: 'Editing',
+                              personName: newPersonName,
+                              editingPersonName: undefined,
+                              showMoreInfo: !currStatus,
+                              personSelectedMode: 'NoPersonName'
+                            }
+                          : {
+                              editState: 'Editing',
+                              personName: undefined,
+                              editingPersonName: undefined,
+                              showMoreInfo: false,
+                              personSelectedMode: 'NoPersonName'
+                            };
+
+                        const relatedActorsList: ActorsAndRelation[] | undefined =
+                          newPersonNames &&
+                          newPersonNames.map((p: PersonNameForCollectingEvent) => ({
+                            actorUuid: p.actorUuid,
+                            actorNameUuid: p.actorNameUuid,
+                            roleId: p.roleId,
+                            name: p.name
+                          }));
+
+                        const newEventState = {
+                          ...ps,
+                          eventData: {
+                            ...ps.eventData,
+                            relatedActors: relatedActorsList
+                          },
+                          personState: newPersonState
+                        };
+                        return newEventState;
+                      });
+                    }
+                  }
+                });
+            }
           }}
           onChangeFullName={(fieldName: string) => (value: string) => {
             console.log('fieldName', value);
             this.setState((ps: CollectingEventState) => {
               const personSelectedMode =
                 ps && ps.personState && ps.personState.personSelectedMode;
+
               let newPersonSelectedMode: PersonSelectedMode = 'NoPersonName';
 
-              if (personSelectedMode === 'Person') {
-                newPersonSelectedMode = 'NewPersonName';
-              } else if (personSelectedMode === 'NoPersonName') {
+              if (personSelectedMode === ('NoPersonName' || undefined)) {
                 newPersonSelectedMode = 'NewPerson';
+              } else if (personSelectedMode === 'Person') {
+                newPersonSelectedMode = 'NewPersonName';
+              } else if (personSelectedMode === 'NewPersonName') {
+                newPersonSelectedMode = 'NewPersonName';
               } else if (personSelectedMode === 'NewPerson') {
                 newPersonSelectedMode = 'NewPerson';
               }
@@ -1641,7 +1734,7 @@ export class CollectingEventComponent extends React.Component<
                   ps.personState.editingPerson &&
                   ps.personState.editingPerson.actorUuid
                     ? 'Person'
-                    : 'NewPerson';
+                    : 'NewPersonName';
               }
 
               const newEditPersonName =

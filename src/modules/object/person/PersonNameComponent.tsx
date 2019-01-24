@@ -4,6 +4,7 @@ import { AppSession } from '../../../types/appSession';
 import { History } from 'history';
 import { PersonOrPersonNameSuggest } from '../../../components/suggest/PersonOrPersonNameSuggest';
 import { PersonNameSuggestion } from '../../../components/suggest/PersonNameSuggest';
+import { PersonSelectedMode } from '../types';
 
 type PersonNameProps = {
   //personName?: InputPersonName;
@@ -17,6 +18,7 @@ type PersonNameProps = {
   addPersonName?: Function;
   value?: string;
   onChangeSecondPerson: (suggestion: PersonNameSuggestion) => void;
+  personSelectedMode?: PersonSelectedMode;
 };
 
 const personNameAsString = (n: PersonNameSuggestion) => {
@@ -60,7 +62,11 @@ export const PersonNameComponent = (props: PersonNameProps) => {
       <div>{''} </div>
       <div className="row">
         <label className="control-label col-md-2" htmlFor="btnNewPersonname">
-          Create a New Person
+          {props.personSelectedMode === 'NewPerson'
+            ? 'Create a New Person'
+            : props.personSelectedMode === 'NewPersonName'
+              ? 'Create Person Name'
+              : 'Create'}
         </label>
       </div>
       <div className="form-group">

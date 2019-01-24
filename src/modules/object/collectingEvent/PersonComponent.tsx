@@ -7,7 +7,11 @@ import { AppSession } from '../../../types/appSession';
 import { History } from 'history';
 import { personDet } from '../../../models/object/classHist';
 import { PersonNameComponent } from '../person/PersonNameComponent';
-import { OutputPersonName, InputPersonName } from '../../../models/object/person';
+import {
+  OutputPersonName,
+  InputPersonName,
+  PersonNameForCollectingEvent
+} from '../../../models/object/person';
 
 import { EditState, NonEditState, PersonSelectedMode } from '../types';
 import EditAndSaveButtons from '../components/EditAndSaveButtons';
@@ -31,10 +35,6 @@ const personNameAsString = (n: PersonNameSuggestion) => {
   );
 };
 
-export type PersonNameForCollectingEvent = OutputPersonName & {
-  actorUuid?: string;
-  roleId: number;
-};
 export interface PersonState {
   personName?: PersonNameForCollectingEvent;
   personNames?: PersonNameForCollectingEvent[];
@@ -69,6 +69,7 @@ export type PersonProps = {
   onClickMoreInfo: () => void;
   nameEmpty: boolean;
   readOnly?: boolean;
+  personSelectedMode?: PersonSelectedMode;
 };
 
 export const ViewPersonComponent = (props: {
@@ -161,6 +162,7 @@ const PersonComponent = (props: PersonProps) => {
             onCreatePersonName={props.onCreatePersonName}
             onChangeFullName={props.onChangeFullName}
             onChangeSecondPerson={props.onChangeSecondPerson}
+            personSelectedMode={props.personSelectedMode}
           />
         )}
       </div>

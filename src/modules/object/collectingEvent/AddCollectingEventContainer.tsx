@@ -11,7 +11,9 @@ import store$, {
   setDisabledState$,
   setDraftState$,
   addPersonName$,
-  AddPersonNameProps
+  AddPersonNameProps,
+  addPerson$,
+  AddPersonProps
 } from './CollectingEventStore';
 import { History } from 'history';
 import { AjaxPost } from '../../../types/ajax';
@@ -55,6 +57,14 @@ const addCollectingEventProps = (combinedStore: any, upstream: { history: Histor
       }),
     addPersonName: (ajaxPost: AjaxPost<any>) => (props: AddPersonNameProps) =>
       addPersonName$.next({
+        data: props.data,
+        token: props.token,
+        collectionId: props.collectionId,
+        ajaxPost,
+        callback: props.callback
+      }),
+    addPerson: (ajaxPost: AjaxPost<any>) => (props: AddPersonProps) =>
+      addPerson$.next({
         data: props.data,
         token: props.token,
         collectionId: props.collectionId,

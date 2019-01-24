@@ -34,7 +34,11 @@ import { PersonState } from './PersonComponent';
 import {
   InputPersonName,
   getPersonName,
-  addPersonName
+  addPersonName,
+  addPersonForCollectingEvent,
+  Person,
+  InputPerson,
+  getPerson
 } from '../../../models/object/person';
 
 export type CollectingEventStoreState = {
@@ -87,6 +91,9 @@ export type EditPlaceProps = CommonParams & {
 export type AddPersonNameProps = CommonParams & { data: InputPersonName };
 export type GetPersonNameProps = CommonParams & { id: string };
 
+export type AddPersonProps = CommonParams & { data: InputPersonName };
+export type GetPersonProps = CommonParams & { id: string };
+
 export type EditPersonEventProps = CommonParams & {
   id: string;
   data: ActorsAndRelation[];
@@ -123,6 +130,53 @@ export const toBackendPersonName: ((p: InputPersonName) => InputPersonName) = (
 ) => {
   return p;
 };
+
+export const toBackendPerson: ((p: InputPersonName) => InputPersonName) = (
+  p: InputPersonName
+) => {
+  console.log('ToBackendPerson', p);
+  const c = new Person(
+    p && p.name,
+    [],
+    'Person',
+    p && p.title,
+    p && p.firstName,
+    p && p.lastName,
+    '',
+    '',
+    '',
+    '',
+    '',
+    [],
+    []
+  );
+  console.log('ToBackendPerson', c);
+  return c;
+};
+
+/* const toFrontend: (p: OutputPerson) => CollectingEventState = (p: OutputPerson) => {
+  const innP: OutputPerson = p;
+  if (innP) {
+    const r: CollectingEventState =(
+      personState: 
+          personNames: innP.relatedActors.map((r: ActorsAndRelation) => ({
+            actorUuid: r.actorUuid,
+            actorNameUuid: r.actorNameUuid,
+            name: r.name,
+            roleId: r.roleId,
+            defaultName: r.defaultName
+          })),
+          editState: 'Not editing',
+          personSelectedMode: 'NoPersonName'
+        }
+      : undefined,  
+    );
+    return r;
+  }
+  return {
+    name: { nameString: 'y' }
+  };
+}; */
 
 const getCollectingEventData = (ajaxGet: AjaxGet<Star>) => (
   props: GetCollectingEventProps
@@ -288,9 +342,48 @@ const addPersonNameData = (ajaxGet: AjaxGet<Star>, ajaxPost: AjaxPost<Star>) => 
     })
     .do(r => console.log('Return from get personNameFromUuid ', r));
 
+const addPersonData = (ajaxGet: AjaxGet<Star>, ajaxPost: AjaxPost<Star>) => (
+  props: AddPersonProps
+) =>
+  Observable.of(props)
+    .flatMap(props =>
+      addPersonForCollectingEvent(ajaxPost)({
+        data: toBackendPerson(props.data),
+        token: props.token
+      })
+    )
+    .do(res => console.log('((((=====)))) ', res))
+    .flatMap(res => {
+      return getPersonFomUuid(ajaxGet)({
+        id: res.actorUuid || '',
+        collectionId: props.collectionId,
+        token: props.token,
+        callback: props.callback
+      });
+    })
+    .do(r => console.log('Return from get personNameFromUuid ', r));
+
+/* const getPersonById = (ajaxGet: AjaxGet<Star>) => (props: GetPersonProps) =>
+  Observable.of(props).flatMap(props =>
+    getPerson(ajaxGet)({ id: props.id, token: props.token, callback: props.callback })
+  ); */
+
+export const addPerson$: Subject<
+  AddPersonProps & { ajaxPost: AjaxPost<Star> }
+> = createAction('addPerson$');
+
+export const getPerson$: Subject<
+  GetPersonProps & { ajaxGet: AjaxGet<Star> }
+> = createAction('getPerson$');
+
 const getPersonNameFromUuid = (ajaxGet: AjaxGet<Star>) => (props: GetPersonNameProps) =>
   Observable.of(props).flatMap(props =>
     getPersonName(ajaxGet)({ id: props.id, token: props.token, callback: props.callback })
+  );
+
+const getPersonFomUuid = (ajaxGet: AjaxGet<Star>) => (props: GetPersonProps) =>
+  Observable.of(props).flatMap(props =>
+    getPerson(ajaxGet)({ id: props.id, token: props.token, callback: props.callback })
   );
 export const addCollectingEvent$: Subject<
   AddCollectingEventProps & { ajaxPost: AjaxPost<Star> }
@@ -360,6 +453,8 @@ type Actions = {
   setDraftState$: Subject<{ subState?: string; fieldName: string; value: boolean }>;
   addPersonName$: Subject<AddPersonNameProps>;
   getPersonName$: Subject<GetPersonNameProps>;
+  addPerson$: Subject<AddPersonProps>;
+  getPerson$: Subject<GetPersonProps>;
 };
 
 export const reducer$ = (
@@ -460,6 +555,12 @@ export const reducer$ = (
       .switchMap(editEventPlaceRevisionData(ajaxPost))
       .map(() => (state: CollectingEventStoreState) => ({
         ...state
+      })),
+    actions.addPerson$
+      .switchMap(addPersonData(ajaxGet, ajaxPost))
+      .map((person: InputPerson) => (state: CollectingEventStoreState) => ({
+        ...state,
+        person
       }))
   );
 };
@@ -476,7 +577,9 @@ export const store$ = (
     setDraftState$,
     editEventMetaData$,
     addPersonName$,
-    getPersonName$
+    getPersonName$,
+    addPerson$,
+    getPerson$
   },
   ajaxGet: AjaxGet<Star> = simpleGet,
   ajaxPost: AjaxPost<Star> = simplePost,
