@@ -331,7 +331,6 @@ const addPersonNameData = (ajaxGet: AjaxGet<Star>, ajaxPost: AjaxPost<Star>) => 
         callback: props.callback */
       })
     )
-    .do(res => console.log('((((=====)))) ', res))
     .flatMap(res => {
       return getPersonNameFromUuid(ajaxGet)({
         id: res.actorNameUuid || '',
@@ -339,8 +338,17 @@ const addPersonNameData = (ajaxGet: AjaxGet<Star>, ajaxPost: AjaxPost<Star>) => 
         token: props.token,
         callback: props.callback
       });
-    })
-    .do(r => console.log('Return from get personNameFromUuid ', r));
+    });
+
+const getPersonNameData = (ajaxGet: AjaxGet<Star>) => (props: GetPersonNameProps) =>
+  Observable.of(props).flatMap(res => {
+    return getPersonNameFromUuid(ajaxGet)({
+      id: props.id,
+      collectionId: props.collectionId,
+      token: props.token,
+      callback: props.callback
+    });
+  });
 
 const addPersonData = (ajaxGet: AjaxGet<Star>, ajaxPost: AjaxPost<Star>) => (
   props: AddPersonProps
@@ -352,7 +360,6 @@ const addPersonData = (ajaxGet: AjaxGet<Star>, ajaxPost: AjaxPost<Star>) => (
         token: props.token
       })
     )
-    .do(res => console.log('((((=====)))) ', res))
     .flatMap(res => {
       return getPersonFomUuid(ajaxGet)({
         id: res.actorUuid || '',
@@ -360,8 +367,7 @@ const addPersonData = (ajaxGet: AjaxGet<Star>, ajaxPost: AjaxPost<Star>) => (
         token: props.token,
         callback: props.callback
       });
-    })
-    .do(r => console.log('Return from get personNameFromUuid ', r));
+    });
 
 /* const getPersonById = (ajaxGet: AjaxGet<Star>) => (props: GetPersonProps) =>
   Observable.of(props).flatMap(props =>
@@ -543,6 +549,17 @@ export const reducer$ = (
             ...state.personState,
             personName: o,
             personNames: tempPersonNames
+          }
+        };
+      }),
+    actions.getPersonName$
+      .switchMap(getPersonNameData(ajaxGet))
+      .map((o: InputPersonName) => (state: CollectingEventStoreState) => {
+        return {
+          ...state,
+          personState: {
+            ...state.personState,
+            editingPersonName: o
           }
         };
       }),

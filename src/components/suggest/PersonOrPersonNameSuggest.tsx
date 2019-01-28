@@ -49,7 +49,7 @@ export class PersonOrPersonNameSuggestComponent extends React.Component<
     super(props);
     this.requestSuggestionUpdate = this.requestSuggestionUpdate.bind(this);
     this.state = {
-      value: this.props.value,
+      value: this.props.value ? props.value : '',
       disabled: this.props && this.props.disabled ? true : false
     };
   }

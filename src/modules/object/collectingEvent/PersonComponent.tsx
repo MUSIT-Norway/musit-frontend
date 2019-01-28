@@ -18,18 +18,17 @@ import EditAndSaveButtons from '../components/EditAndSaveButtons';
 import { PersonState } from '../person/PersonComponent';
 
 const personNameAsString = (n: PersonNameSuggestion) => {
-  console.log('PersonName suggesstions ', n);
   return (
     <span className="suggestion-content">
       {n
-        ? 'Person: ' +
+        ? ' Person Name: ' +
+          ' ' +
+          n.name +
+          '  Person: ' +
           n.displayPersonName +
           ' Uuid:' +
           n.actorUuid.split('-')[0] +
-          '  ' +
-          ' Person Name: ' +
-          ' ' +
-          n.name
+          '  '
         : ''}
     </span>
   );
@@ -66,10 +65,11 @@ export type PersonProps = {
   showMoreInfo?: boolean;
   onChangeFullName: (fieldName: string) => (newValue: string) => void;
   onCreatePersonName: Function;
-  onClickMoreInfo: () => void;
+  onClickMoreOptions: Function;
   nameEmpty: boolean;
   readOnly?: boolean;
   personSelectedMode?: PersonSelectedMode;
+  selectedPerson?: PersonNameForCollectingEvent;
 };
 
 export const ViewPersonComponent = (props: {
@@ -100,25 +100,67 @@ const PersonComponent = (props: PersonProps) => {
   return (
     <div>
       <div className="row">
-        <label
-          className="control-label col-md-2"
-          htmlFor="PersonNameSuggestCollectingEvent"
-        >
-          Person name
-        </label>
-        <div className="col-md-8">
-          <PersonNameSuggest
-            id="PersonNameSuggestCollectingEvent"
-            disabled={props.disabled}
-            value={props.value}
-            renderFunc={personNameAsString}
-            placeHolder="Person Name"
-            appSession={props.appSession}
-            onChange={props.onChangePerson}
-            history={props.history}
-            hideCreateNewPerson={true}
-          />
+        <div className="col-md-12">
+          <label
+            className="control-label col-md-2"
+            htmlFor="PersonNameSuggestCollectingEvent"
+          >
+            Person name
+          </label>
+          <div className="col-md-8">
+            <PersonNameSuggest
+              id="PersonNameSuggestCollectingEvent"
+              disabled={props.disabled}
+              value={props.selectedPerson ? props.selectedPerson.name : props.value}
+              renderFunc={personNameAsString}
+              placeHolder="Person Name"
+              appSession={props.appSession}
+              onChange={props.onChangePerson}
+              history={props.history}
+              hideCreateNewPerson={true}
+            />
+          </div>
         </div>
+      </div>
+      <div className="row">
+        <div className="col-md-12">
+          <label className="control-label col-md-2" htmlFor="btnNewPersonname">
+            Fant du ikke personnavnet?
+          </label>
+          <div className="col-md-2">
+            <button
+              id="btnNewPersonname"
+              disabled={props.disabled}
+              className="btn btn-default btn-sm"
+              onClick={e => {
+                e.preventDefault();
+                props.onClickMoreOptions(props.appSession);
+              }}
+            >
+              {props.showMoreInfo ? 'Mindre valg' : 'Flere valg'}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-12">
+          {props.showMoreInfo && (
+            <PersonNameComponent
+              editingPersonName={props.editingPersonName}
+              disableOnChangeFullName={props.disableOnChangeFullName}
+              disableOnChangeOtherName={props.disableOnChangeOtherName}
+              appSession={props.appSession}
+              history={props.history}
+              onCreatePersonName={props.onCreatePersonName}
+              onChangeFullName={props.onChangeFullName}
+              onChangeSecondPerson={props.onChangeSecondPerson}
+              personSelectedMode={props.personSelectedMode}
+              selectedPerson={props.selectedPerson}
+            />
+          )}
+        </div>
+      </div>
+      <div className="row">
         <div className="col-md-1">
           <button
             className="btn btn-default"
@@ -133,47 +175,14 @@ const PersonComponent = (props: PersonProps) => {
           </button>
         </div>
       </div>
-      <div className="row">
-        <label className="control-label col-md-2" htmlFor="btnNewPersonname">
-          Fant du ikke personnavnet?
-        </label>
-        <div className="col-md-2">
-          <button
-            id="btnNewPersonname"
-            disabled={props.disabled}
-            className="btn btn-default btn-sm"
-            onClick={e => {
-              e.preventDefault();
-              props.onClickMoreInfo();
-            }}
-          >
-            {props.showMoreInfo ? 'Mindre informasjon' : 'Mer informasjon'}
-          </button>
-        </div>
-      </div>
-      <div className="row">
-        {props.showMoreInfo && (
-          <PersonNameComponent
-            editingPersonName={props.editingPersonName}
-            disableOnChangeFullName={props.disableOnChangeFullName}
-            disableOnChangeOtherName={props.disableOnChangeOtherName}
-            appSession={props.appSession}
-            history={props.history}
-            onCreatePersonName={props.onCreatePersonName}
-            onChangeFullName={props.onChangeFullName}
-            onChangeSecondPerson={props.onChangeSecondPerson}
-            personSelectedMode={props.personSelectedMode}
-          />
-        )}
-      </div>
       <div className="row grid">
         <table className="table">
           <thead>
             <tr>
-              <th className="col-md-4">Person </th>
-              <th className="col-md-1">Person UUID</th>
               <th className="col-md-4">Person Name</th>
               <th className="col-md-2">Person Name UUID</th>
+              <th className="col-md-4">Person </th>
+              <th className="col-md-1">Person UUID</th>
               <th className="col-md-1" />
             </tr>
           </thead>
@@ -181,22 +190,6 @@ const PersonComponent = (props: PersonProps) => {
             {props.personNames &&
               props.personNames.map((d: PersonNameForCollectingEvent, i: number) => (
                 <tr key={`det-row-${i}`}>
-                  <td className="col-md-4">
-                    <input
-                      type="text"
-                      className=" form-control"
-                      disabled={true}
-                      value={d.defaultName}
-                    />
-                  </td>
-                  <td className="col-md-1">
-                    <input
-                      type="text"
-                      className="form-control"
-                      disabled={true}
-                      value={d.actorUuid}
-                    />
-                  </td>
                   <td className="col-md-4">
                     <input
                       type="text"
@@ -211,6 +204,22 @@ const PersonComponent = (props: PersonProps) => {
                       className="form-control"
                       disabled={true}
                       value={d.actorNameUuid}
+                    />
+                  </td>
+                  <td className="col-md-4">
+                    <input
+                      type="text"
+                      className=" form-control"
+                      disabled={true}
+                      value={d.defaultName}
+                    />
+                  </td>
+                  <td className="col-md-1">
+                    <input
+                      type="text"
+                      className="form-control"
+                      disabled={true}
+                      value={d.actorUuid}
                     />
                   </td>
                   <td className="col-md-1">
@@ -234,7 +243,6 @@ const PersonComponent = (props: PersonProps) => {
         </table>
       </div>
       <div className="row">
-        {console.log('Anuradha nameEmpty test personComponent', props.nameEmpty)}
         <EditAndSaveButtons
           onClickCancel={() => {}}
           onClickEdit={props.onClickEdit}

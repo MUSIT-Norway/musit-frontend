@@ -13,10 +13,12 @@ import store$, {
   addPersonName$,
   AddPersonNameProps,
   addPerson$,
-  AddPersonProps
+  AddPersonProps,
+  getPersonName$,
+  GetPersonNameProps
 } from './CollectingEventStore';
 import { History } from 'history';
-import { AjaxPost } from '../../../types/ajax';
+import { AjaxPost, AjaxGet } from '../../../types/ajax';
 import { CollectingEventComponent } from './CollectingEventComponent';
 
 const combinedStore$ = createStore(
@@ -34,7 +36,6 @@ const combinedStore$ = createStore(
 );
 
 const addCollectingEventProps = (combinedStore: any, upstream: { history: History }) => {
-  console.log('addCollectingEventProps -xxxxxxxxxxxxxxxxxxxxxx');
   return {
     ...combinedStore,
     ...upstream,
@@ -61,6 +62,14 @@ const addCollectingEventProps = (combinedStore: any, upstream: { history: Histor
         token: props.token,
         collectionId: props.collectionId,
         ajaxPost,
+        callback: props.callback
+      }),
+    getPersonName: (ajaxGet: AjaxGet<any>) => (props: GetPersonNameProps) =>
+      getPersonName$.next({
+        id: props.id,
+        token: props.token,
+        collectionId: props.collectionId,
+        ajaxGet,
         callback: props.callback
       }),
     addPerson: (ajaxPost: AjaxPost<any>) => (props: AddPersonProps) =>

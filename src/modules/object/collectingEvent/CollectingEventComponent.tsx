@@ -55,7 +55,10 @@ import { AjaxPost } from 'src/types/ajax';
 import { PersonState } from './PersonComponent';
 //import { InputPersonName } from '../../../models/object/person';
 import { PersonNameSuggestion } from '../../../components/suggest/PersonNameSuggest';
-import { PersonNameForCollectingEvent } from '../../../models/object/person';
+import {
+  PersonNameForCollectingEvent,
+  InputPersonName
+} from '../../../models/object/person';
 
 export type EventMetadataProps = EventData & {
   onClickSave: () => void;
@@ -212,6 +215,7 @@ export type CollectingProps = {
   saveState?: DraftState | RevisionState;
   addPersonName: Function;
   addPerson: Function;
+  getPersonName: Function;
 };
 
 export default (props: CollectingProps) => (
@@ -236,6 +240,7 @@ export default (props: CollectingProps) => (
     saveState={props.saveState}
     addPersonName={props.addPersonName}
     addPerson={props.addPerson}
+    getPersonName={props.getPersonName}
   />
 );
 
@@ -322,8 +327,6 @@ export const toFrontend: (p: OutputEvent) => CollectingEventState = (p: OutputEv
             editState: 'Not editing'
           }
     };
-
-    console.log('TOFrontEnd: after format ', r);
     return r;
   }
   return {
@@ -454,7 +457,6 @@ export class CollectingEventComponent extends React.Component<
   }
 
   componentWillReceiveProps(props: CollectingProps) {
-    console.log('Recieve props: ====>', props);
     if (props.store.localState) {
       this.setState(() => ({ ...props.store.localState }));
     }
@@ -471,7 +473,6 @@ export class CollectingEventComponent extends React.Component<
         collectionId: this.props.appSession.collectionId,
         callback: {
           onComplete: (r: AjaxResponse) => {
-            console.log('########## addAndSaveCollecingEvent : Resposne ', r);
             const url = config.magasin.urls.client.collectingEvent.view(
               this.props.appSession,
               r.response.eventUuid
@@ -528,8 +529,6 @@ export class CollectingEventComponent extends React.Component<
           onComplete: () => this.props.history.replace(URL)
         }
       };
-
-      console.log('ANU: calling editEventMetaDate');
       this.props.editEventMetaData()(props);
     }
   }
@@ -540,7 +539,6 @@ export class CollectingEventComponent extends React.Component<
         this.props.appSession,
         this.state.eventData.eventUuid
       );
-      console.log('ANU : calling savePerson');
       const props: EditPersonEventProps = {
         id: this.state.eventData.eventUuid,
         data: this.state.eventData.relatedActors
@@ -676,8 +674,6 @@ export class CollectingEventComponent extends React.Component<
           }}
           onCoordinateLatLonKeyPress={e => {
             if (e.charCode === 13) {
-              console.log('E', e);
-
               const datum: Geodesy.datum =
                 this.state.placeState.editingInputCoordinate &&
                 (this.state.placeState.editingInputCoordinate.datum === 'WGS84' ||
@@ -884,7 +880,6 @@ export class CollectingEventComponent extends React.Component<
           getAdmPlaceData={(field: string) => (a: AdmPlace) => {
             const arrayPlaces = a.path ? a.path.split(':') : undefined;
             let PlaceString: string = '';
-            console.log('Anuradha getAdmPlaceDate ', arrayPlaces);
 
             if (field === 'Kommune') {
               PlaceString = arrayPlaces ? arrayPlaces[5] : '';
@@ -1309,6 +1304,14 @@ export class CollectingEventComponent extends React.Component<
           disableOnChangeOtherName={
             this.state.personState && this.state.personState.disableOnChangeOtherName
           }
+          editingPersonName={
+            this.state &&
+            this.state.personState &&
+            this.state.personState.editingPersonName
+          }
+          selectedPerson={
+            this.state && this.state.personState && this.state.personState.personName
+          }
           showMoreInfo={this.state.personState && this.state.personState.showMoreInfo}
           nameEmpty={this.state.eventData.name === '' ? true : false}
           onClickEdit={() => {
@@ -1341,7 +1344,10 @@ export class CollectingEventComponent extends React.Component<
                 actorNameUuid: suggestion ? suggestion.actorNameUuid : '',
                 name: suggestion ? suggestion.name : '',
                 roleId: 11,
-                defaultName: suggestion.defaultName
+                defaultName: suggestion.defaultName,
+                firstName: suggestion ? suggestion.firstName : '',
+                lastName: suggestion ? suggestion.lastName : '',
+                title: suggestion ? suggestion.title : ''
               };
               const newPersonSelectedMode: PersonSelectedMode = 'PersonName';
               const newPersonState: PersonState = {
@@ -1437,9 +1443,13 @@ export class CollectingEventComponent extends React.Component<
                 cs && cs.personState
                   ? {
                       ...cs.personState,
+                      personName: undefined,
                       personNames: newPersonNames,
+                      editingPersonName: undefined,
+                      editingPerson: undefined,
                       editState: 'Editing',
-                      personSelectedMode: 'NoPersonName'
+                      personSelectedMode: 'NoPersonName',
+                      showMoreInfo: false
                     }
                   : {
                       editState: 'Editing',
@@ -1637,8 +1647,9 @@ export class CollectingEventComponent extends React.Component<
                               ...ps.personState,
                               personNames: newPersonNames,
                               editState: 'Editing',
-                              personName: newPersonName,
+                              personName: undefined,
                               editingPersonName: undefined,
+                              editingPerson: undefined,
                               showMoreInfo: !currStatus,
                               personSelectedMode: 'NoPersonName'
                             }
@@ -1646,6 +1657,7 @@ export class CollectingEventComponent extends React.Component<
                               editState: 'Editing',
                               personName: undefined,
                               editingPersonName: undefined,
+                              editingPerson: undefined,
                               showMoreInfo: false,
                               personSelectedMode: 'NoPersonName'
                             };
@@ -1711,15 +1723,14 @@ export class CollectingEventComponent extends React.Component<
                     ps.personState.editingPersonName &&
                     ps.personState.editingPersonName.firstName;
 
-              const nameString = `${lastName || ''}${
-                title || firstName ? ', ' : ''
-              }${title || ''}${title ? ' ' : ''}${firstName}`;
+              const name = `${lastName || ''}${title || firstName ? ', ' : ''}${title ||
+                ''}${title ? ' ' : ''}${firstName}`;
 
               const disableOnChangeFullName =
                 lastName || title || firstName ? true : false;
 
               let disableOnChangeOtherName = false;
-              if (fieldName === 'nameString') {
+              if (fieldName === 'name') {
                 disableOnChangeOtherName = true;
 
                 if (value === '') {
@@ -1741,7 +1752,7 @@ export class CollectingEventComponent extends React.Component<
                 ps.personState && ps.personState.editingPersonName
                   ? {
                       ...ps.personState.editingPersonName,
-                      name: nameString,
+                      name: name,
                       editState: 'Editing',
                       [fieldName]: value
                     }
@@ -1771,33 +1782,87 @@ export class CollectingEventComponent extends React.Component<
               return newEventState;
             });
           }}
-          onClickMoreInfo={() => {
-            this.setState((cs: CollectingEventState) => {
-              const currStatus = cs.personState && cs.personState.showMoreInfo;
-              const newPersonSelectedMode =
-                cs.personState &&
-                cs.personState.personName &&
-                cs.personState.personName.name
-                  ? 'PersonName'
-                  : 'NoPersonName';
+          onClickMoreOptions={(appSession: AppSession) => {
+            if (
+              this.state.personState &&
+              this.state.personState.personName &&
+              this.state.personState.personName.actorNameUuid
+            ) {
+              this.props.getPersonName &&
+                this.props.getPersonName()({
+                  id:
+                    this.state &&
+                    this.state.personState &&
+                    this.state.personState.personName &&
+                    this.state.personState.personName.actorNameUuid,
+                  token: appSession.accessToken,
+                  collectionId: appSession.collectionId,
+                  callback: {
+                    onComplete: (res: AjaxResponse) => {
+                      this.setState((ps: CollectingEventState) => {
+                        const newEditingPerson: InputPersonName = {
+                          title: res.response.title || '',
+                          firstName: res.response.firstName || '',
+                          lastName: res.response.lastName || '',
+                          name: res.response.name
+                        };
 
-              const newPersonState: PersonState =
-                cs && cs.personState
-                  ? {
-                      ...cs.personState,
-                      showMoreInfo: !currStatus,
-                      personSelectedMode: newPersonSelectedMode
+                        const currStatus = ps.personState && ps.personState.showMoreInfo;
+                        const newPersonState: PersonState = ps.personState
+                          ? {
+                              ...ps.personState,
+                              editState: 'Editing',
+                              editingPersonName: newEditingPerson,
+                              showMoreInfo: !currStatus,
+                              personSelectedMode: 'NoPersonName',
+                              disableOnChangeOtherName: false,
+                              disableOnChangeFullName: false
+                            }
+                          : {
+                              editState: 'Editing',
+                              editingPersonName: newEditingPerson,
+                              showMoreInfo: false,
+                              personSelectedMode: 'NoPersonName',
+                              disableOnChangeOtherName: false,
+                              disableOnChangeFullName: false
+                            };
+                        const newEventState = {
+                          ...ps,
+                          personState: newPersonState
+                        };
+                        return newEventState;
+                      });
                     }
-                  : {
-                      showMoreInfo: false
-                    };
+                  }
+                });
+            } else {
+              this.setState((cs: CollectingEventState) => {
+                const currStatus = cs.personState && cs.personState.showMoreInfo;
+                const newPersonSelectedMode =
+                  cs.personState &&
+                  cs.personState.personName &&
+                  cs.personState.personName.name
+                    ? 'PersonName'
+                    : 'NoPersonName';
 
-              const newEventState = {
-                ...cs,
-                personState: newPersonState
-              };
-              return newEventState;
-            });
+                const newPersonState: PersonState =
+                  cs && cs.personState
+                    ? {
+                        ...cs.personState,
+                        showMoreInfo: !currStatus,
+                        personSelectedMode: newPersonSelectedMode
+                      }
+                    : {
+                        showMoreInfo: false
+                      };
+
+                const newEventState = {
+                  ...cs,
+                  personState: newPersonState
+                };
+                return newEventState;
+              });
+            }
           }}
         />
       </div>
