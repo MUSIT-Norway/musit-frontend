@@ -3,10 +3,8 @@ export type NonEditState = 'Not editing';
 export type DraftState = 'Draft';
 export type RevisionState = 'Revision';
 export type PersonSelectedMode =
-  | 'Person'
   | 'PersonAndPersonName'
-  | 'PersonName'
+  | 'PersonOrPersonName'
   | 'NoPersonName'
-  | 'NewPersonName'
-  | 'NewPerson'
+  | 'PersonName'
   | 'NA';

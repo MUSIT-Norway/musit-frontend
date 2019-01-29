@@ -236,6 +236,7 @@ export type EventData = {
 export type PersonNameForCollectingEvent = OutputPersonName & {
   actorUuid?: string;
   roleId: number;
+  orderNo: number;
 };
 
 export const getPersonAttributesFromEvents: (personUUID: string) => Array<EventData> = (

@@ -23,6 +23,7 @@ export type ActorsAndRelation = {
   roleText?: string;
   name: string;
   actorNameUuid: PersonNameUuid;
+  orderNo: number;
 };
 
 export interface InputActorAndRelation {

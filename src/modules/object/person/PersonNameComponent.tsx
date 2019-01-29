@@ -12,12 +12,14 @@ import { PersonSelectedMode } from '../types';
 type PersonNameProps = {
   //personName?: InputPersonName;
   editingPersonName?: InputPersonName;
+  editingPerson?: PersonNameForCollectingEvent;
   disableOnChangeFullName?: boolean;
   disableOnChangeOtherName?: boolean;
   appSession: AppSession;
   history: History;
   onChangeFullName: (fieldName: string) => (newValue: string) => void;
   onCreatePersonName: Function;
+  onCreateNewPerson: Function;
   addPersonName?: Function;
   value?: string;
   onChangeSecondPerson: (suggestion: PersonNameSuggestion) => void;
@@ -108,6 +110,23 @@ export const PersonNameComponent = (props: PersonNameProps) => {
                     disabled={props.disableOnChangeOtherName}
                   />
                 </div>
+                <div className="col-md-2">
+                  <button
+                    id="btnCreatePersonName"
+                    data-toggle="Create a new Person Name for the selected Person"
+                    title=""
+                    className="btn btn-default"
+                    disabled={
+                      props.editingPerson && props.editingPerson.actorUuid ? false : true
+                    }
+                    onClick={e => {
+                      e.preventDefault();
+                      props.onCreatePersonName(props.appSession);
+                    }}
+                  >
+                    Create Person Name
+                  </button>
+                </div>
               </div>
               <div className="form-group">
                 <label className="control-label col-md-2" htmlFor="name">
@@ -133,15 +152,15 @@ export const PersonNameComponent = (props: PersonNameProps) => {
                 <div className="col-md-2">
                   <button
                     id="btnCreatePersonName"
-                    data-toggle="tooltip"
+                    data-toggle="Create New Person with Default Name"
                     title=""
                     className="btn btn-default"
                     onClick={e => {
                       e.preventDefault();
-                      props.onCreatePersonName(props.appSession);
+                      props.onCreateNewPerson(props.appSession);
                     }}
                   >
-                    Create Person Name
+                    Create New Person
                   </button>
                 </div>
               </div>

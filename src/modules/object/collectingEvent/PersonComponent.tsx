@@ -60,11 +60,13 @@ export type PersonProps = {
   onAddPerson: () => void;
   onDeletePerson: (i: number) => void;
   editingPersonName?: InputPersonName;
+  editingPerson?: PersonNameForCollectingEvent;
   disableOnChangeFullName?: boolean;
   disableOnChangeOtherName?: boolean;
   showMoreInfo?: boolean;
   onChangeFullName: (fieldName: string) => (newValue: string) => void;
   onCreatePersonName: Function;
+  onCreateNewPerson: Function;
   onClickMoreOptions: Function;
   nameEmpty: boolean;
   readOnly?: boolean;
@@ -152,10 +154,12 @@ const PersonComponent = (props: PersonProps) => {
               appSession={props.appSession}
               history={props.history}
               onCreatePersonName={props.onCreatePersonName}
+              onCreateNewPerson={props.onCreateNewPerson}
               onChangeFullName={props.onChangeFullName}
               onChangeSecondPerson={props.onChangeSecondPerson}
               personSelectedMode={props.personSelectedMode}
               selectedPerson={props.selectedPerson}
+              editingPerson={props.editingPerson}
             />
           )}
         </div>
