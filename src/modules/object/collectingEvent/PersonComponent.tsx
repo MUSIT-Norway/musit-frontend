@@ -18,29 +18,27 @@ import EditAndSaveButtons from '../components/EditAndSaveButtons';
 import { PersonState } from '../person/PersonComponent';
 
 const personNameAsString = (n: PersonNameSuggestion) => {
+  const displayPersonName =
+    n && n.displayPersonName ? n.displayPersonName.replace(/\s*\(\d\)\s*/i, '') : '';
   const personName = (
     <span style={{ marginRight: '5px' }}>
       <b> Person name: </b>
       {n ? n.name : ''}{' '}
     </span>
   );
-  const person = (
-    <span style={{ marginRight: '5px' }}>
-      <b> Person: </b>
-      {n ? n.displayPersonName : ''}{' '}
-    </span>
-  );
-  const uuid = (
-    <span style={{ marginRight: '5px' }}>
-      <b> Uuid: </b>
-      {n ? n.actorUuid.split('-')[0] : ''}{' '}
-    </span>
-  );
+  const person =
+    displayPersonName !== n.name ? (
+      <span style={{ marginRight: '5px' }}>
+        <b> Person: </b>
+        {n ? n.displayPersonName : ''}{' '}
+      </span>
+    ) : (
+      ''
+    );
   return (
     <span className="suggestion-content" style={{ fontSize: '13px' }}>
       {personName}
       {person}
-      {uuid}
     </span>
   );
 };
