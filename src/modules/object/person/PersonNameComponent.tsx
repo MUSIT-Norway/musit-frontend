@@ -115,6 +115,7 @@ export const PersonNameComponent = (props: PersonNameProps) => {
                     id="btnCreatePersonName"
                     data-toggle="Create a new Person Name for the selected Person"
                     title=""
+                    type="button"
                     className="btn btn-default"
                     disabled={
                       props.editingPerson && props.editingPerson.actorUuid ? false : true
@@ -154,9 +155,9 @@ export const PersonNameComponent = (props: PersonNameProps) => {
                     id="btnCreatePersonName"
                     data-toggle="Create New Person with Default Name"
                     title=""
+                    type="button"
                     className="btn btn-default"
                     onClick={e => {
-                      e.preventDefault();
                       props.onCreateNewPerson(props.appSession);
                     }}
                   >
@@ -176,7 +177,7 @@ export const PersonNameComponent = (props: PersonNameProps) => {
             <PersonOrPersonNameSuggest
               id="PersonNameSuggestCollectingEvent"
               disabled={false}
-              value={props.selectedPerson ? props.selectedPerson.name : ''}
+              value={props.selectedPerson ? props.selectedPerson.defaultName : ''}
               renderFunc={personNameAsString}
               placeHolder="Person"
               appSession={props.appSession}

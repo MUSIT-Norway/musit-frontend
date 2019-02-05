@@ -13,15 +13,21 @@ import store$, {
   editEventMetaData$,
   EditCollectingEventProps,
   EditEventAttributesProps,
+  GetPersonNameProps,
   EditPlaceProps,
   getCollectingEvent$,
   setDisabledState$,
   setDraftState$,
+  addPerson$,
+  addPersonName$,
+  getPersonName$,
   EditPersonEventProps,
+  AddPersonNameProps,
+  AddPersonProps,
   editEventPersonRevision$
 } from './CollectingEventStore';
 import { History } from 'history';
-import { AjaxPost } from '../../../types/ajax';
+import { AjaxPost, AjaxGet } from '../../../types/ajax';
 import { simpleGet } from '../../../shared/RxAjax';
 import { CollectingEventComponent } from './CollectingEventComponent';
 
@@ -117,7 +123,32 @@ const editCollectingEventProps = (combinedStore: any, upstream: { history: Histo
         ajaxPost,
         callback: props.callback
       });
-    }
+    },
+
+    addPersonName: (ajaxPost: AjaxPost<any>) => (props: AddPersonNameProps) =>
+      addPersonName$.next({
+        data: props.data,
+        token: props.token,
+        collectionId: props.collectionId,
+        ajaxPost,
+        callback: props.callback
+      }),
+    addPerson: (ajaxPost: AjaxPost<any>) => (props: AddPersonProps) =>
+      addPerson$.next({
+        data: props.data,
+        token: props.token,
+        collectionId: props.collectionId,
+        ajaxPost,
+        callback: props.callback
+      }),
+    getPersonName: (ajaxGet: AjaxGet<any>) => (props: GetPersonNameProps) =>
+      getPersonName$.next({
+        id: props.id,
+        token: props.token,
+        collectionId: props.collectionId,
+        ajaxGet,
+        callback: props.callback
+      })
   };
 };
 

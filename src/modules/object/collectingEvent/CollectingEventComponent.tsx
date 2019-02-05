@@ -1342,37 +1342,56 @@ export class CollectingEventComponent extends React.Component<
             }
           }}
           onChangePerson={(suggestion: PersonNameSuggestion) => {
-            this.setState((cs: CollectingEventState) => {
-              const index =
-                cs && cs.personState && cs.personState.personNames
-                  ? cs.personState.personNames.length
-                  : 0;
+            this.props.getPersonName()({
+              id: suggestion.actorNameUuid,
+              token: this.props.appSession.accessToken,
+              collectionId: this.props.appSession.collectionId,
+              callback: {
+                onComplete: (res: AjaxResponse) => {
+                  this.setState((cs: CollectingEventState) => {
+                    const index =
+                      cs && cs.personState && cs.personState.personNames
+                        ? cs.personState.personNames.length
+                        : 0;
 
-              const newPersonName: PersonNameForCollectingEvent = {
-                actorUuid: suggestion ? suggestion.actorUuid : '',
-                actorNameUuid: suggestion ? suggestion.actorNameUuid : '',
-                name: suggestion ? suggestion.name : '',
-                roleId: 11,
-                defaultName: suggestion.defaultName,
-                firstName: suggestion ? suggestion.firstName : '',
-                lastName: suggestion ? suggestion.lastName : '',
-                title: suggestion ? suggestion.title : '',
-                orderNo: index
-              };
-              const newPersonSelectedMode: PersonSelectedMode = 'PersonName';
-              const newPersonState: PersonState = {
-                ...cs.personState,
-                personName: newPersonName,
-                editState: 'Editing',
-                personSelectedMode: newPersonSelectedMode,
-                editingPerson: newPersonName
-              };
+                    const newPersonName: PersonNameForCollectingEvent = {
+                      actorUuid: suggestion ? suggestion.actorUuid : '',
+                      actorNameUuid: suggestion ? suggestion.actorNameUuid : '',
+                      name: suggestion ? suggestion.name : '',
+                      roleId: 11,
+                      defaultName: suggestion.defaultName,
+                      firstName: suggestion ? suggestion.firstName : '',
+                      lastName: suggestion ? suggestion.lastName : '',
+                      title: suggestion ? suggestion.title : '',
+                      orderNo: index
+                    };
 
-              const newEventState = {
-                ...cs,
-                personState: newPersonState
-              };
-              return newEventState;
+                    const newEditingPersonName: InputPersonName = {
+                      title: res.response.title || '',
+                      firstName: res.response.firstName || '',
+                      lastName: res.response.lastName || '',
+                      name: res.response.name
+                    };
+
+                    const newPersonSelectedMode: PersonSelectedMode = 'PersonName';
+
+                    const newPersonState: PersonState = {
+                      ...cs.personState,
+                      personName: newPersonName,
+                      editState: 'Editing',
+                      personSelectedMode: newPersonSelectedMode,
+                      editingPerson: newPersonName,
+                      editingPersonName: newEditingPersonName
+                    };
+
+                    const newEventState = {
+                      ...cs,
+                      personState: newPersonState
+                    };
+                    return newEventState;
+                  });
+                }
+              }
             });
           }}
           onChangeSecondPerson={(suggestion: PersonNameSuggestion) => {
@@ -1385,7 +1404,7 @@ export class CollectingEventComponent extends React.Component<
                   ? 'PersonAndPersonName'
                   : personSelectedMode === 'NoPersonName'
                     ? 'PersonOrPersonName'
-                    : 'NA';
+                    : 'PersonOrPersonName';
 
               const newActorId = suggestion.actorUuid;
               const newDefaultName = suggestion.name;
@@ -1578,7 +1597,7 @@ export class CollectingEventComponent extends React.Component<
                             newPersonName,
                             ...currentPersonNames.slice(index + 1)
                           ]
-                        : undefined;
+                        : currentPersonNames;
 
                       const currStatus = ps.personState && ps.personState.showMoreInfo;
                       const newPersonState: PersonState = {
@@ -1617,6 +1636,7 @@ export class CollectingEventComponent extends React.Component<
               });
           }}
           onCreateNewPerson={(appSession: AppSession) => {
+            //console.log(this.props);
             this.props.addPerson &&
               this.props.addPerson()({
                 data: (this.state &&
@@ -1651,7 +1671,7 @@ export class CollectingEventComponent extends React.Component<
                             newPersonName,
                             ...currentPersonNames.slice(index + 1)
                           ]
-                        : undefined;
+                        : currentPersonNames;
 
                       const currStatus = ps.personState && ps.personState.showMoreInfo;
                       const newPersonState: PersonState = {
@@ -1790,7 +1810,7 @@ export class CollectingEventComponent extends React.Component<
                   callback: {
                     onComplete: (res: AjaxResponse) => {
                       this.setState((ps: CollectingEventState) => {
-                        const newEditingPerson: InputPersonName = {
+                        const newEditingPersonName: InputPersonName = {
                           title: res.response.title || '',
                           firstName: res.response.firstName || '',
                           lastName: res.response.lastName || '',
@@ -1802,7 +1822,7 @@ export class CollectingEventComponent extends React.Component<
                           ? {
                               ...ps.personState,
                               editState: 'Editing',
-                              editingPersonName: newEditingPerson,
+                              editingPersonName: newEditingPersonName,
                               showMoreInfo: !currStatus,
                               personSelectedMode: 'PersonName',
                               disableOnChangeOtherName: false,
@@ -1810,7 +1830,7 @@ export class CollectingEventComponent extends React.Component<
                             }
                           : {
                               editState: 'Editing',
-                              editingPersonName: newEditingPerson,
+                              editingPersonName: newEditingPersonName,
                               showMoreInfo: false,
                               personSelectedMode: 'NoPersonName',
                               disableOnChangeOtherName: false,
