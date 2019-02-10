@@ -26,9 +26,10 @@ import store$, {
   AddPersonProps,
   editEventPersonRevision$
 } from './CollectingEventStore';
-import { History } from 'history';
-import { AjaxPost, AjaxGet } from '../../../types/ajax';
+//import { History } from 'history';
+import { AjaxPost, AjaxGet, Callback } from '../../../types/ajax';
 import { simpleGet } from '../../../shared/RxAjax';
+import { Star } from '../../../types/common';
 import { CollectingEventComponent } from './CollectingEventComponent';
 
 const combinedStore$ = createStore(
@@ -45,23 +46,28 @@ const combinedStore$ = createStore(
   )
 );
 
-const editCollectingEventProps = (combinedStore: any, upstream: { history: History }) => {
+const editCollectingEventProps = (combinedStore: any, upstream: any) => {
   return {
     ...combinedStore,
     ...upstream,
+    eventUuid: upstream.match.params.id,
     eventDataReadOnly:
       localStorage.getItem('editComponent') === 'eventMetaData' ? false : true,
     placeReadOnly: localStorage.getItem('editComponent') === 'place' ? false : true,
     personReadOnly: localStorage.getItem('editComponent') === 'person' ? false : true,
     addStateHidden: true,
-    store: { ...combinedStore, localState: combinedStore.store.localState },
 
-    getCollectingEvent: (ajaxGet = simpleGet) => (appSession: AppSession, id: string) =>
+    getCollectingEvent: (ajaxGet = simpleGet) => (
+      appSession: AppSession,
+      id: string,
+      callback?: Callback<Star>
+    ) =>
       getCollectingEvent$.next({
         id: id,
         collectionId: appSession.collectionId,
         token: appSession.accessToken,
-        ajaxGet
+        ajaxGet,
+        callback
       }),
     setDisabledState: (fieldName: string) => (value: boolean) =>
       setDisabledState$.next({ fieldName, value }),
@@ -104,7 +110,6 @@ const editCollectingEventProps = (combinedStore: any, upstream: { history: Histo
     editEventPersonRevision: (ajaxPost: AjaxPost<any>) => (
       props: EditPersonEventProps
     ) => {
-      console.log('IN editEventPersonRevision ', props.data);
       editEventPersonRevision$.next({
         id: props.id,
         data: props.data,
@@ -152,14 +157,14 @@ const editCollectingEventProps = (combinedStore: any, upstream: { history: Histo
   };
 };
 
-export const onMountProps = () => (props: any) => {
-  props.getCollectingEvent()(props.appSession, props.match.params.id);
+export const onMount = (props: any) => {
+  // props.getCollectingEvent()(props.appSession, props.match.params.id);
 };
 
 export const onUnmount = () => (props: any) => {};
 
 const ManageCollectingEventComponent = lifeCycle({
-  onMount: onMountProps(),
+  onMount: onMount,
   onUnmount
 })(CollectingEventComponent);
 

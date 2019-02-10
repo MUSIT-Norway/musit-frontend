@@ -47,6 +47,7 @@ export interface PersonState {
   disableOnChangeFullName?: boolean;
   disableOnChangeOtherName?: boolean;
   showMoreInfo?: boolean;
+  newPersonAddedOrDeleted: boolean;
   personSelectedMode?: PersonSelectedMode;
   editingPerson?: PersonNameForCollectingEvent;
 }
@@ -70,13 +71,14 @@ export type PersonProps = {
   disableOnChangeOtherName?: boolean;
   showMoreInfo?: boolean;
   onChangeFullName: (fieldName: string) => (newValue: string) => void;
-  onCreatePersonName: Function;
+  onCreateAndAddPersonName: Function;
   onCreateNewPerson: Function;
   onClickMoreOptions: Function;
   nameEmpty: boolean;
   readOnly?: boolean;
   personSelectedMode?: PersonSelectedMode;
   selectedPerson?: PersonNameForCollectingEvent;
+  newPersonAddedOrDeleted: boolean;
 };
 
 export const ViewPersonComponent = (props: {
@@ -142,10 +144,11 @@ const PersonComponent = (props: PersonProps) => {
                 props.onClickMoreOptions(props.appSession);
               }}
             >
-              {props.showMoreInfo ? 'Mindre valg' : 'Flere valg'}
+              {props.showMoreInfo ? 'Skjul detaljer' : 'Flere valg/detaljer'}
             </button>
           </div>
         </div>
+        <br />
         <div className="row">
           {props.showMoreInfo && (
             <PersonNameComponent
@@ -154,7 +157,7 @@ const PersonComponent = (props: PersonProps) => {
               disableOnChangeOtherName={props.disableOnChangeOtherName}
               appSession={props.appSession}
               history={props.history}
-              onCreatePersonName={props.onCreatePersonName}
+              onCreatePersonName={props.onCreateAndAddPersonName}
               onCreateNewPerson={props.onCreateNewPerson}
               onChangeFullName={props.onChangeFullName}
               onChangeSecondPerson={props.onChangeSecondPerson}
@@ -255,7 +258,10 @@ const PersonComponent = (props: PersonProps) => {
             onClickSave={props.onClickSave}
             onClickDraft={() => {}}
             editButtonState={{ visible: true, disabled: props.readOnly ? false : true }}
-            saveButtonState={{ visible: true, disabled: props.formInvalid }}
+            saveButtonState={{
+              visible: true,
+              disabled: props.formInvalid || !props.newPersonAddedOrDeleted
+            }}
             cancelButtonState={{ visible: true, disabled: false }}
             draftButtonState={{ visible: false, disabled: false }}
             saveButtonText={'Lagre'}

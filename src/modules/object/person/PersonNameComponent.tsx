@@ -46,10 +46,21 @@ const personNameAsString = (n: PersonNameSuggestion) => {
 
 export const PersonNameComponent = (props: PersonNameProps) => {
   return (
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col-md-8">
-          <form className="form-horizontal">
+    <div
+      className="container-fluid"
+      style={{ marginTop: '10px', paddingTop: '10px', border: 'thin solid' }}
+    >
+      <form className="form-horizontal">
+        <div className="h4 col-md-6">
+          <p>
+            <b>
+              Hvis detaljene om personnavn og person stemmer, trykk på "Legg til person",
+              ellers kan du endre personnavn eller person
+            </b>
+          </p>
+        </div>
+        <div className="row">
+          <div className="col-md-8">
             <div>
               {''}
               <div className="row">
@@ -57,7 +68,8 @@ export const PersonNameComponent = (props: PersonNameProps) => {
                   Person Name
                 </label>
               </div>
-              <div className="form-group">
+              <br />
+              <div className="form-group row">
                 <label className="control-label col-md-2" htmlFor="title">
                   Title
                 </label>
@@ -75,7 +87,7 @@ export const PersonNameComponent = (props: PersonNameProps) => {
                   />
                 </div>
               </div>
-              <div className="form-group">
+              <div className="form-group row">
                 <label className="control-label col-md-2" htmlFor="first-name">
                   First name
                 </label>
@@ -93,7 +105,7 @@ export const PersonNameComponent = (props: PersonNameProps) => {
                   />
                 </div>
               </div>
-              <div className="form-group">
+              <div className="form-group row">
                 <label className="control-label col-md-2" htmlFor="last-name">
                   Last name
                 </label>
@@ -110,26 +122,8 @@ export const PersonNameComponent = (props: PersonNameProps) => {
                     disabled={props.disableOnChangeOtherName}
                   />
                 </div>
-                <div className="col-md-2">
-                  <button
-                    id="btnCreatePersonName"
-                    data-toggle="Create a new Person Name for the selected Person"
-                    title=""
-                    type="button"
-                    className="btn btn-default"
-                    disabled={
-                      props.editingPerson && props.editingPerson.actorUuid ? false : true
-                    }
-                    onClick={e => {
-                      e.preventDefault();
-                      props.onCreatePersonName(props.appSession);
-                    }}
-                  >
-                    Create Person Name
-                  </button>
-                </div>
               </div>
-              <div className="form-group">
+              <div className="form-group row">
                 <label className="control-label col-md-2" htmlFor="name">
                   Navn
                 </label>
@@ -150,43 +144,83 @@ export const PersonNameComponent = (props: PersonNameProps) => {
                   'PersonNameComponent : ',
                   props.editingPersonName && props.editingPersonName.name
                 )}
-                <div className="col-md-2">
-                  <button
-                    id="btnCreatePersonName"
-                    data-toggle="Create New Person with Default Name"
-                    title=""
-                    type="button"
-                    className="btn btn-default"
-                    onClick={e => {
-                      props.onCreateNewPerson(props.appSession);
-                    }}
-                  >
-                    Create New Person
-                  </button>
-                </div>
               </div>
             </div>
-          </form>
-        </div>
+            <div className="row">
+              <div className="col-md-6 col-md-offset-2">
+                <p>
+                  <b>
+                    Lag nytt navn eller ny person basert på endringer du gjør i feltene
+                    over
+                  </b>
+                </p>{' '}
+                <p>
+                  <b>Navnet eller personen blir koblet til hendelsen</b>
+                </p>
+              </div>
+            </div>
 
-        <div className="col-md-4">
-          <div className="row">
-            <label className="control-label " htmlFor="PersonNameSuggestCollectingEvent">
-              Search Person
-            </label>
-            <PersonOrPersonNameSuggest
-              id="PersonNameSuggestCollectingEvent"
-              disabled={false}
-              value={props.selectedPerson ? props.selectedPerson.defaultName : ''}
-              renderFunc={personNameAsString}
-              placeHolder="Person"
-              appSession={props.appSession}
-              onChange={props.onChangeSecondPerson}
-              history={props.history}
-            />
+            <div className="form-group row">
+              <div className="col-md-3 col-md-offset-2">
+                <button
+                  id="btnCreatePersonName"
+                  data-toggle="Create a new Person Name for the selected Person"
+                  title=""
+                  type="button"
+                  className="btn btn-default"
+                  disabled={
+                    props.editingPerson && props.editingPerson.actorUuid ? false : true
+                  }
+                  onClick={e => {
+                    e.preventDefault();
+                    props.onCreatePersonName(props.appSession);
+                  }}
+                >
+                  Lag nytt personnavn{' '}
+                </button>
+              </div>{' '}
+              <div className="col-md-3">
+                <button
+                  id="btnCreatePersonName"
+                  data-toggle="Create New Person with Default Name"
+                  title=""
+                  type="button"
+                  disabled={
+                    props.editingPersonName && props.editingPersonName.name ? false : true
+                  }
+                  className="btn btn-default"
+                  onClick={e => {
+                    props.onCreateNewPerson(props.appSession);
+                  }}
+                >
+                  Lag ny person
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="col-md-4">
+            <br />
+            <div className="row">
+              <label
+                className="control-label "
+                htmlFor="PersonNameSuggestCollectingEvent"
+              >
+                Search Person
+              </label>
+              <PersonOrPersonNameSuggest
+                id="PersonNameSuggestCollectingEvent"
+                disabled={false}
+                value={props.selectedPerson ? props.selectedPerson.defaultName : ''}
+                renderFunc={personNameAsString}
+                placeHolder="Person"
+                appSession={props.appSession}
+                onChange={props.onChangeSecondPerson}
+                history={props.history}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

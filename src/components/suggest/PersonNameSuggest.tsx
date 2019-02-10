@@ -194,7 +194,10 @@ export class PersonNameSuggestComponent extends React.Component<
               if ((event as React.KeyboardEvent<HTMLFormElement>).keyCode === 13) {
                 event.preventDefault();
               }
+              console.log('onSuggestionSelected', method);
+
               if (method === 'click') {
+                console.log('onSuggestionSelected');
                 this.props.onChange(suggestion);
               }
             }}

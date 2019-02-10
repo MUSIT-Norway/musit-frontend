@@ -2,6 +2,7 @@ import * as React from 'react';
 import { musitCoodinateValidate } from '../../../shared/util';
 import CollapseComponent from '../components/Collapse';
 import EventMetadata, { ViewEventMetaData } from './EventMetadata';
+
 import { formatISOString, maybeFormatISOString } from '../../../shared/util';
 import { emitError } from '../../../shared/errors';
 import {
@@ -40,6 +41,7 @@ import {
   CollectingEvent
 } from '../../../models/object/collectingEvent';
 import { AjaxResponse } from 'rxjs';
+
 import config from '../../../config';
 import {
   EditState,
@@ -151,6 +153,7 @@ export class EventData implements EventData {
     eventDateFrom?: string,
     eventDateTo?: string,
     eventDateVerbatim?: string
+
     //editingPersonName?: PersonName
   ) {
     this.name = name;
@@ -180,10 +183,12 @@ export interface CollectingEventState {
   personState?: PersonState;
   editingPlaceState?: InputPlace;
   editingEventData?: EventData;
+  localChange: boolean;
 }
 
 export type CollectingProps = {
   addCollectingEvent?: Function;
+  asyncGetPersonId?: Function;
   editEventMetaData?: (
     ajaxPost?: AjaxPost<any>
   ) => (props: EditCollectingEventProps) => void;
@@ -204,6 +209,7 @@ export type CollectingProps = {
   predefinedCollectingEventValues: PredefinedCollectingEventValues;
   appSession: AppSession;
   history: History;
+  match: any;
   eventDataReadOnly: boolean;
   placeReadOnly: boolean;
   personReadOnly: boolean;
@@ -216,6 +222,7 @@ export type CollectingProps = {
   addPersonName: Function;
   addPerson: Function;
   getPersonName: Function;
+  fromBackend?: boolean;
 };
 
 export default (props: CollectingProps) => (
@@ -223,6 +230,7 @@ export default (props: CollectingProps) => (
     setDraftState={props.setDraftState}
     setDisabledState={props.setDisabledState}
     appSession={props.appSession}
+    match={props.match}
     predefinedCollectingEventValues={props.predefinedCollectingEventValues}
     store={props.store}
     addCollectingEvent={
@@ -271,11 +279,11 @@ export const toEventDataBackend: (p: CollectingEventState) => InputEvent = (
 export const toFrontend: (p: OutputEvent) => CollectingEventState = (p: OutputEvent) => {
   const innP: OutputEvent = p;
 
-  console.log('TOFrontEnd: ', p);
+  console.log('ToFrontEnd: ', p);
   if (innP) {
     const r: CollectingEventState = {
       eventData: new EventData(
-        (innP.attributes && innP.attributes.name) || 'Dummy',
+        (innP.attributes && innP.attributes.name) || '',
         innP.eventUuid,
         innP.eventTypeId,
         innP.museumId,
@@ -305,7 +313,8 @@ export const toFrontend: (p: OutputEvent) => CollectingEventState = (p: OutputEv
               orderNo: r.orderNo
             })),
             editState: 'Not editing',
-            personSelectedMode: 'NoPersonName'
+            personSelectedMode: 'NoPersonName',
+            newPersonAddedOrDeleted: false
           }
         : undefined,
       placeState: innP.place
@@ -326,7 +335,8 @@ export const toFrontend: (p: OutputEvent) => CollectingEventState = (p: OutputEv
             showCoordinateFormat: false,
             coordinateInvalid: false,
             editState: 'Not editing'
-          }
+          },
+      localChange: false
     };
     return r;
   }
@@ -340,7 +350,6 @@ export const toFrontend: (p: OutputEvent) => CollectingEventState = (p: OutputEv
       collectionId: 10,
       editState: 'Not editing'
     },
-
     placeState: {
       admPlace: null,
       showCoordinateFormat: false,
@@ -360,7 +369,8 @@ export const toFrontend: (p: OutputEvent) => CollectingEventState = (p: OutputEv
       },
       coordinateInvalid: false,
       editState: 'Not editing'
-    }
+    },
+    localChange: false
   };
 };
 
@@ -375,11 +385,21 @@ export class CollectingEventComponent extends React.Component<
     this.saveEvent = this.saveEvent.bind(this);
     this.savePerson = this.savePerson.bind(this);
     this.formInvalid = this.formInvalid.bind(this);
+    console.log('PROPS', props);
+
     this.addAndSaveCollecingEvent = this.addAndSaveCollecingEvent.bind(this);
+
     this.state =
       props.store && props.store.localState
         ? {
             ...props.store.localState,
+            personState:
+              props.store.localState && props.store.localState.personState
+                ? {
+                    ...props.store.localState.personState,
+                    newPersonAddedOrDeleted: false
+                  }
+                : undefined,
             placeState: props.store.localState.placeState
               ? {
                   ...props.store.localState.placeState,
@@ -405,7 +425,8 @@ export class CollectingEventComponent extends React.Component<
                   },
                   coordinateInvalid: false,
                   editState: 'Editing'
-                }
+                },
+            localChange: false
           }
         : {
             eventData: new EventData(
@@ -452,14 +473,35 @@ export class CollectingEventComponent extends React.Component<
             },
             personState: {
               showMoreInfo: false,
-              editState: 'Editing'
-            }
+              editState: 'Editing',
+              newPersonAddedOrDeleted: false
+            },
+            localChange: false
           };
   }
 
   componentWillReceiveProps(props: CollectingProps) {
-    if (props.store.localState) {
-      this.setState(() => ({ ...props.store.localState }));
+    console.log('componentWillReceiveProps', props);
+    if (props.store && props.store.localState) {
+      this.setState(ps => {
+        console.log('PS', ps, 'LS', props.store);
+
+        return {
+          ...ps,
+          ...props.store.localState,
+          personState: {
+            ...ps.personState,
+            newPersonAddedOrDeleted:
+              (ps.personState && ps.personState.newPersonAddedOrDeleted) || false,
+            personNames:
+              ps.personState && ps.personState.personNames && this.state.localChange
+                ? ps.personState.personNames
+                : props.store.localState &&
+                  props.store.localState.personState &&
+                  props.store.localState.personState.personNames
+          }
+        };
+      });
     }
   }
 
@@ -534,13 +576,13 @@ export class CollectingEventComponent extends React.Component<
     }
   }
 
-  savePerson(personState: PersonState) {
-    if (this.props.editEventPersonRevision && personState) {
+  savePerson() {
+    if (this.props.editEventPersonRevision) {
       const URL = config.magasin.urls.client.collectingEvent.view(
         this.props.appSession,
         this.state.eventData.eventUuid
       );
-      const props: EditPersonEventProps = {
+      const p: EditPersonEventProps = {
         id: this.state.eventData.eventUuid,
         data: this.state.eventData.relatedActors
           ? this.state.eventData.relatedActors
@@ -548,19 +590,24 @@ export class CollectingEventComponent extends React.Component<
         token: this.props.appSession.accessToken,
         collectionId: this.props.appSession.collectionId,
         callback: {
-          onComplete: () => this.props.history.replace(URL)
+          onComplete: () => {
+            this.props.history.replace(URL);
+          }
         }
       };
-      this.props.editEventPersonRevision()(props);
+      console.log('savePerson', p);
+      /*this.setState((ps: CollectingEventState) => ({
+        ...ps,
+        personState: personState
+          ? { ...ps.personState, personNames: undefined }
+          : undefined
+      })); */
+      console.log('Før editPerson', this.state);
+      this.props.editEventPersonRevision()(p);
     }
   }
 
   render() {
-    console.log('STATE----->', this.state);
-    console.log(
-      'STATE PersonSelectedMode----->',
-      this.state && this.state.personState && this.state.personState.personSelectedMode
-    );
     const PersonViewComponent = this.state.personState ? (
       <div>
         {' '}
@@ -1285,9 +1332,19 @@ export class CollectingEventComponent extends React.Component<
       <div>
         <PersonComponent
           {...this.state}
+          newPersonAddedOrDeleted={
+            (this.state.personState && this.state.personState.newPersonAddedOrDeleted) ||
+            false
+          }
           disabled={this.props.personReadOnly ? this.props.personReadOnly : false}
           readOnly={this.props.personReadOnly ? this.props.personReadOnly : false}
-          value={''}
+          value={
+            this.state.personState &&
+            this.state.personState &&
+            this.state.personState.personName
+              ? this.state.personState.personName.name
+              : ''
+          }
           appSession={this.props.appSession}
           history={this.props.history}
           personSelectedMode={
@@ -1336,18 +1393,18 @@ export class CollectingEventComponent extends React.Component<
             if (this.props.addCollectingEvent) {
               this.addAndSaveCollecingEvent();
             } else {
-              if (this.state.personState) {
-                this.savePerson(this.state.personState);
-              }
+              this.savePerson();
             }
           }}
           onChangePerson={(suggestion: PersonNameSuggestion) => {
+            console.log('onChangePerson');
             this.props.getPersonName()({
               id: suggestion.actorNameUuid,
               token: this.props.appSession.accessToken,
               collectionId: this.props.appSession.collectionId,
               callback: {
                 onComplete: (res: AjaxResponse) => {
+                  console.log('onChangePerson onComplete');
                   this.setState((cs: CollectingEventState) => {
                     const index =
                       cs && cs.personState && cs.personState.personNames
@@ -1377,6 +1434,9 @@ export class CollectingEventComponent extends React.Component<
 
                     const newPersonState: PersonState = {
                       ...cs.personState,
+                      newPersonAddedOrDeleted:
+                        (cs.personState && cs.personState.newPersonAddedOrDeleted) ||
+                        false,
                       personName: newPersonName,
                       editState: 'Editing',
                       personSelectedMode: newPersonSelectedMode,
@@ -1399,7 +1459,7 @@ export class CollectingEventComponent extends React.Component<
               const personSelectedMode =
                 cs && cs.personState && cs.personState.personSelectedMode;
 
-              let newPersonSelectedMode: PersonSelectedMode =
+              const newPersonSelectedMode: PersonSelectedMode =
                 personSelectedMode === 'PersonName'
                   ? 'PersonAndPersonName'
                   : personSelectedMode === 'NoPersonName'
@@ -1446,6 +1506,7 @@ export class CollectingEventComponent extends React.Component<
                 personName: mergePersonToPersonName,
                 editingPerson: editPerson,
                 editState: 'Editing',
+                newPersonAddedOrDeleted: true,
                 personSelectedMode: newPersonSelectedMode
               };
               const newEventState = {
@@ -1457,10 +1518,10 @@ export class CollectingEventComponent extends React.Component<
           }}
           onAddPerson={() => {
             this.setState((cs: CollectingEventState) => {
-              const index =
+              /*      const index =
                 cs.personState && cs.personState.personNames
                   ? cs.personState.personNames.length
-                  : 0;
+                  : 0; */
               const currentPersonNames =
                 cs.personState && cs.personState.personNames
                   ? cs.personState.personNames
@@ -1469,12 +1530,8 @@ export class CollectingEventComponent extends React.Component<
               const currentPersonName = cs.personState && cs.personState.personName;
 
               const newPersonNames = currentPersonName
-                ? [
-                    ...currentPersonNames.slice(0, index),
-                    currentPersonName,
-                    ...currentPersonNames.slice(index + 1)
-                  ]
-                : undefined;
+                ? [...currentPersonNames, currentPersonName]
+                : currentPersonNames;
 
               const newPersonState: PersonState =
                 cs && cs.personState
@@ -1486,11 +1543,13 @@ export class CollectingEventComponent extends React.Component<
                       editingPerson: undefined,
                       editState: 'Editing',
                       personSelectedMode: 'NoPersonName',
-                      showMoreInfo: false
+                      showMoreInfo: false,
+                      newPersonAddedOrDeleted: true
                     }
                   : {
                       editState: 'Editing',
-                      personSelectedMode: 'NoPersonName'
+                      personSelectedMode: 'NoPersonName',
+                      newPersonAddedOrDeleted: true
                     };
 
               const relatedActorsList: ActorsAndRelation[] | undefined =
@@ -1508,7 +1567,8 @@ export class CollectingEventComponent extends React.Component<
                   ...cs.eventData,
                   relatedActors: relatedActorsList
                 },
-                personState: newPersonState
+                personState: newPersonState,
+                localChange: true
               };
               return newEventState;
             });
@@ -1527,12 +1587,14 @@ export class CollectingEventComponent extends React.Component<
                 ? {
                     ...cs.personState,
                     personNames: newPersonNames,
-                    personSelectedMode: 'NoPersonName'
+                    personSelectedMode: 'NoPersonName',
+                    newPersonAddedOrDeleted: true
                   }
                 : {
                     personNames: newPersonNames,
                     editState: 'Editing',
-                    personSelectedMode: 'NoPersonName'
+                    personSelectedMode: 'NoPersonName',
+                    newPersonAddedOrDeleted: true
                   };
 
               const relatedActorsList: ActorsAndRelation[] | undefined =
@@ -1550,12 +1612,13 @@ export class CollectingEventComponent extends React.Component<
                   ...cs.eventData,
                   relatedActors: relatedActorsList
                 },
-                personState: newPersonState
+                personState: newPersonState,
+                localChange: true
               };
               return newEventState;
             });
           }}
-          onCreatePersonName={(appSession: AppSession) => {
+          onCreateAndAddPersonName={(appSession: AppSession) => {
             this.props.addPersonName &&
               this.props.addPersonName()({
                 data: (this.state &&
@@ -1565,7 +1628,10 @@ export class CollectingEventComponent extends React.Component<
                 collectionId: appSession.collectionId,
                 callback: {
                   onComplete: (res: AjaxResponse) => {
+                    console.log('Create new person', res.response, this.state);
                     this.setState((ps: CollectingEventState) => {
+                      console.log('Create new person inne', res.response, ps);
+
                       const index =
                         ps.personState && ps.personState.personNames
                           ? ps.personState.personNames.length
@@ -1592,11 +1658,7 @@ export class CollectingEventComponent extends React.Component<
                         orderNo: index
                       };
                       const newPersonNames = newPersonName
-                        ? [
-                            ...currentPersonNames.slice(0, index),
-                            newPersonName,
-                            ...currentPersonNames.slice(index + 1)
-                          ]
+                        ? [...currentPersonNames, newPersonName]
                         : currentPersonNames;
 
                       const currStatus = ps.personState && ps.personState.showMoreInfo;
@@ -1608,7 +1670,8 @@ export class CollectingEventComponent extends React.Component<
                         editingPersonName: undefined,
                         editingPerson: undefined,
                         showMoreInfo: !currStatus,
-                        personSelectedMode: 'NoPersonName'
+                        personSelectedMode: 'NoPersonName',
+                        newPersonAddedOrDeleted: true
                       };
 
                       const relatedActorsList: ActorsAndRelation[] | undefined =
@@ -1627,8 +1690,14 @@ export class CollectingEventComponent extends React.Component<
                           ...ps.eventData,
                           relatedActors: relatedActorsList
                         },
-                        personState: newPersonState
+                        personState: newPersonState,
+                        localChange: true
                       };
+                      console.log(
+                        'Ny Event personstat: xxxx> ',
+                        newPersonState,
+                        newEventState
+                      );
                       return newEventState;
                     });
                   }
@@ -1682,7 +1751,8 @@ export class CollectingEventComponent extends React.Component<
                         editingPersonName: undefined,
                         editingPerson: undefined,
                         showMoreInfo: !currStatus,
-                        personSelectedMode: 'NoPersonName'
+                        personSelectedMode: 'NoPersonName',
+                        newPersonAddedOrDeleted: true
                       };
 
                       const relatedActorsList: ActorsAndRelation[] | undefined =
@@ -1703,6 +1773,7 @@ export class CollectingEventComponent extends React.Component<
                         },
                         personState: newPersonState
                       };
+
                       return newEventState;
                     });
                   }
@@ -1781,7 +1852,8 @@ export class CollectingEventComponent extends React.Component<
                     editState: 'Editing',
                     disableOnChangeFullName: disableOnChangeFullName,
                     disableOnChangeOtherName: disableOnChangeOtherName,
-                    personSelectedMode: 'NoPersonName'
+                    personSelectedMode: 'NoPersonName',
+                    newPersonAddedOrDeleted: true
                   };
 
               const newEventState = {
@@ -1834,7 +1906,8 @@ export class CollectingEventComponent extends React.Component<
                               showMoreInfo: false,
                               personSelectedMode: 'NoPersonName',
                               disableOnChangeOtherName: false,
-                              disableOnChangeFullName: false
+                              disableOnChangeFullName: false,
+                              newPersonAddedOrDeleted: false
                             };
                         const newEventState = {
                           ...ps,
@@ -1859,7 +1932,8 @@ export class CollectingEventComponent extends React.Component<
                         personSelectedMode: newPersonSelectedMode
                       }
                     : {
-                        showMoreInfo: false
+                        showMoreInfo: false,
+                        newPersonAddedOrDeleted: false
                       };
 
                 const newEventState = {

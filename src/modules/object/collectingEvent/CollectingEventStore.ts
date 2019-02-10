@@ -72,7 +72,9 @@ export type CommonParams = {
   callback?: Callback<Star>;
 };
 
-export type GetCollectingEventProps = CommonParams & { id: string };
+export type GetCollectingEventProps = CommonParams & {
+  id: string;
+};
 export type AddCollectingEventProps = CommonParams & { data: CollectingEventState };
 export type EditCollectingEventProps = CommonParams & {
   data: InputEvent;
