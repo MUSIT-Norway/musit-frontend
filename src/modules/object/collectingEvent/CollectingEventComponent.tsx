@@ -484,23 +484,13 @@ export class CollectingEventComponent extends React.Component<
     console.log('componentWillReceiveProps', props);
     if (props.store && props.store.localState) {
       this.setState(ps => {
-        console.log('PS', ps, 'LS', props.store);
-
-        return {
-          ...ps,
-          ...props.store.localState,
-          personState: {
-            ...ps.personState,
-            newPersonAddedOrDeleted:
-              (ps.personState && ps.personState.newPersonAddedOrDeleted) || false,
-            personNames:
-              ps.personState && ps.personState.personNames && this.state.localChange
-                ? ps.personState.personNames
-                : props.store.localState &&
-                  props.store.localState.personState &&
-                  props.store.localState.personState.personNames
-          }
-        };
+        console.log('PS', ps);
+        console.log('LS', props.store);
+        if (ps.localChange) {
+          return ps;
+        } else {
+          return props.store.localState;
+        }
       });
     }
   }
@@ -577,6 +567,7 @@ export class CollectingEventComponent extends React.Component<
   }
 
   savePerson() {
+    console.log('On save person 1', this.state);
     if (this.props.editEventPersonRevision) {
       const URL = config.magasin.urls.client.collectingEvent.view(
         this.props.appSession,
@@ -608,6 +599,7 @@ export class CollectingEventComponent extends React.Component<
   }
 
   render() {
+    console.log('OnRender: STATE: ', this.state);
     const PersonViewComponent = this.state.personState ? (
       <div>
         {' '}
@@ -1266,6 +1258,7 @@ export class CollectingEventComponent extends React.Component<
             this.setState((cs: CollectingEventState) => {
               return {
                 ...cs,
+                localChange: true,
                 eventData: {
                   ...cs.eventData,
                   editState: 'Editing',
@@ -1277,6 +1270,7 @@ export class CollectingEventComponent extends React.Component<
           onChangeBornDate={(newDate?: Date) => {
             this.setState((p: CollectingEventState) => ({
               ...p,
+              localChange: true,
               eventData: {
                 ...p.eventData,
                 editState: 'Editing',
@@ -1287,6 +1281,7 @@ export class CollectingEventComponent extends React.Component<
           onChangeDeathDate={(newDate?: Date) => {
             this.setState((p: CollectingEventState) => ({
               ...p,
+              localChange: true,
               eventData: {
                 ...p.eventData,
                 editState: 'Editing',
@@ -1297,6 +1292,7 @@ export class CollectingEventComponent extends React.Component<
           onClearBornDate={() => {
             this.setState((p: CollectingEventState) => ({
               ...p,
+              localChange: true,
               eventData: {
                 ...p.eventData,
                 editState: 'Editing',
@@ -1307,6 +1303,7 @@ export class CollectingEventComponent extends React.Component<
           onClearDeathDate={() => {
             this.setState((p: CollectingEventState) => ({
               ...p,
+              localChange: true,
               eventData: {
                 ...p.eventData,
                 editState: 'Editing',
@@ -1317,6 +1314,7 @@ export class CollectingEventComponent extends React.Component<
           onChangeVerbatimDate={(newDate: string) => {
             this.setState((p: CollectingEventState) => ({
               ...p,
+              localChange: true,
               eventData: {
                 ...p.eventData,
                 editState: 'Editing',
@@ -1390,6 +1388,7 @@ export class CollectingEventComponent extends React.Component<
             }
           }}
           onClickSave={() => {
+            console.log('ClickSavePerson', this.props);
             if (this.props.addCollectingEvent) {
               this.addAndSaveCollecingEvent();
             } else {
@@ -1446,6 +1445,7 @@ export class CollectingEventComponent extends React.Component<
 
                     const newEventState = {
                       ...cs,
+                      localChange: true,
                       personState: newPersonState
                     };
                     return newEventState;
@@ -1661,7 +1661,8 @@ export class CollectingEventComponent extends React.Component<
                         ? [...currentPersonNames, newPersonName]
                         : currentPersonNames;
 
-                      const currStatus = ps.personState && ps.personState.showMoreInfo;
+                      const currentShowMoreInfo =
+                        ps.personState && ps.personState.showMoreInfo;
                       const newPersonState: PersonState = {
                         ...ps.personState,
                         personNames: newPersonNames,
@@ -1669,7 +1670,7 @@ export class CollectingEventComponent extends React.Component<
                         personName: undefined,
                         editingPersonName: undefined,
                         editingPerson: undefined,
-                        showMoreInfo: !currStatus,
+                        showMoreInfo: !currentShowMoreInfo,
                         personSelectedMode: 'NoPersonName',
                         newPersonAddedOrDeleted: true
                       };
@@ -1704,7 +1705,7 @@ export class CollectingEventComponent extends React.Component<
                 }
               });
           }}
-          onCreateNewPerson={(appSession: AppSession) => {
+          onCreateAndAddNewPerson={(appSession: AppSession) => {
             //console.log(this.props);
             this.props.addPerson &&
               this.props.addPerson()({

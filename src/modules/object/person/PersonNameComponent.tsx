@@ -18,8 +18,8 @@ type PersonNameProps = {
   appSession: AppSession;
   history: History;
   onChangeFullName: (fieldName: string) => (newValue: string) => void;
-  onCreatePersonName: Function;
-  onCreateNewPerson: Function;
+  onCreateAndAddPersonName: Function;
+  onCreateAndAddNewPerson: Function;
   addPersonName?: Function;
   value?: string;
   onChangeSecondPerson: (suggestion: PersonNameSuggestion) => void;
@@ -173,7 +173,7 @@ export const PersonNameComponent = (props: PersonNameProps) => {
                   }
                   onClick={e => {
                     e.preventDefault();
-                    props.onCreatePersonName(props.appSession);
+                    props.onCreateAndAddPersonName(props.appSession);
                   }}
                 >
                   Lag nytt personnavn{' '}
@@ -190,7 +190,7 @@ export const PersonNameComponent = (props: PersonNameProps) => {
                   }
                   className="btn btn-default"
                   onClick={e => {
-                    props.onCreateNewPerson(props.appSession);
+                    props.onCreateAndAddNewPerson(props.appSession);
                   }}
                 >
                   Lag ny person

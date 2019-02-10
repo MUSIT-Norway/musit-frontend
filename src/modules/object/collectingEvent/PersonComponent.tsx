@@ -72,7 +72,7 @@ export type PersonProps = {
   showMoreInfo?: boolean;
   onChangeFullName: (fieldName: string) => (newValue: string) => void;
   onCreateAndAddPersonName: Function;
-  onCreateNewPerson: Function;
+  onCreateAndAddNewPerson: Function;
   onClickMoreOptions: Function;
   nameEmpty: boolean;
   readOnly?: boolean;
@@ -157,8 +157,8 @@ const PersonComponent = (props: PersonProps) => {
               disableOnChangeOtherName={props.disableOnChangeOtherName}
               appSession={props.appSession}
               history={props.history}
-              onCreatePersonName={props.onCreateAndAddPersonName}
-              onCreateNewPerson={props.onCreateNewPerson}
+              onCreateAndAddPersonName={props.onCreateAndAddPersonName}
+              onCreateAndAddNewPerson={props.onCreateAndAddNewPerson}
               onChangeFullName={props.onChangeFullName}
               onChangeSecondPerson={props.onChangeSecondPerson}
               personSelectedMode={props.personSelectedMode}
