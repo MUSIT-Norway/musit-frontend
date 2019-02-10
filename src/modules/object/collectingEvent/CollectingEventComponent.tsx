@@ -255,7 +255,8 @@ export default (props: CollectingProps) => (
 export const toEventDataBackend: (p: CollectingEventState) => InputEvent = (
   p: CollectingEventState
 ) => {
-  return new CollectingEvent(
+  console.log('To eventdata backend',p);
+  const c=  new CollectingEvent(
     p.eventData.eventUuid,
     p.eventData.eventType,
     p.eventData.museumId,
@@ -274,6 +275,9 @@ export const toEventDataBackend: (p: CollectingEventState) => InputEvent = (
     p.eventData.eventDateVerbatim,
     p.placeState.placeUuid
   );
+  console.log('To eventdata backend',c);
+  return c;
+
 };
 
 export const toFrontend: (p: OutputEvent) => CollectingEventState = (p: OutputEvent) => {

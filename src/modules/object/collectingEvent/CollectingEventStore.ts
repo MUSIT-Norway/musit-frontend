@@ -104,6 +104,7 @@ export type EditPersonEventProps = CommonParams & {
 export const toBackend: ((p: CollectingEventState) => InputEvent) = (
   p: CollectingEventState
 ) => {
+  console.log('toBackend', p);
   const c = new CollectingEvent(
     p.eventData.eventUuid,
     p.eventData.eventType,
@@ -233,6 +234,7 @@ const editEventMetaData = (ajaxPost: AjaxPost<Star>) => (
     props.data && props.data.eventDateTo ? props.data.eventDateTo : undefined,
     props.data && props.data.eventDateVerbatim ? props.data.eventDateVerbatim : undefined
   );
+  console.log('editEventMetaData', props);
   const inputEventAttributes: CollectingEventAttributes | undefined = props.data
     .attributes
     ? {
