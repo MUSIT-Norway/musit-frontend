@@ -699,7 +699,8 @@ export class CollectingEventComponent extends React.Component<
             this.setState((ps: CollectingEventState) => ({
               ...ps,
               eventData: { ...ps.eventData, methodId: Number.parseInt(methodId) },
-              placeState: { ...ps.placeState, editState: 'Editing' }
+              placeState: { ...ps.placeState, editState: 'Editing' },
+              localChange: true
             }));
           }}
           collectingEventMethods={
@@ -712,7 +713,8 @@ export class CollectingEventComponent extends React.Component<
             localStorage['selectedCountry'] = v;
             this.setState((ps: CollectingEventState) => ({
               ...ps,
-              placeState: { ...ps.placeState, selectedCountry: v }
+              placeState: { ...ps.placeState, selectedCountry: v },
+              localChange: true
             }));
           }}
           onCoordinateLatLonKeyPress={e => {
@@ -750,13 +752,15 @@ export class CollectingEventComponent extends React.Component<
                   placeState: {
                     ...ps.placeState,
                     showCoordinateFormat,
+
                     editingInputCoordinate: ps.placeState.editingInputCoordinate
                       ? {
                           ...ps.placeState.editingInputCoordinate,
                           derivedCoordinate: derivedCoordinate
                         }
                       : undefined
-                  }
+                  },
+                  localChange: true
                 }));
               } catch (e) {
                 console.log(e);
@@ -801,6 +805,7 @@ export class CollectingEventComponent extends React.Component<
 
                 this.setState((ps: CollectingEventState) => ({
                   ...ps,
+                  localChange: true,
                   placeState: {
                     ...ps.placeState,
                     showCoordinateFormat,
@@ -854,6 +859,7 @@ export class CollectingEventComponent extends React.Component<
                 }
                 this.setState((ps: CollectingEventState) => ({
                   ...ps,
+                  localChange: true,
                   placeState: {
                     ...ps.placeState,
                     showCoordinateFormat,
@@ -906,6 +912,7 @@ export class CollectingEventComponent extends React.Component<
               };
               return {
                 ...cs,
+                localChange: true,
                 placeState: newPlaceState
               };
             });
@@ -913,6 +920,7 @@ export class CollectingEventComponent extends React.Component<
           onChangeAdmPlace={(t: AdmPlace) => {
             this.setState((s: CollectingEventState) => ({
               ...s,
+              localChange: true,
               placeState: {
                 ...s.placeState,
                 editState: 'Editing',
@@ -955,6 +963,7 @@ export class CollectingEventComponent extends React.Component<
             this.setState((cs: CollectingEventState) => {
               return {
                 ...cs,
+                localChange: true,
                 placeState: {
                   ...cs.placeState,
                   editState: 'Editing',
@@ -1010,6 +1019,7 @@ export class CollectingEventComponent extends React.Component<
               };
               const newEventState = {
                 ...cs,
+                localChange: true,
                 placeState: newPlaceState
               };
 
@@ -1028,6 +1038,7 @@ export class CollectingEventComponent extends React.Component<
 
             this.setState((cs: CollectingEventState) => ({
               ...cs,
+              localChange: true,
               placeState: {
                 ...cs.placeState,
                 editState: 'Editing',
@@ -1133,6 +1144,7 @@ export class CollectingEventComponent extends React.Component<
             this.setState((cs: CollectingEventState) => {
               return {
                 ...cs,
+                localChange: true,
                 placeState: {
                   ...cs.placeState,
                   editState: 'Editing',
@@ -1148,6 +1160,7 @@ export class CollectingEventComponent extends React.Component<
             this.setState((cs: CollectingEventState) => {
               return {
                 ...cs,
+                localChange: true,
                 placeState: {
                   ...cs.placeState,
                   editState: 'Editing',
@@ -1176,6 +1189,7 @@ export class CollectingEventComponent extends React.Component<
               };
               const newEventState = {
                 ...cs,
+                localChange: true,
                 placeState: newPlaceState
               };
               return newEventState;
