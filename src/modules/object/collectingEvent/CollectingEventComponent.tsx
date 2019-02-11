@@ -255,8 +255,8 @@ export default (props: CollectingProps) => (
 export const toEventDataBackend: (p: CollectingEventState) => InputEvent = (
   p: CollectingEventState
 ) => {
-  console.log('To eventdata backend',p);
-  const c=  new CollectingEvent(
+  console.log('To eventdata backend', p);
+  const c = new CollectingEvent(
     p.eventData.eventUuid,
     p.eventData.eventType,
     p.eventData.museumId,
@@ -275,9 +275,8 @@ export const toEventDataBackend: (p: CollectingEventState) => InputEvent = (
     p.eventData.eventDateVerbatim,
     p.placeState.placeUuid
   );
-  console.log('To eventdata backend',c);
+  console.log('To eventdata backend', c);
   return c;
-
 };
 
 export const toFrontend: (p: OutputEvent) => CollectingEventState = (p: OutputEvent) => {
@@ -1515,7 +1514,8 @@ export class CollectingEventComponent extends React.Component<
               };
               const newEventState = {
                 ...cs,
-                personState: newPersonState
+                personState: newPersonState,
+                localChange: true
               };
               return newEventState;
             });
@@ -1776,7 +1776,8 @@ export class CollectingEventComponent extends React.Component<
                           ...ps.eventData,
                           relatedActors: relatedActorsList
                         },
-                        personState: newPersonState
+                        personState: newPersonState,
+                        localChange: true
                       };
 
                       return newEventState;
@@ -1863,7 +1864,8 @@ export class CollectingEventComponent extends React.Component<
 
               const newEventState = {
                 ...ps,
-                personState: newPersonState
+                personState: newPersonState,
+                localChange: true
               };
               return newEventState;
             });
