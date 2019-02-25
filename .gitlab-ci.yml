@@ -63,6 +63,8 @@ build:
   only:
     - master@MUSIT-Norway/musit-frontend
 
+  when: manual
+
 build release branch:
   stage: build
   tags:
