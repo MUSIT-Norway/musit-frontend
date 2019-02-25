@@ -23,6 +23,7 @@ export type ActorsAndRelation = {
   roleText?: string;
   name: string;
   actorNameUuid: PersonNameUuid;
+  orderNo: number;
 };
 
 export interface InputActorAndRelation {
@@ -234,10 +235,7 @@ export const getCollectingEvent: (
   }
 ) => Observable<OutputEvent> = (ajaxGet = simpleGet) => ({ id, token, callback }) => {
   const URL = Config.api.collectingEvent.getEvent(id);
-  console.log('URL', URL);
-  return ajaxGet(URL, token, callback)
-    .map(({ response }) => response)
-    .do(response => console.log('RESPONSE ::::: ', response));
+  return ajaxGet(URL, token, callback).map(({ response }) => response);
 };
 
 export const addCollectingEvent: (
@@ -250,9 +248,7 @@ export const addCollectingEvent: (
   }
 ) => Observable<InputEvent> = (ajaxPost = simplePost) => ({ data, token, callback }) => {
   const URL = Config.api.collectingEvent.addEventUrl;
-  return ajaxPost(URL, data, token, callback)
-    .map(({ response }) => response)
-    .do(r => console.log('##### DO addCollectingEvent', r, callback));
+  return ajaxPost(URL, data, token, callback).map(({ response }) => response);
 };
 
 export const editEventDateRevision: (
@@ -271,9 +267,7 @@ export const editEventDateRevision: (
   callback
 }) => {
   const URL = Config.api.collectingEvent.editEvent.eventDateRevision(id);
-  return ajaxPost(URL, data, token, callback)
-    .do(r => console.log('DO', r, callback))
-    .map(({ response }) => response);
+  return ajaxPost(URL, data, token, callback).map(({ response }) => response);
 };
 
 export const editEventAttributesRevision: (
@@ -292,9 +286,7 @@ export const editEventAttributesRevision: (
   callback
 }) => {
   const URL = Config.api.collectingEvent.editEvent.eventAttributesRevision(id);
-  return ajaxPost(URL, data, token, callback)
-    .do(r => console.log('DO', r, callback))
-    .map(({ response }) => response);
+  return ajaxPost(URL, data, token, callback).map(({ response }) => response);
 };
 
 export const editEventPlaceRevision: (

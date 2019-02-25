@@ -233,6 +233,12 @@ export type EventData = {
   };
 };
 
+export type PersonNameForCollectingEvent = OutputPersonName & {
+  actorUuid?: string;
+  roleId: number;
+  orderNo: number;
+};
+
 export const getPersonAttributesFromEvents: (personUUID: string) => Array<EventData> = (
   personUUID: string
 ) => [
@@ -378,7 +384,7 @@ export const getPerson: (
     token: string;
     callback?: Callback<Star>;
   }
-) => Observable<InputPerson> = (ajaxGet = simpleGet) => ({ id, token, callback }) => {
+) => Observable<InputPersonName> = (ajaxGet = simpleGet) => ({ id, token, callback }) => {
   const URL = Config.api.persons.getUrl(id);
   return ajaxGet(URL, token, callback).map(({ response }) => response);
 };
@@ -409,6 +415,23 @@ export const addPerson: (
     callback?: Callback<Star>;
   }
 ) => Observable<InputPerson> = (ajaxPost = simplePost) => ({ data, token, callback }) => {
+  const URL = Config.api.persons.addUrl;
+  return ajaxPost(URL, data, token, callback).map(({ response }) => response);
+};
+
+export const addPersonForCollectingEvent: (
+  ajaxPost: AjaxPost<Star>
+) => (
+  props: {
+    token: string;
+    data: any;
+    callback?: Callback<Star>;
+  }
+) => Observable<PersonNameForCollectingEvent> = (ajaxPost = simplePost) => ({
+  data,
+  token,
+  callback
+}) => {
   const URL = Config.api.persons.addUrl;
   return ajaxPost(URL, data, token, callback).map(({ response }) => response);
 };

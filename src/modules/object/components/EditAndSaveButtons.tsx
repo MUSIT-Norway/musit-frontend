@@ -18,47 +18,45 @@ export type EditAndSaveButtonProps = {
 
 const EditAndSaveButtons = (props: EditAndSaveButtonProps) => {
   return (
-    <div className="container-fluid" style={{ padding: '10px' }}>
-      <form className="form-inline" style={{ float: 'right' }}>
+    <div className="container-fluid" style={{ padding: '10px', float: 'right' }}>
+      <button
+        type="button"
+        className="btn btn-link"
+        onClick={props.onClickCancel}
+        disabled={props.cancelButtonState.disabled}
+      >
+        {props.cancelButtonText}
+      </button>{' '}
+      {props.editButtonState.visible ? (
         <button
           type="button"
-          className="btn btn-link"
-          onClick={props.onClickCancel}
-          disabled={props.cancelButtonState.disabled}
+          className="btn btn-default"
+          onClick={props.onClickEdit}
+          disabled={props.editButtonState.disabled}
         >
-          {props.cancelButtonText}
-        </button>{' '}
-        {props.editButtonState.visible ? (
-          <button
-            type="button"
-            className="btn btn-default"
-            onClick={props.onClickEdit}
-            disabled={props.editButtonState.disabled}
-          >
-            {props.editButtonText}
-          </button>
-        ) : (
-          <span />
-        )}{' '}
-        {props.draftButtonState.visible && (
-          <button
-            type="button"
-            className="btn btn-warning"
-            onClick={props.onClickDraft}
-            disabled={props.draftButtonState.disabled}
-          >
-            {props.draftButtonText}
-          </button>
-        )}
-        <button
-          type="button"
-          className="btn btn-success"
-          onClick={props.onClickSave}
-          disabled={props.saveButtonState.disabled || props.nameEmpty}
-        >
-          {props.saveButtonText}
+          {props.editButtonText}
         </button>
-      </form>
+      ) : (
+        <span />
+      )}{' '}
+      {props.draftButtonState.visible && (
+        <button
+          type="button"
+          className="btn btn-warning"
+          onClick={props.onClickDraft}
+          disabled={props.draftButtonState.disabled}
+        >
+          {props.draftButtonText}
+        </button>
+      )}
+      <button
+        type="button"
+        className="btn btn-success"
+        onClick={props.onClickSave}
+        disabled={props.saveButtonState.disabled || props.nameEmpty}
+      >
+        {props.saveButtonText}
+      </button>
     </div>
   );
 };
