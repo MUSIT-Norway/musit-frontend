@@ -1,5 +1,6 @@
 
 def proxyServer = 'http://w3prod-proxy01.uio.no:3128'
+def deployJenkinstest = true
 
 node {
     stage('Checkout') {
@@ -34,7 +35,7 @@ node {
         }
     }
 
-    if (gitBranch == "master") {
+    if (gitBranch == "master" || (gitBranch == "jenkinstest" && deployJenkinstest == true)) {
         stage('Build') {
             echo "Build images for branch ${gitBranch}"
             echo "Tag: ${buildTag}"
@@ -54,7 +55,7 @@ node {
             sh "docker tag harbor.uio.no:443/musit/webpack harbor.uio.no:443/musit/webpack:utv"
         }
         
-        if (gitBranch == "master") {
+        if (gitBranch == "master" || (gitBranch == "jenkinstest" && deployJenkinstest == true)) {
 
             stage('Publish to harbor') {
                 echo "Push ${gitBranch} to harbor"

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { musitCoodinateValidate } from '../../../shared/util';
 import CollapseComponent from '../components/Collapse';
 import EventMetadata, { ViewEventMetaData } from './EventMetadata';
+
 import { formatISOString, maybeFormatISOString } from '../../../shared/util';
 import { emitError } from '../../../shared/errors';
 import {
@@ -40,6 +41,7 @@ import {
   CollectingEvent
 } from '../../../models/object/collectingEvent';
 import { AjaxResponse } from 'rxjs';
+
 import config from '../../../config';
 import {
   EditState,
@@ -52,9 +54,13 @@ import EditAndSaveButtons from '../components/EditAndSaveButtons';
 import PersonComponent, { ViewPersonComponent } from './PersonComponent';
 //import { personDet } from '../../../models/object/classHist';
 import { AjaxPost } from 'src/types/ajax';
-import { PersonNameForCollectingEvent, PersonState } from './PersonComponent';
+import { PersonState } from './PersonComponent';
 //import { InputPersonName } from '../../../models/object/person';
 import { PersonNameSuggestion } from '../../../components/suggest/PersonNameSuggest';
+import {
+  PersonNameForCollectingEvent,
+  InputPersonName
+} from '../../../models/object/person';
 
 export type EventMetadataProps = EventData & {
   onClickSave: () => void;
@@ -147,6 +153,7 @@ export class EventData implements EventData {
     eventDateFrom?: string,
     eventDateTo?: string,
     eventDateVerbatim?: string
+
     //editingPersonName?: PersonName
   ) {
     this.name = name;
@@ -176,10 +183,12 @@ export interface CollectingEventState {
   personState?: PersonState;
   editingPlaceState?: InputPlace;
   editingEventData?: EventData;
+  localChange: boolean;
 }
 
 export type CollectingProps = {
   addCollectingEvent?: Function;
+  asyncGetPersonId?: Function;
   editEventMetaData?: (
     ajaxPost?: AjaxPost<any>
   ) => (props: EditCollectingEventProps) => void;
@@ -200,6 +209,7 @@ export type CollectingProps = {
   predefinedCollectingEventValues: PredefinedCollectingEventValues;
   appSession: AppSession;
   history: History;
+  match: any;
   eventDataReadOnly: boolean;
   placeReadOnly: boolean;
   personReadOnly: boolean;
@@ -210,6 +220,9 @@ export type CollectingProps = {
   isDraft?: boolean;
   saveState?: DraftState | RevisionState;
   addPersonName: Function;
+  addPerson: Function;
+  getPersonName: Function;
+  fromBackend?: boolean;
 };
 
 export default (props: CollectingProps) => (
@@ -217,6 +230,7 @@ export default (props: CollectingProps) => (
     setDraftState={props.setDraftState}
     setDisabledState={props.setDisabledState}
     appSession={props.appSession}
+    match={props.match}
     predefinedCollectingEventValues={props.predefinedCollectingEventValues}
     store={props.store}
     addCollectingEvent={
@@ -233,13 +247,16 @@ export default (props: CollectingProps) => (
     addStateHidden={props.addStateHidden}
     saveState={props.saveState}
     addPersonName={props.addPersonName}
+    addPerson={props.addPerson}
+    getPersonName={props.getPersonName}
   />
 );
 
 export const toEventDataBackend: (p: CollectingEventState) => InputEvent = (
   p: CollectingEventState
 ) => {
-  return new CollectingEvent(
+  console.log('To eventdata backend', p);
+  const c = new CollectingEvent(
     p.eventData.eventUuid,
     p.eventData.eventType,
     p.eventData.museumId,
@@ -258,16 +275,18 @@ export const toEventDataBackend: (p: CollectingEventState) => InputEvent = (
     p.eventData.eventDateVerbatim,
     p.placeState.placeUuid
   );
+  console.log('To eventdata backend', c);
+  return c;
 };
 
 export const toFrontend: (p: OutputEvent) => CollectingEventState = (p: OutputEvent) => {
   const innP: OutputEvent = p;
 
-  console.log('TOFrontEnd: ', p);
+  console.log('ToFrontEnd: ', p);
   if (innP) {
     const r: CollectingEventState = {
       eventData: new EventData(
-        (innP.attributes && innP.attributes.name) || 'Dummy',
+        (innP.attributes && innP.attributes.name) || '',
         innP.eventUuid,
         innP.eventTypeId,
         innP.museumId,
@@ -293,9 +312,12 @@ export const toFrontend: (p: OutputEvent) => CollectingEventState = (p: OutputEv
               actorNameUuid: r.actorNameUuid,
               name: r.name,
               roleId: r.roleId,
-              defaultName: r.defaultName
+              defaultName: r.defaultName,
+              orderNo: r.orderNo
             })),
-            editState: 'Not editing'
+            editState: 'Not editing',
+            personSelectedMode: 'NoPersonName',
+            newPersonAddedOrDeleted: false
           }
         : undefined,
       placeState: innP.place
@@ -316,10 +338,9 @@ export const toFrontend: (p: OutputEvent) => CollectingEventState = (p: OutputEv
             showCoordinateFormat: false,
             coordinateInvalid: false,
             editState: 'Not editing'
-          }
+          },
+      localChange: false
     };
-
-    console.log('TOFrontEnd: after format ', r);
     return r;
   }
   return {
@@ -332,7 +353,6 @@ export const toFrontend: (p: OutputEvent) => CollectingEventState = (p: OutputEv
       collectionId: 10,
       editState: 'Not editing'
     },
-
     placeState: {
       admPlace: null,
       showCoordinateFormat: false,
@@ -352,7 +372,8 @@ export const toFrontend: (p: OutputEvent) => CollectingEventState = (p: OutputEv
       },
       coordinateInvalid: false,
       editState: 'Not editing'
-    }
+    },
+    localChange: false
   };
 };
 
@@ -367,11 +388,21 @@ export class CollectingEventComponent extends React.Component<
     this.saveEvent = this.saveEvent.bind(this);
     this.savePerson = this.savePerson.bind(this);
     this.formInvalid = this.formInvalid.bind(this);
+    console.log('PROPS', props);
+
     this.addAndSaveCollecingEvent = this.addAndSaveCollecingEvent.bind(this);
+
     this.state =
       props.store && props.store.localState
         ? {
             ...props.store.localState,
+            personState:
+              props.store.localState && props.store.localState.personState
+                ? {
+                    ...props.store.localState.personState,
+                    newPersonAddedOrDeleted: false
+                  }
+                : undefined,
             placeState: props.store.localState.placeState
               ? {
                   ...props.store.localState.placeState,
@@ -397,7 +428,8 @@ export class CollectingEventComponent extends React.Component<
                   },
                   coordinateInvalid: false,
                   editState: 'Editing'
-                }
+                },
+            localChange: false
           }
         : {
             eventData: new EventData(
@@ -444,15 +476,25 @@ export class CollectingEventComponent extends React.Component<
             },
             personState: {
               showMoreInfo: false,
-              editState: 'Editing'
-            }
+              editState: 'Editing',
+              newPersonAddedOrDeleted: false
+            },
+            localChange: false
           };
   }
 
   componentWillReceiveProps(props: CollectingProps) {
-    console.log('Recieve props: ====>', props);
-    if (props.store.localState) {
-      this.setState(() => ({ ...props.store.localState }));
+    console.log('componentWillReceiveProps', props);
+    if (props.store && props.store.localState) {
+      this.setState(ps => {
+        console.log('PS', ps);
+        console.log('LS', props.store);
+        if (ps.localChange) {
+          return ps;
+        } else {
+          return props.store.localState;
+        }
+      });
     }
   }
 
@@ -467,7 +509,6 @@ export class CollectingEventComponent extends React.Component<
         collectionId: this.props.appSession.collectionId,
         callback: {
           onComplete: (r: AjaxResponse) => {
-            console.log('########## addAndSaveCollecingEvent : Resposne ', r);
             const url = config.magasin.urls.client.collectingEvent.view(
               this.props.appSession,
               r.response.eventUuid
@@ -524,20 +565,18 @@ export class CollectingEventComponent extends React.Component<
           onComplete: () => this.props.history.replace(URL)
         }
       };
-
-      console.log('ANU: calling editEventMetaDate');
       this.props.editEventMetaData()(props);
     }
   }
 
-  savePerson(personState: PersonState) {
-    if (this.props.editEventPersonRevision && personState) {
+  savePerson() {
+    console.log('On save person 1', this.state);
+    if (this.props.editEventPersonRevision) {
       const URL = config.magasin.urls.client.collectingEvent.view(
         this.props.appSession,
         this.state.eventData.eventUuid
       );
-      console.log('ANU : calling savePerson');
-      const props: EditPersonEventProps = {
+      const p: EditPersonEventProps = {
         id: this.state.eventData.eventUuid,
         data: this.state.eventData.relatedActors
           ? this.state.eventData.relatedActors
@@ -545,15 +584,25 @@ export class CollectingEventComponent extends React.Component<
         token: this.props.appSession.accessToken,
         collectionId: this.props.appSession.collectionId,
         callback: {
-          onComplete: () => this.props.history.replace(URL)
+          onComplete: () => {
+            this.props.history.replace(URL);
+          }
         }
       };
-      this.props.editEventPersonRevision()(props);
+      console.log('savePerson', p);
+      /*this.setState((ps: CollectingEventState) => ({
+        ...ps,
+        personState: personState
+          ? { ...ps.personState, personNames: undefined }
+          : undefined
+      })); */
+      console.log('Før editPerson', this.state);
+      this.props.editEventPersonRevision()(p);
     }
   }
 
   render() {
-    console.log('STATE----->', this.state);
+    console.log('OnRender: STATE: ', this.state);
     const PersonViewComponent = this.state.personState ? (
       <div>
         {' '}
@@ -650,7 +699,8 @@ export class CollectingEventComponent extends React.Component<
             this.setState((ps: CollectingEventState) => ({
               ...ps,
               eventData: { ...ps.eventData, methodId: Number.parseInt(methodId) },
-              placeState: { ...ps.placeState, editState: 'Editing' }
+              placeState: { ...ps.placeState, editState: 'Editing' },
+              localChange: true
             }));
           }}
           collectingEventMethods={
@@ -663,13 +713,12 @@ export class CollectingEventComponent extends React.Component<
             localStorage['selectedCountry'] = v;
             this.setState((ps: CollectingEventState) => ({
               ...ps,
-              placeState: { ...ps.placeState, selectedCountry: v }
+              placeState: { ...ps.placeState, selectedCountry: v },
+              localChange: true
             }));
           }}
           onCoordinateLatLonKeyPress={e => {
             if (e.charCode === 13) {
-              console.log('E', e);
-
               const datum: Geodesy.datum =
                 this.state.placeState.editingInputCoordinate &&
                 (this.state.placeState.editingInputCoordinate.datum === 'WGS84' ||
@@ -703,13 +752,15 @@ export class CollectingEventComponent extends React.Component<
                   placeState: {
                     ...ps.placeState,
                     showCoordinateFormat,
+
                     editingInputCoordinate: ps.placeState.editingInputCoordinate
                       ? {
                           ...ps.placeState.editingInputCoordinate,
                           derivedCoordinate: derivedCoordinate
                         }
                       : undefined
-                  }
+                  },
+                  localChange: true
                 }));
               } catch (e) {
                 console.log(e);
@@ -754,6 +805,7 @@ export class CollectingEventComponent extends React.Component<
 
                 this.setState((ps: CollectingEventState) => ({
                   ...ps,
+                  localChange: true,
                   placeState: {
                     ...ps.placeState,
                     showCoordinateFormat,
@@ -807,6 +859,7 @@ export class CollectingEventComponent extends React.Component<
                 }
                 this.setState((ps: CollectingEventState) => ({
                   ...ps,
+                  localChange: true,
                   placeState: {
                     ...ps.placeState,
                     showCoordinateFormat,
@@ -859,6 +912,7 @@ export class CollectingEventComponent extends React.Component<
               };
               return {
                 ...cs,
+                localChange: true,
                 placeState: newPlaceState
               };
             });
@@ -866,6 +920,7 @@ export class CollectingEventComponent extends React.Component<
           onChangeAdmPlace={(t: AdmPlace) => {
             this.setState((s: CollectingEventState) => ({
               ...s,
+              localChange: true,
               placeState: {
                 ...s.placeState,
                 editState: 'Editing',
@@ -876,7 +931,6 @@ export class CollectingEventComponent extends React.Component<
           getAdmPlaceData={(field: string) => (a: AdmPlace) => {
             const arrayPlaces = a.path ? a.path.split(':') : undefined;
             let PlaceString: string = '';
-            console.log('Anuradha getAdmPlaceDate ', arrayPlaces);
 
             if (field === 'Kommune') {
               PlaceString = arrayPlaces ? arrayPlaces[5] : '';
@@ -909,6 +963,7 @@ export class CollectingEventComponent extends React.Component<
             this.setState((cs: CollectingEventState) => {
               return {
                 ...cs,
+                localChange: true,
                 placeState: {
                   ...cs.placeState,
                   editState: 'Editing',
@@ -964,6 +1019,7 @@ export class CollectingEventComponent extends React.Component<
               };
               const newEventState = {
                 ...cs,
+                localChange: true,
                 placeState: newPlaceState
               };
 
@@ -982,6 +1038,7 @@ export class CollectingEventComponent extends React.Component<
 
             this.setState((cs: CollectingEventState) => ({
               ...cs,
+              localChange: true,
               placeState: {
                 ...cs.placeState,
                 editState: 'Editing',
@@ -1087,6 +1144,7 @@ export class CollectingEventComponent extends React.Component<
             this.setState((cs: CollectingEventState) => {
               return {
                 ...cs,
+                localChange: true,
                 placeState: {
                   ...cs.placeState,
                   editState: 'Editing',
@@ -1102,6 +1160,7 @@ export class CollectingEventComponent extends React.Component<
             this.setState((cs: CollectingEventState) => {
               return {
                 ...cs,
+                localChange: true,
                 placeState: {
                   ...cs.placeState,
                   editState: 'Editing',
@@ -1130,6 +1189,7 @@ export class CollectingEventComponent extends React.Component<
               };
               const newEventState = {
                 ...cs,
+                localChange: true,
                 placeState: newPlaceState
               };
               return newEventState;
@@ -1215,6 +1275,7 @@ export class CollectingEventComponent extends React.Component<
             this.setState((cs: CollectingEventState) => {
               return {
                 ...cs,
+                localChange: true,
                 eventData: {
                   ...cs.eventData,
                   editState: 'Editing',
@@ -1226,6 +1287,7 @@ export class CollectingEventComponent extends React.Component<
           onChangeBornDate={(newDate?: Date) => {
             this.setState((p: CollectingEventState) => ({
               ...p,
+              localChange: true,
               eventData: {
                 ...p.eventData,
                 editState: 'Editing',
@@ -1236,6 +1298,7 @@ export class CollectingEventComponent extends React.Component<
           onChangeDeathDate={(newDate?: Date) => {
             this.setState((p: CollectingEventState) => ({
               ...p,
+              localChange: true,
               eventData: {
                 ...p.eventData,
                 editState: 'Editing',
@@ -1246,6 +1309,7 @@ export class CollectingEventComponent extends React.Component<
           onClearBornDate={() => {
             this.setState((p: CollectingEventState) => ({
               ...p,
+              localChange: true,
               eventData: {
                 ...p.eventData,
                 editState: 'Editing',
@@ -1256,6 +1320,7 @@ export class CollectingEventComponent extends React.Component<
           onClearDeathDate={() => {
             this.setState((p: CollectingEventState) => ({
               ...p,
+              localChange: true,
               eventData: {
                 ...p.eventData,
                 editState: 'Editing',
@@ -1266,6 +1331,7 @@ export class CollectingEventComponent extends React.Component<
           onChangeVerbatimDate={(newDate: string) => {
             this.setState((p: CollectingEventState) => ({
               ...p,
+              localChange: true,
               eventData: {
                 ...p.eventData,
                 editState: 'Editing',
@@ -1281,11 +1347,26 @@ export class CollectingEventComponent extends React.Component<
       <div>
         <PersonComponent
           {...this.state}
+          newPersonAddedOrDeleted={
+            (this.state.personState && this.state.personState.newPersonAddedOrDeleted) ||
+            false
+          }
           disabled={this.props.personReadOnly ? this.props.personReadOnly : false}
           readOnly={this.props.personReadOnly ? this.props.personReadOnly : false}
-          value={''}
+          value={
+            this.state.personState &&
+            this.state.personState &&
+            this.state.personState.personName
+              ? this.state.personState.personName.name
+              : ''
+          }
           appSession={this.props.appSession}
           history={this.props.history}
+          personSelectedMode={
+            this.state &&
+            this.state.personState &&
+            this.state.personState.personSelectedMode
+          }
           personNames={
             this.state && this.state.personState ? this.state.personState.personNames : []
           }
@@ -1295,6 +1376,17 @@ export class CollectingEventComponent extends React.Component<
           }
           disableOnChangeOtherName={
             this.state.personState && this.state.personState.disableOnChangeOtherName
+          }
+          editingPersonName={
+            this.state &&
+            this.state.personState &&
+            this.state.personState.editingPersonName
+          }
+          editingPerson={
+            this.state && this.state.personState && this.state.personState.editingPerson
+          }
+          selectedPerson={
+            this.state && this.state.personState && this.state.personState.personName
           }
           showMoreInfo={this.state.personState && this.state.personState.showMoreInfo}
           nameEmpty={this.state.eventData.name === '' ? true : false}
@@ -1313,40 +1405,84 @@ export class CollectingEventComponent extends React.Component<
             }
           }}
           onClickSave={() => {
+            console.log('ClickSavePerson', this.props);
             if (this.props.addCollectingEvent) {
               this.addAndSaveCollecingEvent();
             } else {
-              if (this.state.personState) {
-                this.savePerson(this.state.personState);
-              }
+              this.savePerson();
             }
           }}
           onChangePerson={(suggestion: PersonNameSuggestion) => {
-            this.setState((cs: CollectingEventState) => {
-              const newPersonName: PersonNameForCollectingEvent = {
-                actorUuid: suggestion ? suggestion.actorUuid : '',
-                actorNameUuid: suggestion ? suggestion.actorNameUuid : '',
-                name: suggestion ? suggestion.name : '',
-                roleId: 11,
-                defaultName: suggestion.defaultName
-              };
-              const newPersonSelectedMode: PersonSelectedMode = 'PersonName';
-              const newPersonState: PersonState = {
-                ...cs.personState,
-                personName: newPersonName,
-                editState: 'Editing',
-                personSelectedMode: newPersonSelectedMode
-              };
+            console.log('onChangePerson');
+            this.props.getPersonName()({
+              id: suggestion.actorNameUuid,
+              token: this.props.appSession.accessToken,
+              collectionId: this.props.appSession.collectionId,
+              callback: {
+                onComplete: (res: AjaxResponse) => {
+                  console.log('onChangePerson onComplete');
+                  this.setState((cs: CollectingEventState) => {
+                    const index =
+                      cs && cs.personState && cs.personState.personNames
+                        ? cs.personState.personNames.length
+                        : 0;
 
-              const newEventState = {
-                ...cs,
-                personState: newPersonState
-              };
-              return newEventState;
+                    const newPersonName: PersonNameForCollectingEvent = {
+                      actorUuid: suggestion ? suggestion.actorUuid : '',
+                      actorNameUuid: suggestion ? suggestion.actorNameUuid : '',
+                      name: suggestion ? suggestion.name : '',
+                      roleId: 11,
+                      defaultName: suggestion.defaultName,
+                      firstName: suggestion ? suggestion.firstName : '',
+                      lastName: suggestion ? suggestion.lastName : '',
+                      title: suggestion ? suggestion.title : '',
+                      orderNo: index
+                    };
+
+                    const newEditingPersonName: InputPersonName = {
+                      title: res.response.title || '',
+                      firstName: res.response.firstName || '',
+                      lastName: res.response.lastName || '',
+                      name: res.response.name
+                    };
+
+                    const newPersonSelectedMode: PersonSelectedMode = 'PersonName';
+
+                    const newPersonState: PersonState = {
+                      ...cs.personState,
+                      newPersonAddedOrDeleted:
+                        (cs.personState && cs.personState.newPersonAddedOrDeleted) ||
+                        false,
+                      personName: newPersonName,
+                      editState: 'Editing',
+                      personSelectedMode: newPersonSelectedMode,
+                      editingPerson: newPersonName,
+                      editingPersonName: newEditingPersonName
+                    };
+
+                    const newEventState = {
+                      ...cs,
+                      localChange: true,
+                      personState: newPersonState
+                    };
+                    return newEventState;
+                  });
+                }
+              }
             });
           }}
           onChangeSecondPerson={(suggestion: PersonNameSuggestion) => {
             this.setState((cs: CollectingEventState) => {
+              const personSelectedMode =
+                cs && cs.personState && cs.personState.personSelectedMode;
+
+              const newPersonSelectedMode: PersonSelectedMode =
+                personSelectedMode === 'PersonName'
+                  ? 'PersonAndPersonName'
+                  : personSelectedMode === 'NoPersonName'
+                    ? 'PersonOrPersonName'
+                    : 'PersonOrPersonName';
+
               const newActorId = suggestion.actorUuid;
               const newDefaultName = suggestion.name;
               const orgActorNameUuid =
@@ -1360,31 +1496,50 @@ export class CollectingEventComponent extends React.Component<
                   cs.personState.personName.name) ||
                 '';
 
+              const index =
+                cs && cs.personState && cs.personState.personNames
+                  ? cs.personState.personNames.length
+                  : 0;
+
+              const editPerson: PersonNameForCollectingEvent = {
+                actorUuid: suggestion ? suggestion.actorUuid : '',
+                actorNameUuid: suggestion ? suggestion.actorNameUuid : '',
+                defaultName: suggestion ? suggestion.name : '',
+                roleId: 11,
+                name: '',
+                orderNo: index
+              };
+
               const mergePersonToPersonName: PersonNameForCollectingEvent = {
                 actorUuid: newActorId,
                 defaultName: newDefaultName,
                 actorNameUuid: orgActorNameUuid,
                 name: orgActorName,
-                roleId: 11
+                roleId: 11,
+                orderNo: index
               };
               const newPersonState: PersonState = {
                 ...cs.personState,
                 personName: mergePersonToPersonName,
-                editState: 'Editing'
+                editingPerson: editPerson,
+                editState: 'Editing',
+                newPersonAddedOrDeleted: true,
+                personSelectedMode: newPersonSelectedMode
               };
               const newEventState = {
                 ...cs,
-                personState: newPersonState
+                personState: newPersonState,
+                localChange: true
               };
               return newEventState;
             });
           }}
           onAddPerson={() => {
             this.setState((cs: CollectingEventState) => {
-              const index =
+              /*      const index =
                 cs.personState && cs.personState.personNames
                   ? cs.personState.personNames.length
-                  : 0;
+                  : 0; */
               const currentPersonNames =
                 cs.personState && cs.personState.personNames
                   ? cs.personState.personNames
@@ -1393,22 +1548,26 @@ export class CollectingEventComponent extends React.Component<
               const currentPersonName = cs.personState && cs.personState.personName;
 
               const newPersonNames = currentPersonName
-                ? [
-                    ...currentPersonNames.slice(0, index),
-                    currentPersonName,
-                    ...currentPersonNames.slice(index + 1)
-                  ]
-                : undefined;
+                ? [...currentPersonNames, currentPersonName]
+                : currentPersonNames;
 
               const newPersonState: PersonState =
                 cs && cs.personState
                   ? {
                       ...cs.personState,
+                      personName: undefined,
                       personNames: newPersonNames,
-                      editState: 'Editing'
+                      editingPersonName: undefined,
+                      editingPerson: undefined,
+                      editState: 'Editing',
+                      personSelectedMode: 'NoPersonName',
+                      showMoreInfo: false,
+                      newPersonAddedOrDeleted: true
                     }
                   : {
-                      editState: 'Editing'
+                      editState: 'Editing',
+                      personSelectedMode: 'NoPersonName',
+                      newPersonAddedOrDeleted: true
                     };
 
               const relatedActorsList: ActorsAndRelation[] | undefined =
@@ -1417,7 +1576,8 @@ export class CollectingEventComponent extends React.Component<
                   actorUuid: p.actorUuid,
                   actorNameUuid: p.actorNameUuid,
                   roleId: p.roleId,
-                  name: p.name
+                  name: p.name,
+                  orderNo: p.orderNo
                 }));
               const newEventState: CollectingEventState = {
                 ...cs,
@@ -1425,7 +1585,8 @@ export class CollectingEventComponent extends React.Component<
                   ...cs.eventData,
                   relatedActors: relatedActorsList
                 },
-                personState: newPersonState
+                personState: newPersonState,
+                localChange: true
               };
               return newEventState;
             });
@@ -1444,12 +1605,14 @@ export class CollectingEventComponent extends React.Component<
                 ? {
                     ...cs.personState,
                     personNames: newPersonNames,
-                    personSelectedMode: undefined
+                    personSelectedMode: 'NoPersonName',
+                    newPersonAddedOrDeleted: true
                   }
                 : {
                     personNames: newPersonNames,
                     editState: 'Editing',
-                    personSelectedMode: undefined
+                    personSelectedMode: 'NoPersonName',
+                    newPersonAddedOrDeleted: true
                   };
 
               const relatedActorsList: ActorsAndRelation[] | undefined =
@@ -1458,7 +1621,8 @@ export class CollectingEventComponent extends React.Component<
                   actorUuid: p.actorUuid,
                   actorNameUuid: p.actorNameUuid,
                   roleId: p.roleId,
-                  name: p.name
+                  name: p.name,
+                  orderNo: p.orderNo
                 }));
               const newEventState = {
                 ...cs,
@@ -1466,12 +1630,13 @@ export class CollectingEventComponent extends React.Component<
                   ...cs.eventData,
                   relatedActors: relatedActorsList
                 },
-                personState: newPersonState
+                personState: newPersonState,
+                localChange: true
               };
               return newEventState;
             });
           }}
-          onCreatePersonName={(appSession: AppSession) => {
+          onCreateAndAddPersonName={(appSession: AppSession) => {
             this.props.addPersonName &&
               this.props.addPersonName()({
                 data: (this.state &&
@@ -1481,51 +1646,154 @@ export class CollectingEventComponent extends React.Component<
                 collectionId: appSession.collectionId,
                 callback: {
                   onComplete: (res: AjaxResponse) => {
+                    console.log('Create new person', res.response, this.state);
                     this.setState((ps: CollectingEventState) => {
-                      const newPersonNames =
+                      console.log('Create new person inne', res.response, ps);
+
+                      const index =
+                        ps.personState && ps.personState.personNames
+                          ? ps.personState.personNames.length
+                          : 0;
+                      const currentPersonNames =
                         ps.personState && ps.personState.personNames
                           ? ps.personState.personNames
                           : [];
-                      const tempPersonNames = newPersonNames.concat(res.response);
-                      const newRelatedActors: ActorsAndRelation = {
-                        actorUuid: undefined,
+
+                      const newPersonName: ActorsAndRelation = {
+                        actorUuid:
+                          ps &&
+                          ps.personState &&
+                          ps.personState.editingPerson &&
+                          ps.personState.editingPerson.actorUuid,
+                        defaultName:
+                          ps &&
+                          ps.personState &&
+                          ps.personState.editingPerson &&
+                          ps.personState.editingPerson.defaultName,
                         actorNameUuid: res.response.actorNameUuid,
-                        name:
-                          ps.personState && ps.personState.editingPersonName
-                            ? ps.personState.editingPersonName.name
-                            : '',
-                        roleId: 11
+                        name: res.response.name,
+                        roleId: 11,
+                        orderNo: index
                       };
-                      const currStatus = ps.personState && ps.personState.showMoreInfo;
-                      const newPersonState: PersonState = ps.personState
-                        ? {
-                            ...ps.personState,
-                            personNames: tempPersonNames,
-                            editState: 'Editing',
-                            personName: undefined,
-                            editingPersonName: undefined,
-                            showMoreInfo: !currStatus
-                          }
-                        : {
-                            editState: 'Editing',
-                            personName: undefined,
-                            editingPersonName: undefined,
-                            showMoreInfo: false
-                          };
+                      const newPersonNames = newPersonName
+                        ? [...currentPersonNames, newPersonName]
+                        : currentPersonNames;
+
+                      const currentShowMoreInfo =
+                        ps.personState && ps.personState.showMoreInfo;
+                      const newPersonState: PersonState = {
+                        ...ps.personState,
+                        personNames: newPersonNames,
+                        editState: 'Editing',
+                        personName: undefined,
+                        editingPersonName: undefined,
+                        editingPerson: undefined,
+                        showMoreInfo: !currentShowMoreInfo,
+                        personSelectedMode: 'NoPersonName',
+                        newPersonAddedOrDeleted: true
+                      };
+
+                      const relatedActorsList: ActorsAndRelation[] | undefined =
+                        newPersonNames &&
+                        newPersonNames.map((p: PersonNameForCollectingEvent) => ({
+                          actorUuid: p.actorUuid,
+                          actorNameUuid: p.actorNameUuid,
+                          roleId: p.roleId,
+                          name: p.name,
+                          orderNo: p.orderNo
+                        }));
 
                       const newEventState = {
                         ...ps,
                         eventData: {
                           ...ps.eventData,
-                          relatedActors: [
-                            ...(ps.eventData.relatedActors
-                              ? ps.eventData.relatedActors
-                              : []),
-                            newRelatedActors
-                          ]
+                          relatedActors: relatedActorsList
                         },
-                        personState: newPersonState
+                        personState: newPersonState,
+                        localChange: true
                       };
+                      console.log(
+                        'Ny Event personstat: xxxx> ',
+                        newPersonState,
+                        newEventState
+                      );
+                      return newEventState;
+                    });
+                  }
+                }
+              });
+          }}
+          onCreateAndAddNewPerson={(appSession: AppSession) => {
+            //console.log(this.props);
+            this.props.addPerson &&
+              this.props.addPerson()({
+                data: (this.state &&
+                  this.state.personState &&
+                  this.state.personState.editingPersonName) || { name: '' },
+                token: appSession.accessToken,
+                collectionId: appSession.collectionId,
+                callback: {
+                  onComplete: (res: AjaxResponse) => {
+                    this.setState((ps: CollectingEventState) => {
+                      const index =
+                        ps.personState && ps.personState.personNames
+                          ? ps.personState.personNames.length
+                          : 0;
+                      const currentPersonNames =
+                        ps.personState && ps.personState.personNames
+                          ? ps.personState.personNames
+                          : [];
+
+                      const newPersonName: ActorsAndRelation = {
+                        actorUuid: res.response.actorUuid,
+                        defaultName: res.response.name,
+                        actorNameUuid: res.response.actorNameUuid,
+                        name: res.response.name,
+                        roleId: 11,
+                        orderNo: index
+                      };
+
+                      const newPersonNames = newPersonName
+                        ? [
+                            ...currentPersonNames.slice(0, index),
+                            newPersonName,
+                            ...currentPersonNames.slice(index + 1)
+                          ]
+                        : currentPersonNames;
+
+                      const currStatus = ps.personState && ps.personState.showMoreInfo;
+                      const newPersonState: PersonState = {
+                        ...ps.personState,
+                        personNames: newPersonNames,
+                        editState: 'Editing',
+                        personName: undefined,
+                        editingPersonName: undefined,
+                        editingPerson: undefined,
+                        showMoreInfo: !currStatus,
+                        personSelectedMode: 'NoPersonName',
+                        newPersonAddedOrDeleted: true
+                      };
+
+                      const relatedActorsList: ActorsAndRelation[] | undefined =
+                        newPersonNames &&
+                        newPersonNames.map((p: PersonNameForCollectingEvent) => ({
+                          actorUuid: p.actorUuid,
+                          actorNameUuid: p.actorNameUuid,
+                          roleId: p.roleId,
+                          name: p.name,
+                          orderNo: p.orderNo
+                        }));
+
+                      const newEventState = {
+                        ...ps,
+                        eventData: {
+                          ...ps.eventData,
+                          relatedActors: relatedActorsList
+                        },
+                        personState: newPersonState,
+                        localChange: true
+                      };
+
                       return newEventState;
                     });
                   }
@@ -1533,8 +1801,20 @@ export class CollectingEventComponent extends React.Component<
               });
           }}
           onChangeFullName={(fieldName: string) => (value: string) => {
-            console.log('fieldName', value);
             this.setState((ps: CollectingEventState) => {
+              const personSelectedMode =
+                ps && ps.personState && ps.personState.personSelectedMode;
+
+              let newPersonSelectedMode: PersonSelectedMode = 'NoPersonName';
+
+              if (personSelectedMode === ('NoPersonName' || undefined)) {
+                newPersonSelectedMode = 'PersonOrPersonName';
+              } else if (personSelectedMode === 'PersonName') {
+                newPersonSelectedMode = 'PersonOrPersonName';
+              } else if (personSelectedMode === 'PersonOrPersonName') {
+                newPersonSelectedMode = 'PersonOrPersonName';
+              }
+
               const lastName =
                 fieldName === 'lastName'
                   ? value
@@ -1553,27 +1833,26 @@ export class CollectingEventComponent extends React.Component<
                   : ps.personState &&
                     ps.personState.editingPersonName &&
                     ps.personState.editingPersonName.firstName;
-              const nameString = `${lastName || ''}${
-                title || firstName ? ', ' : ''
-              }${title || ''}${title ? ' ' : ''}${firstName}`;
+
+              const name = `${lastName || ''}${title || firstName ? ', ' : ''}${title ||
+                ''}${title ? ' ' : ''}${firstName}`;
 
               const disableOnChangeFullName =
                 lastName || title || firstName ? true : false;
 
               let disableOnChangeOtherName = false;
-              if (fieldName === 'nameString') {
+              if (fieldName === 'name') {
                 disableOnChangeOtherName = true;
 
                 if (value === '') {
                   disableOnChangeOtherName = false;
                 }
               }
-
               const newEditPersonName =
                 ps.personState && ps.personState.editingPersonName
                   ? {
                       ...ps.personState.editingPersonName,
-                      name: nameString,
+                      name: name,
                       editState: 'Editing',
                       [fieldName]: value
                     }
@@ -1586,50 +1865,105 @@ export class CollectingEventComponent extends React.Component<
                     editingPersonName: newEditPersonName,
                     editState: 'Editing',
                     disableOnChangeFullName: disableOnChangeFullName,
-                    disableOnChangeOtherName: disableOnChangeOtherName
+                    disableOnChangeOtherName: disableOnChangeOtherName,
+                    personSelectedMode: newPersonSelectedMode
                   }
                 : {
                     editState: 'Editing',
                     disableOnChangeFullName: disableOnChangeFullName,
-                    disableOnChangeOtherName: disableOnChangeOtherName
+                    disableOnChangeOtherName: disableOnChangeOtherName,
+                    personSelectedMode: 'NoPersonName',
+                    newPersonAddedOrDeleted: true
                   };
 
               const newEventState = {
                 ...ps,
-                personState: newPersonState
+                personState: newPersonState,
+                localChange: true
               };
               return newEventState;
             });
           }}
-          onClickNewPersonName={() => {
-            this.setState((cs: CollectingEventState) => {
-              const currStatus = cs.personState && cs.personState.showMoreInfo;
-              const newPersonState: PersonState =
-                cs && cs.personState
-                  ? {
-                      ...cs.personState,
-                      showMoreInfo: !currStatus
-                    }
-                  : {
-                      showMoreInfo: false
-                    };
-              const newRelatedActors: ActorsAndRelation[] | undefined =
-                newPersonState && newPersonState.personNames
-                  ? newPersonState.personNames.map((r: PersonNameForCollectingEvent) => ({
-                      actorUuid: r.actorUuid,
-                      actorNameUuid: r.actorNameUuid,
-                      name: r.name,
-                      roleId: r.roleId
-                    }))
-                  : undefined;
+          onClickMoreOptions={(appSession: AppSession) => {
+            if (
+              this.state.personState &&
+              this.state.personState.personName &&
+              this.state.personState.personName.actorNameUuid
+            ) {
+              console.log('onClickMoreOptions : get Person');
+              this.props.getPersonName &&
+                this.props.getPersonName()({
+                  id:
+                    this.state &&
+                    this.state.personState &&
+                    this.state.personState.personName &&
+                    this.state.personState.personName.actorNameUuid,
+                  token: appSession.accessToken,
+                  collectionId: appSession.collectionId,
+                  callback: {
+                    onComplete: (res: AjaxResponse) => {
+                      this.setState((ps: CollectingEventState) => {
+                        const newEditingPersonName: InputPersonName = {
+                          title: res.response.title || '',
+                          firstName: res.response.firstName || '',
+                          lastName: res.response.lastName || '',
+                          name: res.response.name
+                        };
 
-              const newEventState = {
-                ...cs,
-                eventData: { ...cs.eventData, relatedActors: newRelatedActors },
-                personState: newPersonState
-              };
-              return newEventState;
-            });
+                        const currStatus = ps.personState && ps.personState.showMoreInfo;
+                        const newPersonState: PersonState = ps.personState
+                          ? {
+                              ...ps.personState,
+                              editState: 'Editing',
+                              editingPersonName: newEditingPersonName,
+                              showMoreInfo: !currStatus,
+                              personSelectedMode: 'PersonName',
+                              disableOnChangeOtherName: false,
+                              disableOnChangeFullName: false
+                            }
+                          : {
+                              editState: 'Editing',
+                              editingPersonName: newEditingPersonName,
+                              showMoreInfo: false,
+                              personSelectedMode: 'NoPersonName',
+                              disableOnChangeOtherName: false,
+                              disableOnChangeFullName: false,
+                              newPersonAddedOrDeleted: false
+                            };
+                        const newEventState = {
+                          ...ps,
+                          personState: newPersonState
+                        };
+                        return newEventState;
+                      });
+                    }
+                  }
+                });
+            } else {
+              console.log('onClickMoreOptions :  no Person selected');
+              this.setState((cs: CollectingEventState) => {
+                const currStatus = cs.personState && cs.personState.showMoreInfo;
+                const newPersonSelectedMode = 'NoPersonName';
+
+                const newPersonState: PersonState =
+                  cs && cs.personState
+                    ? {
+                        ...cs.personState,
+                        showMoreInfo: !currStatus,
+                        personSelectedMode: newPersonSelectedMode
+                      }
+                    : {
+                        showMoreInfo: false,
+                        newPersonAddedOrDeleted: false
+                      };
+
+                const newEventState = {
+                  ...cs,
+                  personState: newPersonState
+                };
+                return newEventState;
+              });
+            }
           }}
         />
       </div>

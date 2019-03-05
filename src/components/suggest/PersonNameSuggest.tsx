@@ -67,7 +67,7 @@ export class PersonNameSuggestComponent extends React.Component<
     super(props);
     this.requestSuggestionUpdate = this.requestSuggestionUpdate.bind(this);
     this.state = {
-      value: this.props.value,
+      value: this.props.value ? props.value : '',
       disabled: this.props && this.props.disabled ? true : false
     };
 
@@ -75,7 +75,7 @@ export class PersonNameSuggestComponent extends React.Component<
   }
   componentWillReceiveProps(next: PersonNameSuggestComponentProps) {
     if (next.value !== this.props.value) {
-      this.setState(ps => ({ ...ps, value: next.value, disabled: true }));
+      this.setState(ps => ({ ...ps, value: next.value }));
     }
     if (next.disabled !== this.props.disabled) {
       this.setState(ps => ({ ...ps, disabled: next.disabled ? next.disabled : false }));
@@ -86,10 +86,13 @@ export class PersonNameSuggestComponent extends React.Component<
     placeholder: this.props.placeHolder,
     type: 'search',
     onBlur: this.props.clear,
-    onChange: (event: TODO, { newValue }: TODO) => {
-      this.setState(ps => {
-        return { ...ps, value: newValue };
-      });
+    onChange: (event: TODO, { newValue, method }: TODO) => {
+      console.log(newValue, method);
+      if (method === 'type') {
+        this.setState(ps => {
+          return { ...ps, value: newValue };
+        });
+      }
     }
   };
   requestSuggestionUpdate(update: TODO) {
@@ -105,7 +108,9 @@ export class PersonNameSuggestComponent extends React.Component<
       return suggestion.defaultName === suggestion.name;
     });
 
-    let i,
+    return personList;
+
+    /*  let i,
       j = 0;
     let newList: PersonNameSuggestion[] = [];
 
@@ -156,73 +161,74 @@ export class PersonNameSuggestComponent extends React.Component<
       }
     }
 
-    return newList;
+    return newList; */
   }
 
   render() {
     return (
       <div>
-        <form className="form-horizontal">
-          <div className="form-group">
-            <Autosuggest
-              suggestions={this.getFormatedDisplaySuggestions(
-                this.props.suggest.data || []
-              ).sort((a: PersonNameSuggestion, b: PersonNameSuggestion) => {
-                if (a.defaultName <= b.defaultName) {
-                  return -1;
-                }
-                return 1;
-              })}
-              onSuggestionsFetchRequested={this.requestSuggestionUpdate}
-              onSuggestionsClearRequested={() =>
-                this.setState(() => ({ suggestions: [] }))
+        <div className="form-group">
+          <Autosuggest
+            suggestions={this.getFormatedDisplaySuggestions(
+              this.props.suggest.data || []
+            ).sort((a: PersonNameSuggestion, b: PersonNameSuggestion) => {
+              if (a.defaultName <= b.defaultName) {
+                return -1;
               }
-              getSuggestionValue={(suggestion: personDet) => suggestion.name}
-              renderSuggestion={(suggestion: PersonNameSuggestion) => {
-                console.log('PersonName suggesstions ', suggestion);
-                return this.props.renderFunc(suggestion);
-              }}
-              inputProps={{
-                ...(this.PersonNameProps as TODO),
-                value: this.state.value,
-                disabled: this.state.disabled ? this.state.disabled : false
-              }}
-              shouldRenderSuggestions={v => v !== 'undefined'}
-              onSuggestionSelected={(event, { suggestion }) => {
-                if ((event as React.KeyboardEvent<HTMLFormElement>).keyCode === 13) {
-                  event.preventDefault();
-                }
+              return 1;
+            })}
+            onSuggestionsFetchRequested={this.requestSuggestionUpdate}
+            onSuggestionsClearRequested={() => this.setState(() => ({ suggestions: [] }))}
+            getSuggestionValue={(suggestion: personDet) => suggestion.name}
+            renderSuggestion={(suggestion: PersonNameSuggestion) => {
+              console.log('PersonName suggesstions ', suggestion);
+              return this.props.renderFunc(suggestion);
+            }}
+            inputProps={{
+              ...(this.PersonNameProps as TODO),
+              value: this.state.value,
+              disabled: this.state.disabled ? this.state.disabled : false
+            }}
+            shouldRenderSuggestions={v => (v ? v.trim().length > 2 : false)}
+            onSuggestionSelected={(event, { suggestion, method }) => {
+              if ((event as React.KeyboardEvent<HTMLFormElement>).keyCode === 13) {
+                event.preventDefault();
+              }
+              console.log('onSuggestionSelected', method);
+
+              if (method === 'click') {
+                console.log('onSuggestionSelected');
                 this.props.onChange(suggestion);
+              }
+            }}
+          />
+        </div>
+        {!this.props.hideCreateNewPerson && (
+          <div className={this.props.hideCreateNewPerson ? 'col-md-0' : 'col-md-3'}>
+            <label htmlFor="btnAddPerson">Create new</label>
+            <button
+              className="btn btn-default form-control"
+              disabled={this.state && this.state.disabled ? true : false}
+              onClick={e => {
+                let url: string;
+                if (this.state && this.state.value === '') {
+                  url = config.magasin.urls.client.person.addNewPersonNameBlank(
+                    this.props.appSession
+                  );
+                } else {
+                  url = config.magasin.urls.client.person.addNewPersonName(
+                    this.props.appSession,
+                    this.state.value ? this.state.value : ''
+                  );
+                }
+                e.preventDefault();
+                this.props.history && this.props.history.push(url);
               }}
-            />
+            >
+              <FontAwesome name="user-plus" />
+            </button>
           </div>
-          {!this.props.hideCreateNewPerson && (
-            <div className={this.props.hideCreateNewPerson ? 'col-md-0' : 'col-md-3'}>
-              <label htmlFor="btnAddPerson">Create new</label>
-              <button
-                className="btn btn-default form-control"
-                disabled={this.state && this.state.disabled ? true : false}
-                onClick={e => {
-                  let url: string;
-                  if (this.state && this.state.value === '') {
-                    url = config.magasin.urls.client.person.addNewPersonNameBlank(
-                      this.props.appSession
-                    );
-                  } else {
-                    url = config.magasin.urls.client.person.addNewPersonName(
-                      this.props.appSession,
-                      this.state.value ? this.state.value : ''
-                    );
-                  }
-                  e.preventDefault();
-                  this.props.history && this.props.history.push(url);
-                }}
-              >
-                <FontAwesome name="user-plus" />
-              </button>
-            </div>
-          )}
-        </form>
+        )}
       </div>
     );
   }
