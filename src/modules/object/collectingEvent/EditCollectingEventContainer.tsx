@@ -13,16 +13,23 @@ import store$, {
   editEventMetaData$,
   EditCollectingEventProps,
   EditEventAttributesProps,
+  GetPersonNameProps,
   EditPlaceProps,
   getCollectingEvent$,
   setDisabledState$,
   setDraftState$,
+  addPerson$,
+  addPersonName$,
+  getPersonName$,
   EditPersonEventProps,
+  AddPersonNameProps,
+  AddPersonProps,
   editEventPersonRevision$
 } from './CollectingEventStore';
-import { History } from 'history';
-import { AjaxPost } from '../../../types/ajax';
+//import { History } from 'history';
+import { AjaxPost, AjaxGet, Callback } from '../../../types/ajax';
 import { simpleGet } from '../../../shared/RxAjax';
+import { Star } from '../../../types/common';
 import { CollectingEventComponent } from './CollectingEventComponent';
 
 const combinedStore$ = createStore(
@@ -39,23 +46,28 @@ const combinedStore$ = createStore(
   )
 );
 
-const editCollectingEventProps = (combinedStore: any, upstream: { history: History }) => {
+const editCollectingEventProps = (combinedStore: any, upstream: any) => {
   return {
     ...combinedStore,
     ...upstream,
+    eventUuid: upstream.match.params.id,
     eventDataReadOnly:
       localStorage.getItem('editComponent') === 'eventMetaData' ? false : true,
     placeReadOnly: localStorage.getItem('editComponent') === 'place' ? false : true,
     personReadOnly: localStorage.getItem('editComponent') === 'person' ? false : true,
     addStateHidden: true,
-    store: { ...combinedStore, localState: combinedStore.store.localState },
 
-    getCollectingEvent: (ajaxGet = simpleGet) => (appSession: AppSession, id: string) =>
+    getCollectingEvent: (ajaxGet = simpleGet) => (
+      appSession: AppSession,
+      id: string,
+      callback?: Callback<Star>
+    ) =>
       getCollectingEvent$.next({
         id: id,
         collectionId: appSession.collectionId,
         token: appSession.accessToken,
-        ajaxGet
+        ajaxGet,
+        callback
       }),
     setDisabledState: (fieldName: string) => (value: boolean) =>
       setDisabledState$.next({ fieldName, value }),
@@ -98,7 +110,6 @@ const editCollectingEventProps = (combinedStore: any, upstream: { history: Histo
     editEventPersonRevision: (ajaxPost: AjaxPost<any>) => (
       props: EditPersonEventProps
     ) => {
-      console.log('IN editEventPersonRevision ', props.data);
       editEventPersonRevision$.next({
         id: props.id,
         data: props.data,
@@ -117,18 +128,43 @@ const editCollectingEventProps = (combinedStore: any, upstream: { history: Histo
         ajaxPost,
         callback: props.callback
       });
-    }
+    },
+
+    addPersonName: (ajaxPost: AjaxPost<any>) => (props: AddPersonNameProps) =>
+      addPersonName$.next({
+        data: props.data,
+        token: props.token,
+        collectionId: props.collectionId,
+        ajaxPost,
+        callback: props.callback
+      }),
+    addPerson: (ajaxPost: AjaxPost<any>) => (props: AddPersonProps) =>
+      addPerson$.next({
+        data: props.data,
+        token: props.token,
+        collectionId: props.collectionId,
+        ajaxPost,
+        callback: props.callback
+      }),
+    getPersonName: (ajaxGet: AjaxGet<any>) => (props: GetPersonNameProps) =>
+      getPersonName$.next({
+        id: props.id,
+        token: props.token,
+        collectionId: props.collectionId,
+        ajaxGet,
+        callback: props.callback
+      })
   };
 };
 
-export const onMountProps = () => (props: any) => {
-  props.getCollectingEvent()(props.appSession, props.match.params.id);
+export const onMount = (props: any) => {
+  // props.getCollectingEvent()(props.appSession, props.match.params.id);
 };
 
 export const onUnmount = () => (props: any) => {};
 
 const ManageCollectingEventComponent = lifeCycle({
-  onMount: onMountProps(),
+  onMount: onMount,
   onUnmount
 })(CollectingEventComponent);
 
