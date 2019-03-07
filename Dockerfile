@@ -14,4 +14,4 @@ RUN npm run build
 
 EXPOSE 8000
 
-CMD pushstate-server build 8000
+CMD pushstate-server build -p 8000
