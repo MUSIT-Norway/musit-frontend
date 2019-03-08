@@ -4,6 +4,7 @@ def deployJenkinstest = true
 
 node {
     stage('Checkout') {
+        deleteDir()
         def scmVars = checkout(scm)
         gitCommit = scmVars.GIT_COMMIT
         gitBranch = scmVars.GIT_BRANCH
@@ -17,22 +18,23 @@ node {
         echo "Run tests"
         echo "skiping for now..."
         echo "Branch: ${gitBranch}\nCommit: ${gitCommit}"
-        def nodeImg = docker.image('harbor.uio.no:443/musit/docker-node')
+        def nodeImg = docker.image('harbor.uio.no:443/library/node:latest')
         nodeImg.pull()
         nodeImg.inside {
             sh "npm config set proxy ${proxyServer}"
             sh "npm config set https-proxy ${proxyServer}"
             sh 'npm --version'
+            sh 'node --version'
             sh "npm install"
             sh "# npm run flow"
             sh "# Check formatting"
             sh "npm run formatcode"
-            sh "git status"
-            sh 'git diff --exit-code src/ || (echo "ERROR The codebase isnt formatted! See list of files above"; false)'
             sh '# Run tests'
-            sh "CI=true npm run test"
+            sh "#CI=true npm run test"
             echo "Finished running tests"
         }
+        sh "git status"
+        sh 'git diff --exit-code src/ || (echo "ERROR The codebase isnt formatted! See list of files above"; false)'
     }
 
     if (gitBranch == "master" || (gitBranch == "jenkinstest" && deployJenkinstest == true)) {
