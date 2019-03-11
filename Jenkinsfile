@@ -31,10 +31,11 @@ node {
             sh "npm run formatcode"
             sh '# Run tests'
             sh "#CI=true npm run test"
-            echo "Finished running tests"
         }
         sh "git status"
         sh 'git diff --exit-code src/ || (echo "ERROR The codebase isnt formatted! See list of files above"; false)'
+        echo "Finished running tests"
+
     }
 
     if (gitBranch == "master" || (gitBranch == "jenkinstest" && deployJenkinstest == true)) {
