@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/index.js",
-  "homepage": ".",
   "repository": {
     "type": "git",
     "url": "git://github.com/MUSIT-Norway/musit-frontend.git"
