@@ -1,8 +1,7 @@
-FROM node:latest
+FROM node:10-alpine
 
 ENV PUBLIC_PORT $PUBLIC_PORT
 ENV PUBLIC_PORT $PUBLIC_PORT
-
 
 WORKDIR "/usr/src/app"
 
