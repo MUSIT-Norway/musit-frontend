@@ -18,7 +18,7 @@ node {
         echo "Run tests"
         echo "skiping for now..."
         echo "Branch: ${gitBranch}\nCommit: ${gitCommit}"
-        def nodeImg = docker.image('harbor.uio.no:443/library/node:latest')
+        def nodeImg = docker.image('harbor.uio.no:443/library/node:10-alpine')
         nodeImg.pull()
         nodeImg.inside {
             sh "npm config set proxy ${proxyServer}"
@@ -30,8 +30,9 @@ node {
             sh "# Check formatting"
             sh "npm run formatcode"
             sh '# Run tests'
-            sh "#CI=true npm run test"
+            sh "CI=true npm run test"
         }
+        echo 'Check if formatcode changed codebase'
         sh "git status"
         sh 'git diff --exit-code src/ || (echo "ERROR The codebase isnt formatted! See list of files above"; false)'
         echo "Finished running tests"
