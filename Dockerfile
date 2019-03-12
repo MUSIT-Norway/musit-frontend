@@ -1,7 +1,8 @@
-FROM node:7.5
+FROM node:latest
 
 ENV PUBLIC_PORT $PUBLIC_PORT
 ENV PUBLIC_PORT $PUBLIC_PORT
+
 
 WORKDIR "/usr/src/app"
 
@@ -14,4 +15,4 @@ RUN npm run build
 
 EXPOSE 8000
 
-CMD pushstate-server build -p 8000
+CMD pushstate-server -d build -p 8000
